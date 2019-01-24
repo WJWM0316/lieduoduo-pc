@@ -51,7 +51,7 @@
 	   // recruiterIndex applyIndex
 	  login () {
 	  	let data = {
-	  		email: 18802090814,
+	  		email: '302982210@qq.com',
 	  		password: 123456
 	  	}
 
@@ -59,7 +59,7 @@
 	  	then(res=>{
   	  	this.$store.dispatch('setUserInfo', res.data.data);
         this.userInfo = this.$store.state.userInfo
-				this.$router.push({name: 'recruiterIndex'})
+				this.$router.push({name: 'applyIndex'})
 	  	})
 	  	.catch(error => {
 	  	  setTimeout(() => {
