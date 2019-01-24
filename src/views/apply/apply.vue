@@ -1,0 +1,518 @@
+<template>
+	<div id="apply">
+			<!-- 未上传 -->
+		  <div class="resume_main no_upload" v-if="isUpload">
+		  	<div class="main_cont">
+		  		<h3 class="hint">上传简附件，招聘官既可查看你的附件简历 </h3>
+		  		<h3 class="hint">如需要编辑在线简历，请前往猎多多小程序进行操作</h3>
+
+			    <el-upload
+			      class=""
+	          :action="fileUpload.action"
+			      :on-preview="handlePreview"
+			      :on-remove="handleRemove"
+			      :before-remove="beforeRemove"
+			      :on-error="handleFileError"
+			      :on-success="handleFileSuccess"
+			      :headers="fileUpload.headers"
+			      :data="fileUpload.params"
+			      :before-upload="beforeFileUpload"
+			      multiple
+			      :show-file-list='false'
+			      :limit="5"
+			      :file-list="fileList">
+			      <el-button class="upload_btn" size="small" type="primary">上传附件简历</el-button>
+			    </el-upload>
+
+		  		<p class="hint2">
+		  			内容附件简历类型支持word、pdf、ppt、txt、wps、jpg、png； 允许最大上传10M；
+		  		</p>
+		  	</div>
+		  	<img class="cont_pic" src="../../assets/images/pic_home.png"/>
+		  </div>
+
+		  <div class="resume_main" v-else>
+		  	<div class="file_cont" v-if="uploadFileData[0]">
+		  		<div class="cont_top">
+		  			<img class="cont_pic2" src="../../assets/images/pic_resume_already.png"/>
+		  			<h2 class="cont_tit">附件简历已上传</h2>
+		  			<p class="top_text">{{uploadFileData[0].createdAt}}   上传</p>
+		  		</div>
+		  		
+		  		<div class="file_msg">
+		  			<img class="file_icon" />
+		  			<div class="file_center">
+		  				<p class="file_name">
+		  					{{uploadFileData[0].fileName}}
+		  				</p>
+		  				<p>{{uploadFileData[0].sizeM}}</p>
+		  			</div>
+		  			<div class="file_op">
+		  				<div class="op_btn" @click.stop="filePreview()">
+		  					<img class="btn_icon" />
+		  					预览
+		  				</div>
+		  				<div class="op_btn" @click.stop="uploadFile()">
+		  					<img class="btn_icon"  />
+			  				下载
+			  			</div>
+		  				<div class="op_btn" @click="todoAction('openDelete')">
+		  					<img class="btn_icon" />
+			  				删除
+			  			</div>
+		  			</div>
+		  		</div>
+		  	</div>
+		  
+
+		  	<div class="upload_hint">上传简历帮助</div>
+		    <el-upload
+		      class=""
+          :action="fileUpload.action"
+		      :on-preview="handlePreview"
+		      :on-remove="handleRemove"
+		      :before-remove="beforeRemove"
+		      :on-error="handleFileError"
+		      :on-success="handleFileSuccess"
+		      :headers="fileUpload.headers"
+		      :data="fileUpload.params"
+		      :before-upload="beforeFileUpload"
+		      multiple
+		      :show-file-list='false'
+		      :limit="5"
+		      :file-list="fileList">
+		      <el-button class="btn_resume" size="small" type="primary">重新上传</el-button>
+		    </el-upload>
+		  </div>
+	</div>
+  
+</template>
+<script>
+	import Vue from 'vue'
+	import Component from 'vue-class-component'
+	import { uploadApi, waitApi, getQrCodeApi, saveResumeMsgApi, getResumeMsgApi, deleteFileMsgApi } from '../../api/auth'
+	import { upload_api } from '../../api/index'
+	@Component({
+	  name: 'apply',
+	  methods: {
+	  },
+	  computed: {},
+	  watch: {
+	    '$route': {
+	      handler() {
+	        this.init()
+	      },
+	      immediate: true
+	    }
+	  },
+	  components: {}
+	})
+	export default class CourseList extends Vue {
+		isUpload = false
+		uploadFileData = []   // 上传的
+		userInfo = {}
+		fileList= []
+
+		fileUploadType = 'img'
+		// 文件上传
+		fileUpload = {
+		  action: upload_api,
+		  list: [],
+		  limit: 2,
+		  accept: '.png, .jpg, .jpeg, .word, .pdf, .ppt, .txt, .wps',
+		  progress: 0,
+		  btnTxt: '选择文件',
+		  progressText: '上传中',
+		  headers: {
+		    Authorization: ''
+		  },
+		  params: {
+		  	attach_type: 'img',
+		  	sadasd:'222'
+		  },
+		  status: 'processing',
+		  infos: {},
+		  show: false
+		}
+
+
+    imgExt = ['.png','.jpg','.jpeg']//图片文件的后缀名
+    docExt = ['.doc','.docx','.pdf']//word文件的后缀名
+
+		/**
+		 * 初始化表单、分页页面数据
+		 */
+		init() {
+		  this.userInfo = this.$store.state.userInfo
+		  console.log(this.userInfo)
+		  
+		  if(this.userInfo.id){
+		  	this.fileUpload.headers.Authorization = this.userInfo.token 
+		  	this.getResumeMsg()
+		  }
+		}
+
+    saveResumeMsg(){
+    	let data = {
+    		attach_resume: this.uploadFileData[0].id,
+    		attach_name: this.uploadFileData[0].fileName
+    	}
+    	saveResumeMsgApi(data).then(res => {
+    	}).catch(err => {
+	    	this.$message.error(err.msg);
+    	})
+    }
+
+    getResumeMsg(){
+    	getResumeMsgApi().then(res => {
+    		this.isUpload = false
+    		this.uploadFileData = []
+    		this.uploadFileData.push(res.data.data)
+    	}).catch(res => {
+    		console.log(res)
+    		if(res.data && res.data.code && res.data.code === 301 ) {
+    			// 附件简历暂未上传
+    			this.isUpload = true
+    		}
+    	})
+    }
+
+	  todoAction(type) {
+	    switch(type) {
+	      case 'detail':
+	        this.$router.push(
+	          { name: 'teacherDetail',
+	            query: {
+	              id: id
+	            }
+	          }
+	        )
+	        break
+	      case 'openDelete':
+	      	this.$confirm('是否删除该附件简历', '删除附件简历', {
+	          confirmButtonText: '删除',
+	          cancelButtonText: '取消',
+	          type: 'warning'
+	        }).then(() => {
+	          return deleteFileMsgApi()
+	        }).then(()=>{
+	        	this.isUpload = true
+	        	this.uploadFileData = []
+	        	this.$message({
+	            type: 'success',
+	            message: '删除成功!'
+	          })
+	        })
+	        .catch(() => {
+	          this.$message({
+	            type: 'info',
+	            message: '已取消删除'
+	          })          
+	        });
+	      default:
+	        break
+	    }
+	  }
+
+		filePreview () {
+			let fileLink = this.uploadFileData[0].url
+      let event = new MouseEvent('click')
+      let a = document.createElement('a')
+      a.target = 'view_window'
+
+      if(fileLink.indexOf('.png') !=-1 || fileLink.indexOf('.jpeg') !=-1 || fileLink.indexOf('.jpg') !=-1) {
+      	a.href = fileLink
+      }else {
+      	a.href = `https://view.officeapps.live.com/op/view.aspx?src=${fileLink}`
+      }
+      a.dispatchEvent(event)
+    }
+
+		uploadFile () {
+			let fileLink = this.uploadFileData[0].url
+      let event = new MouseEvent('click')
+      let a = document.createElement('a')
+      a.target = 'view_window'
+    	a.href = fileLink
+      a.dispatchEvent(event)
+    }
+
+		/**
+		 * @detail   文件上传成功
+		 */
+		handleFileSuccess(res) {
+	    console.log(res)
+	    this.isUpload = false
+	    this.uploadFileData = []
+	    this.uploadFileData.push(res.data[0])
+
+	    console.log(this.uploadFileData)
+	    this.saveResumeMsg()
+		}
+
+		/**
+		 * @detail   文件上传之前的处理
+		 */
+		beforeFileUpload(file) {
+			console.log(file)
+		  // this.$refs.file.abort()
+
+		  const isLtM = file.size / 1024 / 1024 < 10;
+		  if(!isLtM){
+		    this.$message.error('上传文件大小不能超过 10MB!');
+		  }else {
+		  	let isImg = this.typeMatch(this.imgExt,file.name)
+		  	if(isImg){
+		  		this.fileUpload.params.attach_type = 'img'
+		  	}
+
+		  	let isDoc = this.typeMatch(this.docExt,file.name)
+		  	if(isDoc){
+		  		this.fileUpload.params.attach_type = 'doc'
+		  	}
+
+		  	if(!isImg && !isDoc){
+		    	this.$message.error('上传文件类型不允许');
+		  		this.$refs.file.abort()
+		  	}
+		    this.fileUpload.status = 'loading'
+		    this.fileUpload.progress = 0
+		    this.fileUpload.progressText = '上传中'
+
+		    this.nowLoadUid = file.uid
+		    this.fileUpload.infos = file
+		    this.fileUpload.show = true
+		    this.fileUpload.btnTxt = '重新上传'
+		  }
+
+		  return isLtM
+		}
+
+		/**
+		 * @detail   上传进度
+		 */
+		uploadFileProcess(event, file, fileList){
+		  this.fileUpload.progress = file.percentage.toFixed(0)
+		}
+
+		/**
+		 * @detail   文件上传失败
+		 */
+		handleFileError(err, file, fileList) {
+			console.log(err)
+		  this.fileUpload.status = 'error'
+		  this.fileUpload.progress = 0
+		  this.fileUpload.progressText = '上传失败'
+		  this.fileUpload.btnTxt = '重新上传'
+	    this.$message.error(err.msg);
+		}
+
+	  handleRemove(file, fileList) {
+      console.log(file, fileList);
+    }
+    handlePreview(file) {
+      console.log(file);
+    }
+    beforeRemove(file, fileList) {
+      return this.$confirm(`确定移除 ${ file.name }？`);
+    }
+
+
+    //获取文件名后缀名
+    extension (str){
+      var ext = null;
+      var name = str.toLowerCase();
+      var i = name.lastIndexOf(".");
+      if(i > -1){
+      	var ext = name.substring(i);
+      }
+      return ext;
+    }
+
+    //判断Array中是否包含某个值
+    contain(type,obj){
+      for(var i=0; i<type.length; i++){
+          if(type[i] === obj)
+              return true;
+      }
+      return false;
+    }
+
+    typeMatch(type, fielname){
+      var ext = this.extension(fielname);
+      if(this.contain(type,ext)){        
+          return true;
+      }
+      return false;
+    }
+
+	}
+</script>
+<style lang="less">
+#apply {
+	display: flex;
+	justify-content: center;
+	align-items: center;	
+	flex-direction: column;
+	.test {
+		font-size: 14px;
+	}
+	.resume_main {
+		height: 100vh;
+		width: 960px;
+		display: flex;
+		justify-content: center;
+		align-items: center;	
+		flex-direction: column;
+		&.no_upload {
+			flex-direction: row;
+		}
+		.main_cont {
+			width: 460px;
+			text-align: left;
+			margin-right: 170px;
+			.hint {
+				font-size:20px;
+				font-family:PingFang-SC-Medium;
+				font-weight:500;
+				color:rgba(101,39,145,1);
+				line-height:32px;
+			}
+			.hint2 {
+				font-size:16px;
+				font-family:PingFang-SC-Regular;
+				font-weight:400;
+				color:rgba(146,146,146,1);
+				line-height:28px;
+			}
+			.upload_btn {
+				width: 226px;
+				height: 54px;
+				background: rgba(101,39,145,1);
+				box-shadow: 0px 10px 18px 0px rgba(101,39,145,0.3);
+				border-radius: 27px;
+				text-align: center;
+				font-size:16px;
+				font-family:PingFang-SC-Bold;
+				font-weight:bold;
+				color:rgba(255,255,255,1);
+				margin: 64px 0 24px 0;
+				border-color: rgba(101,39,145,1);
+			}
+		}
+		.cont_pic {
+			width:385px;
+			height:304px;
+			display: block;
+		}
+		.file_cont {
+			.cont_top {
+				.cont_pic2 {
+					width:138px;
+					height:104px;
+				}
+				.cont_tit {
+					font-size:40px;
+					font-family:PingFang-SC-Heavy;
+					font-weight:800;
+					color:rgba(101,39,145,1);
+					line-height:48px;
+					margin: 20px 0 15px 0;
+				}
+				.top_text {
+					font-size:20px;
+					font-family:SFUIDisplay-Regular;
+					font-weight:400;
+					color:rgba(146,146,146,1);
+					line-height:28px;
+				}
+			}
+			.file_msg {
+				margin: 52px auto 72px auto;
+				width:772px;
+				height:78px;
+				background:rgba(255,255,255,1);
+				border-radius:4px;
+				border:1px solid rgba(239,233,244,1);
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				box-sizing: border-box;
+				padding: 12px 16px;
+				.file_icon {
+					width:54px;
+					height:54px;
+					background:rgba(250,57,57,1);
+					border-radius:4px;
+					box-sizing: border-box;
+					margin-right: 12px;
+				}
+				.file_center {
+					flex: 1;
+					text-align: left;
+					overflow: hidden;
+					margin-right: 20px;
+					p {
+						font-size:14px;
+						font-family:SFUIDisplay-Regular;
+						font-weight:400;
+						color:rgba(146,146,146,1);
+						line-height:22px;
+					 	&.file_name {
+					 		font-size:14px;
+					 		font-family:PingFang-SC-Medium;
+					 		font-weight:500;
+					 		color:rgba(17,17,17,1);
+					 		margin-bottom: 2px;
+					 	}
+					}
+				}
+				.file_op {
+					display: flex;
+					flex-direction: row;
+					align-items: center;
+					.op_btn {
+						display: flex;
+						flex-direction: row;
+						align-items: center;
+						margin-right: 30px;
+
+						font-size:12px;
+						font-family:PingFang-SC-Medium;
+						font-weight:500;
+						color:rgba(101,39,145,1);
+						line-height:20px;
+					}
+					.btn_icon {
+						width: 16px;
+						height: 16px;
+						margin-right: 5px;
+					}
+				}
+				
+			}
+
+		}
+		.upload_hint {
+			font-size:16px;
+			font-family:PingFang-SC-Regular;
+			font-weight:400;
+			color:rgba(146,146,146,1);
+			display: block;
+			margin-bottom: 24px;
+		}
+		.btn_resume {
+			display: block;
+			width:226px;
+			height:54px;
+			background:rgba(101,39,145,1);
+			border-radius:27px;
+			border:1px solid rgba(101,39,145,1);
+			font-size:16px;
+			font-family:PingFang-SC-Medium;
+			font-weight:500;
+			color:rgba(255,255,255,1);
+		}
+	}
+}
+</style>
