@@ -1,7 +1,7 @@
 <template>
 	<div id="login">
 		<img class="logo" src="../../assets/images/logo_white.png" />
-	  <p class="title_p">面试多，机会多</p>
+	  <p class="title_p">面试多,机会多</p>
 	  <div class="login_cont">
 	  	<h3>扫码登录</h3>
 	  	<div class="cont_p">使用猎多多小程序扫码登录<a href="">扫码帮助</a></div>
