@@ -25,11 +25,15 @@
 	  				</div>
 	  			</div>
 	  			<div class="blo_center">
-	  				发布于 {{item.createdAt}}
+	  				<!-- <div class="center_status">审核中</div>
+	  				<div class="center_status">审核中</div>
+	  				<div class="center_status">审核中</div> -->
+	  				<div class="center_time">发布于 {{item.createdAt}}</div>
 	  			</div>
 	  			<div class="blo_right">
 	  				<span class="job_op" @click="todoAction('share')">分享</span>
-	  				<span class="job_op" @click="todoAction('closeJob',item.id)">关闭</span>
+	  				<span class="job_op" @click="todoAction('openJob',item.id)" v-if="item.isOnline===2">关闭</span>
+	  				<span class="job_op" @click="todoAction('closeJob',item.id)" v-else>开启</span>
 	  				<span class="job_op" @click="todoAction('editJob',item.id)">编辑</span>
 	  			</div>
 	  		</li>
@@ -53,6 +57,26 @@
 
 		<div class="service">
 			客服咨询
+		</div>
+
+
+		<div class="pop" v-if="pop.isShow">
+		  <div class="share" v-if="pop.type==='share'">
+		  	<div class="share_blo">
+		  		<div class="pop_tit">分享职位</div>
+		  		<img class="clo" src="" >
+		  		<p>使用「微信」扫描小程序码分享职位</p>
+		  		<img class="code" src="" >
+		  		<p @click="clickShareHelp">分享帮助<span>?</span></p>
+		  	</div>
+	      
+	      <div class="share_blo">
+	      	<div class="pop_tit">分享帮助</div>
+	      	<p>扫码 > 点击分享按钮</p>
+	      	<img class="code" src="" >
+	      </div>
+
+		  </div>
 		</div>
 	</div>
 
@@ -83,7 +107,7 @@
 
 		pageInfo = {
 		  page: 1,
-		  count: 5,
+		  count: 20,
 		  totalPage: 0,
 		  total: 0
 		}
@@ -110,7 +134,10 @@
 		jobList = []
 		jobNameList = []
 		// 文件上传
-		
+		pop = {
+	  	isShow: false,
+	  	type: 'share'
+	  }
 
 		form = {
 			recruiter: 5,
@@ -123,12 +150,12 @@
 	  init() {
     	this.form = Object.assign(this.form, this.$route.query || {})
 	    this.userInfo = this.$store.state.userInfo
+	    console.log('==>',this.userInfo)
 	    this.getPositionList()
 	    this.getJobNameList()
 	  }
 
 	  getPositionList ({ page } = {}) {
-	    console.log(1)
 	  	let data = {
 	  		page: page || this.form.page || 1,
 	  		count: this.pageInfo.count,
@@ -151,7 +178,7 @@
 	  getJobNameList () {
 	  	let data = {
 	  		page: 1,
-	  		count: 5,
+	  		count: 20,
 	  		name: ''
 	  	}
 
@@ -233,6 +260,18 @@
 		      }
 	       	closePositionApi({id: id}).then(res=>{
 	       		console.log(res)
+	       	}).catch(e => {
+            that.$message.error(e.data.msg)
+	       	})
+	        break
+	      case 'openJob':
+		      if(!id){
+		        return
+		      }
+	       	openPositionApi({id: id}).then(res=>{
+	       		console.log(res)
+	       	}).catch(e => {
+            that.$message.error(e.data.msg)
 	       	})
 	        break
 	      default:

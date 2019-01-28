@@ -1,7 +1,7 @@
 <template>
 	<div id="apply">
 			<!-- 未上传 -->
-		  <div class="resume_main no_upload" v-if="isUpload">
+		  <div class="resume_main no_upload" v-if="!isUpload">
 		  	<div class="main_cont">
 		  		<h3 class="hint">上传简附件，招聘官既可查看你的附件简历 </h3>
 		  		<h3 class="hint">如需要编辑在线简历，请前往猎多多小程序进行操作</h3>
@@ -165,14 +165,14 @@
 
     getResumeMsg(){
     	getResumeMsgApi().then(res => {
-    		this.isUpload = false
+    		this.isUpload = true
     		this.uploadFileData = []
     		this.uploadFileData.push(res.data.data)
     	}).catch(res => {
     		console.log(res)
     		if(res.data && res.data.code && res.data.code === 301 ) {
     			// 附件简历暂未上传
-    			this.isUpload = true
+    			this.isUpload = false
     		}
     	})
     }
@@ -196,7 +196,7 @@
 	        }).then(() => {
 	          return deleteFileMsgApi()
 	        }).then(()=>{
-	        	this.isUpload = true
+	        	this.isUpload = false
 	        	this.uploadFileData = []
 	        	this.$message({
 	            type: 'success',
@@ -242,7 +242,7 @@
 		 */
 		handleFileSuccess(res) {
 	    console.log(res)
-	    this.isUpload = false
+	    this.isUpload = true
 	    this.uploadFileData = []
 	    this.uploadFileData.push(res.data[0])
 

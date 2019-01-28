@@ -9,7 +9,7 @@
 				</ul>
 			</div>
 			<div class="right" v-if="userInfo && userInfo.token">
-				<span class="name">欢迎登录猎多多，{{userInfo.nickname}}</span>
+				<span class="name">欢迎登录猎多多，{{userInfo.realname}}</span>
 				<span class="op_icon"></span>
 				<img class="avatar" :src="userInfo.avatarInfo.middleUrl" />
 				<ul class="hidden">

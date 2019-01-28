@@ -7,7 +7,7 @@ import { request } from './index.js'
 export const confirmLoginApi = data => request('/auth/confirm_login', 'post', data)
 
 // 轮询请求
-export const waitApi = data => request('/auth/wait', 'post', data)
+export const scanApi = data => request('/auth/scan', 'post', data)
 
 // 生成二维码
 export const getQrCodeApi = () => request('/auth/qr_code', 'get')

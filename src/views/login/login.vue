@@ -3,21 +3,42 @@
 		<img class="logo" src="../../assets/images/logo_white.png" />
 	  <p class="title_p">面试多,机会多</p>
 	  <div class="login_cont">
-	  	<h3>扫码登录</h3>
-	  	<div class="cont_p">使用猎多多小程序扫码登录<a href="">扫码帮助</a></div>
-	  	<img class="loginCode" :src="codeData.image" />
-	  	<div>没有账号，立即注册</div>
+	  	<div class="login" v-if="status==='login'">
+	  		<h3 class="cont_tit">扫码登录</h3>
+	  		<div class="cont_p">使用猎多多小程序扫码登录<span class="help" @click="clickHelp">扫码帮助</span> <span class="ques">?</span></div>
+	  		<div class="login_pic_warp">
+	  			<img class="loginCode"  v-bind:src="codeData.image" />
+	  			<div class="pastDue" v-if="isPast">
+	  				<p>二维码已过期</p>
+	  				<div class="pastBtn" @click="refreshCode">点击刷新</div>
+	  			</div>
+	  		</div>
+	  		<div class="bottom_text">没有账号 <span @click="changeStatus">立即注册</span></div>
+	  	</div>
+	  	
+	  	<div class="sign" v-if="status==='sign'">
+	  		<h3 class="cont_tit">立即注册</h3>
+	  		<div class="cont_p">使用「微信」扫码注册<span class="help" @click="clickHelp">扫码帮助</span> <span class="ques">?</span></div>
+	  		<img class="signPic"  v-bind:src="codeData.image" />
+	  		<div class="bottom_text">已有账号 <span @click="changeStatus">立即登录</span></div>
+	  	</div>
 
+  		<div class="help_cont" v-show="pop.isShow">
+  			<h3 >扫码帮助</h3>
+  			<div class="identitySelect">
+  				<div class="addJob" @click="identitySelect('qiuzhi')" :class="{'select': identitystatus==='qiuzhi'}">求职者</div>
+  				<div class="addJob" @click="identitySelect('zhaopin')" :class="{'select': identitystatus==='zhaopin'}" >招聘者</div>
+  			</div>
+  	    
+  			<img class="pic_1" src="../../assets/images/pic_help_jobhunter.png" v-if="identitystatus==='qiuzhi'" />
+  			<img class="pic_1" src="../../assets/images/pic_help_recruiter.png" v-else />
 
-  		<div class="help_cont">
-  			<h3>扫码帮助</h3>
-  	    <el-button class="addJob" size="small" type="primary" >求职者</el-button>
-  	    <el-button class="addJob" size="small" type="primary" >招聘者</el-button>
-
-  			<img class="pic_1" src="" />
+  			<div class="triangle_border_left">
+  			    <!-- <span></span> -->
+  			</div>
   		</div>
 	  </div>
-  	<div class="login_btn" @click="login">模拟登陆</div>
+  	<!-- <div class="login_btn" @click="login">模拟登陆</div> -->
 
   	
 	</div>
@@ -25,7 +46,7 @@
 <script>
 	import Vue from 'vue'
 	import Component from 'vue-class-component'
-	import { loginApi, waitApi, getQrCodeApi } from '../../api/auth'
+	import { loginApi, scanApi, getQrCodeApi } from '../../api/auth'
 	@Component({
 	  name: 'lighthouse-list',
 	  methods: {
@@ -45,6 +66,15 @@
 		codeImageUrl = ''
 		codeData = {}  // 二维码信息
 		userInfo = {}
+		pop = {
+      isShow: false,
+      type: 'help'
+    }
+    status = 'login'
+    identitystatus = "qiuzhi"
+    isPast = true
+    timer = null
+    num = 1
 	  /**
 	   * 初始化表单、分页页面数据
 	   */
@@ -69,12 +99,62 @@
 	  }
 
 	  init () {
-	  	// this.login()
+	  	this.getCode()
+	  }
+
+	  getCode () {
+	  	let that = this
 	  	getQrCodeApi().then(res=>{
-	  		console.log(res)
-	  		res.data.data.image = `data:image/png;base64,${res.data.data.image}`
+	  		console.log('==>',res)
 	  		this.codeData = res.data.data
+	  		this.isPast = false
+	  		clearInterval(this.timer)
+	  		this.timer = setInterval(()=>{
+	  			this.num += 1
+	  			console.log('this.num',this.num)
+	  			if(this.num > 40){
+	  				this.num = 1
+				  	clearInterval(this.timer);
+			  		this.isPast = true
+				  }else {
+	  				this.scan()
+				  }
+	  		}, 3000);
 	  	})
+	  }
+
+	  scan () {
+	  	scanApi({
+	  		uuid: this.codeData.uuid
+	  	}).then(res=>{
+	  		//console.log('==>',res.data)
+	  		if (res.data.data && res.data.data.id) {
+						this.isPast = false
+	  				clearInterval(this.timer)
+	  				console.log('扫码成功')
+
+		  	  	this.$store.dispatch('setUserInfo', res.data.data);
+		        this.userInfo = this.$store.state.userInfo
+						this.$router.push({name: 'applyIndex'})
+	  		}
+
+	  	})
+	  }
+
+	  refreshCode () {
+	  	this.getCode()
+	  }
+
+	  clickHelp () {
+	  	this.pop.isShow = !this.pop.isShow
+	  }
+
+	  changeStatus () {
+	  	this.status = this.status === 'login'? 'sign':'login'
+	  }
+
+	  identitySelect (status) {
+	  	this.identitystatus = status
 	  }
 
 	  todoAction(type, id) {
@@ -95,13 +175,14 @@
 	        break
 	    }
 	  }
+
 	  //ajax 请求函数，
 	  ajax_request(){
 		  i++;
 		  //如果已经请求20此没有请求成功，则强制结束，给出提示信息，因为每3s调用一次，供调用20次，大概就是一分钟的时间
 		  if(i > 20){
-		  	$('.login_info1').html('<span style="color:red;">登录超时，如需登录请刷新页面~</span>')
 		  	clearInterval(timer);
+	  		this.isPast = true
 		  	return 
 		  }
 		  $.ajax({
@@ -151,28 +232,58 @@
 		border-radius:4px;
 		position: relative;
 		.help_cont {
-			display: none;
 			position: absolute;
 			width:310px;
 			height:420px;
-			right: -330px;
+			right: -350px;
 			background: #fff;
 			border-radius:4px;
 			top: 0;
+			.identitySelect {
+				width:158px;
+				height:34px;
+				border-radius:17px;
+				border:1px solid rgba(239,233,244,1);
+				margin: 24px auto;
+				display: flex;
+				flex-direction: row;
+				.addJob {
+					width:84px;
+					height:34px;
+					border-radius:17px;
+					font-family:PingFang-SC-Regular;
+					font-weight:400;
+					color:rgba(101,39,145,1);
+					line-height:34px;
+					box-sizing: border-box;
+					&.select {
+						background:rgba(239,233,244,1);
+					}
+				}
+			}
 			h3 {
 				font-size:20px;
 				font-family:PingFang-SC-Medium;
 				font-weight:500;
 				color:rgba(40,40,40,1);
 				line-height:26px;
-				margin: 22px 0 24px 0;
+				margin-top: 22px;
+			}
+			.hint_help {
+
+				font-size:12px;
+				font-family:PingFang-SC-Regular;
+				font-weight:400;
+				color:rgba(92,86,93,1);
+				line-height:20px;
+
 			}
 			.pic_1  {
 				width: 261px;
 				height: 232px;
 			}
 		}
-		h3 {
+		.cont_tit {
 			font-size:30px;
 			font-family:PingFang-SC-Medium;
 			font-weight:500;
@@ -188,17 +299,97 @@
 			color:rgba(98,98,98,1);
 			line-height:22px;
 			margin: 40px 0 16px 0;
-			a {
+			display: flex;
+			justify-content: center;
+			flex-direction: row;
+			.help {
 				color:rgba(101,39,145,1);
 				margin-left: 8px;
+				cursor: pointer;
+				
+			}
+			.ques {
+				width:14px;
+				height:14px;
+				line-height: 14px;
+				background:rgba(101,39,145,1);
+				color: #fff;
+				margin-left: 6px;
+				border-radius: 50%;
+				display: block;
+				//float: right;
+				margin-top: 4px;
 			}
 		}
-		.loginCode {
-			display: block;
+		.login_pic_warp {
 			width: 180px;
 			height: 180px;
 			margin: 0 auto;
-			margin-bottom: 60px;
+			margin-bottom: 42px;
+			position: relative;
+			.loginCode {
+				display: block;
+				width: 180px;
+				height: 180px;
+			}
+			.pastDue {
+				width: 180px;
+				height: 180px;
+				position: absolute;
+				left: 0;
+				top: 0;
+				z-index: 10;
+				background: rgba(255, 255, 255, 0.8);
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				flex-direction: column;
+				p {
+					font-size:16px;
+					font-family:PingFang-SC-Medium;
+					font-weight:500;
+					color:rgba(101,39,145,1);
+					margin-bottom: 16px;
+				}
+				.pastBtn {
+					width:98px;
+					height:38px;
+					background:rgba(101,39,145,1);
+					border-radius:19px;
+
+					font-size:14px;
+					font-family:PingFang-SC-Medium;
+					font-weight:500;
+					color:rgba(255,255,255,1);
+					line-height: 38px;
+					text-align: center;
+				}
+			}
+		}
+		
+		.signPic {
+			display: block;
+			width:180px;
+			height:180px;
+			margin: 0 auto;
+			margin-bottom: 42px;
+			border-radius: 50%;
+		}
+		.bottom_text {
+			font-size:14px;
+			font-family:PingFang-SC-Regular;
+			font-weight:400;
+			color:rgba(98,98,98,1);
+			line-height:22px;
+			span {
+				font-size:14px;
+				font-family:PingFang-SC-Regular;
+				font-weight:400;
+				color:rgba(101,39,145,1);
+				line-height:22px;
+				margin-left: 3px;
+				cursor: pointer;
+			}
 		}
 	}
 	.login_btn {
@@ -210,6 +401,29 @@
 		background: #fff;
 		margin-top: 30px;
 	}
+}
+
+.triangle_border_left{
+    width: 0;
+    height: 0;
+    border-width: 10px 14px 10px 0;
+    border-style: solid;
+    border-color: transparent #fff transparent transparent;
+    position: absolute;
+    left: -14px;
+    top: 50%;
+    margin-top: -20px;
+}
+.triangle_border_left span{
+    display:block;
+    width:0;
+    height:0;
+    border-width:28px 28px 28px 0;
+    border-style:solid;
+    border-color:transparent #fc0 transparent transparent;/*透明 黄 透明 透明 */
+    position:absolute;
+    top:0px;
+    left:0px;
 }
 #auth {
 	.mask {
