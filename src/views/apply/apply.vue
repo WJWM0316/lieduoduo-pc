@@ -84,6 +84,36 @@
 		      <el-button class="btn_resume" size="small" type="primary">重新上传</el-button>
 		    </el-upload>
 		  </div>
+		  <div class="service" @click="todoAction('service')">
+				客服咨询
+
+				<div class="service_pop" v-if="isService">
+					<div class="pop_tit">联系我们</div>
+					<div class="pop_cont">
+			  		<h3 class="pop_text">请拨打全国咨询热线</h3>
+			  		<p class="pop_text2">020-6127988</p>
+			  		<img class="pop_code" src="../../assets/images/pic_home.png"/>
+			  		<p class="pop_text3">猎多多公众号</p>
+			  		<p class="pop_text4">微信扫描二维码，关注官方公众号</p>
+					</div>
+					<div class="triangle_border_right">
+					</div>
+				</div>
+			</div>
+			v<!-- -if="isHeadWC" -->
+				<div class="headWC_pop" >
+					<div class="pop_cont">
+			  		<img class="pop_code" src="../../assets/images/pic_home.png"/>
+			  		<p class="pop_text">微信扫码关注公众号 </p>
+			  		<p class="pop_text">菜单栏点击选择猎多多</p>
+					</div>
+					<div class="pop_cont right">
+			  		<img class="pop_code" src="../../assets/images/pic_home.png"/>
+			  		<p class="pop_text">微信扫码打开小程序</p>
+					</div>
+					<div class="triangle_border_right"></div>
+				</div>
+			
 	</div>
   
 </template>
@@ -109,6 +139,7 @@
 	})
 	export default class CourseList extends Vue {
 		isUpload = false
+		isService = false
 		uploadFileData = []   // 上传的
 		userInfo = {}
 		fileList= []
@@ -187,6 +218,9 @@
 	            }
 	          }
 	        )
+	        break
+	      case 'service':
+	        this.isService = !this.isService
 	        break
 	      case 'openDelete':
 	      	this.$confirm('是否删除该附件简历', '删除附件简历', {
@@ -354,6 +388,45 @@
 	justify-content: center;
 	align-items: center;	
 	flex-direction: column;
+	.headWC_pop {
+		position: fixed;
+		top: 100px;
+		left: 40%;
+		width:318px;
+		height:180px;
+		background:rgba(255,255,255,1);
+		box-shadow:0px 8px 12px 0px rgba(239,233,244,1);
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		display: none;
+		.pop_cont {
+			&.right {
+				margin-left: 50px;
+				.pop_code {
+					border-radius: 50%;
+					margin-bottom: 20px;
+
+				}
+				.pop_text {
+				}
+			}
+			.pop_code {
+				width:106px;
+				height:105px;
+				margin-bottom: 12px;
+			}
+			.pop_text {
+				font-size:12px;
+				//margin-top:12px;
+				font-family:PingFang-SC-Regular;
+				font-weight:400;
+				color:rgba(98,98,98,1);
+				line-height:18px;
+			}
+		}
+	}
 	.test {
 		font-size: 14px;
 	}
@@ -513,6 +586,94 @@
 			font-weight:500;
 			color:rgba(255,255,255,1);
 		}
+	}
+
+	.service {
+		font-size:16px;
+		font-family:PingFang-SC-Medium;
+		font-weight:500;
+		color:rgba(101,39,145,1);
+		line-height:18px;
+		position: fixed;
+		right: 0;
+		width:36px;
+		height:120px;
+		background:rgba(239,233,244,1);
+		border-radius:4px 0px 0px 4px;
+		box-sizing: border-box;
+		padding: 10px;
+		cursor: pointer;
+		.service_pop {
+			width:300px;
+			height:440px;
+			background:rgba(255,255,255,1);
+			box-shadow:0px 8px 12px 0px rgba(48,50,51,0.1);
+			border-radius:4px;
+			position: absolute;
+			left: -320px;
+			top: 50%;
+			margin-top: -220px;
+			.pop_tit {
+				width:300px;
+				height:58px;
+				line-height:58px;
+				background:rgba(101,39,145,1);
+				border-radius:4px 4px 0px 0px;
+				font-size:20px;
+				font-family:PingFang-SC-Regular;
+				font-weight:400;
+				color:rgba(255,255,255,1);
+			}
+			.pop_cont {
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				.pop_code {
+					width: 112px;
+					height: 112px;
+					margin: 48px auto 10px auto;
+				}
+				.pop_text {
+					font-size:20px;
+					font-family:PingFang-SC-Regular;
+					font-weight:400;
+					color:rgba(98,98,98,1);
+					margin: 48px 0 12px 0;
+				}
+				.pop_text2 {
+					font-size:24px;
+					font-family:DINAlternate-Bold;
+					font-weight:bold;
+					color:rgba(40,40,40,1);
+				}
+				.pop_text3 {
+					font-size:18px;
+					font-family:PingFang-SC-Regular;
+					font-weight:400;
+					color:rgba(53,64,72,1);
+					margin-bottom: 24px;
+				}
+				.pop_text4 {
+					font-size:14px;
+					font-family:PingFang-SC-Regular;
+					font-weight:400;
+					color:rgba(98,98,98,1);
+				}
+			}
+		}
+	}
+
+	.triangle_border_right{
+    width: 0;
+    height: 0;
+    border-width:10px 0  10px 14px ;
+    border-style: solid;
+    border-color: transparent transparent transparent #fff ;
+    position: absolute;
+    right: -12px;
+    top: 50%;
+    margin-top: -20px;
 	}
 }
 </style>
