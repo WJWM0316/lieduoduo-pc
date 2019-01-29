@@ -177,9 +177,11 @@
 		  this.userInfo = this.$store.state.userInfo
 		  console.log(this.userInfo)
 		  
-		  if(this.userInfo.id){
+		  if(this.userInfo&&this.userInfo.id){
 		  	this.fileUpload.headers.Authorization = this.userInfo.token 
 		  	this.getResumeMsg()
+		  }else {
+		  	this.$router.push({name: 'login'})
 		  }
 		}
 
