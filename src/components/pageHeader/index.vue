@@ -25,6 +25,15 @@
 			</div>
 			<div class="right" v-if="userInfo && userInfo.token">
 				<span class="name">欢迎登录猎多多，{{userInfo.realname}}</span>
+				<el-dropdown @command="handleClick">
+				  <span class="el-dropdown-link">
+				  	<img class="op_icon" src="../../assets/images/open.png" />
+				    <!-- <i class="el-icon-arrow-down el-icon--right"></i> -->
+				  </span>
+				  <el-dropdown-menu slot="dropdown">
+				    <el-dropdown-item command="out">退出登陆</el-dropdown-item>
+				  </el-dropdown-menu>
+				</el-dropdown>
 				<!-- <img class="op_icon" src="../../assets/images/open.png" /> -->
 				<img class="avatar" :src="userInfo.avatarInfo.middleUrl" />
 				<ul class="hidden">
@@ -36,22 +45,6 @@
 					<img class="coed" src />
 				</div>
 			</div>
-			
-			
-			<!-- <ul class="navigation" v-if="userInfo">
-				<li>
-					<el-dropdown trigger="hover" @command="logout" placement="bottom">
-					  <div class="el-dropdown-link" style="color:#354048">
-					  	<img :src="userInfo.avatarInfo.middleUrl" alt="" v-if="userInfo.avatarInfo&&userInfo.avatarInfo.middleUrl">
-					    <span style="margin-left: 10px;">欢迎登录，&nbsp;&nbsp;{{userInfo.realname}}</span>
-					    <i class="el-icon-caret-bottom el-icon--right"></i>
-					  </div>
-					  <el-dropdown-menu slot="dropdown">
-					    <el-dropdown-item command="out">退出登录</el-dropdown-item>
-					  </el-dropdown-menu>
-					</el-dropdown>
-				</li>
-			</ul> -->
 		</section>
 	</header>
 </template>
@@ -217,8 +210,16 @@ export default class ComponentHeader extends Vue {
     type: 'help'
   }
 
+  handleClick (e) {
+  	if(e === 'out'){
+  		this.$store.dispatch('logoutApi')
+  			.then(() => {
+  				this.$router.push({name: 'login'})
+  			})
+  	}
+  }
+
   clickWC () {
-  	console.log(111)
   	this.pop.isShow = !this.pop.isShow
   }
 	logout(command) {

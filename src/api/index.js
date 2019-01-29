@@ -3,16 +3,15 @@ import { Loading } from 'element-ui'
 import router from '../router/index'
 import { baseHost } from '../../config.js'
 
-console.log('====>',baseHost)
+console.log('====>',router)
 let loadingInstance = null
 const company = location.href.split('/')[3] || 'tiger'
-import { getAccessToken, removeAccessToken } from './cacheService'
+import { getAccessToken, removeAccessToken, removeAccessToPPTXken } from './cacheService'
 
 // 请求的跟地址
 export const upload_api = `${baseHost}/attaches`
 axios.defaults.baseURL = baseHost
 
-console.log('==>',getAccessToken())
 // 请求拦截器
 axios.interceptors.request.use(
   config => {
@@ -30,10 +29,12 @@ axios.interceptors.response.use(
     return res
   },
   err => {
-    console.log(err.response.data.httpStatus)
     // 登陆过期或者未登录
     if(err.response.data.httpStatus === 401) {
-      router.push({name: 'login'})
+      console.log(err.response.data.httpStatus)
+      console.log(router)
+      console.log(router.mode)
+      router.replace({name: 'recruiterIndex'})
       removeAccessToken()
       return
     }

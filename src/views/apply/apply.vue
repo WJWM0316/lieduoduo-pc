@@ -11,7 +11,6 @@
 	          :action="fileUpload.action"
 			      :on-preview="handlePreview"
 			      :on-remove="handleRemove"
-			      :before-remove="beforeRemove"
 			      :on-error="handleFileError"
 			      :on-success="handleFileSuccess"
 			      :headers="fileUpload.headers"
@@ -48,7 +47,7 @@
 		  				<p>{{uploadFileData[0].sizeM}}</p>
 		  			</div>
 		  			<div class="file_op">
-		  				<div class="op_btn" @click.stop="filePreview()">
+		  				<div class="op_btn" @click.stop="uploadFile()">
 		  					<img class="btn_icon" src="../../assets/images/preview.png"/>
 		  					预览
 		  				</div>
@@ -65,13 +64,25 @@
 		  	</div>
 		  
 
-		  	<div class="upload_hint">上传简历帮助</div>
+		  	<div class="upload_hint" @mouseover="upload_hint_pop = true" @mouseout="upload_hint_pop = false">
+		  		上传简历帮助<span>?</span>
+		  		<div class="upload_hint_pop" v-if="upload_hint_pop">
+				  	<p>
+				  		上传简附件，招聘官既可查看你的附件简历； 
+				  	</p>
+				  	<p>
+				  		附件简历类型支持word、pdf、ppt、txt、wps、jpg、png；  
+				  	</p>
+				  	<p>
+				  		允许最大上传10M；若从其他平台下载的word简历，请将文件另存为.docx格式后上传。
+				  	</p>
+				  </div>
+		  	</div>
 		    <el-upload
 		      class=""
           :action="fileUpload.action"
 		      :on-preview="handlePreview"
 		      :on-remove="handleRemove"
-		      :before-remove="beforeRemove"
 		      :on-error="handleFileError"
 		      :on-success="handleFileSuccess"
 		      :headers="fileUpload.headers"
@@ -84,6 +95,8 @@
 		      <el-button class="btn_resume" size="small" type="primary">重新上传</el-button>
 		    </el-upload>
 		  </div>
+
+		  
 		  <div class="service" @click="todoAction('service')">
 				<img class="service_icon" src="../../assets/images/service.png"/>
 				客服咨询
@@ -137,7 +150,7 @@
 		  action: upload_api,
 		  list: [],
 		  limit: 2,
-		  accept: '.png, .jpg, .jpeg, .word, .pdf, .ppt, .txt, .wps ,.pptx,.PNG, .JPG, .JPEG, .WORD, .PDF, .PPT, .TXT, .WPS ,.PPTX',
+		  accept: '.png, .jpg, .jpeg, .word, .pdf, .ppt, .txt, .wps ,.pptx,.PNG, .JPG, .JPEG, .WORD, .PDF, .PPT, .TXT, .WPS ,.',
 		  progress: 0,
 		  btnTxt: '选择文件',
 		  progressText: '上传中',
@@ -152,7 +165,7 @@
 		  infos: {},
 		  show: false
 		}
-
+		upload_hint_pop = false
 
     imgExt = ['.png','.jpg','.jpeg']//图片文件的后缀名
     docExt = ['.doc','.docx','.pdf','.ppt','.pptx']//word文件的后缀名
@@ -247,6 +260,8 @@
       }else {
       	a.href = `https://view.officeapps.live.com/op/view.aspx?src=${fileLink}`
       }
+
+      console.log(a.href)
       a.dispatchEvent(event)
     }
 
@@ -256,6 +271,7 @@
       let a = document.createElement('a')
       a.target = 'view_window'
     	a.href = fileLink
+      console.log(a.href)
       a.dispatchEvent(event)
     }
 
@@ -294,7 +310,7 @@
 		  	}
 
 		  	if(!isImg && !isDoc){
-		    	this.$message.error('上传文件类型不允许');
+		    	this.$message.error('附件简历类型仅支持word、pdf、ppt、txt、wps、jpg、png、pptx、jpeg');
 		  		this.$refs.file.abort()
 		  	}
 		    this.fileUpload.status = 'loading'
@@ -335,10 +351,6 @@
     handlePreview(file) {
       console.log(file);
     }
-    beforeRemove(file, fileList) {
-      return this.$confirm(`确定移除 ${ file.name }？`);
-    }
-
 
     //获取文件名后缀名
     extension (str){
@@ -521,8 +533,43 @@
 			font-family:PingFang-SC-Regular;
 			font-weight:400;
 			color:rgba(146,146,146,1);
-			display: block;
+			display: flex;
+			align-items: center;
+			justify-content: center;
 			margin-bottom: 24px;
+			position: relative;
+			span {
+				width:16px;
+				height:16px;
+				line-height:16px;
+				background:#CDCBCF;
+				font-size: 12px;
+				color: #fff;
+				display: block;
+				margin-left: 5px;
+				border-radius: 50%;
+			}
+			.upload_hint_pop {
+				position: absolute;
+				left: 50%;
+				top: -100px;
+				margin: 0px 0 0 -287px;
+				width:574px;
+				height:80px;
+				background:rgba(98,98,98,1);
+				box-shadow:0px 2px 8px 0px rgba(0,0,0,0.15);
+				border-radius: 4px;
+				text-align: left;
+				box-sizing: border-box;
+				padding: 8px 16px;
+				p {
+					font-size:14px;
+					font-family:PingFangSC-Regular;
+					font-weight:400;
+					color:rgba(255,255,255,1);
+					line-height:22px;
+				}
+			}
 		}
 		.btn_resume {
 			display: block;
