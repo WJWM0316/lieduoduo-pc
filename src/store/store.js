@@ -30,11 +30,13 @@ export default new Vuex.Store({
         },
 
         LOGIN (state, data) {
+            console.log(state, data)
             saveAccessToken(data.token, state.loginValidTime)
             saveUserInfo(data, state.loginValidTime)
             state.userInfo = data
             state.token = data.token
         },
+
         LOGOUT (state) {
             state.userInfo = null
             state.token = null
@@ -47,15 +49,18 @@ export default new Vuex.Store({
             context.commit('setUserInfo', n);
         },
 
-        loginApi(store, data) {
-          return loginApi(data)
-            .then(res => {
-              store.commit('LOGIN', res.data.data)
-              return res
-            })
-            .catch(error => {
-              return Promise.reject(error.data || {})
-            })
+        login(store, data) {
+          console.log(store, data)
+            store.commit('LOGIN', data)
+
+          // return loginApi(data)
+          //   .then(res => {
+          //     store.commit('LOGIN', res.data.data)
+          //     return res
+          //   })
+          //   .catch(error => {
+          //     return Promise.reject(error.data || {})
+          //   })
         },
 
         logoutApi(store) {

@@ -34,7 +34,6 @@
   			<img class="pic_1" src="../../assets/images/pic_help_recruiter.png" v-else />
 
   			<div class="triangle_border_left">
-  			    <!-- <span></span> -->
   			</div>
   		</div>
 	  </div>
@@ -127,13 +126,15 @@
 	  	scanApi({
 	  		uuid: this.codeData.uuid
 	  	}).then(res=>{
-	  		//console.log('==>',res.data)
+	  		console.log('==>',res.data)
 	  		if (res.data.data && res.data.data.id) {
 						this.isPast = false
 	  				clearInterval(this.timer)
 	  				console.log('扫码成功')
 
 		  	  	this.$store.dispatch('setUserInfo', res.data.data);
+		  	  	this.$store.dispatch('login', res.data.data);
+		  	  	
 		        this.userInfo = this.$store.state.userInfo
 						this.$router.push({name: 'applyIndex'})
 	  		}
