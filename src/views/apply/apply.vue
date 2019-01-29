@@ -196,15 +196,16 @@
 
     getResumeMsg(){
     	getResumeMsgApi().then(res => {
-    		this.isUpload = true
-    		this.uploadFileData = []
-    		this.uploadFileData.push(res.data.data)
+    		if(res.data.data.length>0){
+    			this.isUpload = true
+    			this.uploadFileData = []
+    			this.uploadFileData.push(res.data.data)
+    		}
+    		
     	}).catch(res => {
     		console.log(res)
-    		if(res.data && res.data.code && res.data.code === 301 ) {
-    			// 附件简历暂未上传
-    			this.isUpload = false
-    		}
+    		this.isUpload = false
+    		
     	})
     }
 
