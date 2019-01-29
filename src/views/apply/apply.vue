@@ -47,11 +47,11 @@
 		  				<p>{{uploadFileData[0].sizeM}}</p>
 		  			</div>
 		  			<div class="file_op">
-		  				<div class="op_btn" @click.stop="uploadFile()">
+		  				<div class="op_btn" @click.stop="filePreview()">
 		  					<img class="btn_icon" src="../../assets/images/preview.png"/>
 		  					预览
 		  				</div>
-		  				<div class="op_btn" @click.stop="uploadFile()">
+		  				<div class="op_btn" @click.stop="downFile()">
 		  					<img class="btn_icon"  src="../../assets/images/down.png"/>
 			  				下载
 			  			</div>
@@ -120,8 +120,9 @@
 <script>
 	import Vue from 'vue'
 	import Component from 'vue-class-component'
-	import { uploadApi, waitApi, getQrCodeApi, saveResumeMsgApi, getResumeMsgApi, deleteFileMsgApi } from '../../api/auth'
+	import { uploadApi, waitApi, getQrCodeApi, saveResumeMsgApi, getResumeMsgApi, deleteFileMsgApi, downApi } from '../../api/auth'
 	import { upload_api } from '../../api/index'
+	import { baseHost } from '../../../config.js'
 	@Component({
 	  name: 'apply',
 	  methods: {
@@ -252,23 +253,33 @@
 	  }
 
 		filePreview () {
+			// let fileLink = this.uploadFileData[0].url
+		   //    let event = new MouseEvent('click')
+		   //    let a = document.createElement('a')
+		   //    a.target = 'view_window'
+
+		   //    if(fileLink.indexOf('.png') !=-1 || fileLink.indexOf('.jpeg') !=-1 || fileLink.indexOf('.jpg') !=-1) {
+		   //    	a.href = fileLink
+		   //    }else {
+		   //    	a.href = `https://view.officeapps.live.com/op/view.aspx?src=${fileLink}`
+		   //    }
+
 			let fileLink = this.uploadFileData[0].url
       let event = new MouseEvent('click')
       let a = document.createElement('a')
       a.target = 'view_window'
-
-      if(fileLink.indexOf('.png') !=-1 || fileLink.indexOf('.jpeg') !=-1 || fileLink.indexOf('.jpg') !=-1) {
-      	a.href = fileLink
-      }else {
-      	a.href = `https://view.officeapps.live.com/op/view.aspx?src=${fileLink}`
-      }
-
+    	a.href = fileLink
       console.log(a.href)
       a.dispatchEvent(event)
+
     }
 
-		uploadFile () {
-			let fileLink = this.uploadFileData[0].url
+		downFile () {
+
+			/*downApi(this.uploadFileData[0].vkey).then(res=>{
+				console.log(res)
+			})*/
+			let fileLink = `${baseHost}/attaches/download/${this.uploadFileData[0].vkey}`
       let event = new MouseEvent('click')
       let a = document.createElement('a')
       a.target = 'view_window'
