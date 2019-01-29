@@ -253,32 +253,27 @@
 	  }
 
 		filePreview () {
-			// let fileLink = this.uploadFileData[0].url
-		   //    let event = new MouseEvent('click')
-		   //    let a = document.createElement('a')
-		   //    a.target = 'view_window'
-
-		   //    if(fileLink.indexOf('.png') !=-1 || fileLink.indexOf('.jpeg') !=-1 || fileLink.indexOf('.jpg') !=-1) {
-		   //    	a.href = fileLink
-		   //    }else {
-		   //    	a.href = `https://view.officeapps.live.com/op/view.aspx?src=${fileLink}`
-		   //    }
-
 			let fileLink = this.uploadFileData[0].url
       let event = new MouseEvent('click')
       let a = document.createElement('a')
       a.target = 'view_window'
-    	a.href = fileLink
-      console.log(a.href)
-      a.dispatchEvent(event)
 
+      if(fileLink.indexOf('.png') !=-1 || fileLink.indexOf('.jpeg') !=-1 || fileLink.indexOf('.jpg') !=-1) {
+      	a.href = fileLink
+      }else {
+
+      	a.href = `https://view.officeapps.live.com/op/view.aspx?src=${fileLink}`
+      }
+
+			// let fileLink = this.uploadFileData[0].url
+		  //    let event = new MouseEvent('click')
+		  //    let a = document.createElement('a')
+		  //    a.target = 'view_window'
+		  //  	a.href = fileLink
+      a.dispatchEvent(event)
     }
 
 		downFile () {
-
-			/*downApi(this.uploadFileData[0].vkey).then(res=>{
-				console.log(res)
-			})*/
 			let fileLink = `${baseHost}/attaches/download/${this.uploadFileData[0].vkey}`
       let event = new MouseEvent('click')
       let a = document.createElement('a')
