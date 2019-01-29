@@ -25,7 +25,7 @@
 			    </el-upload>
 
 		  		<p class="hint2">
-		  			内容附件简历类型支持word、pdf、ppt、txt、wps、jpg、png； 允许最大上传10M；
+		  			内容附件简历类型支持word、pdf、ppt、txt、wps、jpg、png、jpeg、pptx； 允许最大上传10M；
 		  		</p>
 		  	</div>
 		  	<img class="cont_pic" src="../../assets/images/pic_home.png"/>
@@ -49,15 +49,15 @@
 		  			</div>
 		  			<div class="file_op">
 		  				<div class="op_btn" @click.stop="filePreview()">
-		  					<img class="btn_icon" />
+		  					<img class="btn_icon" src="../../assets/images/preview.png"/>
 		  					预览
 		  				</div>
 		  				<div class="op_btn" @click.stop="uploadFile()">
-		  					<img class="btn_icon"  />
+		  					<img class="btn_icon"  src="../../assets/images/down.png"/>
 			  				下载
 			  			</div>
 		  				<div class="op_btn" @click="todoAction('openDelete')">
-		  					<img class="btn_icon" />
+		  					<img class="btn_icon" src="../../assets/images/search_btn_delete.png"/>
 			  				删除
 			  			</div>
 		  			</div>
@@ -85,6 +85,7 @@
 		    </el-upload>
 		  </div>
 		  <div class="service" @click="todoAction('service')">
+				<img class="service_icon" src="../../assets/images/service.png"/>
 				客服咨询
 
 				<div class="service_pop" v-if="isService">
@@ -92,7 +93,7 @@
 					<div class="pop_cont">
 			  		<h3 class="pop_text">请拨打全国咨询热线</h3>
 			  		<p class="pop_text2">020-6127988</p>
-			  		<img class="pop_code" src="../../assets/images/pic_home.png"/>
+			  		<img class="pop_code" src="../../assets/images/gzh.png"/>
 			  		<p class="pop_text3">猎多多公众号</p>
 			  		<p class="pop_text4">微信扫描二维码，关注官方公众号</p>
 					</div>
@@ -100,20 +101,6 @@
 					</div>
 				</div>
 			</div>
-			v<!-- -if="isHeadWC" -->
-				<div class="headWC_pop" >
-					<div class="pop_cont">
-			  		<img class="pop_code" src="../../assets/images/pic_home.png"/>
-			  		<p class="pop_text">微信扫码关注公众号 </p>
-			  		<p class="pop_text">菜单栏点击选择猎多多</p>
-					</div>
-					<div class="pop_cont right">
-			  		<img class="pop_code" src="../../assets/images/pic_home.png"/>
-			  		<p class="pop_text">微信扫码打开小程序</p>
-					</div>
-					<div class="triangle_border_right"></div>
-				</div>
-			
 	</div>
   
 </template>
@@ -150,7 +137,7 @@
 		  action: upload_api,
 		  list: [],
 		  limit: 2,
-		  accept: '.png, .jpg, .jpeg, .word, .pdf, .ppt, .txt, .wps',
+		  accept: '.png, .jpg, .jpeg, .word, .pdf, .ppt, .txt, .wps ,.pptx,.PNG, .JPG, .JPEG, .WORD, .PDF, .PPT, .TXT, .WPS ,.PPTX',
 		  progress: 0,
 		  btnTxt: '选择文件',
 		  progressText: '上传中',
@@ -168,7 +155,7 @@
 
 
     imgExt = ['.png','.jpg','.jpeg']//图片文件的后缀名
-    docExt = ['.doc','.docx','.pdf']//word文件的后缀名
+    docExt = ['.doc','.docx','.pdf','.ppt','.pptx']//word文件的后缀名
 
 		/**
 		 * 初始化表单、分页页面数据
@@ -196,7 +183,7 @@
 
     getResumeMsg(){
     	getResumeMsgApi().then(res => {
-    		if(res.data.data.length>0){
+    		if(res.data.data.id){
     			this.isUpload = true
     			this.uploadFileData = []
     			this.uploadFileData.push(res.data.data)
@@ -389,45 +376,7 @@
 	justify-content: center;
 	align-items: center;	
 	flex-direction: column;
-	.headWC_pop {
-		position: fixed;
-		top: 100px;
-		left: 40%;
-		width:318px;
-		height:180px;
-		background:rgba(255,255,255,1);
-		box-shadow:0px 8px 12px 0px rgba(239,233,244,1);
-		display: flex;
-		flex-direction: row;
-		justify-content: center;
-		align-items: center;
-		display: none;
-		.pop_cont {
-			&.right {
-				margin-left: 50px;
-				.pop_code {
-					border-radius: 50%;
-					margin-bottom: 20px;
-
-				}
-				.pop_text {
-				}
-			}
-			.pop_code {
-				width:106px;
-				height:105px;
-				margin-bottom: 12px;
-			}
-			.pop_text {
-				font-size:12px;
-				//margin-top:12px;
-				font-family:PingFang-SC-Regular;
-				font-weight:400;
-				color:rgba(98,98,98,1);
-				line-height:18px;
-			}
-		}
-	}
+	
 	.test {
 		font-size: 14px;
 	}
@@ -604,6 +553,11 @@
 		box-sizing: border-box;
 		padding: 10px;
 		cursor: pointer;
+		.service_icon {
+			width:16px;
+			height:16px;
+			margin-bottom: 8px;
+		}
 		.service_pop {
 			width:300px;
 			height:440px;

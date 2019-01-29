@@ -13,11 +13,11 @@
         </div>
         <div class="footer_right">
           <div class="right_code_blo">
-            <img class="code public" src />
+            <img class="code public" src="../../assets/images/gzh.png" />
             <p class="black">扫码关注公众号</p>
           </div>
           <div class="right_code_blo">
-            <img class="code applet" src />
+            <img class="code applet" src="../../assets/images/xcx.png" />
             <p class="black">扫码打开小程序</p>
           </div>
         </div>
