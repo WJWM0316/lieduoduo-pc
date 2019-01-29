@@ -36,14 +36,6 @@
 				</el-dropdown>
 				<!-- <img class="op_icon" src="../../assets/images/open.png" /> -->
 				<img class="avatar" :src="userInfo.avatarInfo.middleUrl" />
-				<ul class="hidden">
-					<li class="">退出登录</li>
-					<li class="">切换微招聘官</li>
-				</ul>
-				<div class="pop hidden">
-					<p class="pop_text">微信扫码打开小程序</p>
-					<img class="coed" src />
-				</div>
 			</div>
 		</section>
 	</header>
