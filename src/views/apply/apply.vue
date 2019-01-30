@@ -169,7 +169,7 @@
 		upload_hint_pop = false
 
     imgExt = ['.png','.jpg','.jpeg']//图片文件的后缀名
-    docExt = ['.doc','.docx','.pdf','.ppt','.pptx','.txt','.word']//word文件的后缀名
+    docExt = ['.doc','.docx','.pdf','.ppt','.pptx','.txt','.word','.wps']//word文件的后缀名
 
 		/**
 		 * 初始化表单、分页页面数据
