@@ -47,10 +47,10 @@
 		  				<p>{{uploadFileData[0].sizeM}}</p>
 		  			</div>
 		  			<div class="file_op">
-		  				<div class="op_btn" @click.stop="filePreview()">
+		  				<!-- <div class="op_btn" @click.stop="filePreview()">
 		  					<img class="btn_icon" src="../../assets/images/preview.png"/>
 		  					预览
-		  				</div>
+		  				</div> -->
 		  				<div class="op_btn" @click.stop="downFile()">
 		  					<img class="btn_icon"  src="../../assets/images/down.png"/>
 			  				下载
