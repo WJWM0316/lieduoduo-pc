@@ -19,7 +19,7 @@
 	  	<div class="sign" v-if="status==='sign'">
 	  		<h3 class="cont_tit">立即注册</h3>
 	  		<div class="cont_p">使用「微信」扫码注册<span class="help" @click="clickHelp">扫码帮助</span> <span class="ques">?</span></div>
-	  		<img class="signPic"  v-bind:src="codeData.image" />
+	  		<img class="signPic"  src="../../assets/images/xcx.png" />
 	  		<div class="bottom_text">已有账号 <span @click="changeStatus">立即登录</span></div>
 	  	</div>
 
@@ -27,9 +27,9 @@
   			<h3 >扫码帮助</h3>
   			<div class="identitySelect">
   				<div class="addJob" @click="identitySelect('qiuzhi')" :class="{'select': identitystatus==='qiuzhi'}">求职者</div>
-  				<div class="addJob" @click="identitySelect('zhaopin')" :class="{'select': identitystatus==='zhaopin'}" >招聘者</div>
+  				<!-- <div class="addJob" @click="identitySelect('zhaopin')" :class="{'select': identitystatus==='zhaopin'}" >招聘者</div> -->
   			</div>
-  	    
+  	    	<p>我的 > 附件简历 > 扫码上传</p>
   			<img class="pic_1" src="../../assets/images/pic_help_jobhunter.png" v-if="identitystatus==='qiuzhi'" />
   			<img class="pic_1" src="../../assets/images/pic_help_recruiter.png" v-else />
 
@@ -240,14 +240,23 @@
 			background: #fff;
 			border-radius:4px;
 			top: 0;
+			p {
+				font-size:12px;
+				font-family:PingFang-SC-Regular;
+				font-weight:400;
+				color:rgba(92,86,93,1);
+				line-height:20px;
+				margin: 24px 0 14px 0;
+			}
 			.identitySelect {
 				width:158px;
 				height:34px;
 				border-radius:17px;
-				border:1px solid rgba(239,233,244,1);
-				margin: 24px auto;
+				//border:1px solid rgba(239,233,244,1);
+				margin: 24px auto 0px auto;
 				display: flex;
 				flex-direction: row;
+				justify-content: center;
 				.addJob {
 					width:84px;
 					height:34px;
