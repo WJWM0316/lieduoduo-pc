@@ -31,7 +31,7 @@
 				    <!-- <i class="el-icon-arrow-down el-icon--right"></i> -->
 				  </span>
 				  <el-dropdown-menu slot="dropdown">
-				    <el-dropdown-item command="out">退出登陆</el-dropdown-item>
+				    <el-dropdown-item command="out">退出登录</el-dropdown-item>
 				  </el-dropdown-menu>
 				</el-dropdown>
 				<!-- <img class="op_icon" src="../../assets/images/open.png" /> -->

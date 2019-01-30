@@ -471,7 +471,7 @@
 				}
 			}
 			.file_msg {
-				margin: 52px auto 72px auto;
+				margin: 52px auto 116px auto;
 				width:772px;
 				height:78px;
 				background:rgba(255,255,255,1);
@@ -562,7 +562,7 @@
 				left: 50%;
 				top: -100px;
 				margin: 0px 0 0 -287px;
-				width:574px;
+				width:580px;
 				height:80px;
 				background:rgba(98,98,98,1);
 				box-shadow:0px 2px 8px 0px rgba(0,0,0,0.15);
@@ -576,6 +576,7 @@
 					font-weight:400;
 					color:rgba(255,255,255,1);
 					line-height:22px;
+					white-space: nowrap;
 				}
 			}
 		}
