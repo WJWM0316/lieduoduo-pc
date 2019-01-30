@@ -274,7 +274,7 @@
     }
 
 		downFile () {
-			let fileLink = `${baseHost}/attaches/download/${this.uploadFileData[0].vkey}`
+			let fileLink = `${baseHost}/attaches/download/${this.uploadFileData[0].vkey}?token=${this.userInfo.token}`
       let event = new MouseEvent('click')
       let a = document.createElement('a')
       a.target = 'view_window'
