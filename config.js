@@ -2,7 +2,7 @@
  * 配置的文件
  */
 
-var isTest = true
+var isTest = false
 var identity = 'jobhunter'   //  zhaopin  or  jobhunter
 var domain = identity === 'jobhunter' ? 'qiuzhi' : 'zhaopin'
 //var baseHost = isTest?`https://${domain}-api.lieduoduo.ziwork.com`: `https://${domain}-api.lieduoduo.zike.com` 
