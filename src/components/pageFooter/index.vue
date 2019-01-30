@@ -2,7 +2,7 @@
   <footer id="page-footer">
     <section>
         <div class="footer_left">
-          <h2>猎多多</h2>
+          <img class="ft_logo" src="../../assets/images/logo.png" />
           <p class="left_p black">用户协议</p>
           <p class="gray">Copyright &#169老虎科技 粤ICP备16060093号-2</p>
         </div>
@@ -60,6 +60,10 @@ export default PageFooter
       .left_p {
         margin: 24px 0 8px 0;
       }
+      .ft_logo {
+        width:80px;
+        height:30px;
+      }
     }
     .footer_right {
       display: flex;
@@ -73,6 +77,9 @@ export default PageFooter
           background:rgba(255,255,255,1);
           border:1px solid rgba(239,233,244,1);
           margin-bottom: 13px;
+          &.applet {
+            border-radius: 50%;
+          }
         }
       }
     }

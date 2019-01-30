@@ -39,7 +39,7 @@
 		  		</div>
 		  		
 		  		<div class="file_msg">
-		  			<img class="file_icon" />
+		  			<img class="file_icon" src="../../assets/images/default.png"/>
 		  			<div class="file_center">
 		  				<p class="file_name">
 		  					{{uploadFileData[0].fileName}}
@@ -97,7 +97,7 @@
 		  </div>
 
 		  
-		  <div class="service" @click="todoAction('service')">
+		  <div class="service"  @mouseover="isService = true" @mouseout="isService = false">
 				<img class="service_icon" src="../../assets/images/service.png"/>
 				客服咨询
 

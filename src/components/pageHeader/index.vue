@@ -4,7 +4,7 @@
 			<div class="left">
 				<img class="logo" src="../../assets/images/logo_white.png" />
 				<ul class="nav">
-					<li class="" @click="clickWC">打开猎多多</li>
+					<li class="" @mouseover="pop.isShow = true" @mouseout="pop.isShow = false">打开猎多多</li>
 					<!-- <li class="" @click="changeId">切换为求职者</li> -->
 				</ul>
 
