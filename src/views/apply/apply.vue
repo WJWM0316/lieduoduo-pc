@@ -19,6 +19,7 @@
 			      multiple
 			      :show-file-list='false'
 			      :limit="5"
+			      :on-progress="uploadFileProcess"
 			      :file-list="fileList">
 			      <el-button class="upload_btn" size="small" type="primary">上传附件简历</el-button>
 			    </el-upload>
@@ -37,14 +38,24 @@
 		  			<h2 class="cont_tit">附件简历已上传</h2>
 		  			<p class="top_text">{{uploadFileData[0].createdAt}}   上传</p>
 		  		</div>
-		  		
 		  		<div class="file_msg">
-		  			<img class="file_icon" src="../../assets/images/default.png"/>
+		  			<img class="file_icon" v-if="filePic==='excel'" src="../../assets/images/excel.png"/>
+		  			<img class="file_icon" v-if="filePic==='jpg'" src="../../assets/images/jpg.png"/>
+		  			<img class="file_icon" v-if="filePic==='pdf'" src="../../assets/images/pdf.png"/>
+		  			<img class="file_icon" v-if="filePic==='png'" src="../../assets/images/png.png"/>
+		  			<img class="file_icon" v-if="filePic==='ppt'" src="../../assets/images/ppt.png"/>
+		  			<img class="file_icon" v-if="filePic==='txt'" src="../../assets/images/txt.png"/>
+		  			<img class="file_icon" v-if="filePic==='word'" src="../../assets/images/word.png"/>
+		  			<img class="file_icon" v-if="filePic==='default'" src="../../assets/images/default.png"/>
 		  			<div class="file_center">
 		  				<p class="file_name">
 		  					{{uploadFileData[0].fileName}}
 		  				</p>
-		  				<p>{{uploadFileData[0].sizeM}}</p>
+		  				<div class="progress" v-if="fileUpload.progress>0&&fileUpload.progress!==100">
+		  					<span>{{fileUpload.progress}}%</span>
+		  					<div class="progress-bar" :style="{width: fileUpload.progress + '%'}" ></div>
+		  				</div>
+		  				<p v-else>{{uploadFileData[0].sizeM}}</p>
 		  			</div>
 		  			<div class="file_op">
 		  				<!-- <div class="op_btn" @click.stop="filePreview()">
@@ -65,7 +76,7 @@
 		  
 
 		  	<div class="upload_hint" @mouseover="upload_hint_pop = true" @mouseout="upload_hint_pop = false">
-		  		上传简历帮助<span>?</span>
+		  		上传简历帮助 <span>?</span>
 		  		<div class="upload_hint_pop" v-if="upload_hint_pop">
 				  	<p>
 				  		上传简附件，招聘官既可查看你的附件简历； 
@@ -76,6 +87,7 @@
 				  	<p>
 				  		允许最大上传10M；若从其他平台下载的word简历，请将文件另存为.docx格式后上传。
 				  	</p>
+				  	<div class="triangle_border_down"></div>
 				  </div>
 		  	</div>
 		    <el-upload
@@ -91,6 +103,7 @@
 		      multiple
 		      :show-file-list='false'
 		      :limit="5"
+		      :on-progress="uploadFileProcess"
 		      :file-list="fileList">
 		      <el-button class="btn_resume" size="small" type="primary">重新上传</el-button>
 		    </el-upload>
@@ -170,7 +183,8 @@
 
     imgExt = ['.png','.jpg','.jpeg']//图片文件的后缀名
     docExt = ['.doc','.docx','.pdf','.ppt','.pptx','.txt','.word','.wps']//word文件的后缀名
-
+    filePicList = ['.excel','.jpg','.pdf','.png','.ppt','.txt','.word']
+    filePic = 'default'
 		/**
 		 * 初始化表单、分页页面数据
 		 */
@@ -203,6 +217,9 @@
     			this.isUpload = true
     			this.uploadFileData = []
     			this.uploadFileData.push(res.data.data)
+
+    			this.fileUpload.progress = 100
+	    		this.setFilePic(res.data.data.fileName)
     		}
     		
     	}).catch(res => {
@@ -291,7 +308,9 @@
 	    this.isUpload = true
 	    this.uploadFileData = []
 	    this.uploadFileData.push(res.data[0])
-
+	    
+	    this.fileUpload.progress = 100
+	    this.setFilePic(res.data[0].fileName)
 	    console.log(this.uploadFileData)
 	    this.saveResumeMsg()
 		}
@@ -302,7 +321,6 @@
 		beforeFileUpload(file) {
 			console.log(file)
 		  // this.$refs.file.abort()
-
 		  const isLtM = file.size / 1024 / 1024 < 10;
 		  if(!isLtM){
 		    this.$message.error('上传文件大小不能超过 10MB!');
@@ -321,6 +339,7 @@
 		    	this.$message.error('附件简历类型仅支持word、pdf、ppt、txt、wps、jpg、png、pptx、jpeg');
 		  		this.$refs.file.abort()
 		  	}
+
 		    this.fileUpload.status = 'loading'
 		    this.fileUpload.progress = 0
 		    this.fileUpload.progressText = '上传中'
@@ -350,7 +369,7 @@
 		  this.fileUpload.progress = 0
 		  this.fileUpload.progressText = '上传失败'
 		  this.fileUpload.btnTxt = '重新上传'
-	    this.$message.error(err.msg);
+    	this.$message.error(err.msg);
 		}
 
 	  handleRemove(file, fileList) {
@@ -378,6 +397,21 @@
               return true;
       }
       return false;
+    }
+
+    setFilePic(fileName){
+	    this.filePic =this.getFilePic(this.filePicList,fileName)
+		  console.log(this.filePic)
+    }
+
+    getFilePic(type, fielname){
+    	var ext = this.extension(fielname);
+
+    	if(this.contain(type,ext)){
+					ext = ext.substr(1)
+    	    return ext;
+    	}
+    	return 'default';
     }
 
     typeMatch(type, fielname){
@@ -493,8 +527,33 @@
 				.file_center {
 					flex: 1;
 					text-align: left;
-					overflow: hidden;
+			 		overflow: hidden;
 					margin-right: 20px;
+					.progress-bar{
+					  display: block;
+					  position: absolute;
+					  left: 0;
+					  top: 0;
+					  background: #FFDC29;
+					  width: 0%;
+					  height: 100%;
+					  border-radius: 2px;
+					  z-index:1;
+					}
+					.progress {
+						flex: 1;
+						height: 14px;
+						position: relative;
+						background: #F5F4F7;
+						font-size: 12px;
+						text-align: center;
+						color: #333;
+						span {
+							position: relative;
+							z-index: 2;
+						}
+					}
+
 					p {
 						font-size:14px;
 						font-family:SFUIDisplay-Regular;
@@ -507,6 +566,10 @@
 					 		font-weight:500;
 					 		color:rgba(17,17,17,1);
 					 		margin-bottom: 2px;
+					 		width: 100%;
+					 		text-overflow:ellipsis;
+					 		white-space: nowrap;
+					 		overflow: hidden;
 					 	}
 					}
 				}
@@ -685,6 +748,18 @@
     right: -12px;
     top: 50%;
     margin-top: -20px;
+	}
+
+	.triangle_border_down{
+	    width:0;
+	    height:0;
+	    border-width:10px 10px 0;
+	    border-style:solid;
+	    border-color:rgba(98,98,98,1) transparent transparent;/*灰 透明 透明 */
+	    position:absolute;
+	    bottom: -9px;
+	    left: 50%;
+	    margin-left: -10px;
 	}
 }
 </style>

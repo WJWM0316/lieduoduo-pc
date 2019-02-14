@@ -28,7 +28,7 @@ export const resetPasswordApi = data => request('/unifyauth/resetPassword', 'pos
 export const uploadApi = data => request('/attaches', 'post', data)
 
 
-// 上传文件
+// 下载文件
 export const downApi = data => request(`/attaches/download/${data}`, 'get')
 // 保存附件简历
 export const saveResumeMsgApi = data => request('/jobhunter/save_attach', 'post', data)

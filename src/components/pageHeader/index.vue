@@ -3,14 +3,14 @@
 		<section>
 			<div class="left">
 				<img class="logo" src="../../assets/images/logo_white.png" />
+
 				<ul class="nav">
 					<li class="" @mouseover="pop.isShow = true" @mouseout="pop.isShow = false">打开猎多多</li>
 					<!-- <li class="" @click="changeId">切换为求职者</li> -->
 				</ul>
 
 				<div class="headWC_pop" v-if="pop.isShow">
-					<div class="triangle_border_top">
-					</div>
+					<div class="triangle_border_top"></div>
 					<div class="pop_cont">
 			  		<img class="pop_code" src="../../assets/images/gzh.png"/>
 			  		<p class="pop_text">微信扫码关注公众号 </p>
@@ -23,6 +23,7 @@
 					<div class="triangle_border_right"></div>
 				</div>
 			</div>
+
 			<div class="right" v-if="userInfo && userInfo.token">
 				<span class="name">欢迎登录猎多多，{{userInfo.realname}}</span>
 				<el-dropdown @command="handleClick">
@@ -32,11 +33,41 @@
 				  </span>
 				  <el-dropdown-menu slot="dropdown">
 				    <el-dropdown-item command="out">退出登录</el-dropdown-item>
+				    <!-- <el-dropdown-item command="changeId">切换身份</el-dropdown-item> -->
 				  </el-dropdown-menu>
 				</el-dropdown>
 				<!-- <img class="op_icon" src="../../assets/images/open.png" /> -->
 				<img class="avatar" :src="userInfo.avatarInfo.middleUrl" />
 			</div>
+
+			<div class="switchWrap" v-if="isShowSwitch">
+					<div class="switchIdentity">
+						<img class="cloSwitch" src="../../assets/images/clo.png" @click="cloIdentity">
+						<h3 class="switchTit">切换身份</h3>
+
+						<div class="switchMain" v-if="identity === 'qiuzhi'">
+				  		<p class="switch_text">我的 > 设置 > 切换“求职者”身份</p>
+				  		<img class="switch_pic" src="../../assets/images/pic_cut_jobhunter.png"/>
+							<div class="switch_cont">
+					  		<p class="switch_text2">在小程序端切换为求职者身份后</p>
+					  		<p class="switch_text2">点击下方按钮即可完成切换</p>
+							</div>
+
+							<div class="refresh" @click="refresh">已切换为求职者</div>
+						</div>
+						<div class="switchMain" v-else>
+				  		<p class="switch_text">我的 > 设置 > 切换“招聘官”身份</p>
+				  		<img class="switch_pic" src="../../assets/images/pic_cut_recruiter.png"/>
+							<div class="switch_cont">
+					  		<p class="switch_text2">在小程序端切换为招聘官身份后</p>
+					  		<p class="switch_text2">点击下方按钮即可完成切换</p>
+							</div>
+
+							<div class="refresh" @click="refresh">已切换为招聘官</div>
+						</div>
+					</div>
+			</div>
+			
 		</section>
 	</header>
 </template>
@@ -52,6 +83,79 @@
 	left: 0;
 	right: 0;
 	z-index: 2;
+	.switchWrap {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background:rgba(0,0,0,0.3);
+		.switchIdentity {
+			position: fixed;
+			left: 50%;
+			top: 50%;
+			margin: -150px 0 0 -220px;
+			width:300px;
+			height:440px;
+			background:rgba(255,255,255,1);
+			box-shadow:0px 8px 12px 0px rgba(48,50,51,0.22);
+			text-align: center;
+			.cloSwitch {
+				width:10px;
+				height:10px;
+				position: absolute;
+				right: 16px;
+				top: 16px;
+				cursor: pointer;
+			}
+			.switchTit {
+				font-size:20px;
+				font-family:PingFang-SC-Bold;
+				font-weight:bold;
+				color:rgba(40,40,40,1);
+				margin: 32px 0;
+			}
+			.switchMain {
+				.switch_text {
+					font-size:14px;
+					font-family:PingFang-SC-Regular;
+					font-weight:400;
+					color:rgba(40,40,40,1);
+					line-height:20px;
+				}
+				.switch_pic {
+					width: 224px;
+					height: 147px;
+					margin: 0 auto;
+					margin-top: 16px;
+				}
+				.switch_cont {
+					margin-bottom: 39px;
+					margin-top: 16px;
+					.switch_text2 {
+						font-size:14px;
+						font-family:PingFang-SC-Regular;
+						font-weight:400;
+						color:rgba(40,40,40,1);
+						line-height:22px;
+					}
+				}
+				.refresh {
+					width:180px;
+					height:48px;
+					background:rgba(239,233,244,1);
+					border-radius:27px;
+					font-size:16px;
+					font-family:PingFang-SC-Medium;
+					font-weight:500;
+					color:rgba(101,39,145,1);
+					line-height:48px;
+					margin: 0 auto;
+				}
+			}
+		}
+	}
+	
 	.logo{
 		width:80px;
 		height:30px;
@@ -201,6 +305,18 @@ export default class ComponentHeader extends Vue {
     isShow: false,
     type: 'help'
   }
+  identity = 'qiuzhi'
+  isShowSwitch = false
+
+  //切换身份刷新
+  refresh() {
+
+  }
+
+  //关闭切换
+  cloIdentity () {
+  	this.isShowSwitch = !this.isShowSwitch
+  }
 
   handleClick (e) {
   	if(e === 'out'){
@@ -208,12 +324,17 @@ export default class ComponentHeader extends Vue {
   			.then(() => {
   				this.$router.push({name: 'login'})
   			})
+  	} else if(e === 'changeId') {
+  		this.changeId()
   	}
   }
 
+  //打开列多多二维码
   clickWC () {
   	this.pop.isShow = !this.pop.isShow
   }
+
+  // 退出
 	logout(command) {
 		this.$store.dispatch('logoutApi')
 		//this.logoutApi()
@@ -227,8 +348,9 @@ export default class ComponentHeader extends Vue {
 		console.log('ComponentHeader====',this.userInfo)
 	}
 
+	// 打开切换身份
 	changeId () {
-		this.$router.push({name: 'login'})
+  	this.isShowSwitch = !this.isShowSwitch
 	}
 }
 </script>
