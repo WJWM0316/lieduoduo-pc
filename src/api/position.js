@@ -18,6 +18,9 @@ export const getFiledListApi = data => request(`/filed`, 'get')
 // 职位搜索列表
 export const getListApi = data => request(`/position/list`, 'get', data)
 
+// 当前招聘官职位搜索列表（只返回招聘官自己的职位）
+export const getMyListApi = data => request(`/position/mylist`, 'get', data)
+
 // 搜索职位名称列表
 export const getJobNameListApi = data => request(`/position/namelist`, 'get', data)
 
@@ -48,5 +51,22 @@ export const getPositionTypeListApi = data => request(`/label/positionType`, 'ge
 // 搜索-职业标签
 export const searchPositionApi = data => request(`/search/position`, 'get', data)
 
+// 招聘官-我的信息(“我的”页面)
+export const getMyInfoApi = data => request(`/recruiter/myInfo`, 'get', data)
 
+// 职位分状态按条件数量统计
+export const getStatusTotalApi = data => request(`/position/statustotal`, 'get', data)
 
+// 职业标签列表
+export const getLabelPositionListApi = data => request(
+	 `/label/position`,
+	'get',
+	data
+)
+
+// 职位技能列表
+export const professionalSkillsApi = data => request(
+	`/label/professionalSkills`,
+	'get',
+	data
+)

@@ -1,19 +1,14 @@
 <template>
   <div class="post-job">
-    <h2 class="u-title-1" v-text="editTitle"></h2>
-    <el-form class="edit-form" ref="form" :model="form" :rules="rules" label-width="90px" label-suffix="：">
-
+    <el-form class="edit-form" ref="form" :model="form" :rules="rules" label-width="120px" label-suffix="：">
       <h3 class="title">职位基本信息</h3>
-      <p class="hint">加“*”内容，在确认发布成功后，将无法修改</p>
+      <p class="hint">加“ <span style="color: red; font-size: 15px;">*</span> ”内容，在确认发布成功后，将无法修改</p>
       <el-form-item label="职位名称" prop="position_name" style="width: 380px;">
-        
-
         <el-input v-model="form.position_name" placeholder="限制50个字以内" :maxlength="30"></el-input>
-
       </el-form-item>
 
       <el-form-item label="职位类别" prop="type" style="width: 380px;">
-        <el-select v-model="form.type" placeholder="点击选择职位类别" @change="changePosition" style="width: 100%;">
+        <el-select v-model="selectPositionItem.name" placeholder="点击选择职位类别" @change="changePosition" style="width: 100%;">
           <el-option
             v-for="item in typeList"
             :key="item.value"
@@ -22,8 +17,9 @@
           </el-option>
         </el-select>
       </el-form-item>
+      
       <el-form-item label="工作地点" prop="address_id" style="width: 380px;">
-        <el-select v-model="form.address_id" placeholder="点击选择工作地点" @change="changeAdress"   style="width: 100%;">
+        <el-select v-model="form.address_id" placeholder="点击选择工作地点" @change="changeAdress" style="width: 100%;">
           <el-option
             v-for="item in addressList"
             :key="item.value"
@@ -31,7 +27,7 @@
             :value="item.value">
 
             <span style="float: left;color: #999;" v-if="item.value!=='0'">{{ item.label }}</span>
-            <span style="float: left; color: #652791;" v-else>++++={{ item.label }}</span>
+            <span style="float: left; color: #652791;" v-else>{{ item.label }}</span>
           </el-option>
         </el-select>
       </el-form-item>
@@ -40,8 +36,7 @@
       <p class="hint">我们将通过以下条件，为您精确推荐合适的求职者，请尽量详细填写</p>
 
       <el-form-item label="经验要求" prop="work_experience" style="width: 380px;">
-
-        <el-select v-model="form.work_experience" placeholder="请输入名称"  style="width: 100%;">
+        <el-select v-model="form.work_experience" placeholder="请选择经验要求"  style="width: 100%;">
           <el-option
             v-for="item in experienceList"
             :key="item.value"
@@ -52,7 +47,7 @@
       </el-form-item>
 
       <el-form-item label="最低学历" prop="education" style="width: 380px;">
-        <el-select v-model="form.education" placeholder="请填写一句话介绍"  style="width: 100%;">
+        <el-select v-model="form.education" placeholder="请选择学历要求"  style="width: 100%;">
           <el-option
             v-for="item in educationList"
             :key="item.value"
@@ -63,18 +58,18 @@
       </el-form-item>
 
       <el-form-item label="薪酬范围" prop="emolument_min" style="width: 380px;">
-        <el-select v-model="form.emolument_min" placeholder="选择薪资范围"  style="width: 130px;">
+        <el-select v-model="form.emolument_min" placeholder="选择薪资范围" @change="changeEmolumentMin"  style="width: 100px;">
           <el-option
-            v-for="item in options"
+            v-for="item in emolumentMinList"
             :key="item.value"
             :label="item.label"
             :value="item.value">
           </el-option>
         </el-select>
         ----
-        <el-select v-model="form.emolument_max" placeholder="选择薪资范围"  style="width: 130px;">
+        <el-select v-model="form.emolument_max" placeholder="选择薪资范围"  style="width: 100px;">
           <el-option
-            v-for="item in options"
+            v-for="item in emolumentMaxList"
             :key="item.value"
             :label="item.label"
             :value="item.value">
@@ -82,25 +77,26 @@
         </el-select>
       </el-form-item>
 
-      <el-form-item label="技能要求" prop="labels" style="width: 380px;">
+      <el-form-item label="技能要求" prop="skill_tag" style="width: 380px;">
         <el-select
           style="width: 100%;"
           v-model="form.labels"
           multiple
+          :multiple-limit="4"
           filterable
           allow-create
           default-first-option
           placeholder="请选择技能要求">
           <el-option
             v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
+            :key="item.labelId"
+            :label="item.name"
+            :value="item.labelId">
           </el-option>
         </el-select>
       </el-form-item>
 
-      <el-form-item label="职位描述" prop="describe" style="width: 520px;">
+      <el-form-item label="职位描述" prop="describe" style="width: 700px;">
         <el-input type="textarea" autosize placeholder="请填写职位描述" v-model="form.describe"></el-input>
       </el-form-item>
 
@@ -130,17 +126,21 @@
             </ul>
           </div>
         </div>
+        <!--<map-search v-if="pop.isShow"></map-search>-->
 
         <div class="addAdressPop" v-if="pop.type==='addAdress'">
-          <img class="clo" @click="popCancel" />
+          <img class="clo" src="../../assets/images/clo.png" @click="popCancel" />
           <h3 class="">添加新的公司地址</h3>
           <p>添加新的公司地址</p>
-          <el-input style="width: 368px;box-sizing: border-box;" v-model="adressInput" placeholder="请输入工作地址"></el-input>
+
+          <el-input style="width: 368px;margin: 13px 0 26px 0;box-sizing: border-box;" v-model="adressInput" placeholder="请输入工作地址）"></el-input>
+
+
           <el-input style="width: 368px;margin: 13px 0 26px 0;box-sizing: border-box;" v-model="adress_id_Input" placeholder="请输入门牌号（选填）"></el-input>
 
           <div class="btn-add">
             <el-button class="btn_cancel" @click="popCancel">取消</el-button>
-            <el-button class="btn_submit" type="primary" @click="addAdress">添加</el-button>
+            <el-button class="btn_submit" type="primary" @click="addAdress">保存地址</el-button>
           </div>
         </div>
       </div>

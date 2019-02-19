@@ -23,21 +23,14 @@ import PageHeader from './components/pageHeader/index.vue'
   watch: {
     '$route': {
       handler() {
-
-        // let userInfo = this.$store.state.userInfo
-        //  //console.log('userInfo==>',this.$store.state.userInfo)
-        // if(!userInfo) {
-        //   console.log('to-login')
-        //   this.$router.push({name: 'login'})
-        // }
+        let userInfo = this.$store.state.userInfo
+        if(!userInfo) {
+          console.log('to-login')
+          this.$router.push({name: 'login'})
+        }
       },
       immediate: true
     }
-  },
-  computed: {
-    /*...mapGetters([
-      'token'
-    ])*/
   }
 })
 
@@ -45,10 +38,9 @@ export default class App extends Vue {
 
   // 白名单模式，下面路由不显示管理页面的侧边栏,和顶部的导航栏
   shouldFloatingBoxShown() {
-    return false
-    // return [
-    //   '/login'
-    // ].includes(this.$route.path)
+    return [
+      'login'
+    ].includes(this.$store.state.pageName)
   }
 }
 </script>

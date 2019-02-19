@@ -6,7 +6,7 @@
 
 				<ul class="nav">
 					<li class="" @mouseover="pop.isShow = true" @mouseout="pop.isShow = false">打开猎多多</li>
-					<!-- <li class="" @click="changeId">切换为求职者</li> -->
+					<li class="" @click="refresh" >切换为{{identity==='jobhunter'?'招聘官':'求职者'}}</li>
 				</ul>
 
 				<div class="headWC_pop" v-if="pop.isShow">
@@ -33,7 +33,7 @@
 				  </span>
 				  <el-dropdown-menu slot="dropdown">
 				    <el-dropdown-item command="out">退出登录</el-dropdown-item>
-				    <!-- <el-dropdown-item command="changeId">切换身份</el-dropdown-item> -->
+				    <el-dropdown-item command="changeId">切换为{{identity==='jobhunter'?'招聘官':'求职者'}}</el-dropdown-item>
 				  </el-dropdown-menu>
 				</el-dropdown>
 				<!-- <img class="op_icon" src="../../assets/images/open.png" /> -->
@@ -292,6 +292,8 @@
 <script>
 import Vue from 'vue'
 import Component from 'vue-class-component'
+import { switchId, getUserIdentity } from '../../../config.js'
+import { changeBaseURL } from '../../api/index'
 
 @Component({
   methods: {
@@ -305,12 +307,30 @@ export default class ComponentHeader extends Vue {
     isShow: false,
     type: 'help'
   }
-  identity = 'qiuzhi'
+  identity = 'jobhunter'
   isShowSwitch = false
-
   //切换身份刷新
   refresh() {
 
+  	let identity = switchId()
+  	this.identity = identity
+
+  	this.$store.dispatch('setUserIdentity', identity)
+  	changeBaseURL()
+  	// if(identity === 'zhaopin'){
+
+  	// }else {
+  		
+  	// }
+  	this.$router.push({
+  		name: identity === 'zhaopin' ? 'recruiterIndex' : 'applyIndex',
+  		query:{identity: identity}
+  	})
+
+		this.$message({
+	    type: 'success',
+	    message: '切换成功!'
+	  })
   }
 
   //关闭切换
@@ -324,9 +344,9 @@ export default class ComponentHeader extends Vue {
   			.then(() => {
   				this.$router.push({name: 'login'})
   			})
-  	} else if(e === 'changeId') {
+  	}/* else if(e === 'changeId') {
   		this.changeId()
-  	}
+  	}*/
   }
 
   //打开列多多二维码
@@ -344,8 +364,17 @@ export default class ComponentHeader extends Vue {
 	}
 
 	created(){
+		let identity = this.$store.state.userIdentity
+		if(identity){
+			this.identity = identity
+		}else {
+			identity = getUserIdentity()
+  		this.$store.dispatch('setUserIdentity', identity)
+  		this.identity = identity
+		}
+		console.log('ComponentHeader=identity====', this.identity)
 		this.userInfo = this.$store.state.userInfo
-		console.log('ComponentHeader====',this.userInfo)
+		console.log('ComponentHeader=userInfo====', this.userInfo)
 	}
 
 	// 打开切换身份

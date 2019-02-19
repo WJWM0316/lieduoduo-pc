@@ -3,14 +3,21 @@ import { Loading } from 'element-ui'
 import router from '../router/index'
 import { baseHost } from '../../config.js'
 
-console.log('====>',router)
 let loadingInstance = null
 const company = location.href.split('/')[3] || 'tiger'
 import { getAccessToken, removeAccessToken, removeAccessToPPTXken } from './cacheService'
 
 // 请求的跟地址
-export const upload_api = `${baseHost}/attaches`
-axios.defaults.baseURL = baseHost
+// export const upload_api = `${baseHost()}/attaches`
+axios.defaults.baseURL = baseHost()
+
+export const changeBaseURL = () => {
+  console.log('axios.defaults.baseURL',axios.defaults.baseURL)
+
+  axios.defaults.baseURL = baseHost()
+  console.log('axios.defaults.baseURL',axios.defaults.baseURL)
+}
+
 
 // 请求拦截器
 axios.interceptors.request.use(

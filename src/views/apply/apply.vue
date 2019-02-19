@@ -134,8 +134,8 @@
 	import Vue from 'vue'
 	import Component from 'vue-class-component'
 	import { uploadApi, waitApi, getQrCodeApi, saveResumeMsgApi, getResumeMsgApi, deleteFileMsgApi, downApi } from '../../api/auth'
-	import { upload_api } from '../../api/index'
 	import { baseHost } from '../../../config.js'
+
 	@Component({
 	  name: 'apply',
 	  methods: {
@@ -161,7 +161,7 @@
 		fileUploadType = 'img'
 		// 文件上传
 		fileUpload = {
-		  action: upload_api,
+		  action: `${baseHost()}/attaches`,
 		  list: [],
 		  limit: 2,
 		  accept: '.png, .jpg, .jpeg, .word, .pdf, .ppt, .txt, .wps ,.pptx,.PNG, .JPG, .JPEG, .WORD, .PDF, .PPT, .TXT, .WPS ,.',
@@ -291,7 +291,7 @@
     }
 
 		downFile () {
-			let fileLink = `${baseHost}/attaches/download/${this.uploadFileData[0].vkey}?token=${this.userInfo.token}`
+			let fileLink = `${baseHost()}/attaches/download/${this.uploadFileData[0].vkey}?token=${this.userInfo.token}`
       let event = new MouseEvent('click')
       let a = document.createElement('a')
       a.target = 'view_window'

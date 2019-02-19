@@ -37,8 +37,8 @@
   			</div>
   		</div>
 	  </div>
-  	<!-- <div class="login_btn" @click="login">模拟登陆</div> -->
-
+  	<!-- <div class="login_btn" @click="login">模拟登陆</div>
+ -->
   	
 	</div>
 </template>
@@ -46,6 +46,8 @@
 	import Vue from 'vue'
 	import Component from 'vue-class-component'
 	import { loginApi, scanApi, getQrCodeApi } from '../../api/auth'
+	import { getUserIdentity } from '../../../config.js'
+
 	@Component({
 	  name: 'lighthouse-list',
 	  methods: {
@@ -74,9 +76,17 @@
     isPast = true
     timer = null
     num = 1
+
+    skipName = 'zhaopin'
 	  /**
 	   * 初始化表单、分页页面数据
 	   */
+
+	  mounted () {
+  		this.skipName = getUserIdentity() === 'zhaopin'? 'recruiterIndex':'applyIndex'
+  		this.$store.dispatch('setUserIdentity', getUserIdentity())
+		}
+
 	   // recruiterIndex applyIndex
 	  login () {
 	  	let data = {
@@ -84,11 +94,11 @@
 	  		password: 123456
 	  	}
 
-	  	this.$store.dispatch('loginApi', data).
+	  	this.$store.dispatch('testLogin', data).
 	  	then(res=>{
   	  	this.$store.dispatch('setUserInfo', res.data.data);
         this.userInfo = this.$store.state.userInfo
-				this.$router.push({name: 'applyIndex'})
+				this.$router.push({name: this.skipName})
 	  	})
 	  	.catch(error => {
 	  	  setTimeout(() => {
@@ -110,7 +120,6 @@
 	  		clearInterval(this.timer)
 	  		this.timer = setInterval(()=>{
 	  			this.num += 1
-	  			console.log('this.num',this.num)
 	  			if(this.num > 40){
 	  				this.num = 1
 				  	clearInterval(this.timer);
@@ -126,7 +135,7 @@
 	  	scanApi({
 	  		uuid: this.codeData.uuid
 	  	}).then(res=>{
-	  		console.log('==>',res.data)
+	  		//console.log('==>',res.data)
 	  		if (res.data.data && res.data.data.id) {
 						this.isPast = false
 	  				clearInterval(this.timer)
@@ -136,7 +145,7 @@
 		  	  	this.$store.dispatch('login', res.data.data);
 		  	  	
 		        this.userInfo = this.$store.state.userInfo
-						this.$router.push({name: 'applyIndex'})
+						this.$router.push({name: this.skipName})
 	  		}
 
 	  	})
