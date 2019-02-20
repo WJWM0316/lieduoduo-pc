@@ -252,7 +252,10 @@
 	  	return getMyInfoApi().then(res=>{
 	  		this.uid = res.data.data.uid
 	  		console.log(res.data.data)
-	  	})
+	  	}).catch(e => {
+	  		console.log(e)
+        this.$message.error(e.data.msg)
+     	})
 	  }
 
 	  getPositionList ({ page } = {}) {
@@ -268,7 +271,10 @@
 	  		this.jobList = [...res.data.data]
 	  		this.pageInfo.totalPage = meta.lastPage
 	  		this.pageInfo.total = meta.total
-	  	})
+	  	}).catch(e => {
+	  		console.log(e)
+        this.$message.error(e.data.msg)
+     	})
 	  }
 
 	  getJobNameList () {
