@@ -26,6 +26,17 @@ export const routes = [
       component: () => import(/* webpackChunkName: "login" */ '../views/postJob/postJob.vue')
     },
     {
+      path: '/userDeal',
+      name: 'userDeal',
+      component: () => import(/* webpackChunkName: "login" */ '../views/userDeal/userDeal.vue')
+    },
+
+    {
+      path: '/issueRule',
+      name: 'issueRule',
+      component: () => import(/* webpackChunkName: "login" */ '../views/issueRule/issueRule.vue')
+    },
+    {
       path: '*',
       redirect: {
         name: 'login'
