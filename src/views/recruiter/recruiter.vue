@@ -185,7 +185,7 @@
 			recruiter: 5,
 			name: '', // 职位名称
 			status: '', // 状态
-			isOnline: 1,
+			is_online: 1,
 		}
 
 		searchBarFixed = false
