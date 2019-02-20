@@ -17,7 +17,6 @@ export const switchId = function(type){
 	}else {
 		identity = identity === 'zhaopin' ? 'qiuzhi' : 'zhaopin'
 	}
-	console.log(identity)
 	return identity
 }
 
