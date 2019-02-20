@@ -47,6 +47,7 @@
 	import Component from 'vue-class-component'
 	import { loginApi, scanApi, getQrCodeApi } from '../../api/auth'
 	import { getUserIdentity, switchId } from '../../../config.js'
+	import { changeBaseURL } from '../../api/index'
 
 	@Component({
 	  name: 'lighthouse-list',
@@ -138,6 +139,7 @@
   				clearInterval(this.timer)
 	  			this.identity = res.data.data.isBusiness === 1 ? 'qiuzhi' : 'zhaopin'
 					switchId(this.identity)
+					changeBaseURL()
 					this.isPast = false
 
 					this.$store.dispatch('setUserIdentity', this.identity)
