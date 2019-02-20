@@ -145,7 +145,7 @@
 	  	  	this.$store.dispatch('login', res.data.data)
 
 	        this.userInfo = this.$store.state.userInfo
-					this.$router.push({name: this.identity})
+					this.$router.push({name: this.identity === 'qiuzhi' ? 'applyIndex' : 'recruiterIndex' })
   				console.log('扫码成功')
 	  		}
 	  	})
