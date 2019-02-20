@@ -40,7 +40,7 @@ export const deletePositionApi = data => request(`/position/${data.id}`, 'delete
 export const closePositionApi = data => request(`/position/close/${data.id}`, 'put', data)
 
 // 开始职位
-export const openPositionApi = data => request(`/position/${data.id}`, 'put', data)
+export const openPositionApi = data => request(`/position/open/${data.id}`, 'put', data)
 
 // 职业标签列表
 export const getPositionListApi = data => request(`/label/position`, 'get')

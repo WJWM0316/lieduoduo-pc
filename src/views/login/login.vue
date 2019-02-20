@@ -135,7 +135,7 @@
 	  	scanApi({
 	  		uuid: this.codeData.uuid
 	  	}).then(res=>{
-	  		//console.log('==>',res.data)
+	  		//console.log('==>',res.data) isBusiness==1 b
 	  		if (res.data.data && res.data.data.id) {
 						this.isPast = false
 	  				clearInterval(this.timer)

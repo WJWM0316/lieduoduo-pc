@@ -36,8 +36,8 @@
 	  			</div>
 	  			<div class="blo_right">
 	  				<span class="job_op" @click="openShare(index)" v-if="form.status === ''">分享</span>
-	  				<span class="job_op" @click="todoAction('openJob',item.id)" v-if="item.isOnline===1 && form.status !== 3">关闭</span>
-	  				<span class="job_op" @click="todoAction('closeJob',item.id)" v-if="item.isOnline===2 && form.status !== 3">开启</span>
+	  				<span class="job_op" @click="todoAction('closeJob',item.id)" v-if="item.isOnline===1 && form.status !== 3">关闭</span>
+	  				<span class="job_op" @click="todoAction('openJob',item.id)" v-if="item.isOnline===2 && form.status !== 3">开启</span>
 	  				<span class="job_op" @click="todoAction('editJob',item.id)" >编辑</span>
 	  			</div>
 	  		</li>
@@ -345,6 +345,7 @@
 	  }
 
 	  todoAction(type, id) {
+	  	console.log(type)
 	    switch(type) {
 	      case 'cloShare':
 	        this.pop = {
@@ -377,12 +378,16 @@
 		      if(!id){
 		        return
 		      }
+
+		      console.log(closePositionApi)
 	       	closePositionApi({id: id}).then(res=>{
 	       		console.log(res)
 	       			this.$message({
 	       		    type: 'success',
 	       		    message: '成功!'
 	       		  })
+
+	       			this.getPositionList()
 	       	}).catch(e => {
             this.$message.error(e.data.msg)
 	       	})
@@ -397,6 +402,7 @@
 	       		    type: 'success',
 	       		    message: '成功!'
 	       		  })
+	       			this.getPositionList()
 	       	}).catch(e => {
             this.$message.error(e.data.msg)
 	       	})
