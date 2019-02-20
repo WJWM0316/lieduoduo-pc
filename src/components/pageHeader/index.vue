@@ -294,6 +294,7 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import { switchId, getUserIdentity } from '../../../config.js'
 import { changeBaseURL } from '../../api/index'
+import { switchRoleApi, getMyInfoApi } from '../../api/auth'
 
 @Component({
   methods: {
@@ -309,28 +310,42 @@ export default class ComponentHeader extends Vue {
   }
   identity = 'qiuzhi'
   isShowSwitch = false
+
+	created(){
+		this.userInfo = this.$store.state.userInfo
+		this.identity = this.userInfo.isBusiness === 1 ? 'qiuzhi' : 'zhaopin'
+		this.$store.dispatch('setUserIdentity', this.identity)
+		console.log('ComponentHeader=created====',this.userInfo, this.identity)
+	}
+
   //切换身份刷新
   refresh() {
+  	let identity = getUserIdentity()
+  	let role = identity === 'qiuzhi' ? 2 : 1
+  	switchRoleApi({
+  		role: role
+  	}).then(res => {
+  		console.log(res.data.msg)
 
-  	let identity = switchId()
-  	this.identity = identity
+	  	identity = switchId()
+	  	this.identity = identity
+	  	console.log(this.$store.state.userInfo.isBusiness)
+	  	this.userInfo.isBusiness = role
+	  	this.$store.dispatch('setUserIdentity', identity)
+	  	this.$store.dispatch('login', this.userInfo)
+	  	console.log(this.$store.state.userInfo.isBusiness)
+	  	changeBaseURL()
 
-  	this.$store.dispatch('setUserIdentity', identity)
-  	changeBaseURL()
-  	// if(identity === 'zhaopin'){
+	  	this.$router.push({
+	  		name: identity === 'zhaopin' ? 'recruiterIndex' : 'applyIndex'
+	  	})
 
-  	// }else {
-  		
-  	// }
-  	this.$router.push({
-  		name: identity === 'zhaopin' ? 'recruiterIndex' : 'applyIndex',
-  		query:{identity: identity}
+			this.$message({
+		    type: 'success',
+		    message: '切换成功!'
+		  })
   	})
-
-		this.$message({
-	    type: 'success',
-	    message: '切换成功!'
-	  })
+  	
   }
 
   //关闭切换
@@ -344,9 +359,7 @@ export default class ComponentHeader extends Vue {
   			.then(() => {
   				this.$router.push({name: 'login'})
   			})
-  	}/* else if(e === 'changeId') {
-  		this.changeId()
-  	}*/
+  	}
   }
 
   //打开列多多二维码
@@ -363,19 +376,6 @@ export default class ComponentHeader extends Vue {
 		})
 	}
 
-	created(){
-		let identity = this.$store.state.userIdentity
-		if(identity){
-			this.identity = identity
-		}else {
-			identity = getUserIdentity()
-  		this.$store.dispatch('setUserIdentity', identity)
-  		this.identity = identity
-		}
-		console.log('ComponentHeader=identity====', this.identity)
-		this.userInfo = this.$store.state.userInfo
-		console.log('ComponentHeader=userInfo====', this.userInfo)
-	}
 
 	// 打开切换身份
 	changeId () {

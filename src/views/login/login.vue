@@ -46,7 +46,7 @@
 	import Vue from 'vue'
 	import Component from 'vue-class-component'
 	import { loginApi, scanApi, getQrCodeApi } from '../../api/auth'
-	import { getUserIdentity } from '../../../config.js'
+	import { getUserIdentity, switchId } from '../../../config.js'
 
 	@Component({
 	  name: 'lighthouse-list',
@@ -64,27 +64,24 @@
 	  components: {}
 	})
 	export default class CourseList extends Vue {
-		codeImageUrl = ''
 		codeData = {}  // 二维码信息
 		userInfo = {}
 		pop = {
       isShow: false,
       type: 'help'
     }
-    status = 'login'
-    identitystatus = "qiuzhi"
+    status = 'login' 
+    identitystatus = "qiuzhi"  // 引导图 状态
     isPast = true
-    timer = null
+    timer = null 
     num = 1
-
-    skipName = 'zhaopin'
+    identity = '' //身份
 	  /**
 	   * 初始化表单、分页页面数据
 	   */
 
 	  mounted () {
-  		this.skipName = getUserIdentity() === 'zhaopin'? 'recruiterIndex':'applyIndex'
-  		this.$store.dispatch('setUserIdentity', getUserIdentity())
+  		
 		}
 
 	   // recruiterIndex applyIndex
@@ -98,7 +95,7 @@
 	  	then(res=>{
   	  	this.$store.dispatch('setUserInfo', res.data.data);
         this.userInfo = this.$store.state.userInfo
-				this.$router.push({name: this.skipName})
+				this.$router.push({name: this.userInfo.isBusiness === 1 ? 'applyIndex' : 'recruiterIndex'})
 	  	})
 	  	.catch(error => {
 	  	  setTimeout(() => {
@@ -135,19 +132,22 @@
 	  	scanApi({
 	  		uuid: this.codeData.uuid
 	  	}).then(res=>{
-	  		//console.log('==>',res.data) isBusiness==1 b
+	  		//isBusiness==1 b
+	  		console.log('==>',res.data) 
 	  		if (res.data.data && res.data.data.id) {
-						this.isPast = false
-	  				clearInterval(this.timer)
-	  				console.log('扫码成功')
+  				clearInterval(this.timer)
+	  			this.identity = res.data.data.isBusiness === 1 ? 'qiuzhi' : 'zhaopin'
+					switchId(this.identity)
+					this.isPast = false
 
-		  	  	this.$store.dispatch('setUserInfo', res.data.data);
-		  	  	this.$store.dispatch('login', res.data.data);
-		  	  	
-		        this.userInfo = this.$store.state.userInfo
-						this.$router.push({name: this.skipName})
+					this.$store.dispatch('setUserIdentity', this.identity)
+	  	  	this.$store.dispatch('setUserInfo', res.data.data)
+	  	  	this.$store.dispatch('login', res.data.data)
+
+	        this.userInfo = this.$store.state.userInfo
+					this.$router.push({name: this.identity})
+  				console.log('扫码成功')
 	  		}
-
 	  	})
 	  }
 

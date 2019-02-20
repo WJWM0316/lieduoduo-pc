@@ -96,8 +96,8 @@
         </el-select>
       </el-form-item>
 
-      <el-form-item label="职位描述" prop="describe" style="width: 700px;">
-        <el-input type="textarea" autosize placeholder="请填写职位描述" v-model="form.describe"></el-input>
+      <el-form-item label="职位描述" prop="describe" style="width: 700px;" >
+        <el-input type="textarea" autosize placeholder="请填写职位描述" :maxlength="5000" v-model="form.describe"></el-input>
       </el-form-item>
 
       <p class="ruleHint">发布职位即表示同意遵守<a>《猎多多职位信息发布规则》</a>，如违反将导致您的账号被锁定</p>

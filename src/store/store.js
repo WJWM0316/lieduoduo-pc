@@ -37,6 +37,7 @@ export default new Vuex.Store({
         },
 
         LOGIN (state, data) {
+            console.log(state.loginValidTime)
             saveAccessToken(data.token, state.loginValidTime)
             saveUserInfo(data, state.loginValidTime)
             state.userInfo = data

@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
 // import config from '@/configs'
-import { professionalSkillsApi, getLabelPositionListApi, searchPositionApi, getPositionApi, editPositionApi, addPositionApi, getMyInfoApi } from '@/api/position'
+import { professionalSkillsApi, getLabelPositionListApi, searchPositionApi, getPositionApi, editPositionApi, addPositionApi } from '@/api/position'
 import { getAdressListApi, addCompanyAdressApi } from '@/api/company'
+import { getMyInfoApi } from '../../api/auth'
 
 import SearchBar from '@/components/searchBar'
 import {TMap} from '../../util/TMap.js'
@@ -112,7 +113,7 @@ export default class CommunityEdit extends Vue {
       label: '10年以上'
     }
   ]
-
+  // 公司地址
   addressList = [
     {
       value: '0',
@@ -185,6 +186,7 @@ export default class CommunityEdit extends Vue {
   
   emolumentMaxList = [] //选择薪资范围
   emolumentMinList = [] //选择薪资范围
+  
   addressData = {
     areaName: '',
     area_id: '',
@@ -497,8 +499,6 @@ export default class CommunityEdit extends Vue {
 
   //添加工作地点
   addAdress () {
-    console.log(this.adressInput, 11111)
-    console.log(this.addressData, 222)
     if(this.adressInput.length>0){
       let adress = this.adressInput
       this.addressData.address = this.adressInput

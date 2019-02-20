@@ -51,8 +51,6 @@ export const getPositionTypeListApi = data => request(`/label/positionType`, 'ge
 // 搜索-职业标签
 export const searchPositionApi = data => request(`/search/position`, 'get', data)
 
-// 招聘官-我的信息(“我的”页面)
-export const getMyInfoApi = data => request(`/recruiter/myInfo`, 'get', data)
 
 // 职位分状态按条件数量统计
 export const getStatusTotalApi = data => request(`/position/statustotal`, 'get', data)

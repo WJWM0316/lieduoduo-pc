@@ -4,7 +4,7 @@
 			<div class="header_warp">
 					<div class="header" :class="searchBarFixed === true ? 'isFixed' :''">
 						<h2 class="title">职位管理</h2>
-			      <el-button class="addJob" size="small" type="primary" @click="todoAction('addJob')">发布职位</el-button>
+			      <div class="addJob" size="small" type="primary" @click="todoAction('addJob')">发布职位</div>
 						<ul class="recruiter_classify">
 							<li class="" v-for="item,index in recruiterList" @click="catchRecruiter(index)" :class="{'cur':item.active}">{{item.name}}({{item.total}})</li>
 						</ul>
@@ -20,14 +20,14 @@
 	  	<ul class="job_list" v-if="jobList.length>0">
 	  		<li class="job_blo" v-for="item,index in jobList">
 	  			<div class="blo_left">
-	  				<div class="job_name">{{item.positionName}}</div>
+	  				<div class="job_name">{{item.positionName}} {{item.emolumentMin}}k-{{item.emolumentMax}}k</div>
 	  				<div class="job_info">
 	  					<span v-if="item.address">{{item.address}}</span>
 	  					<span v-if="item.workExperience">{{item.workExperience}}年</span>
 	  					<span v-if="item.workExperienceName">{{item.workExperienceName}}</span>
 	  				</div>
 	  			</div>
-	  			<div class="blo_status" v-if="form.status !==''">{{navSelectName}}</div>
+	  			<div class="blo_status" v-if="form.status !=='1,2'" :class="form.status === '3' ? 'audit' :''">{{navSelectName}}</div>
 	  			<div class="blo_center">
 	  				<!-- <div class="center_status">审核中</div>
 	  				<div class="center_status">审核中</div>
@@ -35,10 +35,10 @@
 	  				<div class="center_time">发布于 {{item.createdAt}}</div>
 	  			</div>
 	  			<div class="blo_right">
-	  				<span class="job_op" @click="openShare(index)" v-if="form.status === ''">分享</span>
-	  				<span class="job_op" @click="todoAction('closeJob',item.id)" v-if="item.isOnline===1 && form.status !== 3">关闭</span>
-	  				<span class="job_op" @click="todoAction('openJob',item.id)" v-if="item.isOnline===2 && form.status !== 3">开启</span>
-	  				<span class="job_op" @click="todoAction('editJob',item.id)" >编辑</span>
+	  				<span class="job_op" @click="openShare(index)" v-if="form.status === '1,2'">分享</span>
+	  				<span class="job_op" @click="opJob('close',item.id)" v-if="item.isOnline===1">关闭</span>
+	  				<span class="job_op" @click="opJob('open',item.id)" v-if="item.isOnline===2 && form.status === '0，1'">开放</span>
+	  				<span class="job_op" @click="todoAction('editJob',item.id)" v-if="form.status === '4' || form.status === '1,2'">编辑</span>
 	  			</div>
 	  		</li>
   			<div class="toTop" @click="toTop">
@@ -79,30 +79,15 @@
 				</div>
 			</div>
 		</div>
-		<div class="messageBox" v-if="isMessageBox">
-  		<img class="clo" src="../../assets/images/clo.png" @click="mbClo">
-			<div class="mb_main">
-				<div class="mb_head">
-					<img class="hint" src="">
-					<h3 class="mb_tit">确认提醒</h3>
-				</div>
-				<div class="mb_cont">
-					<p>关闭职位后，此职位不可被就职者查看和发起约面， 确认关闭吗？</p>
-				</div>
-			</div>
-			<div class="btns">
-				<div class="btn cancel" @click="mbCancel">取消</div>
-				<div class="btn true" @click="mbSumbit">确定</div>
-			</div>
-		</div>
+		
 
 		<div class="pop" v-if="pop.isShow">
 		  <div class="share" v-if="pop.type==='share'">
 		  	<div class="share_blo">
 		  		<div class="pop_tit">分享职位</div>
-		  		<img class="clo" src="../../assets/images/clo.png" @click="todoAction('cloShare')">
+		  		<img class="clo" src="../../assets/images/clo.png" @click="todoAction('cloPop')">
 		  		<p class="share_txt" >使用「微信」扫描小程序码分享职位</p>
-		  		<img class="code" :src="selectItem.positionQrCode" >
+		  		<img class="code" :src="shareSelectItem.positionQrCode" >
 		  		<p class="share_help_text"  @mouseover="isHelpShow = true" @mouseout="isHelpShow = false">分享帮助<span>?</span></p>
 		  	</div>
 	      
@@ -113,6 +98,40 @@
 	      	<span class="triangle_border_left" ></span>
 	      </div>
 		  </div>
+
+  		<div class="messageBox" v-if="pop.type==='openJob'">
+    		<img class="clo" src="../../assets/images/clo.png" @click="todoAction('cloPop')">
+  			<div class="mb_main">
+  				<div class="mb_head">
+  					<img class="hint" src="">
+  					<h3 class="mb_tit">二次确认提醒</h3>
+  				</div>
+  				<div class="mb_cont">
+  					<p>确定重新开放该职位吗？</p>
+  				</div>
+  			</div>
+  			<div class="btns">
+  				<div class="btn cancel" @click="todoAction('cloPop')">取消</div>
+  				<div class="btn true" @click="todoAction('openJob')">确定</div>
+  			</div>
+  		</div>
+
+  		<div class="messageBox" v-if="pop.type==='closeJob'">
+    		<img class="clo" src="../../assets/images/clo.png" @click="todoAction('cloPop')">
+  			<div class="mb_main">
+  				<div class="mb_head">
+  					<img class="hint" src="">
+  					<h3 class="mb_tit">确认提醒</h3>
+  				</div>
+  				<div class="mb_cont">
+  					<p>关闭职位后，此职位不可被就职者查看和发起约面， 确认关闭吗？</p>
+  				</div>
+  			</div>
+  			<div class="btns">
+  				<div class="btn cancel" @click="todoAction('cloPop')">取消</div>
+  				<div class="btn true" @click="todoAction('closeJob')">确定</div>
+  			</div>
+  		</div>
 		</div>
 	</div>
 
@@ -121,8 +140,8 @@
 <script>
 	import Vue from 'vue'
 	import Component from 'vue-class-component'
-	import { uploadApi, waitApi, getQrCodeApi } from '../../api/auth'
-	import { getListApi, getMyListApi, getJobNameListApi, closePositionApi, openPositionApi, editPositionApi, getStatusTotalApi, getMyInfoApi  } from '../../api/position'
+	import { uploadApi, waitApi, getQrCodeApi, getMyInfoApi } from '../../api/auth'
+	import { getListApi, getMyListApi, getJobNameListApi, closePositionApi, openPositionApi, editPositionApi, getStatusTotalApi  } from '../../api/position'
 
 	@Component({
 	  name: 'lighthouse-list',
@@ -140,7 +159,6 @@
 	  components: {}
 	})
 	export default class CourseList extends Vue {
-		isMessageBox = false
 		userInfo = {}
 
 		pageInfo = {
@@ -149,32 +167,32 @@
 		  totalPage: 0,
 		  total: 0
 		}
-		// close关闭，open 开启，审核通过，audit 审核中，fail 审核失败
+		// close关闭，open 开放，审核通过，audit 审核中，fail 审核失败
 		recruiterList = [
 			{
 				name : '招聘中',
-				status: 1,
+				status: '1,2',
 				total: 0,
 				active: true
 			},{
 				name : '已关闭',
-				status: 0,
+				status: '0,1',
 				total: 0,
 				active: false
 			},{
 				name : '审核中',
-				status: 3,
+				status: '3',
 				total: 0,
 				active: false
 			},{
 				name : '未过审',
-				status: 4,
+				status: '4',
 				total: 0,
 				active: false
 			}
 		]
-		jobList = []
-		jobNameList = []
+		jobList = []     // 工作列表
+		jobNameList = [] // 职位分类列表
 		// 文件上传
 		pop = {
 	  	isShow: false,
@@ -182,22 +200,117 @@
 	  }
 
 		form = {
+		  page: 1,
 			recruiter: 5,
 			name: '', // 职位名称
-			status: '', // 状态
+			status: '1,2', // 状态
 			is_online: 1,
 		}
 
-		searchBarFixed = false
-		statusTotal = {}
+		searchBarFixed = false // nav是否置顶
+		statusTotal = {}   //  
 		uid = null
 		isHelpShow = false
-		selectItem = {}
+		shareSelectItem = {}    //分享选中
 		isService = false  
 		navSelectName =  ''  //  nav选中文字
-		mounted(){
+		jobSelectId = null  // 职位开启关闭选中
+		opJob (type, id) {
+			this.pop.isShow = true
+			if(type==='close'){
+				this.pop.type = 'closeJob'
+			}else if( type==='open'){
+				this.pop.type = 'openJob'
+			}
+
+			this.jobSelectId = id
+		}
+
+		mounted () {
   		window.addEventListener('scroll', this.handleScroll)
 		}
+
+
+	  init() {
+    	this.form = Object.assign(this.form, this.$route.query || {})
+	    this.userInfo = this.$store.state.userInfo
+	    console.log('==>',this.userInfo)
+
+	    this.getPositionList()
+	    this.getJobNameList()
+	    this.getMyInfo({
+	    }).then(res=>{
+	    	this.getStatusTotal()
+	    })
+	  }
+
+	  todoAction(type) {
+	  	console.log(type)
+	    switch(type) {
+	      case 'cloPop':
+	        this.pop = {
+	        	isShow: false,
+	  				type: ''
+	        }
+	        break
+	      case 'addJob':
+		      this.$router.push(
+		        { 
+		        	name: 'postJob',
+		        	query: {
+		        		type: 'add'
+		        	}
+		        }
+		      )
+	        break
+	      case 'editJob':
+	        this.$router.push(
+	          { 
+	          	name: 'postJob',
+	          	query: {
+	          		type: 'edit',
+	          		id: id
+	          	}
+	          }
+	        )
+	        break
+	      case 'closeJob':
+	       	closePositionApi({id: this.jobSelectId}).then(res=>{
+	       			this.$message({
+	       		    type: 'success',
+	       		    message: '成功!'
+	       		  })
+
+	       			this.pop = {
+	       				isShow: false,
+	       				type: ''
+	       			}
+	       			this.getJobNameList()
+	       			this.getPositionList()
+	       	}).catch(e => {
+            this.$message.error(e.data.msg)
+	       	})
+	        break
+	      case 'openJob':
+	       	openPositionApi({id: this.jobSelectId}).then(res=>{
+	       			this.$message({
+	       		    type: 'success',
+	       		    message: '成功!'
+	       		  })
+	       		  this.pop = {
+	       		  	isShow: false,
+	       		  	type: ''
+	       		  }
+	       			this.getJobNameList()
+	       			this.getPositionList()
+	       	}).catch(e => {
+            this.$message.error(e.data.msg)
+	       	})
+	        break
+	      default:
+	        break
+	    }
+	  }
 
 		handleScroll(e){
 			var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
@@ -233,18 +346,6 @@
 	  	})
 	  }
 
-	  init() {
-    	this.form = Object.assign(this.form, this.$route.query || {})
-	    this.userInfo = this.$store.state.userInfo
-	    console.log('==>',this.userInfo)
-
-	    this.getPositionList()
-	    this.getJobNameList()
-	    this.getMyInfo({
-	    }).then(res=>{
-	    	this.getStatusTotal()
-	    })
-	  }
 
 	  getMyInfo(){
 	  	return getMyInfoApi().then(res=>{
@@ -263,6 +364,9 @@
 	  		recruiter: 5,
 	  		...this.form
 	  	}
+
+	  	this.form.page = data.page
+
 	  	getMyListApi(data).then(res=>{
 	  		let meta = res.data.meta
 	  		this.jobList = [...res.data.data]
@@ -273,6 +377,7 @@
      	})
 	  }
 
+	  // nav状态列表
 	  getJobNameList () {
 	  	let data = {
 	  		page: 1,
@@ -281,7 +386,6 @@
 	  	}
 
 	  	getJobNameListApi(data).then(res=>{
-	  		// let meta = res.data.meta
 	  		res.data.data.map(item=>{
 	  			item.active = false
 	  		})
@@ -291,7 +395,6 @@
 	  			active: true
 	  		})
 	  		this.jobNameList = res.data.data
-	  		console.log('==>',res.data.data)
 	  	})
 	  }
 
@@ -305,16 +408,15 @@
 	  		if(idx === index){
 	  			item.active = true
 	  			if(index !== 0){
-	  				that.form.is_online = ''
+	  				that.form.is_online = 2
 	  				that.navSelectName = item.name
 		  			that.form.status = item.status
 	  			}else {
 	  				that.navSelectName = ''
-	  				that.form.status = ''
+	  				that.form.status = '1,2'
 	  				that.form.is_online = 1
-
 	  			}
-	  			that.getPositionList()
+	  			that.getPositionList(1)
 	  		}else {
 	  			item.active = false
 	  		}
@@ -328,7 +430,7 @@
 	  			item.active = !item.active
 	  			that.form.name = item.positionName !== '全部' ? item.positionName : ''
 
-	  			that.getPositionList()
+	  			that.getPositionList(1)
 	  		}else {
 	  			item.active = false
 	  		}
@@ -346,74 +448,9 @@
 				type: 'share'
       }
 
-      this.selectItem = this.jobList[index]
+      this.shareSelectItem = this.jobList[index]
 	  }
 
-	  todoAction(type, id) {
-	  	console.log(type)
-	    switch(type) {
-	      case 'cloShare':
-	        this.pop = {
-	        	isShow: false,
-	  				type: 'share'
-	        }
-	        break
-	      case 'addJob':
-		      this.$router.push(
-		        { 
-		        	name: 'postJob',
-		        	query: {
-		        		type: 'add'
-		        	}
-		        }
-		      )
-	        break
-	      case 'editJob':
-	        this.$router.push(
-	          { 
-	          	name: 'postJob',
-	          	query: {
-	          		type: 'edit',
-	          		id: id
-	          	}
-	          }
-	        )
-	        break
-	      case 'closeJob':
-		      if(!id){
-		        return
-		      }
-	       	closePositionApi({id: id}).then(res=>{
-	       		console.log(res)
-	       			this.$message({
-	       		    type: 'success',
-	       		    message: '成功!'
-	       		  })
-
-	       			this.getPositionList()
-	       	}).catch(e => {
-            this.$message.error(e.data.msg)
-	       	})
-	        break
-	      case 'openJob':
-		      if(!id){
-		        return
-		      }
-	       	openPositionApi({id: id}).then(res=>{
-	       		console.log(res)
-	       			this.$message({
-	       		    type: 'success',
-	       		    message: '成功!'
-	       		  })
-	       			this.getPositionList()
-	       	}).catch(e => {
-            this.$message.error(e.data.msg)
-	       	})
-	        break
-	      default:
-	        break
-	    }
-	  }
 	}
 </script>
 <style lang="less">
@@ -466,9 +503,11 @@
 				font-size:14px;
 				font-family:PingFangSC-Regular;
 				font-weight:400;
-				color:rgba(102,102,102,1);
 				line-height:22px;
 				text-align: left;
+				p {
+					color:rgba(102,102,102,1);
+				}
 			}
 		}
 		.btns {
@@ -602,6 +641,7 @@
 		.addJob {
 			width:124px;
 			height:40px;
+			line-height: 40px;
 			background:rgba(101,39,145,1);
 			border-radius:20px;
 			position: absolute;
@@ -612,6 +652,7 @@
 			font-weight:500;
 			color:rgba(255,255,255,1);
 			box-sizing: border-box;
+			cursor: pointer;
 		}
 		.recruiter_classify {
 			display: flex;
@@ -705,6 +746,9 @@
 				font-family:PingFangSC-Regular;
 				font-weight:400;
 				color:rgba(146,146,146,1);
+				&.audit {
+					color:#FF7F4C;
+				}
 			}
 			.blo_center {
 				flex: 1;
