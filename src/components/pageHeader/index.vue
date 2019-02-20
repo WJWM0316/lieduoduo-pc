@@ -315,6 +315,8 @@ export default class ComponentHeader extends Vue {
 		this.userInfo = this.$store.state.userInfo
 		this.identity = this.userInfo.isBusiness === 1 ? 'qiuzhi' : 'zhaopin'
 		this.$store.dispatch('setUserIdentity', this.identity)
+		switchId(this.identity)
+		changeBaseURL()
 		console.log('ComponentHeader=created====',this.userInfo, this.identity)
 	}
 
