@@ -724,6 +724,9 @@
 					font-weight:500;
 					color:rgba(53,64,72,1);
 					margin-bottom: 8px;
+					text-overflow: ellipsis;
+			    white-space: nowrap;
+			    overflow: hidden;
 				}
 				.job_info {
 					span {
