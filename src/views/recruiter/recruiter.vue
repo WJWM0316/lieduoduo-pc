@@ -230,8 +230,6 @@
 	  				item.total = res.data.data.fail
 	  			}
 	  		})
-
-	  		console.log(res.data.data)
 	  	})
 	  }
 
@@ -266,13 +264,11 @@
 	  		...this.form
 	  	}
 	  	getMyListApi(data).then(res=>{
-	  		console.log(res)
 	  		let meta = res.data.meta
 	  		this.jobList = [...res.data.data]
 	  		this.pageInfo.totalPage = meta.lastPage
 	  		this.pageInfo.total = meta.total
 	  	}).catch(e => {
-	  		console.log(e)
         this.$message.error(e.data.msg)
      	})
 	  }
@@ -309,11 +305,14 @@
 	  		if(idx === index){
 	  			item.active = true
 	  			if(index !== 0){
+	  				that.form.is_online = ''
 	  				that.navSelectName = item.name
 		  			that.form.status = item.status
 	  			}else {
 	  				that.navSelectName = ''
 	  				that.form.status = ''
+	  				that.form.is_online = 1
+
 	  			}
 	  			that.getPositionList()
 	  		}else {
@@ -384,8 +383,6 @@
 		      if(!id){
 		        return
 		      }
-
-		      console.log(closePositionApi)
 	       	closePositionApi({id: id}).then(res=>{
 	       		console.log(res)
 	       			this.$message({

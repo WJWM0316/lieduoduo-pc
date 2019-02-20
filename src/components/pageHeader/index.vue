@@ -6,7 +6,7 @@
 
 				<ul class="nav">
 					<li class="" @mouseover="pop.isShow = true" @mouseout="pop.isShow = false">打开猎多多</li>
-					<li class="" @click="refresh" >切换为{{identity==='jobhunter'?'招聘官':'求职者'}}</li>
+					<li class="" @click="refresh" >切换为{{identity==='qiuzhi'?'招聘官':'求职者'}}</li>
 				</ul>
 
 				<div class="headWC_pop" v-if="pop.isShow">
@@ -33,7 +33,7 @@
 				  </span>
 				  <el-dropdown-menu slot="dropdown">
 				    <el-dropdown-item command="out">退出登录</el-dropdown-item>
-				    <el-dropdown-item command="changeId">切换为{{identity==='jobhunter'?'招聘官':'求职者'}}</el-dropdown-item>
+				    <el-dropdown-item command="changeId">切换为{{identity==='qiuzhi'?'招聘官':'求职者'}}</el-dropdown-item>
 				  </el-dropdown-menu>
 				</el-dropdown>
 				<!-- <img class="op_icon" src="../../assets/images/open.png" /> -->
@@ -307,7 +307,7 @@ export default class ComponentHeader extends Vue {
     isShow: false,
     type: 'help'
   }
-  identity = 'jobhunter'
+  identity = 'qiuzhi'
   isShowSwitch = false
   //切换身份刷新
   refresh() {

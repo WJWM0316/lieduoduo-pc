@@ -4,20 +4,16 @@
 import util from './src/util/util'
 let urlIdentity = util.getUrlParam('identity')
 let isTest = true
-let identity = urlIdentity.length>0?urlIdentity:'zhaopin'   //  zhaopin  or  jobhunter
-let domain = identity === 'jobhunter' ? 'qiuzhi' : 'zhaopin'
-
-console.log('config-urlIdentity',urlIdentity)
-//export const baseHost = isTest?`https://${domain}-api.lieduoduo.ziwork.com`: `https://${domain}-api.lieduoduo.com` 
+let identity = urlIdentity.length>0?urlIdentity:'qiuzhi'   //  zhaopin  or  qiuzhi
+//export const baseHost = isTest?`https://${identity}-api.lieduoduo.ziwork.com`: `https://${identity}-api.lieduoduo.com` 
 
 export const baseHost = function(){
-	let url = `https://${identity === 'jobhunter' ? 'qiuzhi' : 'zhaopin'}`
-	console.log(url)
+	let url = `https://${identity}`
 	return isTest?`${url}-api.lieduoduo.ziwork.com`: `${url}-api.lieduoduo.com` 
 }
 
 export const switchId = function(){
-	identity = identity === 'zhaopin' ? 'jobhunter' : 'zhaopin'
+	identity = identity === 'zhaopin' ? 'qiuzhi' : 'zhaopin'
 	console.log(identity)
 	return identity
 }

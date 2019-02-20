@@ -37,8 +37,8 @@
   			</div>
   		</div>
 	  </div>
-  	<!-- <div class="login_btn" @click="login">模拟登陆</div>
- -->
+  	<!-- <div class="login_btn" @click="login">模拟登陆</div> -->
+
   	
 	</div>
 </template>
