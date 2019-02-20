@@ -4,7 +4,7 @@
       <h3 class="title">职位基本信息</h3>
       <p class="hint">加“ <span style="color: red; font-size: 15px;">*</span> ”内容，在确认发布成功后，将无法修改</p>
       <el-form-item label="职位名称" prop="position_name" style="width: 380px;">
-        <el-input v-model="form.position_name" placeholder="限制50个字以内" :maxlength="30"></el-input>
+        <el-input v-model="form.position_name" placeholder="限制50个字以内" :maxlength="50"></el-input>
       </el-form-item>
 
       <el-form-item label="职位类别" prop="type" style="width: 380px;">
