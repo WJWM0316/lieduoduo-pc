@@ -11,6 +11,10 @@ export const baseHost = function(){
 	return isTest?`${url}-api.lieduoduo.ziwork.com`: `${url}-api.lieduoduo.com` 
 }
 
+export const baseUrl = function(){
+	return isTest?`http://www.lieduoduo.ziwork.com`: `https://lieduoduo.com` 
+}
+
 export const switchId = function(type){
 	if(type){
 		identity = type

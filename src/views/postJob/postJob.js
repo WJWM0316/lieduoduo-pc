@@ -3,6 +3,7 @@ import Component from 'vue-class-component'
 // import config from '@/configs'
 import { professionalSkillsApi, getLabelPositionListApi, searchPositionApi, getPositionApi, editPositionApi, addPositionApi } from '@/api/position'
 import { getAdressListApi, addCompanyAdressApi } from '@/api/company'
+import { baseHost } from '../../../config.js'
 import { getMyInfoApi } from '../../api/auth'
 
 import SearchBar from '@/components/searchBar'
@@ -198,41 +199,6 @@ export default class CommunityEdit extends Vue {
 
   professionalSkillsList = []
   mounted() {
-    let that = this
-
-    console.log(this.$store.state.userInfo)
-    // TMap('P63BZ-4RM35-BIJIV-QOL7E-XNCZZ-WIF4L').then(qq => {
-    //     geocoder = new qq.maps.Geocoder({
-    //       complete : function(result){
-    //         console.log(result, 9999)
-    //         let data = {
-    //           areaName: result.detail.addressComponents.city || '',
-    //           //address: result.detail.address,
-    //           address: that.adressInput,
-    //           doorplate: that.addressData.doorplate,
-    //           lng: result.detail.location.lng,
-    //           lat: result.detail.location.lat
-    //         }
-
-    //         addCompanyAdressApi(data).then(res => {
-    //           that.pop = {
-    //             isShow: false,
-    //             type: ''
-    //           }
-    //           that.form.address_id = ''
-    //           that.getAdressList()
-    //           console.log(res)
-    //         }).catch(e=>{
-    //           console.log('===',e)
-    //           that.$message.error(e.data.msg)
-    //         })
-    //       },//若服务请求失败，则运行以下函数
-    //       error: function(e) {
-    //         console.log(e)
-    //         that.$message.error("地址搜索失败")
-    //       }
-    //     })
-    // });
   }
 
   created () {
@@ -375,7 +341,7 @@ export default class CommunityEdit extends Vue {
     let data = {
       page: 1,
       count: 20,
-      sort: 'asc'
+      sort: 'desc'
     }
     getAdressListApi(data).then(res=>{
       if(res.data.data.length>0){
@@ -426,26 +392,16 @@ export default class CommunityEdit extends Vue {
   }
 
   setEmolumentMax (num) {
-    let max = 260
-    let i = num
+    let max = num+5
     let list = []
 
-    while (i<max)
-    {
-      if(i<30){
-        i++
-      } else if(i<100){
-        i+=5
-      } else if(i<260){
-        i+=10
-      }
 
+    for (let i = num+1; i <= max; i++) {
       list.push({
         label : `${i}k`,
         value : i
       })
     }
-
     this.emolumentMaxList = list
   }
 
@@ -497,16 +453,6 @@ export default class CommunityEdit extends Vue {
 
   //添加工作地点
   addAdress (param) {
-    // console.log(this.adressInput, 11111)
-    // console.log(this.addressData, 222)
-    // if(this.adressInput.length>0){
-    //   let adress = this.adressInput
-    //   this.addressData.address = this.adressInput
-    //   this.addressData.doorplate = this.adress_id_Input
-    //   console.log(adress)
-    //   geocoder.getLocation(adress)
-    // }
-
     param.data.areaName = param.data.area_id
     delete param.data.area_id
     console.log(param)
@@ -516,7 +462,8 @@ export default class CommunityEdit extends Vue {
         type: ''
       }
       this.$message.success('添加成功')
-      this.form.address_id = res.data.data.address
+      this.form.address_id = res.data.data.id
+      //this.form.address = res.data.data.address
       this.getAdressList()
       console.log(res)
     }).catch(e=>{
@@ -739,14 +686,17 @@ export default class CommunityEdit extends Vue {
   }
 
   toIssueRule () {
-    this.$router.push({
-      name: 'issueRule'
-    })
+    let event = new MouseEvent('click')
+    let a = document.createElement('a')
+    a.target = 'view_window'
+    a.href = `${baseUrl()}/issueRule`
+    a.dispatchEvent(event)
   }
 
   // 技能下拉框显示隐藏
   skillChange(e){
-    if(e && this.options.length === 0){
+    console.log(this.selectPositionItem.name)
+    if(e && this.selectPositionItem.name.length === 0){
       this.$message.error('请先选择职位类别')
     }
   }

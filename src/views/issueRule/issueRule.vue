@@ -110,6 +110,7 @@
 		padding: 50px;
 		box-sizing: border-box;
 		background: #fff;
+		text-align: left;
 		.main_tit {
 			font-size:30px;
 			font-family:PingFangSC-Semibold;
@@ -117,16 +118,21 @@
 			color:rgba(53,64,72,1);
 			line-height:42px;
 			margin-top: 20px;
+			margin-bottom: 32px;
 		}
 		.main_tit2 {
 			font-size:16px;
-			font-family:PingFang-SC-Regular;
-			font-weight:400;
+			font-family:PingFangSC-semibold;
 			color:rgba(53,64,72,1);
 			line-height:22px;
+			margin-bottom: 5px;
 		}
 		.main_txt {
-			
+			font-size:16px;
+			font-family:PingFangSC-regular;
+			color:rgba(53,64,72,1);
+			line-height:22px;
+			margin-bottom: 32px;
 		}
 	}
 }

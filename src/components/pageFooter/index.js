@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
-/*import { routes } from '@/router/routes'*/
+import { baseUrl } from '../../../config.js'
 
 @Component({
   name: 'page-footer',
@@ -11,8 +11,10 @@ import Component from 'vue-class-component'
 export default class PageFooter extends Vue {
 
   toUserDeal () {
-    this.$router.push({
-      name: 'userDeal'
-    })
+	  let event = new MouseEvent('click')
+	  let a = document.createElement('a')
+	  a.target = 'view_window'
+  	a.href = `${baseUrl()}/userDeal`
+	  a.dispatchEvent(event)
   }
 }

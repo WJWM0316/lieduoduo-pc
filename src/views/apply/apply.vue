@@ -411,6 +411,10 @@
 					ext = ext.substr(1)
     	    return ext;
     	}
+
+    	if(ext === '.pptx') {
+    		return 'ppt'
+    	}
     	return 'default';
     }
 
