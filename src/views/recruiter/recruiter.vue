@@ -235,12 +235,28 @@
 
 
 	  init() {
+
+
+
     	this.form = Object.assign(this.form, this.$route.query || {})
 	    this.userInfo = this.$store.state.userInfo
-	    console.log('==>',this.userInfo)
 
-	    this.getPositionList()
+
+	    let query = this.$route.query
+	  	
+	    console.log('==>',query)
+	    if(query.status){
+	    	this.recruiterList.map(item => {
+	    		if(item.status === query.status){
+	    			item.active = true
+	    		}else {
+	    			item.active = false
+	    		}
+	    	})
+	    }
 	    this.getJobNameList()
+  		this.getPositionList()
+
 	    this.getMyInfo({
 	    }).then(res=>{
 	    	this.getStatusTotal()
@@ -370,8 +386,6 @@
 	  		recruiter: 5,
 	  		...this.form
 	  	}
-	  	console.log(data.page)
-
 
 	  	getMyListApi(data).then(res=>{
 	  		let meta = res.data.meta
@@ -390,7 +404,6 @@
 	  		count: 20,
 	  		name: ''
 	  	}
-
 	  	getJobNameListApi(data).then(res=>{
 	  		res.data.data.map(item=>{
 	  			item.active = false
@@ -410,19 +423,32 @@
 
 	  catchRecruiter(index){
 	  	let that = this
+
+	  	let query = {}
 	  	this.recruiterList.map((item,idx) =>{
 	  		if(idx === index){
 	  			item.active = true
 	  			if(index !== 0){
+	  				query.is_online = 2
+		  			query.status = item.status
+
 	  				that.form.is_online = 2
 	  				that.navSelectName = item.name
 		  			that.form.status = item.status
 	  			}else {
+
+	  				query.is_online = 1
+		  			query.status = '1,2'
+
+
 	  				that.navSelectName = ''
 	  				that.form.status = '1,2'
 	  				that.form.is_online = 1
 	  			}
-	  			that.getPositionList({page:1})
+
+	  			query.page = 1
+		  		this.setPathQuery(query)
+	  			// that.getPositionList({page:1})
 	  		}else {
 	  			item.active = false
 	  		}
