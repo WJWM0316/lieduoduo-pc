@@ -3,7 +3,7 @@ import Component from 'vue-class-component'
 // import config from '@/configs'
 import { professionalSkillsApi, getLabelPositionListApi, searchPositionApi, getPositionApi, editPositionApi, addPositionApi } from '@/api/position'
 import { getAdressListApi, addCompanyAdressApi } from '@/api/company'
-import { baseHost } from '../../../config.js'
+import { baseUrl } from '../../../config.js'
 import { getMyInfoApi } from '../../api/auth'
 
 import SearchBar from '@/components/searchBar'
