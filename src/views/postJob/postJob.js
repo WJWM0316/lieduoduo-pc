@@ -239,10 +239,10 @@ export default class CommunityEdit extends Vue {
     // this.getTagList()
     this.init()
     this.setEmolumentMin()
-    this.getProfessionalSkills()
+    // this.getProfessionalSkills()
     this.getLabelPositionList()
 
-
+    this.getAdressList()
     this.getMyInfo()
   }
   
@@ -377,8 +377,6 @@ export default class CommunityEdit extends Vue {
       count: 20,
       sort: 'asc'
     }
-
-
     getAdressListApi(data).then(res=>{
       if(res.data.data.length>0){
         res.data.data.map(item => {
@@ -465,7 +463,6 @@ export default class CommunityEdit extends Vue {
   get editTitle () {
     return this.$route.query.type !== 'add' ? '编辑职位' : '添加职位'
   }
-  
 
   // 技能
   getProfessionalSkills () {
@@ -484,6 +481,7 @@ export default class CommunityEdit extends Vue {
       this.options = options
     })
   }
+
   // 搜索职位
   handleSearch (e) {
     console.log(e)
@@ -579,7 +577,6 @@ export default class CommunityEdit extends Vue {
 
   // 工作地点选择 
   changeAdress (e) {
-    console.log(e, '999999999----*--*')
     console.log(this.form.address_id)
     // this.form.address_id = 1
     if(e==='0'){
@@ -676,7 +673,10 @@ export default class CommunityEdit extends Vue {
     })
   }
 
-  popCancel () {
+  popCancel (type) {
+    if(type === 'name') {
+      this.selectPositionItem.name = ''
+    }
     this.pop.isShow = false
   }
 
@@ -717,5 +717,18 @@ export default class CommunityEdit extends Vue {
    */
   handleCommunityIntroEditorBlur () {
   //   this.$refs.form.validateField('introduce')
+  }
+
+  toIssueRule () {
+    this.$router.push({
+      name: 'issueRule'
+    })
+  }
+
+  // 技能下拉框显示隐藏
+  skillChange(e){
+    if(e && this.options.length === 0){
+      this.$message.error('请先选择职位类别')
+    }
   }
 }

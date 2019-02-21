@@ -79,6 +79,7 @@
 
       <el-form-item label="技能要求" prop="skill_tag" style="width: 380px;">
         <el-select
+          @visible-change="skillChange"
           style="width: 100%;"
           v-model="form.labels"
           multiple
@@ -100,7 +101,7 @@
         <el-input type="textarea" autosize placeholder="请填写职位描述" :maxlength="5000" v-model="form.describe"></el-input>
       </el-form-item>
 
-      <p class="ruleHint">发布职位即表示同意遵守<a>《猎多多职位信息发布规则》</a>，如违反将导致您的账号被锁定</p>
+      <p class="ruleHint">发布职位即表示同意遵守<span @click="toIssueRule">《猎多多职位信息发布规则》</span>，如违反将导致您的账号被锁定</p>
 
       <div class="btn-container">
         <el-button class="btn_submit" type="primary" @click="handleSubmit">发布</el-button>
@@ -116,6 +117,7 @@
             </ul>
           </div>
           <div class="pop_right">
+            <img class="clo" src="../../assets/images/clo.png" @click="popCancel('name')" />
             <search-bar class="f-float-left" @search="handleSearch" :width="'200'" v-model="searchPosition" placeholder="请输入职位关键词" style="margin-top: 12px;"></search-bar>
             <ul class="job_classily">
               <li v-for="item,index in secondPositionList" @click="selectSecondPosition(index)">{{item.active?'-':'+'}}{{item.name}}</li>
@@ -131,7 +133,7 @@
         <div class="addAdressPop" v-if="pop.type==='addAdress'">
           <img class="clo" src="../../assets/images/clo.png" @click="popCancel" />
           <h3 class="">添加新的公司地址</h3>
-          <p>添加新的公司地址</p>
+          <p>你创建的工作地址，将加入公司的地址库中与同事共享</p>
 
           <el-input style="width: 368px;margin: 13px 0 26px 0;box-sizing: border-box;" v-model="adressInput" placeholder="请输入工作地址）"></el-input>
 

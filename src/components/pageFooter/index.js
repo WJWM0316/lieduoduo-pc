@@ -10,5 +10,9 @@ import Component from 'vue-class-component'
 })
 export default class PageFooter extends Vue {
 
-  
+  toUserDeal () {
+    this.$router.push({
+      name: 'userDeal'
+    })
+  }
 }

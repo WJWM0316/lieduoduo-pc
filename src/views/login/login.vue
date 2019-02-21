@@ -27,7 +27,7 @@
   			<h3 >扫码帮助</h3>
   			<div class="identitySelect">
   				<div class="addJob" @click="identitySelect('qiuzhi')" :class="{'select': identitystatus==='qiuzhi'}">求职者</div>
-  				<!-- <div class="addJob" @click="identitySelect('zhaopin')" :class="{'select': identitystatus==='zhaopin'}" >招聘者</div> -->
+  				<div class="addJob" @click="identitySelect('zhaopin')" :class="{'select': identitystatus==='zhaopin'}" >招聘者</div>
   			</div>
   	    	<p>我的 > 附件简历 > 扫码上传</p>
   			<img class="pic_1" src="../../assets/images/pic_help_jobhunter.png" v-if="identitystatus==='qiuzhi'" />

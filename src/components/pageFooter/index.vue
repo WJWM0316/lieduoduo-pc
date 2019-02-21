@@ -3,7 +3,7 @@
     <section>
         <div class="footer_left">
           <img class="ft_logo" src="../../assets/images/logo.png" />
-          <p class="left_p black">用户协议</p>
+          <p class="left_p black" @click="toUserDeal">用户协议</p>
           <p class="gray">Copyright &#169老虎科技 粤ICP备16060093号-2</p>
         </div>
         <div class="footer_center ">

@@ -1,7 +1,8 @@
 <template>
   <div class="search_wrap" :style="{ width: `${width}px` }" >
     <input type="search" class="control" ref="control" :placeholder="placeholder" v-model="keyword" @input="handleInput" @keypress.enter="handleSearch">
-    <button type="button" class="search u-btn" @click="handleSearch"><i class="u-icon-search no-offset"></i></button>
+
+    <img class="clickSearch" src="../../assets/images/sear.png" @click="handleSearch" />
   </div>
 </template>
 
@@ -30,20 +31,14 @@ export default SearchBar
     font-size: 14px;
   }
 
-  .search {
-    flex: 0 0 auto;
-    padding: 9px;
-    background: rgba(220,220,220,1);
-    border-top-right-radius: 2px;
-    border-bottom-right-radius: 2px;
-    font-size: 0;
-    line-height: 1;
+  .clickSearch {
+    width:16px;
+    height:16px;
     position: absolute;
     right: 10px;
-    top: 10px;
-
+    top: 12px;
     &:hover {
-      background-color: #ccc;
+      cursor: pointer;
     }
   }
 }
