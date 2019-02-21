@@ -37,7 +37,7 @@
 	  			<div class="blo_right">
 	  				<span class="job_op" @click="openShare(index)" v-if="form.status === '1,2'">分享</span>
 	  				<span class="job_op" @click="opJob('close',item.id)" v-if="item.isOnline===1">关闭</span>
-	  				<span class="job_op" @click="opJob('open',item.id)" v-if="item.isOnline===2 && form.status === '0，1'">开放</span>
+	  				<span class="job_op" @click="opJob('open',item.id)" v-if="item.isOnline===2 && form.status === '0,1'">开放</span>
 	  				<span class="job_op" @click="todoAction('editJob',item.id)" >编辑</span>
 	  			</div>
 	  		</li>
@@ -134,8 +134,6 @@
   		</div>
 		</div>
 	</div>
-
-	
 </template>
 <script>
 	import Vue from 'vue'
@@ -244,7 +242,7 @@
 	    })
 	  }
 
-	  todoAction(type) {
+	  todoAction(type, id) {
 	  	console.log(type)
 	    switch(type) {
 	      case 'cloPop':
