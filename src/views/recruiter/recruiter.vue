@@ -23,8 +23,8 @@
 	  				<div class="job_name">{{item.positionName}} {{item.emolumentMin}}k-{{item.emolumentMax}}k</div>
 	  				<div class="job_info">
 	  					<span v-if="item.city">{{item.city}}{{item.district}}</span>
-	  					<span v-if="item.workExperience">{{item.workExperience}}年</span>
-	  					<span v-if="item.workExperienceName">{{item.workExperienceName}}</span>
+	  					<span v-if="item.workExperience">{{item.workExperienceName}}</span>
+	  					<span v-if="item.workExperienceName">{{item.educationName}}</span>
 	  				</div>
 	  			</div>
 	  			<div class="blo_status" v-if="form.status !=='1,2'" :class="form.status === '3' ? 'audit' :''">{{navSelectName}}</div>
@@ -103,7 +103,7 @@
     		<img class="clo" src="../../assets/images/clo.png" @click="todoAction('cloPop')">
   			<div class="mb_main">
   				<div class="mb_head">
-  					<img class="hint" src="">
+  					<img class="hint" src="../../assets/images/exclamation-circle.png">
   					<h3 class="mb_tit">二次确认提醒</h3>
   				</div>
   				<div class="mb_cont">
@@ -120,7 +120,7 @@
     		<img class="clo" src="../../assets/images/clo.png" @click="todoAction('cloPop')">
   			<div class="mb_main">
   				<div class="mb_head">
-  					<img class="hint" src="">
+  					<img class="hint" src="../../assets/images/exclamation-circle.png">
   					<h3 class="mb_tit">确认提醒</h3>
   				</div>
   				<div class="mb_cont">
@@ -224,6 +224,11 @@
 			this.jobSelectId = id
 		}
 
+		handleSearch() {
+			this.form.page = 1
+		  this.setPathQuery(this.form)
+		}
+
 		mounted () {
   		window.addEventListener('scroll', this.handleScroll)
 		}
@@ -283,7 +288,7 @@
 	       				isShow: false,
 	       				type: ''
 	       			}
-	       			this.getJobNameList()
+	       			this.getStatusTotal()
 	       			this.getPositionList()
 	       	}).catch(e => {
             this.$message.error(e.data.msg)
@@ -299,7 +304,7 @@
 	       		  	isShow: false,
 	       		  	type: ''
 	       		  }
-	       			this.getJobNameList()
+	       			this.getStatusTotal()
 	       			this.getPositionList()
 	       	}).catch(e => {
             this.$message.error(e.data.msg)
@@ -356,14 +361,17 @@
 	  }
 
 	  getPositionList ({ page } = {}) {
+	  	if(page){
+	  		this.form.page = page || 1
+	  	}
+
 	  	let data = {
-	  		page: page || this.form.page || 1,
 	  		count: this.pageInfo.count,
 	  		recruiter: 5,
 	  		...this.form
 	  	}
+	  	console.log(data.page)
 
-	  	this.form.page = data.page
 
 	  	getMyListApi(data).then(res=>{
 	  		let meta = res.data.meta
@@ -414,7 +422,7 @@
 	  				that.form.status = '1,2'
 	  				that.form.is_online = 1
 	  			}
-	  			that.getPositionList(1)
+	  			that.getPositionList({page:1})
 	  		}else {
 	  			item.active = false
 	  		}
@@ -428,7 +436,7 @@
 	  			item.active = !item.active
 	  			that.form.name = item.positionName !== '全部' ? item.positionName : ''
 
-	  			that.getPositionList(1)
+	  			that.getPositionList({page:1})
 	  		}else {
 	  			item.active = false
 	  		}

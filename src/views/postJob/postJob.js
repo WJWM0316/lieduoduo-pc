@@ -6,6 +6,7 @@ import { getAdressListApi, addCompanyAdressApi } from '@/api/company'
 import { getMyInfoApi } from '../../api/auth'
 
 import SearchBar from '@/components/searchBar'
+import MapSearch from '@/components/map'
 import {TMap} from '../../util/TMap.js'
 
 
@@ -15,9 +16,8 @@ var citylocation = {}
 @Component({
   name: 'community-edit',
   components: {
-    /*Editor*/
     SearchBar,
-    /*mapSearch*/
+    MapSearch
   },
 
   filters: {
@@ -201,45 +201,45 @@ export default class CommunityEdit extends Vue {
     let that = this
 
     console.log(this.$store.state.userInfo)
-    TMap('P63BZ-4RM35-BIJIV-QOL7E-XNCZZ-WIF4L').then(qq => {
-        geocoder = new qq.maps.Geocoder({
-          complete : function(result){
-            console.log(result, 9999)
-            let data = {
-              areaName: result.detail.addressComponents.city || '',
-              //address: result.detail.address,
-              address: that.adressInput,
-              doorplate: that.addressData.doorplate,
-              lng: result.detail.location.lng,
-              lat: result.detail.location.lat
-            }
+    // TMap('P63BZ-4RM35-BIJIV-QOL7E-XNCZZ-WIF4L').then(qq => {
+    //     geocoder = new qq.maps.Geocoder({
+    //       complete : function(result){
+    //         console.log(result, 9999)
+    //         let data = {
+    //           areaName: result.detail.addressComponents.city || '',
+    //           //address: result.detail.address,
+    //           address: that.adressInput,
+    //           doorplate: that.addressData.doorplate,
+    //           lng: result.detail.location.lng,
+    //           lat: result.detail.location.lat
+    //         }
 
-            addCompanyAdressApi(data).then(res => {
-              that.pop = {
-                isShow: false,
-                type: ''
-              }
-              that.form.address_id = ''
-              that.getAdressList()
-              console.log(res)
-            }).catch(e=>{
-              console.log('===',e)
-              that.$message.error(e.data.msg)
-            })
-          },//若服务请求失败，则运行以下函数
-          error: function(e) {
-            console.log(e)
-            that.$message.error("地址搜索失败")
-          }
-        })
-    });
+    //         addCompanyAdressApi(data).then(res => {
+    //           that.pop = {
+    //             isShow: false,
+    //             type: ''
+    //           }
+    //           that.form.address_id = ''
+    //           that.getAdressList()
+    //           console.log(res)
+    //         }).catch(e=>{
+    //           console.log('===',e)
+    //           that.$message.error(e.data.msg)
+    //         })
+    //       },//若服务请求失败，则运行以下函数
+    //       error: function(e) {
+    //         console.log(e)
+    //         that.$message.error("地址搜索失败")
+    //       }
+    //     })
+    // });
   }
 
   created () {
     // this.getTagList()
     this.init()
     this.setEmolumentMin()
-    // this.getProfessionalSkills()
+    this.getProfessionalSkills()
     this.getLabelPositionList()
 
     this.getAdressList()
@@ -496,14 +496,33 @@ export default class CommunityEdit extends Vue {
   }
 
   //添加工作地点
-  addAdress () {
-    if(this.adressInput.length>0){
-      let adress = this.adressInput
-      this.addressData.address = this.adressInput
-      this.addressData.doorplate = this.adress_id_Input
-      console.log(adress)
-      geocoder.getLocation(adress)
-    }
+  addAdress (param) {
+    // console.log(this.adressInput, 11111)
+    // console.log(this.addressData, 222)
+    // if(this.adressInput.length>0){
+    //   let adress = this.adressInput
+    //   this.addressData.address = this.adressInput
+    //   this.addressData.doorplate = this.adress_id_Input
+    //   console.log(adress)
+    //   geocoder.getLocation(adress)
+    // }
+
+    param.data.areaName = param.data.area_id
+    delete param.data.area_id
+    console.log(param)
+    addCompanyAdressApi(param.data).then(res => {
+      this.pop = {
+        isShow: false,
+        type: ''
+      }
+      this.$message.success('添加成功')
+      this.form.address_id = res.data.data.address
+      this.getAdressList()
+      console.log(res)
+    }).catch(e=>{
+      console.log('===',e)
+      this.$message.error(e.data.msg)
+    })
   }
 
   selectPosition (index) {

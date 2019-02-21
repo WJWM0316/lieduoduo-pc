@@ -128,9 +128,9 @@
             </ul>
           </div>
         </div>
-        <!--<map-search v-if="pop.isShow"></map-search>-->
+        <map-search v-if="pop.type==='addAdress'" @popCancel="popCancel" @addAdress="addAdress"></map-search>
 
-        <div class="addAdressPop" v-if="pop.type==='addAdress'">
+        <div class="addAdressPop" v-if="pop.type==='addAdress2'">
           <img class="clo" src="../../assets/images/clo.png" @click="popCancel" />
           <h3 class="">添加新的公司地址</h3>
           <p>你创建的工作地址，将加入公司的地址库中与同事共享</p>
@@ -142,7 +142,7 @@
 
           <div class="btn-add">
             <el-button class="btn_cancel" @click="popCancel">取消</el-button>
-            <el-button class="btn_submit" type="primary" @click="addAdress">保存地址</el-button>
+            <el-button class="btn_submit" type="primary" @click="addAdress">添加</el-button>
           </div>
         </div>
       </div>
