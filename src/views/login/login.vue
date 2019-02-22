@@ -29,7 +29,8 @@
   				<div class="addJob" @click="identitySelect('qiuzhi')" :class="{'select': identitystatus==='qiuzhi'}">求职者</div>
   				<div class="addJob" @click="identitySelect('zhaopin')" :class="{'select': identitystatus==='zhaopin'}" >招聘者</div>
   			</div>
-  	    	<p>职位管理 > 发布职位 > 扫码上传</p>
+  	    	<p v-if="identitystatus==='qiuzhi'">我的 > 附件简历 > 扫码上传</p>
+  	    	<p v-else>职位管理 > 发布职位 > 扫码上传</p>
   			<img class="pic_1" src="../../assets/images/pic_help_jobhunter.png" v-if="identitystatus==='qiuzhi'" />
   			<img class="pic_1" src="../../assets/images/pic_help_recruiter.png" v-else />
 
