@@ -329,8 +329,18 @@ export default class ComponentHeader extends Vue {
 
 	created(){
 		this.userInfo = this.$store.state.userInfo
+		// if(this.$store.state.pageName === 'recruiterIndex'  ){
+		// 	if(this.userInfo.isBusiness===1)
+		// 	this.$router.push({
+		// 		name: identity === 'zhaopin' ? 'recruiterIndex' : 'applyIndex'
+		// 	})
+		// }else if(this.$store.state.pageName === 'applyIndex' && this.userInfo.isBusiness!==0){
+
+		// }
+
 		this.identity = this.userInfo.isBusiness === 0 ? 'qiuzhi' : 'zhaopin'
 		this.$store.dispatch('setUserIdentity', this.identity)
+		console.log(this.$store.state.pageName)
 		switchId(this.identity)
 		changeBaseURL()
 		console.log('ComponentHeader=created====',this.userInfo, this.identity)
