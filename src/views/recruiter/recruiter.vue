@@ -20,7 +20,10 @@
 	  	<ul class="job_list" v-if="jobList.length>0">
 	  		<li class="job_blo" v-for="item,index in jobList">
 	  			<div class="blo_left">
-	  				<div class="job_name">{{item.positionName}} {{item.emolumentMin}}k-{{item.emolumentMax}}k</div>
+	  				<div class="job_top">
+	  					<div class="job_name">{{item.positionName}}</div>
+	  					<div class="job_emolument">{{item.emolumentMin}}k-{{item.emolumentMax}}k</div>
+	  				</div>
 	  				<div class="job_info">
 	  					<span v-if="item.city">{{item.city}}{{item.district}}</span>
 	  					<span v-if="item.workExperience">{{item.workExperienceName}}</span>
@@ -776,17 +779,27 @@
 			box-sizing: border-box;
 			border-bottom: 1px solid #F5F4F7;
 			.blo_left {
-				width: 240px;
+				width: 330px;
 				text-align: left;
-				.job_name {
-					font-size:16px;
-					font-family:PingFang-SC-Medium;
-					font-weight:500;
+				line-height: 24px;
+				font-size:16px;
+				font-family:PingFang-SC-Medium;
+				font-weight:500;
+				.job_top {
 					color:rgba(53,64,72,1);
 					margin-bottom: 8px;
+					line-height: 24px;
+				}
+				.job_name {
+					max-width: 260px;
 					text-overflow: ellipsis;
 			    white-space: nowrap;
 			    overflow: hidden;
+			    float: left;
+				}
+				.job_emolument {
+					display: inline-block;
+					margin-left: 8px;
 				}
 				.job_info {
 					span {

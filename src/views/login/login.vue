@@ -29,7 +29,7 @@
   				<div class="addJob" @click="identitySelect('qiuzhi')" :class="{'select': identitystatus==='qiuzhi'}">求职者</div>
   				<div class="addJob" @click="identitySelect('zhaopin')" :class="{'select': identitystatus==='zhaopin'}" >招聘者</div>
   			</div>
-  	    	<p>我的 > 附件简历 > 扫码上传</p>
+  	    	<p>职位管理 > 发布职位 > 扫码上传</p>
   			<img class="pic_1" src="../../assets/images/pic_help_jobhunter.png" v-if="identitystatus==='qiuzhi'" />
   			<img class="pic_1" src="../../assets/images/pic_help_recruiter.png" v-else />
 
@@ -38,8 +38,6 @@
   		</div>
 	  </div>
   	<!-- <div class="login_btn" @click="login">模拟登陆</div> -->
-
-  	
 	</div>
 </template>
 <script>
@@ -228,6 +226,7 @@
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
+	background: url(../../assets/images/bg.png) 100% repeat #652791;
 	.title_p {
 		font-size:24px;
 		font-family:PingFang-SC-Regular;
