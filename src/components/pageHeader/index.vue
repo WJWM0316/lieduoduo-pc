@@ -365,7 +365,9 @@ export default class ComponentHeader extends Vue {
 		    type: 'success',
 		    message: '切换成功!'
 		  })
-  	})
+  	}).catch(e => {
+      this.$message.error(e.data.msg)
+   	})
   	
   }
 
