@@ -28,7 +28,9 @@
 		  			内容附件简历类型支持word、pdf、ppt、txt、wps、jpg、png、jpeg、pptx； 允许最大上传10M；
 		  		</p>
 		  	</div>
-		  	<img class="cont_pic" src="../../assets/images/pic_home.png"/>
+		  	<div class="main_right">
+		  		<img class="cont_pic" src="../../assets/images/pic_home.png"/>
+		  	</div>
 		  </div>
 
 		  <div class="resume_main" v-else>
@@ -449,9 +451,9 @@
 			flex-direction: row;
 		}
 		.main_cont {
-			width: 460px;
+			// width: 520px;
 			text-align: left;
-			margin-right: 170px;
+			margin-right: 114px;
 			.hint {
 				font-size:20px;
 				font-family:PingFang-SC-Medium;
@@ -481,11 +483,16 @@
 				border-color: rgba(101,39,145,1);
 			}
 		}
-		.cont_pic {
-			width:385px;
+		.main_right {
+			width:386px;
 			height:304px;
-			display: block;
+			.cont_pic {
+				width:386px;
+				height:304px;
+				display: block;
+			}
 		}
+		
 		.file_cont {
 			.cont_top {
 				.cont_pic2 {
@@ -708,16 +715,16 @@
 				justify-content: center;
 				align-items: center;
 				.pop_code {
-					width: 112px;
-					height: 112px;
-					margin: 48px auto 10px auto;
+					width: 130px;
+					height: 130px;
+					margin: 36px auto 4px auto;
 				}
 				.pop_text {
 					font-size:20px;
 					font-family:PingFang-SC-Regular;
 					font-weight:400;
 					color:rgba(98,98,98,1);
-					margin: 48px 0 12px 0;
+					margin: 36px 0 4px 0;
 				}
 				.pop_text2 {
 					font-size:24px;

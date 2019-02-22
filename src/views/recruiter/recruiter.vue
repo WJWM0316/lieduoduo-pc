@@ -6,7 +6,7 @@
 						<h2 class="title">职位管理</h2>
 			      <div class="addJob" size="small" type="primary" @click="todoAction('addJob')">发布职位</div>
 						<ul class="recruiter_classify">
-							<li class="" v-for="item,index in recruiterList" @click="catchRecruiter(index)" :class="{'cur':item.active}">{{item.name}}({{item.total}})</li>
+							<li class="" v-for="item,index in recruiterList" @click="catchRecruiter(index)" :class="{'cur':item.active}">{{item.name}}   ({{item.total}})</li>
 						</ul>
 					</div>
 			</div>
@@ -578,7 +578,7 @@
 		position: fixed;
 		left: 0;
 		top: 0;
-		background: rgba(0, 0, 0, 0.8);
+		background: rgba(0, 0, 0, 0.65);
 		width: 100%;
 		height: 100%;
 		z-index: 100;
@@ -613,7 +613,7 @@
 					top: 16px;
 				}
 				.share_txt {
-
+					color: #626262;
 				}
 				.code {
 					width:140px;
@@ -631,10 +631,25 @@
 					line-height:22px;
 					text-align: center;
 					cursor: pointer;
+					span {
+						width:14px;
+						height:14px;
+						background:rgba(101,39,145,1);
+						border-radius: 50%;
+						color: #fff;
+						font-size: 12px;
+						text-align: center;
+						line-height: 14px;
+						display: inline-block;
+						margin-left: 6px;
+						position: relative;
+						top: -1px;
+					}
 				}
 				.help_icon {
-					width:171px;
+					width:191px;
 					height:172px;
+					margin-top: 32px;
 				}
 			}
 		}
@@ -656,7 +671,7 @@
 		position: relative;
 		width: 960px;
 		box-sizing: border-box;
-		border-bottom: 1px solid #ccc;
+		border-bottom: 1px solid #ededed;
 		&.isFixed{
 	    position:fixed;
 	    background-color:#Fff;
@@ -664,6 +679,8 @@
 	    z-index:10;
 	  }
 		.title {
+			height: 40px;
+			line-height: 40px;
 			font-size:24px;
 			font-family:PingFang-SC-Bold;
 			font-weight:bold;
@@ -700,7 +717,18 @@
 				line-height:22px;
 				margin-right: 40px;
 				&.cur {
+					font-weight: bold;
 					color:rgba(101,39,145,1);
+					position: relative;
+					&::after {
+  					content: '\20';
+						width:48px;
+						height:2px;
+						background:rgba(101,39,145,1);
+						position: absolute;
+						bottom: -16px;
+						left: 0px;
+					}
 				}
 			}
 		}
@@ -739,7 +767,7 @@
 		position: relative;
 		.job_blo {
 			height:120px;
-			padding: 33px 56px;
+			padding: 33px 18px 33px 56px;
 			margin: 0 auto;
 			box-sizing: border-box;
 			display: flex;
@@ -766,7 +794,7 @@
 						font-family:PingFang-SC-Regular;
 						font-weight:400;
 						color:rgba(98,98,98,1);
-						padding: 0 6px;
+						padding: 4px 6px;
 						margin-right: 8px;
 						background:rgba(248,248,248,1);
 						border-radius:2px;
@@ -798,7 +826,7 @@
 					font-family:PingFangSC-Regular;
 					font-weight:400;
 					color:rgba(101,39,145,1);
-					margin-right: 24px;
+					margin-right: 38px;
 				}
 			}
 		}

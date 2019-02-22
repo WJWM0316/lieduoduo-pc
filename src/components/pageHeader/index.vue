@@ -2,11 +2,11 @@
 	<header id="page-header">
 		<section>
 			<div class="left">
-				<img class="logo" src="../../assets/images/logo_white.png" />
+				<img class="logo" src="../../assets/images/logo_white.png" @click="refresh" />
 
 				<ul class="nav">
 					<li class="" @mouseover="pop.isShow = true" @mouseout="pop.isShow = false">打开猎多多</li>
-					<li class="" @click="refresh" >切换为{{identity==='qiuzhi'?'招聘官':'求职者'}}</li>
+					<li class="" @click="refreshID" >切换为{{identity==='qiuzhi'?'招聘官':'求职者'}}</li>
 				</ul>
 
 				<div class="headWC_pop" v-if="pop.isShow">
@@ -22,23 +22,19 @@
 					</div>
 					<div class="triangle_border_right"></div>
 				</div>
-			</div>
-
-			<div class="right" v-if="userInfo && userInfo.token">
-				<span class="name">欢迎登录猎多多，{{userInfo.realname}}</span>
-				<el-dropdown @command="handleClick">
-				  <span class="el-dropdown-link">
+			</div>	
+				<el-dropdown trigger="click"  @command="handleClick">
+					<div class="right" v-if="userInfo && userInfo.token">
+						<span class="name">欢迎登录猎多多，{{userInfo.realname}}</span>
 				  	<img class="op_icon" src="../../assets/images/open.png" />
-				    <!-- <i class="el-icon-arrow-down el-icon--right"></i> -->
-				  </span>
-				  <el-dropdown-menu slot="dropdown">
+						<img class="avatar" :src="userInfo.avatarInfo.middleUrl" />
+					</div>
+
+					<el-dropdown-menu slot="dropdown">
 				    <el-dropdown-item command="out">退出登录</el-dropdown-item>
 				    <el-dropdown-item command="changeId">切换为{{identity==='qiuzhi'?'招聘官':'求职者'}}</el-dropdown-item>
 				  </el-dropdown-menu>
 				</el-dropdown>
-				<!-- <img class="op_icon" src="../../assets/images/open.png" /> -->
-				<img class="avatar" :src="userInfo.avatarInfo.middleUrl" />
-			</div>
 
 			<div class="switchWrap" v-if="isShowSwitch">
 					<div class="switchIdentity">
@@ -53,7 +49,7 @@
 					  		<p class="switch_text2">点击下方按钮即可完成切换</p>
 							</div>
 
-							<div class="refresh" @click="refresh">已切换为求职者</div>
+							<div class="refresh" @click="refreshID">已切换为求职者</div>
 						</div>
 						<div class="switchMain" v-else>
 				  		<p class="switch_text">我的 > 设置 > 切换“招聘官”身份</p>
@@ -63,7 +59,7 @@
 					  		<p class="switch_text2">点击下方按钮即可完成切换</p>
 							</div>
 
-							<div class="refresh" @click="refresh">已切换为招聘官</div>
+							<div class="refresh" @click="refreshID">已切换为招聘官</div>
 						</div>
 					</div>
 			</div>
@@ -164,12 +160,13 @@
 		font-size:14px;
 		font-family:PingFang-SC-Medium;
 		font-weight:500;
-		color:rgba(255,255,255,1);
 		line-height:60px;
 		li {
 			display: inline-block;
 			margin-left: 60px;
 			cursor: pointer;
+			color:rgba(255,255,255,1);
+
 		}
 	}
 	section {
@@ -288,6 +285,24 @@
 		}
 	}
 }
+.el-dropdown {
+	line-height: 30px;
+	display: flex;
+}
+.el-dropdown-menu {
+	.el-dropdown-menu__item {
+		&:hover {
+			background: #efe9f4 !important;
+ 			color: #652791 !important;
+ 			font-weight: 300;
+		}
+	}
+}
+
+.el-popper[x-placement^=bottom] .popper__arrow {
+	left: 69px !important;
+}
+
 </style>
 <script>
 import Vue from 'vue'
@@ -320,8 +335,12 @@ export default class ComponentHeader extends Vue {
 		console.log('ComponentHeader=created====',this.userInfo, this.identity)
 	}
 
+	refresh(){
+		location.reload()
+	}
+
   //切换身份刷新
-  refresh() {
+  refreshID() {
   	let identity = getUserIdentity()
   	let role = identity === 'qiuzhi' ? 2 : 1
   	switchRoleApi({
