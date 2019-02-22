@@ -95,7 +95,7 @@
 	  	then(res=>{
   	  	this.$store.dispatch('setUserInfo', res.data.data);
         this.userInfo = this.$store.state.userInfo
-				this.$router.push({name: this.userInfo.isBusiness === 0 ? 'applyIndex' : 'recruiterIndex'})
+				this.$router.push({name: this.userInfo.isBusiness === 1 ? 'recruiterIndex' : 'applyIndex'})
 	  	})
 	  	.catch(error => {
 	  	  setTimeout(() => {
@@ -136,7 +136,7 @@
 	  		console.log('==>',res.data) 
 	  		if (res.data.data && res.data.data.id) {
   				clearInterval(this.timer)
-	  			this.identity = res.data.data.isBusiness === 0 ? 'qiuzhi' : 'zhaopin'
+	  			this.identity = res.data.data.isBusiness === 1 ? 'zhaopin' : 'qiuzhi'
 					switchId(this.identity)
 					changeBaseURL()
 					this.isPast = false

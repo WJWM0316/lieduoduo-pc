@@ -352,7 +352,7 @@ export default class ComponentHeader extends Vue {
 	  	identity = switchId()
 	  	this.identity = identity
 	  	console.log(this.$store.state.userInfo.isBusiness)
-	  	this.userInfo.isBusiness = role
+	  	this.userInfo.isBusiness = role === 1 ? 1 : 0
 	  	this.$store.dispatch('setUserIdentity', identity)
 	  	this.$store.dispatch('login', this.userInfo)
 	  	console.log(this.$store.state.userInfo.isBusiness)

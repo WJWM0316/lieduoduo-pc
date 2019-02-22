@@ -13,7 +13,6 @@ axios.defaults.baseURL = baseHost()
 
 export const changeBaseURL = () => {
   console.log('axios.defaults.baseURL',axios.defaults.baseURL)
-
   axios.defaults.baseURL = baseHost()
   console.log('axios.defaults.baseURL',axios.defaults.baseURL)
 }
