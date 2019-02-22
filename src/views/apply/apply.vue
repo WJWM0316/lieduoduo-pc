@@ -700,6 +700,7 @@
 		box-sizing: border-box;
 		padding: 10px;
 		cursor: pointer;
+		z-index: 10;
 		.service_icon {
 			width:16px;
 			height:16px;

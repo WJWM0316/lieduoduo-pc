@@ -78,7 +78,7 @@
 	top: 0;
 	left: 0;
 	right: 0;
-	z-index: 2;
+	z-index: 3;
 	.switchWrap {
 		position: fixed;
 		top: 0;
@@ -240,6 +240,7 @@
 		box-sizing: border-box;
 		padding: 0 24px;
 		border-radius: 8px;
+		z-index: 100;
 		.pop_cont {
 			display: flex;
 			justify-content: center;
@@ -382,6 +383,8 @@ export default class ComponentHeader extends Vue {
   			.then(() => {
   				this.$router.push({name: 'login'})
   			})
+  	}else if(e === 'changeId'){
+  		this.refreshID()
   	}
   }
 
@@ -402,7 +405,7 @@ export default class ComponentHeader extends Vue {
 
 	// 打开切换身份
 	changeId () {
-  	this.isShowSwitch = !this.isShowSwitch
+  		this.isShowSwitch = !this.isShowSwitch
 	}
 }
 </script>
