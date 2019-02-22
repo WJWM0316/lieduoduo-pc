@@ -1,10 +1,10 @@
 <template>
   <section id="app">
-    <page-header v-if="!shouldFloatingBoxShown()" />
+    <page-header v-if="!shouldTopShown()" />
 
     <router-view class="pages" />
 
-    <page-footer v-if="!shouldFloatingBoxShown()" />
+    <page-footer v-if="!shouldBottomShown()" />
   </section>
 </template>
 <script>
@@ -37,9 +37,21 @@ import PageHeader from './components/pageHeader/index.vue'
 export default class App extends Vue {
 
   // 白名单模式，下面路由不显示管理页面的侧边栏,和顶部的导航栏
-  shouldFloatingBoxShown() {
+  shouldTopShown() {
     return [
-      'login'
+      'login',
+      'userDeal',
+      'issueRule'
+    ].includes(this.$store.state.pageName)
+  }
+
+  // 白名单模式，下面路由不显示管理页面的侧边栏,和顶部的导航栏
+  shouldBottomShown() {
+    return [
+      'login',
+      'postJob',
+      'userDeal',
+      'issueRule'
     ].includes(this.$store.state.pageName)
   }
 }

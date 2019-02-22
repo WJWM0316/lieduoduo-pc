@@ -216,7 +216,8 @@
 </script>
 <style lang="less">
 #login {
-	position: absolute;
+	padding: 0;
+	position: fixed;
 	left: 0;
 	top: 0;
 	right: 0;
@@ -247,7 +248,7 @@
 			position: absolute;
 			width:310px;
 			height:420px;
-			right: -350px;
+			right: -340px;
 			background: #fff;
 			border-radius:4px;
 			top: 0;
@@ -263,7 +264,7 @@
 				width:158px;
 				height:34px;
 				border-radius:17px;
-				//border:1px solid rgba(239,233,244,1);
+				border:1px solid rgba(239,233,244,1);
 				margin: 24px auto 0px auto;
 				display: flex;
 				flex-direction: row;
@@ -427,11 +428,11 @@
 .triangle_border_left{
     width: 0;
     height: 0;
-    border-width: 10px 14px 10px 0;
+    border-width: 8px 11px 8px 0;
     border-style: solid;
     border-color: transparent #fff transparent transparent;
     position: absolute;
-    left: -14px;
+    left: -10px;
     top: 50%;
     margin-top: -20px;
 }
