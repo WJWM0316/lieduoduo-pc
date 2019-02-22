@@ -329,7 +329,7 @@ export default class ComponentHeader extends Vue {
 
 	created(){
 		this.userInfo = this.$store.state.userInfo
-		this.identity = this.userInfo.isBusiness === 1 ? 'qiuzhi' : 'zhaopin'
+		this.identity = this.userInfo.isBusiness === 0 ? 'qiuzhi' : 'zhaopin'
 		this.$store.dispatch('setUserIdentity', this.identity)
 		switchId(this.identity)
 		changeBaseURL()
