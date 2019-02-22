@@ -490,8 +490,8 @@
 </script>
 <style lang="less">
 #recruiter {
-	padding-top: 92px;
-	padding-bottom: 32px;
+	// padding-top: 92px;
+	// padding-bottom: 32px;
 	.messageBox {
 		width:432px;
 		height:192px;
@@ -678,7 +678,7 @@
 		&.isFixed{
 	    position:fixed;
 	    background-color:#Fff;
-	    top: 62px;
+	    top: 60px;
 	    z-index:10;
 	  }
 		.title {

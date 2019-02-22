@@ -437,17 +437,32 @@
 	align-items: center;	
 	flex-direction: column;
 	
+
 	.test {
 		font-size: 14px;
 	}
 	.resume_main {
-		height: 100vh;
-		width: 960px;
+		//height: 100vh;
+		position: fixed;
+		z-index: 2;
+		left: 0;
+		right: 0;
+		top: 60px;
+		bottom: 200px;
+		width: 100%;
+		margin: 0 auto;
 		display: flex;
 		justify-content: center;
 		align-items: center;	
 		flex-direction: column;
+
+		padding: 120px 0 80px 0;
+		overflow-x: scroll;
+
 		&.no_upload {
+			padding: 0 ;
+			width: 960px;
+
 			flex-direction: row;
 		}
 		.main_cont {
@@ -675,6 +690,8 @@
 		color:rgba(101,39,145,1);
 		line-height:18px;
 		position: fixed;
+		top: 50%;
+		margin-top: -60px;
 		right: 0;
 		width:36px;
 		height:120px;

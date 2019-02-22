@@ -169,9 +169,12 @@ input[type="number"]+div{
   // left: 0;
   // right: 0;
   // top: 60px;
-  // bottom: 200px;
+  // bottom: 230px;
   background: #FBFBFF;
   // margin-top: 60px;
+
+  padding: 100px 0 230px 0px;
+  width: 100%;
 }
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
@@ -179,6 +182,8 @@ input[type="number"]+div{
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  height: 100vh;
+  background: #FBFBFF;
 }
 .hidden {
   display: none;

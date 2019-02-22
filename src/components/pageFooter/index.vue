@@ -37,11 +37,11 @@ export default PageFooter
   text-align: left;
   font-size: 14px;
   box-shadow: 0px 2px 8px 0px rgba(29,45,53,0.06);
-  // position: fixed;
-  // bottom: 0;
-  // left: 0;
-  // right: 0;
-  // z-index: 2;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
   overflow: hidden;
 
   font-size:14px;
