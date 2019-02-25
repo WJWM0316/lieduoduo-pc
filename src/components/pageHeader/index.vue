@@ -330,7 +330,7 @@ export default class ComponentHeader extends Vue {
 
 	created(){
 		this.userInfo = this.$store.state.userInfo
-		if(this.$store.state.pageName === 'recruiterIndex'){
+		if(this.$store.state.pageName === 'recruiterIndex' || this.$store.state.pageName === 'postJob'){
 			if(this.userInfo.isBusiness !== 1 ){
 				this.$router.push({
 					name: 'applyIndex'
