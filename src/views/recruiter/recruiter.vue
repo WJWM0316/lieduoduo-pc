@@ -146,7 +146,7 @@
 	import Vue from 'vue'
 	import Component from 'vue-class-component'
 	import { uploadApi, waitApi, getQrCodeApi, getMyInfoApi } from '../../api/auth'
-	import { getListApi, getMyListApi, getJobNameListApi, closePositionApi, openPositionApi, editPositionApi, getStatusTotalApi  } from '../../api/position'
+	import { getListApi, getMyListApi, closePositionApi, openPositionApi, editPositionApi, getStatusTotalApi, getTypeListApi } from '../../api/position'
 
 	@Component({
 	  name: 'lighthouse-list',
@@ -242,9 +242,6 @@
 
 
 	  init() {
-
-
-
     	this.form = Object.assign(this.form, this.$route.query || {})
 	    this.userInfo = this.$store.state.userInfo
 
@@ -261,7 +258,7 @@
 	    		}
 	    	})
 	    }
-	    this.getJobNameList()
+	    // this.getJobNameList()
   		this.getPositionList()
 
 	    this.getMyInfo({
@@ -411,7 +408,7 @@
 	  		count: 20,
 	  		name: ''
 	  	}
-	  	getJobNameListApi(data).then(res=>{
+	  	getTypeListApi(data).then(res=>{
 	  		res.data.data.map(item=>{
 	  			item.active = false
 	  		})
@@ -680,7 +677,7 @@
 	    position:fixed;
 	    background-color:#Fff;
 	    top: 60px;
-	    z-index:10;
+	    z-index:1;
 	  }
 		.title {
 			height: 40px;

@@ -68,3 +68,10 @@ export const professionalSkillsApi = data => request(
 	'get',
 	data
 )
+
+// 职位技能列表
+export const getTypeListApi = data => request(
+	`/position/typelist`,
+	'get',
+	data
+)
