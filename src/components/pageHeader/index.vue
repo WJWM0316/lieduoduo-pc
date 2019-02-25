@@ -329,20 +329,33 @@ export default class ComponentHeader extends Vue {
 
 	created(){
 		this.userInfo = this.$store.state.userInfo
-		// if(this.$store.state.pageName === 'recruiterIndex'  ){
-		// 	if(this.userInfo.isBusiness===1)
-		// 	this.$router.push({
-		// 		name: identity === 'zhaopin' ? 'recruiterIndex' : 'applyIndex'
-		// 	})
-		// }else if(this.$store.state.pageName === 'applyIndex' && this.userInfo.isBusiness!==0){
+		if(this.$store.state.pageName === 'recruiterIndex'  ){
+			if(this.userInfo.isBusiness ===0 ){
+				this.$router.push({
+					name: 'applyIndex'
+				})
 
-		// }
+				this.identity = 'qiuzhi'
+				switchId('qiuzhi')
+				changeBaseURL()
+			}
+			
+		}else if(this.$store.state.pageName === 'applyIndex' ){
+			if(this.userInfo.isBusiness ===1){
+				this.$router.push({
+					name: 'recruiterIndex'
+				})
 
-		this.identity = this.userInfo.isBusiness === 0 ? 'qiuzhi' : 'zhaopin'
-		this.$store.dispatch('setUserIdentity', this.identity)
-		console.log(this.$store.state.pageName)
-		switchId(this.identity)
-		changeBaseURL()
+				this.identity = 'zhaopin'
+				switchId('zhaopin')
+				changeBaseURL()
+			}
+		}
+
+
+		// this.identity = this.userInfo.isBusiness === 0 ? 'qiuzhi' : 'zhaopin'
+		// switchId(this.identity)
+		// changeBaseURL()
 		console.log('ComponentHeader=created====',this.userInfo, this.identity)
 	}
 
@@ -363,7 +376,6 @@ export default class ComponentHeader extends Vue {
 	  	this.identity = identity
 	  	console.log(this.$store.state.userInfo.isBusiness)
 	  	this.userInfo.isBusiness = this.identity === 'zhaopin' ? 1 : 0
-	  	this.$store.dispatch('setUserIdentity', identity)
 	  	this.$store.dispatch('login', this.userInfo)
 	  	console.log(this.$store.state.userInfo.isBusiness)
 	  	changeBaseURL()
