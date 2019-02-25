@@ -201,5 +201,11 @@ input[type="number"]+div{
   display: none;
 }
 
+.textEllipsis {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
 
 </style>

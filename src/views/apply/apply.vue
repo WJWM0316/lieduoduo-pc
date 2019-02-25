@@ -455,14 +455,12 @@
 		justify-content: center;
 		align-items: center;	
 		flex-direction: column;
-
 		padding: 120px 0 80px 0;
-		overflow-x: scroll;
-
+		overflow-y: scroll;
 		&.no_upload {
 			padding: 0 ;
 			width: 960px;
-
+			overflow-x: hidden;
 			flex-direction: row;
 		}
 		.main_cont {

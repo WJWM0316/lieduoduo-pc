@@ -292,6 +292,7 @@
 }
 .el-dropdown-menu {
 	.el-dropdown-menu__item {
+		font-weight: 300;
 		&:hover {
 			background: #efe9f4 !important;
  			color: #652791 !important;
@@ -329,34 +330,36 @@ export default class ComponentHeader extends Vue {
 
 	created(){
 		this.userInfo = this.$store.state.userInfo
-		if(this.$store.state.pageName === 'recruiterIndex'  ){
-			if(this.userInfo.isBusiness ===0 ){
+		if(this.$store.state.pageName === 'recruiterIndex'){
+			if(this.userInfo.isBusiness !== 1 ){
 				this.$router.push({
 					name: 'applyIndex'
 				})
-
 				this.identity = 'qiuzhi'
-				switchId('qiuzhi')
-				changeBaseURL()
+			}else {
+				this.identity = 'zhaopin'
 			}
-			
-		}else if(this.$store.state.pageName === 'applyIndex' ){
-			if(this.userInfo.isBusiness ===1){
+		}else if(this.$store.state.pageName === 'applyIndex'){
+			if(this.userInfo.isBusiness !==0){
 				this.$router.push({
 					name: 'recruiterIndex'
 				})
-
 				this.identity = 'zhaopin'
-				switchId('zhaopin')
-				changeBaseURL()
+			}else {
+				this.identity = 'qiuzhi'
 			}
 		}
+
+		switchId(this.identity)
+		changeBaseURL()
+
 
 
 		// this.identity = this.userInfo.isBusiness === 0 ? 'qiuzhi' : 'zhaopin'
 		// switchId(this.identity)
 		// changeBaseURL()
-		console.log('ComponentHeader=created====',this.userInfo, this.identity)
+		console.log('Header===', this.identity)
+		console.log('Header===',this.userInfo.isBusiness)
 	}
 
 	refresh(){

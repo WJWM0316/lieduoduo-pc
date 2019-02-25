@@ -3,12 +3,12 @@
     <el-form class="edit-form" ref="form" :model="form" :rules="rules" label-width="120px" label-suffix="：">
       <h3 class="title">职位基本信息</h3>
       <p class="hint">加“ <span style="color: red; font-size: 15px;">*</span> ”内容，在确认发布成功后，将无法修改</p>
-      <el-form-item label="职位名称" prop="position_name" style="width: 380px;">
-        <el-input v-model="form.position_name" placeholder="限制50个字以内" :maxlength="50"></el-input>
+      <el-form-item label="职位名称" prop="position_name" style="width: 450px;">
+        <el-input v-model="form.position_name" placeholder="限制50个字以内" :maxlength="50" style="width: 382px;"></el-input>
       </el-form-item>
 
-      <el-form-item label="职位类别" prop="type" style="width: 380px;">
-        <el-select v-model="selectPositionItem.name" placeholder="点击选择职位类别" @change="changePosition" style="width: 100%;">
+      <el-form-item label="职位类别" prop="type" style="width: 450px;">
+        <el-select v-model="selectPositionItem.name" placeholder="点击选择职位类别" @change="changePosition" style="width: 382px;">
           <el-option
             v-for="item in typeList"
             :key="item.value"
@@ -18,25 +18,32 @@
         </el-select>
       </el-form-item>
       
-      <el-form-item label="工作地点" prop="address_id" style="width: 380px;">
-        <el-select v-model="form.address_id" placeholder="点击选择工作地点" @change="changeAdress" style="width: 100%;">
+      <el-form-item label="工作地点" prop="address_id" style="width: 450px;">
+        <el-select v-model="form.address_id" placeholder="点击选择工作地点" @change="changeAdress" style="width: 382px;">
           <el-option
             v-for="item in addressList"
             :key="item.value"
             :label="item.label"
-            :value="item.value">
+            :value="item.value"
+            style="width: 382px;"
+            >
 
-            <span style="float: left;color: #999;" v-if="item.value!=='0'">{{ item.label }}</span>
-            <span style="float: left; color: #652791;" v-else>{{ item.label }}</span>
+            <div class="address_line textEllipsis"  v-if="item.value!=='0'">
+              {{ item.label }}
+            </div>
+            <div class="address_line cur textEllipsis" v-else>
+              <img class="add_icon" src="../../assets/images/add_icon.png" />
+              {{ item.label }}
+            </div>
           </el-option>
         </el-select>
       </el-form-item>
 
-      <h3 class="title">职位要求</h3>
+      <h3 class="title second">职位要求</h3>
       <p class="hint">我们将通过以下条件，为您精确推荐合适的求职者，请尽量详细填写</p>
 
-      <el-form-item label="经验要求" prop="work_experience" style="width: 380px;">
-        <el-select v-model="form.work_experience" placeholder="请选择经验要求"  style="width: 100%;">
+      <el-form-item label="经验要求" prop="work_experience" style="width: 450px;">
+        <el-select v-model="form.work_experience" placeholder="请选择经验要求"  style="width: 382px;">
           <el-option
             v-for="item in experienceList"
             :key="item.value"
@@ -46,8 +53,8 @@
         </el-select>
       </el-form-item>
 
-      <el-form-item label="最低学历" prop="education" style="width: 380px;">
-        <el-select v-model="form.education" placeholder="请选择学历要求"  style="width: 100%;">
+      <el-form-item label="最低学历" prop="education" style="width: 450px;">
+        <el-select v-model="form.education" placeholder="请选择学历要求"  style="width: 382px;">
           <el-option
             v-for="item in educationList"
             :key="item.value"
@@ -57,30 +64,33 @@
         </el-select>
       </el-form-item>
 
-      <el-form-item label="薪酬范围" prop="emolument_min" style="width: 380px;">
-        <el-select v-model="form.emolument_min" placeholder="选择薪资范围" @change="changeEmolumentMin"  style="width: 100px;">
-          <el-option
-            v-for="item in emolumentMinList"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
-        ----
-        <el-select v-model="form.emolument_max" placeholder="选择薪资范围"  style="width: 100px;">
-          <el-option
-            v-for="item in emolumentMaxList"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
+      <el-form-item class="emolument" label="薪酬范围" prop="emolument_min" style="width: 450px;">
+        <div class="emolument_cont">
+          <el-select v-model="form.emolument_min" placeholder="选择薪资范围" @change="changeEmolumentMin"  style="width: 130px;">
+            <el-option
+              v-for="item in emolumentMinList"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+          <span class="emolument_line">-</span>
+          <el-select v-model="form.emolument_max" placeholder="选择薪资范围"  style="width: 130px;">
+            <el-option
+              v-for="item in emolumentMaxList"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+        </div>
+        
       </el-form-item>
 
-      <el-form-item label="技能要求" prop="skill_tag" style="width: 380px;">
+      <el-form-item label="技能要求" prop="skill_tag" style="width: 450px;">
         <el-select
           @visible-change="skillChange"
-          style="width: 100%;"
+          style="width: 382px;"
           v-model="form.labels"
           multiple
           :multiple-limit="4"
@@ -97,8 +107,16 @@
         </el-select>
       </el-form-item>
 
-      <el-form-item label="职位描述" prop="describe" style="width: 700px;" >
-        <el-input type="textarea" autosize placeholder="请填写职位描述" :maxlength="5000" v-model="form.describe"></el-input>
+      <el-form-item label="职位描述" prop="describe" style="width: 520px;" >
+        <el-input 
+          type="textarea" 
+          :autosize="{ minRows: 6}"
+          placeholder="请填写职位描述" 
+          :maxlength="5000" 
+          v-model="form.describe" 
+          style="width: 520px;"
+         ></el-input>
+        </el-input>
       </el-form-item>
 
       <p class="ruleHint">发布职位即表示同意遵守<span @click="toIssueRule">《猎多多职位信息发布规则》</span>，如违反将导致您的账号被锁定</p>

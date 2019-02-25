@@ -40,7 +40,7 @@ axios.interceptors.response.use(
       console.log(err.response.data.httpStatus)
       console.log(router)
       console.log(router.mode)
-      router.replace({name: 'recruiterIndex'})
+      router.replace({name: 'login'})
       removeAccessToken()
       return
     }

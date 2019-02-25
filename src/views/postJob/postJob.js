@@ -42,9 +42,12 @@ var citylocation = {}
 })
 export default class CommunityEdit extends Vue {
   // 列表
-  deletePoster = []
   options= [
   ]
+
+  autosize = {
+    minRows: 4
+  }
   //职位类别
   typeList = [
     {
@@ -119,14 +122,6 @@ export default class CommunityEdit extends Vue {
     {
       value: '0',
       label: '添加新的公司地址',
-    },
-    {
-      value: '3',
-      label: '添加新的公asdasdasdasd司地址',
-    },
-    {
-      value: '1',
-      label: '添加新的asdasdasd公asdfvsxcvbnhjhgfdcfghjkmhng司地址',
     }
   ]
 
@@ -216,7 +211,7 @@ export default class CommunityEdit extends Vue {
     this.getProfessionalSkills()
     this.getLabelPositionList()
 
-    // this.getAdressList()
+    this.getAdressList()
     this.getMyInfo()
   }
   

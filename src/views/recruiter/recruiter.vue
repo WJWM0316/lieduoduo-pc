@@ -91,7 +91,11 @@
 		  		<img class="clo" src="../../assets/images/clo.png" @click="todoAction('cloPop')">
 		  		<p class="share_txt" >使用「微信」扫描小程序码分享职位</p>
 		  		<img class="code" :src="shareSelectItem.positionQrCode" >
-		  		<p class="share_help_text"  @mouseover="isHelpShow = true" @mouseout="isHelpShow = false">分享帮助<span>?</span></p>
+		  		<p class="share_help_text"  @mouseover="isHelpShow = true" @mouseout="isHelpShow = false">
+		  			分享帮助
+		  			<img class="ques_icon" src="../../assets/images/question-circle2.png">
+		  			<!-- <span>?</span> -->
+		  		</p>
 		  	</div>
 	      
 	      <div class="share_blo share_help" v-if="isHelpShow">
@@ -634,25 +638,22 @@
 					line-height:22px;
 					text-align: center;
 					cursor: pointer;
-					span {
+					.ques_icon {
 						width:14px;
 						height:14px;
-						background:rgba(101,39,145,1);
-						border-radius: 50%;
-						color: #fff;
-						font-size: 12px;
-						text-align: center;
-						line-height: 14px;
 						display: inline-block;
 						margin-left: 6px;
 						position: relative;
-						top: -1px;
+						top: -3px;
 					}
 				}
 				.help_icon {
 					width:191px;
 					height:172px;
 					margin-top: 32px;
+					position: relative;
+
+					right: -10px;
 				}
 			}
 		}
