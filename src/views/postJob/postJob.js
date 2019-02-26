@@ -272,7 +272,7 @@ export default class CommunityEdit extends Vue {
         }
         form.labels = []
         data.data.skillsLabel.map(item=>{
-          form.labels.push(item.labelId)
+          form.labels.push(item.name)
         })
 
         this.addressList[1] = {

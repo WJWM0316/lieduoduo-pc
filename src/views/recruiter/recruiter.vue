@@ -2,20 +2,23 @@
 	<div id="recruiter" @scroll="handleScroll">
 		<div class="recruiter_cont">
 			<div class="header_warp">
-					<div class="header" :class="searchBarFixed === true ? 'isFixed' :''">
-						<div class="header_status">
-							<h2 class="title">职位管理</h2>
-				      <div class="addJob" size="small" type="primary" @click="todoAction('addJob')">发布职位</div>
-							<ul class="recruiter_classify">
-								<li class="" v-for="item,index in recruiterList" @click="catchRecruiter(index)" :class="{'cur':item.active}">{{item.name}}   ({{item.total}})</li>
-							</ul>
-						</div>
+				<h2 class="title">
+					职位管理
+					<div class="addJob" size="small" type="primary" @click="todoAction('addJob')">发布职位</div>
+				</h2>
+				<div class="header_navs_wrap">
+					<div class="header_navs"  :class="searchBarFixed === true ? 'isFixed' :''">
+						<ul class="recruiter_classify">
+							<li class="" v-for="item,index in recruiterList" @click="catchRecruiter(index)" :class="{'cur':item.active}">{{item.name}}   ({{item.total}})</li>
+						</ul>
 						<div class="job_classify_wrap" v-if="jobNameList.length>0">
 							<ul class="job_classify">
 								<li class="" v-for="item,index in jobNameList" @click="catchJob(index)" :class="{'slet':item.active}">{{item.name}}</li>
 							</ul>
 						</div>
 					</div>
+				</div>
+				
 			</div>
 			
 			
@@ -53,10 +56,10 @@
 	  	</ul>
 
 	  	<div class="job_cont_none" v-else>
-	  			<div class="none_hint" @click="toTop">
-			  		<img class="hint_icon" src="../../assets/images/open.png"/>
-	  				当前没有招聘中职位~
-	  			</div>
+	  		<img class="hint_icon" src="../../assets/images/ufo.png"/>
+  			<div class="none_hint">
+  				当前没有招聘中职位~
+  			</div>
 	  	</div>
 		</div>
 		<el-pagination
@@ -345,7 +348,7 @@
 		handleScroll(e){
 			var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
 
-			if(scrollTop>32){
+			if(scrollTop>155){
 				this.searchBarFixed = true
 			}else {
 				this.searchBarFixed = false
@@ -676,31 +679,99 @@
 		position: relative;
 		width: 960px;
 		box-sizing: border-box;
-	}
-	.header {
-		height: 222px;
-		&.isFixed{
-	    position:fixed;
-	    background-color:#Fff;
-	    top: 60px;
-	    z-index:1;
-	  }
-		.header_status {
-			height: 160px;
-			padding: 36px  56px 0 56px;
+		.header_navs_wrap {
+			height: 110px;
+			width: 960px;
+		}
+		.header_navs {
+			height: 110px;
 			position: relative;
 			width: 960px;
-			box-sizing: border-box;
+			&.isFixed{
+		    position:fixed;
+		    background-color:#Fff;
+		    top: 60px;
+		    z-index:1;
+		  }
+  		.recruiter_classify {
+				padding: 0  56px 0 56px;
+				box-sizing: border-box;
+  			display: flex;
+  			flex-direction: row;
+  			justify-content: flex-start;
+  			height: 46px;
+  			width: 100%;
+  			li {
+  				font-size:16px;
+  				font-family:PingFang-SC-Bold;
+  				font-weight:bold;
+  				color:rgba(98,98,98,1);
+  				margin-right: 40px;
+					line-height: 46px;
+  				&.cur {
+  					font-weight: bold;
+  					color:rgba(101,39,145,1);
+  					position: relative;
+  					&::after {
+    					content: '\20';
+  						width:48px;
+  						height:2px;
+  						background:rgba(101,39,145,1);
+  						position: absolute;
+  						bottom: -0px;
+  						left: 0px;
+  					}
+  				}
+  			}
+  		}
+			.job_classify_wrap {
+				height: 62px;
+				width:960px;
+				.job_classify {
+					width:960px;
+					height:62px;
+					background:rgba(248,248,248,1);
+					padding: 20px 56px;
+					display: flex;
+					flex-direction: row;
+					// justify-content: flex-start;
+					// align-items: center;	
+					box-sizing: border-box;
+					overflow-x: scroll;
+					li {
+						padding: 1px 14px;
+						font-size:14px;
+						font-family:PingFang-SC-Regular;
+						font-weight:400;
+						color:rgba(40,40,40,1);
+						display: block;
+						float: left;
+				    white-space: nowrap;
+				    line-height: 20px;
+				    height: 20px;
+						&.slet {
+							background:rgba(132,82,167,1);
+							font-family:PingFang-SC-Medium;
+							color:rgba(255,255,255,1);
+						}
+					}
+				}
+			}
+			.job_classify::-webkit-scrollbar {
+		    //display: none;
+			}
 		}
 		
 		.title {
-			height: 40px;
-			line-height: 40px;
+			padding-left: 56px;
+			height: 110px;
+			line-height: 110px;
 			font-size:24px;
 			font-family:PingFang-SC-Bold;
 			font-weight:bold;
 			color:rgba(40,40,40,1);
 			text-align: left;
+			position: relative;
 		}
 		.addJob {
 			width:124px;
@@ -717,72 +788,11 @@
 			color:rgba(255,255,255,1);
 			box-sizing: border-box;
 			cursor: pointer;
+			text-align: center;
 		}
-		.recruiter_classify {
-			display: flex;
-			flex-direction: row;
-			justify-content: flex-start;
-			position: absolute;
-			bottom: 16px;
-			li {
-				font-size:16px;
-				font-family:PingFang-SC-Bold;
-				font-weight:bold;
-				color:rgba(98,98,98,1);
-				line-height:22px;
-				margin-right: 40px;
-				&.cur {
-					font-weight: bold;
-					color:rgba(101,39,145,1);
-					position: relative;
-					&::after {
-  					content: '\20';
-						width:48px;
-						height:2px;
-						background:rgba(101,39,145,1);
-						position: absolute;
-						bottom: -16px;
-						left: 0px;
-					}
-				}
-			}
-		}
-	}
-	.job_classify_wrap {
 
-		width:960px;
-		.job_classify {
-			width:960px;
-			height:62px;
-			background:rgba(248,248,248,1);
-			padding: 20px 56px;
-			display: flex;
-			flex-direction: row;
-			// justify-content: flex-start;
-			// align-items: center;	
-			box-sizing: border-box;
-			overflow-x: scroll;
-			li {
-				padding: 1px 14px;
-				font-size:14px;
-				font-family:PingFang-SC-Regular;
-				font-weight:400;
-				color:rgba(40,40,40,1);
-				display: block;
-				float: left;
-		    white-space: nowrap;
-		    line-height: 20px;
-				&.slet {
-					background:rgba(132,82,167,1);
-					font-family:PingFang-SC-Medium;
-					color:rgba(255,255,255,1);
-				}
-			}
-		}
 	}
-	.job_classify::-webkit-scrollbar {
-    //display: none;
-	}
+
 	.job_list {
 		position: relative;
 		.job_blo {
@@ -885,13 +895,19 @@
 		line-height: 554px;
 		font-size: 18px;
 		display: flex;
+		flex-direction: column;
 		justify-content: center;
 		align-items: center;
 		.none_hint {
-
-			.hint_icon {
-
-			}
+			font-size:14px;
+			font-family:PingFang-SC-Regular;
+			font-weight:400;
+			color:rgba(146,146,146,1);
+			line-height:20px;
+		}
+		.hint_icon {
+			width: 170px;
+			height: 120px;
 		}
 	}
 	.pagination {
@@ -1034,6 +1050,12 @@
 	    left: -8px;
 	    top: 50%;
 	    margin-top: -20px;
+	}
+
+	.pagination {
+		width: 960px;
+		margin: 0 auto;
+		box-sizing: border-box;
 	}
 }
 </style>
