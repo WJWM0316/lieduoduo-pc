@@ -99,7 +99,7 @@
           default-first-option
           placeholder="请选择技能要求">
           <el-option
-            v-for="item in options"
+            v-for="item in options2"
             :key="item.labelId"
             :label="item.name"
             :value="item.labelId">
@@ -138,7 +138,11 @@
             <img class="clo" src="../../assets/images/clo.png" @click="popCancel('name')" />
             <search-bar class="f-float-left" @search="handleSearch" :width="'200'" v-model="searchPosition" placeholder="请输入职位关键词" style="margin-top: 12px;"></search-bar>
             <ul class="job_classily">
-              <li v-for="item,index in secondPositionList" @click="selectSecondPosition(index)">{{item.active?'-':'+'}}{{item.name}}</li>
+              <li v-for="item,index in secondPositionList" @click="selectSecondPosition(index)">
+                <img class="classily_icon classily_open" src="../../assets/images/add_icon.png" v-if="!item.active" />
+                <img class="classily_icon classily_close" src="../../assets/images/close_icon.png" v-else />
+                {{item.name}}
+              </li>
             </ul>
 
             <ul class="open_jobs" v-if="thirdPositionList.length>0">

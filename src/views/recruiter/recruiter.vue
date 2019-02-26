@@ -11,11 +11,11 @@
 					</div>
 			</div>
 			
-			<!-- <div class="job_classify_wrap">
+			<div class="job_classify_wrap">
 				<ul class="job_classify">
-					<li class="" v-for="item,index in jobNameList" @click="catchJob(index)" :class="{'slet':item.active}">{{item.positionName}}</li>
+					<li class="" v-for="item,index in jobNameList" @click="catchJob(index)" :class="{'slet':item.active}">{{item.name}}</li>
 				</ul>
-			</div> -->
+			</div>
 	  	
 	  	<ul class="job_list" v-if="jobList.length>0">
 	  		<li class="job_blo" v-for="item,index in jobList">
@@ -207,9 +207,9 @@
 		form = {
 		  page: 1,
 			recruiter: 5,
-			name: '', // 职位名称
 			status: '1,2', // 状态
 			is_online: 1,
+			type: ''
 		}
 
 		searchBarFixed = false // nav是否置顶
@@ -258,7 +258,7 @@
 	    		}
 	    	})
 	    }
-	    // this.getJobNameList()
+	    this.getJobNameList()
   		this.getPositionList()
 
 	    this.getMyInfo({
@@ -268,7 +268,6 @@
 	  }
 
 	  todoAction(type, id) {
-	  	console.log(type)
 	    switch(type) {
 	      case 'cloPop':
 	        this.pop = {
@@ -373,9 +372,7 @@
 	  getMyInfo(){
 	  	return getMyInfoApi().then(res=>{
 	  		this.uid = res.data.data.uid
-	  		console.log(res.data.data)
 	  	}).catch(e => {
-	  		console.log(e)
         this.$message.error(e.data.msg)
      	})
 	  }
@@ -404,20 +401,21 @@
 	  // nav状态列表
 	  getJobNameList () {
 	  	let data = {
-	  		page: 1,
-	  		count: 20,
-	  		name: ''
+	  		status: this.form.status,
 	  	}
-	  	getTypeListApi(data).then(res=>{
+	  	getTypeListApi(data).then(res => {
+	  		console.log(res.data)
 	  		res.data.data.map(item=>{
 	  			item.active = false
 	  		})
 
 	  		res.data.data.unshift({
-	  			positionName:'全部',
+	  			name:'全部',
 	  			active: true
 	  		})
+
 	  		this.jobNameList = res.data.data
+	  		console.log(this.jobNameList)
 	  	})
 	  }
 
@@ -464,7 +462,7 @@
 	  	this.jobNameList.map((item,idx) =>{
 	  		if(idx === index){
 	  			item.active = !item.active
-	  			that.form.name = item.positionName !== '全部' ? item.positionName : ''
+	  			that.form.type = item.name !== '全部' ? item.id : ''
 
 	  			that.getPositionList({page:1})
 	  		}else {
@@ -478,7 +476,6 @@
 	  }
 
 	  openShare(index){
-      console.log('share',index)
       this.pop = {
       	isShow: true,
 				type: 'share'
@@ -756,6 +753,7 @@
 				display: block;
 				float: left;
 		    white-space: nowrap;
+		    line-height: 20px;
 				&.slet {
 					background:rgba(132,82,167,1);
 					font-family:PingFang-SC-Medium;

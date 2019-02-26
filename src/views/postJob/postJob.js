@@ -42,8 +42,8 @@ var citylocation = {}
 })
 export default class CommunityEdit extends Vue {
   // 列表
-  options= [
-  ]
+  options= []
+  options2= []
 
   autosize = {
     minRows: 4
@@ -701,6 +701,10 @@ export default class CommunityEdit extends Vue {
     console.log(this.selectPositionItem.name)
     if(e && this.selectPositionItem.name.length === 0){
       this.$message.error('请先选择职位类别')
+      this.options2 = []
+
+    }else {
+      this.options2 = this.options
     }
   }
 }
