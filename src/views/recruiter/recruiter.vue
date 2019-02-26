@@ -11,11 +11,11 @@
 					</div>
 			</div>
 			
-			<div class="job_classify_wrap">
+			<!-- <div class="job_classify_wrap">
 				<ul class="job_classify">
 					<li class="" v-for="item,index in jobNameList" @click="catchJob(index)" :class="{'slet':item.active}">{{item.name}}</li>
 				</ul>
-			</div>
+			</div> -->
 	  	
 	  	<ul class="job_list" v-if="jobList.length>0">
 	  		<li class="job_blo" v-for="item,index in jobList">
