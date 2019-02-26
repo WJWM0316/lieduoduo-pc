@@ -268,6 +268,8 @@ export default class CommunityEdit extends Vue {
           }else {
             this.setSkillsList(true)
           }
+        }else {
+          this.skillChange(true)
         }
 
         form.labels = []

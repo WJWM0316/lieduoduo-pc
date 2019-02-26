@@ -3,11 +3,26 @@
     <el-form class="edit-form" ref="form" :model="form" :rules="rules" label-width="120px" label-suffix="：">
       <h3 class="title">职位基本信息</h3>
       <p class="hint">加“ <span style="color: red; font-size: 15px;">*</span> ”内容，在确认发布成功后，将无法修改</p>
-      <el-form-item label="职位名称" prop="position_name" style="width: 450px;">
+
+
+      <el-form-item label="职位名称" prop="position_name" style="width: 450px;" v-if="isEdit">
+        <el-input v-model="form.position_name" :disabled="true" placeholder="限制50个字以内" :maxlength="50" style="width: 382px;"></el-input>
+      </el-form-item>
+      <el-form-item label="职位名称" prop="position_name" style="width: 450px;" v-else>
         <el-input v-model="form.position_name" placeholder="限制50个字以内" :maxlength="50" style="width: 382px;"></el-input>
       </el-form-item>
 
-      <el-form-item label="职位类别" prop="type" style="width: 450px;">
+      <el-form-item label="职位类别" prop="type" style="width: 450px;" v-if="isEdit">
+        <el-select :disabled="true" v-model="selectPositionItem.name" placeholder="点击选择职位类别" @change="changePosition" style="width: 382px;">
+          <el-option
+            v-for="item in typeList"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="职位类别" prop="type" style="width: 450px;" v-else>
         <el-select v-model="selectPositionItem.name" placeholder="点击选择职位类别" @change="changePosition" style="width: 382px;">
           <el-option
             v-for="item in typeList"
