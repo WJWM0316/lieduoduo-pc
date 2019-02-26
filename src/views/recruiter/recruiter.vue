@@ -891,8 +891,8 @@
 		}
 	}
 	.job_cont_none {
-		height: 554px;
-		line-height: 554px;
+		height: 354px;
+		line-height: 354px;
 		font-size: 18px;
 		display: flex;
 		flex-direction: column;
