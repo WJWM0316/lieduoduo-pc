@@ -50,7 +50,7 @@ export default class App extends Vue {
     return [
       'login',
       'postJob',
-      'userDeal',
+      // 'userDeal',
       'issueRule'
     ].includes(this.$store.state.pageName)
   }

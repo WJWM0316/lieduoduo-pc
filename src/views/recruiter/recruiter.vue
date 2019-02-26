@@ -834,7 +834,7 @@
 						font-family:PingFang-SC-Regular;
 						font-weight:400;
 						color:rgba(98,98,98,1);
-						padding: 4px 6px;
+						padding: 1px 6px;
 						margin-right: 8px;
 						background:rgba(248,248,248,1);
 						border-radius:2px;

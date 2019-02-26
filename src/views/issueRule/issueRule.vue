@@ -102,7 +102,7 @@
 
 <style lang="less">
 #issueRule {
-	padding-top: 92px;
+	padding-top: 32px;
 	padding-bottom: 32px;
 	.iR_main {
 		width: 960px;

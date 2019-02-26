@@ -77,7 +77,7 @@
 
 <style lang="less">
 #userDeal {
-	padding-top: 92px;
+	padding-top: 32px;
 	padding-bottom: 32px;
 	.uD_main {
 		width: 960px;
