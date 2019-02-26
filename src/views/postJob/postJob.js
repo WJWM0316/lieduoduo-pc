@@ -367,7 +367,7 @@ export default class CommunityEdit extends Vue {
   }
 
   setEmolumentMin () {
-    let max = 260
+    let max = 250
     let i = 0
     let list = []
 
@@ -377,7 +377,7 @@ export default class CommunityEdit extends Vue {
         i++
       } else if(i<100){
         i+=5
-      } else if(i<260){
+      } else if(i<max){
         i+=10
       }
 
@@ -395,9 +395,23 @@ export default class CommunityEdit extends Vue {
   }
 
   setEmolumentMax (num) {
-    let max = num+5
+    let max = 0
     let list = []
 
+    if (num <= 10) {
+      max = num+5
+    } else if (num > 10 && num < 31) {
+      max = num*2
+
+    } else if (num > 34 && num < 71) {
+      max = num+30
+
+    } else if (num > 74 && num < 96) {
+      max = num+30
+
+    } else if (num > 99 && num < 251) {
+      max = num*2
+    }
 
     for (let i = num+1; i <= max; i++) {
       list.push({
@@ -405,6 +419,7 @@ export default class CommunityEdit extends Vue {
         value : i
       })
     }
+
     this.emolumentMaxList = list
   }
 

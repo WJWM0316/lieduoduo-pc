@@ -3,19 +3,22 @@
 		<div class="recruiter_cont">
 			<div class="header_warp">
 					<div class="header" :class="searchBarFixed === true ? 'isFixed' :''">
-						<h2 class="title">职位管理</h2>
-			      <div class="addJob" size="small" type="primary" @click="todoAction('addJob')">发布职位</div>
-						<ul class="recruiter_classify">
-							<li class="" v-for="item,index in recruiterList" @click="catchRecruiter(index)" :class="{'cur':item.active}">{{item.name}}   ({{item.total}})</li>
-						</ul>
+						<div class="header_status">
+							<h2 class="title">职位管理</h2>
+				      <div class="addJob" size="small" type="primary" @click="todoAction('addJob')">发布职位</div>
+							<ul class="recruiter_classify">
+								<li class="" v-for="item,index in recruiterList" @click="catchRecruiter(index)" :class="{'cur':item.active}">{{item.name}}   ({{item.total}})</li>
+							</ul>
+						</div>
+						<div class="job_classify_wrap" v-if="jobNameList.length>0">
+							<ul class="job_classify">
+								<li class="" v-for="item,index in jobNameList" @click="catchJob(index)" :class="{'slet':item.active}">{{item.name}}</li>
+							</ul>
+						</div>
 					</div>
 			</div>
 			
-			<div class="job_classify_wrap">
-				<ul class="job_classify">
-					<li class="" v-for="item,index in jobNameList" @click="catchJob(index)" :class="{'slet':item.active}">{{item.name}}</li>
-				</ul>
-			</div>
+			
 	  	
 	  	<ul class="job_list" v-if="jobList.length>0">
 	  		<li class="job_blo" v-for="item,index in jobList">
@@ -49,7 +52,12 @@
   			</div>
 	  	</ul>
 
-	  	<div class="job_cont_none" v-else>没有数据</div>
+	  	<div class="job_cont_none" v-else>
+	  			<div class="none_hint" @click="toTop">
+			  		<img class="hint_icon" src="../../assets/images/open.png"/>
+	  				当前没有招聘中职位~
+	  			</div>
+	  	</div>
 		</div>
 		<el-pagination
 			class="pagination"
@@ -404,17 +412,22 @@
 	  		status: this.form.status,
 	  	}
 	  	getTypeListApi(data).then(res => {
-	  		console.log(res.data)
-	  		res.data.data.map(item=>{
-	  			item.active = false
-	  		})
-
-	  		res.data.data.unshift({
-	  			name:'全部',
-	  			active: true
-	  		})
-
-	  		this.jobNameList = res.data.data
+	  		let data = []
+	  		if (res.data.data.length > 0){
+	  			res.data.data.map(item=>{
+	  				item.active = false
+	  			})
+	  			if(res.data.data.length>1){
+	  				res.data.data.unshift({
+	  					name:'全部',
+	  					active: true
+	  				})
+	  			}else {
+	  				res.data.data[0].active = true
+	  			}
+	  			data = res.data.data
+	  		}
+	  		this.jobNameList = data
 	  		console.log(this.jobNameList)
 	  	})
 	  }
@@ -659,24 +672,27 @@
 		background: #ffffff;
 	}
 	.header_warp {
-		height: 160px;
+		height: 222px;
 		position: relative;
 		width: 960px;
 		box-sizing: border-box;
 	}
 	.header {
-		height: 160px;
-		padding: 36px  56px 0 56px;
-		position: relative;
-		width: 960px;
-		box-sizing: border-box;
-		border-bottom: 1px solid #ededed;
+		height: 222px;
 		&.isFixed{
 	    position:fixed;
 	    background-color:#Fff;
 	    top: 60px;
 	    z-index:1;
 	  }
+		.header_status {
+			height: 160px;
+			padding: 36px  56px 0 56px;
+			position: relative;
+			width: 960px;
+			box-sizing: border-box;
+		}
+		
 		.title {
 			height: 40px;
 			line-height: 40px;
@@ -765,7 +781,7 @@
 		}
 	}
 	.job_classify::-webkit-scrollbar {
-    display: none;
+    //display: none;
 	}
 	.job_list {
 		position: relative;
@@ -865,9 +881,18 @@
 		}
 	}
 	.job_cont_none {
-		height: 500px;
-		line-height: 500px;
+		height: 554px;
+		line-height: 554px;
 		font-size: 18px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		.none_hint {
+
+			.hint_icon {
+
+			}
+		}
 	}
 	.pagination {
 		height: 102px;
