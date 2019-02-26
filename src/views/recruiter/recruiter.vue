@@ -449,6 +449,7 @@
 	  			}
 
 	  			query.page = 1
+	  			this.form.type = ''
 		  		this.setPathQuery(query)
 	  			// that.getPositionList({page:1})
 	  		}else {
@@ -732,6 +733,7 @@
 		}
 	}
 	.job_classify_wrap {
+
 		width:960px;
 		.job_classify {
 			width:960px;
@@ -761,6 +763,9 @@
 				}
 			}
 		}
+	}
+	.job_classify::-webkit-scrollbar {
+    display: none;
 	}
 	.job_list {
 		position: relative;

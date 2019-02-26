@@ -869,7 +869,9 @@
 			color:rgba(255,255,255,1);
 		}
 	}
-
+	.resume_main::-webkit-scrollbar {
+    display: none;
+	}
 	.service {
 		font-size:16px;
 		font-family:PingFang-SC-Medium;
