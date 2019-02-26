@@ -255,24 +255,24 @@ export default class CommunityEdit extends Vue {
           name: data.data.typeName,
           typeId: data.data.type
         }
+
+        console.log(data.data.skillsLabel)
         // 设置技能
         if (data.data.skillsLabel.length > 0) {
           this.selectPositionItem.topPid = data.data.skillsLabel[0].topPid
 
           if(this.professionalSkillsList.length < 1){
-            console.log(this.professionalSkillsList)
             this.getProfessionalSkills().then(()=>{
-              this.setSkillsList()
+              this.setSkillsList(true)
             })
           }else {
-            console.log(this.professionalSkillsList)
-
-            this.setSkillsList()
+            this.setSkillsList(true)
           }
         }
+
         form.labels = []
         data.data.skillsLabel.map(item=>{
-          form.labels.push(item.name)
+          form.labels.push(item.labelId)
         })
 
         this.addressList[1] = {
@@ -541,13 +541,19 @@ export default class CommunityEdit extends Vue {
   }
 
   //设置技能列表
-  setSkillsList () {
+  setSkillsList (isNext) {
     if (this.professionalSkillsList.length > 0){
       let topPid = this.selectPositionItem.topPid
       this.professionalSkillsList.map(item => {
         if ( item.labelId === topPid ) {
           this.options = item.children
         }
+
+        // 编辑 显示技能 
+        if(isNext){
+          this.skillChange(isNext)
+        }
+
       })
     }else {}
   }
@@ -594,7 +600,7 @@ export default class CommunityEdit extends Vue {
   transformData (form) {
     const newForm = {...form}
     // 分类标签
-    console.log(newForm)
+    console.log('newForm==>',newForm.labels)
     if(newForm.labels && newForm.labels.length>0){
       let labels = []
       newForm.labels.map(item=>{
@@ -603,7 +609,6 @@ export default class CommunityEdit extends Vue {
           is_diy: '0'
         })
       })
-      //var jsObject = JSON.parse(jsonString); //转换为json对象
       newForm.labels = JSON.stringify(labels); //转换为json类型的字符串　　
       console.log(newForm.labels)
     }else {
@@ -720,6 +725,7 @@ export default class CommunityEdit extends Vue {
 
     }else {
       this.options2 = this.options
+      console.log(this.options2)
     }
   }
 }
