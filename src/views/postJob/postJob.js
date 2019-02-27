@@ -395,6 +395,7 @@ export default class CommunityEdit extends Vue {
   }
 
   changeEmolumentMin(e){
+    this.form.emolument_max = ''
     this.setEmolumentMax(e)
   }
 
