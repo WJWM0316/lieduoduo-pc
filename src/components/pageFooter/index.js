@@ -10,6 +10,17 @@ import { baseUrl } from '../../../config.js'
 })
 export default class PageFooter extends Vue {
 
+  mouted() {
+
+  }
+
+  shouldFixed() {
+    return [
+      'recruiterIndex'
+    ].includes(this.$store.state.pageName)
+  }
+
+
   toUserDeal () {
 	  let event = new MouseEvent('click')
 	  let a = document.createElement('a')

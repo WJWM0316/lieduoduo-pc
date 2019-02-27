@@ -527,7 +527,7 @@
 <style lang="less">
 #recruiter {
 	// padding-top: 92px;
-	// padding-bottom: 32px;
+	padding-bottom: 232px;
 	.messageBox {
 		width:432px;
 		height:192px;
@@ -754,13 +754,13 @@
 					width:960px;
 					min-height:62px;
 					background:rgba(248,248,248,1);
-					padding: 20px 56px 10px 56px;
+					padding: 20px 56px 5px 56px;
 					display: flex;
 					flex-direction: row;
 					// justify-content: flex-start;
 					// align-items: center;	
 					box-sizing: border-box;
-					overflow-x: scroll;
+					//overflow-x: scroll;
 					position: relative;
 					&.job_classify2 {
 						width:960px;
@@ -798,7 +798,7 @@
 				    white-space: nowrap;
 				    line-height: 20px;
 				    height: 20px;
-				    margin-bottom: 10px;
+				    margin-bottom: 15px;
 				    &.more {
 							position: absolute;
 							right: 30px;
@@ -1116,4 +1116,6 @@
 		box-sizing: border-box;
 	}
 }
+
+
 </style>

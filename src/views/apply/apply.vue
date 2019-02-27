@@ -1,7 +1,9 @@
 <template>
 	<div id="apply">
 			<!-- 未上传 -->
-		  <div class="resume_main no_upload" v-if="!isUpload">
+		  <div class="resume_main no_upload" v-if="!isUpload"
+		  	:style="{ height: contentHeight + 'px' }"
+		  >
 		  	<div class="main_cont">
 		  		<h3 class="hint">上传简附件，招聘官既可查看你的附件简历 </h3>
 		  		<h3 class="hint">如需要编辑在线简历，请前往猎多多小程序进行操作</h3>
@@ -33,7 +35,9 @@
 		  	</div>
 		  </div>
 
-		  <div class="resume_main" v-else>
+		  <div class="resume_main" v-else 
+		  	:style="{ height: contentHeight2 + 'px' }"
+		  >
 		  	<div class="file_cont" v-if="uploadFileData[0]">
 		  		<div class="cont_top">
 		  			<img class="cont_pic2" src="../../assets/images/pic_resume_already.png"/>
@@ -211,6 +215,9 @@
     	isShow: false,
     	type: 'delete'
     }
+
+    contentHeight = 400
+    contentHeight2 = 630
 		/**
 		 * 初始化表单、分页页面数据
 		 */
@@ -224,6 +231,21 @@
 		  }else {
 		  	this.$router.push({name: 'login'})
 		  }
+
+
+
+		  let w = document.documentElement.clientWidth || document.body.clientWidth;
+		  let h = document.documentElement.clientHeight || document.body.clientHeight;
+
+		  if(h-60-200>400){
+		  	this.contentHeight = h-60-200
+		  }
+
+		  if(h-60-200>630){
+		  	this.contentHeight2 = h-60-200
+		  }
+
+		  console.log(w,h)
 		}
 
     saveResumeMsg(){
@@ -463,7 +485,8 @@
 	justify-content: center;
 	align-items: center;	
 	flex-direction: column;
-	
+	padding-bottom: 0;
+	padding-top: 60px;
 	.messageBox {
 		width:432px;
 		height:192px;
@@ -631,24 +654,24 @@
 	}
 	.resume_main {
 		//height: 100vh;
-		position: fixed;
-		z-index: 2;
-		left: 0;
-		right: 0;
-		top: 60px;
-		bottom: 200px;
-		width: 100%;
+		// position: fixed;
+		// z-index: 2;
+		// left: 0;
+		// right: 0;
+		// top: 60px;
+		// bottom: 200px;
+		// width: 100%;
 		margin: 0 auto;
 		display: flex;
 		justify-content: center;
-		align-items: center;	
+		align-items: center;
 		flex-direction: column;
-		padding: 120px 0 80px 0;
-		overflow-y: scroll;
+		//padding: 120px 0 80px 0;
+		//overflow-y: scroll;
 		&.no_upload {
 			padding: 0 ;
 			width: 960px;
-			overflow-x: hidden;
+			//overflow-x: hidden;
 			flex-direction: row;
 		}
 		.main_cont {
@@ -695,7 +718,7 @@
 		}
 		
 		.file_cont {
-			margin-top: 120px;
+			// margin-top: 120px;
 			.cont_top {
 				.cont_pic2 {
 					width:138px;

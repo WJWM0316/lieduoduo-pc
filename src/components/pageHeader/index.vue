@@ -1,5 +1,5 @@
 <template>
-	<header id="page-header">
+	<header id="page-header" >
 		<section>
 			<div class="left">
 				<img class="logo" src="../../assets/images/logo_white.png" @click="refresh" />
