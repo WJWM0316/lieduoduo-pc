@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
 // import config from '@/configs'
-import { professionalSkillsApi, getLabelPositionListApi, searchPositionApi, getPositionApi, editPositionApi, addPositionApi } from '@/api/position'
+import { professionalSkillsApi, closePositionApi, getLabelPositionListApi, searchPositionApi, getPositionApi, editPositionApi, addPositionApi } from '@/api/position'
 import { getAdressListApi, addCompanyAdressApi } from '@/api/company'
 import { baseUrl } from '../../../config.js'
 import { getMyInfoApi } from '../../api/auth'
@@ -50,10 +50,6 @@ export default class CommunityEdit extends Vue {
   }
   //职位类别
   typeList = [
-    {
-      value: '选项1',
-      label: '选择职位'
-    }
   ]
   // 学历
   educationList = [
@@ -201,6 +197,8 @@ export default class CommunityEdit extends Vue {
   }
 
   professionalSkillsList = []
+
+  isEdit = false  // 是否编辑
   mounted() {
   }
 
@@ -269,7 +267,8 @@ export default class CommunityEdit extends Vue {
             this.setSkillsList(true)
           }
         }else {
-          this.skillChange(true)
+          //
+          //this.skillChange(true)
         }
 
         form.labels = []
@@ -729,5 +728,21 @@ export default class CommunityEdit extends Vue {
       this.options2 = this.options
       console.log(this.options2)
     }
+  }
+
+  cloJob(){
+    closePositionApi({id: this.$route.query.id}).then(res=>{
+        this.$message({
+          type: 'success',
+          message: '成功!'
+        })
+
+        this.$router.push({
+          name: 'recruiterIndex'
+        })
+
+    }).catch(e => {
+      this.$message.error(e.data.msg)
+    })
   }
 }

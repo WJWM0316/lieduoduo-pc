@@ -12,8 +12,19 @@
 							<li class="" v-for="item,index in recruiterList" @click="catchRecruiter(index)" :class="{'cur':item.active}">{{item.name}}   ({{item.total}})</li>
 						</ul>
 						<div class="job_classify_wrap" v-if="jobNameList.length>0">
-							<ul class="job_classify">
+							<!-- <ul class="job_classify">
 								<li class="" v-for="item,index in jobNameList" @click="catchJob(index)" :class="{'slet':item.active}">{{item.name}}</li>
+							</ul> -->
+							<!-- <ul class="job_classify">
+								<li class="" v-for="item,index in jobNameList" @click="catchJob(index)" :class="{'slet':item.active}" v-if="index<9">{{item.name}}</li>
+
+								<li class="more" @click="todoAction('moreClassily')" :class="{'slet':false}" v-if="jobNameList.length>9">更多</li>v-show="isShowClassily"
+							</ul> -->
+
+							<ul class="job_classify job_classify2" >
+								<li class="" v-for="item,index in jobNameList" @click="catchJob(index)" :class="{'slet':item.active}">{{item.name}}</li>
+
+								<!-- <li class="close" @click="todoAction('closeClassily')" :class="{'slet':false}" v-if="jobNameList.length>9">收起</li> -->
 							</ul>
 						</div>
 					</div>
@@ -231,6 +242,7 @@
 		isService = false  
 		navSelectName =  ''  //  nav选中文字
 		jobSelectId = null  // 职位开启关闭选中
+		isShowClassily = false  // 分类更多
 		opJob (type, id) {
 			this.pop.isShow = true
 			if(type==='close'){
@@ -339,6 +351,15 @@
 	       	}).catch(e => {
             this.$message.error(e.data.msg)
 	       	})
+	        break
+
+
+	      case 'moreClassily':
+	        this.isShowClassily = true
+	        break
+
+	      case 'closeClassily':
+	        this.isShowClassily = false
 	        break
 	      default:
 	        break
@@ -675,16 +696,16 @@
 		background: #ffffff;
 	}
 	.header_warp {
-		height: 222px;
+		min-height: 222px;
 		position: relative;
 		width: 960px;
 		box-sizing: border-box;
 		.header_navs_wrap {
-			height: 110px;
+			min-height: 110px;
 			width: 960px;
 		}
 		.header_navs {
-			height: 110px;
+			min-height: 110px;
 			position: relative;
 			width: 960px;
 			&.isFixed{
@@ -725,19 +746,47 @@
   			}
   		}
 			.job_classify_wrap {
-				height: 62px;
+				min-height: 62px;
 				width:960px;
+				position: relative;
+
 				.job_classify {
 					width:960px;
-					height:62px;
+					min-height:62px;
 					background:rgba(248,248,248,1);
-					padding: 20px 56px;
+					padding: 20px 56px 10px 56px;
 					display: flex;
 					flex-direction: row;
 					// justify-content: flex-start;
 					// align-items: center;	
 					box-sizing: border-box;
 					overflow-x: scroll;
+					position: relative;
+					&.job_classify2 {
+						width:960px;
+						height: auto;
+						background:rgba(248,248,248,1);
+						//padding-right: 100px;
+						display: flex;
+						flex-direction: row;
+						justify-content: flex-start;
+						align-items: center;	
+						box-sizing: border-box;
+						position: relative;
+						flex-wrap: wrap;
+
+						// position: absolute;
+						// left: 0;
+						// bottom: 0;
+						// z-index: 100;
+						.close {
+							position: absolute;
+							right: 30px;
+							top: 20px;
+							color: red;
+							cursor: pointer;
+						}
+					}
 					li {
 						padding: 1px 14px;
 						font-size:14px;
@@ -749,6 +798,15 @@
 				    white-space: nowrap;
 				    line-height: 20px;
 				    height: 20px;
+				    margin-bottom: 10px;
+				    &.more {
+							position: absolute;
+							right: 30px;
+							top: 50%;
+							margin-top: -10px;
+							color: red;
+							cursor: pointer;
+						}
 						&.slet {
 							background:rgba(132,82,167,1);
 							font-family:PingFang-SC-Medium;
@@ -818,7 +876,7 @@
 					line-height: 24px;
 				}
 				.job_name {
-					max-width: 260px;
+					max-width: 235px;
 					text-overflow: ellipsis;
 			    white-space: nowrap;
 			    overflow: hidden;

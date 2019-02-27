@@ -23,7 +23,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="职位类别" prop="type" style="width: 450px;" v-else>
-        <el-select v-model="selectPositionItem.name" placeholder="点击选择职位类别" @change="changePosition" style="width: 382px;">
+        <el-select v-model="selectPositionItem.name" placeholder="点击选择职位类别" @focus="changePosition" style="width: 382px;">
           <el-option
             v-for="item in typeList"
             :key="item.value"
@@ -139,6 +139,8 @@
       <div class="btn-container">
         <el-button class="btn_submit" type="primary" @click="handleSubmit">发布</el-button>
         <el-button class="btn_cancel" @click="handleCancel">取消</el-button>
+
+        <div class="cloJob" v-if="isEdit" @click="cloJob">关闭该职位</div>
       </div>
 
       <div class="pop" v-if="pop.isShow">
