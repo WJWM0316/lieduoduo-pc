@@ -140,7 +140,7 @@
         <el-button class="btn_submit" type="primary" @click="handleSubmit">发布</el-button>
         <el-button class="btn_cancel" @click="handleCancel">取消</el-button>
 
-        <div class="cloJob" v-if="isEdit" @click="cloJob">关闭该职位</div>
+        <div class="cloJob" v-if="isEdit && isOnline" @click="cloJob">关闭该职位</div>
       </div>
 
       <div class="pop" v-if="pop.isShow">

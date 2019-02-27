@@ -199,6 +199,7 @@ export default class CommunityEdit extends Vue {
   professionalSkillsList = []
 
   isEdit = false  // 是否编辑
+  isOnline = false // 编辑是否在线
   mounted() {
   }
 
@@ -231,10 +232,12 @@ export default class CommunityEdit extends Vue {
         const { data } = await getPositionApi({
           id:id
         })
-
-        console.log('====',data.data)
         // // 创建编辑表单数据
         const form = {}
+
+        if(data.data.isOnline === 1){
+          this.isOnline = true
+        }
         form.position_name = data.data.positionName
         form.type = data.data.typeName
 
