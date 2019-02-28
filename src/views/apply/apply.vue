@@ -58,7 +58,7 @@
 		  					{{uploadFileData[0].fileName}}
 		  				</p>
 		  				<div class="progress" v-if="fileUpload.progress>0&&fileUpload.progress!==100">
-		  					<span>{{fileUpload.progress}}%</span>
+		  					<!-- <span>{{fileUpload.progress}}%</span> -->
 		  					<div class="progress-bar" :style="{width: fileUpload.progress + '%'}" ></div>
 		  				</div>
 		  				<p v-else>{{uploadFileData[0].sizeM}}</p>
@@ -709,10 +709,10 @@
 		}
 		.main_right {
 			width:386px;
-			height:304px;
+			height:308px;
 			.cont_pic {
 				width:386px;
-				height:304px;
+				height:308px;
 				display: block;
 			}
 		}
@@ -778,7 +778,7 @@
 					}
 					.progress {
 						flex: 1;
-						height: 14px;
+						height: 6px;
 						position: relative;
 						background: #F5F4F7;
 						font-size: 12px;
@@ -826,8 +826,8 @@
 						line-height:20px;
 					}
 					.btn_icon {
-						width: 16px;
-						height: 16px;
+						width: 18px;
+						height: 18px;
 						margin-right: 5px;
 					}
 				}
