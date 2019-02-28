@@ -13,7 +13,7 @@
       </el-form-item>
 
       <el-form-item label="职位类别" prop="type" style="width: 450px;" v-if="isEdit">
-        <el-select :disabled="true" v-model="selectPositionItem.name" placeholder="点击选择职位类别" @change="changePosition" style="width: 382px;">
+        <el-select :disabled="true" v-model="selectPositionItem.name" placeholder="点击选择职位类别" @focus="changePosition" style="width: 382px;">
           <el-option
             v-for="item in typeList"
             :key="item.value"

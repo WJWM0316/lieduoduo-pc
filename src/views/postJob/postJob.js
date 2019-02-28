@@ -45,9 +45,6 @@ export default class CommunityEdit extends Vue {
   options= []
   options2= []
 
-  autosize = {
-    minRows: 4
-  }
   //职位类别
   typeList = [
   ]
@@ -257,7 +254,6 @@ export default class CommunityEdit extends Vue {
           typeId: data.data.type
         }
 
-        console.log(data.data.skillsLabel)
         // 设置技能
         if (data.data.skillsLabel.length > 0) {
           this.selectPositionItem.topPid = data.data.skillsLabel[0].topPid
@@ -270,7 +266,6 @@ export default class CommunityEdit extends Vue {
             this.setSkillsList(true)
           }
         }else {
-          //
           //this.skillChange(true)
         }
 
@@ -309,11 +304,9 @@ export default class CommunityEdit extends Vue {
    * 保存社区
    */
   async savePosition () {
-    console.log('savePosition')
     try {
       // this.$store.dispatch('showAjaxLoading')
       const params = this.transformData(this.form)
-      console.log('---', params)
       if (!this.$route.query.id) {
         addPositionApi(params).then(res=>{
           this.$message.success('创建成功')
@@ -463,7 +456,6 @@ export default class CommunityEdit extends Vue {
 
   // 搜索职位
   handleSearch (e) {
-    console.log(e)
     searchPositionApi({
       name: e,
       page: 1,
@@ -514,7 +506,6 @@ export default class CommunityEdit extends Vue {
   }
 
   selectSecondPosition (index) {
-
     if (!this.secondPositionList[index].active) {
       this.secondPositionList.map((item,index2)=>{
         if(index2===index){
@@ -723,14 +714,12 @@ export default class CommunityEdit extends Vue {
 
   // 技能下拉框显示隐藏
   skillChange(e){
-    console.log(this.selectPositionItem.name)
     if(e && this.selectPositionItem.name.length === 0){
       this.$message.error('请先选择职位类别')
       this.options2 = []
 
     }else {
       this.options2 = this.options
-      console.log(this.options2)
     }
   }
 
