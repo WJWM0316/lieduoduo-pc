@@ -826,8 +826,8 @@
 						line-height:20px;
 					}
 					.btn_icon {
-						width: 18px;
-						height: 18px;
+						width: 16px;
+						height: 16px;
 						margin-right: 5px;
 					}
 				}

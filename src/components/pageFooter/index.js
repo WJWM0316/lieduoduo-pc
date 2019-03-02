@@ -16,7 +16,7 @@ export default class PageFooter extends Vue {
 
   shouldFixed() {
     return [
-      'recruiterIndex'
+      //'recruiterIndex'
     ].includes(this.$store.state.pageName)
   }
 

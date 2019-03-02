@@ -29,11 +29,8 @@
 						</div>
 					</div>
 				</div>
-				
 			</div>
-			
-			
-	  	
+
 	  	<ul class="job_list" v-if="jobList.length>0">
 	  		<li class="job_blo" v-for="item,index in jobList">
 	  			<div class="blo_left">
@@ -61,9 +58,6 @@
 	  				<span class="job_op" @click="todoAction('editJob',item.id)" >编辑</span>
 	  			</div>
 	  		</li>
-  			<div class="toTop" @click="toTop">
-		  		<img class="arrows" src="../../assets/images/open.png"/>
-  			</div>
 	  	</ul>
 
 	  	<div class="job_cont_none" v-else>
@@ -72,6 +66,10 @@
   				当前没有招聘中职位~
   			</div>
 	  	</div>
+
+			<div class="toTop" @click="toTop" v-if="isShowTop">
+	  		<img class="arrows" src="../../assets/images/open.png"/>
+			</div>
 		</div>
 		<el-pagination
 			class="pagination"
@@ -162,6 +160,9 @@
   			</div>
   		</div>
 		</div>
+
+
+		
 	</div>
 </template>
 <script>
@@ -243,6 +244,7 @@
 		navSelectName =  ''  //  nav选中文字
 		jobSelectId = null  // 职位开启关闭选中
 		isShowClassily = false  // 分类更多
+		isShowTop = false //
 		opJob (type, id) {
 			this.pop.isShow = true
 			if(type==='close'){
@@ -371,8 +373,14 @@
 
 			if(scrollTop>155){
 				this.searchBarFixed = true
+
+				console.log(scrollTop)
+				if(scrollTop>300){
+					this.isShowTop = true
+				}
 			}else {
 				this.searchBarFixed = false
+				this.isShowTop = false
 			}
 		}
 	  /**
@@ -527,7 +535,7 @@
 <style lang="less">
 #recruiter {
 	// padding-top: 92px;
-	padding-bottom: 232px;
+	padding-bottom: 32px;
 	.messageBox {
 		width:432px;
 		height:192px;
@@ -694,6 +702,7 @@
 		width: 960px;
 		margin: 0 auto;
 		background: #ffffff;
+		position: relative;
 	}
 	.header_warp {
 		min-height: 222px;
@@ -928,25 +937,7 @@
 				}
 			}
 		}
-		.toTop {
-			position: absolute;
-			right: -90px;
-			bottom: 10px;
-			width: 56px;
-			height: 56px;
-			background:rgba(239,233,244,1);
-			border-radius: 50%;
-			cursor: pointer;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			.arrows {
-				width: 16px;
-				height: 18px;
-				display: block;
-				transform:rotate(180deg);
-			}
-		}
+		
 	}
 	.job_cont_none {
 		height: 354px;
@@ -1013,7 +1004,25 @@
 			}
 		}
 	}
-	
+	.toTop {
+		position: absolute;
+		right: -76px;
+		bottom: 0px;
+		width: 56px;
+		height: 56px;
+		background:rgba(239,233,244,1);
+		border-radius: 50%;
+		cursor: pointer;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		.arrows {
+			width: 16px;
+			height: 18px;
+			display: block;
+			transform:rotate(180deg);
+		}
+	}
 	.service {
 		font-size:16px;
 		font-family:PingFang-SC-Medium;
@@ -1032,6 +1041,7 @@
 		box-sizing: border-box;
 		padding: 10px;
 		cursor: pointer;
+		z-index: 100;
 		.service_icon {
 			width:16px;
 			height:16px;
@@ -1073,7 +1083,7 @@
 					font-family:PingFang-SC-Regular;
 					font-weight:400;
 					color:rgba(98,98,98,1);
-					margin: 48px 0 12px 0;
+					margin: 48px 0 20px 0;
 				}
 				.pop_text2 {
 					font-size:24px;
