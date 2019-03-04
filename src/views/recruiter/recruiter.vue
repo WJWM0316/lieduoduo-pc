@@ -1,5 +1,5 @@
 <template>
-	<div id="recruiter" @scroll="handleScroll">
+	<div id="recruiter">
 		<div class="recruiter_cont">
 			<div class="header_warp">
 				<h2 class="title">
@@ -68,7 +68,7 @@
 	  	</div>
 
 			<div class="toTop" @click="toTop" v-if="isShowTop">
-	  		<img class="arrows" src="../../assets/images/open.png"/>
+	  			<img class="arrows" src="../../assets/images/open.png"/>
 			</div>
 		</div>
 		<el-pagination
@@ -375,7 +375,7 @@
 				this.searchBarFixed = true
 
 				console.log(scrollTop)
-				if(scrollTop>300){
+				if(scrollTop > 1500){
 					this.isShowTop = true
 				}
 			}else {
@@ -536,168 +536,7 @@
 #recruiter {
 	// padding-top: 92px;
 	padding-bottom: 32px;
-	.messageBox {
-		width:432px;
-		height:192px;
-		background:rgba(255,255,255,1);
-		box-shadow:0px 4px 12px 0px rgba(0,0,0,0.2);
-		border-radius:4px;
-		position: absolute;
-		left: 50%;
-		top: 50%;
-		padding: 32px 32px;
-		box-sizing: border-box;
-  	transform: translate(-50%, -50%);
-		.clo {
-			width:10px;
-			height:10px;
-			position: absolute;
-			right: 16px;
-			top: 16px;
-		}
-		.mb_main {
-
-			.mb_head {
-				height: 24px;
-				display: flex;
-				flex-direction: row;
-				justify-content: flex-start;
-				align-items: center;
-				margin-bottom: 8px;
-				.hint {
-					width:24px;
-					height:24px;
-					border-radius: 50%;
-					margin-right: 16px;
-				}
-				.mb_tit {
-					font-size:16px;
-					font-family:PingFangSC-Medium;
-					font-weight:500;
-					color:rgba(53,64,72,1);
-					line-height:24px;
-				}
-			}
-			.mb_cont {
-				font-size:14px;
-				font-family:PingFangSC-Regular;
-				font-weight:400;
-				line-height:22px;
-				text-align: left;
-				p {
-					color:rgba(102,102,102,1);
-				}
-			}
-		}
-		.btns {
-			display: flex;
-			flex-direction: row;
-			justify-content: flex-end;
-			margin-top: 28px;
-			.btn {
-				font-size:14px;
-				font-family:PingFangSC-Regular;
-				font-weight:400;
-				color:rgba(53,64,72,1);
-				line-height:32px;
-				text-align: center;
-			}
-			.cancel {
-				width:80px;
-				height:32px;
-				background:rgba(255,255,255,1);
-				border-radius:16px;
-				border:1px solid rgba(220,220,220,1);
-				color:rgba(53,64,72,1);
-
-			}
-			.true {
-				width:80px;
-				height:32px;
-				background:rgba(101,39,145,1);
-				border-radius:16px;
-				color:rgba(255,255,255,1);
-				margin-left: 16px;
-			}
-		}
-	}
-	.pop {
-		position: fixed;
-		left: 0;
-		top: 0;
-		background: rgba(0, 0, 0, 0.65);
-		width: 100%;
-		height: 100%;
-		z-index: 100;
-		.share {
-			.share_blo {
-				position: absolute;
-				right: 50%;
-				top: 50%;
-				z-index: 6;
-				width:300px;
-				height:396px;
-				margin: -200px -150px 0 0 ;
-				background:rgba(255,255,255,1);
-				box-shadow:0px -2px 4px 0px rgba(101,39,145,0.1),0px 2px 4px 0px rgba(132,82,167,0.1);
-				border-radius:4px;
-				&.share_help {
-					margin-right: -470px;
-				}
-				.pop_tit {
-					font-size:20px;
-					font-family:PingFang-SC-Bold;
-					font-weight:bold;
-					color:rgba(40,40,40,1);
-					line-height:26px;
-					margin: 32px 0 24px 0;
-				}
-				.clo {
-					width:10px;
-					height:10px;
-					position: absolute;
-					right: 16px;
-					top: 16px;
-				}
-				.share_txt {
-					color: #626262;
-				}
-				.code {
-					width:140px;
-					height:140px;
-					background:rgba(255,255,255,1);
-					border-radius:70px;
-					border:1px solid rgba(239,233,244,1);
-					margin: 40px 0 66px 0;
-				}
-				.share_help_text {
-					font-size:14px;
-					font-family:PingFang-SC-Medium;
-					font-weight:500;
-					color:rgba(101,39,145,1);
-					line-height:22px;
-					text-align: center;
-					cursor: pointer;
-					.ques_icon {
-						width:14px;
-						height:14px;
-						display: inline-block;
-						margin-left: 6px;
-						position: relative;
-						top: -3px;
-					}
-				}
-				.help_icon {
-					width:191px;
-					height:172px;
-					margin-top: 32px;
-					position: relative;
-
-					right: -10px;
-				}
-			}
-		}
-	}
+	min-height: calc(100vh - 337px);
 	.recruiter_cont {
 		width: 960px;
 		margin: 0 auto;
@@ -940,8 +779,8 @@
 		
 	}
 	.job_cont_none {
-		height: 354px;
-		line-height: 354px;
+		height: 400px;
+		line-height: 400px;
 		font-size: 18px;
 		display: flex;
 		flex-direction: column;
@@ -1005,11 +844,12 @@
 		}
 	}
 	.toTop {
-		position: absolute;
-		right: -76px;
-		bottom: 0px;
+		position: fixed;
+		right: 50%;
+		bottom: 230px;
 		width: 56px;
 		height: 56px;
+		margin-right: -560px;
 		background:rgba(239,233,244,1);
 		border-radius: 50%;
 		cursor: pointer;
@@ -1125,7 +965,172 @@
 		margin: 0 auto;
 		box-sizing: border-box;
 	}
+
+
 }
+
+	.messageBox {
+		width:432px;
+		height:192px;
+		background:rgba(255,255,255,1);
+		box-shadow:0px 4px 12px 0px rgba(0,0,0,0.2);
+		border-radius:4px;
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		padding: 32px 32px;
+		box-sizing: border-box;
+  	transform: translate(-50%, -50%);
+		.clo {
+			width:10px;
+			height:10px;
+			position: absolute;
+			right: 16px;
+			top: 16px;
+		}
+		.mb_main {
+
+			.mb_head {
+				height: 24px;
+				display: flex;
+				flex-direction: row;
+				justify-content: flex-start;
+				align-items: center;
+				margin-bottom: 8px;
+				.hint {
+					width:24px;
+					height:24px;
+					border-radius: 50%;
+					margin-right: 16px;
+				}
+				.mb_tit {
+					font-size:16px;
+					font-family:PingFangSC-Medium;
+					font-weight:500;
+					color:rgba(53,64,72,1);
+					line-height:24px;
+				}
+			}
+			.mb_cont {
+				font-size:14px;
+				font-family:PingFangSC-Regular;
+				font-weight:400;
+				line-height:22px;
+				text-align: left;
+				p {
+					color:rgba(102,102,102,1);
+				}
+			}
+		}
+		.btns {
+			display: flex;
+			flex-direction: row;
+			justify-content: flex-end;
+			margin-top: 28px;
+			.btn {
+				font-size:14px;
+				font-family:PingFangSC-Regular;
+				font-weight:400;
+				color:rgba(53,64,72,1);
+				line-height:32px;
+				text-align: center;
+			}
+			.cancel {
+				width:80px;
+				height:32px;
+				background:rgba(255,255,255,1);
+				border-radius:16px;
+				border:1px solid rgba(220,220,220,1);
+				color:rgba(53,64,72,1);
+
+			}
+			.true {
+				width:80px;
+				height:32px;
+				background:rgba(101,39,145,1);
+				border-radius:16px;
+				color:rgba(255,255,255,1);
+				margin-left: 16px;
+			}
+		}
+	}
+	.pop {
+		position: fixed;
+		left: 0;
+		top: 0;
+		background: rgba(0, 0, 0, 0.65);
+		width: 100%;
+		height: 100%;
+		z-index: 100;
+		.share {
+			.share_blo {
+				position: absolute;
+				right: 50%;
+				top: 50%;
+				z-index: 6;
+				width:300px;
+				height:396px;
+				margin: -200px -150px 0 0 ;
+				background:rgba(255,255,255,1);
+				box-shadow:0px -2px 4px 0px rgba(101,39,145,0.1),0px 2px 4px 0px rgba(132,82,167,0.1);
+				border-radius:4px;
+				&.share_help {
+					margin-right: -470px;
+				}
+				.pop_tit {
+					font-size:20px;
+					font-family:PingFang-SC-Bold;
+					font-weight:bold;
+					color:rgba(40,40,40,1);
+					line-height:26px;
+					margin: 32px 0 24px 0;
+				}
+				.clo {
+					width:10px;
+					height:10px;
+					position: absolute;
+					right: 16px;
+					top: 16px;
+				}
+				.share_txt {
+					color: #626262;
+				}
+				.code {
+					width:140px;
+					height:140px;
+					background:rgba(255,255,255,1);
+					border-radius:70px;
+					border:1px solid rgba(239,233,244,1);
+					margin: 40px 0 66px 0;
+				}
+				.share_help_text {
+					font-size:14px;
+					font-family:PingFang-SC-Medium;
+					font-weight:500;
+					color:rgba(101,39,145,1);
+					line-height:22px;
+					text-align: center;
+					cursor: pointer;
+					.ques_icon {
+						width:14px;
+						height:14px;
+						display: inline-block;
+						margin-left: 6px;
+						position: relative;
+						top: -3px;
+					}
+				}
+				.help_icon {
+					width:191px;
+					height:172px;
+					margin-top: 32px;
+					position: relative;
+
+					right: -10px;
+				}
+			}
+		}
+	}
 
 
 </style>

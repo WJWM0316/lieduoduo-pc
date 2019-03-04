@@ -232,8 +232,6 @@
 		  	this.$router.push({name: 'login'})
 		  }
 
-
-
 		  let w = document.documentElement.clientWidth || document.body.clientWidth;
 		  let h = document.documentElement.clientHeight || document.body.clientHeight;
 
@@ -812,7 +810,7 @@
 				.file_op {
 					display: flex;
 					flex-direction: row;
-					align-items: center;
+					align-items: center;   
 					.op_btn {
 						display: flex;
 						flex-direction: row;
@@ -826,8 +824,8 @@
 						line-height:20px;
 					}
 					.btn_icon {
-						width: 16px;
-						height: 16px;
+						width: 18px;
+						height: 18px;
 						margin-right: 5px;
 					}
 				}

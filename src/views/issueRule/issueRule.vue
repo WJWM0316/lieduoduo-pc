@@ -1,5 +1,5 @@
 <template>
-	<div id="issueRule" @scroll="handleScroll">
+	<div id="issueRule" >
 		<div class="iR_main">
 			<h3 class="main_tit">猎多多职位信息发布规则</h3>
 
