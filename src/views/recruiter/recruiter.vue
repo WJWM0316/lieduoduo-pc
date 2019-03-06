@@ -20,7 +20,6 @@
 
 								<li class="more" @click="todoAction('moreClassily')" :class="{'slet':false}" v-if="jobNameList.length>9">更多</li>v-show="isShowClassily"
 							</ul> -->
-
 							<ul class="job_classify job_classify2" >
 								<li class="" v-for="item,index in jobNameList" @click="catchJob(index)" :class="{'slet':item.active}">{{item.name}}</li>
 
@@ -52,7 +51,7 @@
 	  				<div class="center_time">发布于 {{item.createdAt}}</div>
 	  			</div>
 	  			<div class="blo_right">
-	  				<span class="job_op" @click="openShare(index)" v-if="form.status === '1,2'">分享</span>
+	  				<span class="job_op" @click="openShare(index, item.id)" v-if="form.status === '1,2'">分享</span>
 	  				<span class="job_op" @click="opJob('close',item.id)" v-if="item.isOnline===1">关闭</span>
 	  				<span class="job_op" @click="opJob('open',item.id)" v-if="item.isOnline===2 && form.status === '0,1'">开放</span>
 	  				<span class="job_op" @click="todoAction('editJob',item.id)" >编辑</span>
@@ -108,13 +107,12 @@
 		  <div class="share" v-if="pop.type==='share'">
 		  	<div class="share_blo">
 		  		<div class="pop_tit">分享职位</div>
-		  		<img class="clo" src="../../assets/images/clo.png" @click="todoAction('cloPop')">
+		  		<img class="clo" src="../../assets/images/clo.png" @click="todoAction('cloPop2')">
 		  		<p class="share_txt" >使用「微信」扫描小程序码分享职位</p>
-		  		<img class="code" :src="shareSelectItem.positionQrCode" >
+		  		<img class="code" :src="shareSelectItem.qrCodeUrl" >
 		  		<p class="share_help_text"  @mouseover="isHelpShow = true" @mouseout="isHelpShow = false">
 		  			分享帮助
 		  			<img class="ques_icon" src="../../assets/images/question-circle2.png">
-		  			<!-- <span>?</span> -->
 		  		</p>
 		  	</div>
 	      
@@ -160,16 +158,13 @@
   			</div>
   		</div>
 		</div>
-
-
-		
 	</div>
 </template>
 <script>
 	import Vue from 'vue'
 	import Component from 'vue-class-component'
 	import { uploadApi, waitApi, getQrCodeApi, getMyInfoApi } from '../../api/auth'
-	import { getListApi, getMyListApi, closePositionApi, openPositionApi, editPositionApi, getStatusTotalApi, getTypeListApi } from '../../api/position'
+	import { getListApi, getMyListApi, closePositionApi, openPositionApi, editPositionApi, getStatusTotalApi, getTypeListApi, getCodeUrl } from '../../api/position'
 
 	@Component({
 	  name: 'lighthouse-list',
@@ -239,7 +234,9 @@
 		statusTotal = {}   //  
 		uid = null
 		isHelpShow = false
-		shareSelectItem = {}    //分享选中
+		shareSelectItem = {
+			qrCodeUrl: ''
+		}    //分享选中
 		isService = false  
 		navSelectName =  ''  //  nav选中文字
 		jobSelectId = null  // 职位开启关闭选中
@@ -299,6 +296,16 @@
 	        	isShow: false,
 	  				type: ''
 	        }
+	        break
+	      case 'cloPop2':
+	        this.pop = {
+	        	isShow: false,
+	  				type: ''
+	        }
+
+	        this.shareSelectItem = {
+						qrCodeUrl: ''
+					}
 	        break
 	      case 'addJob':
 		      this.$router.push(
@@ -370,11 +377,8 @@
 
 		handleScroll(e){
 			var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-
-			if(scrollTop>155){
+			if(scrollTop > 155){
 				this.searchBarFixed = true
-
-				console.log(scrollTop)
 				if(scrollTop > 1500){
 					this.isShowTop = true
 				}
@@ -521,15 +525,18 @@
 	  	document.documentElement.scrollTop=0;
 	  }
 
-	  openShare(index){
+	  openShare(index, id){
+	  	getCodeUrl({id}).then(res => {
+	  		console.log(res.data.data.qrCodeUrl)
+      	this.shareSelectItem.qrCodeUrl = res.data.data.qrCodeUrl
+      	//this.shareSelectItem = this.jobList[index]
+	  	})
+
       this.pop = {
       	isShow: true,
 				type: 'share'
       }
-
-      this.shareSelectItem = this.jobList[index]
 	  }
-
 	}
 </script>
 <style lang="less">
@@ -1100,7 +1107,7 @@
 					height:140px;
 					background:rgba(255,255,255,1);
 					border-radius:70px;
-					border:1px solid rgba(239,233,244,1);
+					//border:1px solid rgba(239,233,244,1);
 					margin: 40px 0 66px 0;
 				}
 				.share_help_text {

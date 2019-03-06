@@ -166,7 +166,8 @@
 			margin-left: 60px;
 			cursor: pointer;
 			color:rgba(255,255,255,1);
-
+			font-family:PingFang-SC-Medium;
+			font-weight:500;
 		}
 	}
 	section {

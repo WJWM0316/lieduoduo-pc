@@ -75,3 +75,12 @@ export const getTypeListApi = data => request(
 	'get',
 	data
 )
+
+// 获取职位二维码
+export const getCodeUrl = data => request(
+	`/position/get_code_url`,
+	'get',
+	data
+)
+
+
