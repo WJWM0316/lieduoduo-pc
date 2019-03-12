@@ -5,7 +5,7 @@
 		  	:style="{ height: contentHeight + 'px' }"
 		  >
 		  	<div class="main_cont">
-		  		<h3 class="hint">上传简附件，招聘官既可查看你的附件简历 </h3>
+		  		<h3 class="hint">上传后，招聘官既可查看你的附件简历 </h3>
 		  		<h3 class="hint">如需要编辑在线简历，请前往猎多多小程序进行操作</h3>
 
 			    <el-upload
@@ -27,7 +27,7 @@
 			    </el-upload>
 
 		  		<p class="hint2">
-		  			内容附件简历类型支持word、pdf、ppt、txt、wps、jpg、png、jpeg、pptx； 允许最大上传10M；
+		  			附件简历类型支持word、pdf、ppt、txt、wps、jpg、png、jpeg、pptx； 最大允许上传10M；
 		  		</p>
 		  	</div>
 		  	<div class="main_right">
