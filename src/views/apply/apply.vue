@@ -5,7 +5,7 @@
 		  	:style="{ height: contentHeight + 'px' }"
 		  >
 		  	<div class="main_cont">
-		  		<h3 class="hint">上传后，招聘官既可查看你的附件简历 </h3>
+		  		<h3 class="hint">上传后，招聘官即可查看你的附件简历 </h3>
 		  		<h3 class="hint">如需要编辑在线简历，请前往猎多多小程序进行操作</h3>
 
 			    <el-upload
@@ -124,7 +124,7 @@
 					<div class="pop_tit">联系我们</div>
 					<div class="pop_cont">
 			  		<h3 class="pop_text">请拨打全国咨询热线</h3>
-			  		<p class="pop_text2">020-6127988</p>
+			  		<p class="pop_text2">400-065-5788</p>
 			  		<img class="pop_code" src="../../assets/images/gzh.png"/>
 			  		<p class="pop_text3">猎多多公众号</p>
 			  		<p class="pop_text4">微信扫描二维码，关注官方公众号</p>
