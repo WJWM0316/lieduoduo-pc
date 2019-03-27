@@ -1,10 +1,11 @@
 <template>
   <section id="app">
-    <page-header v-if="!shouldTopShown()" />
-
+    <page-header v-if="shouldTopShown()" />
+    <page-header2 v-if="shouldTopShown2()" />
     <router-view class="pages" />
 
     <page-footer v-if="!shouldBottomShown()" />
+    <page-aside v-if="shouldSaideShown()" />
   </section>
 </template>
 <script>
@@ -13,12 +14,16 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import PageFooter from './components/pageFooter/index.vue'
 import PageHeader from './components/pageHeader/index.vue'
+import PageAside from './components/pageAside/index.vue'
+import PageHeader2 from './components/pageHeader2/index.vue'
 
 @Component({
   name: 'App',
   components: {
     PageFooter,
-    PageHeader
+    PageHeader,
+    PageHeader2,
+    PageAside
   },
   watch: {
     '$route': {
@@ -36,21 +41,36 @@ import PageHeader from './components/pageHeader/index.vue'
 
 export default class App extends Vue {
 
-  // 白名单模式，下面路由不显示管理页面的侧边栏,和顶部的导航栏
+  // 下面路由显示管理页面顶部的导航栏
   shouldTopShown() {
     return [
-      'login',
-      'userDeal',
-      'issueRule'
+      'applyIndex'
     ].includes(this.$store.state.pageName)
   }
 
-  // 白名单模式，下面路由不显示管理页面的侧边栏,和顶部的导航栏
+  // 下面路由不显示管理页面的侧边栏,和顶部的导航栏
+  shouldTopShown2() {
+    return [
+      'candidate',
+      'recruiterIndex'
+    ].includes(this.$store.state.pageName)
+  }
+
+  // 下面路由显示管理页面的侧边栏
+  shouldSaideShown() {
+    return [
+      'candidate',
+      'recruiterIndex'
+    ].includes(this.$store.state.pageName)
+  }
+
+  // 下面路由不显示管理页面的侧边栏,和顶部的导航栏
   shouldBottomShown() {
     return [
       'login',
       'postJob',
-      //'userDeal',
+      'candidate',
+      'recruiterIndex'
       //'issueRule'
     ].includes(this.$store.state.pageName)
   }

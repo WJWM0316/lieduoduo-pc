@@ -61,7 +61,6 @@ export const getLabelPositionListApi = data => request(
 	'get',
 	data
 )
-
 // 职位技能列表
 export const professionalSkillsApi = data => request(
 	`/label/professionalSkills`,

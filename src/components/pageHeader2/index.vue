@@ -1,39 +1,47 @@
 <template>
-	<header id="page-header" >
+	<header id="page-header2" >
 		<section>
 			<div class="left">
-				<img class="logo" src="../../assets/images/logo_white.png" @click="refresh" />
-
 				<ul class="nav">
-					<li class="" @mouseover="pop.isShow = true" @mouseout="pop.isShow = false">打开猎多多</li>
-					<li class="" @click="refreshID" >切换为{{identity==='qiuzhi'?'招聘官':'求职者'}}</li>
+					<li class="" @mouseover="pop = {isShow: true, type: 'gzh'}" @mouseout="pop.isShow = false">关注列多多</li>
+					<li class="" @mouseover="pop = {isShow: true, type: 'xcx'}" @mouseout="pop.isShow = false"> 列多多移动版</li>
 				</ul>
-
-				<div class="headWC_pop" v-if="pop.isShow">
+				<div class="headWC_pop" :class="{'left': pop.type === 'gzh'}" v-if="pop.isShow">
 					<div class="triangle_border_top"></div>
-					<div class="pop_cont">
+					<div class="pop_cont" v-if="pop.type === 'gzh'">
 			  		<img class="pop_code" src="../../assets/images/gzh.png"/>
 			  		<p class="pop_text">微信扫码关注公众号 </p>
 			  		<p class="pop_text">菜单栏点击选择猎多多</p>
 					</div>
-					<div class="pop_cont right">
-			  		<img class="pop_code" src="../../assets/images/xcx.png"/>
+					<div class="pop_cont" v-if="pop.type === 'xcx'">
+			  		<img class="pop_code2 " src="../../assets/images/xcx.png"/>
 			  		<p class="pop_text">微信扫码打开小程序</p>
 					</div>
 					<div class="triangle_border_right"></div>
 				</div>
-			</div>	
-			<el-dropdown trigger="click"  @command="handleClick">
-					<div class="right" v-if="userInfo && userInfo.token">
-						<span class="name">欢迎登录猎多多，{{userInfo.realname}}</span>
-				  	<img class="op_icon" src="../../assets/images/open.png" />
-						<img class="avatar" :src="userInfo.avatarInfo.middleUrl" />
-					</div>
+			</div>
 
-					<el-dropdown-menu slot="dropdown">
-				    <el-dropdown-item command="out">退出登录</el-dropdown-item>
-				    <el-dropdown-item command="changeId">切换为{{identity==='qiuzhi'?'招聘官':'求职者'}}</el-dropdown-item>
-				  </el-dropdown-menu>
+			<el-dropdown trigger="click"  @command="handleClick">
+				<div class="right" v-if="userInfo && userInfo.token">
+					<span class="name">欢迎登录猎多多，{{userInfo.realname}}</span>
+			  	<img class="op_icon" src="../../assets/images/open.png" />
+					<img class="avatar" :src="userInfo.avatarInfo.middleUrl" />
+				</div>
+
+				<el-dropdown-menu slot="dropdown">
+			    <el-dropdown-item command="changeId">
+			  		<img class="drop_icon" src="../../assets/images/change.png" />
+			    	切换为{{identity==='qiuzhi'?'招聘官':'求职者'}}
+			    </el-dropdown-item>
+			    <el-dropdown-item command="help" class="dropdown_blo">
+			  		<img class="drop_icon" src="../../assets/images/help.png" />
+			    	帮助中心
+			    </el-dropdown-item>
+			    <el-dropdown-item command="out">
+			  		<img class="drop_icon" src="../../assets/images/out.png" />
+			    	退出登录
+			  	</el-dropdown-item>
+			  </el-dropdown-menu>
 			</el-dropdown>
 
 			<div class="switchWrap" v-if="isShowSwitch">
@@ -63,19 +71,20 @@
 						</div>
 					</div>
 			</div>
+			
 		</section>
 	</header>
 </template>
 <style lang="less">
-#page-header{
+#page-header2{
 	height:60px;
-	background: rgba(101,39,145,1);
+	background: #fff;
 	text-align: right;
 	font-size: 14px;
 	box-shadow: 0px 2px 8px 0px rgba(29,45,53,0.06);
 	position: fixed;
 	top: 0;
-	left: 0;
+	left: 0px;
 	right: 0;
 	z-index: 3;
 	.switchWrap {
@@ -150,33 +159,29 @@
 			}
 		}
 	}
-	
-	.logo{
-		width:80px;
-		height:30px;
-	}
+
 	.nav {
-		font-size:14px;
-		font-family:PingFang-SC-Medium;
-		font-weight:500;
 		line-height:60px;
 		li {
 			display: inline-block;
 			margin-left: 60px;
 			cursor: pointer;
-			color:rgba(255,255,255,1);
-			font-family:PingFang-SC-Medium;
-			font-weight:500;
+
+			font-size:14px;
+			font-family:PingFangSC-Regular;
+			font-weight:400;
+			color:rgba(40,40,40,1);
 		}
 	}
 	section {
-		width: 960px;
+		width: 1200px;
 		height: 100%;
 		margin: 0 auto;
+		padding-left: 200px;
 		display: flex;
 		flex-direction: row;
 		align-items: center;
-		justify-content: space-between;
+		justify-content: flex-end;
 		position: relative;
 		.left {
 			display: flex;
@@ -190,9 +195,9 @@
 			align-items: center;
 			.name {
 				font-size:14px;
-				font-family:PingFang-SC-Medium;
-				font-weight:500;
-				color:rgba(255,255,255,1);
+				font-family:PingFangSC-Regular;
+				font-weight:400;
+				color:rgba(40,40,40,1);
 			}
 			.avatar {
 				width:30px;
@@ -208,6 +213,7 @@
 		}
 	}
 	.navigation {
+
 		margin-right: 40px;
 		li{
 			display: inline-block;
@@ -229,37 +235,41 @@
 		position: absolute;
 		top: 55px;
 		left: 140px;
-		width:318px;
-		height:180px;
+		height:190px;
+		width:190px;
 		background:rgba(255,255,255,1);
-		box-shadow:0px 8px 12px 0px rgba(239,233,244,1);
 		display: flex;
 		flex-direction: row;
 		justify-content: center;
 		align-items: center;
 		box-sizing: border-box;
-		padding: 0 24px;
+		padding: 0 35px;
 		border-radius: 8px;
 		z-index: 100;
+		box-shadow:0px 0px 30px 0px rgba(33,0,74,0.2);
+		&.left {
+			position: absolute;
+			top: 55px;
+			left: 0px;
+		}
 		.pop_cont {
 			display: flex;
 			justify-content: center;
 			flex-direction: column;
-			&.right {
-				margin-left: 50px;
-				.pop_code {
-					border-radius: 50%;
-					margin-bottom: 20px;
-					display: block;
-				}
-				.pop_text {
-				}
-			}
 			.pop_code {
 				width:106px;
 				height:105px;
 				margin: 0 auto;
 				margin-bottom: 12px;
+				border:1px solid rgba(239,233,244,1)
+			}
+			.pop_code2 {
+				width:106px;
+				height:105px;
+				margin: 0 auto;
+				margin-bottom: 12px;
+				border:1px solid rgba(239,233,244,1);
+				border-radius: 50%;
 			}
 			.pop_text {
 				text-align: center;
@@ -281,14 +291,16 @@
      	border-color:transparent transparent #fff;/*透明 透明  灰*/
 	    border-style: solid;
 	    position: absolute;
-	    left: 30px;
+	    left: 50%;
 	    top: -10px;
+	    margin-left: -10px;
 		}
 	}
 }
 .el-dropdown {
 	line-height: 30px;
 	display: flex;
+	margin-left: 70px;
 }
 .el-dropdown-menu {
 	.el-dropdown-menu__item {
@@ -303,6 +315,17 @@
 
 .el-popper[x-placement^=bottom] .popper__arrow {
 	left: 69px !important;
+}
+
+.el-dropdown-menu__item {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	.drop_icon {
+		width: 16px;
+		height: 16px;
+		margin-right: 8px;
+	}
 }
 
 </style>

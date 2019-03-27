@@ -8,7 +8,6 @@ let identity = 'qiuzhi'   // 身份 zhaopin  or  qiuzhi
 
 export const baseHost = function(){
 	let url = `https://${identity}`
-
 	return isTest ?`${url}-api.lieduoduo.ziwork.com`: `${url}-api.lieduoduo.com` 
 }
 

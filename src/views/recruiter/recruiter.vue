@@ -1,164 +1,165 @@
 <template>
 	<div id="recruiter">
 		<div class="recruiter_cont">
-			<div class="header_warp">
-				<h2 class="title">
-					职位管理
-					<div class="addJob" size="small" type="primary" @click="todoAction('addJob')">发布职位</div>
-				</h2>
-				<div class="header_navs_wrap">
-					<div class="header_navs"  :class="searchBarFixed === true ? 'isFixed' :''">
-						<ul class="recruiter_classify">
-							<li class="" v-for="item,index in recruiterList" @click="catchRecruiter(index)" :class="{'cur':item.active}">{{item.name}}   ({{item.total}})</li>
-						</ul>
-						<div class="job_classify_wrap" v-if="jobNameList.length>0">
-							<!-- <ul class="job_classify">
-								<li class="" v-for="item,index in jobNameList" @click="catchJob(index)" :class="{'slet':item.active}">{{item.name}}</li>
-							</ul> -->
-							<!-- <ul class="job_classify">
-								<li class="" v-for="item,index in jobNameList" @click="catchJob(index)" :class="{'slet':item.active}" v-if="index<9">{{item.name}}</li>
+	<div class="header_warp">
+		<h2 class="title">
+			职位管理
+			<div class="addJob" size="small" type="primary" @click="todoAction('addJob')">发布职位</div>
+		</h2>
+		<div class="header_navs_wrap">
+			<div class="header_navs"  :class="searchBarFixed === true ? 'isFixed' :''">
+				<ul class="recruiter_classify">
+					<li class="" v-for="item,index in recruiterList" @click="catchRecruiter(index)" :class="{'cur':item.active}">{{item.name}}   ({{item.total}})</li>
+				</ul>
+				<div class="job_classify_wrap" v-if="jobNameList.length>0">
+					<!-- <ul class="job_classify">
+						<li class="" v-for="item,index in jobNameList" @click="catchJob(index)" :class="{'slet':item.active}">{{item.name}}</li>
+					</ul> -->
+					<!-- <ul class="job_classify">
+						<li class="" v-for="item,index in jobNameList" @click="catchJob(index)" :class="{'slet':item.active}" v-if="index<9">{{item.name}}</li>
 
-								<li class="more" @click="todoAction('moreClassily')" :class="{'slet':false}" v-if="jobNameList.length>9">更多</li>v-show="isShowClassily"
-							</ul> -->
-							<ul class="job_classify job_classify2" >
-								<li class="" v-for="item,index in jobNameList" @click="catchJob(index)" :class="{'slet':item.active}">{{item.name}}</li>
+						<li class="more" @click="todoAction('moreClassily')" :class="{'slet':false}" v-if="jobNameList.length>9">更多</li>v-show="isShowClassily"
+					</ul> -->
+					<ul class="job_classify job_classify2" >
+						<li class="" v-for="item,index in jobNameList" @click="catchJob(index)" :class="{'slet':item.active}">{{item.name}}</li>
 
-								<!-- <li class="close" @click="todoAction('closeClassily')" :class="{'slet':false}" v-if="jobNameList.length>9">收起</li> -->
-							</ul>
-						</div>
-					</div>
+						<!-- <li class="close" @click="todoAction('closeClassily')" :class="{'slet':false}" v-if="jobNameList.length>9">收起</li> -->
+					</ul>
 				</div>
 			</div>
-
-	  	<ul class="job_list" v-if="jobList.length>0">
-	  		<li class="job_blo" v-for="item,index in jobList">
-	  			<div class="blo_left">
-	  				<div class="job_top">
-	  					<div class="job_name">{{item.positionName}}</div>
-	  					<div class="job_emolument">{{item.emolumentMin}}k-{{item.emolumentMax}}k</div>
-	  				</div>
-	  				<div class="job_info">
-	  					<span v-if="item.city">{{item.city}}{{item.district}}</span>
-	  					<span v-if="item.workExperience">{{item.workExperienceName}}</span>
-	  					<span v-if="item.workExperienceName">{{item.educationName}}</span>
-	  				</div>
-	  			</div>
-	  			<div class="blo_status" v-if="form.status !=='1,2'" :class="form.status === '3' ? 'audit' :''">{{navSelectName}}</div>
-	  			<div class="blo_center">
-	  				<!-- <div class="center_status">审核中</div>
-	  				<div class="center_status">审核中</div>
-	  				<div class="center_status">审核中</div> -->
-	  				<div class="center_time">发布于 {{item.createdAt}}</div>
-	  			</div>
-	  			<div class="blo_right">
-	  				<span class="job_op" @click="openShare(index, item.id)" v-if="form.status === '1,2'">分享</span>
-	  				<span class="job_op" @click="opJob('close',item.id)" v-if="item.isOnline===1">关闭</span>
-	  				<span class="job_op" @click="opJob('open',item.id)" v-if="item.isOnline===2 && form.status === '0,1'">开放</span>
-	  				<span class="job_op" @click="todoAction('editJob',item.id)" >编辑</span>
-	  			</div>
-	  		</li>
-	  	</ul>
-
-	  	<div class="job_cont_none" v-else>
-	  		<img class="hint_icon" src="../../assets/images/ufo.png"/>
-  			<div class="none_hint">
-  				当前没有招聘中职位~
-  			</div>
-	  	</div>
-
-			<div class="toTop" @click="toTop" v-if="isShowTop">
-	  			<img class="arrows" src="../../assets/images/open.png"/>
-			</div>
-		</div>
-		<el-pagination
-			class="pagination"
-		  background
-		  layout="prev, pager, next, slot"
-		  :total="pageInfo.total"
-		  :page-size="pageInfo.count"
-		  prev-text="上一页"
-		  next-text="下一页"
-		  :current-page="pageInfo.page"
-		  v-if="pageInfo.totalPage > pageInfo.page"
-		  @current-change="handleCurrentPageChange">
-		  <span class="total">共{{ Math.ceil(pageInfo.totalPage) }}页, {{pageInfo.total}}条记录</span>
-		</el-pagination>
-
-		<div class="service"  @mouseover="isService = true" @mouseout="isService = false">
-			<img class="service_icon" src="../../assets/images/service.png"/>
-			客服咨询
-
-			<div class="service_pop" v-if="isService">
-				<div class="pop_tit">联系我们</div>
-				<div class="pop_cont">
-		  		<h3 class="pop_text">请拨打全国咨询热线</h3>
-		  		<p class="pop_text2">400-065-5788</p>
-		  		<img class="pop_code" src="../../assets/images/gzh.png"/>
-		  		<p class="pop_text3">猎多多公众号</p>
-		  		<p class="pop_text4">微信扫描二维码，关注官方公众号</p>
-				</div>
-				<div class="triangle_border_right">
-				</div>
-			</div>
-		</div>
-		
-
-		<div class="pop" v-if="pop.isShow">
-		  <div class="share" v-if="pop.type==='share'">
-		  	<div class="share_blo">
-		  		<div class="pop_tit">分享职位</div>
-		  		<img class="clo" src="../../assets/images/clo.png" @click="todoAction('cloPop2')">
-		  		<p class="share_txt" >使用「微信」扫描小程序码分享职位</p>
-		  		<img class="code" :src="shareSelectItem.qrCodeUrl" >
-		  		<p class="share_help_text"  @mouseover="isHelpShow = true" @mouseout="isHelpShow = false">
-		  			分享帮助
-		  			<img class="ques_icon" src="../../assets/images/question-circle2.png">
-		  		</p>
-		  	</div>
-	      
-	      <div class="share_blo share_help" v-if="isHelpShow">
-	      	<div class="pop_tit">分享帮助</div>
-	      	<p class="share_txt">扫码 > 点击分享按钮</p>
-	      	<img class="help_icon" src="../../assets/images/pic_share_help.png" >
-	      	<span class="triangle_border_left" ></span>
-	      </div>
-		  </div>
-
-  		<div class="messageBox" v-if="pop.type==='openJob'">
-    		<img class="clo" src="../../assets/images/clo.png" @click="todoAction('cloPop')">
-  			<div class="mb_main">
-  				<div class="mb_head">
-  					<img class="hint" src="../../assets/images/exclamation-circle.png">
-  					<h3 class="mb_tit">二次确认提醒</h3>
-  				</div>
-  				<div class="mb_cont">
-  					<p>确定重新开放该职位吗？</p>
-  				</div>
-  			</div>
-  			<div class="btns">
-  				<div class="btn cancel" @click="todoAction('cloPop')">取消</div>
-  				<div class="btn true" @click="todoAction('openJob')">确定</div>
-  			</div>
-  		</div>
-
-  		<div class="messageBox" v-if="pop.type==='closeJob'">
-    		<img class="clo" src="../../assets/images/clo.png" @click="todoAction('cloPop')">
-  			<div class="mb_main">
-  				<div class="mb_head">
-  					<img class="hint" src="../../assets/images/exclamation-circle.png">
-  					<h3 class="mb_tit">确认提醒</h3>
-  				</div>
-  				<div class="mb_cont">
-  					<p>关闭职位后，此职位不可被就职者查看和发起约面， 确认关闭吗？</p>
-  				</div>
-  			</div>
-  			<div class="btns">
-  				<div class="btn cancel" @click="todoAction('cloPop')">取消</div>
-  				<div class="btn true" @click="todoAction('closeJob')">确定</div>
-  			</div>
-  		</div>
 		</div>
 	</div>
+
+	<ul class="job_list" v-if="jobList.length>0">
+		<li class="job_blo" v-for="item,index in jobList">
+			<div class="blo_left">
+				<div class="job_top">
+					<div class="job_name">{{item.positionName}}</div>
+					<div class="job_emolument">{{item.emolumentMin}}k-{{item.emolumentMax}}k</div>
+				</div>
+				<div class="job_info">
+					<span v-if="item.city">{{item.city}}{{item.district}}</span>
+					<span v-if="item.workExperience">{{item.workExperienceName}}</span>
+					<span v-if="item.workExperienceName">{{item.educationName}}</span>
+				</div>
+			</div>
+			<div class="blo_status" v-if="form.status !=='1,2'" :class="form.status === '3' ? 'audit' :''">{{navSelectName}}</div>
+			<div class="blo_center">
+				<!-- <div class="center_status">审核中</div>
+				<div class="center_status">审核中</div>
+				<div class="center_status">审核中</div> -->
+				<div class="center_time">发布于 {{item.createdAt}}</div>
+			</div>
+			<div class="blo_right">
+				<span class="job_op" @click="openShare(index, item.id)" v-if="form.status === '1,2'">分享</span>
+				<span class="job_op" @click="opJob('close',item.id)" v-if="item.isOnline===1">关闭</span>
+				<span class="job_op" @click="opJob('open',item.id)" v-if="item.isOnline===2 && form.status === '0,1'">开放</span>
+				<span class="job_op" @click="todoAction('editJob',item.id)" >编辑</span>
+			</div>
+		</li>
+	</ul>
+
+	<div class="job_cont_none" v-else>
+		<img class="hint_icon" src="../../assets/images/ufo.png"/>
+		<div class="none_hint">
+			当前没有招聘中职位~
+		</div>
+	</div>
+
+	<div class="toTop" @click="toTop" v-if="isShowTop">
+			<img class="arrows" src="../../assets/images/open.png"/>
+	</div>
+</div>
+<el-pagination
+	class="pagination"
+  background
+  layout="prev, pager, next, slot"
+  :total="pageInfo.total"
+  :page-size="pageInfo.count"
+  prev-text="上一页"
+  next-text="下一页"
+  :current-page="pageInfo.page"
+  v-if="pageInfo.totalPage > pageInfo.page"
+  @current-change="handleCurrentPageChange">
+  <span class="total">共{{ Math.ceil(pageInfo.totalPage) }}页, {{pageInfo.total}}条记录</span>
+</el-pagination>
+
+<div class="service"  @mouseover="isService = true" @mouseout="isService = false">
+	<img class="service_icon" src="../../assets/images/service.png"/>
+	客服咨询
+
+	<div class="service_pop" v-if="isService">
+		<div class="pop_tit">联系我们</div>
+		<div class="pop_cont">
+  		<h3 class="pop_text">请拨打全国咨询热线</h3>
+  		<p class="pop_text2">400-065-5788</p>
+  		<img class="pop_code" src="../../assets/images/gzh.png"/>
+  		<p class="pop_text3">猎多多公众号</p>
+  		<p class="pop_text4">微信扫描二维码，关注官方公众号</p>
+		</div>
+		<div class="triangle_border_right">
+		</div>
+	</div>
+</div>
+
+
+<div class="pop" v-if="pop.isShow">
+  <div class="share" v-if="pop.type==='share'">
+  	<div class="share_blo">
+  		<div class="pop_tit">分享职位</div>
+  		<img class="clo" src="../../assets/images/clo.png" @click="todoAction('cloPop2')">
+  		<p class="share_txt" >使用「微信」扫描小程序码分享职位</p>
+  		<img class="code" :src="shareSelectItem.qrCodeUrl" >
+  		<p class="share_help_text"  @mouseover="isHelpShow = true" @mouseout="isHelpShow = false">
+  			分享帮助
+  			<img class="ques_icon" src="../../assets/images/question-circle2.png">
+  		</p>
+  	</div>
+  
+  <div class="share_blo share_help" v-if="isHelpShow">
+  	<div class="pop_tit">分享帮助</div>
+  	<p class="share_txt">扫码 > 点击分享按钮</p>
+  	<img class="help_icon" src="../../assets/images/pic_share_help.png" >
+  	<span class="triangle_border_left" ></span>
+  </div>
+  </div>
+
+	<div class="messageBox" v-if="pop.type==='openJob'">
+	<img class="clo" src="../../assets/images/clo.png" @click="todoAction('cloPop')">
+		<div class="mb_main">
+			<div class="mb_head">
+				<img class="hint" src="../../assets/images/exclamation-circle.png">
+				<h3 class="mb_tit">二次确认提醒</h3>
+			</div>
+			<div class="mb_cont">
+				<p>确定重新开放该职位吗？</p>
+			</div>
+		</div>
+		<div class="btns">
+			<div class="btn cancel" @click="todoAction('cloPop')">取消</div>
+			<div class="btn true" @click="todoAction('openJob')">确定</div>
+		</div>
+	</div>
+
+	<div class="messageBox" v-if="pop.type==='closeJob'">
+	<img class="clo" src="../../assets/images/clo.png" @click="todoAction('cloPop')">
+		<div class="mb_main">
+			<div class="mb_head">
+				<img class="hint" src="../../assets/images/exclamation-circle.png">
+				<h3 class="mb_tit">确认提醒</h3>
+			</div>
+			<div class="mb_cont">
+				<p>关闭职位后，此职位不可被就职者查看和发起约面， 确认关闭吗？</p>
+			</div>
+		</div>
+		<div class="btns">
+			<div class="btn cancel" @click="todoAction('cloPop')">取消</div>
+			<div class="btn true" @click="todoAction('closeJob')">确定</div>
+		</div>
+	</div>
+</div>
+	</div>
+
 </template>
 <script>
 	import Vue from 'vue'
@@ -179,7 +180,8 @@
 	      immediate: true
 	    }
 	  },
-	  components: {}
+	  components: {
+	  }
 	})
 	export default class CourseList extends Vue {
 		userInfo = {}
@@ -283,8 +285,7 @@
 	    this.getJobNameList()
   		this.getPositionList()
 
-	    this.getMyInfo({
-	    }).then(res=>{
+	    this.getMyInfo().then(res=>{
 	    	this.getStatusTotal()
 	    })
 	  }

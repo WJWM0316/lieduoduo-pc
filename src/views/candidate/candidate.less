@@ -1,0 +1,513 @@
+#candidate {
+  padding-top: 60px;
+  padding-bottom: 30px;
+  .recruiter_main {
+    width: 1200px;
+    margin: 0 auto;
+    padding-left: 200px;
+
+    .main_cont {
+      .candidate_blo {
+        width: 1200px;
+        height: 196px;
+        background: rgba(255,255,255,1);
+        border-radius: 8px;
+        border: 1px solid rgba(232,233,235,1);
+        margin-bottom: 15px;
+        box-sizing: border-box;
+        .bloTop {
+          height: 48px;
+          line-height: 48px;
+          border-bottom: 1px solid #E8E9EB;
+          padding: 0 24px;
+          font-size:12px;
+          font-family:PingFangSC-Regular;
+          font-weight:400;
+          color:rgba(146,146,146,1);
+          box-sizing: border-box;
+          overflow: hidden;
+          .timer {
+            float: left;
+          }
+          .topText {
+            float: left;
+            margin-left: 8px;
+          }
+        }
+        .bloCont {
+          display: flex;
+          flex-direction: row;
+          padding: 20px 0px 20px 32px;
+          box-sizing: border-box;
+          .leftMsg {
+            height:72px;
+            width: 380px;
+            .userBaseInfo {
+              position: relative;
+              height:72px;
+              .userIcon {
+                width:72px;
+                height:72px;
+                display: block;
+                float: left;
+                margin-right: 16px;
+                border-radius: 50%;
+              }
+              .gender {
+                width:19px;
+                height:19px;
+                border-radius: 50%;
+                position: absolute;
+                left: 50px;
+                bottom: 0;
+              }
+              .infoRight {
+                height:72px;
+                text-align: left;
+                padding-top: 10px;
+                .infoName {
+                  font-size:20px;
+                  font-family:PingFangSC-Semibold;
+                  font-weight:600;
+                  color:rgba(40,40,40,1);
+                  line-height:28px;
+                  margin-bottom: 6px;
+                }
+                .userLabel {
+                  height: 20px;
+                  li {
+                    display: inline-block;
+                    height:20px;
+                    line-height: 20px;
+                    background:rgba(245,244,247,1);
+                    border-radius:2px;
+                    padding: 0 6px;
+                    box-sizing: border-box;
+                    margin-right: 8px;
+
+                    font-size:12px;
+                    font-family:PingFangSC-Regular;
+                    font-weight:400;
+                    color:rgba(40,40,40,1);
+                  }
+                }
+              }
+            }
+            .intention {
+              height:20px;
+              font-size:14px;
+              font-family:PingFangSC-Regular;
+              font-weight:400;
+              color: #5C565D;
+              line-height:20px;
+              text-align: left;
+              margin-top: 12px;
+
+              .intentionText {
+                color: #282828;
+              } 
+              .intentionText2 {
+                color: #FF7F4C;
+              }
+            }
+          }
+          .bloExperience {
+            width: 285px;
+            font-size:14px;
+            font-family:PingFangSC-Regular;
+            font-weight:400;
+            color:rgba(146,146,146,1);
+            line-height:22px;
+            text-align: left;
+            padding-top: 10px;
+            position: relative;
+            padding-left: 20px;
+            padding-right: 20px;
+            overflow: hidden;
+            box-sizing: border-box;
+            &::after {
+              content: '';
+              width: 1px;
+              height: 100px;
+              background: #E8E9EB;
+              position: absolute;
+              left: 0;
+              top: 10px;
+            }
+            &.educationExperience {
+              width: 225px;
+            }
+            .experienceTitle {
+              margin-bottom: 8px;
+            }
+            .experienceText {
+              color:rgba(40,40,40,1);
+              margin-bottom: 8px;
+
+
+            }
+          }
+          .userOp {
+            position: relative;
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .like_user {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              flex-direction: row;
+              img {
+                margin-right: 7px
+              }
+            }
+            .btn {
+              width:108px;
+              height:38px;
+              line-height:38px;
+              background:rgba(255,220,41,1);
+              border-radius:30px;
+              font-size:14px;
+              font-family:PingFangSC-Regular;
+              font-weight:400;
+              color:rgba(40,40,40,1);
+              text-align: center;
+              margin-left: 24px;
+            }
+          }
+        }
+      }
+    }
+    .cont_none {
+      width:1200px;
+      height:752px;
+      background:rgba(255,255,255,1);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      p {
+        font-size:14px;
+        font-family:PingFangSC-Regular;
+        font-weight:400;
+        color:rgba(146,146,146,1);
+        line-height:20px;
+      }
+      img {
+        width: 146px;
+        height: 115px;
+        display: block;
+        margin-bottom: 10px;
+      }
+    }
+    .loading {
+      font-size:14px;
+      font-family:PingFangSC-Regular;
+      font-weight:400;
+      color:rgba(92,86,93,1);
+      line-height:20px;
+      text-align: center;
+      margin-top: 40px;
+      img {
+        width: 18px;
+        height: 18px;
+      }
+    }
+
+    
+  }
+  .main_top_warp {
+    //width: 1200px;
+    height:88px;
+    position: relative;
+    padding-left: 200px;
+    &.isFixed{
+      position:fixed;
+      background-color:#Fff;
+      top: 60px;
+      left: 0px;
+      right: 0;
+      z-index:1;
+      box-shadow:0px 10px 26px 0px rgba(0,0,0,0.08);
+    }
+  }
+  .main_top {
+    width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height:88px;
+    
+    .topBlo {
+      font-size:14px;
+      font-family:PingFangSC-Regular;
+      font-weight:400;
+      color:rgba(92,86,93,1);
+      height:40px;
+      background:rgba(255,255,255,1);
+      border-radius:4px;
+      border:1px solid rgba(232,233,235,1);
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      padding: 0 14px;
+      position: relative;
+      cursor: pointer;
+      img {
+        margin-right: 7px;
+      }
+      &.borright{
+        border-right: none;
+        border-top-right-radius: inherit;
+        border-bottom-right-radius: inherit;
+      }
+      &.borleft {
+        border-top-left-radius: inherit;
+        border-bottom-left-radius: inherit;
+        border-left: none;
+      }
+      .border {
+        width: 1px;
+        height: 16px;
+        background: #E8E9EB;
+        position: absolute;
+        left: 0;
+        top: 12px;
+      }
+      &.cur {
+        &::after {
+          content: '';
+          width: 80%;
+          height: 2px;
+          background: #652791;
+          position: absolute;
+          left: 10%;
+          bottom: 0px;
+        }
+      }
+    }
+    .screen_cont {
+      width:140px;
+      height:40px;
+      box-sizing: border-box;
+      position: relative;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      flex: 1;
+      .screenBox {
+        width:432px;
+        // height:248px;
+        background:rgba(255,255,255,1);
+        box-shadow:0px 0px 20px 0px rgba(0,0,0,0.15);
+        position: absolute;
+        bottom: -440px;
+        right: -50px;
+        padding: 26px ;
+        box-sizing: border-box;
+        z-index: 1000;
+        border-radius: 4px;
+        .screen_tit {
+          font-size:14px;
+          font-family:PingFangSC-Medium;
+          font-weight:500;
+          color:rgba(40,40,40,1);
+          line-height:24px;
+          text-align: left;
+          margin-bottom: 16px;
+        }
+        .lable_list {
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+          span {
+            height:28px;
+            background:rgba(248,248,248,1);
+            border-radius:4px;
+            color: #5C565D;
+            text-align: center;
+            line-height: 28px;
+            font-size:14px;
+            font-family:PingFangSC-Regular;
+            font-weight:400;
+            padding: 0px 12px;
+            margin: 0 8px 16px 0;
+            box-sizing: border-box;
+            border:1px solid rgba(248,248,248,1);
+            white-space: nowrap;
+            &.cur {
+              height:28px;
+              background:rgba(255,255,255,1);
+              border:1px solid rgba(101,39,145,1);
+              color:rgba(101,39,145,1);
+            }
+          }
+        }
+        .screen_btns {
+          height:32px;
+          display: flex;
+          flex-direction: row;
+          margin-top: 30px;
+          .screen_btn {
+            width:64px;
+            height:32px;
+            line-height:32px;
+            background:rgba(255,255,255,1);
+            border-radius:4px;
+            border:1px solid rgba(205,203,207,1);
+            font-size:14px;
+            font-family:PingFangSC-Regular;
+            font-weight:400;
+            color:rgba(92,86,93,1);
+            text-align: center;
+            box-sizing: border-box;
+            &.true {
+              background:rgba(101,39,145,1);
+              border: none;
+              color: #fff;
+              margin-right: 16px;
+            }
+          }
+        }
+      }
+    }
+    .topSelected {
+      width:100px;
+      height:40px;
+      background:rgba(255,255,255,1);
+      border-radius:4px;
+      border:1px solid rgba(232,233,235,1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: row;
+      border-top-right-radius: inherit;
+      border-bottom-right-radius: inherit;
+      &.selected {
+        color: #652791;
+      }
+    }
+    .topSelected2 {
+      width:40px;
+      height:40px;
+      display: flex;
+      justify-content: center;
+      align-items:center;
+      background:rgba(255,255,255,1);
+      border-radius:4px;
+      border:1px solid rgba(232,233,235,1);
+      border-top-left-radius: inherit;
+      border-bottom-left-radius: inherit;
+      border-left: none;
+      img {
+        margin: 0;
+      }
+    }
+    .topStatusBlo {
+      
+    }
+    .topStatusBlo2 {
+      margin-left: 23px;
+    }
+  }
+  .like {
+    width:16px;
+    height:16px;
+    display: block;
+  }
+  .preview {
+    width:16px;
+    height:16px;
+    display: block;
+  }
+  .screen_icon {
+    width:16px;
+    height:16px;
+    display: block;
+    margin-right: 6px;
+  }
+
+  .xcxPic {
+    width:238px;
+    height:206px;
+    background:rgba(255,255,255,1);
+    box-shadow:0px 0px 20px 0px rgba(0,0,0,0.15);
+    z-index: 100;
+    border-radius: 6px;
+    position: absolute;
+    top: -206px;
+    right: -40px;
+    .xcx_main {
+      width:238px;
+      height:206px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      .xcx_icon {
+        width:112px;
+        height:112px;
+        border-radius: 50%;
+      }
+      .xcx_load {
+        width:38px;
+        height:38px;
+      }
+      p {
+        margin-top: 17px;
+        font-size:14px;
+        font-family:PingFangSC-Regular;
+        font-weight:400;
+        color:rgba(92,86,93,1);
+        line-height:22px;
+      }
+    }
+  }
+  .triangle_border_down{
+      width:0;
+      height:0;
+      border-width:10px 10px 0;
+      border-style:solid;
+      border-color:#fff transparent transparent;/*灰 透明 透明 */
+      position:absolute;
+      bottom: -9px;
+      left: 50%;
+      margin-left: -10px;
+  }
+  .triangle_border_top{
+      width: 0;
+      height: 0;
+      border-width:0 10px 10px 10px;
+      border-style:solid;
+      border-color:transparent transparent #fff;/*透明 透明  灰*/
+      border-style: solid;
+      position: absolute;
+      right: 80px;
+      top: -10px;
+    }
+}
+.toTop {
+    position: fixed;
+    right: 50%;
+    bottom: 50px;
+    width: 56px;
+    height: 56px;
+    margin-right: -800px;
+    background:rgba(239,233,244,1);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .arrows {
+      width: 16px;
+      height: 18px;
+      display: block;
+      transform:rotate(180deg);
+    }
+  }
+
