@@ -3,8 +3,8 @@
 		<section>
 			<div class="left">
 				<ul class="nav">
-					<li class="" @mouseover="pop = {isShow: true, type: 'gzh'}" @mouseout="pop.isShow = false">关注列多多</li>
-					<li class="" @mouseover="pop = {isShow: true, type: 'xcx'}" @mouseout="pop.isShow = false"> 列多多移动版</li>
+					<li class="" @mouseover="pop = {isShow: true, type: 'gzh'}" @mouseout="pop.isShow = false">关注猎多多</li>
+					<li class="" @mouseover="pop = {isShow: true, type: 'xcx'}" @mouseout="pop.isShow = false"> 猎多多移动版</li>
 				</ul>
 				<div class="headWC_pop" :class="{'left': pop.type === 'gzh'}" v-if="pop.isShow">
 					<div class="triangle_border_top"></div>
