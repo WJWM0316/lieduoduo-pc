@@ -5,7 +5,7 @@
 	  <div class="login_cont">
 	  	<div class="login" v-if="status==='login'">
 	  		<h3 class="cont_tit">扫码登录</h3>
-	  		<div class="cont_p">使用猎多多小程序扫码登录<span class="help" @click="clickHelp">扫码帮助</span> <span class="ques">?</span></div>
+	  		<div class="cont_p">使用猎多多小程序扫码登录</div>
 	  		<div class="login_pic_warp">
 	  			<img class="loginCode"  v-bind:src="codeData.image" />
 	  			<div class="pastDue" v-if="isPast">

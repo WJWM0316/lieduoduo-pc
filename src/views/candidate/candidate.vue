@@ -118,7 +118,9 @@
 				<img class="loading_icon" src="../../assets/images/loading.gif" />
 				加载更多
 			</div>
-
+			<div class="loading" v-else>
+				--没有更多职位了--
+			</div>
 			<div class="toTop" @click="toTop" v-if="isShowTop">
 					<img class="arrows" src="../../assets/images/open.png"/>
 			</div>
