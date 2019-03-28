@@ -12,16 +12,16 @@
             v-if="item.meta && item.meta.useNav"
             :class="{'active' : $route.name === item.name}"  :key="`item.name`+index"
            >  
-              <div class="side_icon" v-if="item.name==='candidate'">
-                <img src="../../assets/images/candidate_sel.png" v-if="$route.name === item.name"  />
-                <img src="../../assets/images/candidate.png" v-else />
-              </div>
-              <div class="side_icon" v-if="item.name==='recruiterIndex'">
-                <img src="../../assets/images/position_sel.png" v-if="$route.name === item.name"  />
-                <img src="../../assets/images/position.png" v-else />
-              </div>
-              <router-link :to="{ name: item.name}">
+              <router-link :to="{ name: item.name}" class="a_warp">
                <!-- <i :class="`zike-icon icon iconfont ${item.meta.icon}`"></i>   -->
+               <div class="side_icon" v-if="item.name==='candidate'">
+                 <img src="../../assets/images/candidate_sel.png" v-if="$route.name === item.name"  />
+                 <img src="../../assets/images/candidate.png" v-else />
+               </div>
+               <div class="side_icon" v-if="item.name==='recruiterIndex'">
+                 <img src="../../assets/images/position_sel.png" v-if="$route.name === item.name"  />
+                 <img src="../../assets/images/position.png" v-else />
+               </div>
                {{ item.title }}
              </router-link>
           </li>

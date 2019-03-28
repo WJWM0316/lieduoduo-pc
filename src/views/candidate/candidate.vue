@@ -78,7 +78,7 @@
 						</div>
 						<div class="bloExperience educationExperience">
 							<div class="experienceTitle">教育经历</div>
-							<div class="experienceText textEllipsis"></div>
+							<div class="experienceText textEllipsis">{{item.education.school}}</div>
 						</div>
 
 						<div class="userOp">
@@ -90,17 +90,17 @@
 								<img class="like" src="../../assets/images/like2.png"/>
 									对Ta感兴趣
 							</div>
-							<div class="btn" v-if="item.interviewStatus.length<1" @click="positionOp" @mouseover="item.isShowPic = true" @mouseout="item.isShowPic = false">开撩约面</div>
-							<div class="btn" @click="positionOp" @mouseover="item.isShowPic = true" @mouseout="item.isShowPic = false" v-else>确认约面</div>
+							<div class="btn" v-if="item.interviewStatus.length<1" @click="positionOp" @mouseover="sharePicOp(true,index)" @mouseout="sharePicOp(false,index)">开撩约面</div>
+							<div class="btn" @click="positionOp" @mouseover="sharePicOp(true,index)" @mouseout="sharePicOp(false,index)" v-else>确认约面</div>
 
 							<div class="xcxPic" v-if="item.isShowPic">
 									<div class="triangle_border_down" ></div>
-									<div class="xcx_main" v-if="false">
+									<div class="xcx_main" v-if="item.src.length<1">
 										<img class="xcx_load" src="../../assets/images/loading.gif">
 										<p>正在加载中…</p>
 									</div>
 									<div class="xcx_main" v-else>
-										<img class="xcx_icon" src="../../assets/images/xcx.png">
+										<img class="xcx_icon" :src="item.src">
 										<p>微信扫码，查看简历详情</p>
 									</div>
 							</div>
@@ -125,9 +125,6 @@
 					<img class="arrows" src="../../assets/images/open.png"/>
 			</div>
 		</div>
-
-		
-
 		<div class="pop" v-if="pop.isShow">
 			<div class="messageBox" v-if="pop.type==='openJob'">
 				<img class="clo" src="../../assets/images/clo.png" @click="todoAction('cloPop')">
@@ -146,9 +143,10 @@
 	import Vue from 'vue'
 	import Component from 'vue-class-component'
 	import { uploadApi, waitApi, getQrCodeApi, getMyInfoApi } from '../../api/auth'
-	import { getPositionTypeListApi, getMyListApi, closePositionApi, openPositionApi, editPositionApi, getTypeListApi, getCodeUrl } from '../../api/position'
+	import { getPositionTypeApi, getPositionTypeListApi, getResumeShareApi, getCodeUrl } from '../../api/position'
 	import { getSearchMyCollectApi, getSearchCollectApi, putCollectUserApi, cancelCollectUserApi } from '../../api/collect'
 	import { getSearchBrowseMyselfApi } from '../../api/browse'
+	import { changeBaseURL } from '../../api/index'
 
 	import { applyInterviewApi, confirmInterviewApi } from '../../api/interview'
 
@@ -211,8 +209,16 @@
 		searchBrowseMyselfList = []
 		positionTypeList = []  // 职业标签列表
 		isShowScreen = false
-		selectedScreen = '' // 筛选选中条件
-
+		selectedScreen = [] // 筛选选中条件
+		sharePicIds = []
+		sharePicOp (type,index) {
+			if (type) {
+				this.candidateList[index].isShowPic = true
+				this.getPic(index)
+			}else {
+				this.candidateList[index].isShowPic = false
+			}
+		}
 		getPopName () {
 			return this.navType === 'searchBrowseMyself' ? '看过我的职位类型' : this.navType === 'searchCollect' ? '对我感兴趣的职位类型' : '我感兴趣的职位类型'
 		}
@@ -225,7 +231,6 @@
 			  case 'confirm':
 			  	this.getList()
 					this.isShowScreen = false
-			  	console.log(confirm)
 			    break
 			  case 'label_all':
 			  	console.log('label_all')
@@ -246,7 +251,7 @@
 
 		// 设置默认筛选
 		setDefaultScreen () {
-			this.selectedScreen = ''
+			this.selectedScreen = []
 
 			this.positionTypeList.map((item,idx) => {
 		  	item.active = false
@@ -292,8 +297,9 @@
 		    return
 		  }
 		  this.navType = type
-		  this.getList()
 		  this.setDefaultScreen()
+		  this.getPositionTypeList()
+		  this.getList()
 			this.isShowScreen = false
 		}
 
@@ -317,15 +323,19 @@
 		// 查询我感兴趣的
 		getSearchMyCollect (page) {
 			let data = {
-				type: this.selectedScreen.uid,
+				category: this.selectedScreen.length > 0 ? 1 : 0,
+				type: this.selectedScreen.join(),
+				index: this.positionTypeList.length > 0 && this.positionTypeList[this.positionTypeList.length-1].active ? 1 : 0,
 				page: page || this.pageInfo.page || 1,
 				count: this.pageInfo.count
 			}
+			console.log(data)
 			this.loading = true
 			getSearchMyCollectApi(data).then(res => {
 				let msg = res.data
 				msg.data.map((item,idx) => {
 		  		item.isShowPic = false
+		  		item.src = ''
 		  	})
 				if (data.page === 1){
 					this.candidateList = msg.data
@@ -336,22 +346,26 @@
 				this.pageInfo.totalPage = msg.meta.total/data.count || 0
 				this.pageInfo.page = data.page
 			}).catch(e => {
+				this.loading = false
 				this.candidateList = []
 			})
 		}
 		// 对我感兴趣的
 		getSearchCollect (page) {
 			let data = {
-				category: 0,
-				type: this.selectedScreen.uid,
+				category: this.selectedScreen.length > 0 ? 1 : 0,
+				type: this.selectedScreen.join(),
+				index: this.positionTypeList.length > 0 &&this.positionTypeList[this.positionTypeList.length-1].active ? 1 : 0,
 				page: page || this.pageInfo.page || 1,
 				count: this.pageInfo.count
 			}
+			console.log(data)
 			this.loading = true
 			getSearchCollectApi(data).then(res => {
 				let msg = res.data
 				msg.data.map((item,idx) => {
 		  		item.isShowPic = false
+		  		item.src = ''
 		  	})
 				if (data.page === 1){
 					this.candidateList = msg.data
@@ -362,23 +376,26 @@
 				this.pageInfo.totalPage = msg.meta.total/data.count || 0
 				this.pageInfo.page = data.page
 			}).catch(e => {
+				this.loading = false
 				this.candidateList = []
 			})
 		}
 		// 浏览过我的求职者
 		getSearchBrowseMyself (page) {
 			let data = {
-				category: 0,
-				type: this.selectedScreen.uid,
+				category: this.selectedScreen.length > 0 ? 1 : 0,
+				type: this.selectedScreen.join(),
+				index: this.positionTypeList.length > 0 && this.positionTypeList[this.positionTypeList.length-1].active ? 1 : 0,
 				page: page || this.pageInfo.page || 1,
 				count: this.pageInfo.count
 			}
-
+			console.log(data)
 			this.loading = true
 			getSearchBrowseMyselfApi(data).then(res => {
 				let msg = res.data
 				msg.data.map((item,idx) => {
 		  		item.isShowPic = false
+		  		item.src = ''
 		  	})
 				if (data.page === 1){
 					this.candidateList = msg.data
@@ -391,40 +408,95 @@
 				this.pageInfo.totalPage = msg.meta.total/data.count || 0
 				this.pageInfo.page = data.page
 			}).catch(e => {
+				this.loading = false
 				this.candidateList = []
 			})
 		}
 		// 职业类型列表
 		getPositionTypeList () {
-			getPositionTypeListApi().then(res => {
+			getPositionTypeApi().then(res => {
 				let data = res.data.data
-
 				data.map(item=>{
 					item.active = false
 				})
 				data.unshift({
 					name: '全部',
-					uid: '',
+					labelId: '',
 					active: true
 				})
+
+				if (this.navType === 'searchMyCollect') {
+					data.push({
+						name: '暂无工作经验',
+						labelId: 'index',
+						active: false
+					})
+				}else {
+					data.push({
+						name: '我的主页',
+						labelId: 'index',
+						active: false
+					})
+				}
+				
+				this.positionTypeList = data
+			})
+		}
+
+		
+
+		// 职业类型列表
+		getPositionTypeList2 () {
+			getPositionTypeListApi().then(res => {
+				let data = res.data.data
+				data.map(item=>{
+					item.active = false
+				})
+				data.unshift({
+					name: '全部',
+					labelId: '',
+					active: true
+				})
+				if (this.navType === 'searchMyCollect') {
+					data.push({
+						name: '暂无工作经验',
+						labelId: 'index',
+						active: false
+					})
+				}else {
+					data.push({
+						name: '我的主页',
+						labelId: 'index',
+						active: false
+					})
+				}
 				this.positionTypeList = data
 			})
 		}
 
 		labelClick (index) {
-			this.positionTypeList.map((item,idx) => {
-				item.active = false
-				if (index === idx) {
-					this.selectedScreen = item
-					item.active = true
+			let data = this.positionTypeList[index]
+
+			data.active = !data.active
+			if( data.name === '全部' && data.active) {
+				this.selectedScreen = []
+				this.setDefaultScreen()
+			}else {
+				if (data.active) {
+					this.selectedScreen.push(data.labelId)
+				} else {
+					this.selectedScreen.splice(this.selectedScreen.indexOf(data.labelId),1)
 				}
-			})
+				console.log(this.selectedScreen)
+				this.positionTypeList[0].active = false
+			}
 		}
 		//是否感兴趣操作
 		ownerOp (status,uid) {
 			let data = {
 				uid: uid
 			}
+
 	  	if (!status) {
 	  		putCollectUserApi(data).then(res => {
   				this.$message({
@@ -436,7 +508,7 @@
 					this.$message.error(err.data.msg)
 	  		})
 	  	} else {
-	  		cancelCollectUserApi(data).catch(err => {
+	  		cancelCollectUserApi(data).then(res => {
   				this.$message({
   			    type: 'success',
   			    message: '成功!'
@@ -476,17 +548,6 @@
 	    }
 	    this.getSearchBrowseMyself()
   		this.getPositionTypeList()
-
-
-
-  		let arr = [4,1,2,3,4,2,2,6]
-  		let ass = new Set(arr)
-  		let b = [...new Set(arr)]
-  		console.log(ass)
-  		console.log(b)
-	    return 
-	    this.getMyInfo({
-	    })
 	  }
 
 	  todoAction(type, id) {
@@ -577,17 +638,22 @@
 	  	document.documentElement.scrollTop=0;
 	  }
 
-	  openShare(index, id){
-	  	getCodeUrl({id}).then(res => {
-	  		console.log(res.data.data.qrCodeUrl)
-      	this.shareSelectItem.qrCodeUrl = res.data.data.qrCodeUrl
-      	//this.shareSelectItem = this.jobList[index]
-	  	})
-
-      this.pop = {
-      	isShow: true,
-				type: 'share'
-      }
+	  getPic(index, id){
+	  	let ids = this.sharePicIds
+	  	let item = this.candidateList[index]
+	  	if (item.src.length < 1 && !ids.includes[id]) {
+	  		ids.push(id)
+		  	getResumeShareApi({
+		  		resumeUid: item.id
+		  	}).then(res => {
+		  		item.src = res.data.data
+		  		console.log(this.candidateList[index])
+	      	//this.shareSelectItem.qrCodeUrl = res.data.data.qrCodeUrl
+	      	//this.shareSelectItem = this.jobList[index]
+		  	}).catch(err => {
+		  		ids.splice(ids.indexOf(id), 1)
+		  	})
+	  	}
 	  }
 	}
 </script>

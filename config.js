@@ -27,3 +27,10 @@ export const switchId = function(type){
 export const getUserIdentity = function(){
 	 return identity
 }
+
+
+export const changeBaseHost = function(type){
+	if(type === 1){
+		return `https://pub-api.lieduoduo.ziwork.com`
+	}
+}

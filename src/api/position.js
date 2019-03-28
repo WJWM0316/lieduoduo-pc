@@ -82,4 +82,18 @@ export const getCodeUrl = data => request(
 	data
 )
 
+// 简历分享信息
+export const getResumeShareApi = data => request(
+	`/share/resume_share`,
+	'get',
+	data,
+	true
+)
+
+// 获取招聘官在招职位类型
+export const getPositionTypeApi = data => request(
+	`/browse/get_position_type`,
+	'get',
+	data
+)
 

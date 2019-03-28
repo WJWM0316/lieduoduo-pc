@@ -41,10 +41,7 @@
     padding-left: 40px;
     box-sizing: border-box;
     text-align: left;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
+    
     &:hover {
       background:rgba(255,226,102,0.12);
     }
@@ -91,6 +88,10 @@
     font-family:PingFangSC-Regular;
     font-weight:400;
     color:#BCBCBC;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
   }
   .side_icon {
     width:16px;
@@ -118,3 +119,24 @@
     line-height:21px;
   }
 }
+
+.toTop {
+    position: fixed;
+    right: 50%;
+    bottom: 230px;
+    width: 56px;
+    height: 56px;
+    margin-right: -560px;
+    background:rgba(239,233,244,1);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .arrows {
+      width: 16px;
+      height: 18px;
+      display: block;
+      transform:rotate(180deg);
+    }
+  }

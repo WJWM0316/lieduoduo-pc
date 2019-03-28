@@ -70,8 +70,8 @@ export default class App extends Vue {
       'login',
       'postJob',
       'candidate',
-      'recruiterIndex'
-      //'issueRule'
+      'recruiterIndex',
+      '404'
     ].includes(this.$store.state.pageName)
   }
 }

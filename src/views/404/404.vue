@@ -39,12 +39,14 @@
 </script>
 <style lang="less">
 #page404 {
-	
+	padding: 0;
+	height: 100vh;
 	.none_main {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
+		height: 85vh;
 		.none_icon {
 			width: 334px;
 			height: 200px;

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Loading } from 'element-ui'
 import router from '../router/index'
-import { baseHost } from '../../config.js'
+import { baseHost, changeBaseHost } from '../../config.js'
 
 let loadingInstance = null
 const company = location.href.split('/')[3] || 'tiger'
@@ -11,8 +11,8 @@ import { getAccessToken, removeAccessToken, removeAccessToPPTXken } from './cach
 // export const upload_api = `${baseHost()}/attaches`
 axios.defaults.baseURL = baseHost()
 
-export const changeBaseURL = () => {
-  axios.defaults.baseURL = baseHost()
+export const changeBaseURL = (type) => {
+  axios.defaults.baseURL = type ? changeBaseHost(type) :baseHost()
 }
 
 
@@ -35,9 +35,6 @@ axios.interceptors.response.use(
   err => {
     // 登陆过期或者未登录
     if(err.response.data.httpStatus === 401) {
-      console.log(err.response.data.httpStatus)
-      console.log(router)
-      console.log(router.mode)
       router.replace({name: 'login'})
       removeAccessToken()
       return
@@ -48,10 +45,17 @@ axios.interceptors.response.use(
 )
 
 
-export const request = (url, method, params = {}) => {
+export const request = (url, method, params = {}, isChangeHost) => {
   if (params.globalLoading) {
     loadingInstance = Loading.service({})
     delete params.globalLoading
   }
+  
+  if (isChangeHost) {
+    changeBaseURL(1)
+  } else {
+    changeBaseURL()
+  }
+
   return axios[method](url, method === 'get' ? { params } : params)
 }
