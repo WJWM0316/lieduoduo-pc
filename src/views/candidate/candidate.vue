@@ -311,7 +311,7 @@
 			  	this.getSearchMyCollect(page)
 			    break
 			  case 'searchCollect':
-			  	this.getSearchMyCollect(page)
+			  	this.getSearchCollect(page)
 			    break
 			  case 'searchBrowseMyself':
 			  	this.getSearchBrowseMyself(page)
