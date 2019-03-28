@@ -646,7 +646,7 @@
 		  	getResumeShareApi({
 		  		resumeUid: item.id
 		  	}).then(res => {
-		  		item.src = res.data.data
+		  		item.src = res.data.data.positionQrCodeUrl
 		  		console.log(this.candidateList[index])
 	      	//this.shareSelectItem.qrCodeUrl = res.data.data.qrCodeUrl
 	      	//this.shareSelectItem = this.jobList[index]
