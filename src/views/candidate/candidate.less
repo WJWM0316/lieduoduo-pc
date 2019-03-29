@@ -37,116 +37,131 @@
         .bloCont {
           display: flex;
           flex-direction: row;
-          padding: 20px 0px 20px 32px;
-          box-sizing: border-box;
-          .leftMsg {
-            height:72px;
-            width: 380px;
-            .userBaseInfo {
-              position: relative;
+          height: 148px;
+          .cont_left {
+            display: flex;
+            flex-direction: row;
+            padding: 20px 0px 20px 32px;
+            box-sizing: border-box;
+            .leftMsg {
               height:72px;
-              .userIcon {
-                width:72px;
+              width: 380px;
+              .userBaseInfo {
+                position: relative;
                 height:72px;
-                display: block;
-                float: left;
-                margin-right: 16px;
-                border-radius: 50%;
-              }
-              .gender {
-                width:19px;
-                height:19px;
-                border-radius: 50%;
-                position: absolute;
-                left: 50px;
-                bottom: 0;
-              }
-              .infoRight {
-                height:72px;
-                text-align: left;
-                padding-top: 10px;
-                .infoName {
-                  font-size:20px;
-                  font-family:PingFangSC-Semibold;
-                  font-weight:600;
-                  color:rgba(40,40,40,1);
-                  line-height:28px;
-                  margin-bottom: 6px;
+                .userIcon {
+                  width:72px;
+                  height:72px;
+                  display: block;
+                  float: left;
+                  margin-right: 16px;
+                  border-radius: 50%;
                 }
-                .userLabel {
-                  height: 20px;
-                  li {
-                    display: inline-block;
-                    height:20px;
-                    line-height: 20px;
-                    background:rgba(245,244,247,1);
-                    border-radius:2px;
-                    padding: 0 6px;
-                    box-sizing: border-box;
-                    margin-right: 8px;
-
-                    font-size:12px;
-                    font-family:PingFangSC-Regular;
-                    font-weight:400;
+                .gender {
+                  width:19px;
+                  height:19px;
+                  border-radius: 50%;
+                  position: absolute;
+                  left: 50px;
+                  bottom: 0;
+                }
+                .infoRight {
+                  height:72px;
+                  text-align: left;
+                  padding-top: 10px;
+                  .infoName {
+                    font-size:20px;
+                    font-family:PingFangSC-Semibold;
+                    font-weight:600;
                     color:rgba(40,40,40,1);
+                    line-height:28px;
+                    margin-bottom: 6px;
+                  }
+                  .userLabel {
+                    height: 20px;
+                    li {
+                      display: inline-block;
+                      height:20px;
+                      line-height: 20px;
+                      background:rgba(245,244,247,1);
+                      border-radius:2px;
+                      padding: 0 6px;
+                      box-sizing: border-box;
+                      margin-right: 8px;
+
+                      font-size:12px;
+                      font-family:PingFangSC-Regular;
+                      font-weight:400;
+                      color:rgba(40,40,40,1);
+                    }
                   }
                 }
               }
+              .intention {
+                height:20px;
+                font-size:14px;
+                font-family:PingFangSC-Regular;
+                font-weight:400;
+                color: #5C565D;
+                line-height:20px;
+                text-align: left;
+                margin-top: 12px;
+                .intentionTextWidth {
+                  max-width: 120px;
+                }
+                .intentionTextWidth2 {
+                  max-width: 150px;
+                }
+                .intentionText {
+                  color: #282828;
+                } 
+                .intentionText {
+                  color: #282828;
+                } 
+                .intentionText2 {
+                  color: #FF7F4C;
+                }
+              }
             }
-            .intention {
-              height:20px;
+            .bloExperience {
+              height: 88px;
+              width: 285px;
               font-size:14px;
               font-family:PingFangSC-Regular;
               font-weight:400;
-              color: #5C565D;
-              line-height:20px;
+              color:rgba(146,146,146,1);
+              line-height:22px;
               text-align: left;
-              margin-top: 12px;
+              padding-top: 10px;
+              position: relative;
+              padding-left: 20px;
+              padding-right: 20px;
+              overflow: hidden;
+              box-sizing: border-box;
+              &::after {
+                content: '';
+                width: 1px;
+                height: 100px;
+                background: #E8E9EB;
+                position: absolute;
+                left: 0;
+                top: 10px;
+              }
+              &.educationExperience {
+                width: 225px;
+              }
+              .experienceTitle {
+                margin-bottom: 8px;
+              }
+              .experienceText {
+                color:rgba(40,40,40,1);
+                margin-bottom: 8px;
 
-              .intentionText {
-                color: #282828;
-              } 
-              .intentionText2 {
-                color: #FF7F4C;
+
               }
             }
           }
-          .bloExperience {
-            width: 285px;
-            font-size:14px;
-            font-family:PingFangSC-Regular;
-            font-weight:400;
-            color:rgba(146,146,146,1);
-            line-height:22px;
-            text-align: left;
-            padding-top: 10px;
-            position: relative;
-            padding-left: 20px;
-            padding-right: 20px;
-            overflow: hidden;
-            box-sizing: border-box;
-            &::after {
-              content: '';
-              width: 1px;
-              height: 100px;
-              background: #E8E9EB;
-              position: absolute;
-              left: 0;
-              top: 10px;
-            }
-            &.educationExperience {
-              width: 225px;
-            }
-            .experienceTitle {
-              margin-bottom: 8px;
-            }
-            .experienceText {
-              color:rgba(40,40,40,1);
-              margin-bottom: 8px;
-
-
-            }
-          }
+          
           .userOp {
             position: relative;
             flex: 1;
@@ -158,6 +173,7 @@
               justify-content: center;
               align-items: center;
               flex-direction: row;
+              color: #652791;
               img {
                 margin-right: 7px
               }
@@ -174,6 +190,7 @@
               color:rgba(40,40,40,1);
               text-align: center;
               margin-left: 24px;
+              cursor: pointer;
             }
           }
         }
@@ -205,7 +222,7 @@
       font-size:14px;
       font-family:PingFangSC-Regular;
       font-weight:400;
-      color:rgba(92,86,93,1);
+      color:#bcbcbc;
       line-height:20px;
       text-align: center;
       margin-top: 40px;
@@ -223,13 +240,15 @@
     position: relative;
     padding-left: 200px;
     &.isFixed{
+      height: 68px;
       position:fixed;
       background-color:#Fff;
       top: 60px;
       left: 0px;
       right: 0;
       z-index:1;
-      box-shadow:0px 10px 26px 0px rgba(0,0,0,0.08);
+      //box-shadow:0px 10px 26px 0px rgba(0,0,0,0.08);
+      box-shadow:0px 1px 3px 0px rgba(0,0,0,0.08);
     }
   }
   .main_top {
@@ -238,7 +257,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    height:88px;
+    height:100%;
     
     .topBlo {
       font-size:14px;
@@ -279,6 +298,7 @@
         top: 12px;
       }
       &.cur {
+        color: #652791;
         &::after {
           content: '';
           width: 80%;
@@ -420,7 +440,7 @@
     display: block;
   }
   .preview {
-    width:16px;
+    width:18px;
     height:16px;
     display: block;
   }

@@ -22,10 +22,10 @@ export const routes = [
       component: () => import(/* webpackChunkName: "login" */ '../views/apply/apply.vue')
     },
     {
-      path: '/recruiterIndex',
-      name: 'recruiterIndex',
-      title: '职位管理',
-      component: () => import(/* webpackChunkName: "login" */ '../views/recruiter/recruiter.vue'),
+      path: '/candidate',
+      name: 'candidate',
+      title: '候选人',
+      component: () => import(/* webpackChunkName: "login" */ '../views/candidate/candidate.vue'),
       // 元信息
       meta: {
         // 一级路由需要设置， 是否在侧边栏显示
@@ -35,10 +35,10 @@ export const routes = [
       }
     },
     {
-      path: '/candidate',
-      name: 'candidate',
-      title: '候选人',
-      component: () => import(/* webpackChunkName: "login" */ '../views/candidate/candidate.vue'),
+      path: '/recruiterIndex',
+      name: 'recruiterIndex',
+      title: '职位管理',
+      component: () => import(/* webpackChunkName: "login" */ '../views/recruiter/recruiter.vue'),
       // 元信息
       meta: {
         // 一级路由需要设置， 是否在侧边栏显示

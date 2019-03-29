@@ -550,6 +550,7 @@
 		margin: 0 auto;
 		background: #ffffff;
 		position: relative;
+		padding-left: 200px;
 	}
 	.header_warp {
 		min-height: 222px;

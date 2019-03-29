@@ -348,7 +348,7 @@ export default class ComponentHeader extends Vue {
 		}else if(qiuzhiPages.includes(pageName)){
 			if(isBusiness !==0){
 				this.$router.push({
-					name: 'recruiterIndex'
+					name: 'candidate'
 				})
 				this.identity = 'zhaopin'
 			}else {
@@ -377,7 +377,7 @@ export default class ComponentHeader extends Vue {
 	  	this.$store.dispatch('login', this.userInfo)
 	  	changeBaseURL()
 	  	this.$router.push({
-	  		name: identity === 'zhaopin' ? 'recruiterIndex' : 'applyIndex'
+	  		name: identity === 'zhaopin' ? 'candidate' : 'applyIndex'
 	  	})
 			this.$message({
 		    type: 'success',

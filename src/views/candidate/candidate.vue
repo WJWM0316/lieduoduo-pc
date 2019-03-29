@@ -9,12 +9,12 @@
 					</div>
 					<div class="topBlo topStatusBlo borleft "  :class="{'cur':navType==='searchCollect'}" @click="changeNav('searchCollect')">
 						<span class="border"></span>
-						<img class="like" src="../../assets/images/like.png" v-if="navType === 'searchCollect'" />
+						<img class="like" src="../../assets/images/like_no.png" v-if="navType === 'searchCollect'" />
 						<img class="like" src="../../assets/images/like2.png" v-else />
 						对我感兴趣
 					</div>
 					<div class="topBlo topStatusBlo2"  :class="{'cur':navType==='searchMyCollect'}" @click="changeNav('searchMyCollect')">
-						<img class="like" src="../../assets/images/like.png" v-if="navType === 'searchMyCollect'" />
+						<img class="like" src="../../assets/images/like_no.png" v-if="navType === 'searchMyCollect'" />
 						<img class="like" src="../../assets/images/like2.png" v-else />
 						我感兴趣的
 					</div>
@@ -51,43 +51,57 @@
 				<div class="candidate_blo" v-for="item,index in candidateList" >
 					<div class="bloTop">
 						<div class="timer">{{item.viewAt}}</div>
-						<div class="topText">看过我的主页</div>
-						<div class="topText">{{item.positionInfo.area}} | {{item.positionInfo.positionName}} | {{item.positionInfo.emolument}}</div>
+						<div class="topText" v-if="navType === 'searchBrowseMyself'">看过我的{{item.positionInfo && item.positionInfo.positionName ?'职位':'主页'}}</div>
+						<div class="topText" v-if="navType === 'searchCollect'">对我{{item.positionInfo && item.positionInfo.positionName ?'的职位':''}}感兴趣</div>
+						<div class="topText" v-if="navType === 'searchMyCollect'">对Ta感兴趣</div>
+
+						<div class="topText">{{item.positionInfo.area}} <span v-if="item.positionInfo.positionName">| {{item.positionInfo.positionName}}</span><span v-if="item.positionInfo.emolument"> | {{item.positionInfo.emolument}}</span></div>
 					</div>
 					<div class="bloCont">
-						<div class="leftMsg">
-							<div class="userBaseInfo">
-								
-								<img class="gender" src="../../assets/images/girl.png" v-if="item.gender===1" />
-								<img class="gender" src="../../assets/images/boy.png" v-else />
-								<img class="userIcon" :src="item.avatar.middleUrl" />
-								<div class="infoRight">
-									<div class="infoName">{{item.name}}</div>
-									<ul class="userLabel">
-										<li class="" v-if="item.workAge">{{item.workAge}}</li>
-										<li class="" v-if="item.age">{{item.age}}岁</li>
-										<li class="" v-if="item.degreeDesc">{{item.degreeDesc}}</li>
-									</ul>
+						<div class="cont_left">
+							<div class="leftMsg">
+								<div class="userBaseInfo">
+									
+									<img class="gender" src="../../assets/images/girl.png" v-if="item.gender===1" />
+									<img class="gender" src="../../assets/images/boy.png" v-else />
+									<img class="userIcon" :src="item.avatar.middleUrl" />
+									<div class="infoRight">
+										<div class="infoName textEllipsis">{{item.name}}</div>
+										<ul class="userLabel">
+											<li class="" v-if="item.workAge">{{item.workAge}}年工作经验</li>
+											<li class="" v-else>暂无工作经验</li>
+											<li class="" v-if="item.age">{{item.age}}岁</li>
+											<li class="" v-if="item.degreeDesc">{{item.degreeDesc}}</li>
+										</ul>
+									</div>
+								</div>
+								<div class="intention" v-if="item.expects.length>0">求职意向：
+									<span class="intentionText intentionTextWidth textEllipsis">{{item.expects[0].city}} </span> ·
+									<span class="intentionText intentionTextWidth2 textEllipsis">{{item.expects[0].position}}</span> ·
+									<span class="intentionText2">{{item.expects[0].salaryFloor}}k~{{item.expects[0].salaryCeil}}k</span>
 								</div>
 							</div>
-							<div class="intention" v-if="item.expects.length>0">求职意向：<span class="intentionText">{{item.expects[0].city}} · {{item.expects[0].position}} ·</span><span class="intentionText2">{{item.expects[0].salaryFloor}}k~{{item.expects[0].salaryCeil}}k</span></div>
+							<div class="bloExperience workExperience">
+								<div class="experienceTitle ">最近工作经历</div>
+								<div class="experienceText textEllipsis" v-if="item.lastCompanyName">{{item.lastCompanyName}}</div>
+								<div class="experienceText textEllipsis" v-if="item.lastPosition">{{item.lastPosition}}</div>
+								<div class="experienceText textEllipsis" v-if="item.lastCompanyName.length<1">暂无工作经历</div>
+							</div>
+							<div class="bloExperience educationExperience">
+								<div class="experienceTitle">最近教育经历</div>
+								<div class="experienceText textEllipsis" v-if="item.education && item.education.school">{{item.education.school}}</div>
+								<div class="experienceText textEllipsis" v-if="item.education && item.education.major">{{item.education.major}}</div>
+								<div class="experienceText textEllipsis" v-if="!item.education || item.education.school.length<1">暂无教育经历</div>
+							</div>
 						</div>
-						<div class="bloExperience workExperience">
-							<div class="experienceTitle ">最近工作经历</div>
-							<div class="experienceText textEllipsis">{{item.lastCompanyName}}</div>
-						</div>
-						<div class="bloExperience educationExperience">
-							<div class="experienceTitle">教育经历</div>
-							<div class="experienceText textEllipsis">{{item.education.school}}</div>
-						</div>
-
+						
 						<div class="userOp">
 							<div class="like_user" @click="ownerOp(true,item.uid)" v-if="item.interested">
 								<img class="like" src="../../assets/images/like.png"/>
 								取消感兴趣
 							</div>
 							<div class="like_user" @click="ownerOp(false,item.uid)" v-else >
-								<img class="like" src="../../assets/images/like2.png"/>
+								<img class="like" src="../../assets/images/like_no.png"/>
 									对Ta感兴趣
 							</div>
 							<div class="btn" v-if="item.interviewStatus.length<1" @click="positionOp" @mouseover="sharePicOp(true,index)" @mouseout="sharePicOp(false,index)">开撩约面</div>
@@ -107,6 +121,7 @@
 							<!-- <div class="btn" @click="positionOp(3,item.uid)">安排面试</div> -->
 						</div>
 					</div>
+					
 				</div>
 			</div>
 			<div class="cont_none" v-else>
@@ -119,7 +134,7 @@
 				加载更多
 			</div>
 			<div class="loading" v-else>
-				--没有更多职位了--
+				-没有更多职位了-
 			</div>
 			<div class="toTop" @click="toTop" v-if="isShowTop">
 					<img class="arrows" src="../../assets/images/open.png"/>
@@ -134,6 +149,24 @@
 							<img class="hint" src="../../assets/images/exclamation-circle.png">
 							<p>微信扫码，查看简历详情</p>
 						</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="service"  @mouseover="isService = true" @mouseout="isService = false">
+			<img class="service_icon" src="../../assets/images/service.png"/>
+			客服咨询
+
+			<div class="service_pop" v-if="isService">
+				<div class="pop_tit">联系我们</div>
+				<div class="pop_cont">
+		  		<h3 class="pop_text">请拨打全国咨询热线</h3>
+		  		<p class="pop_text2">400-065-5788</p>
+		  		<img class="pop_code" src="../../assets/images/gzh.png"/>
+		  		<p class="pop_text3">猎多多公众号</p>
+		  		<p class="pop_text4">微信扫描二维码，关注官方公众号</p>
+				</div>
+				<div class="triangle_border_right">
 				</div>
 			</div>
 		</div>
@@ -171,7 +204,7 @@
 
 		pageInfo = {
 		  page: 1,
-		  count: 7,
+		  count: 20,
 		  totalPage: 0,
 		  total: 0
 		}
@@ -200,6 +233,7 @@
 			y: ''
 		}
 		isShowTop = false //
+		isService = false  
 
 		navType = 'searchBrowseMyself' 
 		loading = false //翻页 
@@ -296,7 +330,9 @@
 		  if(type2 === type){
 		    return
 		  }
+
 		  this.navType = type
+		  this.toTop()
 		  this.setDefaultScreen()
 		  this.getPositionTypeList()
 		  this.getList()
