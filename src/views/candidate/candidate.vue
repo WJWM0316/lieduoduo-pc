@@ -115,9 +115,8 @@
 								<img class="like" src="../../assets/images/like_no.png"/>
 									对Ta感兴趣
 							</div>
-							<div class="btn" v-if="item.interviewStatus.length<1" @click="positionOp" @mouseover="sharePicOp(true,index)" @mouseout="sharePicOp(false,index)">开撩约面</div>
-							<div class="btn" @click="positionOp" @mouseover="sharePicOp(true,index)" @mouseout="sharePicOp(false,index)" v-else-if="item.interviewStatus.status === 41">安排面试</div>
-							<div class="btn" @click="positionOp" @mouseover="sharePicOp(true,index)" @mouseout="sharePicOp(false,index)" v-else>确认约面</div>
+							<div class="btn" v-if="!item.interviewStatus.status" @click="positionOp" @mouseover="sharePicOp(true,index)" @mouseout="sharePicOp(false,index)">开撩约面</div>
+							<div class="btn" @click="positionOp" @mouseover="sharePicOp(true,index)" @mouseout="sharePicOp(false,index)" v-else>{{item.interviewStatus.statusDesc}}</div>
 
 							<div class="xcxPic" v-if="item.isShowPic">
 									<div class="triangle_border_down" ></div>
