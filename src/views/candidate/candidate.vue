@@ -20,11 +20,19 @@
 					</div>
 
 					<div class="screen_cont">
-						<div class="topSelected" @click="screenList(1)" :class="{'selected':isShowScreen}">
+						<div class="topSelected" @click="screenList(1)" :class="{'selected':isShowScreen}" v-if="isShowScreen">
 							<img class="screen_icon" src="../../assets/images/screen.png" v-if="isShowScreen" />
 							<img class="screen_icon" src="../../assets/images/screen_off.png" v-else />
 							{{isShowScreen ? '清除筛选' :'高级筛选' }}
 						</div>
+
+						<div class="topSelected" @click="screenList(1)" :class="{'selected':selectedScreen.length>0}" v-else>
+							<img class="screen_icon" src="../../assets/images/screen.png" v-if="selectedScreen.length>0" />
+							<img class="screen_icon" src="../../assets/images/screen_off.png" v-else />
+							{{selectedScreen.length>0 ? '清除筛选' :'高级筛选' }}
+						</div>
+
+
 						<div class="topSelected2" @click="screenList(2)">
 							<img class="screen_icon" src="../../assets/images/arrows2.png" v-if="isShowScreen" />
 							<img class="screen_icon" src="../../assets/images/arrows2.png" v-else />
@@ -109,6 +117,7 @@
 									对Ta感兴趣
 							</div>
 							<div class="btn" v-if="item.interviewStatus.length<1" @click="positionOp" @mouseover="sharePicOp(true,index)" @mouseout="sharePicOp(false,index)">开撩约面</div>
+							<div class="btn" @click="positionOp" @mouseover="sharePicOp(true,index)" @mouseout="sharePicOp(false,index)" v-else-if="item.interviewStatus.status === 41">安排面试</div>
 							<div class="btn" @click="positionOp" @mouseover="sharePicOp(true,index)" @mouseout="sharePicOp(false,index)" v-else>确认约面</div>
 
 							<div class="xcxPic" v-if="item.isShowPic">
@@ -138,7 +147,7 @@
 				加载更多
 			</div>
 			<div class="loading" v-else>
-				-没有更多职位了-
+				- 没有更多职位了-
 			</div>
 			<div class="toTop" @click="toTop" v-if="isShowTop">
 					<img class="arrows" src="../../assets/images/open.png"/>
@@ -288,12 +297,16 @@
 		}
 
 		// 设置默认筛选
-		setDefaultScreen () {
+		setDefaultScreen (status) {
 			this.selectedScreen = []
 
 			this.positionTypeList.map((item,idx) => {
 		  	item.active = false
-  			if (item.name === '全部') {
+
+		  	if (status && item.labelId === 'index') {
+  	  		item.active = true
+		  	}
+  			if (!status && item.labelId === 'all') {
   	  		item.active = true
   			}
 		  })
@@ -468,7 +481,7 @@
 				})
 				data.unshift({
 					name: '全部',
-					labelId: '',
+					labelId: 'all',
 					active: true
 				})
 
@@ -501,7 +514,7 @@
 				})
 				data.unshift({
 					name: '全部',
-					labelId: '',
+					labelId: 'all',
 					active: true
 				})
 				if (this.navType === 'searchMyCollect') {
@@ -525,17 +538,21 @@
 			let data = this.positionTypeList[index]
 
 			data.active = !data.active
-			if( data.name === '全部' && data.active) {
+			if( (data.labelId === 'all'||data.labelId === 'index') && data.active) {
 				this.selectedScreen = []
-				this.setDefaultScreen()
+				if(data.labelId === 'index') {
+					this.setDefaultScreen('index')
+				}else {
+					this.setDefaultScreen()
+				}
 			}else {
 				if (data.active) {
 					this.selectedScreen.push(data.labelId)
 				} else {
 					this.selectedScreen.splice(this.selectedScreen.indexOf(data.labelId),1)
 				}
-				console.log(this.selectedScreen)
 				this.positionTypeList[0].active = false
+				this.positionTypeList[this.positionTypeList.length-1].active = false
 			}
 		}
 		//是否感兴趣操作

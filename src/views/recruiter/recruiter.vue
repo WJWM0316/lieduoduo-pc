@@ -545,12 +545,13 @@
 	// padding-top: 92px;
 	padding-bottom: 32px;
 	min-height: calc(100vh - 337px);
+	padding-left: 200px;
+	box-sizing: border-box;
 	.recruiter_cont {
 		width: 960px;
 		margin: 0 auto;
 		background: #ffffff;
 		position: relative;
-		padding-left: 200px;
 	}
 	.header_warp {
 		min-height: 222px;
