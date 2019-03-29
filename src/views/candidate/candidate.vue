@@ -71,7 +71,9 @@
 											<li class="" v-if="item.workAge">{{item.workAge}}年工作经验</li>
 											<li class="" v-else>暂无工作经验</li>
 											<li class="" v-if="item.age">{{item.age}}岁</li>
+											<li class="" v-else>暂无年龄</li>
 											<li class="" v-if="item.degreeDesc">{{item.degreeDesc}}</li>
+											<li class="" v-else>暂无学历</li>
 										</ul>
 									</div>
 								</div>
@@ -80,6 +82,7 @@
 									<span class="intentionText intentionTextWidth2 textEllipsis">{{item.expects[0].position}}</span> ·
 									<span class="intentionText2">{{item.expects[0].salaryFloor}}k~{{item.expects[0].salaryCeil}}k</span>
 								</div>
+								<div class="intention" v-else>求职意向：暂无求职意向</div>
 							</div>
 							<div class="bloExperience workExperience">
 								<div class="experienceTitle ">最近工作经历</div>
@@ -91,7 +94,7 @@
 								<div class="experienceTitle">最近教育经历</div>
 								<div class="experienceText textEllipsis" v-if="item.education && item.education.school">{{item.education.school}}</div>
 								<div class="experienceText textEllipsis" v-else>暂无教育经历</div>
-								
+
 								<div class="experienceText textEllipsis" v-if="item.education && item.education.major">{{item.education.major}}</div>
 							</div>
 						</div>
