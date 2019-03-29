@@ -547,6 +547,7 @@
 	min-height: calc(100vh - 337px);
 	padding-left: 200px;
 	box-sizing: border-box;
+	padding-top: 84px;
 	.recruiter_cont {
 		width: 960px;
 		margin: 0 auto;

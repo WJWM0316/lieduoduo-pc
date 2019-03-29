@@ -244,7 +244,7 @@
 		align-items: center;
 		box-sizing: border-box;
 		padding: 0 35px;
-		border-radius: 8px;
+		border-radius: 4px;
 		z-index: 100;
 		box-shadow:0px 0px 30px 0px rgba(33,0,74,0.2);
 		&.left {
@@ -284,16 +284,16 @@
 		}
 
 		.triangle_border_top{
-	    width: 0;
-	    height: 0;
-	    border-width:0 10px 10px 10px;
-     	border-style:solid;
-     	border-color:transparent transparent #fff;/*透明 透明  灰*/
-	    border-style: solid;
-	    position: absolute;
-	    left: 50%;
-	    top: -10px;
-	    margin-left: -10px;
+		    width: 0;
+		    height: 0;
+		    border-width:0 8px 9px 8px;
+	     	border-style:solid;
+	     	border-color:transparent transparent #fff;/*透明 透明  灰*/
+		    border-style: solid;
+		    position: absolute;
+		    left: 50%;
+		    top: -8px;
+		    margin-left: -10px;
 		}
 	}
 }
@@ -307,7 +307,7 @@
 		font-weight: 300;
 		&:hover {
 			background: #efe9f4 !important;
- 			color: #652791 !important;
+ 			color: #606266 !important;
  			font-weight: 300;
 		}
 	}

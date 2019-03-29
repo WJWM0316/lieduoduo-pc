@@ -5,19 +5,19 @@
 				<img class="logo" src="../../assets/images/logo_white.png" @click="refresh" />
 
 				<ul class="nav">
-					<li class="" @mouseover="pop.isShow = true" @mouseout="pop.isShow = false">打开猎多多</li>
-					<li class="" @click="refreshID" >切换为{{identity==='qiuzhi'?'招聘官':'求职者'}}</li>
+					<li class="" @mouseover="pop = {isShow: true, type: 'gzh'}" @mouseout="pop.isShow = false">关注猎多多</li>
+					<li class="" @mouseover="pop = {isShow: true, type: 'xcx'}" @mouseout="pop.isShow = false"> 猎多多移动版</li>
 				</ul>
 
-				<div class="headWC_pop" v-if="pop.isShow">
+				<div class="headWC_pop" :class="{'left': pop.type === 'gzh'}" v-if="pop.isShow">
 					<div class="triangle_border_top"></div>
-					<div class="pop_cont">
+					<div class="pop_cont" v-if="pop.type === 'gzh'">
 			  		<img class="pop_code" src="../../assets/images/gzh.png"/>
 			  		<p class="pop_text">微信扫码关注公众号 </p>
 			  		<p class="pop_text">菜单栏点击选择猎多多</p>
 					</div>
-					<div class="pop_cont right">
-			  		<img class="pop_code" src="../../assets/images/xcx.png"/>
+					<div class="pop_cont" v-if="pop.type === 'xcx'">
+			  		<img class="pop_code2 " src="../../assets/images/xcx.png"/>
 			  		<p class="pop_text">微信扫码打开小程序</p>
 					</div>
 					<div class="triangle_border_right"></div>
@@ -31,9 +31,19 @@
 					</div>
 
 					<el-dropdown-menu slot="dropdown">
-				    <el-dropdown-item command="out">退出登录</el-dropdown-item>
-				    <el-dropdown-item command="changeId">切换为{{identity==='qiuzhi'?'招聘官':'求职者'}}</el-dropdown-item>
-				  </el-dropdown-menu>
+			    <el-dropdown-item command="changeId">
+			  		<img class="drop_icon" src="../../assets/images/change.png" />
+			    	切换为{{identity==='qiuzhi'?'招聘官':'求职者'}}
+			    </el-dropdown-item>
+			    <el-dropdown-item command="help" class="dropdown_blo">
+			  		<img class="drop_icon" src="../../assets/images/help.png" />
+			    	帮助中心
+			    </el-dropdown-item>
+			    <el-dropdown-item command="out">
+			  		<img class="drop_icon" src="../../assets/images/out.png" />
+			    	退出登录
+			  	</el-dropdown-item>
+			  </el-dropdown-menu>
 			</el-dropdown>
 
 			<div class="switchWrap" v-if="isShowSwitch">
@@ -228,38 +238,42 @@
 	.headWC_pop {
 		position: absolute;
 		top: 55px;
-		left: 140px;
-		width:318px;
-		height:180px;
+		left: 220px;
+		height:190px;
+		width:190px;
 		background:rgba(255,255,255,1);
-		box-shadow:0px 8px 12px 0px rgba(239,233,244,1);
 		display: flex;
 		flex-direction: row;
 		justify-content: center;
 		align-items: center;
 		box-sizing: border-box;
-		padding: 0 24px;
-		border-radius: 8px;
+		padding: 0 35px;
+		border-radius: 4px;
 		z-index: 100;
+		box-shadow:0px 0px 30px 0px rgba(33,0,74,0.2);
+		&.left {
+			position: absolute;
+			top: 55px;
+			left: 84px;
+		}
 		.pop_cont {
 			display: flex;
 			justify-content: center;
 			flex-direction: column;
-			&.right {
-				margin-left: 50px;
-				.pop_code {
-					border-radius: 50%;
-					margin-bottom: 20px;
-					display: block;
-				}
-				.pop_text {
-				}
-			}
 			.pop_code {
 				width:106px;
 				height:105px;
 				margin: 0 auto;
 				margin-bottom: 12px;
+				border:1px solid rgba(239,233,244,1)
+			}
+			.pop_code2 {
+				width:106px;
+				height:105px;
+				margin: 0 auto;
+				margin-bottom: 12px;
+				border:1px solid rgba(239,233,244,1);
+				border-radius: 50%;
 			}
 			.pop_text {
 				text-align: center;
@@ -274,15 +288,16 @@
 		}
 
 		.triangle_border_top{
-	    width: 0;
-	    height: 0;
-	    border-width:0 10px 10px 10px;
-     	border-style:solid;
-     	border-color:transparent transparent #fff;/*透明 透明  灰*/
-	    border-style: solid;
-	    position: absolute;
-	    left: 30px;
-	    top: -10px;
+		    width: 0;
+		    height: 0;
+		    border-width:0 8px 9px 8px;
+	     	border-style:solid;
+	     	border-color:transparent transparent #fff;/*透明 透明  灰*/
+		    border-style: solid;
+		    position: absolute;
+		    left: 50%;
+		    top: -8px;
+		    margin-left: -10px;
 		}
 	}
 }
@@ -295,7 +310,7 @@
 		font-weight: 300;
 		&:hover {
 			background: #efe9f4 !important;
- 			color: #652791 !important;
+ 			color: #606266 !important;
  			font-weight: 300;
 		}
 	}
@@ -304,7 +319,16 @@
 .el-popper[x-placement^=bottom] .popper__arrow {
 	left: 69px !important;
 }
-
+.el-dropdown-menu__item {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	.drop_icon {
+		width: 16px;
+		height: 16px;
+		margin-right: 8px;
+	}
+}
 </style>
 <script>
 import Vue from 'vue'

@@ -5,18 +5,18 @@
 					<div class="topBlo topStatusBlo borright " :class="{'cur':navType==='searchBrowseMyself'}" @click="changeNav('searchBrowseMyself')">
 						<img class="preview" src="../../assets/images/preview.png" v-if="navType === 'searchBrowseMyself'"  />
 						<img class="preview" src="../../assets/images/preview_off.png" v-else />
-						看过我的
+						看过我的({{navNum.browseMyselfCount || 0}})
 					</div>
 					<div class="topBlo topStatusBlo borleft "  :class="{'cur':navType==='searchCollect'}" @click="changeNav('searchCollect')">
 						<span class="border"></span>
 						<img class="like" src="../../assets/images/like_no.png" v-if="navType === 'searchCollect'" />
 						<img class="like" src="../../assets/images/like2.png" v-else />
-						对我感兴趣
+						对我感兴趣({{navNum.collectMyselfCount || 0}})
 					</div>
 					<div class="topBlo topStatusBlo2"  :class="{'cur':navType==='searchMyCollect'}" @click="changeNav('searchMyCollect')">
 						<img class="like" src="../../assets/images/like_no.png" v-if="navType === 'searchMyCollect'" />
 						<img class="like" src="../../assets/images/like2.png" v-else />
-						我感兴趣的
+						我感兴趣的({{navNum.myCollectCount || 0}})
 					</div>
 
 					<div class="screen_cont">
@@ -63,7 +63,7 @@
 						<div class="topText" v-if="navType === 'searchCollect'">对我{{item.positionInfo && item.positionInfo.positionName ?'的职位':''}}感兴趣</div>
 						<div class="topText" v-if="navType === 'searchMyCollect'">对Ta感兴趣</div>
 
-						<div class="topText">{{item.positionInfo.area}} <span v-if="item.positionInfo.positionName">| {{item.positionInfo.positionName}}</span><span v-if="item.positionInfo.emolument"> | {{item.positionInfo.emolument}}</span></div>
+						<div class="topText topText2">{{item.positionInfo.area}} <span v-if="item.positionInfo.positionName">| {{item.positionInfo.positionName}}</span><span v-if="item.positionInfo.emolument"> | {{item.positionInfo.emolument}}</span></div>
 					</div>
 					<div class="bloCont">
 						<div class="cont_left">
@@ -85,12 +85,11 @@
 										</ul>
 									</div>
 								</div>
-								<div class="intention" v-if="item.expects.length>0">求职意向：
-									<span class="intentionText intentionTextWidth textEllipsis">{{item.expects[0].city}} </span> ·
+								<div class="intention" v-if="item.expects.length>0">求职意向:<span class="intentionText intentionTextWidth textEllipsis">{{item.expects[0].city}} </span> ·
 									<span class="intentionText intentionTextWidth2 textEllipsis">{{item.expects[0].position}}</span> ·
 									<span class="intentionText2">{{item.expects[0].salaryFloor}}k~{{item.expects[0].salaryCeil}}k</span>
 								</div>
-								<div class="intention" v-else>求职意向：暂无求职意向</div>
+								<div class="intention" v-else>求职意向:暂无求职意向</div>
 							</div>
 							<div class="bloExperience workExperience">
 								<div class="experienceTitle ">最近工作经历</div>
@@ -191,7 +190,7 @@
 	import { uploadApi, waitApi, getQrCodeApi, getMyInfoApi } from '../../api/auth'
 	import { getPositionTypeApi, getPositionTypeListApi, getResumeShareApi, getCodeUrl } from '../../api/position'
 	import { getSearchMyCollectApi, getSearchCollectApi, putCollectUserApi, cancelCollectUserApi } from '../../api/collect'
-	import { getSearchBrowseMyselfApi, getMyNavDataApi } from '../../api/browse'
+	import { getSearchBrowseMyselfApi, getMyNavDataApi, getJobHunterPositionTypeApi } from '../../api/browse'
 	import { changeBaseURL } from '../../api/index'
 
 	import { applyInterviewApi, confirmInterviewApi } from '../../api/interview'
@@ -257,7 +256,8 @@
 		positionTypeList = []  // 职业标签列表
 		isShowScreen = false
 		selectedScreen = [] // 筛选选中条件
-		sharePicIds = []
+		sharePicIds = [] // 下载中的图片
+		navNum = {} // nav 数量
 		sharePicOp (type,index) {
 			if (type) {
 				this.candidateList[index].isShowPic = true
@@ -348,10 +348,14 @@
 		    return
 		  }
 
+		  if(type === 'searchMyCollect') {
+		  	this.getJobHunterPositionType()
+		  }else {
+		  	this.getPositionTypeList()
+		  }
 		  this.navType = type
 		  this.toTop()
 		  this.setDefaultScreen()
-		  this.getPositionTypeList()
 		  this.getList()
 			this.isShowScreen = false
 		}
@@ -359,7 +363,7 @@
 		getMyNavData() {
 			console.log('sasdasd')
 			getMyNavDataApi().then(res => {
-				console.log(res)
+				this.navNum = res.data.data
 			})
 		}
 
@@ -389,7 +393,6 @@
 				page: page || this.pageInfo.page || 1,
 				count: this.pageInfo.count
 			}
-			console.log(data)
 			this.loading = true
 			getSearchMyCollectApi(data).then(res => {
 				let msg = res.data
@@ -419,7 +422,6 @@
 				page: page || this.pageInfo.page || 1,
 				count: this.pageInfo.count
 			}
-			console.log(data)
 			this.loading = true
 			getSearchCollectApi(data).then(res => {
 				let msg = res.data
@@ -449,7 +451,6 @@
 				page: page || this.pageInfo.page || 1,
 				count: this.pageInfo.count
 			}
-			console.log(data)
 			this.loading = true
 			getSearchBrowseMyselfApi(data).then(res => {
 				let msg = res.data
@@ -462,8 +463,6 @@
 				} else {
         	this.candidateList = this.candidateList.concat(msg.data)
 				}
-
-				
 				this.loading = false
 				this.pageInfo.totalPage = msg.meta.total/data.count || 0
 				this.pageInfo.page = data.page
@@ -479,35 +478,27 @@
 				data.map(item=>{
 					item.active = false
 				})
+
 				data.unshift({
 					name: '全部',
 					labelId: 'all',
 					active: true
 				})
 
-				if (this.navType === 'searchMyCollect') {
-					data.push({
-						name: '暂无工作经验',
-						labelId: 'index',
-						active: false
-					})
-				}else {
-					data.push({
-						name: '我的主页',
-						labelId: 'index',
-						active: false
-					})
-				}
+				data.push({
+					name: '我的主页',
+					labelId: 'index',
+					active: false
+				})
 				
 				this.positionTypeList = data
 			})
 		}
 
-		
-
-		// 职业类型列表
-		getPositionTypeList2 () {
-			getPositionTypeListApi().then(res => {
+		// 看过我的职业类型列表
+		getJobHunterPositionType () {
+			console.log(111)
+			getJobHunterPositionTypeApi().then(res => {
 				let data = res.data.data
 				data.map(item=>{
 					item.active = false
@@ -517,19 +508,11 @@
 					labelId: 'all',
 					active: true
 				})
-				if (this.navType === 'searchMyCollect') {
-					data.push({
-						name: '暂无工作经验',
-						labelId: 'index',
-						active: false
-					})
-				}else {
-					data.push({
-						name: '我的主页',
-						labelId: 'index',
-						active: false
-					})
-				}
+				data.push({
+					name: '暂无工作经验',
+					labelId: 'index',
+					active: false
+				})
 				this.positionTypeList = data
 			})
 		}
