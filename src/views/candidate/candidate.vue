@@ -90,8 +90,9 @@
 							<div class="bloExperience educationExperience">
 								<div class="experienceTitle">最近教育经历</div>
 								<div class="experienceText textEllipsis" v-if="item.education && item.education.school">{{item.education.school}}</div>
+								<div class="experienceText textEllipsis" v-else>暂无教育经历</div>
+								
 								<div class="experienceText textEllipsis" v-if="item.education && item.education.major">{{item.education.major}}</div>
-								<div class="experienceText textEllipsis" v-if="!item.education">暂无教育经历</div>
 							</div>
 						</div>
 						
