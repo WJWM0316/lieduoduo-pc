@@ -91,7 +91,7 @@
   		})();
 		}
 
-	   // recruiterIndex applyIndex
+	   // candidate applyIndex
 	  login () {
 	  	let data = {
 	  		email: '302982210@qq.com',
@@ -102,7 +102,7 @@
 	  	then(res=>{
   	  	this.$store.dispatch('setUserInfo', res.data.data);
         this.userInfo = this.$store.state.userInfo
-				this.$router.push({name: this.userInfo.isBusiness === 1 ? 'recruiterIndex' : 'applyIndex'})
+				this.$router.push({name: this.userInfo.isBusiness === 1 ? 'candidate' : 'applyIndex'})
 	  	})
 	  	.catch(error => {
 	  	  setTimeout(() => {
@@ -153,7 +153,7 @@
 	  	  	this.$store.dispatch('login', res.data.data)
 
 	        this.userInfo = this.$store.state.userInfo
-					this.$router.push({name: this.identity === 'qiuzhi' ? 'applyIndex' : 'recruiterIndex' })
+					this.$router.push({name: this.identity === 'qiuzhi' ? 'applyIndex' : 'candidate' })
   				console.log('扫码成功')
 	  		}
 	  	})
