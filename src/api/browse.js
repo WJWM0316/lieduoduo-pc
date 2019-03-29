@@ -7,5 +7,6 @@ import { request } from './index.js'
 export const getSearchBrowseMyselfApi = data => request('/browse/search_browse_myself', 'get',data)
 
 
-
+//获取数据
+export const getMyNavDataApi = data => request('/browse/get_my_data', 'get',data)
 

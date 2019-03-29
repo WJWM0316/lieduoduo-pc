@@ -91,7 +91,7 @@
 								<div class="experienceTitle">最近教育经历</div>
 								<div class="experienceText textEllipsis" v-if="item.education && item.education.school">{{item.education.school}}</div>
 								<div class="experienceText textEllipsis" v-if="item.education && item.education.major">{{item.education.major}}</div>
-								<div class="experienceText textEllipsis" v-if="!item.education || item.education.school.length<1">暂无教育经历</div>
+								<div class="experienceText textEllipsis" v-if="!item.education">暂无教育经历</div>
 							</div>
 						</div>
 						
@@ -178,7 +178,7 @@
 	import { uploadApi, waitApi, getQrCodeApi, getMyInfoApi } from '../../api/auth'
 	import { getPositionTypeApi, getPositionTypeListApi, getResumeShareApi, getCodeUrl } from '../../api/position'
 	import { getSearchMyCollectApi, getSearchCollectApi, putCollectUserApi, cancelCollectUserApi } from '../../api/collect'
-	import { getSearchBrowseMyselfApi } from '../../api/browse'
+	import { getSearchBrowseMyselfApi, getMyNavDataApi } from '../../api/browse'
 	import { changeBaseURL } from '../../api/index'
 
 	import { applyInterviewApi, confirmInterviewApi } from '../../api/interview'
@@ -337,6 +337,13 @@
 		  this.getPositionTypeList()
 		  this.getList()
 			this.isShowScreen = false
+		}
+
+		getMyNavData() {
+			console.log('sasdasd')
+			getMyNavDataApi().then(res => {
+				console.log(res)
+			})
 		}
 
 		getList (type, page=1) {
@@ -582,6 +589,7 @@
 	    if(query.status){
 
 	    }
+		  this.getMyNavData()
 	    this.getSearchBrowseMyself()
   		this.getPositionTypeList()
 	  }
