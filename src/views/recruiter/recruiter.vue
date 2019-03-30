@@ -549,7 +549,7 @@
 	box-sizing: border-box;
 	padding-top: 84px;
 	.recruiter_cont {
-		width: 960px;
+		width: 1200px;
 		margin: 0 auto;
 		background: #ffffff;
 		position: relative;
@@ -557,16 +557,16 @@
 	.header_warp {
 		min-height: 222px;
 		position: relative;
-		width: 960px;
+		width: 1200px;
 		box-sizing: border-box;
 		.header_navs_wrap {
 			min-height: 110px;
-			width: 960px;
+			width: 1200px;
 		}
 		.header_navs {
 			min-height: 110px;
 			position: relative;
-			width: 960px;
+			width: 1200px;
 			&.isFixed{
 		    position:fixed;
 		    background-color:#Fff;
@@ -606,11 +606,11 @@
   		}
 			.job_classify_wrap {
 				min-height: 62px;
-				width:960px;
+				width:1200px;
 				position: relative;
 
 				.job_classify {
-					width:960px;
+					width:1200px;
 					min-height:62px;
 					background:rgba(248,248,248,1);
 					padding: 20px 56px 5px 56px;
@@ -622,7 +622,7 @@
 					//overflow-x: scroll;
 					position: relative;
 					&.job_classify2 {
-						width:960px;
+						width:1200px;
 						height: auto;
 						background:rgba(248,248,248,1);
 						//padding-right: 100px;
@@ -723,7 +723,7 @@
 			box-sizing: border-box;
 			border-bottom: 1px solid #F5F4F7;
 			.blo_left {
-				width: 330px;
+				width: 430px;
 				text-align: left;
 				line-height: 24px;
 				font-size:16px;
@@ -735,7 +735,7 @@
 					line-height: 24px;
 				}
 				.job_name {
-					max-width: 235px;
+					max-width: 430px;
 					text-overflow: ellipsis;
 			    white-space: nowrap;
 			    overflow: hidden;
@@ -856,17 +856,17 @@
 	}
 	.toTop {
 		position: fixed;
-		right: 50%;
-		bottom: 230px;
-		width: 56px;
-		height: 56px;
-		margin-right: -560px;
-		background:rgba(239,233,244,1);
-		border-radius: 50%;
-		cursor: pointer;
-		display: flex;
-		justify-content: center;
-		align-items: center;
+    right: 50%;
+    bottom: 50px;
+    width: 56px;
+    height: 56px;
+    margin-right: -800px;
+    background:rgba(239,233,244,1);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 		.arrows {
 			width: 16px;
 			height: 18px;
@@ -972,7 +972,7 @@
 	}
 
 	.pagination {
-		width: 960px;
+		width: 1200px;
 		margin: 0 auto;
 		box-sizing: border-box;
 	}

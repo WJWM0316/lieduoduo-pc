@@ -63,20 +63,22 @@
 						<div class="topText" v-if="navType === 'searchCollect'">对我{{item.positionInfo && item.positionInfo.positionName ?'的职位':''}}感兴趣</div>
 						<div class="topText" v-if="navType === 'searchMyCollect'">对Ta感兴趣</div>
 
-						<div class="topText topText2">{{item.positionInfo.area}} <span v-if="item.positionInfo.positionName">| {{item.positionInfo.positionName}}</span><span v-if="item.positionInfo.emolument"> | {{item.positionInfo.emolument}}</span></div>
+						<div class="topText topText2">
+							<span v-if="item.positionInfo.area">{{item.positionInfo.area}} | </span> 
+							<span v-if="item.positionInfo.positionName">{{item.positionInfo.positionName}} | </span>
+							<span v-if="item.positionInfo.emolument"> {{item.positionInfo.emolument}}</span></div>
 					</div>
 					<div class="bloCont">
 						<div class="cont_left">
 							<div class="leftMsg">
 								<div class="userBaseInfo">
-									
-									<img class="gender" src="../../assets/images/girl.png" v-if="item.gender===1" />
+									<img class="gender" src="../../assets/images/girl.png" v-if="item.gender===2" />
 									<img class="gender" src="../../assets/images/boy.png" v-else />
 									<img class="userIcon" :src="item.avatar.middleUrl" />
 									<div class="infoRight">
 										<div class="infoName textEllipsis">{{item.name}}</div>
 										<ul class="userLabel">
-											<li class="" v-if="item.workAge">{{item.workAge}}年工作经验</li>
+											<li class="" v-if="item.workAgeDesc">{{item.workAgeDesc}}</li>
 											<li class="" v-else>暂无工作经验</li>
 											<li class="" v-if="item.age">{{item.age}}岁</li>
 											<li class="" v-else>暂无年龄</li>
@@ -284,6 +286,7 @@
 	    	}
 	    	this.navType = query.navType
 	    }else {
+	    	this.navType = 'searchBrowseMyself' 
     		this.getSearchBrowseMyself(1)
     		this.getPositionTypeList()
     	}
@@ -369,9 +372,10 @@
 		  	this.getPositionTypeList()
 		  }
 		  this.navType = type
-		  this.toTop()
+		  //this.toTop()
 		  this.setDefaultScreen()
-		  this.getList()
+			this.setPath({navType: type})
+		  //this.getList()
 			this.isShowScreen = false
 		}
 
@@ -385,8 +389,6 @@
 			let status = type ? type : this.navType
 			if (type) this.navType = type
 
-			this.setPath({navType: status})
-			return 
 			switch(status) {
 			  case 'searchMyCollect':
 			  	this.getSearchMyCollect(page)
