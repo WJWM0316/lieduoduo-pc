@@ -140,7 +140,7 @@
 			</div>
 			<div class="cont_none" v-else>
 				<img  src="../../assets/images/ufo.png">
-				<p>暂无候选人关注你，快去发布你的职位吧~</p>
+				<p>{{ this.navType === 'searchBrowseMyself' || this.navType === 'searchCollect'  ? '暂无候选人关注你，快去发布你的职位吧~ '  : '还没有感兴趣候选人~'}}</p>
 			</div>
 
 			<div class="loading" v-if="loading">
@@ -423,7 +423,7 @@
 			let otherActive = this.getOtherActive()
 			let data = {
 				category: this.selectedScreen.length > 0 || otherActive ? 1 : 0,
-				type: this.selectedScreen.join(),
+				type: otherActive ? '0':this.selectedScreen.join(),
 				index: this.positionTypeList.length > 0 && otherActive ? 1 : 0,
 				page: page || this.pageInfo.page || 1,
 				count: this.pageInfo.count
