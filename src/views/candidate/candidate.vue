@@ -257,6 +257,42 @@
 		selectedScreen = [] // 筛选选中条件
 		sharePicIds = [] // 下载中的图片
 		navNum = {} // nav 数量
+		init() {
+	  	_.times(5,function(a){});
+    	this.form = Object.assign(this.form, this.$route.query || {})
+	    this.userInfo = this.$store.state.userInfo
+	    let query = this.$route.query
+	    if(query.navType){
+	    	console.log(query)
+	    	switch(query.navType) {
+	    	  case 'searchMyCollect':
+	    	  	this.getSearchMyCollect(1)
+  					this.getJobHunterPositionType()
+	    	    break
+	    	  case 'searchCollect':
+	    	  	this.getSearchCollect(1)
+  					this.getPositionTypeList()
+	    	    break
+	    	  case 'searchBrowseMyself':
+	    	  	this.getSearchBrowseMyself(1)
+	    	  	this.getPositionTypeList()
+	    	    break
+	    	  default:
+	    	  	this.getSearchBrowseMyself(1)
+	    	  	this.getPositionTypeList()
+	    	    break
+	    	}
+	    	this.navType = query.navType
+	    }else {
+    		this.getSearchBrowseMyself(1)
+    		this.getPositionTypeList()
+    	}
+		  this.getMyNavData()
+	  }
+		setPath (res) {
+			this.pageInfo.page = 1
+			this.setPathQuery(res)
+		}
 		sharePicOp (type,index) {
 			if (type) {
 				this.candidateList[index].isShowPic = true
@@ -265,6 +301,7 @@
 				this.candidateList[index].isShowPic = false
 			}
 		}
+
 		getPopName () {
 			return this.navType === 'searchBrowseMyself' ? '看过我的职位类型' : this.navType === 'searchCollect' ? '对我感兴趣的职位类型' : '我感兴趣的职位类型'
 		}
@@ -313,31 +350,10 @@
 
 		// 职位操作
 		positionOp (type, index) {
-			console.log(e)
 			if(type){
 				this.candidateList[index].isShowPic = true
 			}else {
 				this.candidateList[index].isShowPic = false
-			}
-			return
-			let data = {}
-			if (type === 1) {
-				// 开撩约面
-				data = {
-					jobhunterUid: id,
-					positionId: ''
-				}
-				applyInterviewApi(data).then(res => {
-					
-				})
-			} else if (type === 2) {
-				// 确定约面
-				data = {
-					interviewId: id,
-				}
-				confirmInterviewApi(data).then(res => {
-				})
-			} else if (type === 3) {
 			}
 		}
 
@@ -360,7 +376,6 @@
 		}
 
 		getMyNavData() {
-			console.log('sasdasd')
 			getMyNavDataApi().then(res => {
 				this.navNum = res.data.data
 			})
@@ -369,6 +384,9 @@
 		getList (type, page=1) {
 			let status = type ? type : this.navType
 			if (type) this.navType = type
+
+			this.setPath({navType: status})
+			return 
 			switch(status) {
 			  case 'searchMyCollect':
 			  	this.getSearchMyCollect(page)
@@ -385,10 +403,11 @@
 		}
 		// 查询我感兴趣的
 		getSearchMyCollect (page) {
+			let otherActive = this.positionTypeList.length>0?this.positionTypeList[this.positionTypeList.length-1].active:false
 			let data = {
-				category: this.selectedScreen.length > 0 ? 1 : 0,
+				category: this.selectedScreen.length > 0 || otherActive ? 1 : 0,
 				type: this.selectedScreen.join(),
-				index: this.positionTypeList.length > 0 && this.positionTypeList[this.positionTypeList.length-1].active ? 1 : 0,
+				index: this.positionTypeList.length > 0 && otherActive ? 1 : 0,
 				page: page || this.pageInfo.page || 1,
 				count: this.pageInfo.count
 			}
@@ -414,10 +433,11 @@
 		}
 		// 对我感兴趣的
 		getSearchCollect (page) {
+			let otherActive = this.positionTypeList.length > 0 ? this.positionTypeList[this.positionTypeList.length-1].active:false
 			let data = {
-				category: this.selectedScreen.length > 0 ? 1 : 0,
+				category: this.selectedScreen.length > 0 || otherActive ? 1 : 0,
 				type: this.selectedScreen.join(),
-				index: this.positionTypeList.length > 0 &&this.positionTypeList[this.positionTypeList.length-1].active ? 1 : 0,
+				index: this.positionTypeList.length > 0 && otherActive ? 1 : 0,
 				page: page || this.pageInfo.page || 1,
 				count: this.pageInfo.count
 			}
@@ -443,10 +463,11 @@
 		}
 		// 浏览过我的求职者
 		getSearchBrowseMyself (page) {
+			let otherActive = this.positionTypeList.length > 0 ? this.positionTypeList[this.positionTypeList.length-1].active:false
 			let data = {
-				category: this.selectedScreen.length > 0 ? 1 : 0,
+				category: this.selectedScreen.length > 0 || otherActive ? 1 : 0,
 				type: this.selectedScreen.join(),
-				index: this.positionTypeList.length > 0 && this.positionTypeList[this.positionTypeList.length-1].active ? 1 : 0,
+				index: this.positionTypeList.length > 0 && otherActive ? 1 : 0,
 				page: page || this.pageInfo.page || 1,
 				count: this.pageInfo.count
 			}
@@ -585,22 +606,7 @@
 		}
 
 
-	  init() {
-
-	  	console.log(1)
-	  	_.times(5,function(a){
-        console.log(a);
-    	});
-    	this.form = Object.assign(this.form, this.$route.query || {})
-	    this.userInfo = this.$store.state.userInfo
-	    let query = this.$route.query
-	    if(query.status){
-
-	    }
-		  this.getMyNavData()
-	    this.getSearchBrowseMyself()
-  		this.getPositionTypeList()
-	  }
+	  
 
 	  todoAction(type, id) {
 	    switch(type) {
@@ -681,29 +687,21 @@
         this.$message.error(e.data.msg)
      	})
 	  }
-
-	  handleCurrentPageChange(page){
-	  	this.setPathQuery({page: page})
-	  }
-
 	  toTop(){
 	  	document.documentElement.scrollTop=0;
 	  }
 
-	  getPic(index, id){
+	  getPic(index){
 	  	let ids = this.sharePicIds
 	  	let item = this.candidateList[index]
-	  	if (item.src.length < 1 && !ids.includes[id]) {
-	  		ids.push(id)
+	  	if (item.src.length < 1 && !ids.includes[item.uid]) {
+	  		ids.push(item.uid)
 		  	getResumeShareApi({
-		  		resumeUid: item.id
+		  		resumeUid: item.uid
 		  	}).then(res => {
 		  		item.src = res.data.data.positionQrCodeUrl
-		  		console.log(this.candidateList[index])
-	      	//this.shareSelectItem.qrCodeUrl = res.data.data.qrCodeUrl
-	      	//this.shareSelectItem = this.jobList[index]
 		  	}).catch(err => {
-		  		ids.splice(ids.indexOf(id), 1)
+		  		ids.splice(ids.indexOf(item.uid), 1)
 		  	})
 	  	}
 	  }
