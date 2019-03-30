@@ -115,7 +115,6 @@
 			}
 			.switchTit {
 				font-size:20px;
-				font-family:PingFang-SC-Bold;
 				font-weight:bold;
 				color:rgba(40,40,40,1);
 				margin: 32px 0;
@@ -123,7 +122,6 @@
 			.switchMain {
 				.switch_text {
 					font-size:14px;
-					font-family:PingFang-SC-Regular;
 					font-weight:400;
 					color:rgba(40,40,40,1);
 					line-height:20px;
@@ -139,7 +137,6 @@
 					margin-top: 16px;
 					.switch_text2 {
 						font-size:14px;
-						font-family:PingFang-SC-Regular;
 						font-weight:400;
 						color:rgba(40,40,40,1);
 						line-height:22px;
@@ -151,8 +148,7 @@
 					background:rgba(239,233,244,1);
 					border-radius:27px;
 					font-size:16px;
-					font-family:PingFang-SC-Medium;
-					font-weight:500;
+					font-weight:400;
 					color:rgba(101,39,145,1);
 					line-height:48px;
 					margin: 0 auto;
@@ -167,16 +163,14 @@
 	}
 	.nav {
 		font-size:14px;
-		font-family:PingFang-SC-Medium;
-		font-weight:500;
+		font-weight:400;
 		line-height:60px;
 		li {
 			display: inline-block;
 			margin-left: 60px;
 			cursor: pointer;
 			color:rgba(255,255,255,1);
-			font-family:PingFang-SC-Medium;
-			font-weight:500;
+			font-weight:400;
 		}
 	}
 	section {
@@ -200,8 +194,7 @@
 			align-items: center;
 			.name {
 				font-size:14px;
-				font-family:PingFang-SC-Medium;
-				font-weight:500;
+				font-weight:400;
 				color:rgba(255,255,255,1);
 			}
 			.avatar {

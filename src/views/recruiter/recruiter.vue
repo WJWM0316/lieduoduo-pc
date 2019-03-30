@@ -97,8 +97,8 @@
   		<p class="pop_text3">猎多多公众号</p>
   		<p class="pop_text4">微信扫描二维码，关注官方公众号</p>
 		</div>
-		<div class="triangle_border_right">
-		</div>
+		<!-- <div class="triangle_border_right">
+		</div> -->
 	</div>
 </div>
 
@@ -584,7 +584,7 @@
   			li {
   				font-size:16px;
   				font-family:PingFang-SC-Bold;
-  				font-weight:bold;
+  				font-weight:400;
   				color:rgba(98,98,98,1);
   				margin-right: 40px;
 					line-height: 46px;
@@ -684,8 +684,7 @@
 			height: 110px;
 			line-height: 110px;
 			font-size:24px;
-			font-family:PingFang-SC-Bold;
-			font-weight:bold;
+			font-weight:500;
 			color:rgba(40,40,40,1);
 			text-align: left;
 			position: relative;
@@ -700,8 +699,7 @@
 			right: 56px;
 			top: 36px;
 			font-size:16px;
-			font-family:PingFang-SC-Medium;
-			font-weight:500;
+			font-weight:400;
 			color:rgba(255,255,255,1);
 			box-sizing: border-box;
 			cursor: pointer;
@@ -790,8 +788,9 @@
 		
 	}
 	.job_cont_none {
-		height: 400px;
-		line-height: 400px;
+		min-height: calc(100vh - 337px);
+		//height: 400px;
+		//line-height: 400px;
 		font-size: 18px;
 		display: flex;
 		flex-direction: column;

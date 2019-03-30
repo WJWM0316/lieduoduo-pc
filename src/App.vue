@@ -88,7 +88,7 @@ body,p,h1,h2,h3,h4,h5,h6,ul,ol,dl,li,dt,dd{
     padding: 0;
     /*字体设置*/
     font-size: 14px;
-    font-family: "Microsoft Yahei",sans-serif;
+    //font-family: "Microsoft Yahei",sans-serif;
     color: #ccc;
     /* 去掉列表的原点 */
     list-style: none;
@@ -313,5 +313,16 @@ input[type="number"]+div{
         }
       }
     }
-  }
+    .triangle_border_right{
+      width: 0;
+      height: 0;
+      border-width:10px 0  10px 14px ;
+      border-style: solid;
+      border-color: transparent transparent transparent #fff ;
+      position: absolute;
+      right: -12px;
+      top: 50%;
+      margin-top: -20px;
+    }
+}
 </style>

@@ -698,8 +698,7 @@
 				border-radius: 27px;
 				text-align: center;
 				font-size:16px;
-				font-family:PingFang-SC-Bold;
-				font-weight:bold;
+				font-weight:400;
 				color:rgba(255,255,255,1);
 				margin: 64px 0 24px 0;
 				border-color: rgba(101,39,145,1);

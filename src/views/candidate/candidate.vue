@@ -127,7 +127,7 @@
 										<img class="xcx_load" src="../../assets/images/loading.gif">
 										<p>正在加载中…</p>
 									</div>
-									<div class="xcx_main" v-else>
+									<div class="xcx_main" v-show='item.src.length>0'>
 										<img class="xcx_icon" :class="{'xcx_border':item.src}" :src="item.src">
 										<p>微信扫码，查看简历详情</p>
 									</div>
@@ -147,7 +147,7 @@
 				加载更多
 			</div>
 			<div class="loading" v-else>
-				- 没有更多职位了-
+				- 没有更多候选人 -
 			</div>
 			<div class="toTop" @click="toTop" v-if="isShowTop">
 					<img class="arrows" src="../../assets/images/open.png"/>
@@ -179,8 +179,8 @@
 		  		<p class="pop_text3">猎多多公众号</p>
 		  		<p class="pop_text4">微信扫描二维码，关注官方公众号</p>
 				</div>
-				<div class="triangle_border_right">
-				</div>
+				<!-- <div class="triangle_border_right">
+				</div> -->
 			</div>
 		</div>
 	</div>
@@ -311,7 +311,7 @@
 		}
 
 		getPopName () {
-			return this.navType === 'searchBrowseMyself' ? '看过我的职位类型' : this.navType === 'searchCollect' ? '对我感兴趣的职位类型' : '我感兴趣的职位类型'
+			return this.navType === 'searchBrowseMyself' ? '看过我的职位类型' : this.navType === 'searchCollect' ? '简历职位类型' : '感兴趣职位类型'
 		}
 		screenOp (status) {
 			switch(status) {
@@ -584,7 +584,7 @@
 	  		putCollectUserApi(data).then(res => {
   				this.$message({
   			    type: 'success',
-  			    message: '成功!'
+  			    message: '感兴趣成功!'
   			  })
   			  this.getList()
 	  		}).catch(err => {
@@ -594,7 +594,7 @@
 	  		cancelCollectUserApi(data).then(res => {
   				this.$message({
   			    type: 'success',
-  			    message: '成功!'
+  			    message: '取消成功!'
   			  })
   			  this.getList()
 	  		}).catch(err => {
