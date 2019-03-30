@@ -128,11 +128,10 @@
 										<p>正在加载中…</p>
 									</div>
 									<div class="xcx_main" v-else>
-										<img class="xcx_icon" :src="item.src">
+										<img class="xcx_icon" :class="{'xcx_border':item.src}" :src="item.src">
 										<p>微信扫码，查看简历详情</p>
 									</div>
 							</div>
-							<!-- <div class="btn" @click="positionOp(3,item.uid)">安排面试</div> -->
 						</div>
 					</div>
 					
