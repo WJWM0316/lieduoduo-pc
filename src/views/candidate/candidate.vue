@@ -586,6 +586,11 @@
 
 
 	  init() {
+
+	  	console.log(1)
+	  	_.times(5,function(a){
+        console.log(a);
+    	});
     	this.form = Object.assign(this.form, this.$route.query || {})
 	    this.userInfo = this.$store.state.userInfo
 	    let query = this.$route.query
