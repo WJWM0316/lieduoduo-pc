@@ -81,7 +81,7 @@
 	background: #fff;
 	text-align: right;
 	font-size: 14px;
-	box-shadow: 0px 1px 8px 0px rgba(29,45,53,0.06);
+	box-shadow: 0px 1px 0px 0px rgba(29,45,53,0.06);
 	position: fixed;
 	top: 0;
 	left: 0px;

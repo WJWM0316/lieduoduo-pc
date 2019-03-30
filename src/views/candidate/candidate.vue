@@ -23,13 +23,13 @@
 						<div class="topSelected" @click="screenList(1)" :class="{'selected':isShowScreen}" v-if="isShowScreen">
 							<img class="screen_icon" src="../../assets/images/screen.png" v-if="isShowScreen" />
 							<img class="screen_icon" src="../../assets/images/screen_off.png" v-else />
-							{{isShowScreen ? '清除筛选' :'高级筛选' }}
+							{{ selectedScreen.length > 0 || (positionTypeList.length > 0 ? positionTypeList[positionTypeList.length-1].active:false) ? '清除筛选' :'高级筛选' }}
 						</div>
 
 						<div class="topSelected" @click="screenList(1)" :class="{'selected':selectedScreen.length>0}" v-else>
 							<img class="screen_icon" src="../../assets/images/screen.png" v-if="selectedScreen.length>0" />
 							<img class="screen_icon" src="../../assets/images/screen_off.png" v-else />
-							{{selectedScreen.length>0 ? '清除筛选' :'高级筛选' }}
+							{{selectedScreen.length > 0 ||  (positionTypeList.length > 0 ? positionTypeList[positionTypeList.length-1].active:false) ? '清除筛选' :'高级筛选' }}
 						</div>
 
 
@@ -37,6 +37,7 @@
 							<img class="screen_icon" src="../../assets/images/arrows2.png" v-if="isShowScreen" />
 							<img class="screen_icon" src="../../assets/images/arrows2.png" v-else />
 						</div>
+
 						<div class="screenBox" v-if="isShowScreen">
 							<div class="triangle_border_top"></div>
 							<div class="screen_tit">{{getPopName()}}</div>
@@ -78,7 +79,7 @@
 									<div class="infoRight">
 										<div class="infoName textEllipsis">{{item.name}}</div>
 										<ul class="userLabel">
-											<li class="" v-if="item.workAgeDesc">{{item.workAgeDesc}}</li>
+											<li class="" v-if="item.workAgeDesc">{{item.workAgeDesc === '在校生'? item.workAgeDesc:item.workAgeDesc+'工作经验'}}</li>
 											<li class="" v-else>暂无工作经验</li>
 											<li class="" v-if="item.age">{{item.age}}岁</li>
 											<li class="" v-else>暂无年龄</li>
@@ -87,11 +88,11 @@
 										</ul>
 									</div>
 								</div>
-								<div class="intention" v-if="item.expects.length>0">求职意向:<span class="intentionText intentionTextWidth textEllipsis">{{item.expects[0].city}} </span> ·
+								<div class="intention" v-if="item.expects.length>0">求职意向：<span class="intentionText intentionTextWidth textEllipsis"> {{item.expects[0].city}} </span> ·
 									<span class="intentionText intentionTextWidth2 textEllipsis">{{item.expects[0].position}}</span> ·
 									<span class="intentionText2">{{item.expects[0].salaryFloor}}k~{{item.expects[0].salaryCeil}}k</span>
 								</div>
-								<div class="intention" v-else>求职意向:暂无求职意向</div>
+								<div class="intention" v-else>求职意向：暂无求职意向</div>
 							</div>
 							<div class="bloExperience workExperience">
 								<div class="experienceTitle ">最近工作经历</div>
@@ -292,6 +293,11 @@
     	}
 		  this.getMyNavData()
 	  }
+	  // 获取另外的选择
+	  getOtherActive () {
+	  	let otherActive = this.positionTypeList.length > 0 ? this.positionTypeList[this.positionTypeList.length-1].active : false
+	  	return otherActive
+	  }
 		setPath (res) {
 			this.pageInfo.page = 1
 			this.setPathQuery(res)
@@ -327,9 +333,18 @@
 		}
 		// 列表筛选
 		screenList (type) {
-			if (type === 1 && this.isShowScreen) {
+			let otherActive = this.getOtherActive()
+			if (type === 1 ) {
+				if (this.selectedScreen.length > 0 || otherActive) {
+					this.setDefaultScreen()
+					if (!this.isShowScreen) {
+						console.log('没展开')
+						this.getList()
+					}
+				}else{
+					this.isShowScreen = !this.isShowScreen
+				}
 				// 清楚筛选
-				this.setDefaultScreen()
 			} else {
 				this.isShowScreen = !this.isShowScreen
 			}
@@ -405,7 +420,7 @@
 		}
 		// 查询我感兴趣的
 		getSearchMyCollect (page) {
-			let otherActive = this.positionTypeList.length>0?this.positionTypeList[this.positionTypeList.length-1].active:false
+			let otherActive = this.getOtherActive()
 			let data = {
 				category: this.selectedScreen.length > 0 || otherActive ? 1 : 0,
 				type: this.selectedScreen.join(),
@@ -435,7 +450,7 @@
 		}
 		// 对我感兴趣的
 		getSearchCollect (page) {
-			let otherActive = this.positionTypeList.length > 0 ? this.positionTypeList[this.positionTypeList.length-1].active:false
+			let otherActive = this.getOtherActive()
 			let data = {
 				category: this.selectedScreen.length > 0 || otherActive ? 1 : 0,
 				type: this.selectedScreen.join(),
