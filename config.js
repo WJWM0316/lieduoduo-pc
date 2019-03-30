@@ -3,7 +3,7 @@
  */
 import util from './src/util/util'
 
-let isTest = true    // 是否测试
+let isTest = false    // 是否测试
 let identity = 'qiuzhi'   // 身份 zhaopin  or  qiuzhi
 
 export const baseHost = function(){
@@ -31,6 +31,6 @@ export const getUserIdentity = function(){
 
 export const changeBaseHost = function(type){
 	if(type === 1){
-		return `https://pub-api.lieduoduo.ziwork.com`
+		return isTest ? `https://pub-api.lieduoduo.ziwork.com`: `https://pub-api.lieduoduo.com`
 	}
 }
