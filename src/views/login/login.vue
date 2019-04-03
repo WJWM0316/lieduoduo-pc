@@ -5,7 +5,7 @@
 	  <div class="login_cont">
 	  	<div class="login" v-if="status==='login'">
 	  		<h3 class="cont_tit">扫码登录</h3>
-	  		<div class="cont_p">使用猎多多小程序扫码登录</div>
+	  		<div class="cont_p">使用猎多多小程序扫码登录<span class="help" @click="clickHelp">扫码帮助</span> <span class="ques">?</span></div>
 	  		<div class="login_pic_warp">
 	  			<img class="loginCode"  v-bind:src="codeData.image" />
 	  			<div class="pastDue" v-if="isPast">
@@ -18,7 +18,7 @@
 	  	
 	  	<div class="sign" v-if="status==='sign'">
 	  		<h3 class="cont_tit">立即注册</h3>
-	  		<div class="cont_p">使用「微信」扫码注册<span class="help" @click="clickHelp">扫码帮助</span> <span class="ques">?</span></div>
+	  		<div class="cont_p">使用「微信」扫码注册</div>
 	  		<img class="signPic"  src="../../assets/images/xcx.png" />
 	  		<div class="bottom_text">已有账号 <span @click="changeStatus">立即登录</span></div>
 	  	</div>

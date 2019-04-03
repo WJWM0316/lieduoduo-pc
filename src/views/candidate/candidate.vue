@@ -57,7 +57,7 @@
 		<div class="recruiter_main">
 			
 			<div id="box" class="main_cont" v-if="candidateList.length>0">
-				<div class="candidate_blo" v-for="item,index in candidateList" >
+				<div class="candidate_blo" v-for="item,index in candidateList" @click="todoAction('openPop',index)">
 					<div class="bloTop">
 						<div class="timer">{{item.viewAt}}</div>
 						<div class="topText" v-if="navType === 'searchBrowseMyself'">看过我的{{item.positionInfo && item.positionInfo.positionName ?'职位':'主页'}}</div>
@@ -153,15 +153,20 @@
 					<img class="arrows" src="../../assets/images/open.png"/>
 			</div>
 		</div>
+
 		<div class="pop" v-if="pop.isShow">
-			<div class="messageBox" v-if="pop.type==='openJob'">
+			<div class="xcxPicBox" v-if="pop.type==='clickPic'">
 				<img class="clo" src="../../assets/images/clo.png" @click="todoAction('cloPop')">
-				<div class="mb_main">
-						<div class="main_tit"></div>
-						<div>
-							<img class="hint" src="../../assets/images/exclamation-circle.png">
-							<p>微信扫码，查看简历详情</p>
-						</div>
+				<div class="main_tit">查看简历详情</div>
+
+				<div class="xcx_main" v-if="!selectBlo || !selectBlo.src || selectBlo.src.length<1">
+					<img class="xcx_load" src="../../assets/images/loading.gif">
+					<p>正在加载中…</p>
+				</div>
+
+				<div class="xcx_main" v-show='selectBlo.src && selectBlo.src.length>0'>
+					<img class="xcx_icon" :src="selectBlo.src">
+					<p>微信扫码，查看简历详情</p>
 				</div>
 			</div>
 		</div>
@@ -223,7 +228,7 @@
 		}
 		pop = {
 	  	isShow: false,
-	  	type: 'share'
+	  	type: 'clickPic'
 	  }
 
 		form = {
@@ -259,13 +264,12 @@
 		selectedScreen = [] // 筛选选中条件
 		sharePicIds = [] // 下载中的图片
 		navNum = {} // nav 数量
+		selectBlo = {}
 		init() {
-	  	_.times(5,function(a){});
     	this.form = Object.assign(this.form, this.$route.query || {})
 	    this.userInfo = this.$store.state.userInfo
 	    let query = this.$route.query
 	    if(query.navType){
-	    	console.log(query)
 	    	switch(query.navType) {
 	    	  case 'searchMyCollect':
 	    	  	this.getSearchMyCollect(1)
@@ -324,7 +328,6 @@
 					this.isShowScreen = false
 			    break
 			  case 'label_all':
-			  	console.log('label_all')
 			    break
 			  default:
 			    break
@@ -337,7 +340,6 @@
 				if (this.selectedScreen.length > 0 || otherActive) {
 					this.setDefaultScreen()
 					if (!this.isShowScreen) {
-						console.log('没展开')
 						this.getList()
 					}
 				}else{
@@ -533,7 +535,6 @@
 
 		// 看过我的职业类型列表
 		getJobHunterPositionType () {
-			console.log(111)
 			getJobHunterPositionTypeApi().then(res => {
 				let data = res.data.data
 				data.map(item=>{
@@ -603,28 +604,18 @@
 	  	}
 	  }
 
-		opJob (type, id) {
-			this.pop.isShow = true
-			if(type==='close'){
-				this.pop.type = 'closeJob'
-			}else if( type==='open'){
-				this.pop.type = 'openJob'
-			}
-		}
-
 		handleSearch() {
 			this.form.page = 1
 		  this.setPathQuery(this.form)
 		}
 
 		mounted () {
-  		window.addEventListener('scroll', this.handleScroll)
+			setTimeout(function(){
+				window.addEventListener('scroll', this.handleScroll)
+			},1300)
 		}
 
-
-	  
-
-	  todoAction(type, id) {
+	  todoAction(type, index) {
 	    switch(type) {
 	      case 'cloPop':
 	        this.pop = {
@@ -632,36 +623,13 @@
 	  				type: ''
 	        }
 	        break
-	      case 'cloPop2':
+	      case 'openPop':
 	        this.pop = {
-	        	isShow: false,
-	  				type: ''
+	        	isShow: true,
+	  				type: 'clickPic'
 	        }
-
-	        this.shareSelectItem = {
-						qrCodeUrl: ''
-					}
-	        break
-	      case 'addJob':
-		      this.$router.push(
-		        { 
-		        	name: 'postJob',
-		        	query: {
-		        		type: 'add'
-		        	}
-		        }
-		      )
-	        break
-	      case 'editJob':
-	        this.$router.push(
-	          { 
-	          	name: 'postJob',
-	          	query: {
-	          		type: 'edit',
-	          		id: id
-	          	}
-	          }
-	        )
+	        this.selectBlo = this.candidateList[index]
+					this.getPic(index)
 	        break
 	      default:
 	        break
@@ -710,6 +678,7 @@
 	  getPic(index){
 	  	let ids = this.sharePicIds
 	  	let item = this.candidateList[index]
+	  	console.log('getPic',index)
 	  	if (item.src.length < 1 && !ids.includes[item.uid]) {
 	  		ids.push(item.uid)
 		  	getResumeShareApi({

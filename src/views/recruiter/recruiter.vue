@@ -272,7 +272,6 @@
 
 	    let query = this.$route.query
 	  	
-	    console.log('==>',query)
 	    if(query.status){
 	    	this.recruiterList.map(item => {
 	    		if(item.status === query.status){
@@ -465,7 +464,6 @@
 	  			data = res.data.data
 	  		}
 	  		this.jobNameList = data
-	  		console.log(this.jobNameList)
 	  	})
 	  }
 
@@ -528,9 +526,7 @@
 
 	  openShare(index, id){
 	  	getCodeUrl({id}).then(res => {
-	  		console.log(res.data.data.qrCodeUrl)
       	this.shareSelectItem.qrCodeUrl = res.data.data.qrCodeUrl
-      	//this.shareSelectItem = this.jobList[index]
 	  	})
 
       this.pop = {

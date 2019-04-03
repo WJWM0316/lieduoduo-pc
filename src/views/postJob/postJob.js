@@ -214,7 +214,6 @@ export default class CommunityEdit extends Vue {
   getMyInfo(){
     return getMyInfoApi().then(res=>{
       this.form.company_id = res.data.data.companyId
-      console.log(res.data.data)
     })
   }
   /**
@@ -285,8 +284,6 @@ export default class CommunityEdit extends Vue {
         this.form = form
 
         this.getAdressList()
-
-        console.log(this.form)
         //this.form = $.extend(true, {}, this.form, form)
       } else {
         // const res = await getCreateCommunityData({
@@ -422,7 +419,6 @@ export default class CommunityEdit extends Vue {
   }
 
   querySearch(queryString, cb){
-    console.log(queryString)
     if(queryString.length>0){
       geocoder.getLocation(queryString)
     }
@@ -470,7 +466,6 @@ export default class CommunityEdit extends Vue {
   addAdress (param) {
     param.data.areaName = param.data.area_id
     delete param.data.area_id
-    console.log(param)
     addCompanyAdressApi(param.data).then(res => {
       this.pop = {
         isShow: false,
@@ -480,9 +475,7 @@ export default class CommunityEdit extends Vue {
       this.form.address_id = res.data.data.id
       //this.form.address = res.data.data.address
       this.getAdressList()
-      console.log(res)
     }).catch(e=>{
-      console.log('===',e)
       this.$message.error(e.data.msg)
     })
   }
@@ -522,15 +515,12 @@ export default class CommunityEdit extends Vue {
   }
 
   thirdSecondPosition (item) {
-    console.log(item)
     this.pop.isShow = false
     this.selectPositionItem = {
       name: item.name,
       typeId: item.labelId,
       topPid: item.topPid,
     }
-
-    console.log(item.topPid)
     this.form.labels = []
     this.form.type = item.labelId
     this.setSkillsList()
@@ -563,7 +553,6 @@ export default class CommunityEdit extends Vue {
 
   // 工作地点选择 
   changeAdress (e) {
-    console.log(this.form.address_id)
     // this.form.address_id = 1
     if(e==='0'){
       this.pop = {
@@ -596,7 +585,6 @@ export default class CommunityEdit extends Vue {
   transformData (form) {
     const newForm = {...form}
     // 分类标签
-    console.log('newForm==>',newForm.labels)
     if(newForm.labels && newForm.labels.length>0){
       let labels = []
       newForm.labels.map(item=>{
@@ -606,7 +594,6 @@ export default class CommunityEdit extends Vue {
         })
       })
       newForm.labels = JSON.stringify(labels); //转换为json类型的字符串　　
-      console.log(newForm.labels)
     }else {
       delete newForm.labels
     }
@@ -618,7 +605,6 @@ export default class CommunityEdit extends Vue {
    * 检查pos
    */
   examinePos () {
-    console.log('examinePos', typeof this.form.posters)
     let test = true
     let data = this.form
 
@@ -649,7 +635,6 @@ export default class CommunityEdit extends Vue {
    * 点击提交
    */
   handleSubmit () {
-    console.log(this.form, '-*****-***--*-*-')
     this.$refs.form.validate(valid => {
       if (valid) {
         let data = this.form
@@ -681,27 +666,6 @@ export default class CommunityEdit extends Vue {
   handleTimeRangeChange (range, start, end) {
     this.form.start_time = start
     this.form.end_time = end
-  }
-
-  /**
-   * 修改活动周期
-   * @param {*} value
-   */
-  handleActivityCycleChange (value) {
-    console.log(value)
-    for (let [, item] of this.activityCycles.entries()) {
-      if (item.value === value) {
-        this.form.activity_cycle_unit = item.unit
-        break
-      }
-    }
-  }
-
-  /**
-   * 社区介绍失去焦点
-   */
-  handleCommunityIntroEditorBlur () {
-  //   this.$refs.form.validateField('introduce')
   }
 
   toIssueRule () {

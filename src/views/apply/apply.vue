@@ -223,8 +223,6 @@
 		 */
 		init() {
 		  this.userInfo = this.$store.state.userInfo
-		  console.log(this.userInfo)
-		  
 		  if(this.userInfo&&this.userInfo.id){
 		  	this.fileUpload.headers.Authorization = this.userInfo.token 
 		  	this.getResumeMsg()
@@ -242,8 +240,6 @@
 		  if(h-60-200>630){
 		  	this.contentHeight2 = h-60-200
 		  }
-
-		  console.log(w,h)
 		}
 
     saveResumeMsg(){
@@ -269,7 +265,6 @@
     		}
     		
     	}).catch(res => {
-    		console.log(res)
     		this.isUpload = false
     		
     	})
@@ -345,7 +340,6 @@
       let a = document.createElement('a')
       a.target = 'view_window'
     	a.href = fileLink
-      console.log(a.href)
       a.dispatchEvent(event)
     }
 
@@ -353,14 +347,12 @@
 		 * @detail   文件上传成功
 		 */
 		handleFileSuccess(res) {
-	    console.log(res)
 	    this.isUpload = true
 	    this.uploadFileData = []
 	    this.uploadFileData.push(res.data[0])
 	    
 	    this.fileUpload.progress = 100
 	    this.setFilePic(res.data[0].fileName)
-	    console.log(this.uploadFileData)
 	    this.saveResumeMsg()
 		}
 
@@ -368,7 +360,6 @@
 		 * @detail   文件上传之前的处理
 		 */
 		beforeFileUpload(file) {
-			console.log(file)
 		  // this.$refs.file.abort()
 		  const isLtM = file.size / 1024 / 1024 < 10;
 		  if(!isLtM){
@@ -413,7 +404,6 @@
 		 * @detail   文件上传失败
 		 */
 		handleFileError(err, file, fileList) {
-			console.log(err)
 		  this.fileUpload.status = 'error'
 		  this.fileUpload.progress = 0
 		  this.fileUpload.progressText = '上传失败'
@@ -422,10 +412,8 @@
 		}
 
 	  handleRemove(file, fileList) {
-      console.log(file, fileList);
     }
     handlePreview(file) {
-      console.log(file);
     }
 
     //获取文件名后缀名
@@ -450,7 +438,6 @@
 
     setFilePic(fileName){
 	    this.filePic =this.getFilePic(this.filePicList,fileName)
-		  console.log(this.filePic)
     }
 
     getFilePic(type, fielname){

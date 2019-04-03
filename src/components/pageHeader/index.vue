@@ -14,7 +14,6 @@
 					<div class="pop_cont" v-if="pop.type === 'gzh'">
 			  		<img class="pop_code" src="../../assets/images/gzh.png"/>
 			  		<p class="pop_text">微信扫码关注公众号 </p>
-			  		<p class="pop_text">菜单栏点击选择猎多多</p>
 					</div>
 					<div class="pop_cont" v-if="pop.type === 'xcx'">
 			  		<img class="pop_code2 " src="../../assets/images/xcx.png"/>
