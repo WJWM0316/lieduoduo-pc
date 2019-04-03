@@ -1,6 +1,6 @@
 <template>
 	<div id="candidate">
-		<div class="main_top_warp" :class="navBarFixed? 'isFixed' :''">
+		<div class="main_top_warp" :class="{'isFixed':navBarFixed}">
 				<div class="main_top" > 
 					<div class="topBlo topStatusBlo borright " :class="{'cur':navType==='searchBrowseMyself'}" @click="changeNav('searchBrowseMyself')">
 						<img class="preview" src="../../assets/images/preview.png" v-if="navType === 'searchBrowseMyself'"  />
@@ -118,8 +118,8 @@
 								<img class="like" src="../../assets/images/like_no.png"/>
 									对Ta感兴趣
 							</div>
-							<div class="btn" v-if="!item.interviewStatus.status"  @mouseover="sharePicOp(true,index)" @mouseout="sharePicOp(false,index)">开撩约面</div>
-							<div class="btn"  @mouseover="sharePicOp(true,index)" @mouseout="sharePicOp(false,index)" v-else>{{item.interviewStatus.statusDesc}}</div>
+							<div class="btn" v-if="!item.interviewStatus.status" @mouseover="sharePicOp(true,index)" @mouseout="sharePicOp(false,index)">开撩约面</div>
+							<div class="btn" @mouseover="sharePicOp(true,index)" @mouseout="sharePicOp(false,index)" v-else>{{item.interviewStatus.statusDesc}}</div>
 
 							<div class="xcxPic" v-if="item.isShowPic">
 									<div class="triangle_border_down" ></div>
@@ -154,7 +154,7 @@
 			</div>
 		</div>
 
-		<div class="pop" v-if="pop.isShow">
+		<div class="pop" v-if="pop.isShow" @click="todoAction('cloPop')">
 			<div class="xcxPicBox" v-if="pop.type==='clickPic'">
 				<img class="clo" src="../../assets/images/clo.png" @click="todoAction('cloPop')">
 				<div class="main_tit">查看简历详情</div>
@@ -305,7 +305,7 @@
 			this.pageInfo.page = 1
 			this.setPathQuery(res)
 		}
-		
+
 		sharePicOp (type,index) {
 			if (type) {
 				this.candidateList[index].isShowPic = true
@@ -646,7 +646,6 @@
 			// 148
 			let otherHeight = 148+30 
 			let value = pageHeight-otherHeight+scrollTop
-
 			if(scrollTop > 155){
 				this.navBarFixed = true
 				if(scrollTop > 500){
