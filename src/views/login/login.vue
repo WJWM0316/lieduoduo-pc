@@ -106,7 +106,7 @@
 	  	})
 	  	.catch(error => {
 	  	  setTimeout(() => {
-		  	  console.log(`${error.msg}~`);
+		  	  //console.log(`${error.msg}~`);
 	  		})
 	  	})
 	  }
@@ -118,7 +118,7 @@
 	  getCode () {
 	  	let that = this
 	  	getQrCodeApi().then(res=>{
-	  		console.log('==>',res)
+	  		//console.log('==>',res)
 	  		this.codeData = res.data.data
 	  		this.isPast = false
 	  		clearInterval(this.timer)
@@ -140,7 +140,7 @@
 	  		uuid: this.codeData.uuid
 	  	}).then(res=>{
 	  		//isBusiness==1 b
-	  		console.log('==>',res.data) 
+	  		//console.log('==>',res.data) 
 	  		if (res.data.data && res.data.data.id) {
   				clearInterval(this.timer)
 	  			this.identity = res.data.data.isBusiness === 1 ? 'zhaopin' : 'qiuzhi'
@@ -154,7 +154,6 @@
 
 	        this.userInfo = this.$store.state.userInfo
 					this.$router.push({name: this.identity === 'qiuzhi' ? 'applyIndex' : 'candidate' })
-  				console.log('扫码成功')
 	  		}
 	  	})
 	  }

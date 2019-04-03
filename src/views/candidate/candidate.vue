@@ -610,9 +610,9 @@
 		}
 
 		mounted () {
-			setTimeout(function(){
+			//setTimeout(function(){
 				window.addEventListener('scroll', this.handleScroll)
-			},1300)
+			//},1300)
 		}
 
 	  todoAction(type, index) {
@@ -678,7 +678,6 @@
 	  getPic(index){
 	  	let ids = this.sharePicIds
 	  	let item = this.candidateList[index]
-	  	console.log('getPic',index)
 	  	if (item.src.length < 1 && !ids.includes[item.uid]) {
 	  		ids.push(item.uid)
 		  	getResumeShareApi({

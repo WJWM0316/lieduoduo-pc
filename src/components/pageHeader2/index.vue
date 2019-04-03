@@ -379,7 +379,7 @@ export default class ComponentHeader extends Vue {
 		}
 		switchId(this.identity)
 		changeBaseURL()
-		console.log('Header===', this.identity)
+		// console.log('Header===', this.identity)
 	}
 
 	refresh(){
