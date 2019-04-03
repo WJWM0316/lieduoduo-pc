@@ -110,16 +110,16 @@
 						</div>
 						
 						<div class="userOp">
-							<div class="like_user" @click="ownerOp(true,item.uid)" v-if="item.interested">
+							<div class="like_user" @click.stop="ownerOp(true,item.uid)" v-if="item.interested">
 								<img class="like" src="../../assets/images/like.png"/>
 								取消感兴趣
 							</div>
-							<div class="like_user" @click="ownerOp(false,item.uid)" v-else >
+							<div class="like_user" @click.stop="ownerOp(false,item.uid)" v-else >
 								<img class="like" src="../../assets/images/like_no.png"/>
 									对Ta感兴趣
 							</div>
-							<div class="btn" v-if="!item.interviewStatus.status" @click="positionOp" @mouseover="sharePicOp(true,index)" @mouseout="sharePicOp(false,index)">开撩约面</div>
-							<div class="btn" @click="positionOp" @mouseover="sharePicOp(true,index)" @mouseout="sharePicOp(false,index)" v-else>{{item.interviewStatus.statusDesc}}</div>
+							<div class="btn" v-if="!item.interviewStatus.status"  @mouseover="sharePicOp(true,index)" @mouseout="sharePicOp(false,index)">开撩约面</div>
+							<div class="btn"  @mouseover="sharePicOp(true,index)" @mouseout="sharePicOp(false,index)" v-else>{{item.interviewStatus.statusDesc}}</div>
 
 							<div class="xcxPic" v-if="item.isShowPic">
 									<div class="triangle_border_down" ></div>
@@ -305,6 +305,7 @@
 			this.pageInfo.page = 1
 			this.setPathQuery(res)
 		}
+		
 		sharePicOp (type,index) {
 			if (type) {
 				this.candidateList[index].isShowPic = true
