@@ -30,7 +30,7 @@ import PageHeader2 from './components/pageHeader2/index.vue'
       handler() {
         let userInfo = this.$store.state.userInfo
         if(!userInfo) {
-          console.log('to-login')
+          //console.log('to-login')
           this.$router.push({name: 'login'})
         }
       },

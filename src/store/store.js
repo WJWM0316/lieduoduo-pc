@@ -37,7 +37,6 @@ export default new Vuex.Store({
         },
 
         LOGIN (state, data) {
-            console.log(state.loginValidTime)
             saveAccessToken(data.token, state.loginValidTime)
             saveUserInfo(data, state.loginValidTime)
             state.userInfo = data
@@ -65,7 +64,6 @@ export default new Vuex.Store({
         },
 
         login(store, data) {
-          console.log(store, data)
           store.commit('LOGIN', data)
 
           // return loginApi(data)
@@ -79,7 +77,6 @@ export default new Vuex.Store({
         },
 
         testLogin(store, data) {
-          console.log(store, data)
           return loginApi(data)
             .then(res => {
               store.commit('LOGIN', res.data.data)

@@ -18,6 +18,5 @@ export default class PageAside extends Vue {
 
   created() {
   	this.routes = routes
-  	console.log(routes)
   }
 }
