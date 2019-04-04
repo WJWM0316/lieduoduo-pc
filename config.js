@@ -3,7 +3,7 @@
  */
 import util from './src/util/util'
 
-let isTest = false    // 是否测试
+let isTest = process.env.NODE_ENV === 'development' ? true : false    // 是否测试
 let identity = 'qiuzhi'   // 身份 zhaopin  or  qiuzhi
 
 export const baseHost = function(){
