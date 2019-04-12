@@ -1,7 +1,7 @@
 <template>
 	<div id="login">
 		<img class="logo" src="../../assets/images/logo_white.png" />
-	  <p class="title_p">小程序求职招聘神器</p>
+	  <p class="title_p">社交求职招聘神器</p>
 	  <div class="login_cont">
 	  	<div class="login" v-if="status==='login'">
 	  		<h3 class="cont_tit">扫码登录</h3>
