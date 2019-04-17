@@ -230,7 +230,7 @@ export default class CommunityEdit extends Vue {
         })
         // // 创建编辑表单数据
         const form = {}
-
+        let isHasSkill = false
         if(data.data.isOnline === 1){
           this.isOnline = true
         }
@@ -253,20 +253,20 @@ export default class CommunityEdit extends Vue {
           typeId: data.data.type
         }
 
+        this.selectPositionItem.topPid = data.data.topPid
         // 设置技能
         if (data.data.skillsLabel.length > 0) {
-          this.selectPositionItem.topPid = data.data.skillsLabel[0].topPid
-
-          if(this.professionalSkillsList.length < 1){
-            this.getProfessionalSkills().then(()=>{
-              this.setSkillsList(true)
-            })
-          }else {
-            this.setSkillsList(true)
-          }
-        }else {
-          //this.skillChange(true)
+            isHasSkill = true
         }
+
+        if(this.professionalSkillsList.length < 1){
+          this.getProfessionalSkills().then(()=>{
+            this.setSkillsList(isHasSkill)
+          })
+        }else {
+          this.setSkillsList(isHasSkill)
+        }
+        
 
         form.labels = []
         data.data.skillsLabel.map(item=>{
@@ -528,20 +528,20 @@ export default class CommunityEdit extends Vue {
 
   //设置技能列表
   setSkillsList (isNext) {
+    console.log(isNext)
     if (this.professionalSkillsList.length > 0){
       let topPid = this.selectPositionItem.topPid
       this.professionalSkillsList.map(item => {
         if ( item.labelId === topPid ) {
           this.options = item.children
         }
-
         // 编辑 显示技能 
         if(isNext){
           this.skillChange(isNext)
         }
 
       })
-    }else {}
+    }
   }
 
   changePosition () {
