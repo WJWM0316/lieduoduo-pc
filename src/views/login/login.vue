@@ -18,7 +18,7 @@
 	  	
 	  	<div class="sign" v-if="status==='register'">
 	  		<h3 class="cont_tit">免费注册</h3>
-	  		<div class="cont_p">使用「微信」扫码注册</div>
+	  		<div class="cont_p">使用「微信」扫一扫下方小程序码</div>
 	  		<img class="signPic"  src="../../assets/images/xcx.png" />
 	  		<div class="bottom_text">已有账号 <span @click="changeStatus">立即登录</span></div>
 	  	</div>
