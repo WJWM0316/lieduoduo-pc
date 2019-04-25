@@ -31,7 +31,7 @@
   						<span class="strong">1.</span>
   						<span class="default">微信扫一扫下方小程序码，打开「猎多多」</span>
   					</div>
-  					<img class="pic_1" src="../../assets/images/inf_qrcode@2x.png" />
+  					<img class="pic_1" src="../../assets/images/xcx.png" />
   				</li>
   				<li>
   					<div>
@@ -450,7 +450,7 @@
 
 			}
 			.pic_1  {
-				width: 120px;
+				width: 130px;
 				margin-top: 14px;
 			}
 			.pic_2  {
