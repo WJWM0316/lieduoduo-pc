@@ -435,8 +435,8 @@
 				font-weight:500;
 				color:rgba(40,40,40,1);
 				line-height:1.1;
-				margin-top: 22px;
-				margin-bottom: 32px;
+				margin-top: 38px;
+				margin-bottom: 26px;
 			}
 			.juli {
 				padding-bottom: 22px;
@@ -452,7 +452,7 @@
 			}
 			.pic_1  {
 				width: 110px;
-				margin-top: 28px;
+				margin-top: 14px;
 			}
 			.pic_2  {
 				width: 193px;
@@ -487,7 +487,7 @@
 			font-weight:500;
 			color:rgba(40,40,40,1);
 			line-height:38px;
-			margin-top: 36px;
+			margin-top: 50px;
 
 		}
 		.cont_p {
@@ -578,13 +578,12 @@
 			font-family:PingFang-SC-Regular;
 			font-weight:400;
 			color:rgba(98,98,98,1);
-			line-height:22px;
+			line-height:1;
 			span {
 				font-size:14px;
 				font-family:PingFang-SC-Regular;
 				font-weight:400;
 				color:rgba(101,39,145,1);
-				line-height:22px;
 				margin-left: 3px;
 				cursor: pointer;
 			}
