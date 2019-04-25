@@ -431,7 +431,6 @@
 			}
 			h3 {
 				font-size:20px;
-				font-family:PingFang-SC-Medium;
 				font-weight:500;
 				color:rgba(40,40,40,1);
 				line-height:1.1;
@@ -451,7 +450,7 @@
 
 			}
 			.pic_1  {
-				width: 110px;
+				width: 120px;
 				margin-top: 14px;
 			}
 			.pic_2  {
@@ -571,7 +570,6 @@
 			height:180px;
 			margin: 0 auto;
 			margin-bottom: 42px;
-			border-radius: 50%;
 		}
 		.bottom_text {
 			font-size:14px;
