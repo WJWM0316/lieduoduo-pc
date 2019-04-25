@@ -16,7 +16,7 @@
 	  		<div class="bottom_text">没有账号 <span @click="changeStatus">免费注册</span></div>
 	  	</div>
 	  	
-	  	<div class="sign" v-if="status==='sign'">
+	  	<div class="sign" v-if="status==='register'">
 	  		<h3 class="cont_tit">免费注册</h3>
 	  		<div class="cont_p">使用「微信」扫码注册</div>
 	  		<img class="signPic"  src="../../assets/images/xcx.png" />
@@ -118,15 +118,20 @@
 	   */
 
 	  mounted () {
+	  	let query = this.$route.query
 	  	//百度统计
-  		var _hmt = _hmt || [];
+  		let _hmt = _hmt || [];
   		(function() {
   		  var hm = document.createElement("script");
   		  hm.src = "https://hm.baidu.com/hm.js?f7fe68c0039c09911deef47214587f2f";
   		  var s = document.getElementsByTagName("script")[0]; 
   		  s.parentNode.insertBefore(hm, s);
   		})();
-  		console.log(this.$route.params)
+  		if(!query.type) {
+  			this.status = 'login'
+  		} else  {
+  			this.status = query.type
+  		}
 		}
 
 		closeMask() {
@@ -208,7 +213,7 @@
 	  }
 
 	  changeStatus () {
-	  	this.status = this.status === 'login'? 'sign':'login'
+	  	this.status = this.status === 'login'? 'register':'login'
 	  	this.pop.isShow = !this.pop.isShow
 	  }
 
