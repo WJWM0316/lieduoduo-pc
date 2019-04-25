@@ -23,7 +23,7 @@
 	  		<div class="bottom_text">已有账号 <span @click="changeStatus">立即登录</span></div>
 	  	</div>
 
-  		<div class="help_cont" v-show="pop.isShow">
+  		<div class="help_cont" v-if="status==='login'">
   			<h3 >扫码帮助</h3>
   			<ul>
   				<li class="juli">
@@ -214,7 +214,7 @@
 
 	  changeStatus () {
 	  	this.status = this.status === 'login'? 'register':'login'
-	  	this.pop.isShow = !this.pop.isShow
+	  	// this.pop.isShow = !this.pop.isShow
 	  }
 
 	  identitySelect (status) {
