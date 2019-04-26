@@ -4,8 +4,8 @@
 	  <p class="title_p">社交求职招聘神器</p>
 	  <div class="login_cont">
 	  	<div class="login" v-if="status==='login'">
-	  		<h3 class="cont_tit">扫码登录</h3>
-	  		<div class="cont_p">使用猎多多小程序扫码登录<span class="help" @click="clickHelp">扫码帮助</span> <span class="ques">?</span></div>
+	  		<h3 class="cont_tit">登录</h3>
+	  		<div class="cont_p">使用「猎多多小程序」扫码登录</div>
 	  		<div class="login_pic_warp">
 	  			<img class="loginCode"  v-bind:src="codeData.image" />
 	  			<div class="pastDue" v-if="isPast">
@@ -13,30 +13,66 @@
 	  				<div class="pastBtn" @click="refreshCode">点击刷新</div>
 	  			</div>
 	  		</div>
-	  		<div class="bottom_text">没有账号 <span @click="changeStatus">立即注册</span></div>
+	  		<div class="bottom_text">没有账号 <span @click="changeStatus">免费注册</span></div>
 	  	</div>
 	  	
-	  	<div class="sign" v-if="status==='sign'">
-	  		<h3 class="cont_tit">立即注册</h3>
-	  		<div class="cont_p">使用「微信」扫码注册</div>
+	  	<div class="sign" v-if="status==='register'">
+	  		<h3 class="cont_tit">免费注册</h3>
+	  		<div class="cont_p">使用「微信」扫一扫下方小程序码</div>
 	  		<img class="signPic"  src="../../assets/images/xcx.png" />
 	  		<div class="bottom_text">已有账号 <span @click="changeStatus">立即登录</span></div>
 	  	</div>
 
-  		<div class="help_cont" v-show="pop.isShow">
+  		<div class="help_cont" v-if="status==='login'">
   			<h3 >扫码帮助</h3>
-  			<div class="identitySelect">
-  				<div class="addJob" @click="identitySelect('qiuzhi')" :class="{'select': identitystatus==='qiuzhi'}">求职者</div>
-  				<div class="addJob" @click="identitySelect('zhaopin')" :class="{'select': identitystatus==='zhaopin'}" >招聘者</div>
-  			</div>
-  	    	<p v-if="identitystatus==='qiuzhi'">我的 > 附件简历 > 扫码上传</p>
-  	    	<p v-else>职位管理 > 发布职位 > 扫码上传</p>
-  			<img class="pic_1" src="../../assets/images/pic_help_jobhunter.png" v-if="identitystatus==='qiuzhi'" />
-  			<img class="pic_1" src="../../assets/images/pic_help_recruiter.png" v-else />
-
-  			<div class="triangle_border_left">
-  			</div>
+  			<ul>
+  				<li class="juli">
+  					<div>
+  						<span class="strong">1.</span>
+  						<span class="default">微信扫一扫下方小程序码，打开「猎多多」</span>
+  					</div>
+  					<img class="pic_1" src="../../assets/images/xcx.png" />
+  				</li>
+  				<li>
+  					<div>
+  						<span class="strong">2.</span>
+  						<span class="default">进入“我的”页面，点击左上角扫码按钮， 扫描左侧二维码</span>
+  					</div>
+  					<img class="pic_2" src="../../assets/images/inf_login@2x.png" />
+  				</li>
+  			</ul>
   		</div>
+	  </div>
+	  <div class="overlayout" v-if="showError">
+	  	<div class="box">
+	  		<i class="el-icon-close" @click="closeMask"></i>
+	  		<div class="header">
+	  			<i class="el-icon-warning"></i>
+	  			登录失败
+	  		</div>
+	  		<ul>
+	  			<li class="h10">可能是由于以下原因导致：</li>
+	  			<li>
+	  				1、未注册猎多多小程序；
+	  			</li>
+	  			<li>
+	  				2、招聘官身份尚未审核通过；
+	  			</li>
+	  			<li>
+	  				3、招聘官身份尚未加入该公司；
+	  			</li>
+	  			<li>
+	  				4、招聘官身份所属公司尚未通过审核。
+	  			</li>
+	  		</ul>
+	  		<div class="code-tips">
+	  			<img class="pic_3" src="../../assets/images/inf_qrcode@2x.png" />
+	  			<div class="text10">
+	  				使用「微信」扫描小程序码， <br/>进入猎多多小程序解决以上问题
+	  			</div>
+	  		</div>
+	  		<div class="login-next"><span>重新登录>></span></div>
+	  	</div>
 	  </div>
   	<!-- <div class="login_btn" @click="login">模拟登陆</div> -->
 	</div>
@@ -67,7 +103,7 @@
 		codeData = {}  // 二维码信息
 		userInfo = {}
 		pop = {
-      isShow: false,
+      isShow: true,
       type: 'help'
     }
     status = 'login' 
@@ -76,22 +112,32 @@
     timer = null 
     num = 1
     identity = '' //身份
+    showError = false
 	  /**
 	   * 初始化表单、分页页面数据
 	   */
 
 	  mounted () {
+	  	let query = this.$route.query
 	  	//百度统计
-  		var _hmt = _hmt || [];
+  		let _hmt = _hmt || [];
   		(function() {
   		  var hm = document.createElement("script");
   		  hm.src = "https://hm.baidu.com/hm.js?f7fe68c0039c09911deef47214587f2f";
   		  var s = document.getElementsByTagName("script")[0]; 
   		  s.parentNode.insertBefore(hm, s);
   		})();
+  		if(!query.type) {
+  			this.status = 'login'
+  		} else  {
+  			this.status = query.type
+  		}
 		}
 
-	   // candidate applyIndex
+		closeMask() {
+			this.showError = !this.showError
+		}
+
 	  login () {
 	  	let data = {
 	  		email: '302982210@qq.com',
@@ -167,7 +213,8 @@
 	  }
 
 	  changeStatus () {
-	  	this.status = this.status === 'login'? 'sign':'login'
+	  	this.status = this.status === 'login'? 'register':'login'
+	  	// this.pop.isShow = !this.pop.isShow
 	  }
 
 	  identitySelect (status) {
@@ -235,6 +282,97 @@
 	justify-content: center;
 	flex-direction: column;
 	background: url(../../assets/images/bg.png) 100% repeat #652791;
+	.overlayout {
+		position: fixed;
+		left: 0;
+		top: 0;
+		bottom: 0;
+		right: 0;
+		z-index: 10;
+		background: rgba(0,0,0,.3);
+		.box {
+			width:432px;
+			height:384px;
+			background:rgba(255,255,255,1);
+			box-shadow:0px 4px 12px 0px rgba(0,0,0,0.2);
+			border-radius:4px;
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+			box-sizing: border-box;
+			padding: 32px 32px 32px 70px;
+		}
+		.el-icon-close {
+			position: absolute;
+			top: 16px;
+			right: 16px;
+			cursor: pointer;
+		}
+		.header {
+			text-align: left;
+			height:24px;
+			font-size:16px;
+			font-weight:500;
+			color:rgba(53,64,72,1);
+			line-height:24px;
+			position: relative;
+		}
+		.el-icon-warning {
+			color: #FF7F4C;
+			position: absolute;
+			left: -24px;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+		ul {
+			text-align: left;
+			line-height: 1.5;
+		}
+		li {
+			color: #5C565D;
+		}
+		.h10 {
+			height:24px;
+			font-size:14px;
+			font-weight:400;
+			color:rgba(92,86,93,1);
+			line-height:24px;
+			margin-bottom: 8px;
+			margin-top: 16px;
+		}
+		.text10 {
+			flex: 1;
+			text-align: left;
+			font-size:14px;
+			font-weight:400;
+			color:rgba(92,86,93,1);
+			line-height:22px;
+		}
+		.code-tips {
+			display: flex;
+		  justify-content: center;
+		  align-items: center;
+		  margin-top: 18px;
+		}
+		.pic_3{
+			width: 96px;
+			height: 96px;
+			margin-right: 16px;
+		}
+		.login-next {
+			height:22px;
+			font-size:14px;
+			font-weight:400;
+			color:rgba(101,39,145,1);
+			line-height:22px;
+			text-align: left;
+			margin-top: 24px;
+			span{
+				cursor: pointer;
+			}
+		}
+	}
 	.title_p {
 		font-size:24px;
 		font-family:PingFang-SC-Regular;
@@ -245,18 +383,20 @@
 	}
 	.login_cont {
 		width:560px;
-		height:420px;
+		height:460px;
 		background:rgba(255,255,255,1);
 		box-shadow:0px 8px 12px 0px rgba(40,40,40,0.2);
 		border-radius:4px;
 		position: relative;
 		.help_cont {
 			position: absolute;
-			width:310px;
-			height:420px;
-			right: -340px;
+			width:320px;
+			height:460px;
+			right: -330px;
 			background: #fff;
 			border-radius:4px;
+			box-sizing: border-box;
+			padding: 0 30px;
 			top: 0;
 			p {
 				font-size:12px;
@@ -291,11 +431,14 @@
 			}
 			h3 {
 				font-size:20px;
-				font-family:PingFang-SC-Medium;
 				font-weight:500;
 				color:rgba(40,40,40,1);
-				line-height:26px;
-				margin-top: 22px;
+				line-height:1.1;
+				margin-top: 38px;
+				margin-bottom: 26px;
+			}
+			.juli {
+				padding-bottom: 22px;
 			}
 			.hint_help {
 
@@ -307,8 +450,34 @@
 
 			}
 			.pic_1  {
-				width: 261px;
-				height: 232px;
+				width: 130px;
+				margin-top: 14px;
+			}
+			.pic_2  {
+				width: 193px;
+				padding-top: 15px;
+			}
+			.strong {
+				font-size: 24px;
+		    color: #652791;
+		    display: inline-block;
+		    width: 20px;
+		    vertical-align: middle;
+		    margin-right: 10px;
+		    font-weight: 700;
+			}
+			.default{
+				font-size:12px;
+				font-weight:300;
+				color:rgba(40,40,40,1);
+				line-height:18px;
+				display: inline-block;
+				text-align: left;
+				max-width: 228px;
+				vertical-align: middle;
+			}
+			.row{
+				line-height:1;
 			}
 		}
 		.cont_tit {
@@ -317,7 +486,7 @@
 			font-weight:500;
 			color:rgba(40,40,40,1);
 			line-height:38px;
-			margin-top: 36px;
+			margin-top: 50px;
 
 		}
 		.cont_p {
@@ -401,20 +570,18 @@
 			height:180px;
 			margin: 0 auto;
 			margin-bottom: 42px;
-			border-radius: 50%;
 		}
 		.bottom_text {
 			font-size:14px;
 			font-family:PingFang-SC-Regular;
 			font-weight:400;
 			color:rgba(98,98,98,1);
-			line-height:22px;
+			line-height:1;
 			span {
 				font-size:14px;
 				font-family:PingFang-SC-Regular;
 				font-weight:400;
 				color:rgba(101,39,145,1);
-				line-height:22px;
 				margin-left: 3px;
 				cursor: pointer;
 			}
