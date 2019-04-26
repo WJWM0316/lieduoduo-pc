@@ -1,6 +1,6 @@
 <template>
 	<div id="login">
-		<img class="logo" src="../../assets/images/logo_white.png" />
+		<img class="logo" src="../../assets/images/logo_white.png" @click="returnHome" />
 	  <p class="title_p">社交求职招聘神器</p>
 	  <div class="login_cont">
 	  	<div class="login" v-if="status==='login'">
@@ -116,6 +116,10 @@
 	  /**
 	   * 初始化表单、分页页面数据
 	   */
+
+	  returnHome() {
+	  	window.location.href = `${process.env.VUE_APP_WEB_INDEX}`;
+	  }
 
 	  mounted () {
 	  	let query = this.$route.query
@@ -282,6 +286,9 @@
 	justify-content: center;
 	flex-direction: column;
 	background: url(../../assets/images/bg.png) 100% repeat #652791;
+	.logo {
+		cursor: pointer;
+	}
 	.overlayout {
 		position: fixed;
 		left: 0;
