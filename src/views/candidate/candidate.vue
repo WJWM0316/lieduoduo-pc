@@ -79,7 +79,7 @@
 									<div class="infoRight">
 										<div class="infoName textEllipsis">{{item.name}}</div>
 										<ul class="userLabel">
-											<li class="" v-if="item.workAgeDesc">{{item.workAgeDesc === '在校生'? item.workAgeDesc:item.workAgeDesc+'工作经验'}}</li>
+											<li class="" v-if="item.workAgeDesc">{{item.workAgeDesc === '暂无经历'? item.workAgeDesc:item.workAgeDesc+'工作经验'}}</li>
 											<li class="" v-else>暂无工作经验</li>
 											<li class="" v-if="item.age">{{item.age}}岁</li>
 											<li class="" v-else>暂无年龄</li>
