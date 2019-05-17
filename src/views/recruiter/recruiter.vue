@@ -577,7 +577,7 @@ export default class CourseList extends Vue {
   box-sizing: border-box;
   padding-top: 84px;
   .recruiter_cont {
-    width: 1200px;
+    width: 100%;
     margin: 0 auto;
     background: #ffffff;
     position: relative;
