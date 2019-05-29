@@ -27,7 +27,7 @@
 			    </el-upload>
 
 		  		<p class="hint2">
-		  			附件简历类型支持word、pdf、ppt、txt、wps、jpg、png、jpeg、pptx； 最大允许上传10M；
+		  			附件简历类型支持pdf、jpg、png、doc、docx； 最大允许上传10M；
 		  		</p>
 		  	</div>
 		  	<div class="main_right">
@@ -88,7 +88,7 @@
 				  		上传简附件，招聘官既可查看你的附件简历； 
 				  	</p>
 				  	<p>
-				  		附件简历类型支持word、pdf、ppt、txt、wps、jpg、png；  
+				  		附件简历类型支持pdf、jpg、png、doc、docx；  
 				  	</p>
 				  	<p>
 				  		允许最大上传10M；若从其他平台下载的word简历，请将文件另存为.docx格式后上传。
@@ -188,8 +188,8 @@
 		fileUpload = {
 		  action: `${baseHost()}/attaches`,
 		  list: [],
-		  limit: 2,
-		  accept: '.png, .jpg, .jpeg, .word, .pdf, .ppt, .txt, .wps ,.pptx,.PNG, .JPG, .JPEG, .WORD, .PDF, .PPT, .TXT, .WPS ,.',
+		  limit: 2, 
+		  accept: '.png, .jpg, .jpeg, .pdf,.doc,.docx,.DOC,.DOCX,.PNG, .JPG, .JPEG, .PDF',
 		  progress: 0,
 		  btnTxt: '选择文件',
 		  progressText: '上传中',
@@ -207,8 +207,8 @@
 		upload_hint_pop = false
 
     imgExt = ['.png','.jpg','.jpeg']//图片文件的后缀名
-    docExt = ['.doc','.docx','.pdf','.ppt','.pptx','.txt','.word','.wps']//word文件的后缀名
-    filePicList = ['.excel','.jpg','.pdf','.png','.ppt','.txt','.word']
+    docExt = ['.doc','.docx','.pdf']//word文件的后缀名
+    filePicList = ['.excel','.jpg','.pdf','.png']
     filePic = 'default'
 
   	pop = {
@@ -376,7 +376,7 @@
 		  	}
 
 		  	if(!isImg && !isDoc){
-		    	this.$message.error('附件简历类型仅支持word、pdf、ppt、txt、wps、jpg、png、pptx、jpeg');
+		    	this.$message.error('附件简历类型仅支持pdf、jpg、png、jpeg、doc、docx');
 		  		this.$refs.file.abort()
 		  	}
 
@@ -448,9 +448,6 @@
     	    return ext;
     	}
 
-    	if(ext === '.pptx') {
-    		return 'ppt'
-    	}
     	return 'default';
     }
 
