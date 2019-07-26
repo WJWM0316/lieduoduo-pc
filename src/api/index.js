@@ -20,6 +20,7 @@ export const changeBaseURL = (type) => {
 axios.interceptors.request.use(
   config => {
     config.headers.common['Authorization'] = getAccessToken()
+    config.headers.common['Wechat-Version'] = 102
     return config
   },
   error => {
