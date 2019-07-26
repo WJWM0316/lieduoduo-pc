@@ -77,7 +77,11 @@
 									<img class="gender" src="../../assets/images/boy.png" v-else />
 									<img class="userIcon" :src="item.avatar.middleUrl" />
 									<div class="infoRight">
-										<div class="infoName textEllipsis">{{item.name}}</div>
+										<div class="infoName textEllipsis">
+											<block v-if="!item.glass">{{item.name}}</block>
+											<img v-else class="invisible2" src="https://attach.lieduoduo.ziwork.com/front-assets/images/invisible2.png">
+										</div>
+
 										<ul class="userLabel">
 											<li class="" v-if="item.workAgeDesc">{{item.workAgeDesc}}</li>
 											<li class="" v-if="item.age">{{item.age}}岁</li>
