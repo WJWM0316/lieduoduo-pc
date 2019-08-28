@@ -8,13 +8,10 @@ const company = location.href.split('/')[3] || 'tiger'
 import { getAccessToken, removeAccessToken, removeAccessToPPTXken } from './cacheService'
 
 // 请求的跟地址
-// export const upload_api = `${baseHost()}/attaches`
 axios.defaults.baseURL = baseHost()
-
 export const changeBaseURL = (type) => {
   axios.defaults.baseURL = type ? changeBaseHost(type) :baseHost()
 }
-
 
 // 请求拦截器
 axios.interceptors.request.use(
@@ -51,7 +48,7 @@ export const request = (url, method, params = {}, isChangeHost) => {
     loadingInstance = Loading.service({})
     delete params.globalLoading
   }
-  
+  console.log(isChangeHost)
   if (isChangeHost) {
     changeBaseURL(1)
   } else {

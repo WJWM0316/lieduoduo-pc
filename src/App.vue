@@ -24,19 +24,18 @@ import PageHeader2 from './components/pageHeader2/index.vue'
     PageHeader,
     PageHeader2,
     PageAside
+  },
+  watch: {
+    '$route': {
+      handler() {
+        // let userInfo = this.$store.state.userInfo
+        // if(!userInfo) {
+        //   this.$router.push({name: 'login'})
+        // }
+      },
+      immediate: true
+    }
   }
-  // watch: {
-  //   '$route': {
-  //     handler() {
-  //       let userInfo = this.$store.state.userInfo
-  //       if(!userInfo) {
-  //         //console.log('to-login')
-  //         // this.$router.push({name: 'login'})
-  //       }
-  //     },
-  //     immediate: true
-  //   }
-  // }
 })
 
 export default class App extends Vue {
@@ -44,7 +43,7 @@ export default class App extends Vue {
   // 下面路由显示管理页面顶部的导航栏
   shouldTopShown() {
     return [
-      'applyIndex'
+      'applyIndex',
     ].includes(this.$store.state.pageName)
   }
 

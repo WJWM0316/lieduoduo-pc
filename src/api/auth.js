@@ -15,6 +15,15 @@ export const getQrCodeApi = () => request('/auth/qr_code', 'get')
 // 用户登录
 export const loginApi = data => request('/auth/login', 'post', data)
 
+// 投放页登录注册
+export const loginPutInApi = data => request('/wap/login', 'post', data, data.isChangeHost)
+
+// wap下发短信验证
+export const getCodeApi = data => request('/wap/message', 'post', data)
+
+// 刷新图片验证码
+export const getCaptchaApi = data => request('/auth/wap_captcha', 'get')
+
 // 切换用户角色（切换到求职端、招聘者端）求职者1，招聘者2
 export const switchRoleApi = data => request('/user/role/switch', 'post', data)
 

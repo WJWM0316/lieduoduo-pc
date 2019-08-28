@@ -77,6 +77,30 @@ export const routes = [
       component: () => import(/* webpackChunkName: "login" */ '../views/issueRule/issueRule.vue')
     },
     {
+      path: '/putIn',
+      name: 'putIn',
+      title: '猎多多 | 投放',
+      component: () => import(/* webpackChunkName: "putIn" */ '../views/activity/putIn/index.vue')
+    },
+    {
+      path: '/resumePost',
+      name: 'resumePost',
+      title: '猎多多 | 简历',
+      component: () => import(/* webpackChunkName: "putIn" */ '../views/activity/resumePost/index.vue')
+    },
+    {
+      path: '/resumePost2',
+      name: 'resumePost2',
+      title: '猎多多 | 简历',
+      component: () => import(/* webpackChunkName: "putIn" */ '../views/activity/resumePost2/index.vue')
+    },
+    {
+      path: '/userAgreement',
+      name: 'userAgreement',
+      title: '猎多多 | 用户协议&隐私政策',
+      component: () => import(/* webpackChunkName: "putIn" */ '../views/activity/userAgreement/index.vue')
+    },
+    {
       path: '*',
       redirect: {
         name: '404'
