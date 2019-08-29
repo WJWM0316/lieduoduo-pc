@@ -348,7 +348,7 @@
         }).then(res => {
             this.$store.commit('LOGIN',res.data.data)
             this.$store.dispatch('setUserInfo', res.data.data)
-            this.$router.push({name: 'resumePost'})
+            this.$router.push({name: 'resumeFirstPost'})
           console.log(res.data.data)
         }).catch(e=>{
           console.log(e)
@@ -504,7 +504,8 @@
     padding: 40px;
     box-sizing: border-box;
     top: 130px;
-    left: 40px;
+    left: 50%;
+    margin-left: -500px;
     display: block;
     transition: opacity .3s,top .3s;
     -moz-transition: opacity .3s,top .3s;
@@ -1240,6 +1241,7 @@
           font-family:PingFangSC;
           font-weight:400;
           color:rgba(237,92,92,1);
+          white-space:nowrap;
           img {
             width: 14px;
             height: 14px;
