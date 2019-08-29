@@ -37,6 +37,10 @@
       </div>
 
       <div class="resumeOpFirstMain">
+        <div class="formHint" v-if="formHint.isShow && !messagePop.isShow">
+          <img class="" src="../../../assets/images/activity/putIn/live_icon_question2.png" />
+          {{formHint.text}}
+        </div>
         <h3 class="form-title">请填写工作经历</h3>
 
         <div class="form">
@@ -108,7 +112,7 @@
           </div>
           <div class="btn-box">
             <div class="over-lay">
-              <div class="btn-pre">上一步</div>
+              <div class="btn-pre" @click="lastStep">上一步</div>
               <div class="btn-confirm" @click="submit">继续</div>
             </div>
             <div class="mask"></div>
@@ -121,6 +125,10 @@
 
   <div class="message" v-if="messagePop.isShow" >
     <div class="duty-modal" v-if="messagePop.type==='duly'">
+      <div class="formHint two" v-if="formHint.isShow">
+        <img class="" src="../../../assets/images/activity/putIn/live_icon_question2.png" />
+        {{formHint.text}}
+      </div>
       <img class="icon-close" src="../../../assets/images/clo.png" @click.stop="cloMask" />
       <div class="duty-content" >
         <h3 class="duty-tit">工作内容</h3>
@@ -169,6 +177,10 @@
       isShow: false,
       type: 'duly'
     }
+    formHint = {    //form提示框
+      isShow: false,
+      text: ''
+    }
     form2 = {
       company: '',
       positionTypeId: '1',
@@ -178,6 +190,7 @@
       endTime: '',  
       from: 1,  
     }
+    hintSetTime = null
     textarea = ''
     isShowMask = false
     showError = false
@@ -229,18 +242,14 @@
 
     // 返回上一步
     lastStep() {
-      if(this.step < 1) return
-      this.step -= 1
+      this.$router.push({name: 'resumeFirstPost'})
     }
 
     // 
     checkCompany() {
       var pattern = /^[\u0391-\uFFE5A-Za-z\s]{2,50}$/
       if(!pattern.test(this.form2.company)){
-        this.$message({
-          type: 'info',
-          message: '请填写公司名称'
-        })
+        this.setHint('请填写公司名称')
         return false
       }else {
         return true
@@ -250,10 +259,7 @@
     checkDuty() {
       var pattern = /^.{10,1000}$/
       if(!pattern.test(this.form2.duty)){
-        this.$message({
-          type: 'info',
-          message: '请填写工作内容'
-        })
+        this.setHint('请填写10-1000的工作内容')
         return false
       }else {
         return true
@@ -263,10 +269,7 @@
     checkPosition() {
       var pattern = /^.{2,20}$/
       if(!pattern.test(this.form2.position)){
-        this.$message({
-          type: 'info',
-          message: '请填写职位名称'
-        })
+        this.setHint('请填写职位名称')
         return false
       }else {
         return true
@@ -284,8 +287,24 @@
         data.careers.push(params)
         setResumeSecondApi(data).then(res => {
           console.log(res.data)
+          this.$router.push({name: 'resumeThirdPost'})
+        }).catch(e => {
+          console.log(e)
+          this.setHint(e.data.msg || '')
         })
       }
+    }
+
+    setHint (text) {
+      console.log(text)
+      this.formHint = {    //form提示框
+        isShow: true,
+        text: text
+      }
+      clearTimeout(this.hintSetTime) 
+      this.hintSetTime = setTimeout(()=> {
+        this.formHint.isShow = false
+      }, 3000);
     }
 
     transformData () {
@@ -315,17 +334,19 @@
     }
 
     openMask() {
+      clearTimeout(this.hintSetTime) 
       this.messagePop.isShow = true
       this.textarea = this.form2.duty 
     }
 
     saveDuty() {
+      if(!this.checkDuty()) return
       this.form2.duty = this.textarea
-      console.log()
       this.cloMask()
     }
 
     cloMask() {
+      clearTimeout(this.hintSetTime) 
       this.messagePop.isShow = false
     }
   }
@@ -368,6 +389,33 @@
   .clearfix {
       zoom: 1;
   }
+  .formHint {
+    height:60px;
+    background:rgba(237,92,92,0.1);
+    border-radius:4px;
+    padding: 0 27px;
+    position: absolute;
+    left: 50%;
+    top: 0px;
+    transform: translate(-50%,0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size:14px;
+    font-family:PingFangSC;
+    font-weight:400;
+    color:rgba(237,92,92,1);
+    white-space:nowrap;
+    &.two {
+      height:34px;
+    }
+    img {
+      width: 14px;
+      height: 14px;
+      margin-right: 8px;
+      display: block;
+    }
+  }
 
   .resumeOpFirstMain {
     width:450px;
@@ -379,6 +427,7 @@
     padding: 50px 40px 35px 40px;
     box-sizing: border-box;
     position: relative;
+    
     .form-title {
       font-size:24px;
       font-family:PingFangSC;

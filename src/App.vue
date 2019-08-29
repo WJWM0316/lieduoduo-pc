@@ -72,6 +72,10 @@ export default class App extends Vue {
       'postJob',
       'candidate',
       'recruiterIndex',
+      'resumeFirstPost',
+      'resumeSecondPost',
+      'resumeThirdPost',
+      'resumeFourthPost',
       '404'
     ].includes(this.$store.state.pageName)
   }
