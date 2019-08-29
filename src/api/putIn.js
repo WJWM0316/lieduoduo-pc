@@ -31,3 +31,13 @@ export const getPositionTypesApi = data => request(`/launch/position/types`, 'ge
 
 //广告列表 - 公司职位
 export const getAdvListApi = data => request(`/launch/adv/list`, 'get', data)
+
+//获取学历接口
+export const getDegreeAllListsApi = data => request('/degree/all', 'get')
+
+//完善简历-获取第三步已填信息
+export const getResumeThirdStepApi = data => request('/jobhunter/resume/four/thirdStep', 'get')
+
+
+//获取城市列表
+export const getAreaListsApi = data => request('area', 'get', data)
