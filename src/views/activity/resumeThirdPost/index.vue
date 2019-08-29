@@ -225,14 +225,15 @@
             field.endTime = new Date()
           }
         })
-
         this.internships = internships
         this.educations = educations
-        this.form.school = educations[0].school
-        this.form.major = educations[0].major
-        this.form.degree = educations[0].degree
-        this.form.startTime = educations[0].startTime
-        this.form.endTime = educations[0].endTime
+        if(educations.length) {
+          this.form.school = educations[0].school
+          this.form.major = educations[0].major
+          this.form.degree = educations[0].degree
+          this.form.startTime = educations[0].startTime
+          this.form.endTime = educations[0].endTime 
+        }
       })
     }
 
