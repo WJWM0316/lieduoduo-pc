@@ -86,7 +86,7 @@
 
       <div class="btn-box">
         <div class="over-lay">
-          <div class="btn-pre">上一步</div>
+          <div class="btn-pre" @click="lastStep">上一步</div>
           <div class="btn-confirm" @click="check">继续</div>
         </div>
         <div class="mask"></div>
@@ -146,6 +146,12 @@
     getDegreeAllLists() {
       return getDegreeAllListsApi().then(res => this.degreeAllLists = res.data.data)
     }
+
+    // 返回上一步
+    lastStep() {
+      this.$router.push({name: 'resumeSecondPost'})
+    }
+
     check() {
 
       let schoolCheck = new Promise((resolve, reject) => {
@@ -341,6 +347,7 @@
   justify-content: center;
   flex-direction: column;
   background: #652791;
+  padding-bottom: 130px;
   // background: url(../../../assets/images/bg.png) 100% repeat #652791;
   .content {
     padding-top: 64px;

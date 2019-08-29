@@ -34,6 +34,9 @@ export const getResumeThirdApi = data => request(`/jobhunter/resume/four/thirdSt
 //获取第4步提交的信息
 export const getResumeFourthApi = data => request(`/jobhunter/resume/four/fourthStep`, 'get', data)
 
+//获取用户身份角色信息
+export const getUserRoleInfo = data => request(`/user/roleinfo`, 'get', data)
+
 //职位搜索 - 投放页
 export const schJobApi = data => request(`/launch/position/sch`, 'get', data)
 

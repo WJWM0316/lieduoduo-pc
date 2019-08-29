@@ -26,15 +26,15 @@ import PageHeader2 from './components/pageHeader2/index.vue'
     PageAside
   },
   watch: {
-    '$route': {
-      handler() {
-        // let userInfo = this.$store.state.userInfo
-        // if(!userInfo) {
-        //   this.$router.push({name: 'login'})
-        // }
-      },
-      immediate: true
-    }
+    // '$route': {
+    //   handler() {
+    //     // let userInfo = this.$store.state.userInfo
+    //     // if(!userInfo) {
+    //     //   this.$router.push({name: 'login'})
+    //     // }
+    //   },
+    //   immediate: true
+    // }
   }
 })
 

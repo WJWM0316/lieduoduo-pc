@@ -233,7 +233,7 @@
   import Vue from 'vue'
   import Component from 'vue-class-component'
   import { loginPutInApi, getCodeApi, scanApi, getCaptchaApi, getQrCodeApi } from '../../../api/auth'
-  import { schJobApi, getPositionTypesApi, getAdvListApi } from '../../../api/putIn'
+  import { schJobApi, getPositionTypesApi, getAdvListApi, getUserRoleInfo } from '../../../api/putIn'
   import { getUserIdentity, switchId } from '../../../../config.js'
   @Component({
     name: 'lighthouse-list',
@@ -350,7 +350,6 @@
     refresh(){}
 
     submit () {
-
       if(this.validate()){
         loginPutInApi({
           isChangeHost: true,
@@ -358,8 +357,15 @@
         }).then(res => {
             this.$store.commit('LOGIN',res.data.data)
             this.$store.dispatch('setUserInfo', res.data.data)
-            this.$router.push({name: 'resumeFirstPost'})
-          console.log(res.data.data)
+            getUserRoleInfo().then(res => {
+              console.log(res.data.data)
+              if(res.data.data.isJobhunter === 1) {
+                this.$router.push({name: 'applyIndex'})
+              }else {
+                this.$router.push({name: 'resumeFirstPost'})
+              }
+            })
+          // console.log(res.data.data)
         }).catch(e=>{
           console.log(e)
           this.setHint(e.data.msg || '')

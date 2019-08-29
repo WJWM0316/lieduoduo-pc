@@ -61,6 +61,7 @@
               </el-option>
             </el-select> -->
             <el-cascader
+              v-model= "postion"
               ref="cascader"
               class=""
               placeholder="期待职位类别"
@@ -197,6 +198,7 @@
     imageUrl = ''
     step = 1
     options = []
+    postion = ''
     mounted () {
       let query = this.$route.query
       this.userInfo = this.$store.state.userInfo
@@ -209,15 +211,18 @@
 
     getResumeSecond() {
       getResumeSecondApi().then(res => {
-        // this.form2 = {
-        //   company: '',
-        //   positionTypeId: '1',
-        //   position: '',  
-        //   duty: null,
-        //   startTime: '',  
-        //   endTime: '',  
-        //   from: 1,  
-        // }
+        let data = res.data.data[0]
+        console.log(data)
+        this.form2 = {
+          company: data.company,
+          positionTypeId:  data.positionTypeId,
+          position: data.position,  
+          duty: data.duty,
+          startTime: data.startTime*1000,  
+          endTime: data.endTime*1000,  
+          from: 1,  
+        }
+        // this.postion = data.positionTypeId.toString()
       })
     }
 
@@ -275,6 +280,15 @@
       }
     }
 
+    checkPositionTypeId() {
+      if(!this.form2.positionTypeId){
+        this.setHint('请选择期待职位类别')
+        return false
+      }else {
+        return true
+      }
+    }
+
     // 提交
     submit (index) {
       console.log(this.form2)
@@ -319,6 +333,7 @@
     validate() {
       if(!this.checkCompany()) return false
       if(!this.checkDuty()) return false
+      if(!this.checkPositionTypeId()) return false
       if(!this.checkPosition()) return false
       return true
     }

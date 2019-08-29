@@ -222,6 +222,7 @@
 		 * 初始化表单、分页页面数据
 		 */
 		init() {
+			console.log(111)
 		  this.userInfo = this.$store.state.userInfo
 		  if(this.userInfo&&this.userInfo.id){
 		  	this.fileUpload.headers.Authorization = this.userInfo.token 
@@ -229,7 +230,6 @@
 		  }else {
 		  	this.$router.push({name: 'login'})
 		  }
-
 		  let w = document.documentElement.clientWidth || document.body.clientWidth;
 		  let h = document.documentElement.clientHeight || document.body.clientHeight;
 

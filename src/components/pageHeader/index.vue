@@ -345,6 +345,7 @@ export default class ComponentHeader extends Vue {
   isShowSwitch = false
 
 	created(){
+		console.log('header')
 		let pageName = this.$store.state.pageName
 		let userInfo = this.$store.state.userInfo
 		let isBusiness = userInfo.isBusiness

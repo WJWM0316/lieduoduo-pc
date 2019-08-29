@@ -292,7 +292,9 @@
         cityNum: this.form.cityNum[this.form.cityNum.length - 1],
         fieldIds: this.form.fields.map(field => field.fieldId).join(',')
       }
-      setResumeFourthApi(params)
+      setResumeFourthApi(params).then(res => {
+        this.$router.push({name: 'applyIndex'})
+      })
     }
     openModel() {
       let fieldIds = this.form.fields.map(field => Number(field.fieldId))
@@ -515,6 +517,7 @@
   justify-content: center;
   flex-direction: column;
   background: #652791;
+  padding-bottom: 130px;
   // background: url(../../../assets/images/bg.png) 100% repeat #652791;
   .content {
     padding-top: 64px;

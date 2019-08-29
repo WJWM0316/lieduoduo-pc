@@ -106,9 +106,7 @@
         2、本协议及本协议任何条款内容的最终解释权及修改权归老虎科技所有。若您对老虎科技及本服务有任何意见，请咨询老虎科技客服中心。邮箱：lieduoduo@thetiger.com.cn
     </div>
   </div>
-
 </div>
-
 </template>
 <script>
 
