@@ -4,14 +4,14 @@
   <header id="putInHeader" >
     <section>
       <div class="left">
-        <img class="logo" src="../../../assets/images/logo_white.png" @click="refresh" />
+        <img class="logo" src="../../../assets/images/logo_white.png" @click="" />
         <div class="companyMsg">
           <p>精英人才招聘神器</p>
           <p>www.lieduoduo.co</p>
         </div>
       </div>  
       <div class="headerBtn">
-        <span class="btn_blo">高薪职位</span>
+        <span class="btn_blo" @click="openMask('login')">高薪职位</span>
         <div class="btn_blo2">求职者登录</div>
       </div>
     </section>
@@ -59,12 +59,12 @@
             <div class="select-search-content" >
               <template v-for="(item, index) in advList " v-if="index<9">
                 <div class="select_info"  @click="setAdv(item)"
-                v-if="item.type === 1">
+                v-if="index<4">
                   <img class="banner" :src="item.companyLogo.middleUrl">
                 </div>
 
                 <div class="select_info info_type2"  @click="setAdv(item)"
-                v-else-if="item.type === 2">
+                v-else-if="index>3&&index<7">
                   <img class="banner" :src="item.companyLogo.middleUrl">
                   <p class="positionName ellipsis">{{item.positionName}}</p>
                   <p class="emolument ellipsis">
@@ -73,7 +73,7 @@
                 </div>
 
                 <div class="select_info info_type3"  @click="setAdv(item)"
-                v-if="item.type === 3">
+                v-if="index>6&&index<9">
                   <div class="info_cont ellipsis">
                     <p class="positionName ellipsis">{{item.positionName}}</p>
                     <p class="emolument ellipsis">
@@ -121,7 +121,7 @@
           </div>
         </form>
         <div class="login_btn">
-          <a href="https://passport.lagou.com/login/login.html?service=https%3a%2f%2fwww.lagou.com%2f" target="_blank" data-lg-tj-id="1kxx" data-lg-tj-no="0004" data-lg-tj-cid="idnull">企业注册/登录</a>
+          <p @click="toPcLogin" >企业注册/登录</p>
         </div>
         <div class="formHint" v-if="formHint.isShow">
           <img class="" src="../../../assets/images/activity/putIn/live_icon_question2.png" />
@@ -161,7 +161,7 @@
     <div class="register-modal modal" @click.stop="" v-if="messagePop.type==='login'">
       <img class="icon-close" src="../../../assets/images/clo.png" @click.stop="cloMask" />
       <p class="register-text">立即注册</p>
-      <p class="register-text2">即可免费获取简历模板</p>
+      <p class="register-text2">即可查看更多职位信息</p>
       <i class="icon-pointer"></i>
     </div>
 
@@ -290,6 +290,10 @@
 
     init () {
 
+    }
+
+    toPcLogin () {
+      this.$router.push({name: 'login'})
     }
 
     setHint (text) {
@@ -985,9 +989,8 @@
           }
           .select-content {
             margin-top: 10px;
-            overflow: hidden;
             width:564px;
-            height:436px;
+            // height:436px;
             // display: flex;
             .select-search-lab {
               width: 100%;
@@ -1138,7 +1141,9 @@
         .login_btn {
           text-align: center;
           margin-top: 44px;
-          a{
+          cursor: pointer;
+          p{
+            text-decoration: underline;
             color: #652791;
           }
         }

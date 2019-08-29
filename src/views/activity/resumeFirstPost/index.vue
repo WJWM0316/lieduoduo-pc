@@ -32,6 +32,14 @@
     <div class="contain clearfix">
 
       <h3 class="title"><span>三分钟</span>创建微简历，<span>1000+名企</span>高薪职位任你选</h3>
+
+      <div class="recommend">
+        <img class="recommendAva" src="../../../assets/images/open.png" />
+        <div class="recommendMsg">
+          <p class="msg_position">爱奇艺产品总监</p>
+          <p class="msg_text">很期待与你这样的精英人才相遇</p>
+        </div>
+      </div>
       <div class="resumeOpFirstMain">
 
         <div class="form">
@@ -49,14 +57,10 @@
             </el-upload>
           </div>
           <div class="formItem">
-            <el-input  placeholder="请输入真实姓名" v-model="form1.name"></el-input>
+            <el-input placeholder="请输入真实姓名" v-model="form1.name"></el-input>
           </div>
 
-          <div class="formItem">
-            <el-input  placeholder="请输入职位名称" v-model="form1.position"></el-input>
-          </div>
-
-          <div class="formItem">
+          <div class="formRadio">
             <el-radio-group v-model="form1.gender">
               <el-radio label="1">男</el-radio>
               <el-radio label="2">女</el-radio>
@@ -67,13 +71,23 @@
             <el-date-picker
               class=""
               type="date"
-              placeholder="选择参加工作时间"
-              v-model="form1.startWorkYear"
+              placeholder="选择你的出生年月"
+              v-model="form1.birth"
               value-format="timestamp"
-              style="width: 142px"
+              style="width: 300px"
             ></el-date-picker>
           </div>
 
+          <div class="formItem">
+            <el-date-picker
+              class=""
+              type="date"
+              placeholder="选择参加工作时间"
+              v-model="form1.startWorkYear"
+              value-format="timestamp"
+              style="width: 300px"
+            ></el-date-picker>
+          </div>
           <div class="submit" @click="submit(1)">继续</div>
         </div>
       </div>
@@ -114,26 +128,8 @@
       gender: '1',
       name: '',  
       startWorkYear: null,
-      position: '',  
-      apiVersion: 0,  
-    }
-    form2 = {
-      mobile: '',
-      code: '',
-      captchaKey: '',  
-      captchaValue: '' 
-    }
-    form3 = {
-      mobile: '',
-      code: '',
-      captchaKey: '',  
-      captchaValue: '' 
-    }
-    form4 = {
-      mobile: '',
-      code: '',
-      captchaKey: '',  
-      captchaValue: '' 
+      birth: '',
+      from: 1,
     }
     augustInterval = null
     isShowMask = false
@@ -212,6 +208,8 @@
     // 下载
       handleAvatarSuccess(res, file) {
         this.imageUrl = URL.createObjectURL(file.raw);
+        this.form1.avatar = file.uid
+        console.log(file.uid)
       }
 
       beforeAvatarUpload(file) {
@@ -291,7 +289,41 @@
   }
 </script>
 <style lang="less" scoped>
-
+.recommend {
+  width:450px;
+  height:70px;
+  padding: 10px 22px;
+  margin: 38px auto 50px;
+  background:rgba(111,55,153,1);
+  border-radius:100px 100px 100px 0px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-radius: 50px;
+  box-sizing: border-box;
+  .recommendAva {
+    width:46px;
+    height:46px;
+    border-radius:50%;
+    margin-right: 20px;
+  }
+  .recommendMsg {
+    text-align: left;
+    .msg_position {
+      font-size:16px;
+      font-weight:500;
+      color:rgba(255,255,255,1);
+      line-height:16px;
+    }
+    .msg_text {
+      font-size:14px;
+      font-weight:300;
+      color:rgba(255,255,255,1);
+      line-height:14px;
+      margin-top: 6px;
+    }
+  }
+}
 .resumePost {
   padding: 0;
   display: flex;
@@ -403,7 +435,6 @@
     font-weight:500;
     color:#fff;
     line-height:32px;
-    margin-bottom: 135px;
     span {
       color:#FFDC29;
     }
@@ -434,13 +465,17 @@
       top: -53px;
       left: 50%;
       margin-left: -53px;
-
+      box-sizing: border-box;
       overflow: hidden;
       .avatar-uploader {
+        background: #fff;
         width: 100%;
         height: 100%;
         cursor: pointer;
         position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         .el-upload {
           width: 100%;
           height: 100%;
@@ -466,7 +501,28 @@
       background:rgba(251,249,252,0.8);
       border-radius:23px;
       border:1px solid rgba(242,237,245,1);
+      padding: 0 30px ;
+      box-sizing: border-box;
       margin-bottom: 20px;
+    }
+    .formRadio {
+      height:46px;
+      width:370px;
+      margin-bottom: 20px;
+      .el-radio-group {
+        display: flex;
+        justify-content: space-between;
+        .el-radio {
+          width:180px;
+          height:46px;
+          background:rgba(251,249,252,0.8);
+          border-radius:23px;
+          border:1px solid rgba(242,237,245,1);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
     }
     .submit {
       width:260px;

@@ -65,15 +65,6 @@ export default new Vuex.Store({
 
         login(store, data) {
           store.commit('LOGIN', data)
-
-          // return loginApi(data)
-          //   .then(res => {
-          //     store.commit('LOGIN', res.data.data)
-          //     return res
-          //   })
-          //   .catch(error => {
-          //     return Promise.reject(error.data || {})
-          //   })
         },
 
         testLogin(store, data) {

@@ -147,7 +147,6 @@
 	  		email: '302982210@qq.com',
 	  		password: 123456
 	  	}
-
 	  	this.$store.dispatch('testLogin', data).
 	  	then(res => {
   	  	this.$store.dispatch('setUserInfo', res.data.data);
