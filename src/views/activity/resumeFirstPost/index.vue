@@ -11,7 +11,6 @@
       </div>  
         <el-dropdown trigger="click"  @command="handleClick" >
           <div class="headerBtn">
-
             <div class="right" v-if="userInfo && userInfo.token">
               <span class="name">欢迎登录猎多多，{{userInfo.realname}}</span>
               <img class="op_icon" src="../../../assets/images/open.png" />
@@ -57,7 +56,7 @@
             </el-upload>
           </div>
           <div class="formItem">
-            <el-input placeholder="请输入真实姓名" v-model="form1.name"></el-input>
+            <el-input maxlength="10" placeholder="请输入真实姓名" v-model="form1.name"></el-input>
           </div>
 
           <div class="formRadio">
@@ -99,7 +98,7 @@
 <script>
   import Vue from 'vue'
   import Component from 'vue-class-component'
-  import { getUserInfoApi, searchResumeStepApi, setResumeFirstApi, setResumeSecondApi, setResumeThirdApi, setResumeFourthApi } from '../../../api/putIn'
+  import { getUserInfoApi, searchResumeStepApi, setResumeFirstApi, setResumeSecondApi, setResumeThirdApi, setResumeFourthApi, getResumeFirstApi } from '../../../api/putIn'
   import { getUserIdentity, switchId } from '../../../../config.js'
   import { getAccessToken } from '../../../api/cacheService.js'
   @Component({
@@ -127,7 +126,7 @@
       avatar: '',
       gender: '1',
       name: '',  
-      startWorkYear: null,
+      startWorkYear: '',
       birth: '',
       from: 1,
     }
@@ -147,10 +146,13 @@
       let query = this.$route.query
       this.handleHeaders['Authorization'] = getAccessToken()
       this.userInfo = this.$store.state.userInfo
+
+
     }
 
     init () {
       this.searchResumeStep()
+      this.getResumeFirst()
     }
 
     // 返回上一步
@@ -166,13 +168,51 @@
       })
     }
 
+    getResumeFirst() {
+      getResumeFirstApi().then(res => {
+        let data = res.data.data
+        this.imageUrl = data.avatar.smallUrl
+        this.form1 = {
+          avatar: data.avatarId,
+          gender: data.gender.toString(),
+          name:  data.name,  
+          startWorkYear: data.startWorkYear*1000,
+          birth: data.birth*1000,
+          from: 1,
+        }
+        console.log(res.data)
+      })
+    }
+
+    // 验证
+    validate1() {
+      console.log(this.form1)
+      if(!this.checkName()) return false
+      if(!this.checkWorkYear()) return false
+      if(!this.checkBirth()) return false
+      if(!this.checkAva()) return false
+      return true
+    }
+
     // 第一步
-      checkCode() {
-        var pattern = /^[0-9A-Za-z]{4}$/
-        if(!pattern.test(this.form.code)){
+      checkAva() {
+        var pattern = /^[\u4E00-\u9FA5\s]{2,10}$/
+        if(!this.form1.avatar){
           this.$message({
             type: 'info',
-            message: '请填写四位数字验证码'
+            message: '请上传你的头像'
+          })
+          return false
+        }else {
+          return true
+        }
+      }
+      checkName() {
+        var pattern = /^[\u4E00-\u9FA5\s]{2,10}$/
+        if(!pattern.test(this.form1.name)){
+          this.$message({
+            type: 'info',
+            message: '请填写真实姓名'
           })
           return false
         }else {
@@ -180,12 +220,26 @@
         }
       }
 
-      checkMobile() {
+      checkBirth() {
         var pattern = /^1(3|4|5|6|7|8|9)\d{9}$/
-        if(!pattern.test(this.form.mobile)){
+        if(this.form1.birth.length<1){
+
           this.$message({
             type: 'info',
-            message: '请填写格式正确的手机号码'
+            message: '请选择出生年月'
+          })
+          return false
+        }else {
+          return true
+        }
+      }
+
+      checkWorkYear() {
+        var pattern = /^1(3|4|5|6|7|8|9)\d{9}$/
+        if(this.form1.startWorkYear.length<1){
+          this.$message({
+            type: 'info',
+            message: '请选择工作时间'
           })
           return false
         }else {
@@ -194,34 +248,29 @@
       }
     // 第一步
 
-    // 第2步
-    
-    // 第2步
 
-    // 第3步
-    
-    // 第3步
-
-    // 第4步
-    
-    // 第4步
     // 下载
       handleAvatarSuccess(res, file) {
         this.imageUrl = URL.createObjectURL(file.raw);
-        this.form1.avatar = file.uid
-        console.log(file.uid)
+        this.form1.avatar = file.response.data[0].id
+        console.log(file)
       }
 
       beforeAvatarUpload(file) {
-        const isJPG = file.type === 'image/jpeg';
-        const isLt2M = file.size / 1024 / 1024 < 2;
-        if (!isJPG) {
-          this.$message.error('上传头像图片只能是 JPG 格式!');
+        console.log(file)
+        const fileNames = ['png','jpg','jpeg','gif','JPG','JPEG','GIF','PNG']
+        const isLt10M = file.size / 1024 / 1024 < 10
+        let name = file.name.split(".")[1]
+        let isUpload = fileNames.indexOf(name)
+        if(isUpload<0 || !isLt10M){
+          this.$alert('提示', '只支持JPG、JPEG、GIF、PNG格式，文件小于10M', {
+            type: 'warning',
+            confirmButtonText: '确定',
+          })
+          return false
         }
-        if (!isLt2M) {
-          this.$message.error('上传头像图片大小不能超过 2MB!');
-        }
-        return isJPG && isLt2M;
+
+        return true
       }
     // 下载
 
@@ -248,34 +297,25 @@
           default:
             break
         }
-        subName({...this[form]}).then(res => {
-          console.log(res)
+        const params = this.transformData(this.form1)
+        subName({...params}).then(res => {
           this.step = index
+          this.$router.push({name: 'resumeSecondPost'})
         })
       }
     }
-    // 验证
-      validate1() {
-        // if(!this.checkMobile()) return false
-        // if(!this.checkCode()) return false
-        return true
-      }
-      validate2() {
-        if(!this.checkMobile()) return false
-        if(!this.checkCode()) return false
-        return true
-      }
-      validate3() {
-        if(!this.checkMobile()) return false
-        if(!this.checkCode()) return false
-        return true
-      }
-      validate4() {
-        if(!this.checkMobile()) return false
-        if(!this.checkCode()) return false
-        return true
-      }
-    // 验证
+
+    transformData () {
+      const newForm = Object.assign({}, this.form1 || {})
+      newForm.uid = this.uid
+
+      newForm.birth =  newForm.birth/1000
+      newForm.startWorkYear =  newForm.startWorkYear/1000
+
+      console.log(newForm)
+      return newForm
+    }
+    
     
 
     handleClick(e) {
@@ -326,6 +366,7 @@
 }
 .resumePost {
   padding: 0;
+  padding-bottom: 100px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -527,6 +568,7 @@
     .submit {
       width:260px;
       height:50px;
+      line-height:50px;
       background:rgba(101,39,145,1);
       border-radius:25px;
       margin: 0 auto;
@@ -536,7 +578,6 @@
       font-size:16px;
       font-weight:600;
       color:rgba(255,255,255,1);
-      line-height:22px;
     }
   }
 

@@ -11,7 +11,7 @@ export const getUserInfoApi = data => request(`/users/${data.vkey}`, 'get', data
 export const searchResumeStepApi = data => request('/jobhunter/resume/four/step', 'get', data)
 
 //完善简历-第一步
-export const setResumeFirstApi = data => request(`/jobhunter/resume/four/firstStep`, 'get', data)
+export const setResumeFirstApi = data => request(`/jobhunter/resume/four/firstStep`, 'post', data)
 
 //完善简历-第2步
 export const setResumeSecondApi = data => request(`/jobhunter/resume/four/secondStep`, 'post', data)
@@ -22,6 +22,17 @@ export const setResumeThirdApi = data => request(`/jobhunter/resume/four/thirdSt
 //完善简历-第4步
 export const setResumeFourthApi = data => request(`/jobhunter/resume/four/fourthStep`, 'post', data)
 
+//获取第一步提交的信息
+export const getResumeFirstApi = data => request(`/jobhunter/resume/four/firstStep`, 'get', data)
+
+//获取第2步提交的信息
+export const getResumeSecondApi = data => request(`/jobhunter/resume/four/secondStep`, 'get', data)
+
+//获取第3步提交的信息
+export const getResumeThirdApi = data => request(`/jobhunter/resume/four/thirdStep`, 'get', data)
+
+//获取第4步提交的信息
+export const getResumeFourthApi = data => request(`/jobhunter/resume/four/fourthStep`, 'get', data)
 
 //职位搜索 - 投放页
 export const schJobApi = data => request(`/launch/position/sch`, 'get')

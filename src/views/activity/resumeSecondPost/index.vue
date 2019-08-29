@@ -3,28 +3,23 @@
 <div class="resumePost">
   <header id="resumeHeader" >
     <section>
-      <div class="left">
-        <div class="companyMsg">
-          <p>精英人才招聘神器</p>
-          <p>www.lieduoduo.co</p>
-        </div>
-      </div>  
-        <el-dropdown trigger="click"  @command="handleClick" >
-          <div class="headerBtn">
+      <img class="left_logo" src="../../../assets/images/activity/putIn/logo_lieduodou@2x.png" />
+      <el-dropdown trigger="click"  @command="handleClick" >
+        <div class="headerBtn">
 
-            <div class="right" v-if="userInfo && userInfo.token">
-              <span class="name">欢迎登录猎多多，{{userInfo.realname}}</span>
-              <img class="op_icon" src="../../../assets/images/open.png" />
-              <img class="avatar" :src="userInfo.avatarInfo.middleUrl" />
-            </div>
+          <div class="right" v-if="userInfo && userInfo.token">
+            <span class="name">欢迎登录猎多多，{{userInfo.realname}}</span>
+            <img class="op_icon" src="../../../assets/images/open.png" />
+            <img class="avatar" :src="userInfo.avatarInfo.middleUrl" />
           </div>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="out">
-                <img class="drop_icon" src="../../../assets/images/out.png" />
-                退出登录
-              </el-dropdown-item>
-            </el-dropdown-menu>
-        </el-dropdown>
+        </div>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="out">
+              <img class="drop_icon" src="../../../assets/images/out.png" />
+              退出登录
+            </el-dropdown-item>
+          </el-dropdown-menu>
+      </el-dropdown>
       
     </section>
   </header>
@@ -32,19 +27,29 @@
     <div class="contain clearfix">
 
       <h3 class="title"><span>三分钟</span>创建微简历，<span>1000+名企</span>高薪职位任你选</h3>
+
+      <div class="recommend">
+        <img class="recommendAva" src="../../../assets/images/open.png" />
+        <div class="recommendMsg">
+          <p class="msg_position">爱奇艺产品总监</p>
+          <p class="msg_text">很期待与你这样的精英人才相遇</p>
+        </div>
+      </div>
+
       <div class="resumeOpFirstMain">
+        <h3 class="form-title">请填写工作经历</h3>
 
         <div class="form">
           <div class="formItem">
-            <el-input  placeholder="请输入真实姓名" v-model="form1.name"></el-input>
+            <el-input maxlength="20" placeholder="请输入公司名称" v-model="form2.name"></el-input>
           </div>
 
           <div class="formItem">
-            <el-input  placeholder="请输入职位名称" v-model="form1.position"></el-input>
+            <el-input  placeholder="请输入职位名称" v-model="form2.position"></el-input>
           </div>
 
           <div class="formItem">
-            <el-radio-group v-model="form1.gender">
+            <el-radio-group v-model="form2.gender">
               <el-radio label="1">男</el-radio>
               <el-radio label="2">女</el-radio>
             </el-radio-group>
@@ -55,7 +60,7 @@
               class=""
               type="date"
               placeholder="选择参加工作时间"
-              v-model="form1.startWorkYear"
+              v-model="form2.startWorkYear"
               value-format="timestamp"
               style="width: 142px"
             ></el-date-picker>
@@ -72,7 +77,7 @@
 <script>
   import Vue from 'vue'
   import Component from 'vue-class-component'
-  import { getUserInfoApi, searchResumeStepApi, setResumeFirstApi, setResumeSecondApi, setResumeThirdApi, setResumeFourthApi } from '../../../api/putIn'
+  import { getUserInfoApi, getResumeSecondApi, setResumeSecondApi} from '../../../api/putIn'
   import { getUserIdentity, switchId } from '../../../../config.js'
   import { getAccessToken } from '../../../api/cacheService.js'
   @Component({
@@ -96,40 +101,50 @@
       isShow: false,
       type: 'help'
     }
-    form = {
-      avatar: '',
-      gender: '1',
-      name: '',  
-      startWorkYear: null,
+    form2 = {
+      company: '',
+      positionTypeId: '1',
       position: '',  
-      apiVersion: 0,  
+      duty: null,
+      startTime: '',  
+      endTime: '',  
+      from: 1,  
     }
-    augustInterval = null
     isShowMask = false
     showError = false
     timer = 60
     imageUrl = ''
     step = 1
+
     mounted () {
       let query = this.$route.query
       this.userInfo = this.$store.state.userInfo
     }
 
     init () {
-      this.searchResumeStep()
+      this.setResumeSecond()
+    }
+
+    setResumeSecond() {
+      setResumeSecondApi().then(res => {
+        let data = res.data.data
+        console.log(data)
+        this.form1 = {
+          company: '',
+          positionTypeId: '1',
+          position: '',  
+          duty: null,
+          startTime: '',  
+          endTime: '',  
+          from: 1,  
+        }
+      })
     }
 
     // 返回上一步
     lastStep() {
       if(this.step < 1) return
       this.step -= 1
-    }
-
-    //查询简历完善步数
-    searchResumeStep() {
-      searchResumeStepApi().then(res => {
-        console.log(res.data)
-      })
     }
 
     // 
@@ -148,7 +163,7 @@
 
     checkMobile() {
       var pattern = /^1(3|4|5|6|7|8|9)\d{9}$/
-      if(!pattern.test(this.form.mobile)){
+      if(!pattern.test(this.form2.mobile)){
         this.$message({
           type: 'info',
           message: '请填写格式正确的手机号码'
@@ -189,9 +204,44 @@
   }
 </script>
 <style lang="less" scoped>
-
+.recommend {
+  width:450px;
+  height:70px;
+  padding: 10px 22px;
+  margin: 38px auto 50px;
+  background:rgba(111,55,153,1);
+  border-radius:100px 100px 100px 0px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-radius: 50px;
+  box-sizing: border-box;
+  .recommendAva {
+    width:46px;
+    height:46px;
+    border-radius:50%;
+    margin-right: 20px;
+  }
+  .recommendMsg {
+    text-align: left;
+    .msg_position {
+      font-size:16px;
+      font-weight:500;
+      color:rgba(255,255,255,1);
+      line-height:16px;
+    }
+    .msg_text {
+      font-size:14px;
+      font-weight:300;
+      color:rgba(255,255,255,1);
+      line-height:14px;
+      margin-top: 6px;
+    }
+  }
+}
 .resumePost {
   padding: 0;
+  padding-bottom: 130px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -218,7 +268,6 @@
     font-weight:500;
     color:#fff;
     line-height:32px;
-    margin-bottom: 135px;
     span {
       color:#FFDC29;
     }
@@ -230,15 +279,23 @@
 
   .resumeOpFirstMain {
     width:450px;
-    height:471px;
     background:rgba(255,255,255,1);
     box-shadow:0px 3px 20px 2px rgba(0,0,0,0.09);
     border-radius:8px;
     border:1px solid rgba(255,255,255,1);
     margin: 0 auto;
-    padding: 95px 40px 0 40px;
+    padding: 50px 40px 35px 40px;
     box-sizing: border-box;
     position: relative;
+    .form-title {
+      font-size:24px;
+      font-family:PingFangSC;
+      font-weight:500;
+      color:rgba(40,40,40,1);
+      line-height:33px;
+      text-align: center;
+      margin-bottom: 40px;
+    }
     .formItem {
       width:370px;
       height:46px;
@@ -359,25 +416,10 @@
         margin-left: 20px;
       }
     }
-    .left {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      text-align: left;
-      .logo {
-        width:40px;
-        height:40px;
-        display: block;
-        margin-right: 10px;
-      }
-      .companyMsg {
-        p {
-          font-size:14px;
-          font-weight:500;
-          color:rgba(110,31,150,1);
-          line-height:20px;
-        }
-      }
+    .left_logo {
+      width:160px;
+      height:auto;
+      display: block;
     }
     .el-popper[x-placement^=bottom] .popper__arrow {
       left: 69px !important;

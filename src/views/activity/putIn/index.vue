@@ -3,13 +3,7 @@
 <div class="putIn">
   <header id="putInHeader" >
     <section>
-      <div class="left">
-        <img class="logo" src="../../../assets/images/logo_white.png" @click="" />
-        <div class="companyMsg">
-          <p>精英人才招聘神器</p>
-          <p>www.lieduoduo.co</p>
-        </div>
-      </div>  
+      <img class="left_logo" src="../../../assets/images/activity/putIn/logo_lieduodou@2x.png" />
       <div class="headerBtn">
         <span class="btn_blo" @click="openMask('login')">高薪职位</span>
         <div class="btn_blo2">求职者登录</div>
@@ -750,25 +744,10 @@
         margin-left: 20px;
       }
     }
-    .left {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      text-align: left;
-      .logo {
-        width:40px;
-        height:40px;
-        display: block;
-        margin-right: 10px;
-      }
-      .companyMsg {
-        p {
-          font-size:14px;
-          font-weight:500;
-          color:rgba(110,31,150,1);
-          line-height:20px;
-        }
-      }
+    .left_logo {
+      width:160px;
+      height:auto;
+      display: block;
     }
   }
   .companyBabels {
