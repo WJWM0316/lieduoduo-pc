@@ -1,6 +1,6 @@
 <template>
 
-<div class="resumePost">
+<div class="resumeSecondPost">
   <header id="resumeHeader" >
     <section>
       <img class="left_logo" src="../../../assets/images/activity/putIn/logo_lieduodou@2x.png" />
@@ -41,33 +41,101 @@
 
         <div class="form">
           <div class="formItem">
-            <el-input maxlength="20" placeholder="请输入公司名称" v-model="form2.name"></el-input>
+            <input maxlength="20" placeholder="请输入公司名称" v-model="form2.company"></input>
+
+            <div class="limit">
+              <span>{{form2.company.length}}</span>/<span>20</span>
+            </div>
           </div>
 
           <div class="formItem">
-            <el-input  placeholder="请输入职位名称" v-model="form2.position"></el-input>
-          </div>
-
-          <div class="formItem">
-            <el-radio-group v-model="form2.gender">
-              <el-radio label="1">男</el-radio>
-              <el-radio label="2">女</el-radio>
-            </el-radio-group>
-          </div>
-
-          <div class="formItem">
-            <el-date-picker
+            <!-- <el-select v-model="form2.position" placeholder="请选择职位类型">
+              <el-option
+                v-for="item in degreeAllLists"
+                :key="item.value"
+                :label="item.text"
+                :value="item.value">
+              </el-option>
+            </el-select> -->
+            <el-cascader
+              ref="cascader"
               class=""
-              type="date"
-              placeholder="选择参加工作时间"
-              v-model="form2.startWorkYear"
-              value-format="timestamp"
-              style="width: 142px"
-            ></el-date-picker>
+              placeholder="期待职位类别"
+              :options="options"
+              :filterable="false"
+              :props="{
+              value:'labelId',
+              label:'name',
+              children:'children'
+              }"
+              @change="choicePostion"
+            ></el-cascader>
           </div>
 
-          <div class="submit" @click="submit(1)">继续</div>
+          <div class="formItem">
+            <input maxlength="20" placeholder="请输入职位名称" v-model="form2.position"></input>
+            <div class="limit">
+              <span>{{form2.position.length}}</span>/<span>20</span>
+            </div>
+          </div>
+
+          <div class="formItem2">
+            <div class="start-time">
+              <el-date-picker
+                v-model="form2.startTime"
+                type="date"
+                value-format="timestamp"
+                format="yyyy 年 MM 月 dd 日"
+                placeholder="请选择开始时间">
+              </el-date-picker>
+            </div>～ &nbsp;&nbsp;
+            <div class="end-time">
+              <el-date-picker
+                v-model="form2.endTime"
+                type="date"
+                value-format="timestamp"
+                format="yyyy 年 MM 月 dd 日"
+                placeholder="请选择开始时间">
+              </el-date-picker>
+            </div>
+          </div>
+
+          <div class="formItem" @click="openMask">
+            <input maxlength="1000" disabled placeholder="请输入工作内容" v-model="form2.duty" ></input>
+            <div class="limit">
+              <span>{{form2.duty.length}}</span>/<span>1000</span>
+            </div>
+          </div>
+          <div class="btn-box">
+            <div class="over-lay">
+              <div class="btn-pre">上一步</div>
+              <div class="btn-confirm" @click="submit">继续</div>
+            </div>
+            <div class="mask"></div>
+          </div>
         </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="message" v-if="messagePop.isShow" >
+    <div class="duty-modal" v-if="messagePop.type==='duly'">
+      <img class="icon-close" src="../../../assets/images/clo.png" @click.stop="cloMask" />
+      <div class="duty-content" >
+        <h3 class="duty-tit">工作内容</h3>
+        <el-input
+          resize="none"
+          type="textarea"
+          placeholder="请输入内容"
+          v-model="textarea"
+          maxlength="1000"
+          show-word-limit
+        ></el-input>
+      </div>
+      <div class="duty-btn-box">
+        <div class="btn-blo cancle" @click="cloMask">取消</div>
+        <div class="btn-blo true" @click="saveDuty">保存 </div>
       </div>
     </div>
   </div>
@@ -77,7 +145,7 @@
 <script>
   import Vue from 'vue'
   import Component from 'vue-class-component'
-  import { getUserInfoApi, getResumeSecondApi, setResumeSecondApi} from '../../../api/putIn'
+  import { getUserInfoApi, getResumeSecondApi, setResumeSecondApi, getLabelPositionListApi} from '../../../api/putIn'
   import { getUserIdentity, switchId } from '../../../../config.js'
   import { getAccessToken } from '../../../api/cacheService.js'
   @Component({
@@ -99,45 +167,63 @@
     userInfo = {}
     messagePop = {
       isShow: false,
-      type: 'help'
+      type: 'duly'
     }
     form2 = {
       company: '',
       positionTypeId: '1',
       position: '',  
-      duty: null,
+      duty: '',
       startTime: '',  
       endTime: '',  
       from: 1,  
     }
+    textarea = ''
     isShowMask = false
     showError = false
     timer = 60
     imageUrl = ''
     step = 1
-
+    options = []
     mounted () {
       let query = this.$route.query
       this.userInfo = this.$store.state.userInfo
     }
 
     init () {
-      this.setResumeSecond()
+      this.getResumeSecond()
+      this.getLabelPositionList()
     }
 
-    setResumeSecond() {
-      setResumeSecondApi().then(res => {
-        let data = res.data.data
-        console.log(data)
-        this.form1 = {
-          company: '',
-          positionTypeId: '1',
-          position: '',  
-          duty: null,
-          startTime: '',  
-          endTime: '',  
-          from: 1,  
-        }
+    getResumeSecond() {
+      getResumeSecondApi().then(res => {
+        // this.form2 = {
+        //   company: '',
+        //   positionTypeId: '1',
+        //   position: '',  
+        //   duty: null,
+        //   startTime: '',  
+        //   endTime: '',  
+        //   from: 1,  
+        // }
+      })
+    }
+
+    choicePostion(e) {
+      this.form2.positionTypeId = e[e.length - 1];
+    }
+
+    getLabelPositionList () {
+      getLabelPositionListApi().then(res => {
+        this.options = res.data.data
+        this.options.forEach(item => {
+          item.children.forEach(item1 => {
+            item1.children.forEach(item2 => {
+              let result = JSON.stringify(item2.children)
+              if (result === "[]") delete item2.children
+            })
+          })
+        })
       })
     }
 
@@ -148,12 +234,12 @@
     }
 
     // 
-    checkCode() {
-      var pattern = /^[0-9A-Za-z]{4}$/
-      if(!pattern.test(this.form.code)){
+    checkCompany() {
+      var pattern = /^[\u0391-\uFFE5A-Za-z\s]{2,50}$/
+      if(!pattern.test(this.form2.company)){
         this.$message({
           type: 'info',
-          message: '请填写四位数字验证码'
+          message: '请填写公司名称'
         })
         return false
       }else {
@@ -161,12 +247,25 @@
       }
     }
 
-    checkMobile() {
-      var pattern = /^1(3|4|5|6|7|8|9)\d{9}$/
-      if(!pattern.test(this.form2.mobile)){
+    checkDuty() {
+      var pattern = /^.{10,1000}$/
+      if(!pattern.test(this.form2.duty)){
         this.$message({
           type: 'info',
-          message: '请填写格式正确的手机号码'
+          message: '请填写工作内容'
+        })
+        return false
+      }else {
+        return true
+      }
+    }
+
+    checkPosition() {
+      var pattern = /^.{2,20}$/
+      if(!pattern.test(this.form2.position)){
+        this.$message({
+          type: 'info',
+          message: '请填写职位名称'
         })
         return false
       }else {
@@ -176,22 +275,35 @@
 
     // 提交
     submit (index) {
-      let subName = ''
+      console.log(this.form2)
       if(this.validate()) {
-        setResumeFirstApi({...this.form}).then(res => {
-          console.log(res)
-          this.step = index
+        const params = this.transformData()
+        let data = {
+          careers: []
+        }
+        data.careers.push(params)
+        setResumeSecondApi(data).then(res => {
+          console.log(res.data)
         })
       }
     }
+
+    transformData () {
+      const newForm = Object.assign({}, this.form2 || {})
+
+      newForm.startTime = newForm.startTime/1000
+      newForm.endTime = newForm.endTime/1000
+      console.log(newForm)
+      return newForm
+    }
+
     // 验证
-      validate() {
-        // if(!this.checkMobile()) return false
-        // if(!this.checkCode()) return false
-        return true
-      }
-    // 验证
-    
+    validate() {
+      if(!this.checkCompany()) return false
+      if(!this.checkDuty()) return false
+      if(!this.checkPosition()) return false
+      return true
+    }
 
     handleClick(e) {
       if(e === 'out'){
@@ -201,45 +313,26 @@
           })
       }
     }
+
+    openMask() {
+      this.messagePop.isShow = true
+      this.textarea = this.form2.duty 
+    }
+
+    saveDuty() {
+      this.form2.duty = this.textarea
+      console.log()
+      this.cloMask()
+    }
+
+    cloMask() {
+      this.messagePop.isShow = false
+    }
   }
 </script>
-<style lang="less" scoped>
-.recommend {
-  width:450px;
-  height:70px;
-  padding: 10px 22px;
-  margin: 38px auto 50px;
-  background:rgba(111,55,153,1);
-  border-radius:100px 100px 100px 0px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  border-radius: 50px;
-  box-sizing: border-box;
-  .recommendAva {
-    width:46px;
-    height:46px;
-    border-radius:50%;
-    margin-right: 20px;
-  }
-  .recommendMsg {
-    text-align: left;
-    .msg_position {
-      font-size:16px;
-      font-weight:500;
-      color:rgba(255,255,255,1);
-      line-height:16px;
-    }
-    .msg_text {
-      font-size:14px;
-      font-weight:300;
-      color:rgba(255,255,255,1);
-      line-height:14px;
-      margin-top: 6px;
-    }
-  }
-}
-.resumePost {
+<style lang="less">
+
+.resumeSecondPost {
   padding: 0;
   padding-bottom: 130px;
   display: flex;
@@ -276,7 +369,6 @@
       zoom: 1;
   }
 
-
   .resumeOpFirstMain {
     width:450px;
     background:rgba(255,255,255,1);
@@ -303,44 +395,259 @@
       border-radius:23px;
       border:1px solid rgba(242,237,245,1);
       margin-bottom: 20px;
+      position: relative;
+      input{
+        width: 100%;
+        height: 100%;
+        border: none;
+        background: transparent;
+        box-sizing: border-box;
+        padding: 0 100px 0 30px;
+      }
+      .limit{
+        position: absolute;
+        right: 30px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size:14px;
+        font-weight:300;
+        color:rgba(146,146,146,1);
+      }
+      .el-cascader{
+        width: 100%;
+        height: 100%;
+        .el-cascader__label {
+          display: flex;
+          align-items: center;
+          padding: 0 30px;
+        }
+        .el-input {
+          height: 100%;
+        }
+        .el-input__suffix {
+          height: 100%;
+          right: 30px;
+        }
+      }
     }
-    .submit {
-      width:260px;
+
+    .formItem2 {
+      width:370px;
+      height:46px;
+      line-height: 46px;
+      display: flex;
+      color: #666666;
+      margin-bottom: 20px;
+      .el-input__prefix{
+        display: none;
+      }
+      .el-date-editor{
+        width: 100%;
+      }
+      input{
+        background: transparent;
+        border: none;
+        height: 46px;
+        line-height: 46px;
+      }
+      .start-time{
+        width:176px;
+        height:46px;
+        background:rgba(251,249,252,0.8);
+        border-radius:23px;
+        border:1px solid rgba(242,237,245,1);
+        display: inline-block;
+        overflow: hidden;
+        box-sizing: border-box;
+        vertical-align: middle;
+      }
+      .end-time{
+        width:176px;
+        height:46px;
+        background:rgba(251,249,252,0.8);
+        border-radius:23px;
+        border:1px solid rgba(242,237,245,1);
+        display: inline-block;
+        overflow: hidden;
+        box-sizing: border-box;
+        vertical-align: middle;
+      }
+    }
+    .btn-box{
       height:50px;
-      background:rgba(101,39,145,1);
-      border-radius:25px;
-      margin: 0 auto;
       line-height: 50px;
-      text-align: center;
-      margin-top: 50px;
       font-size:16px;
-      font-weight:600;
-      color:rgba(255,255,255,1);
-      line-height:22px;
+      font-weight:500;
+      cursor: pointer;
+      position: relative;
+      margin-top: 48px;
+      .btn-pre{
+        width:126px;
+        height:50px;
+        background:rgba(255,255,255,1);
+        border-radius:100px 0px 0px 100px;
+        border:1px solid rgba(101,39,145,1);
+        box-sizing: border-box;
+        display: inline-block;
+        color:rgba(101,39,145,1);
+        vertical-align: middle;
+      }
+      .btn-confirm{
+        width:240px;
+        height:50px;
+        background:rgba(101,39,145,1);
+        border-radius:0px 25px 25px 0px;
+        box-sizing: border-box;
+        display: inline-block;
+        color: white;
+        vertical-align: middle;
+      }
+      .over-lay{
+        position: relative;
+        z-index: 2;
+      }
+      .mask{
+        width:360px;
+        height:50px;
+        border-radius:25px;
+        border:1px solid rgba(101,39,145,1);
+        position: absolute;
+        top: 4px;
+        z-index: 1;
+        left: 8px;
+      }
     }
   }
 
-  .triangle_border_left{
-      width: 0;
-      height: 0;
-      border-width: 8px 11px 8px 0;
-      border-style: solid;
-      border-color: transparent #fff transparent transparent;
+  .message {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 1001;
+    .duty-modal {
+      width:450px;
+      height:442px;
+      background:rgba(255,255,255,1);
+      border-radius:4px;
       position: absolute;
-      left: -10px;
+      padding: 44px 32px 24px;
+      box-sizing: border-box;
       top: 50%;
-      margin-top: -20px;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      text-align: left;
+      .duty-content {
+        .duty-tit {
+          font-size:16px;
+          font-family:PingFangSC;
+          font-weight:500;
+          color:rgba(40,40,40,1);
+          line-height:22px;
+          margin-bottom: 18px;
+        }
+        .el-textarea {
+          .el-textarea__inner {
+            width:386px;
+            height:264px;
+          }
+        }
+      }
+      .duty-btn-box {
+        margin-top: 30px; 
+        display: flex;
+        justify-content: flex-end;
+        .btn-blo {
+          text-align: center;
+          font-size:16px;
+          font-weight:500;
+          border-radius:25px;
+          line-height:40px;
+          
+          &.cancle {
+            width:88px;
+            height:40px;
+            color:#929292;
+            border:1px solid rgba(220,220,220,1);
+            margin-right: 16px;
+          }
+          &.true {
+            width:128px;
+            height:40px;
+            color:#fff;
+            background:rgba(101,39,145,1);
+            border:1px solid rgba(101,39,145,1);
+          }
+        }
+      }
+      .bottom_hint {
+        width: 100%;
+        height:76px;
+        background:rgba(101,39,145,0.03);
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        font-size:16px;
+        font-weight:400;
+        color:rgba(101,39,145,1);
+        line-height:22px;
+        img {
+          display: block;
+          width: 14px;
+          height: auto;
+        }
+      }
+      .icon-close {
+        width: 15px;
+        height: 15px;
+        display: inline-block;
+        background-size: contain;
+        position: absolute;
+        right: 15px;
+        top: 15px;
+      }
+    }
   }
-  .triangle_border_left span{
-      display:block;
-      width:0;
-      height:0;
-      border-width:28px 28px 28px 0;
-      border-style:solid;
-      border-color:transparent #fc0 transparent transparent;/*透明 黄 透明 透明 */
-      position:absolute;
-      top:0px;
-      left:0px;
+  .recommend {
+    width:450px;
+    height:70px;
+    padding: 10px 22px;
+    margin: 38px auto 50px;
+    background:rgba(111,55,153,1);
+    border-radius:100px 100px 100px 0px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border-radius: 50px;
+    box-sizing: border-box;
+    .recommendAva {
+      width:46px;
+      height:46px;
+      border-radius:50%;
+      margin-right: 20px;
+    }
+    .recommendMsg {
+      text-align: left;
+      .msg_position {
+        font-size:16px;
+        font-weight:500;
+        color:rgba(255,255,255,1);
+        line-height:16px;
+      }
+      .msg_text {
+        font-size:14px;
+        font-weight:300;
+        color:rgba(255,255,255,1);
+        line-height:14px;
+        margin-top: 6px;
+      }
+    }
   }
 
   .el-dropdown-menu {

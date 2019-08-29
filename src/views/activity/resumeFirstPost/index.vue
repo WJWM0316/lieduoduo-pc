@@ -56,7 +56,11 @@
             </el-upload>
           </div>
           <div class="formItem">
-            <el-input maxlength="10" placeholder="请输入真实姓名" v-model="form1.name"></el-input>
+
+            <input placeholder="请输入真实姓名" v-model="form1.name" class="default" maxlength="10" />
+            <div class="limit">
+              <span>{{form1.name.length}}</span>/<span>10</span>
+            </div>
           </div>
 
           <div class="formRadio">
@@ -66,25 +70,23 @@
             </el-radio-group>
           </div>
 
-          <div class="formItem">
+          <div class="formTimeItem">
             <el-date-picker
               class=""
               type="date"
               placeholder="选择你的出生年月"
               v-model="form1.birth"
               value-format="timestamp"
-              style="width: 300px"
             ></el-date-picker>
           </div>
 
-          <div class="formItem">
+          <div class="formTimeItem">
             <el-date-picker
               class=""
               type="date"
               placeholder="选择参加工作时间"
               v-model="form1.startWorkYear"
               value-format="timestamp"
-              style="width: 300px"
             ></el-date-picker>
           </div>
           <div class="submit" @click="submit(1)">继续</div>
@@ -307,8 +309,6 @@
 
     transformData () {
       const newForm = Object.assign({}, this.form1 || {})
-      newForm.uid = this.uid
-
       newForm.birth =  newForm.birth/1000
       newForm.startWorkYear =  newForm.startWorkYear/1000
 
@@ -328,7 +328,7 @@
     }
   }
 </script>
-<style lang="less" scoped>
+<style lang="less">
 .recommend {
   width:450px;
   height:70px;
@@ -542,9 +542,26 @@
       background:rgba(251,249,252,0.8);
       border-radius:23px;
       border:1px solid rgba(242,237,245,1);
-      padding: 0 30px ;
       box-sizing: border-box;
       margin-bottom: 20px;
+      position: relative;
+      input{
+        width: 100%;
+        height: 100%;
+        border: none;
+        background: transparent;
+        box-sizing: border-box;
+        padding: 0 100px 0 30px;
+      }
+      .limit{
+        position: absolute;
+        right: 30px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size:14px;
+        font-weight:300;
+        color:rgba(146,146,146,1);
+      }
     }
     .formRadio {
       height:46px;
@@ -565,6 +582,34 @@
         }
       }
     }
+    .formTimeItem {
+      width:370px;
+      height:46px;
+      line-height: 46px;
+      display: flex;
+      color: #666666;
+      margin-bottom: 20px;
+
+      background:rgba(251,249,252,0.8);
+      border-radius:23px;
+      border:1px solid rgba(242,237,245,1);
+      display: inline-block;
+      overflow: hidden;
+      box-sizing: border-box;
+      vertical-align: middle;
+      .el-input__prefix{
+        display: none;
+      }
+      .el-date-editor{
+        width: 100%;
+      }
+      input{
+        background: transparent;
+        border: none;
+        height: 46px;
+        line-height: 46px;
+      }
+    }
     .submit {
       width:260px;
       height:50px;
@@ -574,7 +619,7 @@
       margin: 0 auto;
       line-height: 50px;
       text-align: center;
-      margin-top: 50px;
+      margin-top: 30px;
       font-size:16px;
       font-weight:600;
       color:rgba(255,255,255,1);

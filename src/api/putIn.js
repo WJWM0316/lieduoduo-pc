@@ -35,7 +35,7 @@ export const getResumeThirdApi = data => request(`/jobhunter/resume/four/thirdSt
 export const getResumeFourthApi = data => request(`/jobhunter/resume/four/fourthStep`, 'get', data)
 
 //职位搜索 - 投放页
-export const schJobApi = data => request(`/launch/position/sch`, 'get')
+export const schJobApi = data => request(`/launch/position/sch`, 'get', data)
 
 //职位类型列表
 export const getPositionTypesApi = data => request(`/launch/position/types`, 'get')
@@ -49,6 +49,8 @@ export const getDegreeAllListsApi = data => request('/degree/all', 'get')
 //完善简历-获取第三步已填信息
 export const getResumeThirdStepApi = data => request('/jobhunter/resume/four/thirdStep', 'get')
 
+// 职业标签列表
+export const getLabelPositionListApi = data => request('/label/position', 'get')
 
 //获取城市列表
 export const getAreaListsApi = data => request('area', 'get', data)
