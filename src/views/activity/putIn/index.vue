@@ -127,22 +127,28 @@
   <div class="companyBabels">
     <section>
       <div class="babel_blo">
-        <img class="blo_icon" src="../../../assets/images/logo_white.png" />
+        <img class="blo_icon" src="../../../assets/images/activity/putIn/icon_jishufankui@2x.png" />
         <div class="blo_cont">
           <p class="cont_text">急速反馈</p>
           <p class="cont_text2">24小时急速反馈</p>
         </div>
-        <img class="blo_icon" src="../../../assets/images/logo_white.png" />
+      </div>
+      <div class="babel_blo">
+        <img class="blo_icon" src="../../../assets/images/activity/putIn/icon_kugongsi@2x.png" />
         <div class="blo_cont">
           <p class="cont_text">酷公司</p>
           <p class="cont_text2">1000+知名企业</p>
         </div>
-        <img class="blo_icon" src="../../../assets/images/logo_white.png" />
+      </div>
+      <div class="babel_blo">
+        <img class="blo_icon" src="../../../assets/images/activity/putIn/icon_haozhiwei@2x.png" />
         <div class="blo_cont">
           <p class="cont_text">好职位</p>
           <p class="cont_text2">大量精选高薪职位</p>
         </div>
-        <img class="blo_icon" src="../../../assets/images/logo_white.png" />
+      </div>
+      <div class="babel_blo">
+        <img class="blo_icon" src="../../../assets/images/activity/putIn/icon_yuedaka@2x.png" />
         <div class="blo_cont">
           <p class="cont_text">约大咖</p>
           <p class="cont_text2">行业大咖在线招聘</p>
@@ -753,19 +759,23 @@
   .companyBabels {
     height:178px;
     width: 100%;
+    background:rgba(251,251,255,1);
     section {
+      width: 1000px;
+      margin: 0 auto;
       height:178px;
-      background:rgba(251,251,255,1);
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
       .babel_blo {
+        flex: 1;
         display: flex;
         justify-content: center;
         align-items: center;
         .blo_icon {
-          width: 50px;
-          height: auto;
+          width: 68px;
+          height: 68px;
+          display: block;
           margin-right: 20px;
         }
         .blo_cont {
