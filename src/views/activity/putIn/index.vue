@@ -28,7 +28,9 @@
             </div>
             <div class="select-main" v-if="isShowSelect">
               <div class="select-none" v-if="selectList.length<1">
-                <i class="empty-icon"></i>
+                <img class="bloSel" src="../../../assets/images/clo.png" @click="isShowSelect = false" />
+
+                <img class="empty-icon" src="../../../assets/images/activity/putIn/live_icon_question.png" />
                 <p>暂时没有符合该搜索条件的职位</p>
               </div>
               <div class="select_cont" v-else>
@@ -51,13 +53,38 @@
             </div>
           </div>
           <div class="select-content">
-            <div class="select-search-lab"><!--  :class="{'active': labType === item.positionType }" -->
+            <div class="select-search-lab">
               <span class="search-lab" @click="selectLab(item.positionType)" :class="{'active': labType === item.positionType }" v-for="(item, index) in positionTypeList" v-if="">{{item.positionTypeName}}</span>
             </div>
             <div class="select-search-content" >
-              <div class="select_info" v-for="(item, index) in advList " @click="setAdv(item)">
-                <img class="banner" :src="item.companyLogo.middleUrl">
-              </div>
+              <template v-for="(item, index) in advList " v-if="index<9">
+                <div class="select_info"  @click="setAdv(item)"
+                v-if="item.type === 1">
+                  <img class="banner" :src="item.companyLogo.middleUrl">
+                </div>
+
+                <div class="select_info info_type2"  @click="setAdv(item)"
+                v-else-if="item.type === 2">
+                  <img class="banner" :src="item.companyLogo.middleUrl">
+                  <p class="positionName ellipsis">{{item.positionName}}</p>
+                  <p class="emolument ellipsis">
+                    {{item.emolumentMin}}k-{{item.emolumentMax}}k
+                  </p>
+                </div>
+
+                <div class="select_info info_type3"  @click="setAdv(item)"
+                v-if="item.type === 3">
+                  <div class="info_cont ellipsis">
+                    <p class="positionName ellipsis">{{item.positionName}}</p>
+                    <p class="emolument ellipsis">
+                      {{item.emolumentMin}}k-{{item.emolumentMax}}k
+                    </p>
+                    <p class="companyInfo ellipsis">{{item.companyBrief}}</p>
+                  </div>
+                  <img class="banner" :src="item.companyLogo.middleUrl">
+
+                </div>
+              </template>
             </div>
           </div>
         </div>
@@ -65,24 +92,25 @@
       </div>
       <div class="lp-login animated-base" :class="{'fixed':messagePop.isShow }">
         <p class="lp-login-title">
-          <span class="green">7秒</span>注册 1000+高薪职位任你选</p>
+          <span class="green">7秒</span>注册 1000+高薪职位任你选
+        </p>
         <form id="phone_form" method="post" action="javascript:;">
           <ul>
             <li>
               <img class="input_icon" src="../../../assets/images/activity/putIn/icon_note.png" />
 
-              <input placeholder="请输入常用手机号" v-model="form.mobile"></li>
+              <input placeholder="请输入常用手机号"  maxlength="11" v-model="form.mobile"></li>
               
             <li>
               <img class="input_icon" src="../../../assets/images/activity/putIn/icon_number.png" />
-              <input placeholder="请输入手机验证码" v-model="form.code" >
+              <input placeholder="请输入手机验证码"  maxlength="4" v-model="form.code" >
               <span class="getcode" @click="getCode" v-if="codeStatus">获取验证码</span>
               <span class="getcode false" v-else>{{timer}}s</span>
             </li>
 
             <li v-if="codePic.img">
               <img class="input_icon" src="../../../assets/images/activity/putIn/icon_photo.png" />
-              <input placeholder="请输入图片验证码" v-model="form.captchaValue" >
+              <input placeholder="请输入图片验证码" maxlength="4" v-model="form.captchaValue" >
               <img class="codePic" :src="codePic.img" @click="getPicCode" />
             </li>
           </ul>
@@ -93,51 +121,53 @@
           </div>
         </form>
         <div class="login_btn">
-          <a href="https://passport.lagou.com/login/login.html?service=https%3a%2f%2fwww.lagou.com%2f" target="_blank" data-lg-tj-id="1kxx" data-lg-tj-no="0004" data-lg-tj-cid="idnull">企业注册/登录</a></div>
+          <a href="https://passport.lagou.com/login/login.html?service=https%3a%2f%2fwww.lagou.com%2f" target="_blank" data-lg-tj-id="1kxx" data-lg-tj-no="0004" data-lg-tj-cid="idnull">企业注册/登录</a>
+        </div>
+        <div class="formHint" v-if="formHint.isShow">
+          <img class="" src="../../../assets/images/activity/putIn/live_icon_question2.png" />
+          {{formHint.text}}
+        </div>
       </div>
     </div>
   </div>
   <div class="companyBabels">
     <section>
       <div class="babel_blo">
-        <img class="blo_icon" src="../../../assets/images/logo_white.png" @click="refresh" />
+        <img class="blo_icon" src="../../../assets/images/logo_white.png" />
         <div class="blo_cont">
-          <p class="cont_text">精英人才招聘神器</p>
-          <p class="cont_text2">www.lieduoduo.co</p>
+          <p class="cont_text">急速反馈</p>
+          <p class="cont_text2">24小时急速反馈</p>
         </div>
-        <img class="blo_icon" src="../../../assets/images/logo_white.png" @click="refresh" />
+        <img class="blo_icon" src="../../../assets/images/logo_white.png" />
         <div class="blo_cont">
-          <p class="cont_text">精英人才招聘神器</p>
-          <p class="cont_text2">www.lieduoduo.co</p>
+          <p class="cont_text">酷公司</p>
+          <p class="cont_text2">1000+知名企业</p>
         </div>
-        <img class="blo_icon" src="../../../assets/images/logo_white.png" @click="refresh" />
+        <img class="blo_icon" src="../../../assets/images/logo_white.png" />
         <div class="blo_cont">
-          <p class="cont_text">精英人才招聘神器</p>
-          <p class="cont_text2">www.lieduoduo.co</p>
+          <p class="cont_text">好职位</p>
+          <p class="cont_text2">大量精选高薪职位</p>
         </div>
-        <img class="blo_icon" src="../../../assets/images/logo_white.png" @click="refresh" />
+        <img class="blo_icon" src="../../../assets/images/logo_white.png" />
         <div class="blo_cont">
-          <p class="cont_text">精英人才招聘神器</p>
-          <p class="cont_text2">www.lieduoduo.co</p>
+          <p class="cont_text">约大咖</p>
+          <p class="cont_text2">行业大咖在线招聘</p>
         </div>
       </div>
     </section>
   </div>
 
   <div class="message" v-if="messagePop.isShow" @click="cloMask">
-    <div class="register-modal modal" @click.stop="cloMask" v-if="messagePop.type==='login'">
-      <div class="modal-content" >
-        <i class="icon-close"></i>
-        <div class="company-content">
-          <p class="modal-title">立即注册</p>
-          <span class="modal-des">即可免费获取简历模板</span></div>
-        <i class="icon-pointer"></i>
-      </div>
+    <div class="register-modal modal" @click.stop="" v-if="messagePop.type==='login'">
+      <img class="icon-close" src="../../../assets/images/clo.png" @click.stop="cloMask" />
+      <p class="register-text">立即注册</p>
+      <p class="register-text2">即可免费获取简历模板</p>
+      <i class="icon-pointer"></i>
     </div>
 
-    <div class="company-modal modal" @click.stop="cloMask" v-if="messagePop.type==='job' && advList.length>0 && selectAdv">
+    <div class="company-modal modal" @click.stop="" v-if="messagePop.type==='job' && advList.length>0 && selectAdv">
       <div class="modal-content" >
-        <i class="icon-close"></i>
+        <img class="icon-close" src="../../../assets/images/clo.png" @click.stop="cloMask" />
         <div class="company-content">
           <div class="modal-top">
              <img class="company-logo" :src="selectAdv.companyLogo.middleUrl" />
@@ -179,7 +209,6 @@
         <div class="bottom_hint">
           注册后可查看更多职位信息
           <img class="" src="../../../assets/images/activity/putIn/arrowsR.png" />
-
         </div>
         <i class="icon-pointer"></i>
       </div>
@@ -219,6 +248,10 @@
   })
   export default class CourseList extends Vue {
     userInfo = {}
+    formHint = {    //form提示框
+      isShow: false,
+      text: ''
+    }
     messagePop = {
       isShow: false,
       type: 'help'
@@ -236,7 +269,7 @@
       captchaValue: ''  //验证码
     }
     augustInterval = null
-    status = 'login' 
+    hintSetTime = null
     isShowMask = false
     showError = false
     timer = 60
@@ -257,6 +290,18 @@
 
     init () {
 
+    }
+
+    setHint (text) {
+      console.log(text)
+      this.formHint = {    //form提示框
+        isShow: true,
+        text: text
+      }
+      clearTimeout(this.hintSetTime) 
+      this.hintSetTime = setTimeout(()=> {
+        this.formHint.isShow = false
+      }, 1500);
     }
 
     //职位类型列表
@@ -288,7 +333,6 @@
     searchJob() {
       schJobApi({...this.searchJobData}).then(res => {
         this.selectList = res.data.data
-        this.selectList = []
         this.isShowSelect = true
       })
     }
@@ -307,6 +351,8 @@
             this.$router.push({name: 'resumePost'})
           console.log(res.data.data)
         }).catch(e=>{
+          console.log(e)
+          this.setHint(e.data.msg || '')
           if(e.data.code && e.data.code === 419) {
             this.codePic = e.data.data
           }
@@ -348,10 +394,7 @@
     checkCode() {
       var pattern = /^[0-9A-Za-z]{4}$/
       if(!pattern.test(this.form.code)){
-        this.$message({
-          type: 'info',
-          message: '请填写四位数字验证码'
-        })
+        this.setHint('请填写四位数字验证码')
         return false
       }else {
         return true
@@ -369,10 +412,7 @@
     checkMobile() {
       var pattern = /^1(3|4|5|6|7|8|9)\d{9}$/
       if(!pattern.test(this.form.mobile)){
-        this.$message({
-          type: 'info',
-          message: '请填写格式正确的手机号码'
-        })
+        this.setHint('请填写格式正确的手机号码')
         return false
       }else {
         return true
@@ -463,7 +503,7 @@
     position: absolute;
     padding: 40px;
     box-sizing: border-box;
-    top: 134px;
+    top: 130px;
     left: 40px;
     display: block;
     transition: opacity .3s,top .3s;
@@ -523,7 +563,7 @@
           &::after {
             position: absolute;
             left: 0;
-            top: 0;
+            top: -2px;
             content: '';
             width:4px;
             height:20px;
@@ -609,15 +649,49 @@
       width: 15px;
       height: 15px;
       display: inline-block;
-      background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR…Z2JhXot0ixZ9jv89aY5XKZosxbyoAder5er6cBTfqZ+gUjhLke/BXnHQAAAABJRU5ErkJggg==) no-repeat;
       background-size: contain;
       position: absolute;
-      right: 20px;
-      top: 20px;
-      
+      right: 15px;
+      top: 15px;
     }
   }
   .register-modal {
+    width:354px;
+    height:176px;
+    background:rgba(255,255,255,1);
+    border-radius:4px;
+    position: absolute;
+    top: 300px;
+    left: 50%;
+    margin-left: -400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    .register-text {
+      font-size:22px;
+      font-family:PingFangSC;
+      font-weight:600;
+      color:rgba(101,39,145,1);
+      line-height:30px;
+    }
+    .register-text2 {
+      font-size:16px;
+      font-family:PingFangSC;
+      font-weight:300;
+      color:rgba(51,51,51,1);
+      line-height:22px;
+      margin-top: 12px;
+    }
+    .icon-close {
+      width: 15px;
+      height: 15px;
+      display: inline-block;
+      background-size: contain;
+      position: absolute;
+      right: 15px;
+      top: 15px;
+    }
   }
 }
 
@@ -814,6 +888,14 @@
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
+                position: relative;
+                .bloSel {
+                  position: absolute;
+                  top: 15px;
+                  right: 15px;
+                  width: 20px;
+                  height: 20px;
+                }
                 p {
                     font-size:16px;
                     font-weight:400;
@@ -824,7 +906,8 @@
                   width:68px;
                   height:68px;
                   display: block;
-                  margin: 0 0 30px 0;
+                  margin: -30px 0 30px 0;
+
                 }
               }
               .select-cont {
@@ -901,6 +984,9 @@
           }
           .select-content {
             margin-top: 10px;
+            overflow: hidden;
+            width:564px;
+            height:436px;
             // display: flex;
             .select-search-lab {
               width: 100%;
@@ -946,7 +1032,58 @@
                 justify-content: center;
                 align-items: center;
                 margin-bottom: 10px;
-
+                &.info_type2 {
+                  flex-direction: column;
+                  width:184px;
+                  height:141px;
+                  background:rgba(255,255,255,1);
+                  border-radius:4px;
+                  .banner {
+                    height: 40px;
+                    width: auto;
+                    margin-bottom: 14px;
+                  }
+                  .positionName {
+                    margin-bottom: 4px;
+                  }
+                }
+                &.info_type3 {
+                  width:279px;
+                  height:104px;
+                  background:rgba(255,255,255,1);
+                  border-radius:4px;
+                  padding: 15px;
+                  box-sizing: border-box;
+                  text-align: left;
+                  .banner {
+                    width: 70px;
+                    height: auto;
+                  }
+                  .positionName {
+                    margin-top: 4px;
+                  }
+                }
+                .positionName {
+                  font-size:16px;
+                  font-family:PingFangSC;
+                  font-weight:500;
+                  color:rgba(51,51,51,1);
+                }
+                .emolument {
+                  font-size:18px;
+                  font-family:PingFangSC;
+                  font-weight:500;
+                  color:rgba(255,127,76,1);
+                  line-height:18px;
+                }
+                .companyInfo {
+                  font-size:12px;
+                  font-family:PingFangSC;
+                  font-weight:300;
+                  color:rgba(92,86,93,1);
+                  line-height:17px;
+                  margin-top: 10px;
+                }
               }
               .banner {
                 width:  130px;
@@ -980,10 +1117,10 @@
         align-items: center;
         &.fixed {
           position: fixed;
-          top: 134px;
-          left: 50%;
-          margin-left: 205px;
           z-index: 1003;
+          top: 130px;
+          left: 50%;
+          margin-left: 90px;
         }
         .lp-login-title {
           font-size: 24px;
@@ -1006,6 +1143,7 @@
         }
         #phone_form {
           width: 328px;
+          position: relative;
           ul {
             margin-bottom: 48px;
             li {
@@ -1058,7 +1196,6 @@
               }
             }
           }
-          
           .submitBtn {
             display: block;
             height: 54px;
@@ -1085,6 +1222,29 @@
                 color: #652791;
               }
             }
+          }
+        }
+        .formHint {
+          height:34px;
+          background:rgba(237,92,92,0.1);
+          border-radius:4px;
+          padding: 0 27px;
+          position: absolute;
+          left: 50%;
+          top: 10px;
+          transform: translate(-50%,0);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size:14px;
+          font-family:PingFangSC;
+          font-weight:400;
+          color:rgba(237,92,92,1);
+          img {
+            width: 14px;
+            height: 14px;
+            margin-right: 8px;
+            display: block;
           }
         }
       }

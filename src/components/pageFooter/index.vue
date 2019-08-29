@@ -14,6 +14,10 @@
         <div class="footer_right">
           <div class="right_code_blo">
             <img class="code public" src="../../assets/images/gzh.png" />
+            <p class="black">扫码下载APP</p>
+          </div>
+          <div class="right_code_blo">
+            <img class="code public" src="../../assets/images/gzh.png" />
             <p class="black">扫码关注公众号</p>
           </div>
           <div class="right_code_blo">
@@ -55,6 +59,10 @@ export default PageFooter
     justify-content: space-between;
     .footer_left {
       .left_p {
+        font-size:14px;
+        font-weight:400;
+        color:rgba(0,0,0,1);
+        line-height:20px;
         margin: 24px 0 8px 0;
       }
       .ft_logo {
@@ -81,6 +89,7 @@ export default PageFooter
       }
     }
     .footer_center {
+      width: 220px;
       .center_p {
         line-height:26px;
         margin: 16px 0 4px 0;
@@ -98,6 +107,7 @@ export default PageFooter
     color:rgba(40,40,40,1)
   }
   .gray {
+    font-size: 12px;
     color:rgba(188,188,188,1);
   }
 }
