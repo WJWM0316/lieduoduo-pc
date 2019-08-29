@@ -72,7 +72,7 @@
           <span
             v-for="(item, index) in form.fields"
             :key="index">
-            {{`${item.field}${form.fields.length - 1 !== index ? '、' : ''}`}}
+            {{`${item.field || item.name}${form.fields.length - 1 !== index ? '、' : ''}`}}
           </span>
         </div>
       </div>

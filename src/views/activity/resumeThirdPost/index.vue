@@ -222,8 +222,6 @@
 
         this.internships = internships
         this.educations = educations
-        
-        let infos = res.data.data.educations[0]
         this.form.school = educations[0].school
         this.form.major = educations[0].major
         this.form.degree = educations[0].degree
