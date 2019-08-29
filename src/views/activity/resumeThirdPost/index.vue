@@ -42,7 +42,7 @@
 
       <div class="form-header">
         <h3>请填写教育经历</h3>
-        <div class="add-btn">教育经历</div>
+        <!-- <div class="add-btn">教育经历</div> -->
       </div>
 
       <div class="formItem">
@@ -113,27 +113,17 @@
   import { getUserIdentity, switchId } from '../../../../config.js'
   import { getAccessToken } from '../../../api/cacheService.js'
   @Component({
-    name: 'lighthouse-list',
-    methods: {
-    },
-    computed: {},
-    watch: {
-      '$route': {
-        handler() {
-          this.init()
-        },
-        immediate: true
-      }
-    },
-    components: {}
+    name: 'resumeThirdPost'
   })
-  export default class CourseList extends Vue {
+  export default class resumeThirdPost extends Vue {
     form = {
       school: '',
       major: '',
       degree: '',
       startTime: '',
-      endTime: ''
+      endTime: '',
+      internships: [],
+      educations: []
     }
     userInfo = {}
     messagePop = {
@@ -211,9 +201,28 @@
       this.handleHeaders['Authorization'] = getAccessToken()
       this.userInfo = this.$store.state.userInfo
       this.getDegreeAllLists()
+      this.init()
     }
     init () {
       return getResumeThirdStepApi().then(res => {
+        let educations = res.data.data.educations
+        let internships = res.data.data.internships
+        educations.map(field => {
+          if(field.startTime) {
+            field.startTime = new Date(field.startTime * 1000)
+          } else {
+            field.startTime = new Date()
+          }
+          if(field.endTime) {
+            field.endTime = new Date(field.endTime * 1000)
+          } else {
+            field.endTime = new Date()
+          }
+        })
+
+        this.internships = internships
+        this.educations = educations
+        
         let infos = res.data.data.educations[0]
         this.form.school = infos.school
         this.form.major = infos.major
@@ -231,15 +240,23 @@
       })
     }
 
-    submit (index) {
-      let params = {
+    submit() {
+      let item = {
         school: this.form.school,
         major: this.form.major,
         degree: this.form.degree,
         startTime: Date.parse(this.form.startTime)/1000,
         endTime: Date.parse(this.form.endTime)/1000
       }
-      setResumeThirdApi(params)
+      let educations = this.form.educations
+      educations.shift()
+      educations.push(item)
+      setResumeThirdApi({
+        internships: this.form.internships,
+        educations: educations
+      }).then(() => {
+        this.$router.push({name: 'resumeFourthPost'})
+      })
     }
   }
 </script>

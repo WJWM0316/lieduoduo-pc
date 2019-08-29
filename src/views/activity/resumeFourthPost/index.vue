@@ -47,9 +47,11 @@
       <div class="formItem">
         <el-cascader
           ref="cityChoice"
+          v-model="form.cityNum"
           placeholder="请选择期望城市"
           :options="cityList"
           filterable
+          :show-all-levels="false"
           :props="{
             value:'areaId',
             label:'title',
@@ -59,18 +61,25 @@
         ></el-cascader>
       </div>
 
-      <div class="formItem">
-        <input placeholder="请输入专业名称" v-model="form.major" class="default" />
+      <div class="formItem" @click="openPositionModel">
+        <div class="default-value" v-if="!form.position">请选择期望职位</div>
+        <div class="has-value" v-else>{{form.position}}</div>
       </div>
 
       <div class="formItem" @click="openModel">
-        <!-- <div class="default-value">请选择期望领域</div> -->
-        <div class="has-value">互联网、社交网络、音乐/视频/阅读</div>
+        <div class="default-value" v-if="!form.fields.length">请选择期望领域</div>
+        <div class="has-value" v-else>
+          <span
+            v-for="(item, index) in form.fields"
+            :key="index">
+            {{`${item.field}${form.fields.length - 1 !== index ? '、' : ''}`}}
+          </span>
+        </div>
       </div>
 
       <div class="formItem2">
         <div class="start-time">
-          <el-select v-model="form.emolument_min" placeholder="请选择期望薪资" @change="changeEmolumentMin">
+          <el-select v-model="form.salaryFloor" placeholder="请选择期望薪资" @change="changeEmolumentMin">
             <el-option
               v-for="item in emolumentMinList"
               :key="item.value"
@@ -80,7 +89,7 @@
           </el-select>
         </div>～ &nbsp;&nbsp;
         <div class="end-time">
-          <el-select v-model="form.emolument_max" placeholder="期望薪资">
+          <el-select v-model="form.salaryCeil" placeholder="期望薪资">
             <el-option
               v-for="item in emolumentMaxList"
               :key="item.value"
@@ -114,10 +123,19 @@
         <span class="tips">(最多选3个行业领域)</span>
       </div>
       <ul class="seleced-box">
-        <li class="item">测试数据<i class="el-icon-circle-plus"></i></li>
+        <li
+          class="item" 
+          v-for="(item, index) in model.selected"
+          @click="remove(index, item)"
+          :key="index">{{item.field || item.name}}<i class="el-icon-circle-plus"></i></li>
       </ul>
       <ul class="scroll-box">
-        <li class="item2" v-for="item in 100" :key="item">测试数据</li>
+        <li
+          class="item2"
+          v-for="(item, index) in labelFieldList"
+          :key="index"
+          @click="onClick(index, item)"
+          :class="{item2_active: item.active}">{{item.name}}</li>
       </ul>
     </div>
     <div slot="footer" class="dialog-footer">
@@ -125,12 +143,15 @@
       <div @click="confirm" class="btn-confirm">确 定</div>
     </div>
   </el-dialog>
+  <MyModel @resultEvent="resultEvent" v-model="model.showPositionModel"></MyModel>
 </div>
 
 </template>
 <script>
   import Vue from 'vue'
   import Component from 'vue-class-component'
+  import MyModel from '@/components/model/index.vue'
+
   import {
     getUserInfoApi,
     searchResumeStepApi,
@@ -139,42 +160,42 @@
     setResumeThirdApi,
     setResumeFourthApi,
     getDegreeAllListsApi,
-    getResumeThirdStepApi,
-    getAreaListsApi
+    getResumeFourStepApi,
+    getAreaListsApi,
+    getLabelFieldListApi
   } from '../../../api/putIn'
   import { getUserIdentity, switchId } from '../../../../config.js'
   import { getAccessToken } from '../../../api/cacheService.js'
   @Component({
-    name: 'lighthouse-list',
+    name: 'resumeFourthPost',
     methods: {
     },
-    computed: {},
-    watch: {
-      '$route': {
-        handler() {
-          // this.init()
-        },
-        immediate: true
-      }
-    },
-    components: {}
+    components: {
+      MyModel
+    }
   })
-  export default class CourseList extends Vue {
+  export default class resumeFourthPost extends Vue {
     form = {
-      school: '',
-      major: '',
-      degree: '',
-      startTime: '',
-      endTime: '',
-      emolument_min: '',
-      emolument_max: ''
+      salaryFloor: '',
+      salaryCeil: '',
+      cityNum: '',
+      positionId: '',
+      salaryCeil: '',
+      salaryFloor: '',
+      fields: [],
+      position: '',
+      city: '',
+      cityNum: [],
+      placeholder: ''
     }
     model = {
       show: false,
       title: '',
       type: '',
       lockScroll: true,
-      showClose: false
+      showClose: false,
+      showPositionModel: false,
+      selected: []
     }
     userInfo = {}
     messagePop = {
@@ -196,101 +217,102 @@
     cityList = []
     emolumentMaxList = []
     emolumentMinList = []
+    labelFieldList = []
     getDegreeAllLists() {
       return getDegreeAllListsApi().then(res => this.degreeAllLists = res.data.data)
     }
     check() {
 
-      let schoolCheck = new Promise((resolve, reject) => {
-        if(!this.form.school) {
-          reject('请填写学校名称')
+      let cityCheck = new Promise((resolve, reject) => {
+        if(!this.form.cityNum) {
+          reject('请选择期望城市')
         } else {
           resolve()
         }
       })
 
-      let majorCheck = new Promise((resolve, reject) => {
-        if(!this.form.major) {
-          reject('请填写专业名称')
+      let positionCheck = new Promise((resolve, reject) => {
+        if(!this.form.positionId) {
+          reject('请选择期望职位')
         } else {
           resolve()
         }
       })
 
-      let degreeCheck = new Promise((resolve, reject) => {
-        if(!this.form.degree) {
-          reject('请选择学历')
+      let salaryCeilCheck = new Promise((resolve, reject) => {
+        if(!this.form.salaryCeil) {
+          reject('请选择最大薪资')
         } else {
           resolve()
         }
       })
 
-      let startTime = new Promise((resolve, reject) => {
-        if(!this.form.startTime) {
-          reject('请选择开始时间')
+      let salaryFloorCheck = new Promise((resolve, reject) => {
+        if(!this.form.salaryFloor) {
+          reject('请选择最小薪资')
         } else {
           resolve()
         }
       })
 
-      let endTime = new Promise((resolve, reject) => {
-        if(!this.form.startTime) {
-          reject('请选择结束时间')
+      let fieldIdsCheck = new Promise((resolve, reject) => {
+        if(!this.form.fields) {
+          reject('请选择行业领域')
         } else {
           resolve()
         }
       })
 
       Promise.all([
-        schoolCheck,
-        majorCheck,
-        degreeCheck,
-        startTime,
-        endTime
+        cityCheck,
+        positionCheck,
+        salaryCeilCheck,
+        salaryFloorCheck,
+        fieldIdsCheck
       ]).then(() => this.submit()).catch(err => this.$message.error(err))
     }
-    init () {
-      return getResumeThirdStepApi().then(res => {
-        let infos = res.data.data.educations[0]
-        this.form.school = infos.school
-        this.form.major = infos.major
-        this.form.degree = infos.degree
-        if(infos.startTime) {
-          this.form.startTime = new Date(infos.startTime * 1000)
-        } else {
-          this.form.startTime = new Date()
-        }
-        if(infos.endTime) {
-          this.form.endTime = new Date(infos.endTime * 1000)
-        } else {
-          this.form.endTime = new Date()
-        }
+    init() {
+      return getResumeFourStepApi().then(res => {
+        let infos = res.data.data
+        this.setEmolumentMax(infos.salaryCeil)
+        this.form.positionId = infos.positionId
+        this.form.position = infos.position
+        this.form.salaryFloor = infos.salaryFloor
+        this.form.salaryCeil = infos.salaryCeil
+        this.form.fields = infos.fields
+        this.form.cityNum = [infos.provinceNum, infos.cityNum]
+        this.getLabelFieldList()
       })
     }
     submit (index) {
       let params = {
-        school: this.form.school,
-        major: this.form.major,
-        degree: this.form.degree,
-        startTime: Date.parse(this.form.startTime)/1000,
-        endTime: Date.parse(this.form.endTime)/1000
+        positionId: this.form.positionId,
+        salaryFloor: this.form.salaryFloor,
+        salaryCeil: this.form.salaryCeil,
+        cityNum: this.form.cityNum[this.form.cityNum.length - 1],
+        fieldIds: this.form.fields.map(field => field.fieldId).join(',')
       }
-      setResumeThirdApi(params)
+      setResumeFourthApi(params)
     }
     openModel() {
+      let fieldIds = this.form.fields.map(field => Number(field.fieldId))
       this.model.show = !this.model.show
+      this.model.selected = this.form.fields.slice()
+      this.labelFieldList.map(field => field.active = fieldIds.includes(field.labelId) ? true : false)
     }
     closeModel() {
       this.model.show = !this.model.show
+      this.model.selected = this.form.fields.slice()
     }
     confirm() {
       this.model.show = !this.model.show
+      this.form.fields = this.model.selected
     }
     handleBeforeClose() {
 
     }
     choiceCity(e) {
-      this.form.expectCityNum = e[e.length - 1]
+      this.form.cityNum = e
     }
     getAreaLists() {
       return getAreaListsApi({level: 3}).then(res => {
@@ -304,7 +326,7 @@
       })
     }
     changeEmolumentMin(e){
-      this.form.emolument_max = ''
+      this.form.salaryCeil = ''
       this.setEmolumentMax(e)
     }
     setEmolumentMax(num) {
@@ -322,7 +344,7 @@
         max = num*2
       }
 
-      for (let i = num+1; i <= max; i++) {
+      for(let i = num+1; i <= max; i++) {
         list.push({
           label : `${i}k`,
           value : i
@@ -345,7 +367,6 @@
         } else if(i<max){
           i+=10
         }
-
         list.push({
           label : `${i}k`,
           value : i
@@ -353,13 +374,53 @@
       }
       this.emolumentMinList = list
     }
+    resultEvent(res) {
+      this.model.showPositionModel = false
+      this.form.positionId = res.labelId
+      this.form.position = res.name
+    }
+    openPositionModel() {
+      this.model.showPositionModel = true
+    }
+    getLabelFieldList() {
+      return getLabelFieldListApi().then(res => {
+        let labelFieldList = res.data.data
+        let fieldIds = this.form.fields.map(field => Number(field.fieldId))
+        labelFieldList.map(field => field.active = fieldIds.includes(field.labelId) ? true : false)
+        this.labelFieldList = labelFieldList
+      })
+    }
+    remove(index, item) {
+      this.model.selected.splice(index, 1)
+      this.labelFieldList.map(field => {
+        if(field.labelId == item.fieldId) field.active = false
+      })
+    }
+    onClick(index, item) {
+      let labelFieldList = this.labelFieldList.slice()
+      if(this.model.selected.length > 2 && !item.active) {
+        this.$message({message: '最多选3个行业领域', type: 'warning'})
+        return 
+      }
+      if(item.active) {
+        labelFieldList[index].active = false
+        this.model.selected.map((field, i) => {
+          if(field.fieldId == item.labelId) this.model.selected.splice(i, 1)
+        })
+      } else {
+        labelFieldList[index].active = true
+        item.fieldId = item.labelId
+        this.model.selected.push(item)
+      }
+      this.labelFieldList = labelFieldList
+    }
     mounted () {
       let query = this.$route.query
       this.handleHeaders['Authorization'] = getAccessToken()
       this.userInfo = this.$store.state.userInfo
       this.getDegreeAllLists()
       this.setEmolumentMin()
-      this.getAreaLists()
+      this.getAreaLists().then(() => this.init())
     }
   }
 </script>
@@ -568,7 +629,7 @@
       height: 100%;
       line-height: 46px;
       width: 100%;
-      .el-input__inner{
+      input{
         border: none;
         line-height: 46px;
         width: 100%;
@@ -795,7 +856,6 @@
       border-bottom: 1px solid #E8E9EB;
     }
     .item{
-      width:100px;
       height:30px;
       background:rgba(255,255,255,1);
       border-radius:17px;
@@ -812,6 +872,7 @@
       display: inline-block;
       margin-right: 8px;
       position: relative;
+      padding: 0 16px;
       .el-icon-circle-plus{
         position: absolute;
         top: -5px;
@@ -842,7 +903,6 @@
      border-radius:20px;
     }
     .item2{
-      width:100px;
       height:30px;
       border-radius:17px;
       border:1px solid #BCBCBC;
@@ -857,6 +917,7 @@
       cursor: pointer;
       display: inline-block;
       margin-right: 8px;
+      padding: 0 16px;
     }
     .item2_active{
       border:1px solid #8351A7;
