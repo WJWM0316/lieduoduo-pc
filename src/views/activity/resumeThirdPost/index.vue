@@ -222,21 +222,11 @@
 
         this.internships = internships
         this.educations = educations
-        
-        let infos = res.data.data.educations[0]
-        this.form.school = infos.school
-        this.form.major = infos.major
-        this.form.degree = infos.degree
-        if(infos.startTime) {
-          this.form.startTime = new Date(infos.startTime * 1000)
-        } else {
-          this.form.startTime = new Date()
-        }
-        if(infos.endTime) {
-          this.form.endTime = new Date(infos.endTime * 1000)
-        } else {
-          this.form.endTime = new Date()
-        }
+        this.form.school = educations[0].school
+        this.form.major = educations[0].major
+        this.form.degree = educations[0].degree
+        this.form.startTime = educations[0].startTime
+        this.form.endTime = educations[0].endTime
       })
     }
 
