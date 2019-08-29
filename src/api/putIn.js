@@ -54,3 +54,9 @@ export const getLabelPositionListApi = data => request('/label/position', 'get')
 
 //获取城市列表
 export const getAreaListsApi = data => request('area', 'get', data)
+
+//完善简历-获取第三步已填信息
+export const getResumeFourStepApi = data => request('/jobhunter/resume/four/fourthStep', 'get')
+
+//获取行业领域
+export const getLabelFieldListApi = data => request('/label/field', 'get')
