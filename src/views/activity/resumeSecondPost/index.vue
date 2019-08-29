@@ -20,7 +20,6 @@
             </el-dropdown-item>
           </el-dropdown-menu>
       </el-dropdown>
-      
     </section>
   </header>
   <div class="middle">
@@ -257,8 +256,8 @@
     }
 
     checkDuty() {
-      var pattern = /^.{10,1000}$/
-      if(!pattern.test(this.form2.duty)){
+      let lgh = this.form2.duty.length
+      if(lgh<10 && lgh>1000){
         this.setHint('请填写10-1000的工作内容')
         return false
       }else {

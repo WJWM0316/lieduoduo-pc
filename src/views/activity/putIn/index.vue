@@ -111,7 +111,8 @@
           <div class="submitBtn" @click="submit">求职者注册/登录</div>
           <div class="lp_agreeNotice_box">
             <p>注册代表你已同意
-              <a rel="nofollow" href="http://www.lagou.com/privacy.html" >猎多多用户协议&隐私政策</a></p>
+              <span @click="toAgreement">猎多多用户协议&隐私政策</span>
+            </p>
           </div>
         </form>
         <div class="login_btn">
@@ -162,7 +163,10 @@
       <img class="icon-close" src="../../../assets/images/clo.png" @click.stop="cloMask" />
       <p class="register-text">立即注册</p>
       <p class="register-text2">即可查看更多职位信息</p>
-      <i class="icon-pointer"></i>
+
+
+      <img class="icon-pointer" src="../../../assets/images/activity/putIn/arrows.gif" />
+
     </div>
 
     <div class="company-modal modal" @click.stop="" v-if="messagePop.type==='job' && advList.length>0 && selectAdv">
@@ -210,7 +214,7 @@
           注册后可查看更多职位信息
           <img class="" src="../../../assets/images/activity/putIn/arrowsR.png" />
         </div>
-        <i class="icon-pointer"></i>
+        <img class="icon-pointer" src="../../../assets/images/activity/putIn/icon_hand@2x.png" />
       </div>
     </div>
 
@@ -291,7 +295,9 @@
     init () {
 
     }
-
+    toAgreement() {
+      this.$router.push({name: 'userAgreement'})
+    }
     toPcLogin () {
       this.$router.push({name: 'login'})
     }
@@ -516,6 +522,16 @@
     -webkit-transition: opacity .3s,top .3s;
     -o-transition: opacity .3s,top .3s;
     text-align: left;
+    .icon-pointer {
+      width: 66px;
+      height: 50px;
+      display: block;
+      position: fixed;
+      right: 50%;
+      top: 350px;
+      margin-right: -100px;
+      z-index: 1100;
+    }
     .company-content {
       .modal-top {
         margin-bottom: 40px;
@@ -613,21 +629,7 @@
           margin: 47px 0 0;
         }
       }
-      .icon-pointer {
-        width: 53px;
-        height: 38px;
-        display: inline-block;
-        background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADUAAAAmCAYAAABkpNNFAAAAAXNSR…KTbDI9H7CA39JGjsv2APlEiLcjlMm+03oalMn9KVPPFo1/A2XXfs+LqZGsAAAAAElFTkSuQmCC) no-repeat;
-        right: -68px;
-        top: 50%;
-        -webkit-transform: translateY(-50%);
-        transform: translateY(-50%);
-        position: absolute;
-        -webkit-animation-duration: 1s;
-        animation-duration: 1s;
-        -webkit-animation-fill-mode: both;
-        animation-fill-mode: both;
-      }
+      
     }
     .bottom_hint {
       width: 100%;
@@ -696,6 +698,21 @@
       position: absolute;
       right: 15px;
       top: 15px;
+    }
+    .icon-pointer {
+      width: 152px;
+      height: 48px;
+      display: block;
+      position: absolute;
+      right: -108px;
+      top: 50%;
+      -webkit-transform: translateY(-50%);
+      transform: translateY(-50%);
+      position: absolute;
+      -webkit-animation-duration: 1s;
+      animation-duration: 1s;
+      -webkit-animation-fill-mode: both;
+      animation-fill-mode: both;
     }
   }
 }
@@ -779,6 +796,7 @@
           margin-right: 20px;
         }
         .blo_cont {
+          text-align: left;
           .cont_text {
             font-size:18px;
             font-weight:600;
@@ -1213,7 +1231,10 @@
             p {
               font-size: 14px;
               color: #999;
-              a {
+              span {
+                color: #555;
+                text-decoration: underline;
+                cursor: pointer;
                 color: #652791;
               }
             }

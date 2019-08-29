@@ -13,7 +13,7 @@
         </div>
         <div class="footer_right">
           <div class="right_code_blo">
-            <img class="code public" src="../../assets/images/gzh.png" />
+            <img class="code app" src="../../assets/images/uploadAPP.png" />
             <p class="black">扫码下载APP</p>
           </div>
           <div class="right_code_blo">
@@ -82,6 +82,11 @@ export default PageFooter
           background:rgba(255,255,255,1);
           border:1px solid rgba(239,233,244,1);
           margin-bottom: 13px;
+          &.app {
+            width:96px;
+            height:96px;
+            border: none;
+          }
           &.applet {
             border-radius: 50%;
           }
