@@ -30,19 +30,19 @@
 					</div>
 
 					<el-dropdown-menu slot="dropdown">
-			    <el-dropdown-item command="changeId">
-			  		<img class="drop_icon" src="../../assets/images/change.png" />
-			    	切换为{{identity==='qiuzhi'?'招聘官':'求职者'}}
-			    </el-dropdown-item>
-			    <!-- <el-dropdown-item command="help" class="dropdown_blo">
-			  		<img class="drop_icon" src="../../assets/images/help.png" />
-			    	帮助中心
-			    </el-dropdown-item> -->
-			    <el-dropdown-item command="out">
-			  		<img class="drop_icon" src="../../assets/images/out.png" />
-			    	退出登录
-			  	</el-dropdown-item>
-			  </el-dropdown-menu>
+				    <el-dropdown-item command="changeId">
+				  		<img class="drop_icon" src="../../assets/images/change.png" />
+				    	切换为{{identity==='qiuzhi'?'招聘官':'求职者'}}
+				    </el-dropdown-item>
+				    <!-- <el-dropdown-item command="help" class="dropdown_blo">
+				  		<img class="drop_icon" src="../../assets/images/help.png" />
+				    	帮助中心
+				    </el-dropdown-item> -->
+				    <el-dropdown-item command="out">
+				  		<img class="drop_icon" src="../../assets/images/out.png" />
+				    	退出登录
+				  	</el-dropdown-item>
+				  </el-dropdown-menu>
 			</el-dropdown>
 
 			<div class="switchWrap" v-if="isShowSwitch">

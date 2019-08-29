@@ -83,16 +83,28 @@ export const routes = [
       component: () => import(/* webpackChunkName: "putIn" */ '../views/activity/putIn/index.vue')
     },
     {
-      path: '/resumePost',
-      name: 'resumePost',
+      path: '/resumeFirstPost',
+      name: 'resumeFirstPost',
       title: '猎多多 | 简历',
-      component: () => import(/* webpackChunkName: "putIn" */ '../views/activity/resumePost/index.vue')
+      component: () => import(/* webpackChunkName: "putIn" */ '../views/activity/resumeFirstPost/index.vue')
     },
     {
-      path: '/resumePost2',
-      name: 'resumePost2',
+      path: '/resumeSecondPost',
+      name: 'resumeSecondPost',
       title: '猎多多 | 简历',
-      component: () => import(/* webpackChunkName: "putIn" */ '../views/activity/resumePost2/index.vue')
+      component: () => import(/* webpackChunkName: "putIn" */ '../views/activity/resumeSecondPost/index.vue')
+    },
+    {
+      path: '/resumeThirdPost',
+      name: 'resumeThirdPost',
+      title: '猎多多 | 简历',
+      component: () => import(/* webpackChunkName: "putIn" */ '../views/activity/resumeThirdPost/index.vue')
+    },
+    {
+      path: '/resumeFourthPost',
+      name: 'resumeFourthPost',
+      title: '猎多多 | 简历',
+      component: () => import(/* webpackChunkName: "putIn" */ '../views/activity/resumeFourthPost/index.vue')
     },
     {
       path: '/userAgreement',
