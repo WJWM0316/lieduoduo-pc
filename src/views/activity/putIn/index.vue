@@ -18,7 +18,7 @@
             <div class="search-bar-top">
               <img class="i-search" src="../../../assets/images/activity/putIn/search.png" />
               <input class="search-input" placeholder="搜索职位" maxlength="64" v-model="searchJobData.keyword">
-              <button class="search-bar-btn" @click="searchJob">搜索职位</button>
+              <div class="search-bar-btn" @click="searchJob">搜索职位</div>
             </div>
             <div class="select-main" v-if="isShowSelect">
               <div class="select-none" v-if="selectList.length<1">
@@ -30,7 +30,7 @@
               <div class="select_cont" v-else>
                 <div class="select_list">
                   <div class="job_blo" v-for="(item,index) in selectList">
-                    <div class="job_blo_left ellipsis">{{item.companyName}}</div>
+                    <div class="job_blo_left ellipsis">{{item.companyShortname}}</div>
                     <div class="job_blo_center ellipsis">{{item.positionName}}</div>
                     <div class="job_blo_right">{{item.emolumentMin}}k-{{item.emolumentMax}}k</div>
                   </div>
@@ -174,7 +174,7 @@
         <img class="icon-close" src="../../../assets/images/clo.png" @click.stop="cloMask" />
         <div class="company-content">
           <div class="modal-top">
-             <img class="company-logo" :src="selectAdv.companyLogo.middleUrl" />
+             <img class="company-logo" :src="selectAdv.cardCompanyLogo.middleUrl" />
               <div class="top-right">
                 <div class="modal-top-title">
                   {{selectAdv.companyName}}
@@ -340,6 +340,7 @@
     }
 
     searchJob() {
+      console.log(11)
       schJobApi({...this.searchJobData}).then(res => {
         this.selectList = res.data.data
         this.isShowSelect = true
@@ -893,6 +894,7 @@
                 line-height:40px;
                 background:rgba(101,39,145,1);
                 border-radius:8px;
+                cursor: pointer;
               }
             }
             .select-main {
@@ -1077,6 +1079,7 @@
                   padding: 15px;
                   box-sizing: border-box;
                   text-align: left;
+                  justify-content: space-between;
                   .banner {
                     width: 70px;
                     height: auto;
@@ -1253,7 +1256,7 @@
         }
         .formHint {
           height:34px;
-          background:rgba(237,92,92,0.1);
+          background:rgba(255,244,244,1);
           border-radius:4px;
           padding: 0 27px;
           position: absolute;

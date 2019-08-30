@@ -263,7 +263,9 @@
 
     checkDuty() {
       let lgh = this.form2.duty.length
-      if(lgh<10 && lgh>1000){
+      console.log(lgh<10 || lgh>1000)
+      console.log(lgh)
+      if(lgh<10 || lgh>1000){
         this.setHint('请填写10-1000的工作内容')
         return false
       }else {
@@ -354,7 +356,10 @@
     }
 
     saveDuty() {
-      if(!this.checkDuty()) return
+      let lgh = this.textarea.length
+      if(lgh<10 || lgh>1000) {
+        return
+      }
       this.form2.duty = this.textarea
       this.cloMask()
     }
@@ -403,7 +408,7 @@
   }
   .formHint {
     height:60px;
-    background:rgba(237,92,92,0.1);
+    background:rgba(255,244,244,1);
     border-radius:4px;
     padding: 0 27px;
     position: absolute;

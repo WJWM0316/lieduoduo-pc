@@ -34,7 +34,10 @@
       </div>
     </div>
     <div class="myForm">
-
+      <div class="formHint" v-if="formHint.isShow && !messagePop.isShow">
+        <img class="" src="../../../assets/images/activity/putIn/live_icon_question2.png" />
+        {{formHint.text}}
+      </div>
       <div class="form-header">
         <h3>请填写求职意向</h3>
       </div>
@@ -197,6 +200,10 @@
       isShow: false,
       type: 'help'
     }
+    formHint = {    //form提示框
+      isShow: false,
+      text: ''
+    }
     augustInterval = null
     isShowMask = false
     showError = false
@@ -213,7 +220,7 @@
     emolumentMaxList = []
     emolumentMinList = []
     labelFieldList = []
-    
+    hintSetTime = null
     mounted () {
       let query = this.$route.query
       this.handleHeaders['Authorization'] = getAccessToken()
@@ -273,7 +280,9 @@
         salaryCeilCheck,
         salaryFloorCheck,
         fieldIdsCheck
-      ]).then(() => this.submit()).catch(err => this.$message.error(err))
+      ]).then(() => this.submit()).catch(err => 
+        this.setHint(err)
+      )
     }
     init() {
       return getResumeFourStepApi().then(res => {
@@ -288,7 +297,7 @@
         this.getLabelFieldList()
       })
     }
-    submit (index) {
+    submit () {
       let params = {
         positionId: this.form.positionId,
         salaryFloor: this.form.salaryFloor,
@@ -298,7 +307,9 @@
       }
       setResumeFourthApi(params).then(res => {
         this.$router.push({name: 'applyIndex'})
-      })
+      }).catch(
+        err => this.setHint(err.data.msg || '错误')
+      )
     }
     openModel() {
       let fieldIds = this.form.fields.map(field => Number(field.fieldId))
@@ -430,6 +441,17 @@
           })
       }
     }
+
+    setHint (text) {
+      this.formHint = {    //form提示框
+        isShow: true,
+        text: text
+      }
+      clearTimeout(this.hintSetTime) 
+      this.hintSetTime = setTimeout(()=> {
+        this.formHint.isShow = false
+      }, 3000);
+    }
   }
 </script>
 <style lang="less">
@@ -530,6 +552,30 @@
       color:#FFDC29;
     }
   }
+  .formHint {
+    height:60px;
+    background:rgba(255,244,244,1);
+    border-radius:4px;
+    padding: 0 27px;
+    position: absolute;
+    left: 50%;
+    top: 0px;
+    transform: translate(-50%,0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size:14px;
+    font-family:PingFangSC;
+    font-weight:400;
+    color:rgba(237,92,92,1);
+    white-space:nowrap;
+    img {
+      width: 14px;
+      height: 14px;
+      margin-right: 8px;
+      display: block;
+    }
+  }
   .slogon-box{
     width:450px;
     height:70px;
@@ -592,6 +638,7 @@
     border-radius:16px;
     border:1px solid rgba(255,255,255,1);
     margin: 0 auto;
+    position: relative;
     .formItem {
       height:46px;
       background:rgba(251,249,252,0.8);
@@ -764,7 +811,7 @@
       overflow: hidden;
     }
     .form-header{
-      text-align: right;
+      text-align: center;
       margin-bottom: 40px;
       overflow: hidden;
       line-height: 33px;

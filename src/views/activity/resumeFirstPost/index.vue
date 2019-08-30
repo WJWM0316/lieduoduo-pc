@@ -180,9 +180,9 @@
     getResumeFirst() {
       getResumeFirstApi().then(res => {
         let data = res.data.data
-        this.imageUrl = data.avatar.smallUrl
+        if(data.avatarId !== 0) this.imageUrl = data.avatar.smallUrl
         this.form1 = {
-          avatar: data.avatarId,
+          avatar: data.avatarId !== 0 ? data.avatarId : '',
           gender: data.gender.toString(),
           name:  data.name,  
           startWorkYear: data.startWorkYear*1000,
@@ -207,10 +207,7 @@
       checkAva() {
         var pattern = /^[\u4E00-\u9FA5\s]{2,10}$/
         if(!this.form1.avatar && this.form1.avatar!==0){
-          this.$message({
-            type: 'info',
-            message: '请上传你的头像'
-          })
+          this.setHint('请上传你的头像')
           return false
         }else {
           return true
@@ -219,10 +216,7 @@
       checkName() {
         var pattern = /^[\u4E00-\u9FA5\s]{2,10}$/
         if(!pattern.test(this.form1.name)){
-          this.$message({
-            type: 'info',
-            message: '请填写真实姓名'
-          })
+          this.setHint('请填写2-10字的真实姓名')
           return false
         }else {
           return true
@@ -231,11 +225,8 @@
 
       checkBirth() {
         var pattern = /^1(3|4|5|6|7|8|9)\d{9}$/
-        if(!pattern.test(this.form1.birth)){
-          this.$message({
-            type: 'info',
-            message: '请选择出生年月'
-          })
+        if(!this.form1.birth && !pattern.test(this.form1.birth)){
+          this.setHint('请选择出生年月')
           return false
         }else {
           return true
@@ -244,11 +235,9 @@
 
       checkWorkYear() {
         var pattern = /^1(3|4|5|6|7|8|9)\d{9}$/
-        if(!pattern.test(this.form1.startWorkYear)){
-          this.$message({
-            type: 'info',
-            message: '请选择工作时间'
-          })
+        console.log(!this.form1.startWorkYear,this.form1.startWorkYear)
+        if(!this.form1.startWorkYear && !pattern.test(this.form1.startWorkYear)){
+          this.setHint('请选择工作时间')
           return false
         }else {
           return true
@@ -309,7 +298,9 @@
         subName({...params}).then(res => {
           this.step = index
           this.$router.push({name: 'resumeSecondPost'})
-        })
+        }).catch(
+          err => this.setHint(err.data.msg || '错误')
+        )
       }
     }
 
@@ -488,7 +479,7 @@
     }
     .formHint {
       height:60px;
-      background:rgba(237,92,92,0.1);
+      background:rgba(255,244,244,1);
       border-radius:4px;
       padding: 0 27px;
       position: absolute;
@@ -503,6 +494,7 @@
       font-weight:400;
       color:rgba(237,92,92,1);
       white-space:nowrap;
+      z-index: 100;
       &.two {
         height:34px;
       }
