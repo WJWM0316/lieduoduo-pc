@@ -141,7 +141,7 @@
       <div @click="confirm" class="btn-confirm">确 定</div>
     </div>
   </el-dialog>
-  <MyModel @resultEvent="resultEvent" v-model="model.showPositionModel"></MyModel>
+  <MyModel @resultEvent="resultEvent" v-model="model.showPositionModel" :data="model.data"></MyModel>
 </div>
 
 </template>
@@ -193,7 +193,8 @@
       lockScroll: true,
       showClose: false,
       showPositionModel: false,
-      selected: []
+      selected: [],
+      data: []
     }
     userInfo = {}
     messagePop = {

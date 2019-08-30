@@ -16,7 +16,10 @@
         </ul>
       </div>
       <div class="pop_right">
-      	<div class="search-box"></div>
+      	<div class="search-box">
+         <input type="text" v-model="keyword">
+         <i class="el-icon-search" @click="handleSearch"></i> 
+        </div>
         <i class="el-icon-close" @click="close"></i>
         <ul class="job_classily">
           <li
@@ -31,6 +34,7 @@
         </ul>
         <ul class="open_jobs" v-if="thirdPositionList.length">
           <li
+            :class="{active3: item.active}"
           	v-for="item,index in thirdPositionList"
           	@click="thirdSecondPosition(item)"
           	:key="index">{{item.name}}
@@ -48,6 +52,10 @@ import {
   getLabelPositionListApi
 } from '@/api/putIn'
 
+import {
+  searchPositionApi
+} from '@/api/position'
+
 @Component({
   name: 'MyModel',
   props: {
@@ -58,8 +66,8 @@ import {
     },
     // 是否显示
     data: {
-      type: Object,
-      default: () => {}
+      type: Array,
+      default: [] // top-labelId  second-labelId third-labelId
     }
   },
   model: {
@@ -78,7 +86,28 @@ import {
         if(!visiable) {
           this.$emit('close')
         }
-      }
+      },
+      immediate: true
+    },
+    data: {
+      handler(arr) {
+        if(arr.length) {
+
+          let positionList = this.positionList
+          positionList.map(field => field.active = field.labelId === this.data[0] ? true : false)
+
+          let secondPositionList = positionList.find(field => field.active).children
+          secondPositionList.map(field => field.active = field.labelId === this.data[1] ? true : false)
+
+          let thirdPositionList = secondPositionList.find(field => field.active).children
+          thirdPositionList.map(field => field.active = field.labelId === this.data[2] ? true : false)
+
+          this.positionList = positionList
+          this.secondPositionList = secondPositionList
+          this.thirdPositionList = thirdPositionList
+        }
+      },
+      immediate: true
     }
   }
 })
@@ -87,28 +116,12 @@ export default class MyModel extends Vue {
 	secondPositionList = []
 	thirdPositionList = []
   visiable = false
+  keyword = ''
 	close() {
     this.visiable = false
   }
 	getLabelPositionList() {
-	  return getLabelPositionListApi().then(res => {
-	  	let positionList = res.data.data
-	    positionList.map((item, index) => {
-	    	item.active = false
-	      if(index === 0) {
-	        item.active = true
-	        item.children.map((field, index) => {
-	        	field.active = false
-	        	if(index === 0) {
-	        		field.active = true
-	        		this.thirdPositionList = field.children
-	        	}
-	        })
-	        this.secondPositionList = item.children
-	      }
-	    })
-	    this.positionList = positionList
-	  })
+	  return getLabelPositionListApi().then(res => this.positionList = res.data.data)
 	}
 	selectPosition(index) {
 	  if (!this.positionList[index].active) {
@@ -144,7 +157,19 @@ export default class MyModel extends Vue {
 	}
 	thirdSecondPosition(item) {
 		this.$emit('resultEvent', item)
+    this.keyword = ''
+    this.secondPositionList = []
+    this.thirdPositionList = []
 	}
+  handleSearch() {
+    if(!(this.keyword.trim())) return
+    searchPositionApi({
+      name: this.keyword
+    }).then(res => {
+      this.secondPositionList = []
+      this.thirdPositionList = res.data.data
+    })
+  }
 	mounted() {
 		this.getLabelPositionList()
 		// alert()
@@ -294,6 +319,25 @@ export default class MyModel extends Vue {
 		border-radius:20px;
 		border:1px solid rgba(220,220,220,1);
 		margin-top: 16px;
+    overflow: hidden;
+    position: relative;
+    input{
+      border: none;
+      height: 100%;
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0 40px 0 20px;
+    }
+    i{
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+      right: 15px;
+      font-size: 18px;
+      color: #dcdcdc;
+      cursor: pointer;
+    }
 	}
 	.mask{
 		position: fixed;
