@@ -148,9 +148,12 @@
     }
 
     check() {
-
+      // 学校名称 
+      let schoolNameReg = /^[\u0391-\uFFE5A-Za-z\s]{2,50}$/
+      // 专业名称  
+      let majorNameReg = /^[\u0391-\uFFE5A-Za-z\s]{2,50}$/
       let schoolCheck = new Promise((resolve, reject) => {
-        if(!this.form.school) {
+        if(!schoolNameReg.test(this.form.school)) {
           reject('请填写学校名称')
         } else {
           resolve()
@@ -158,7 +161,7 @@
       })
 
       let majorCheck = new Promise((resolve, reject) => {
-        if(!this.form.major) {
+        if(!majorNameReg.test(this.form.major)) {
           reject('请填写专业名称')
         } else {
           resolve()
