@@ -6,7 +6,7 @@
       <img class="left_logo" src="../../../assets/images/activity/putIn/logo_lieduodou@2x.png" />
       <div class="headerBtn">
         <span class="btn_blo" @click="openMask('login')">高薪职位</span>
-        <div class="btn_blo2">求职者登录</div>
+        <div class="btn_blo2" @click="setAnimate">求职者登录</div>
       </div>
     </section>
   </header>
@@ -29,7 +29,7 @@
               </div>
               <div class="select_cont" v-else>
                 <div class="select_list">
-                  <div class="job_blo" v-for="(item,index) in selectList">
+                  <div class="job_blo" @click="openMask('login')" v-for="(item,index) in selectList">
                     <div class="job_blo_left ellipsis">{{item.companyShortname}}</div>
                     <div class="job_blo_center ellipsis">{{item.positionName}}</div>
                     <div class="job_blo_right">{{item.emolumentMin}}k-{{item.emolumentMax}}k<span v-if="item.annualSalary>12">·{{item.annualSalary}}</span></div>
@@ -91,12 +91,12 @@
         <form id="phone_form" method="post" action="javascript:;">
           <ul>
             <li>
-              <img class="input_icon" src="../../../assets/images/activity/putIn/icon_note.png" />
+              <img class="input_icon" src="../../../assets/images/activity/putIn/icon_number.png" />
 
               <input placeholder="请输入常用手机号"  maxlength="11" v-model="form.mobile"></li>
               
             <li>
-              <img class="input_icon" src="../../../assets/images/activity/putIn/icon_number.png" />
+              <img class="input_icon" src="../../../assets/images/activity/putIn/icon_note.png" />
               <input placeholder="请输入手机验证码"  maxlength="4" v-model="form.code" >
               <span class="getcode" @click="getCode" v-if="codeStatus">获取验证码</span>
               <span class="getcode false" v-else>{{timer}}s</span>
@@ -840,14 +840,15 @@
     }
   }
   .middle {
-    padding-top: 130px;
+    margin-top: 60px;
     position: relative;
     height: 660px;
-    // background: #00b38a;
     background-repeat: no-repeat;
     background-position: bottom;
     width: 100%;
     background-size: auto 112px;
+    display: flex;
+    align-items: center;
     .contain {
       width: 1000px;
       margin: 0 auto;
@@ -905,7 +906,7 @@
                 height:40px;
                 line-height:40px;
                 background:rgba(101,39,145,1);
-                border-radius:8px;
+                border-radius:4px;
                 cursor: pointer;
               }
             }
@@ -914,7 +915,7 @@
               height:436px;
               
               background:rgba(255,255,255,1);
-              border-radius:8px;
+              border-radius:4px;
               position: absolute;
               top: 65px;
               left: 0;
@@ -950,17 +951,20 @@
               .select-cont {
               }
               .select_list {
-                padding: 0 40px;
-                box-sizing: border-box;
                 height: 382px;
                 overflow-y: auto;
                 .job_blo {
+                  padding: 0 40px;
+                  box-sizing: border-box;
                   display: flex;
                   justify-content: space-between;
                   align-items: center;
                   height: 60px;
                   border-bottom: 1px solid #E8E9EB;
                   text-align: left;
+                  &:hover {
+                    background: rgba(101, 39, 145, 0.1);
+                  }
                   .job_blo_left {
                     width: 160px;
                     font-size:16px;
@@ -973,11 +977,12 @@
                     color:rgba(92,86,93,1);
                     flex: 1;
                     margin-left: 20px;
+                    margin-right: 20px;
                   }
                   .job_blo_right {
-                    width: 100px;
+                    width: 112px;
                     text-align: right;
-                    font-size:14px;
+                    font-size:18px;
                     font-weight:400;
                     color:#FF7F4C;
                   }
@@ -1031,7 +1036,7 @@
               display: flex;
               margin-bottom: 18px;
               background:rgba(0,0,0,0.2);
-              border-radius:8px;
+              border-radius:4px;
               .search-lab {
                 display: block;
                 font-size: 16px;
@@ -1047,7 +1052,7 @@
                   font-weight: 600;
                   color: #fff;
                   background:rgba(121,84,149,1);
-                  border-radius:0px 0px 8px 8px;
+                  border-radius:0px 0px 4px 4px;
                 }
               }
             }

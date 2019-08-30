@@ -135,7 +135,7 @@
         <el-input
           resize="none"
           type="textarea"
-          placeholder="请输入内容"
+          placeholder="工作的主要职责，参加了***项目，取得了***成绩，我在其中发挥了***的作用"
           v-model="textarea"
           maxlength="1000"
           show-word-limit
