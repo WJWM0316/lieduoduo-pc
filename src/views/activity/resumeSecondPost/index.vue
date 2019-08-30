@@ -254,7 +254,7 @@
     checkCompany() {
       var pattern = /^[\u0391-\uFFE5A-Za-z\s]{2,50}$/
       if(!pattern.test(this.form2.company)){
-        this.setHint('请填写公司名称')
+        this.setHint('请填写2-50字的公司名称')
         return false
       }else {
         return true
@@ -274,7 +274,7 @@
     checkPosition() {
       var pattern = /^.{2,20}$/
       if(!pattern.test(this.form2.position)){
-        this.setHint('请填写职位名称')
+        this.setHint('职位名称需为2-20个字')
         return false
       }else {
         return true
@@ -303,7 +303,6 @@
           console.log(res.data)
           this.$router.push({name: 'resumeThirdPost'})
         }).catch(e => {
-          console.log(e)
           this.setHint(e.data.msg || '')
         })
       }
@@ -343,7 +342,7 @@
       if(e === 'out'){
         this.$store.dispatch('logoutApi')
           .then(() => {
-            this.$router.push({name: 'login'})
+            this.$router.push({name: 'putIn'})
           })
       }
     }

@@ -213,6 +213,15 @@
     emolumentMaxList = []
     emolumentMinList = []
     labelFieldList = []
+    
+    mounted () {
+      let query = this.$route.query
+      this.handleHeaders['Authorization'] = getAccessToken()
+      this.userInfo = this.$store.state.userInfo
+      this.getDegreeAllLists()
+      this.setEmolumentMin()
+      this.getAreaLists().then(() => this.init())
+    }
     getDegreeAllLists() {
       return getDegreeAllListsApi().then(res => this.degreeAllLists = res.data.data)
     }
@@ -411,13 +420,15 @@
       }
       this.labelFieldList = labelFieldList
     }
-    mounted () {
-      let query = this.$route.query
-      this.handleHeaders['Authorization'] = getAccessToken()
-      this.userInfo = this.$store.state.userInfo
-      this.getDegreeAllLists()
-      this.setEmolumentMin()
-      this.getAreaLists().then(() => this.init())
+    
+
+    handleClick(e) {
+      if(e === 'out'){
+        this.$store.dispatch('logoutApi')
+          .then(() => {
+            this.$router.push({name: 'putIn'})
+          })
+      }
     }
   }
 </script>

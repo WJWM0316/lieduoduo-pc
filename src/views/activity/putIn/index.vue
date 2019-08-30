@@ -189,11 +189,8 @@
               热招职位
             </h3>
             <div class="hot-position">
-              <div class="hot-lab">
-                前端开发工程师
-              </div>
-              <div class="hot-lab">
-                前端开发工程师
+              <div class="hot-lab" v-for="(item,index) in selectAdv.hotPositions">
+                {{item}}
               </div>
             </div>
           </div>

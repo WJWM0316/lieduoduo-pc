@@ -40,7 +40,10 @@
         </div>
       </div>
       <div class="resumeOpFirstMain">
-
+        <div class="formHint" v-if="formHint.isShow && !messagePop.isShow">
+          <img class="" src="../../../assets/images/activity/putIn/live_icon_question2.png" />
+          {{formHint.text}}
+        </div>
         <div class="form">
           <div class="formPic">
             <el-upload
@@ -143,6 +146,10 @@
     handleData = {
       'attach_type': 'avatar'
     }
+    formHint = {    //form提示框
+      isShow: false,
+      text: ''
+    }
     step = 1
     mounted () {
       let query = this.$route.query
@@ -224,8 +231,7 @@
 
       checkBirth() {
         var pattern = /^1(3|4|5|6|7|8|9)\d{9}$/
-        if(this.form1.birth.length<1){
-
+        if(!pattern.test(this.form1.birth)){
           this.$message({
             type: 'info',
             message: '请选择出生年月'
@@ -238,7 +244,7 @@
 
       checkWorkYear() {
         var pattern = /^1(3|4|5|6|7|8|9)\d{9}$/
-        if(this.form1.startWorkYear.length<1){
+        if(!pattern.test(this.form1.startWorkYear)){
           this.$message({
             type: 'info',
             message: '请选择工作时间'
@@ -316,13 +322,23 @@
       return newForm
     }
     
-    
+    setHint (text) {
+      console.log(text)
+      this.formHint = {    //form提示框
+        isShow: true,
+        text: text
+      }
+      clearTimeout(this.hintSetTime) 
+      this.hintSetTime = setTimeout(()=> {
+        this.formHint.isShow = false
+      }, 3000);
+    }
 
     handleClick(e) {
       if(e === 'out'){
         this.$store.dispatch('logoutApi')
           .then(() => {
-            this.$router.push({name: 'login'})
+            this.$router.push({name: 'putIn'})
           })
       }
     }
@@ -469,6 +485,33 @@
     background-size: auto 112px;
     .contain {
 
+    }
+    .formHint {
+      height:60px;
+      background:rgba(237,92,92,0.1);
+      border-radius:4px;
+      padding: 0 27px;
+      position: absolute;
+      left: 50%;
+      top: 0px;
+      transform: translate(-50%,0);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size:14px;
+      font-family:PingFangSC;
+      font-weight:400;
+      color:rgba(237,92,92,1);
+      white-space:nowrap;
+      &.two {
+        height:34px;
+      }
+      img {
+        width: 14px;
+        height: 14px;
+        margin-right: 8px;
+        display: block;
+      }
     }
   }
   .title {
