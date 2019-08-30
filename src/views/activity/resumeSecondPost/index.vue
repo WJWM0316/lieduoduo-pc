@@ -335,9 +335,10 @@
     // 验证
     validate() {
       if(!this.checkCompany()) return false
-      if(!this.checkDuty()) return false
       if(!this.checkPositionTypeId()) return false
       if(!this.checkPosition()) return false
+      if(!this.checkDuty()) return false
+        
       return true
     }
 
@@ -359,6 +360,7 @@
     saveDuty() {
       let lgh = this.textarea.length
       if(lgh<10 || lgh>1000) {
+        this.setHint('请填写10-1000的工作内容')
         return
       }
       this.form2.duty = this.textarea
