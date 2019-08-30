@@ -183,7 +183,7 @@
                 </div>
               </div>
           </div>
-          <div class="modal-body">
+          <div class="modal-body" v-if="selectAdv.type === 1 && selectAdv.hotPositions.length>0">
             <h3 class="modal-category"> 
               热招职位
             </h3>
@@ -193,6 +193,18 @@
               </div>
             </div>
           </div>
+
+          <div class="modal-body" v-if="selectAdv.type === 2 && selectAdv.positionDemand.length>0">
+            <h3 class="modal-category"> 
+              职位要求
+            </h3>
+            <div class="hot-position">
+              <div class="hot-lab" v-for="(item,index) in selectAdv.positionDemand">
+                {{item}}
+              </div>
+            </div>
+          </div>
+
           <div class="modal-body benefit">
             <h3 class="modal-category"> 
               福利
@@ -632,6 +644,7 @@
             background:rgba(255,255,255,1);
             border-radius:56px;
             border:1px solid rgba(101,39,145,0.8);
+            margin-bottom: 10px;
           }
         }
         .register-detail {
