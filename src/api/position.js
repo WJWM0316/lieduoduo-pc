@@ -96,4 +96,3 @@ export const getPositionTypeApi = data => request(
 	'get',
 	data
 )
-
