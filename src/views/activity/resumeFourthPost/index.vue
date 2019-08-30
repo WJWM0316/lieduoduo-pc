@@ -626,6 +626,9 @@
         font-weight:300;
         color:rgba(146,146,146,1);
       }
+      .el-cascader__label {
+        padding: 0 30px;
+      }
     }
     .el-select{
       height: 100%;
