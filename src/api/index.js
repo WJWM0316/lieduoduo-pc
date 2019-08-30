@@ -11,7 +11,6 @@ import { getAccessToken, removeAccessToken, removeAccessToPPTXken } from './cach
 axios.defaults.baseURL = baseHost()
 export const changeBaseURL = (type) => {
   axios.defaults.baseURL = type ? changeBaseHost(type) :baseHost()
-  console.log(axios.defaults.baseURL)
 }
 
 // 请求拦截器

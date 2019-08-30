@@ -199,7 +199,7 @@
     // 第一步
       checkAva() {
         var pattern = /^[\u4E00-\u9FA5\s]{2,10}$/
-        if(!this.form1.avatar){
+        if(!this.form1.avatar && this.form1.avatar!==0){
           this.$message({
             type: 'info',
             message: '请上传你的头像'

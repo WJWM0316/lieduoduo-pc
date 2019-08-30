@@ -3,12 +3,7 @@
 <div id="resume-three">
   <header id="header2" >
     <section>
-      <div class="left">
-        <div class="companyMsg">
-          <p>精英人才招聘神器</p>
-          <p>www.lieduoduo.co</p>
-        </div>
-      </div>  
+      <img class="left_logo" src="../../../assets/images/activity/putIn/logo_lieduodou@2x.png" />
         <el-dropdown trigger="click">
           <div class="headerBtn">
 
@@ -320,25 +315,10 @@
       margin-left: 20px;
     }
   }
-  .left {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    text-align: left;
-    .logo {
-      width:40px;
-      height:40px;
-      display: block;
-      margin-right: 10px;
-    }
-    .companyMsg {
-      p {
-        font-size:14px;
-        font-weight:500;
-        color:rgba(110,31,150,1);
-        line-height:20px;
-      }
-    }
+  .left_logo {
+    width:160px;
+    height:auto;
+    display: block;
   }
 }
 #resume-three {
@@ -347,9 +327,8 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  background: #652791;
   padding-bottom: 130px;
-  // background: url(../../../assets/images/bg.png) 100% repeat #652791;
+  background: url(../../../assets/images/activity/putIn/bg_createjl.png) 100% repeat #652791;
   .content {
     padding-top: 64px;
     position: relative;
