@@ -333,7 +333,7 @@
   width:450px;
   height:70px;
   padding: 10px 22px;
-  margin: 38px auto 50px;
+  margin: 38px auto 60px;
   background:rgba(111,55,153,1);
   border-radius:100px 100px 100px 0px;
   display: flex;
@@ -346,6 +346,7 @@
     height:46px;
     border-radius:50%;
     margin-right: 20px;
+    background: #fff;
   }
   .recommendMsg {
     text-align: left;
@@ -503,7 +504,7 @@
       border:4px solid rgba(255,255,255,1);
       border-radius: 50%;
       position: absolute;
-      top: -53px;
+      top: -40px;
       left: 50%;
       margin-left: -53px;
       box-sizing: border-box;
@@ -579,6 +580,17 @@
           display: flex;
           align-items: center;
           justify-content: center;
+
+          &.is-checked {
+            border: 1px solid #8351A7;
+          }
+          .el-radio__input.is-checked .el-radio__inner {
+            border-color: #8351A7;
+            background: #8351A7;
+          }
+          .el-radio__input.is-checked+.el-radio__label{
+            color: #8351A7;
+          }
         }
       }
     }

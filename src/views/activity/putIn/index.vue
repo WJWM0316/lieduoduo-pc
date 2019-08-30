@@ -84,7 +84,7 @@
         </div>
         
       </div>
-      <div class="lp-login animated-base" :class="{'fixed':messagePop.isShow }">
+      <div class="lp-login" :class="{'fixed':messagePop.isShow ,'cake':loginModelAnimale}">
         <p class="lp-login-title">
           <span class="green">7秒</span>注册 1000+高薪职位任你选
         </p>
@@ -260,7 +260,7 @@
       isShow: false,
       type: 'help'
     }
-    selectList = []
+    selectList = []  //搜索结果
     codePic = {
       key:'',
       img: ''
@@ -278,15 +278,17 @@
     showError = false
     timer = 60
     codeStatus = true
-    searchJobData = {
+    searchJobData = {    //搜索职位
       page: 1,
       count: 20,
       keyword: ''
     }
     labType = 1
-    positionTypeList = []
-    advList = []
-    selectAdv = {}
+    positionTypeList = [] //职位类型列表
+    advList = []   //广告列表
+    selectAdv = {}  //点击logo参数
+
+    loginModelAnimale = false //登录框动画显示
     mounted () {
       let query = this.$route.query
       this.getPositionTypes()
@@ -347,7 +349,12 @@
       })
     }
 
-    refresh(){}
+    setAnimate(){
+      this.loginModelAnimale = true
+      setTimeout(()=>{
+        this.loginModelAnimale = false
+      },2000)
+    }
 
     submit () {
       if(this.validate()){
@@ -442,6 +449,8 @@
     setAdv(item) {
       this.selectAdv = item
       this.openMask('job')
+
+      this.setAnimate()
     }
 
     openMask(type) {
@@ -832,7 +841,6 @@
     .contain {
       width: 1000px;
       margin: 0 auto;
-      overflow: hidden;
       .lp_left {
         width: 564px;
         float: left;
@@ -1271,13 +1279,6 @@
           }
         }
       }
-
-      .animated-base{
-        a {
-          font-size: 14px;
-          text-decoration: underline;
-        }
-      }
     }
   }
   .clearfix {
@@ -1345,5 +1346,68 @@
     box-sizing: border-box;
     padding: 20px;
   }
+}
+
+.cake{
+  animation:move 1s 1;
+  -webkit-animation:move 1s 1;
+  transform-origin:bottom;
+  -webkit-transform-origin:bottom;
+}
+
+@keyframes move
+{
+    0%{ 
+      -webkit-transform:rotate(0deg);
+      transform:rotate(0deg);
+    }
+    20% {  
+      -webkit-transform:rotate(-6deg);
+      transform:rotate(-6deg);
+    }
+    40% {  
+      -webkit-transform:rotate(6deg);
+      transform:rotate(6deg);
+    }
+    60% {  
+      -webkit-transform:rotate(-6deg);
+      transform:rotate(-6deg);
+    }
+    80% {  
+      -webkit-transform:rotate(6deg);
+      transform:rotate(6deg);
+    }
+    100% {  
+      -webkit-transform:rotate(0deg);
+      transform:rotate(0deg);
+    }
+}
+
+@-webkit-keyframes move
+{
+    0%{ 
+      -webkit-transform:rotate(0deg);
+      transform:rotate(0deg);
+    }
+    20% {  
+      -webkit-transform:rotate(-6deg);
+      transform:rotate(-6deg);
+    }
+    40% {  
+      -webkit-transform:rotate(6deg);
+      transform:rotate(6deg);
+    }
+    60% {  
+      -webkit-transform:rotate(-6deg);
+      transform:rotate(-6deg);
+    }
+    80% {  
+      -webkit-transform:rotate(6deg);
+      transform:rotate(6deg);
+    }
+    100% {  
+      -webkit-transform:rotate(0deg);
+      transform:rotate(0deg);
+    }
 }
 </style>

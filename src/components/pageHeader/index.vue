@@ -345,7 +345,6 @@ export default class ComponentHeader extends Vue {
   isShowSwitch = false
 
 	created(){
-		console.log('header')
 		let pageName = this.$store.state.pageName
 		let userInfo = this.$store.state.userInfo
 		let isBusiness = userInfo.isBusiness
@@ -353,6 +352,7 @@ export default class ComponentHeader extends Vue {
 		let qiuzhiPages = ['applyIndex']
 
 		this.userInfo = this.$store.state.userInfo
+		if(!this.userInfo.hasOwnProperty('isBusiness')) return
 		if(zhaopinPages.includes(pageName)){
 			if(isBusiness !== 1 ){
 				this.$router.push({

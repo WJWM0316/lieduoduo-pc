@@ -694,6 +694,7 @@
       height:46px;
       border-radius:50%;
       margin-right: 20px;
+      background: #fff;
     }
     .recommendMsg {
       text-align: left;
