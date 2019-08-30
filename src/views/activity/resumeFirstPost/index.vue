@@ -180,7 +180,7 @@
     getResumeFirst() {
       getResumeFirstApi().then(res => {
         let data = res.data.data
-        if(data.avatarId !== 0) this.imageUrl = data.avatar.smallUrl
+        if(data.avatarId !== 0) this.imageUrl = data.avatar.url
         this.form1 = {
           avatar: data.avatarId !== 0 ? data.avatarId : '',
           gender: data.gender.toString(),
@@ -189,7 +189,7 @@
           birth: data.birth*1000,
           from: 1,
         }
-        console.log(res.data)
+        console.log(this.form1)
       })
     }
 
@@ -336,45 +336,11 @@
   }
 </script>
 <style lang="less">
-.recommend {
-  width:450px;
-  height:70px;
-  padding: 10px 22px;
-  margin: 38px auto 60px;
-  background:rgba(111,55,153,1);
-  border-radius:100px 100px 100px 0px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  border-radius: 50px;
-  box-sizing: border-box;
-  .recommendAva {
-    width:46px;
-    height:46px;
-    border-radius:50%;
-    margin-right: 20px;
-    background: #fff;
-  }
-  .recommendMsg {
-    text-align: left;
-    .msg_position {
-      font-size:16px;
-      font-weight:500;
-      color:rgba(255,255,255,1);
-      line-height:16px;
-    }
-    .msg_text {
-      font-size:14px;
-      font-weight:300;
-      color:rgba(255,255,255,1);
-      line-height:14px;
-      margin-top: 6px;
-    }
-  }
-}
+
 .resumePost {
-  padding: 0;
-  padding-bottom: 100px;
+  padding: 48px 0 100px 0;
+  height: 100vh;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -466,7 +432,6 @@
     }
   }
   .middle {
-    padding-top: 108px;
     position: relative;
     height: 660px;
     // background: #00b38a;
@@ -622,13 +587,6 @@
           &.is-checked {
             border: 1px solid #8351A7;
           }
-          .el-radio__input.is-checked .el-radio__inner {
-            border-color: #8351A7;
-            background: #8351A7;
-          }
-          .el-radio__input.is-checked+.el-radio__label{
-            color: #8351A7;
-          }
         }
       }
     }
@@ -676,27 +634,41 @@
     }
   }
 
-  .triangle_border_left{
-      width: 0;
-      height: 0;
-      border-width: 8px 11px 8px 0;
-      border-style: solid;
-      border-color: transparent #fff transparent transparent;
-      position: absolute;
-      left: -10px;
-      top: 50%;
-      margin-top: -20px;
-  }
-  .triangle_border_left span{
-      display:block;
-      width:0;
-      height:0;
-      border-width:28px 28px 28px 0;
-      border-style:solid;
-      border-color:transparent #fc0 transparent transparent;/*透明 黄 透明 透明 */
-      position:absolute;
-      top:0px;
-      left:0px;
+  .recommend {
+    width:450px;
+    height:70px;
+    padding: 10px 22px;
+    margin: 38px auto 60px;
+    background:rgba(111,55,153,1);
+    border-radius:100px 100px 100px 0px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border-radius: 50px;
+    box-sizing: border-box;
+    .recommendAva {
+      width:46px;
+      height:46px;
+      border-radius:50%;
+      margin-right: 20px;
+      background: #fff;
+    }
+    .recommendMsg {
+      text-align: left;
+      .msg_position {
+        font-size:16px;
+        font-weight:500;
+        color:rgba(255,255,255,1);
+        line-height:16px;
+      }
+      .msg_text {
+        font-size:14px;
+        font-weight:300;
+        color:rgba(255,255,255,1);
+        line-height:14px;
+        margin-top: 6px;
+      }
+    }
   }
 
   .el-dropdown-menu {

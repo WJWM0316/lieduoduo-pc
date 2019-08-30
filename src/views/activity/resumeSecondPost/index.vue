@@ -373,15 +373,15 @@
 <style lang="less">
 
 .resumeSecondPost {
-  padding: 0;
-  padding-bottom: 130px;
+  padding: 48px 0 100px 0;
+  height: 100vh;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   background: url(../../../assets/images/activity/putIn/bg_createjl.png) 100% repeat #652791;
   .middle {
-    padding-top: 108px;
     position: relative;
     height: 660px;
     // background: #00b38a;

@@ -32,7 +32,7 @@
                   <div class="job_blo" v-for="(item,index) in selectList">
                     <div class="job_blo_left ellipsis">{{item.companyShortname}}</div>
                     <div class="job_blo_center ellipsis">{{item.positionName}}</div>
-                    <div class="job_blo_right">{{item.emolumentMin}}k-{{item.emolumentMax}}k</div>
+                    <div class="job_blo_right">{{item.emolumentMin}}k-{{item.emolumentMax}}k<span v-if="item.annualSalary>12">·{{item.annualSalary}}</span></div>
                   </div>
                 </div>
                 <div class="select_op">
@@ -54,12 +54,12 @@
               <template v-for="(item, index) in advList " v-if="index<9">
                 <div class="select_info"  @click="setAdv(item)"
                 v-if="index<4">
-                  <img class="banner" :src="item.companyLogo.middleUrl">
+                  <img class="banner" :src="item.cardCompanyLogo.middleUrl">
                 </div>
 
                 <div class="select_info info_type2"  @click="setAdv(item)"
                 v-else-if="index>3&&index<7">
-                  <img class="banner" :src="item.companyLogo.middleUrl">
+                  <img class="banner" :src="item.cardCompanyLogo.middleUrl">
                   <p class="positionName ellipsis">{{item.positionName}}</p>
                   <p class="emolument ellipsis">
                     {{item.emolumentMin}}k-{{item.emolumentMax}}k
@@ -101,7 +101,6 @@
               <span class="getcode" @click="getCode" v-if="codeStatus">获取验证码</span>
               <span class="getcode false" v-else>{{timer}}s</span>
             </li>
-
             <li v-if="codePic.img">
               <img class="input_icon" src="../../../assets/images/activity/putIn/icon_photo.png" />
               <input placeholder="请输入图片验证码" maxlength="4" v-model="form.captchaValue" >
@@ -425,8 +424,8 @@
     getPicCode() {
       getCaptchaApi().then(res => {
         console.log(res)
-        this.codePic = res.data
-        this.form.captchaKey = res.data.key
+        this.codePic = res.data.data
+        this.form.captchaKey = res.data.data.key
       })
     }
 
@@ -1017,7 +1016,7 @@
               padding: 0 20px;
               box-sizing: border-box;
               display: flex;
-              margin-bottom: 20px;
+              margin-bottom: 18px;
               background:rgba(0,0,0,0.2);
               border-radius:8px;
               .search-lab {
@@ -1062,12 +1061,8 @@
                   height:141px;
                   background:rgba(255,255,255,1);
                   border-radius:4px;
-                  .banner {
-                    height: 40px;
-                    width: auto;
-                    margin-bottom: 14px;
-                  }
                   .positionName {
+                    margin-top: 14px;
                     margin-bottom: 4px;
                   }
                 }
@@ -1082,7 +1077,7 @@
                   justify-content: space-between;
                   .banner {
                     width: 70px;
-                    height: auto;
+                    height: 70px;
                   }
                   .positionName {
                     margin-top: 4px;
@@ -1111,8 +1106,8 @@
                 }
               }
               .banner {
-                width:  130px;
-                height: auto;
+                width:  122px;
+                height: 52px;
                 border-radius:4px;
               }
             }
