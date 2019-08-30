@@ -222,7 +222,7 @@
           endTime: data.endTime*1000,  
           from: 1,  
         }
-        // this.postion = data.positionTypeId.toString()
+        this.postion = [data.positionTypeTopPid,data.positionTypePid,data.positionTypeId]
       })
     }
 
@@ -374,9 +374,7 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  background: #652791;
-  // background: url(../../../assets/images/bg.png) 100% repeat #652791;
-  
+  background: url(../../../assets/images/activity/putIn/bg_createjl.png) 100% repeat #652791;
   .middle {
     padding-top: 108px;
     position: relative;
@@ -681,7 +679,7 @@
     width:450px;
     height:70px;
     padding: 10px 22px;
-    margin: 38px auto 50px;
+    margin: 38px auto 56px;
     background:rgba(111,55,153,1);
     border-radius:100px 100px 100px 0px;
     display: flex;
