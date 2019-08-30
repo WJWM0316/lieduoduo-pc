@@ -338,7 +338,7 @@
       if(!this.checkPositionTypeId()) return false
       if(!this.checkPosition()) return false
       if(!this.checkDuty()) return false
-        
+
       return true
     }
 
@@ -376,7 +376,8 @@
 <style lang="less">
 
 .resumeSecondPost {
-  padding: 48px 0 100px 0;
+  padding: 108px 0 100px 0;
+  min-height: 1000px;
   height: 100vh;
   box-sizing: border-box;
   display: flex;
@@ -386,14 +387,12 @@
   background: url(../../../assets/images/activity/putIn/bg_createjl.png) 100% repeat #652791;
   .middle {
     position: relative;
-    height: 660px;
     // background: #00b38a;
     background-repeat: no-repeat;
     background-position: bottom;
     width: 100%;
     background-size: auto 112px;
     .contain {
-
     }
   }
   .title {

@@ -350,17 +350,15 @@
   }
 }
 #resume-three {
-  padding: 0;
+  padding: 108px 0 100px 0;
+  min-height: 900px;
+  height: 100vh;
+  box-sizing: border-box;
   display: flex;
-  align-items: center;
-  justify-content: center;
   flex-direction: column;
-  padding-bottom: 130px;
   background: url(../../../assets/images/activity/putIn/bg_createjl.png) 100% repeat #652791;
   .content {
-    padding-top: 64px;
     position: relative;
-    height: 660px;
     // background: #00b38a;
     background-repeat: no-repeat;
     background-position: bottom;
@@ -372,7 +370,6 @@
     font-weight:500;
     color:#fff;
     line-height:32px;
-    padding-top: 48px;
     padding-bottom: 38px;
     span {
       color:#FFDC29;

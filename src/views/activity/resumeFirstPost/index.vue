@@ -180,7 +180,7 @@
     getResumeFirst() {
       getResumeFirstApi().then(res => {
         let data = res.data.data
-        if(data.avatarId !== 0) this.imageUrl = data.avatar.url
+        // if(data.avatarId !== 0) this.imageUrl = data.avatar.url
         this.form1 = {
           avatar: data.avatarId !== 0 ? data.avatarId : '',
           gender: data.gender.toString(),
@@ -338,14 +338,17 @@
 <style lang="less">
 
 .resumePost {
-  padding: 48px 0 100px 0;
+  // margin-top: 60px;
+  // padding-top: 48px;
+  // min-height: 900px;
+  padding: 108px 0 100px 0;
   height: 100vh;
+  min-height: 900px;
+  
   box-sizing: border-box;
   display: flex;
-  align-items: center;
   justify-content: center;
   flex-direction: column;
-  background: #652791;
   background: url(../../../assets/images/activity/putIn/bg_createjl.png) 100% repeat #652791;
   #resumeHeader {
     height:60px;
@@ -433,7 +436,6 @@
   }
   .middle {
     position: relative;
-    height: 660px;
     // background: #00b38a;
     background-repeat: no-repeat;
     background-position: bottom;
@@ -526,12 +528,11 @@
       .avatar-uploader-icon {
         font-size: 28px;
         color: #8c939d;
-        width: 50px;
-        height: auto;
+        width:40px;
+        height:auto;
         line-height: 100%;
         text-align: center;
         position: relative;
-        left: 6px;
         top: -2px;
       }
       .avatar {
