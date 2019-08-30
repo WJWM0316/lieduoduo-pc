@@ -198,7 +198,7 @@
     imageUrl = ''
     step = 1
     options = []
-    postion = ''
+    postion = []
     mounted () {
       let query = this.$route.query
       this.userInfo = this.$store.state.userInfo
@@ -212,6 +212,7 @@
     getResumeSecond() {
       getResumeSecondApi().then(res => {
         let data = res.data.data[0]
+        if(res.data.data.length<1) return
         console.log(data)
         this.form2 = {
           company: data.company,
