@@ -100,7 +100,7 @@
 
       <div class="btn-box">
         <div class="over-lay">
-          <div class="btn-pre">上一步</div>
+          <div class="btn-pre" @click="lastStep">上一步</div>
           <div class="btn-confirm" @click="check">完成</div>
         </div>
         <div class="mask"></div>
@@ -453,6 +453,10 @@
         this.formHint.isShow = false
       }, 3000);
     }
+
+    lastStep() {
+      this.$router.push({name: 'resumeThirdPost'})
+    }
   }
 </script>
 <style lang="less">
@@ -654,7 +658,9 @@
         background: transparent;
         box-sizing: border-box;
         padding: 0 100px 0 30px;
-        color: #282828;
+        color:rgba(40,40,40,1);
+        font-size:14px;
+        font-weight:400;
       }
       .limit{
         position: absolute;
@@ -799,9 +805,6 @@
       padding: 0 30px;
     }
     .has-value{
-      color: #282828;
-      font-size: 14px;
-      font-weight: 300;
       height: 48px;
       line-height: 48px;
       text-align: left;
@@ -810,6 +813,10 @@
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
+
+      color:rgba(40,40,40,1);
+      font-size:14px;
+      font-weight:400;
     }
     .form-header{
       text-align: center;

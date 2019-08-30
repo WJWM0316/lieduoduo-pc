@@ -556,6 +556,9 @@
         background: transparent;
         box-sizing: border-box;
         padding: 0 100px 0 30px;
+        color:rgba(40,40,40,1);
+        font-size:14px;
+        font-weight:400;
       }
       .limit{
         position: absolute;

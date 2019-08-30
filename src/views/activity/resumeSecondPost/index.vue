@@ -252,9 +252,10 @@
 
     // 
     checkCompany() {
-      var pattern = /^[\u0391-\uFFE5A-Za-z\s]{2,50}$/
+      // var pattern = /^[\u0391-\uFFE5A-Za-z\s]{2,50}$/
+      var pattern = /^.{2,20}$/
       if(!pattern.test(this.form2.company)){
-        this.setHint('请填写2-50字的公司名称')
+        this.setHint('请填写2-20字的公司名称')
         return false
       }else {
         return true
@@ -469,6 +470,9 @@
         background: transparent;
         box-sizing: border-box;
         padding: 0 100px 0 30px;
+        color:rgba(40,40,40,1);
+        font-size:14px;
+        font-weight:400;
       }
       .limit{
         position: absolute;
@@ -482,11 +486,6 @@
       .el-cascader{
         width: 100%;
         height: 100%;
-        .el-cascader__label {
-          display: flex;
-          align-items: center;
-          padding: 0 30px;
-        }
         .el-input {
           height: 100%;
         }

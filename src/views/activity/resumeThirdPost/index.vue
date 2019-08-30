@@ -472,6 +472,11 @@
       border:1px solid rgba(242,237,245,1);
       margin-bottom: 20px;
       position: relative;
+      .el-input__inner {
+        color:rgba(40,40,40,1);
+        font-size:14px;
+        font-weight:400;
+      }
       input{
         width: 100%;
         height: 100%;
@@ -479,6 +484,9 @@
         background: transparent;
         box-sizing: border-box;
         padding: 0 100px 0 30px;
+        color:rgba(40,40,40,1);
+        font-size:14px;
+        font-weight:400;
       }
       .limit{
         position: absolute;
@@ -610,7 +618,7 @@
       font-weight: 300;
     }
     .form-header{
-      text-align: right;
+      text-align: center;
       margin-bottom: 40px;
       overflow: hidden;
       line-height: 33px;
