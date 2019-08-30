@@ -345,14 +345,14 @@ export default class ComponentHeader extends Vue {
   isShowSwitch = false
 
 	created(){
-		let pageName = this.$store.state.pageName
 		let userInfo = this.$store.state.userInfo
+		this.userInfo = userInfo
+		if(!userInfo.hasOwnProperty('isBusiness')) return
+		// 扫码登陆
+		let pageName = this.$store.state.pageName
 		let isBusiness = userInfo.isBusiness
 		let zhaopinPages = ['recruiterIndex','postJob','candidate']
 		let qiuzhiPages = ['applyIndex']
-
-		this.userInfo = this.$store.state.userInfo
-		if(!this.userInfo.hasOwnProperty('isBusiness')) return
 		if(zhaopinPages.includes(pageName)){
 			if(isBusiness !== 1 ){
 				this.$router.push({
@@ -374,7 +374,6 @@ export default class ComponentHeader extends Vue {
 		}
 		switchId(this.identity)
 		changeBaseURL()
-		// console.log('Header===', this.identity)
 	}
 
 	refresh(){

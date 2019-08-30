@@ -516,9 +516,8 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  background: #652791;
   padding-bottom: 130px;
-  // background: url(../../../assets/images/bg.png) 100% repeat #652791;
+  background: url(../../../assets/images/activity/putIn/bg_createjl.png) 100% repeat #652791;
   .content {
     padding-top: 64px;
     position: relative;

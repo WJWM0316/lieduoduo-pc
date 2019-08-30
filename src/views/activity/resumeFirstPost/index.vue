@@ -52,7 +52,7 @@
               :on-success="handleAvatarSuccess"
               :before-upload="beforeAvatarUpload">
               <img v-if="imageUrl" :src="imageUrl" class="avatar">
-              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+              <img v-else  class="avatar-uploader-icon" src="../../../assets/images/activity/putIn/btn_pic.png" />
             </el-upload>
           </div>
           <div class="formItem">
@@ -373,7 +373,7 @@
   justify-content: center;
   flex-direction: column;
   background: #652791;
-  // background: url(../../../assets/images/bg.png) 100% repeat #652791;
+  background: url(../../../assets/images/activity/putIn/bg_createjl.png) 100% repeat #652791;
   #resumeHeader {
     height:60px;
     background: #fff;
@@ -484,8 +484,6 @@
   .clearfix {
       zoom: 1;
   }
-
-
   .resumeOpFirstMain {
     width:450px;
     height:471px;
@@ -510,7 +508,6 @@
       box-sizing: border-box;
       overflow: hidden;
       .avatar-uploader {
-        background: #fff;
         width: 100%;
         height: 100%;
         cursor: pointer;
@@ -521,15 +518,21 @@
         .el-upload {
           width: 100%;
           height: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
         }
       }
       .avatar-uploader-icon {
         font-size: 28px;
         color: #8c939d;
-        width: 100%;
-        height: 100%;
+        width: 50px;
+        height: auto;
         line-height: 100%;
         text-align: center;
+        position: relative;
+        left: 6px;
+        top: -2px;
       }
       .avatar {
         width: 100%;
