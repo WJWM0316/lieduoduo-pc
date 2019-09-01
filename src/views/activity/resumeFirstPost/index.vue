@@ -3,12 +3,8 @@
 <div class="resumePost">
   <header id="resumeHeader" >
     <section>
-      <div class="left">
-        <div class="companyMsg">
-          <p>精英人才招聘神器</p>
-          <p>www.lieduoduo.co</p>
-        </div>
-      </div>  
+      <img class="left_logo" src="../../../assets/images/activity/putIn/logo_lieduodou@2x.png" />
+       
         <el-dropdown trigger="click"  @command="handleClick" >
           <div class="headerBtn">
             <div class="right" v-if="userInfo && userInfo.token">
@@ -31,12 +27,11 @@
     <div class="contain clearfix">
 
       <h3 class="title"><span>三分钟</span>创建微简历，<span>1000+名企</span>高薪职位任你选</h3>
-
-      <div class="recommend">
-        <img class="recommendAva" src="../../../assets/images/open.png" />
-        <div class="recommendMsg">
-          <p class="msg_position">爱奇艺产品总监</p>
-          <p class="msg_text">很期待与你这样的精英人才相遇</p>
+      <div class="slogon-box">
+        <div class="img-box"></div>
+        <div class="infos">
+          <div class="h33">爱奇艺产品总监</div>
+          <div class="p44">很期待与你这样的精英人才相遇</div>
         </div>
       </div>
       <div class="resumeOpFirstMain">
@@ -45,8 +40,18 @@
           {{formHint.text}}
         </div>
         <div class="form">
+
           <div class="formPic">
-            <el-upload
+            <myCropper
+              class="cropperBox"
+              :hasUploaded="imageUpload.hasUploaded"
+              :btnTxt="imageUpload.btnTxt"
+              :accept="imageUpload.accept"
+              @success="imageUploadSuccess"
+              @fail="imageUploadFail"></myCropper>
+            <img v-if="imageUrl" :src="imageUrl" class="avatar">
+            <img v-else  class="avatar-uploader-icon" src="../../../assets/images/activity/putIn/btn_pic.png" />
+            <!-- <el-upload
               class="avatar-uploader"
               action="https://qiuzhi-api.lieduoduo.ziwork.com/attaches"
               :data = "handleData"
@@ -54,9 +59,7 @@
               :show-file-list="false"
               :on-success="handleAvatarSuccess"
               :before-upload="beforeAvatarUpload">
-              <img v-if="imageUrl" :src="imageUrl" class="avatar">
-              <img v-else  class="avatar-uploader-icon" src="../../../assets/images/activity/putIn/btn_pic.png" />
-            </el-upload>
+            </el-upload> -->
           </div>
           <div class="formItem">
 
@@ -105,12 +108,16 @@
   import Component from 'vue-class-component'
   import { getUserInfoApi, searchResumeStepApi, setResumeFirstApi, setResumeSecondApi, setResumeThirdApi, setResumeFourthApi, getResumeFirstApi } from '../../../api/putIn'
   import { getUserIdentity, switchId } from '../../../../config.js'
+
+  import MyCropper from '../../../components/cropper/index.vue'
   import { getAccessToken } from '../../../api/cacheService.js'
+
   @Component({
     name: 'lighthouse-list',
     methods: {
     },
-    computed: {},
+    computed: {
+    },
     watch: {
       '$route': {
         handler() {
@@ -119,7 +126,9 @@
         immediate: true
       }
     },
-    components: {}
+    components: {
+      MyCropper,
+    }
   })
   export default class CourseList extends Vue {
     userInfo = {}
@@ -150,13 +159,33 @@
       isShow: false,
       text: ''
     }
+    imageUpload = {
+      hasUploaded: false,
+      btnTxt: '',
+      tips: '建议尺寸160X160px ，JPG、PNG格式，图片小于5M',
+      showError: false,
+      accept: '.jpeg, .png, .jpg'
+    }
     step = 1
+
+    imageUploadSuccess(res) {
+      this.form1.avatar = res.id
+      this.imageUrl = res.url
+    }
+
+    imageUploadFail(res) {
+      if(Object.prototype.toString.call(res) === '[object String]') {
+        this.setHint(`${res}~`)
+      } else {
+        this.setHint(`${res.msg}~`)
+      }
+    }
+
+
     mounted () {
       let query = this.$route.query
       this.handleHeaders['Authorization'] = getAccessToken()
       this.userInfo = this.$store.state.userInfo
-
-
     }
 
     init () {
@@ -413,25 +442,10 @@
         margin-left: 20px;
       }
     }
-    .left {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      text-align: left;
-      .logo {
-        width:40px;
-        height:40px;
-        display: block;
-        margin-right: 10px;
-      }
-      .companyMsg {
-        p {
-          font-size:14px;
-          font-weight:500;
-          color:rgba(110,31,150,1);
-          line-height:20px;
-        }
-      }
+    .left_logo {
+      width:160px;
+      height:auto;
+      display: block;
     }
   }
   .middle {
@@ -509,21 +523,16 @@
       margin-left: -53px;
       box-sizing: border-box;
       overflow: hidden;
-      .avatar-uploader {
-        width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .cropperBox {
+        position: absolute;
+        left: 0;
+        top: 0;
         height: 100%;
-        cursor: pointer;
-        position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        .el-upload {
-          width: 100%;
-          height: 100%;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
+        width: 100%;
+        z-index: 10;
       }
       .avatar-uploader-icon {
         font-size: 28px;
@@ -638,40 +647,57 @@
     }
   }
 
-  .recommend {
+  .slogon-box{
     width:450px;
     height:70px;
-    padding: 10px 22px;
+    background:rgba(255,255,255,0.1);
+    border-radius:100px;
     margin: 38px auto 60px;
-    background:rgba(111,55,153,1);
-    border-radius:100px 100px 100px 0px;
     display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    border-radius: 50px;
+    padding: 0 23px;
     box-sizing: border-box;
-    .recommendAva {
+    align-items: center;
+    position: relative;
+    &:after {
+      width: 0;
+      height: 0;
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 10px;
+      border-style: solid;
+      border-color: rgba(255,255,255,0.1) transparent transparent transparent;
+      display: block;
+      content: '';
+    }
+    .img-box{
       width:46px;
       height:46px;
-      border-radius:50%;
+      border-radius: 50%;
+      background: white;
       margin-right: 20px;
-      background: #fff;
     }
-    .recommendMsg {
+    .infos{
+      flex: 1;
       text-align: left;
-      .msg_position {
-        font-size:16px;
-        font-weight:500;
-        color:rgba(255,255,255,1);
-        line-height:16px;
-      }
-      .msg_text {
-        font-size:14px;
-        font-weight:300;
-        color:rgba(255,255,255,1);
-        line-height:14px;
-        margin-top: 6px;
-      }
+    }
+    .h33{
+      height:16px;
+      font-size:16px;
+      font-family:PingFangSC;
+      font-weight:500;
+      color:rgba(255,255,255,1);
+      line-height:16px;
+    }
+    .p44{
+      height:14px;
+      font-size:14px;
+      font-family:PingFangSC;
+      font-weight:300;
+      color:rgba(255,255,255,1);
+      line-height:14px;
+      margin-top: 6px;
     }
   }
 

@@ -27,11 +27,11 @@
 
       <h3 class="title"><span>三分钟</span>创建微简历，<span>1000+名企</span>高薪职位任你选</h3>
 
-      <div class="recommend">
-        <img class="recommendAva" src="../../../assets/images/open.png" />
-        <div class="recommendMsg">
-          <p class="msg_position">爱奇艺产品总监</p>
-          <p class="msg_text">很期待与你这样的精英人才相遇</p>
+      <div class="slogon-box">
+        <div class="img-box"></div>
+        <div class="infos">
+          <div class="h33">爱奇艺产品总监</div>
+          <div class="p44">很期待与你这样的精英人才相遇</div>
         </div>
       </div>
 
@@ -680,40 +680,57 @@
       }
     }
   }
-  .recommend {
+  .slogon-box{
     width:450px;
     height:70px;
-    padding: 10px 22px;
-    margin: 38px auto 56px;
-    background:rgba(111,55,153,1);
-    border-radius:100px 100px 100px 0px;
+    background:rgba(255,255,255,0.1);
+    border-radius:100px;
+    margin: 38px auto 20px;
     display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    border-radius: 50px;
+    padding: 0 23px;
     box-sizing: border-box;
-    .recommendAva {
+    align-items: center;
+    position: relative;
+    &:after {
+      width: 0;
+      height: 0;
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 10px;
+      border-style: solid;
+      border-color: rgba(255,255,255,0.1) transparent transparent transparent;
+      display: block;
+      content: '';
+    }
+    .img-box{
       width:46px;
       height:46px;
-      border-radius:50%;
+      border-radius: 50%;
+      background: white;
       margin-right: 20px;
-      background: #fff;
     }
-    .recommendMsg {
+    .infos{
+      flex: 1;
       text-align: left;
-      .msg_position {
-        font-size:16px;
-        font-weight:500;
-        color:rgba(255,255,255,1);
-        line-height:16px;
-      }
-      .msg_text {
-        font-size:14px;
-        font-weight:300;
-        color:rgba(255,255,255,1);
-        line-height:14px;
-        margin-top: 6px;
-      }
+    }
+    .h33{
+      height:16px;
+      font-size:16px;
+      font-family:PingFangSC;
+      font-weight:500;
+      color:rgba(255,255,255,1);
+      line-height:16px;
+    }
+    .p44{
+      height:14px;
+      font-size:14px;
+      font-family:PingFangSC;
+      font-weight:300;
+      color:rgba(255,255,255,1);
+      line-height:14px;
+      margin-top: 6px;
     }
   }
 
