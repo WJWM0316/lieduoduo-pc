@@ -745,7 +745,7 @@
     }
   }
   #resumeHeader {
-    height:60px;
+    height:64px;
     background: #fff;
     text-align: right;
     font-size: 14px;
@@ -757,7 +757,7 @@
     z-index: 1001;
 
     section {
-      height:60px;
+      height:64px;
       width: 1000px;
       display: flex;
       justify-content: space-between;

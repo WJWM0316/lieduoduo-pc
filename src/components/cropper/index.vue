@@ -394,20 +394,11 @@ export default class ComponentCropper extends Vue {
     top: 15px;
   }
   .modal-position {
-    font-size: 16px;
+    font-size: 20px;
     color: #000;
     line-height: 1;
     position: relative;
-    &:before{
-      content: '';
-      height: 100%;
-      width:6px;
-      height:16px;
-      background:rgba(255,226,102,1);
-      display: inline-block;
-      margin-right: 10px;
-      float: left;
-    };
+    text-align: center;
   }
   .icon-update {
     font-size: 14px;

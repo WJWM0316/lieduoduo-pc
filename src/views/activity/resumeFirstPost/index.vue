@@ -380,7 +380,7 @@
   flex-direction: column;
   background: url(../../../assets/images/activity/putIn/bg_createjl.png) 100% repeat #652791;
   #resumeHeader {
-    height:60px;
+    height:64px;
     background: #fff;
     text-align: right;
     font-size: 14px;
@@ -392,7 +392,7 @@
     z-index: 1001;
 
     section {
-      height:60px;
+      height:64px;
       width: 1000px;
       display: flex;
       justify-content: space-between;

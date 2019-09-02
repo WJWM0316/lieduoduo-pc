@@ -309,7 +309,6 @@
     }
 
     setHint (text) {
-      console.log(text)
       this.formHint = {    //form提示框
         isShow: true,
         text: text
@@ -336,7 +335,6 @@
         count: 10
       }).then(res => {
         this.advList = res.data.data
-        console.log(res.data.data)
       })
     }
 
@@ -347,7 +345,6 @@
     }
 
     searchJob() {
-      console.log(11)
       schJobApi({...this.searchJobData}).then(res => {
         this.selectList = res.data.data
         this.isShowSelect = true
@@ -370,7 +367,6 @@
             this.$store.commit('LOGIN',res.data.data)
             this.$store.dispatch('setUserInfo', res.data.data)
             getUserRoleInfo().then(res => {
-              console.log(res.data.data)
               if(res.data.data.isJobhunter === 1) {
                 this.$router.push({name: 'applyIndex'})
               }else {
@@ -379,7 +375,6 @@
             })
           // console.log(res.data.data)
         }).catch(e=>{
-          console.log(e)
           this.setHint(e.data.msg || '')
           if(e.data.code && e.data.code === 419) {
             this.codePic = e.data.data
@@ -413,9 +408,7 @@
       getCodeApi({ 
         mobile: this.form.mobile 
       }).then(res => {
-        console.log(res.data)
       }).catch(e=>{
-        console.log(e)
       })
     }
 
@@ -431,7 +424,6 @@
 
     getPicCode() {
       getCaptchaApi().then(res => {
-        console.log(res)
         this.codePic = res.data.data
         this.form.captchaKey = res.data.data.key
       })
