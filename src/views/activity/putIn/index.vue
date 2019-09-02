@@ -85,6 +85,7 @@
         
       </div>
       <div class="lp-login" :class="{'fixed':messagePop.isShow ,'cake':loginModelAnimale}">
+        <img class="icon-pointer" :class="{'companyType': messagePop.type==='job' }" src="../../../assets/images/activity/putIn/arrows.gif" v-if="messagePop.isShow" />
         <p class="lp-login-title">
           <span class="green">7秒</span>注册 1000+高薪职位任你选
         </p>
@@ -162,10 +163,6 @@
       <img class="icon-close" src="../../../assets/images/clo.png" @click.stop="cloMask" />
       <p class="register-text">立即注册</p>
       <p class="register-text2">即可查看更多职位信息</p>
-
-
-      <img class="icon-pointer" src="../../../assets/images/activity/putIn/arrows.gif" />
-
     </div>
 
     <div class="company-modal modal" @click.stop="" v-if="messagePop.type==='job' && advList.length>0 && selectAdv">
@@ -222,7 +219,6 @@
           注册后可查看更多职位信息
           <img class="" src="../../../assets/images/activity/putIn/arrowsR.png" />
         </div>
-        <img class="icon-pointer" src="../../../assets/images/activity/putIn/icon_hand@2x.png" />
       </div>
     </div>
 
@@ -546,16 +542,6 @@
     -webkit-transition: opacity .3s,top .3s;
     -o-transition: opacity .3s,top .3s;
     text-align: left;
-    .icon-pointer {
-      width: 66px;
-      height: 50px;
-      display: block;
-      position: fixed;
-      right: 50%;
-      top: 350px;
-      margin-right: -100px;
-      z-index: 1100;
-    }
     .company-content {
       .modal-top {
         margin-bottom: 40px;
@@ -693,7 +679,7 @@
     background:rgba(255,255,255,1);
     border-radius:4px;
     position: absolute;
-    top: 300px;
+    top: 293px;
     left: 50%;
     margin-left: -400px;
     display: flex;
@@ -723,21 +709,6 @@
       position: absolute;
       right: 15px;
       top: 15px;
-    }
-    .icon-pointer {
-      width: 152px;
-      height: 48px;
-      display: block;
-      position: absolute;
-      right: -108px;
-      top: 50%;
-      -webkit-transform: translateY(-50%);
-      transform: translateY(-50%);
-      position: absolute;
-      -webkit-animation-duration: 1s;
-      animation-duration: 1s;
-      -webkit-animation-fill-mode: both;
-      animation-fill-mode: both;
     }
   }
 }
@@ -1159,6 +1130,24 @@
           top: 130px;
           left: 50%;
           margin-left: 90px;
+        }
+        .icon-pointer {
+          width: 152px;
+          height: 48px;
+          display: block;
+          position: absolute;
+          left: -120px;
+          top: 50%;
+          margin-top: -28px;
+          position: absolute;
+          -webkit-animation-duration: 1s;
+          animation-duration: 1s;
+          -webkit-animation-fill-mode: both;
+          animation-fill-mode: both;
+          &.companyType {
+            left: -90px;
+            margin-top: 5px;
+          }
         }
         .lp-login-title {
           font-size: 24px;
