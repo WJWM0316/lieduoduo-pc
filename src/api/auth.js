@@ -53,4 +53,5 @@ export const deleteFileMsgApi = data => request('/jobhunter/del_attach', 'delete
 // 招聘官-我的信息(“我的”页面)
 export const getMyInfoApi = data => request(`/recruiter/myInfo`, 'get', data)
 
-
+// 获取用户信息
+export const getUserInfosApi = () => request(`/cur/user_info`, 'get')

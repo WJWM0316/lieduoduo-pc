@@ -212,9 +212,7 @@
 
     //查询简历完善步数
     searchResumeStep() {
-      searchResumeStepApi().then(res => {
-        console.log(res.data)
-      })
+      searchResumeStepApi().then(res => {})
     }
 
     getResumeFirst() {
@@ -229,13 +227,11 @@
           birth: data.birth*1000,
           from: 1,
         }
-        console.log(this.form1)
       })
     }
 
     // 验证
     validate1() {
-      console.log(this.form1)
       if(!this.checkName()) return false
       if(!this.checkWorkYear()) return false
       if(!this.checkBirth()) return false
@@ -275,7 +271,6 @@
 
       checkWorkYear() {
         var pattern = /^1(3|4|5|6|7|8|9)\d{9}$/
-        console.log(!this.form1.startWorkYear,this.form1.startWorkYear)
         if(!this.form1.startWorkYear && !pattern.test(this.form1.startWorkYear)){
           this.setHint('请选择工作时间')
           return false
@@ -290,11 +285,9 @@
       handleAvatarSuccess(res, file) {
         this.imageUrl = URL.createObjectURL(file.raw);
         this.form1.avatar = file.response.data[0].id
-        console.log(file)
       }
 
       beforeAvatarUpload(file) {
-        console.log(file)
         const fileNames = ['png','jpg','jpeg','gif','JPG','JPEG','GIF','PNG']
         const isLt10M = file.size / 1024 / 1024 < 10
         let name = file.name.split(".")[1]
@@ -336,7 +329,11 @@
         }
         const params = this.transformData(this.form1)
         subName({...params}).then(res => {
+          let userInfo = this.userInfo;
+          userInfo.avatarInfo.middleUrl = this.imageUrl
+          userInfo.realname = params.name
           this.step = index
+          this.$store.dispatch('setUserInfo', userInfo);
           this.$router.push({name: 'resumeSecondPost'})
         }).catch(
           err => this.setHint(err.data.msg || '错误')
@@ -348,13 +345,10 @@
       const newForm = Object.assign({}, this.form1 || {})
       newForm.birth =  newForm.birth/1000
       newForm.startWorkYear =  newForm.startWorkYear/1000
-
-      console.log(newForm)
       return newForm
     }
     
     setHint (text) {
-      console.log(text)
       this.formHint = {    //form提示框
         isShow: true,
         text: text
