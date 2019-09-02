@@ -32,7 +32,7 @@
                   <div class="job_blo" @click="openMask('login')" v-for="(item,index) in selectList">
                     <div class="job_blo_left ellipsis">{{item.companyShortname}}</div>
                     <div class="job_blo_center ellipsis">{{item.positionName}}</div>
-                    <div class="job_blo_right">{{item.emolumentMin}}K-{{item.emolumentMax}}K<span v-if="item.annualSalary>12">·{{item.annualSalary}}</span></div>
+                    <div class="job_blo_right">{{item.emolumentMin}}K-{{item.emolumentMax}}K<span v-if="item.annualSalary>12">·{{item.annualSalary}}薪</span></div>
                   </div>
                 </div>
                 <div class="select_op">
@@ -947,11 +947,9 @@
                     font-weight:400;
                     color:rgba(92,86,93,1);
                     flex: 1;
-                    margin-left: 20px;
                     margin-right: 20px;
                   }
                   .job_blo_right {
-                    width: 112px;
                     text-align: right;
                     font-size:18px;
                     font-weight:400;
