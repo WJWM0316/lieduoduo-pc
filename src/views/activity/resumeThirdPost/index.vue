@@ -359,12 +359,10 @@
   }
 }
 #resume-three {
-  padding: 108px 0 100px 0;
+  padding: 64px 0 100px 0;
   min-height: 900px;
   height: 100vh;
   box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
   background: url(../../../assets/images/activity/putIn/bg_createjl.png) 100% repeat #652791;
   .content {
     position: relative;
@@ -380,6 +378,7 @@
     color:#fff;
     line-height:32px;
     padding-bottom: 38px;
+    padding-top: 48px;
     span {
       color:#FFDC29;
     }

@@ -24,7 +24,7 @@
     </section>
   </header>
   <div class="middle">
-    <div class="contain clearfix">
+    <div class="contain">
 
       <h3 class="title"><span>三分钟</span>创建微简历，<span>1000+名企</span>高薪职位任你选</h3>
       <div class="slogon-box">
@@ -62,7 +62,6 @@
             </el-upload> -->
           </div>
           <div class="formItem">
-
             <input placeholder="请输入真实姓名" v-model="form1.name" class="default" maxlength="10" />
             <div class="limit">
               <span>{{form1.name.length}}</span>/<span>10</span>
@@ -82,9 +81,10 @@
               type="date"
               placeholder="选择你的出生年月"
               v-model="form1.birth"
+              format="yyyy-MM-dd"
               value-format="timestamp"
-              :picker-options="pickerOptions"
             ></el-date-picker>
+            <!-- <i class="el-icon-caret-bottom defalut-position center" id="test01"></i> -->
           </div>
 
           <div class="formTimeItem">
@@ -173,7 +173,7 @@
     pickerOptions = {
       shortcuts: [
         {
-          text: '至今',
+          text: '暂无工作经历',
           onClick: picker => picker.$emit('pick', Date.parse(new Date()))
         }
       ]
@@ -372,17 +372,10 @@
 <style lang="less">
 
 .resumePost {
-  // margin-top: 60px;
-  // padding-top: 48px;
-  // min-height: 900px;
-  padding: 108px 0 100px 0;
+  padding: 64px 0 100px 0;
   height: 100vh;
   min-height: 900px;
-  
   box-sizing: border-box;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
   background: url(../../../assets/images/activity/putIn/bg_createjl.png) 100% repeat #652791;
   #resumeHeader {
     height:64px;
@@ -453,6 +446,19 @@
       display: block;
     }
   }
+/*  .el-date-editor{
+    .el-icon-circle-close{
+      display: none;
+    }
+  }*/
+  .defalut-position{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 25px;
+    color: #CDCBCF;
+    transition: all ease .4s;
+  }
   .middle {
     position: relative;
     // background: #00b38a;
@@ -460,9 +466,6 @@
     background-position: bottom;
     width: 100%;
     background-size: auto 112px;
-    .contain {
-
-    }
     .formHint {
       height:60px;
       background:rgba(255,244,244,1);
@@ -498,6 +501,7 @@
     font-weight:500;
     color:#fff;
     line-height:32px;
+    padding-top: 48px;
     span {
       color:#FFDC29;
     }
@@ -615,7 +619,6 @@
       display: flex;
       color: #666666;
       margin-bottom: 20px;
-
       background:rgba(251,249,252,0.8);
       border-radius:23px;
       border:1px solid rgba(242,237,245,1);
@@ -623,6 +626,7 @@
       overflow: hidden;
       box-sizing: border-box;
       vertical-align: middle;
+      position: relative;
       .el-input__prefix{
         display: none;
       }

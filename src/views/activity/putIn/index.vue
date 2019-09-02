@@ -32,7 +32,7 @@
                   <div class="job_blo" @click="openMask('login')" v-for="(item,index) in selectList">
                     <div class="job_blo_left ellipsis">{{item.companyShortname}}</div>
                     <div class="job_blo_center ellipsis">{{item.positionName}}</div>
-                    <div class="job_blo_right">{{item.emolumentMin}}k-{{item.emolumentMax}}k<span v-if="item.annualSalary>12">·{{item.annualSalary}}</span></div>
+                    <div class="job_blo_right">{{item.emolumentMin}}K-{{item.emolumentMax}}K<span v-if="item.annualSalary>12">·{{item.annualSalary}}</span></div>
                   </div>
                 </div>
                 <div class="select_op">
@@ -284,7 +284,7 @@
     codeStatus = true
     searchJobData = {    //搜索职位
       page: 1,
-      count: 20,
+      count: 6,
       keyword: ''
     }
     labType = 1
@@ -536,17 +536,16 @@
     text-align: left;
     .company-content {
       .modal-top {
-        margin-bottom: 40px;
-        height:82px;
+        margin-bottom: 36px;
+        overflow: hidden;
         .company-logo {
-          width:150px;
-          height:82px;
+          width: 122px;
+          padding: 15px 14px;
           background:rgba(255,255,255,1);
           border-radius:4px;
           border:1px solid rgba(239,233,244,0.8);
           margin-right: 16px;
           display: block;
-          box-sizing: border-box;
           float: left;
         }
         .top-right {
@@ -576,6 +575,7 @@
         }
       }
       .modal-body {
+        overflow: hidden;
         &.benefit {
           margin-top: 40px;
         }
@@ -585,18 +585,21 @@
           color: #333;
           letter-spacing: 0;
           font-weight: 600;
-          margin: 30px 0 12px;
+          margin: 0 0 20px;
           padding-left: 12px;
           position: relative;
+          height: 25px;
+          line-height: 25px;
           &::after {
             position: absolute;
             left: 0;
-            top: -2px;
+            top: 50%;
             content: '';
             width:4px;
             height:20px;
             background:rgba(101,39,145,0.8);
             border-radius:2px;
+            transform: translateY(-50%);
           }
         }
         .hot-position {
@@ -609,6 +612,8 @@
             font-size: 14px;
             color: #666;
             letter-spacing: 0;
+            height: 20px;
+            line-height: 20px;
           }
         }
         .modal-walfare {

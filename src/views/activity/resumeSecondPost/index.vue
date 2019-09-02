@@ -385,14 +385,10 @@
 <style lang="less">
 
 .resumeSecondPost {
-  padding: 108px 0 100px 0;
+  padding: 64px 0 100px 0;
   min-height: 1000px;
   height: 100vh;
   box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
   background: url(../../../assets/images/activity/putIn/bg_createjl.png) 100% repeat #652791;
   .middle {
     position: relative;
@@ -410,6 +406,7 @@
     font-weight:500;
     color:#fff;
     line-height:32px;
+    margin-top: 48px;
     span {
       color:#FFDC29;
     }
