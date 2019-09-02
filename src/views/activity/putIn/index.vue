@@ -57,7 +57,7 @@
                   <img class="banner" :src="item.cardCompanyLogo.middleUrl">
                 </div>
 
-                <div class="select_info info_type2"  @click="setAdv(item)"
+                <div class="select_info info_type2 ellipsis"  @click="setAdv(item)"
                 v-else-if="index>3&&index<7">
                   <img class="banner" :src="item.cardCompanyLogo.middleUrl">
                   <p class="positionName ellipsis">{{item.positionName}}</p>
@@ -73,7 +73,7 @@
                     <p class="emolument ellipsis">
                       {{item.emolumentMin}}k-{{item.emolumentMax}}k
                     </p>
-                    <p class="companyInfo ellipsis">{{item.companyBrief}}</p>
+                    <p class="companyInfo ellipsis" v-if="item.companyBrief">{{item.companyBrief}}</p>
                   </div>
                   <img class="banner" :src="item.companyLogo.middleUrl">
 
@@ -723,7 +723,7 @@
   background: #652791;
   // background: url(../../../assets/images/bg.png) 100% repeat #652791;
   #putInHeader {
-    height:60px;
+    height:64px;
     background: #fff;
     text-align: right;
     font-size: 14px;
@@ -733,9 +733,8 @@
     left: 0;
     right: 0;
     z-index: 1001;
-
     section {
-      height:60px;
+      height:64px;
       width: 1000px;
       display: flex;
       justify-content: space-between;
@@ -784,7 +783,7 @@
       .babel_blo {
         flex: 1;
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
         .blo_icon {
           width: 68px;
@@ -812,7 +811,7 @@
     }
   }
   .middle {
-    margin-top: 60px;
+    margin-top: 64px;
     position: relative;
     height: 660px;
     background-repeat: no-repeat;
@@ -1051,9 +1050,11 @@
                   height:141px;
                   background:rgba(255,255,255,1);
                   border-radius:4px;
+                  padding: 0 15px;
+                  box-sizing: border-box;
                   .positionName {
-                    margin-top: 14px;
-                    margin-bottom: 4px;
+                    margin-top: 12px;
+                    margin-bottom: 7px;
                   }
                 }
                 &.info_type3 {
@@ -1070,16 +1071,20 @@
                     height: 70px;
                   }
                   .positionName {
-                    margin-top: 4px;
+                    line-height: 16px;
+                    margin-bottom: 6px;
+
                   }
                 }
                 .positionName {
+                  width: 100%;
                   font-size:16px;
                   font-family:PingFangSC;
                   font-weight:500;
                   color:rgba(51,51,51,1);
                 }
                 .emolument {
+                  width: 100%;
                   font-size:18px;
                   font-family:PingFangSC;
                   font-weight:500;
@@ -1092,7 +1097,7 @@
                   font-weight:300;
                   color:rgba(92,86,93,1);
                   line-height:17px;
-                  margin-top: 10px;
+                  margin-top: 12px;
                 }
               }
               .banner {

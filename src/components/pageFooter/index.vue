@@ -50,7 +50,7 @@ export default PageFooter
   font-weight:400;
 
   section {
-    width: 960px;
+    width: 1000px;
     height: 100%;
     margin: 0 auto;
     display: flex;
