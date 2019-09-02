@@ -67,9 +67,9 @@ export const routes = [
       component: resolve => require(['../views/postJob/postJob.vue'], resolve)
     },
     {
-      path: '/userDeal',
-      name: 'userDeal',
-      component: resolve => require(['../views/userDeal/userDeal.vue'], resolve)
+      path: '/issueRule',
+      name: 'issueRule',
+      component: resolve => require(['../views/issueRule/issueRule.vue'], resolve)
     },
     {
       path: '/issueRule',

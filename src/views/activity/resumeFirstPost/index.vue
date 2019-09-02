@@ -9,8 +9,8 @@
           <div class="headerBtn">
             <div class="right" v-if="userInfo && userInfo.token">
               <span class="name">欢迎登录猎多多，{{userInfo.realname}}</span>
-              <img class="op_icon" src="../../../assets/images/open.png" />
-              <img class="avatar" :src="userInfo.avatarInfo.middleUrl" />
+              <img class="op_icon aaa" src="../../../assets/images/open.png" v-if="!userInfo.avatarInfo.middleUrl" />
+              <img class="avatar" :src="userInfo.avatarInfo.middleUrl" v-if="userInfo.avatarInfo.middleUrl" />
             </div>
           </div>
             <el-dropdown-menu slot="dropdown">
@@ -77,25 +77,32 @@
 
           <div class="formTimeItem">
             <el-date-picker
-              class=""
               type="date"
               placeholder="选择你的出生年月"
               v-model="form1.birth"
               format="yyyy-MM-dd"
               value-format="timestamp"
+              @focus="focus('#birthDom')"
+              @blur="blur('#birthDom')"
             ></el-date-picker>
-            <!-- <i class="el-icon-caret-bottom defalut-position center" id="test01"></i> -->
+            <div v-if="!form1.birth">暂无工作经历</div>
+            <div v-else>{{form1.birth | formatDate}}</div>
+            <i class="el-icon-caret-bottom defalut-position" id="birthDom"></i>
           </div>
 
           <div class="formTimeItem">
+            <div v-if="!form1.startWorkYear">暂无工作经历</div>
+            <div v-else>{{form1.startWorkYear | formatDate}}</div>
             <el-date-picker
-              class=""
               type="date"
               placeholder="选择参加工作时间"
               v-model="form1.startWorkYear"
+              :pickerOptions="pickerOptions"
               value-format="timestamp"
-              :picker-options="pickerOptions"
+              @focus="focus('#startWorkYearDom')"
+              @blur="blur('#startWorkYearDom')"
             ></el-date-picker>
+            <i class="el-icon-caret-bottom defalut-position" id="startWorkYearDom"></i>
           </div>
           <div class="submit" @click="submit(1)">继续</div>
         </div>
@@ -130,6 +137,32 @@
     },
     components: {
       MyCropper,
+    },
+    filters: {
+      formatDate(date) {
+        const dateTime = new Date(date)
+        const YY = dateTime.getFullYear()
+        const MM =
+          dateTime.getMonth() + 1 < 10
+            ? '0' + (dateTime.getMonth() + 1)
+            : dateTime.getMonth() + 1;
+        const D =
+          dateTime.getDate() < 10 ? '0' + dateTime.getDate() : dateTime.getDate();
+        const hh =
+          dateTime.getHours() < 10
+            ? '0' + dateTime.getHours()
+            : dateTime.getHours();
+        const mm =
+          dateTime.getMinutes() < 10
+            ? '0' + dateTime.getMinutes()
+            : dateTime.getMinutes();
+        const ss =
+          dateTime.getSeconds() < 10
+            ? '0' + dateTime.getSeconds()
+            : dateTime.getSeconds();
+        return `${YY}-${MM}-${D}`
+        // return `${YY}-${MM}-${D} ${hh}:${mm}`;
+      }
     }
   })
   export default class CourseList extends Vue {
@@ -216,17 +249,25 @@
     }
 
     getResumeFirst() {
-      getResumeFirstApi().then(res => {
-        let data = res.data.data
-        // if(data.avatarId !== 0) this.imageUrl = data.avatar.url
-        this.form1 = {
-          avatar: data.avatarId !== 0 ? data.avatarId : '',
-          gender: data.gender.toString(),
-          name:  data.name,  
-          startWorkYear: data.startWorkYear*1000,
-          birth: data.birth*1000,
-          from: 1,
-        }
+      return new Promise((resolve, reject) => {
+        getResumeFirstApi().then(res => {
+          let data = res.data.data
+          // if(data.avatarId !== 0) this.imageUrl = data.avatar.url
+          this.form1 = {
+            avatar: data.avatarId !== 0 ? data.avatarId : '',
+            gender: data.gender.toString(),
+            name:  data.name || '',  
+            birth: data.birth*1000,
+            from: 1,
+          }
+          // 判断时间， 可能是暂无工作经历
+          if(data.startWorkYear) {
+            this.startWorkYear = data.startWorkYear*1000
+          } else {
+            this.startWorkYear = 0
+          }
+          resolve(data)
+        })
       })
     }
 
@@ -271,7 +312,7 @@
 
       checkWorkYear() {
         var pattern = /^1(3|4|5|6|7|8|9)\d{9}$/
-        if(!this.form1.startWorkYear && !pattern.test(this.form1.startWorkYear)){
+        if(!this.form1.startWorkYear && this.form1.startWorkYear != 0){
           this.setHint('请选择工作时间')
           return false
         }else {
@@ -329,12 +370,14 @@
         }
         const params = this.transformData(this.form1)
         subName({...params}).then(res => {
-          let userInfo = this.userInfo;
-          userInfo.avatarInfo.middleUrl = this.imageUrl
-          userInfo.realname = params.name
-          this.step = index
-          this.$store.dispatch('setUserInfo', userInfo);
-          this.$router.push({name: 'resumeSecondPost'})
+          this.getResumeFirst().then(res => {
+            let userInfo = this.userInfo;
+            userInfo.avatarInfo = res.avatar
+            userInfo.realname = res.name
+            this.step = index
+            this.$store.dispatch('setUserInfo', userInfo);
+            this.$router.push({name: 'resumeSecondPost'})
+          })
         }).catch(
           err => this.setHint(err.data.msg || '错误')
         )
@@ -370,6 +413,12 @@
             this.$router.push({name: 'putIn'})
           })
       }
+    }
+    focus(dom){
+      document.querySelector(dom).className = 'el-icon-caret-bottom defalut-position icon_active'
+    }
+    blur(dom) {
+      document.querySelector(dom).className = 'el-icon-caret-bottom defalut-position'
     }
   }
 </script>
@@ -461,7 +510,11 @@
     transform: translateY(-50%);
     right: 25px;
     color: #CDCBCF;
-    transition: all ease .4s;
+    transition: all ease .3s;
+    z-index: 222
+  }
+  .icon_active{
+    transform: translateY(-50%) rotate(180deg);
   }
   .middle {
     position: relative;
@@ -642,6 +695,14 @@
         border: none;
         height: 46px;
         line-height: 46px;
+      }
+      .el-date-editor{
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        opacity: 0;
       }
     }
     .submit {

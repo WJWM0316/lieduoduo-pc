@@ -78,7 +78,6 @@
           <el-date-picker
             v-model="form.endTime"
             type="date"
-            :picker-options="pickerOptions"
             placeholder="请选择开始时间">
           </el-date-picker>
         </div>

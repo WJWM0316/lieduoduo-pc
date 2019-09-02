@@ -97,7 +97,6 @@
               <el-date-picker
                 v-model="form2.endTime"
                 type="date"
-                :picker-options="pickerOptions"
                 value-format="timestamp"
                 format="yyyy 年 MM 月 dd 日"
                 placeholder="请选择开始时间">

@@ -169,7 +169,10 @@
                 <div class="modal-top-title">
                   {{selectAdv.companyName}}
                 </div>
-                <div class="modal-top-des ellipsis">
+                <div class="modal-top-emolumentMax" v-if="selectAdv.emolumentMin">
+                  {{selectAdv.emolumentMin}}k~{{selectAdv.emolumentMax}}<template v-if="selectAdv.annualSalary > 12">·{{selectAdv.annualSalary}}</template>
+                </div>
+                <div class="modal-top-des ellipsis" v-if="selectAdv.companyBrief">
                   {{selectAdv.companyBrief}}
                 </div>
               </div>
@@ -375,7 +378,7 @@
           if(e.data.code && e.data.code === 419) {
             this.codePic = e.data.data
             this.form.captchaKey = e.data.data.key
-          } else if(e.data.code === 440){
+          } else if (e.data.code === 440){
             this.getPicCode()
           }
         })
@@ -562,6 +565,10 @@
             color:rgba(51,51,51,1);
             line-height:28px;
             margin-bottom: 4px;
+          }
+          .modal-top-emolumentMax{
+            font-size: 18px;
+            color: #FF7F4C;
           }
           .modal-top-des {
             font-size:16px;

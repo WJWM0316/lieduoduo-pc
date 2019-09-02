@@ -22,10 +22,14 @@ export default class PageFooter extends Vue {
 
 
   toUserDeal () {
-	  let event = new MouseEvent('click')
-	  let a = document.createElement('a')
-	  a.target = 'view_window'
-  	a.href = `${baseUrl()}/userDeal`
-	  a.dispatchEvent(event)
+    let urlData = this.$router.resolve({
+      name: 'issueRule'
+    })
+    window.open(urlData.href, '_blank')
+	  // let event = new MouseEvent('click')
+	  // let a = document.createElement('a')
+	  // a.target = 'view_window'
+  	// a.href = `${baseUrl()}/userDeal`
+	  // a.dispatchEvent(event)
   }
 }
