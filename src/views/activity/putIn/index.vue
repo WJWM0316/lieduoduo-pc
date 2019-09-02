@@ -533,7 +533,7 @@
     position: absolute;
     padding: 40px;
     box-sizing: border-box;
-    top: 130px;
+    top: 135px;
     left: 50%;
     margin-left: -500px;
     display: block;
@@ -605,7 +605,8 @@
         .hot-position {
           .hot-lab {
             display: inline-block;
-            width: 151px;
+            // width: 151px;
+            margin-right: 15px;
             margin-bottom: 8px;
             box-sizing: border-box;
             font-size: 14px;
@@ -1127,7 +1128,7 @@
         &.fixed {
           position: fixed;
           z-index: 1003;
-          top: 130px;
+          top: 135px;
           left: 50%;
           margin-left: 90px;
         }
