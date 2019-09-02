@@ -174,7 +174,7 @@
       shortcuts: [
         {
           text: '暂无工作经历',
-          onClick: picker => picker.$emit('pick', Date.parse(new Date()))
+          onClick: picker => picker.$emit('pick', 0)
         }
       ]
     }
@@ -344,7 +344,11 @@
     transformData () {
       const newForm = Object.assign({}, this.form1 || {})
       newForm.birth =  newForm.birth/1000
-      newForm.startWorkYear =  newForm.startWorkYear/1000
+      if(newForm.startWorkYear === 0) {
+        newForm.startWorkYear =  0
+      } else {
+        newForm.startWorkYear =  newForm.startWorkYear/1000
+      }
       return newForm
     }
     

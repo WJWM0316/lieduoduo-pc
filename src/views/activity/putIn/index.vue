@@ -93,9 +93,7 @@
           <ul>
             <li>
               <img class="input_icon" src="../../../assets/images/activity/putIn/icon_number.png" />
-
               <input placeholder="请输入常用手机号"  maxlength="11" v-model="form.mobile"></li>
-              
             <li>
               <img class="input_icon" src="../../../assets/images/activity/putIn/icon_note.png" />
               <input placeholder="请输入手机验证码"  maxlength="4" v-model="form.code" >
