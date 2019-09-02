@@ -79,20 +79,22 @@
           <div class="formTimeItem">
             <el-date-picker
               class=""
-              type="datetime"
+              type="date"
               placeholder="选择你的出生年月"
               v-model="form1.birth"
               value-format="timestamp"
+              :picker-options="pickerOptions"
             ></el-date-picker>
           </div>
 
           <div class="formTimeItem">
             <el-date-picker
               class=""
-              type="datetime"
+              type="date"
               placeholder="选择参加工作时间"
               v-model="form1.startWorkYear"
               value-format="timestamp"
+              :picker-options="pickerOptions"
             ></el-date-picker>
           </div>
           <div class="submit" @click="submit(1)">继续</div>
@@ -167,6 +169,15 @@
       accept: '.jpeg, .png, .jpg'
     }
     step = 1
+
+    pickerOptions = {
+      shortcuts: [
+        {
+          text: '至今',
+          onClick: picker => picker.$emit('pick', Date.parse(new Date()))
+        }
+      ]
+    }
 
     imageUploadSuccess(res) {
       this.form1.avatar = res.id

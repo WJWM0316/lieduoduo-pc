@@ -70,14 +70,15 @@
         <div class="start-time">
           <el-date-picker
             v-model="form.startTime"
-            type="datetime"
+            type="date"
             placeholder="请选择开始时间">
           </el-date-picker>
         </div>～ &nbsp;&nbsp;
         <div class="end-time">
           <el-date-picker
             v-model="form.endTime"
-            type="datetime"
+            type="date"
+            :picker-options="pickerOptions"
             placeholder="请选择开始时间">
           </el-date-picker>
         </div>
@@ -115,6 +116,14 @@
     name: 'resumeThirdPost'
   })
   export default class resumeThirdPost extends Vue {
+    pickerOptions = {
+      shortcuts: [
+        {
+          text: '至今',
+          onClick: picker => picker.$emit('pick', Date.parse(new Date()))
+        }
+      ]
+    }
     form = {
       school: '',
       major: '',

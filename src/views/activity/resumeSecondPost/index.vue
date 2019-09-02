@@ -87,7 +87,7 @@
             <div class="start-time">
               <el-date-picker
                 v-model="form2.startTime"
-                type="datetime"
+                type="date"
                 value-format="timestamp"
                 format="yyyy 年 MM 月 dd 日"
                 placeholder="请选择开始时间">
@@ -96,7 +96,8 @@
             <div class="end-time">
               <el-date-picker
                 v-model="form2.endTime"
-                type="datetime"
+                type="date"
+                :picker-options="pickerOptions"
                 value-format="timestamp"
                 format="yyyy 年 MM 月 dd 日"
                 placeholder="请选择开始时间">
@@ -172,6 +173,14 @@
     components: {}
   })
   export default class CourseList extends Vue {
+    pickerOptions = {
+      shortcuts: [
+        {
+          text: '至今',
+          onClick: picker => picker.$emit('pick', Date.parse(new Date()))
+        }
+      ]
+    }
     userInfo = {}
     messagePop = {
       isShow: false,
