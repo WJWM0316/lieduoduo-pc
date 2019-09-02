@@ -533,7 +533,7 @@
     position: absolute;
     padding: 40px;
     box-sizing: border-box;
-    top: 135px;
+    top: 139px;
     left: 50%;
     margin-left: -500px;
     display: block;
@@ -685,7 +685,7 @@
     background:rgba(255,255,255,1);
     border-radius:4px;
     position: absolute;
-    top: 293px;
+    top: 296px;
     left: 50%;
     margin-left: -400px;
     display: flex;
@@ -1138,7 +1138,7 @@
         &.fixed {
           position: fixed;
           z-index: 1003;
-          top: 135px;
+          top: 139px;
           left: 50%;
           margin-left: 90px;
         }
