@@ -61,18 +61,14 @@
                 v-else-if="index>3&&index<7">
                   <img class="banner" :src="item.cardCompanyLogo.middleUrl">
                   <p class="positionName ellipsis">{{item.positionName}}</p>
-                  <p class="emolument ellipsis">
-                    {{item.emolumentMin}}k-{{item.emolumentMax}}k
-                  </p>
+                  <p class="emolument ellipsis">{{item.emolumentMin}}k-{{item.emolumentMax}}k<template v-if="item.annualSalary > 12">·{{item.annualSalary}}薪</template></p>
                 </div>
 
                 <div class="select_info info_type3"  @click="setAdv(item)"
                 v-if="index>6&&index<9">
                   <div class="info_cont ellipsis">
                     <p class="positionName ellipsis">{{item.positionName}}</p>
-                    <p class="emolument ellipsis">
-                      {{item.emolumentMin}}k-{{item.emolumentMax}}k
-                    </p>
+                    <p class="emolument ellipsis">{{item.emolumentMin}}k-{{item.emolumentMax}}k<template v-if="item.annualSalary > 12">·{{item.annualSalary}}薪</template></p>
                     <p class="companyInfo ellipsis" v-if="item.companyBrief">{{item.companyBrief}}</p>
                   </div>
                   <img class="banner" :src="item.companyLogo.middleUrl">
@@ -85,7 +81,7 @@
         
       </div>
       <div class="lp-login" :class="{'fixed':messagePop.isShow ,'cake':loginModelAnimale}">
-        <img class="icon-pointer" :class="{'companyType': messagePop.type==='job' }" src="../../../assets/images/activity/putIn/arrows.gif" v-if="messagePop.isShow" />
+        <img class="icon-pointer" :class="{'companyType': messagePop.type==='job' }" src="../../../assets/images/activity/putIn/arrows.gif" v-if="messagePop.isShow && !isFocus" />
         <p class="lp-login-title">
           <span class="green">7秒</span>注册 1000+高薪职位任你选
         </p>
@@ -93,7 +89,7 @@
           <ul>
             <li>
               <img class="input_icon" src="../../../assets/images/activity/putIn/icon_number.png" />
-              <input placeholder="请输入常用手机号"  maxlength="11" v-model="form.mobile"></li>
+              <input placeholder="请输入常用手机号"  maxlength="11" v-model="form.mobile" @focus="setFocus"></li>
             <li>
               <img class="input_icon" src="../../../assets/images/activity/putIn/icon_note.png" />
               <input placeholder="请输入手机验证码"  maxlength="4" v-model="form.code" >
@@ -253,6 +249,7 @@
     components: {}
   })
   export default class CourseList extends Vue {
+    isFocus = false
     userInfo = {}
     formHint = {    //form提示框
       isShow: false,
@@ -357,6 +354,7 @@
     }
 
     submit () {
+      this.isFocus = true
       if(this.validate()){
         loginPutInApi({
           isChangeHost: true,
@@ -376,6 +374,9 @@
           this.setHint(e.data.msg || '')
           if(e.data.code && e.data.code === 419) {
             this.codePic = e.data.data
+            this.form.captchaKey = e.data.data.key
+          } else if(e.data.code === 440){
+            this.getPicCode()
           }
         })
       }
@@ -388,6 +389,7 @@
     }
 
     getCode() {
+      this.isFocus = true
       if(!this.checkMobile()) return false
       if(!this.codeStatus) return false
       this.codeStatus = false
@@ -406,6 +408,7 @@
       getCodeApi({ 
         mobile: this.form.mobile 
       }).then(res => {
+        console.log(res)
       }).catch(e=>{
       })
     }
@@ -456,7 +459,9 @@
     closeMask() {
       this.showError = !this.showError
     }
-    
+    setFocus() {
+      this.isFocus = true
+    }
   }
 </script>
 <style lang="less">
@@ -575,7 +580,7 @@
       .modal-body {
         overflow: hidden;
         &.benefit {
-          margin-top: 40px;
+          margin-top: 24px;
         }
         .modal-category {
           display: block;
