@@ -22,13 +22,13 @@ export const loginPutInApi = data => request('/wap/login', 'post', data, data.is
 export const getCodeApi = data => request('/wap/message', 'post', data)
 
 // 刷新图片验证码
-export const getCaptchaApi = data => request('/auth/wap_captcha', 'get')
+export const getCaptchaApi = () => request('/auth/wap_captcha', 'get')
 
 // 切换用户角色（切换到求职端、招聘者端）求职者1，招聘者2
 export const switchRoleApi = data => request('/user/role/switch', 'post', data)
 
 // 退出接口
-export const logoutApi = data => request('/auth/logout', 'get')
+export const logoutApi = () => request('/auth/logout', 'get')
 
 // 邮箱验证码校验
 export const verifyApi = data => request('/verification/verify', 'post', data)

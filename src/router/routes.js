@@ -13,19 +13,19 @@ export const routes = [
       path: '/login',
       name: 'login',
       title: '登陆',
-      component: () => import(/* webpackChunkName: "login" */ '../views/login/login.vue')
+      component: resolve => require(['../views/login/login.vue'], resolve)
     },
     {
       path: '/applyIndex',
       name: 'applyIndex',
       title: '求职首页',
-      component: () => import(/* webpackChunkName: "login" */ '../views/apply/apply.vue')
+      component: resolve => require(['../views/apply/apply.vue'], resolve)
     },
     {
       path: '/candidate',
       name: 'candidate',
       title: '候选人',
-      component: () => import(/* webpackChunkName: "login" */ '../views/candidate/candidate.vue'),
+      component: resolve => require(['../views/candidate/candidate.vue'], resolve),
       // 元信息
       meta: {
         // 一级路由需要设置， 是否在侧边栏显示
@@ -38,7 +38,7 @@ export const routes = [
       path: '/recruiterIndex',
       name: 'recruiterIndex',
       title: '职位管理',
-      component: () => import(/* webpackChunkName: "login" */ '../views/recruiter/recruiter.vue'),
+      component: resolve => require(['../views/recruiter/recruiter.vue'], resolve),
       // 元信息
       meta: {
         // 一级路由需要设置， 是否在侧边栏显示
@@ -51,7 +51,7 @@ export const routes = [
       path: '/404',
       name: '404',
       title: '页面不存在',
-      component: () => import(/* webpackChunkName: "login" */ '../views/404/404.vue'),
+      component: resolve => require(['../views/404/404.vue'], resolve),
       // 元信息
       meta: {
         // 一级路由需要设置， 是否在侧边栏显示
@@ -64,53 +64,53 @@ export const routes = [
       path: '/postJob',
       name: 'postJob',
       title: '操作职位',
-      component: () => import(/* webpackChunkName: "login" */ '../views/postJob/postJob.vue')
+      component: resolve => require(['../views/postJob/postJob.vue'], resolve)
     },
     {
       path: '/userDeal',
       name: 'userDeal',
-      component: () => import(/* webpackChunkName: "login" */ '../views/userDeal/userDeal.vue')
+      component: resolve => require(['../views/userDeal/userDeal.vue'], resolve)
     },
     {
       path: '/issueRule',
       name: 'issueRule',
-      component: () => import(/* webpackChunkName: "login" */ '../views/issueRule/issueRule.vue')
+      component: resolve => require(['../views/issueRule/issueRule.vue'], resolve)
     },
     {
       path: '/putIn',
       name: 'putIn',
       title: '猎多多 | 投放',
-      component: () => import(/* webpackChunkName: "putIn" */ '../views/activity/putIn/index.vue')
+      component: resolve => require(['../views/activity/putIn/index.vue'], resolve)
     },
     {
       path: '/resumeFirstPost',
       name: 'resumeFirstPost',
       title: '猎多多 | 简历',
-      component: () => import(/* webpackChunkName: "putIn" */ '../views/activity/resumeFirstPost/index.vue')
+      component: resolve => require(['../views/activity/resumeFirstPost/index.vue'], resolve)
     },
     {
       path: '/resumeSecondPost',
       name: 'resumeSecondPost',
       title: '猎多多 | 简历',
-      component: () => import(/* webpackChunkName: "putIn" */ '../views/activity/resumeSecondPost/index.vue')
+      component: resolve => require(['../views/activity/resumeSecondPost/index.vue'], resolve)
     },
     {
       path: '/resumeThirdPost',
       name: 'resumeThirdPost',
       title: '猎多多 | 简历',
-      component: () => import(/* webpackChunkName: "putIn" */ '../views/activity/resumeThirdPost/index.vue')
+      component: resolve => require(['../views/activity/resumeThirdPost/index.vue'], resolve)
     },
     {
       path: '/resumeFourthPost',
       name: 'resumeFourthPost',
       title: '猎多多 | 简历',
-      component: () => import(/* webpackChunkName: "putIn" */ '../views/activity/resumeFourthPost/index.vue')
+      component: resolve => require(['../views/activity/resumeFourthPost/index.vue'], resolve)
     },
     {
       path: '/userAgreement',
       name: 'userAgreement',
       title: '猎多多 | 用户协议&隐私政策',
-      component: () => import(/* webpackChunkName: "putIn" */ '../views/activity/userAgreement/index.vue')
+      component: resolve => require(['../views/activity/userAgreement/index.vue'], resolve)
     },
     {
       path: '*',

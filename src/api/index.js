@@ -4,8 +4,7 @@ import router from '../router/index'
 import { baseHost, changeBaseHost } from '../../config.js'
 
 let loadingInstance = null
-const company = location.href.split('/')[3] || 'tiger'
-import { getAccessToken, removeAccessToken, removeAccessToPPTXken } from './cacheService'
+import { getAccessToken, removeAccessToken } from './cacheService'
 
 // 请求的跟地址
 axios.defaults.baseURL = baseHost()

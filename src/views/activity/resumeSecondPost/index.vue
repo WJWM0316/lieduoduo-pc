@@ -87,7 +87,7 @@
             <div class="start-time">
               <el-date-picker
                 v-model="form2.startTime"
-                type="date"
+                type="datetime"
                 value-format="timestamp"
                 format="yyyy 年 MM 月 dd 日"
                 placeholder="请选择开始时间">
@@ -96,7 +96,7 @@
             <div class="end-time">
               <el-date-picker
                 v-model="form2.endTime"
-                type="date"
+                type="datetime"
                 value-format="timestamp"
                 format="yyyy 年 MM 月 dd 日"
                 placeholder="请选择开始时间">

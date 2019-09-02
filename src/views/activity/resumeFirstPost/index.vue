@@ -79,7 +79,7 @@
           <div class="formTimeItem">
             <el-date-picker
               class=""
-              type="date"
+              type="datetime"
               placeholder="选择你的出生年月"
               v-model="form1.birth"
               value-format="timestamp"
@@ -89,7 +89,7 @@
           <div class="formTimeItem">
             <el-date-picker
               class=""
-              type="date"
+              type="datetime"
               placeholder="选择参加工作时间"
               v-model="form1.startWorkYear"
               value-format="timestamp"

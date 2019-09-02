@@ -172,8 +172,6 @@ export default class ComponentCropper extends Vue {
         this.flag.imgHasLoad = false
         this.flag.imgHasLoad = false
         this.flag.btnTips.disable = false
-
-        console.log(res)
         this.$emit('success', infos)
       })
       .catch(err => {

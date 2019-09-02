@@ -70,14 +70,14 @@
         <div class="start-time">
           <el-date-picker
             v-model="form.startTime"
-            type="date"
+            type="datetime"
             placeholder="请选择开始时间">
           </el-date-picker>
         </div>～ &nbsp;&nbsp;
         <div class="end-time">
           <el-date-picker
             v-model="form.endTime"
-            type="date"
+            type="datetime"
             placeholder="请选择开始时间">
           </el-date-picker>
         </div>
