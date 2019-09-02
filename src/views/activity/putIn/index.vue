@@ -175,7 +175,7 @@
                 <div class="modal-top-title">
                   {{selectAdv.companyName}}
                 </div>
-                <div class="modal-top-des">
+                <div class="modal-top-des ellipsis">
                   {{selectAdv.companyBrief}}
                 </div>
               </div>
@@ -554,9 +554,14 @@
           border:1px solid rgba(239,233,244,0.8);
           margin-right: 16px;
           display: block;
+          box-sizing: border-box;
           float: left;
         }
         .top-right {
+          min-height:82px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
           .modal-top-title {
             font-size:20px;
             font-weight:500;
@@ -565,10 +570,10 @@
             margin-bottom: 4px;
           }
           .modal-top-des {
-            font-size:18px;
-            font-weight:bold;
-            color:rgba(255,127,76,1);
-            line-height:21px;
+            font-size:16px;
+            font-weight:300;
+            color:rgba(51,51,51,1);
+            line-height:22px;
           }
         }
         .modal-top-right  {
