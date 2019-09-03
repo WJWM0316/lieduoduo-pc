@@ -9,14 +9,14 @@
 					<li class="" @mouseover="pop = {isShow: true, type: 'xcx'}" @mouseout="pop.isShow = false"> 猎多多移动版</li>
 				</ul>
 
-				<div class="headWC_pop" :class="{'left': pop.type === 'gzh'}" v-if="pop.isShow">
+				<div class="headWC_pop" :class="{'left': pop.type === 'gzh'}" v-show="pop.isShow">
 					<div class="triangle_border_top"></div>
 					<div class="pop_cont" v-if="pop.type === 'gzh'">
-			  		<img class="pop_code" src="../../assets/images/gzh.png"/>
+			  		<img class="pop_code" src="../../assets/images/gzh_new.jpg"/>
 			  		<p class="pop_text">微信扫码关注公众号 </p>
 					</div>
 					<div class="pop_cont" v-if="pop.type === 'xcx'">
-			  		<img class="pop_code2 " src="../../assets/images/xcx.png"/>
+			  		<img class="pop_code2 " src="../../assets/images/xcx_new.jpg"/>
 			  		<p class="pop_text">微信扫码打开小程序</p>
 					</div>
 					<div class="triangle_border_right"></div>
