@@ -33,6 +33,7 @@ export default new Vuex.Store({
 
         // mutations的第一个参数即为 state对象，并且可以向mutation传入额外的参数
         setUserInfo: (state, data) => {
+            saveUserInfo(data, state.loginValidTime)
             state.userInfo = data
         },
 

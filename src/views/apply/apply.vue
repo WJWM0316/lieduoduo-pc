@@ -222,8 +222,9 @@
 		 * 初始化表单、分页页面数据
 		 */
 		init() {
-			console.log(111)
 		  this.userInfo = this.$store.state.userInfo
+			console.log(this.userInfo)
+		  
 		  if(this.userInfo&&this.userInfo.id){
 		  	this.fileUpload.headers.Authorization = this.userInfo.token 
 		  	this.getResumeMsg()

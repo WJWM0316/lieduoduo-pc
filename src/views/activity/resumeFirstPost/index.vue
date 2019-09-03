@@ -358,7 +358,6 @@
             let userInfo = this.userInfo;
             userInfo.avatarInfo = res.avatar
             userInfo.realname = res.name
-            this.step = index
             this.$store.dispatch('setUserInfo', userInfo);
             this.$router.push({name: 'resumeSecondPost'})
           })

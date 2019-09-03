@@ -257,6 +257,7 @@
     mounted () {
       let query = this.$route.query
       this.userInfo = this.$store.state.userInfo
+      console.log(this.userInfo)
     }
 
     init () {
