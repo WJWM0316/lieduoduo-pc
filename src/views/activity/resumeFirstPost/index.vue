@@ -51,15 +51,6 @@
               @fail="imageUploadFail"></myCropper>
             <img v-if="imageUrl" :src="imageUrl" class="avatar">
             <img v-else  class="avatar-uploader-icon" src="../../../assets/images/activity/putIn/btn_pic.png" />
-            <!-- <el-upload
-              class="avatar-uploader"
-              action="https://qiuzhi-api.lieduoduo.ziwork.com/attaches"
-              :data = "handleData"
-              :headers="handleHeaders"
-              :show-file-list="false"
-              :on-success="handleAvatarSuccess"
-              :before-upload="beforeAvatarUpload">
-            </el-upload> -->
           </div>
           <div class="formItem">
             <input placeholder="请输入真实姓名" v-model="form1.name" class="default" maxlength="10" />
@@ -70,8 +61,8 @@
 
           <div class="formRadio">
             <el-radio-group v-model="form1.gender">
-              <el-radio label="1">男</el-radio>
-              <el-radio label="2">女</el-radio>
+              <el-radio :label="1">男</el-radio>
+              <el-radio :label="2">女</el-radio>
             </el-radio-group>
           </div>
 
@@ -85,7 +76,7 @@
               @focus="focus('#birthDom')"
               @blur="blur('#birthDom')"
             ></el-date-picker>
-            <div v-if="!form1.birth">暂无工作经历</div>
+            <div v-if="!form1.birth">选择你的出生年月</div>
             <div v-else>{{form1.birth | formatDate}}</div>
             <i class="el-icon-caret-bottom defalut-position" id="birthDom"></i>
           </div>
@@ -252,20 +243,13 @@
       return new Promise((resolve, reject) => {
         getResumeFirstApi().then(res => {
           let data = res.data.data
-          // if(data.avatarId !== 0) this.imageUrl = data.avatar.url
-          this.form1 = {
-            avatar: data.avatarId !== 0 ? data.avatarId : '',
-            gender: data.gender.toString(),
-            name:  data.name || '',  
-            birth: data.birth*1000,
-            from: 1,
-          }
-          // 判断时间， 可能是暂无工作经历
-          if(data.startWorkYear) {
-            this.startWorkYear = data.startWorkYear*1000
-          } else {
-            this.startWorkYear = 0
-          }
+          this.form1.from = 1
+          this.form1.name = data.name
+          this.form1.gender = data.gender
+          this.form1.avatar = data.avatarId ? data.avatarId : ''
+          this.form1.startWorkYear = data.startWorkYear ? data.startWorkYear * 1000 : 0
+          this.form1.birth = data.birth ? data.birth * 1000 : ''
+          this.imageUrl = data.avatarId ? data.avatar.smallUrl : ''
           resolve(data)
         })
       })

@@ -56,7 +56,8 @@
       </div>
 
       <div class="formItem">
-        <el-select v-model="form.degree" placeholder="请选择学历">
+        <el-select v-model="form.degree" placeholder="请选择学历" @focus="focus('#degree')"
+            @blur="blur('#degree')">
           <el-option
             v-for="item in degreeAllLists"
             :key="item.value"
@@ -64,20 +65,40 @@
             :value="item.value">
           </el-option>
         </el-select>
+        <i class="el-icon-caret-bottom defalut-position" id="degree"></i>
       </div>
 
       <div class="formItem2">
         <div class="start-time">
+          <div v-if="!form.startTime" style="padding-left: 30px; color: #929292; font-weight: 300;">请选择开始时间</div>
+          <div v-else style="padding-left: 30px; color: #282828">{{form.startTime | formatDate}}</div>
+          <i class="el-icon-caret-bottom defalut-position" id="startTime"></i>
           <el-date-picker
             v-model="form.startTime"
             type="date"
+            @focus="focus('#startTime')"
+            @blur="blur('#startTime')"
             placeholder="请选择开始时间">
           </el-date-picker>
         </div>～ &nbsp;&nbsp;
         <div class="end-time">
+          <div v-if="!form.endTime" style="padding-left: 30px; color: #929292; font-weight: 300;">
+            <template v-if="form.endTime === ''">
+              请选择结束时间
+            </template>
+            <template v-else>
+              至今
+            </template>
+          </div>
+          <div v-else style="padding-left: 30px; color: #282828">{{form.endTime | formatDate}}</div>
+          <i class="el-icon-caret-bottom defalut-position" id="endTime"></i>
+
           <el-date-picker
             v-model="form.endTime"
             type="date"
+            @focus="focus('#endTime')"
+            @blur="blur('#endTime')"
+            :pickerOptions="pickerOptions"
             placeholder="请选择开始时间">
           </el-date-picker>
         </div>
@@ -112,14 +133,40 @@
   import { getUserIdentity, switchId } from '../../../../config.js'
   import { getAccessToken } from '../../../api/cacheService.js'
   @Component({
-    name: 'resumeThirdPost'
+    name: 'resumeThirdPost',
+    filters: {
+      formatDate(date) {
+        const dateTime = new Date(date)
+        const YY = dateTime.getFullYear()
+        const MM =
+          dateTime.getMonth() + 1 < 10
+            ? '0' + (dateTime.getMonth() + 1)
+            : dateTime.getMonth() + 1;
+        const D =
+          dateTime.getDate() < 10 ? '0' + dateTime.getDate() : dateTime.getDate();
+        const hh =
+          dateTime.getHours() < 10
+            ? '0' + dateTime.getHours()
+            : dateTime.getHours();
+        const mm =
+          dateTime.getMinutes() < 10
+            ? '0' + dateTime.getMinutes()
+            : dateTime.getMinutes();
+        const ss =
+          dateTime.getSeconds() < 10
+            ? '0' + dateTime.getSeconds()
+            : dateTime.getSeconds();
+        return `${YY}-${MM}-${D}`
+        // return `${YY}-${MM}-${D} ${hh}:${mm}`;
+      }
+    }
   })
   export default class resumeThirdPost extends Vue {
     pickerOptions = {
       shortcuts: [
         {
           text: '至今',
-          onClick: picker => picker.$emit('pick', Date.parse(new Date()))
+          onClick: picker => picker.$emit('pick', 0)
         }
       ]
     }
@@ -193,28 +240,50 @@
         }
       })
 
-      let startTime = new Promise((resolve, reject) => {
-        if(!this.form.startTime) {
-          reject('请选择开始时间')
-        } else {
-          resolve()
-        }
-      })
+      // let startTime = new Promise((resolve, reject) => {
+      //   if(!this.form.startTime) {
+      //     reject('请选择开始时间')
+      //   } else {
+      //     resolve()
+      //   }
+      // })
 
-      let endTime = new Promise((resolve, reject) => {
-        if(!this.form.startTime) {
-          reject('请选择结束时间')
-        } else {
-          resolve()
+      // let endTime = new Promise((resolve, reject) => {
+      //   if(!this.form.startTime) {
+      //     reject('请选择结束时间')
+      //   } else {
+      //     resolve()
+      //   }
+      // })
+
+      let checkTime = new Promise((resolve, reject) => {
+        let startTime = this.form.startTime
+        let endTime = this.form.endTime
+
+        if(!startTime) {
+          reject('请选择开始时间')
+          return false
         }
+
+        if(startTime && endTime === '') {
+          reject('请选择结束时间')
+          return false
+        }
+
+        if(endTime !== 0 && (endTime - startTime < 0)) {
+          reject('开始时间不得晚于结束时间')
+          return false
+        }
+        resolve()
       })
 
       Promise.all([
         schoolCheck,
         majorCheck,
         degreeCheck,
-        startTime,
-        endTime
+        checkTime
+        // startTime,
+        // endTime
       ]).then(() => this.submit()).catch(
         err => this.setHint(err)
       )
@@ -260,7 +329,7 @@
         major: this.form.major,
         degree: this.form.degree,
         startTime: Date.parse(this.form.startTime)/1000,
-        endTime: Date.parse(this.form.endTime)/1000
+        endTime: this.form.endTime ? Date.parse(this.form.endTime)/1000 : 0
       }
       let educations = this.form.educations
       educations.shift()
@@ -285,6 +354,12 @@
       this.hintSetTime = setTimeout(()=> {
         this.formHint.isShow = false
       }, 3000);
+    }
+    focus(dom){
+      document.querySelector(dom).className = 'el-icon-caret-bottom defalut-position icon_active'
+    }
+    blur(dom) {
+      document.querySelector(dom).className = 'el-icon-caret-bottom defalut-position'
     }
   }
 </script>
@@ -363,6 +438,21 @@
   height: 100vh;
   box-sizing: border-box;
   background: url(../../../assets/images/activity/putIn/bg_createjl.png) 100% repeat #652791;
+  .el-input__suffix{
+    display: none;
+  }
+  .defalut-position {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 20px;
+    color: #CDCBCF;
+    transition: all ease .3s;
+    z-index: 222
+  }
+  .icon_active{
+    transform: translateY(-50%) rotate(180deg);
+  }
   .content {
     position: relative;
     // background: #00b38a;
@@ -544,6 +634,8 @@
         overflow: hidden;
         box-sizing: border-box;
         vertical-align: middle;
+        position: relative;
+        text-align: left;
       }
       .end-time{
         width:176px;
@@ -555,6 +647,16 @@
         overflow: hidden;
         box-sizing: border-box;
         vertical-align: middle;
+        position: relative;
+        text-align: left;
+      }
+      .el-date-editor{
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        opacity: 0;
       }
     }
     .btn-box{
