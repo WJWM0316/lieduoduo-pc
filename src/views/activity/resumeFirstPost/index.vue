@@ -241,7 +241,7 @@
           this.form1.name = data.name
           this.form1.gender = data.gender
           this.form1.avatar = data.avatarId ? data.avatarId : ''
-          this.form1.startWorkYear = data.startWorkYear ? data.startWorkYear * 1000 : 0
+          this.form1.startWorkYear = data.startWorkYear ? data.startWorkYear * 1000 : ''
           this.form1.birth = data.birth ? data.birth * 1000 : ''
           this.imageUrl = data.avatarId ? data.avatar.smallUrl : ''
           resolve(data)
