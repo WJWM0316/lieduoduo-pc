@@ -49,6 +49,8 @@
           placeholder="请选择期望城市"
           :options="cityList"
           filterable
+          @focus="focus('#cityNum')"
+          @blur="blur('#cityNum')"
           :show-all-levels="false"
           :props="{
             value:'areaId',
@@ -57,11 +59,13 @@
           }"
           @change="choiceCity"
         ></el-cascader>
+        <i class="el-icon-caret-bottom defalut-position" id="cityNum"></i>
       </div>
 
       <div class="formItem" @click="openPositionModel">
         <div class="default-value" v-if="!form.position">请选择期望职位</div>
         <div class="has-value" v-else>{{form.position}}</div>
+        <i class="el-icon-caret-bottom defalut-position" id="position"></i>
       </div>
 
       <div class="formItem" @click="openModel">
@@ -73,11 +77,13 @@
             {{`${item.field || item.name}${form.fields.length - 1 !== index ? '、' : ''}`}}
           </span>
         </div>
+        <i class="el-icon-caret-bottom defalut-position" id="fields"></i>
       </div>
 
       <div class="formItem2">
         <div class="start-time">
-          <el-select v-model="form.salaryFloor" placeholder="请选择期望薪资" @change="changeEmolumentMin">
+          <el-select v-model="form.salaryFloor" placeholder="请选择期望薪资" @change="changeEmolumentMin" @focus="focus('#salaryFloor')"
+          @blur="blur('#salaryFloor')">
             <el-option
               v-for="item in emolumentMinList"
               :key="item.value"
@@ -85,9 +91,11 @@
               :value="item.value">
             </el-option>
           </el-select>
+          <i class="el-icon-caret-bottom defalut-position" id="salaryFloor"></i>
         </div>～ &nbsp;&nbsp;
         <div class="end-time">
-          <el-select v-model="form.salaryCeil" placeholder="期望薪资">
+          <el-select v-model="form.salaryCeil" placeholder="期望薪资" @focus="focus('#salaryCeil')"
+          @blur="blur('#salaryCeil')">
             <el-option
               v-for="item in emolumentMaxList"
               :key="item.value"
@@ -95,6 +103,7 @@
               :value="item.value">
             </el-option>
           </el-select>
+          <i class="el-icon-caret-bottom defalut-position" id="salaryCeil"></i>
         </div>
       </div>
 
@@ -457,6 +466,13 @@
     lastStep() {
       this.$router.push({name: 'resumeThirdPost'})
     }
+
+    focus(dom){
+      document.querySelector(dom).className = 'el-icon-caret-bottom defalut-position icon_active'
+    }
+    blur(dom) {
+      document.querySelector(dom).className = 'el-icon-caret-bottom defalut-position'
+    }
   }
 </script>
 <style lang="less">
@@ -534,6 +550,21 @@
   height: 100vh;
   box-sizing: border-box;
   background: url(../../../assets/images/activity/putIn/bg_createjl.png) 100% repeat #652791;
+  .el-input__suffix{
+    display: none;
+  }
+  .defalut-position {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 20px;
+    color: #CDCBCF;
+    transition: all ease .3s;
+    z-index: 222
+  }
+  .icon_active{
+    transform: translateY(-50%) rotate(180deg);
+  }
   .content {
     position: relative;
     // background: #00b38a;
@@ -713,6 +744,7 @@
         overflow: hidden;
         box-sizing: border-box;
         vertical-align: middle;
+        position: relative;
       }
       .end-time{
         width:176px;
@@ -724,6 +756,7 @@
         overflow: hidden;
         box-sizing: border-box;
         vertical-align: middle;
+        position: relative;
       }
     }
     .btn-box{
