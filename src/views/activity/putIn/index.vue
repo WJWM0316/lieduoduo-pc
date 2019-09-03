@@ -167,7 +167,7 @@
              <img class="company-logo" :src="selectAdv.cardCompanyLogo.middleUrl" />
               <div class="top-right">
                 <div class="modal-top-title">
-                  {{selectAdv.companyName}}
+                  {{selectAdv.type === 1 ? selectAdv.companyName : selectAdv.positionName}}
                 </div>
                 <div class="modal-top-emolumentMax" v-if="selectAdv.emolumentMin">
                   {{selectAdv.emolumentMin}}k~{{selectAdv.emolumentMax}}k<template v-if="selectAdv.annualSalary > 12">·{{selectAdv.annualSalary}}</template>
