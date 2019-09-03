@@ -488,7 +488,7 @@
   right: 0;
   z-index: 1001;
   section {
-    height:60px;
+    height:64px;
     width: 1000px;
     display: flex;
     justify-content: space-between;
@@ -579,7 +579,6 @@
     color:#fff;
     line-height:32px;
     padding-bottom: 38px;
-    padding-top: 48px;
     span {
       color:#FFDC29;
     }
@@ -854,7 +853,7 @@
       line-height: 33px;
       h3{
         display: inline-block;
-        float: left;
+        // float: left;
         font-weight:500;
         color:rgba(40,40,40,1);
         font-size:24px;

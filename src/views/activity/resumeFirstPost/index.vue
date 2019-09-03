@@ -26,7 +26,7 @@
   <div class="middle">
     <div class="contain">
 
-      <h3 class="title"><span>三分钟</span>创建微简历，<span>1000+名企</span>高薪职位任你选</h3>
+      <h3 class="title"><span>3分钟</span>创建微简历，<span>1000+名企</span>高薪职位任你选</h3>
       <div class="slogon-box">
         <div class="img-box"></div>
         <div class="infos">

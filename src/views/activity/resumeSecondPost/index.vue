@@ -25,7 +25,7 @@
   <div class="middle">
     <div class="contain clearfix">
 
-      <h3 class="title"><span>三分钟</span>创建微简历，<span>1000+名企</span>高薪职位任你选</h3>
+      <h3 class="title"><span>3分钟</span>创建微简历，<span>1000+名企</span>高薪职位任你选</h3>
 
       <div class="slogon-box">
         <div class="img-box"></div>
@@ -538,7 +538,7 @@
     border-radius:8px;
     border:1px solid rgba(255,255,255,1);
     margin: 0 auto;
-    padding: 50px 40px 35px 40px;
+    padding: 50px 40px 44px 40px;
     box-sizing: border-box;
     position: relative;
     .form-title {
@@ -791,7 +791,7 @@
     height:70px;
     background:rgba(255,255,255,0.1);
     border-radius:100px;
-    margin: 38px auto 20px;
+    margin: 38px auto 19px;
     display: flex;
     padding: 0 23px;
     box-sizing: border-box;

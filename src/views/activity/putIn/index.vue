@@ -177,7 +177,7 @@
                 </div>
               </div>
           </div>
-          <div class="modal-body" v-if="selectAdv.type === 1 && selectAdv.hotPositions.length>0">
+          <div class="modal-body center-cont" v-if="selectAdv.type === 1 && selectAdv.hotPositions.length>0">
             <h3 class="modal-category"> 
               热招职位
             </h3>
@@ -188,7 +188,7 @@
             </div>
           </div>
 
-          <div class="modal-body" v-if="selectAdv.type === 2 && selectAdv.positionDemand.length>0">
+          <div class="modal-body center-cont" v-if="selectAdv.type === 2 && selectAdv.positionDemand.length>0">
             <h3 class="modal-category"> 
               职位要求
             </h3>
@@ -289,7 +289,6 @@
     positionTypeList = [] //职位类型列表
     advList = []   //广告列表
     selectAdv = {}  //点击logo参数
-
     loginModelAnimale = false //登录框动画显示
     mounted () {
       let query = this.$route.query
@@ -450,7 +449,6 @@
     setAdv(item) {
       this.selectAdv = item
       this.openMask('job')
-
       this.setAnimate()
     }
 
@@ -586,6 +584,9 @@
       }
       .modal-body {
         overflow: hidden;
+        &.center-cont {
+          margin-bottom: 28px;
+        }
         &.benefit {
           margin-top: 24px;
         }
@@ -616,7 +617,7 @@
           .hot-lab {
             display: inline-block;
             // width: 151px;
-            margin-right: 15px;
+            margin-right: 36px;
             margin-bottom: 8px;
             box-sizing: border-box;
             font-size: 14px;
@@ -793,7 +794,7 @@
       justify-content: space-between;
       align-items: center;
       .babel_blo {
-        flex: 1;
+        // flex: 1;
         display: flex;
         justify-content: flex-start;
         align-items: center;
@@ -801,7 +802,7 @@
           width: 68px;
           height: 68px;
           display: block;
-          margin-right: 20px;
+          margin-right: 10px;
         }
         .blo_cont {
           text-align: left;
