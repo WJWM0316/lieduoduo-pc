@@ -170,7 +170,7 @@
                   {{selectAdv.companyName}}
                 </div>
                 <div class="modal-top-emolumentMax" v-if="selectAdv.emolumentMin">
-                  {{selectAdv.emolumentMin}}k~{{selectAdv.emolumentMax}}<template v-if="selectAdv.annualSalary > 12">·{{selectAdv.annualSalary}}</template>
+                  {{selectAdv.emolumentMin}}k~{{selectAdv.emolumentMax}}k<template v-if="selectAdv.annualSalary > 12">·{{selectAdv.annualSalary}}</template>
                 </div>
                 <div class="modal-top-des ellipsis" v-if="selectAdv.companyBrief">
                   {{selectAdv.companyBrief}}
