@@ -26,13 +26,7 @@
   <div class="content">
     
     <h3 class="h11">还剩<span>最后一步，1000+名企</span>高薪职位任你</h3>
-    <div class="slogon-box">
-      <div class="img-box"></div>
-      <div class="infos">
-        <div class="h33">爱奇艺产品总监</div>
-        <div class="p44">很期待与你这样的精英人才相遇</div>
-      </div>
-    </div>
+    <img class="slogon-box" src="../../../assets/images/activity/putIn/img_sentence_04@2x.png" />
     <div class="myForm">
       <div class="formHint" v-if="formHint.isShow && !messagePop.isShow">
         <img class="" src="../../../assets/images/activity/putIn/live_icon_question2.png" />
@@ -609,56 +603,8 @@
   }
   .slogon-box{
     width:450px;
-    height:70px;
-    background:rgba(255,255,255,0.1);
-    border-radius:100px;
+    height:auto;
     margin: 0 auto 30px;
-    display: flex;
-    padding: 0 23px;
-    box-sizing: border-box;
-    align-items: center;
-    position: relative;
-    &:after {
-      width: 0;
-      height: 0;
-      position: absolute;
-      bottom: -20px;
-      left: 50%;
-      transform: translateX(-50%);
-      border-width: 10px;
-      border-style: solid;
-      border-color: rgba(255,255,255,0.1) transparent transparent transparent;
-      display: block;
-      content: '';
-    }
-    .img-box{
-      width:46px;
-      height:46px;
-      border-radius: 50%;
-      background: white;
-      margin-right: 20px;
-    }
-    .infos{
-      flex: 1;
-      text-align: left;
-    }
-    .h33{
-      height:16px;
-      font-size:16px;
-      font-family:PingFangSC;
-      font-weight:500;
-      color:rgba(255,255,255,1);
-      line-height:16px;
-    }
-    .p44{
-      height:14px;
-      font-size:14px;
-      font-family:PingFangSC;
-      font-weight:300;
-      color:rgba(255,255,255,1);
-      line-height:14px;
-      margin-top: 6px;
-    }
   }
   .myForm {
     width:450px;
