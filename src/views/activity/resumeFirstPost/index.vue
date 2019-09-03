@@ -82,7 +82,7 @@
           </div>
 
           <div class="formTimeItem">
-            <div v-if="!form1.startWorkYear">暂无工作经历</div>
+            <div v-if="!form1.startWorkYear">选择参加工作时间</div>
             <div v-else>{{form1.startWorkYear | formatDate}}</div>
             <!-- :pickerOptions="pickerOptions" -->
             <el-date-picker     
@@ -372,7 +372,7 @@
       const newForm = Object.assign({}, this.form1 || {})
       newForm.birth =  newForm.birth/1000
       if(newForm.startWorkYear === 0) {
-        newForm.startWorkYear =  0
+        newForm.startWorkYear =  ''
       } else {
         newForm.startWorkYear =  newForm.startWorkYear/1000
       }

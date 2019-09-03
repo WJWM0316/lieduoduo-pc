@@ -6,7 +6,7 @@ import _ from 'lodash'
 import 'normalize.css';
 // 引入vue实例扩展函数库
 import './util'
-import '@/eleui'
+import './eleui'
 
 Vue.config.productionTip = false
 Vue.prototype._ = _
