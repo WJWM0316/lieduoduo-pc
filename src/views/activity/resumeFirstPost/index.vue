@@ -85,7 +85,7 @@
               @focus="focus('#birthDom')"
               @blur="blur('#birthDom')"
             ></el-date-picker>
-            <div v-if="!form1.birth">暂无工作经历</div>
+            <div v-if="!form1.birth">选择你的出生年月</div>
             <div v-else>{{form1.birth | formatDate}}</div>
             <i class="el-icon-caret-bottom defalut-position" id="birthDom"></i>
           </div>
@@ -93,11 +93,11 @@
           <div class="formTimeItem">
             <div v-if="!form1.startWorkYear">暂无工作经历</div>
             <div v-else>{{form1.startWorkYear | formatDate}}</div>
-            <el-date-picker
+            <!-- :pickerOptions="pickerOptions" -->
+            <el-date-picker     
               type="date"
               placeholder="选择参加工作时间"
               v-model="form1.startWorkYear"
-              :pickerOptions="pickerOptions"
               value-format="timestamp"
               @focus="focus('#startWorkYearDom')"
               @blur="blur('#startWorkYearDom')"
