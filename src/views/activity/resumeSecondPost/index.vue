@@ -58,7 +58,7 @@
               v-model= "postion"
               ref="cascader"
               class=""
-              placeholder="期待职位类别"
+              placeholder="请选择职位类型"
               :options="options"
               :filterable="false"
               @focus="focus('#position')"
