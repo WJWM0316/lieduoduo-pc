@@ -293,6 +293,12 @@
     mounted () {
       let query = this.$route.query
       this.getPositionTypes()
+
+      var _hmt = _hmt || [];
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0db2bb23e62da470d62ce19d419aebc3";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
     }
 
     init () {
