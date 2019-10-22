@@ -154,18 +154,12 @@
   import MyModel from '@/components/model/index.vue'
 
   import {
-    getUserInfoApi,
-    searchResumeStepApi,
-    setResumeFirstApi,
-    setResumeSecondApi,
-    setResumeThirdApi,
     setResumeFourthApi,
     getDegreeAllListsApi,
     getResumeFourStepApi,
     getAreaListsApi,
     getLabelFieldListApi
   } from '../../../api/putIn'
-  import { getUserIdentity, switchId } from '../../../../config.js'
   import { getAccessToken } from '../../../api/cacheService.js'
   @Component({
     name: 'resumeFourthPost',
@@ -179,10 +173,7 @@
     form = {
       salaryFloor: '',
       salaryCeil: '',
-      cityNum: '',
       positionId: '',
-      salaryCeil: '',
-      salaryFloor: '',
       fields: [],
       position: '',
       city: '',
@@ -226,7 +217,7 @@
     labelFieldList = []
     hintSetTime = null
     mounted () {
-      let query = this.$route.query
+      // let query = this.$route.query
       this.handleHeaders['Authorization'] = getAccessToken()
       this.userInfo = this.$store.state.userInfo
       this.getDegreeAllLists()
@@ -309,7 +300,7 @@
         cityNum: this.form.cityNum[this.form.cityNum.length - 1],
         fieldIds: this.form.fields.map(field => field.fieldId).join(',')
       }
-      setResumeFourthApi(params).then(res => {
+      setResumeFourthApi(params).then(() => {
         this.$router.push({name: 'applyIndex'})
       }).catch(
         err => this.setHint(err.data.msg || '错误')

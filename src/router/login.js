@@ -1,4 +1,4 @@
-export const routes = [
+ const login = [
 	{
     path: '/login',
     name: 'login',
@@ -6,3 +6,4 @@ export const routes = [
     component: resolve => require(['../views/login/login.vue'], resolve)
   }
 ]
+export default login

@@ -1,4 +1,4 @@
-export const routes = [
+const common = [
 	{
     path: '/userAgreement',
     name: 'userAgreement',
@@ -6,3 +6,4 @@ export const routes = [
     component: resolve => require(['../views/activity/userAgreement/index.vue'], resolve)
   }
 ]
+export default common

@@ -1,4 +1,4 @@
-export const other = [
+const other = [
 	{
     path: '/',
     // 默认进入控制台
@@ -30,3 +30,4 @@ export const other = [
     component: resolve => require(['../views/activity/putIn/index.vue'], resolve)
   },
 ]
+export default other

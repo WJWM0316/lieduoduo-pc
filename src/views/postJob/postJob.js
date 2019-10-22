@@ -8,12 +8,9 @@ import { getMyInfoApi } from '../../api/auth'
 
 import SearchBar from '@/components/searchBar'
 import MapSearch from '@/components/map'
-import {TMap} from '../../util/TMap.js'
 
 
 var geocoder = {}
-var searchService = {}
-var citylocation = {}
 @Component({
   name: 'community-edit',
   components: {
@@ -305,7 +302,7 @@ export default class CommunityEdit extends Vue {
       // this.$store.dispatch('showAjaxLoading')
       const params = this.transformData(this.form)
       if (!this.$route.query.id) {
-        addPositionApi(params).then(res=>{
+        addPositionApi(params).then(()=>{
           this.$message.success('创建成功')
           this.$router.push({
             name: 'recruiterIndex'
@@ -316,7 +313,7 @@ export default class CommunityEdit extends Vue {
         })
       } else {
         params.id = this.$route.query.id
-        editPositionApi(params).then(res=>{
+        editPositionApi(params).then(()=>{
           this.$message.success('编辑成功')
           this.$router.push({
             name: 'recruiterIndex'
@@ -355,7 +352,7 @@ export default class CommunityEdit extends Vue {
           ...res.data.data
         ]
       }
-    }).catch(err => {
+    }).catch(() => {
       this.$message.error("该手机号码的用户还不是招聘官哦~")
     })
   }
@@ -418,13 +415,13 @@ export default class CommunityEdit extends Vue {
     this.emolumentMaxList = list
   }
 
-  querySearch(queryString, cb){
+  querySearch(queryString){
     if(queryString.length>0){
       geocoder.getLocation(queryString)
     }
   }
 
-  handleSelect(e){
+  handleSelect(){
   }
 
   // 编辑标题
@@ -593,7 +590,7 @@ export default class CommunityEdit extends Vue {
           is_diy: '0'
         })
       })
-      newForm.labels = JSON.stringify(labels); //转换为json类型的字符串　　
+      newForm.labels = JSON.stringify(labels);
     }else {
       delete newForm.labels
     }
@@ -620,8 +617,9 @@ export default class CommunityEdit extends Vue {
       return test
     }
 
-    this.form.posters.map((item, index) => {
+    this.form.posters.map((item) => {
       if (item.new_wap_file_id && item.new_applet_file_id) {
+        //
       } else {
         test = false
         this.$message.error('分销／邀请函海报上传图片不全，请重新上传')
@@ -637,9 +635,10 @@ export default class CommunityEdit extends Vue {
   handleSubmit () {
     this.$refs.form.validate(valid => {
       if (valid) {
-        let data = this.form
         this.savePosition()
-      } else {}
+      } else {
+        //
+      }
     })
   }
 
@@ -688,7 +687,7 @@ export default class CommunityEdit extends Vue {
   }
 
   cloJob(){
-    closePositionApi({id: this.$route.query.id}).then(res=>{
+    closePositionApi({id: this.$route.query.id}).then(()=>{
         this.$message({
           type: 'success',
           message: '成功!'

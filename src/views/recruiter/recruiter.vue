@@ -10,10 +10,10 @@
           <div class="header_navs" :class="searchBarFixed === true ? 'isFixed' :''">
             <ul class="recruiter_classify">
               <li
-                class
-                v-for="item,index in recruiterList"
+                v-for="(item,index) in recruiterList"
                 @click="catchRecruiter(index)"
                 :class="{'cur':item.active}"
+                :key="index"
               >{{item.name}} ({{item.total}})</li>
             </ul>
             <div class="job_classify_wrap" v-if="jobNameList.length>0">
@@ -27,10 +27,10 @@
               </ul>-->
               <ul class="job_classify job_classify2">
                 <li
-                  class
-                  v-for="item,index in jobNameList"
+                  v-for="(item,index) in jobNameList"
                   @click="catchJob(index)"
                   :class="{'slet':item.active}"
+                  :key="index"
                 >{{item.name}}</li>
 
                 <!-- <li class="close" @click="todoAction('closeClassily')" :class="{'slet':false}" v-if="jobNameList.length>9">收起</li> -->
@@ -41,7 +41,7 @@
       </div>
 
       <ul class="job_list" v-if="jobList.length>0">
-        <li class="job_blo" v-for="item,index in jobList">
+        <li class="job_blo" v-for="(item,index ) in jobList" :key="index">
           <div class="blo_left">
             <div class="job_top">
               <div class="job_name">{{item.positionName}}</div>
@@ -179,13 +179,11 @@
 <script>
 import Vue from "vue";
 import Component from "vue-class-component";
-import { uploadApi, waitApi, getQrCodeApi, getMyInfoApi } from "../../api/auth";
+import {  getMyInfoApi } from "../../api/auth";
 import {
-  getListApi,
   getMyListApi,
   closePositionApi,
   openPositionApi,
-  editPositionApi,
   getStatusTotalApi,
   getTypeListApi,
   getCodeUrl
@@ -307,7 +305,7 @@ export default class CourseList extends Vue {
     this.getJobNameList();
     this.getPositionList();
 
-    this.getMyInfo().then(res => {
+    this.getMyInfo().then(() => {
       this.getStatusTotal();
     });
   }
@@ -349,7 +347,7 @@ export default class CourseList extends Vue {
         break;
       case "closeJob":
         closePositionApi({ id: this.jobSelectId })
-          .then(res => {
+          .then(() => {
             this.$message({
               type: "success",
               message: "成功!"
@@ -368,7 +366,7 @@ export default class CourseList extends Vue {
         break;
       case "openJob":
         openPositionApi({ id: this.jobSelectId })
-          .then(res => {
+          .then(() => {
             this.$message({
               type: "success",
               message: "成功!"
@@ -397,7 +395,7 @@ export default class CourseList extends Vue {
     }
   }
 
-  handleScroll(e) {
+  handleScroll() {
     var scrollTop =
       window.pageYOffset ||
       document.documentElement.scrollTop ||

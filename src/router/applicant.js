@@ -1,4 +1,4 @@
-export const applicant = [
+const applicant = [
   {
     path: '/applyIndex',
     name: 'applyIndex',
@@ -30,3 +30,5 @@ export const applicant = [
     component: resolve => require(['../views/activity/resumeFourthPost/index.vue'], resolve)
   },
 ]
+
+export default applicant

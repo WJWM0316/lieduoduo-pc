@@ -29,7 +29,7 @@
               </div>
               <div class="select_cont" v-else>
                 <div class="select_list">
-                  <div class="job_blo" @click="openMask('login')" v-for="(item,index) in selectList">
+                  <div class="job_blo" @click="openMask('login')" v-for="(item,index) in selectList"  :key="index">
                     <div class="job_blo_left ellipsis">{{item.companyShortname}}</div>
                     <div class="job_blo_center ellipsis">{{item.positionName}}</div>
                     <div class="job_blo_right">{{item.emolumentMin}}K-{{item.emolumentMax}}K<span v-if="item.annualSalary>12">·{{item.annualSalary}}薪</span></div>
@@ -48,24 +48,30 @@
           </div>
           <div class="select-content">
             <div class="select-search-lab">
-              <span class="search-lab" @click="selectLab(item.positionType)" :class="{'active': labType === item.positionType }" v-for="(item, index) in positionTypeList" v-if="">{{item.positionTypeName}}</span>
+              <span class="search-lab" @click="selectLab(item.positionType)" :class="{'active': labType === item.positionType }" v-for="(item, index) in positionTypeList" :key="index">{{item.positionTypeName}}</span>
             </div>
             <div class="select-search-content" >
-              <template v-for="(item, index) in advList " v-if="index<9">
-                <div class="select_info"  @click="setAdv(item)"
-                v-if="index<4">
+              <template v-for="(item, index) in advList">
+                <div class="select_info"  
+                  @click="setAdv(item)"
+                  v-if="index<4"
+                  :key="item.id">
                   <img class="banner" :src="item.cardCompanyLogo.middleUrl">
                 </div>
 
-                <div class="select_info info_type2 ellipsis"  @click="setAdv(item)"
-                v-else-if="index>3&&index<7">
+                <div 
+                class="select_info info_type2 ellipsis"  
+                @click="setAdv(item)"
+                v-else-if="index>3&&index<7"
+                :key="item.id">
                   <img class="banner" :src="item.cardCompanyLogo.middleUrl">
                   <p class="positionName ellipsis">{{item.positionName}}</p>
                   <p class="emolument ellipsis">{{item.emolumentMin}}k-{{item.emolumentMax}}k<template v-if="item.annualSalary > 12">·{{item.annualSalary}}薪</template></p>
                 </div>
 
                 <div class="select_info info_type3"  @click="setAdv(item)"
-                v-if="index>6&&index<9">
+                v-if="index>6&&index<9"
+                :key="item.id">
                   <div class="info_cont ellipsis">
                     <p class="positionName ellipsis">{{item.positionName}}</p>
                     <p class="emolument ellipsis">{{item.emolumentMin}}k-{{item.emolumentMax}}k<template v-if="item.annualSalary > 12">·{{item.annualSalary}}薪</template></p>
@@ -182,7 +188,7 @@
               热招职位
             </h3>
             <div class="hot-position">
-              <div class="hot-lab" v-for="(item,index) in selectAdv.hotPositions">
+              <div class="hot-lab" v-for="(item,index) in selectAdv.hotPositions" :key="index">
                 {{item}}
               </div>
             </div>
@@ -193,7 +199,7 @@
               职位要求
             </h3>
             <div class="hot-position">
-              <div class="hot-lab" v-for="(item,index) in selectAdv.positionDemand">
+              <div class="hot-lab" v-for="(item,index) in selectAdv.positionDemand"  :key="index">
                 {{item}}
               </div>
             </div>
@@ -205,7 +211,7 @@
             </h3>
             <div class="modal-walfare">
               <!-- hotPositions -->
-              <div class="walfare-lab" v-for="(item,index) in selectAdv.benefit">
+              <div class="walfare-lab" v-for="(item,index) in selectAdv.benefit"  :key="index">
                 {{item}}
               </div>
             </div>
@@ -233,9 +239,8 @@
 <script>
   import Vue from 'vue'
   import Component from 'vue-class-component'
-  import { loginPutInApi, getCodeApi, scanApi, getCaptchaApi, getQrCodeApi } from '../../../api/auth'
+  import { loginPutInApi, getCodeApi, getCaptchaApi } from '../../../api/auth'
   import { schJobApi, getPositionTypesApi, getAdvListApi, getUserRoleInfo } from '../../../api/putIn'
-  import { getUserIdentity, switchId } from '../../../../config.js'
   @Component({
     name: 'lighthouse-list',
     methods: {
@@ -291,7 +296,7 @@
     selectAdv = {}  //点击logo参数
     loginModelAnimale = false //登录框动画显示
     mounted () {
-      let query = this.$route.query
+      // let query = this.$route.query
       this.getPositionTypes()
 
       var _hmt = _hmt || [];
@@ -417,7 +422,7 @@
         mobile: this.form.mobile 
       }).then(res => {
         console.log(res)
-      }).catch(e=>{
+      }).catch(()=>{
       })
     }
 

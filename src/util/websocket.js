@@ -64,7 +64,7 @@ class WS {
           case 'live.leave':
             break
           case 'msg.push': // 不是心跳返回的数据和登录的返回的数据, 存储起来
-            let time = new Date().getTime()
+            // let time = new Date().getTime()
             // store.dispatch('updata_resolveTime', time)
             break
         }
@@ -74,12 +74,12 @@ class WS {
         this.checkConnect()
       }
       // 关闭监听
-      ws.onclose = (e) => {
+      ws.onclose = () => {
         // store.dispatch('updata_wsLogin', false)
         this.reConnect()
       }
       // 错误监听
-      ws.onerror = (e) => {}
+      ws.onerror = () => {}
     } else {
       alert('您的浏览器不支持 WebSocket，请更换浏览器')
     }

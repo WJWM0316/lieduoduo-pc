@@ -131,7 +131,6 @@
           v-model="form.describe" 
           style="width: 520px;"
          ></el-input>
-        </el-input>
       </el-form-item>
 
       <p class="ruleHint">发布职位即表示同意遵守<span @click="toIssueRule">《猎多多职位信息发布规则》</span>，如违反将导致您的账号被锁定</p>
@@ -148,14 +147,14 @@
           <div class="pop_left">
             <div class="pop_tit">请选择职位类别</div>
             <ul class="pop_classily" >
-              <li class="" :class="{'cur': item.active}" v-for="item,index in positionList" @click="selectPosition(index)">{{item.name}}</li>
+              <li class="" :class="{'cur': item.active}" v-for="(item,index) in positionList" @click="selectPosition(index)" :key="index">{{item.name}}</li>
             </ul>
           </div>
           <div class="pop_right">
             <img class="clo" src="../../assets/images/clo.png" @click="popCancel('name')" />
             <search-bar class="f-float-left" @search="handleSearch" :width="'200'" v-model="searchPosition" placeholder="请输入职位关键词" style="margin-top: 12px;"></search-bar>
             <ul class="job_classily">
-              <li v-for="item,index in secondPositionList" @click="selectSecondPosition(index)">
+              <li v-for="(item,index) in secondPositionList" @click="selectSecondPosition(index)" :key="index">
                 <img class="classily_icon classily_open" src="../../assets/images/add_icon.png" v-if="!item.active" />
                 <img class="classily_icon classily_close" src="../../assets/images/close_icon.png" v-else />
                 {{item.name}}
@@ -163,7 +162,7 @@
             </ul>
 
             <ul class="open_jobs" v-if="thirdPositionList.length>0">
-              <li  v-for="item,index in thirdPositionList" @click="thirdSecondPosition(item)"> {{item.name}}</li>
+              <li  v-for="(item,index) in thirdPositionList" @click="thirdSecondPosition(item)" :key="index"> {{item.name}}</li>
             </ul>
           </div>
         </div>

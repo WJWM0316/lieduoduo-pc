@@ -148,13 +148,9 @@
 import Vue from "vue";
 import Component from "vue-class-component";
 import {
-  uploadApi,
-  waitApi,
-  getQrCodeApi,
   saveResumeMsgApi,
   getResumeMsgApi,
-  deleteFileMsgApi,
-  downApi
+  deleteFileMsgApi
 } from "../../api/auth";
 import { baseHost } from "../../../config.js";
 
@@ -228,7 +224,7 @@ export default class CourseList extends Vue {
     } else {
       this.$router.push({ name: "login" });
     }
-    let w = document.documentElement.clientWidth || document.body.clientWidth;
+    // let w = document.documentElement.clientWidth || document.body.clientWidth;
     let h = document.documentElement.clientHeight || document.body.clientHeight;
 
     if (h - 60 - 200 > 400) {
@@ -246,7 +242,7 @@ export default class CourseList extends Vue {
       attach_name: this.uploadFileData[0].fileName
     };
     saveResumeMsgApi(data)
-      .then(res => {})
+      .then(() => {})
       .catch(err => {
         this.$message.error(err.msg);
       });
@@ -275,7 +271,7 @@ export default class CourseList extends Vue {
         this.$router.push({
           name: "teacherDetail",
           query: {
-            id: id
+            // id: id
           }
         });
         break;
@@ -400,14 +396,14 @@ export default class CourseList extends Vue {
   /**
    * @detail   上传进度
    */
-  uploadFileProcess(event, file, fileList) {
+  uploadFileProcess(event, file) {
     this.fileUpload.progress = file.percentage.toFixed(0);
   }
 
   /**
    * @detail   文件上传失败
    */
-  handleFileError(err, file, fileList) {
+  handleFileError(err) {
     this.fileUpload.status = "error";
     this.fileUpload.progress = 0;
     this.fileUpload.progressText = "上传失败";
@@ -415,8 +411,8 @@ export default class CourseList extends Vue {
     this.$message.error(err.msg);
   }
 
-  handleRemove(file, fileList) {}
-  handlePreview(file) {}
+  handleRemove() {}
+  handlePreview() {}
 
   //获取文件名后缀名
   extension(str) {
@@ -424,7 +420,7 @@ export default class CourseList extends Vue {
     var name = str.toLowerCase();
     var i = name.lastIndexOf(".");
     if (i > -1) {
-      var ext = name.substring(i);
+      ext = name.substring(i);
     }
     return ext;
   }

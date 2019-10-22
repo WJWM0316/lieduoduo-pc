@@ -332,7 +332,6 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import { switchId, getUserIdentity } from '../../../config.js'
-import { changeBaseURL } from '../../api/index'
 import { switchRoleApi } from '../../api/auth'
 
 @Component({
@@ -357,30 +356,28 @@ export default class ComponentHeader extends Vue {
     let zhaopinPages = ['recruiterIndex','postJob','candidate']
     let qiuzhiPages = ['applyIndex']
 
-    this.userInfo = this.$store.state.userInfo
-    if(zhaopinPages.includes(pageName)){
-      if(isBusiness !== 1 ){
-        this.$router.push({
-          name: 'applyIndex'
-        })
-        this.identity = 'qiuzhi'
-      }else {
-        this.identity = 'zhaopin'
-      }
-    }else if(qiuzhiPages.includes(pageName)){
-      if(isBusiness !==0){
-        this.$router.push({
-          name: 'candidate'
-        })
-        this.identity = 'zhaopin'
-      }else {
-        this.identity = 'qiuzhi'
-      }
-    }
-    switchId(this.identity)
-    changeBaseURL()
-    // console.log('Header===', this.identity)
-  }
+		this.userInfo = this.$store.state.userInfo
+		if(zhaopinPages.includes(pageName)){
+			if(isBusiness !== 1 ){
+				this.$router.push({
+					name: 'applyIndex'
+				})
+				this.identity = 'qiuzhi'
+			}else {
+				this.identity = 'zhaopin'
+			}
+		}else if(qiuzhiPages.includes(pageName)){
+			if(isBusiness !==0){
+				this.$router.push({
+					name: 'candidate'
+				})
+				this.identity = 'zhaopin'
+			}else {
+				this.identity = 'qiuzhi'
+			}
+		}
+		switchId(this.identity)
+	}
 
   refresh(){
     location.reload()
@@ -397,7 +394,6 @@ export default class ComponentHeader extends Vue {
       this.identity = identity
       this.userInfo.isBusiness = this.identity === 'zhaopin' ? 1 : 0
       this.$store.dispatch('login', this.userInfo)
-      changeBaseURL()
       this.$router.push({
         name: identity === 'zhaopin' ? 'candidate' : 'applyIndex'
       })
@@ -407,7 +403,7 @@ export default class ComponentHeader extends Vue {
       })
     }).catch(e => {
       this.$message.error(e.data.msg)
-     })
+      })
   }
 
   //关闭切换
