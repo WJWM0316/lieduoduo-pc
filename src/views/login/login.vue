@@ -79,17 +79,10 @@
   </div>
 </template>
 <script>
-<<<<<<< HEAD
-import Vue from "vue";
-import Component from "vue-class-component";
-import { scanApi, getQrCodeApi } from "../../api/auth";
-import { switchId } from "../../../config.js";
-=======
 	import Vue from 'vue'
 	import Component from 'vue-class-component'
-	import { loginApi, scanApi, getQrCodeApi } from '../../api/auth'
-	import { getUserIdentity, switchId } from '../../../config.js'
->>>>>>> 10b5df3387703829221bd0a57649b97414383048
+	import { scanApi, getQrCodeApi } from '../../api/auth'
+	import { switchId } from '../../../config.js'
 
 @Component({
   name: "lighthouse-list",
