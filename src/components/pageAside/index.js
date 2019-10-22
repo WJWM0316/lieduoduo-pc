@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
-import { routes } from '@/router/routes'
+import recruiter from '@/router/recruiter'
 
 @Component({
   name: 'page-asise',
@@ -17,6 +17,6 @@ export default class PageAside extends Vue {
 
 
   created() {
-  	this.routes = routes
+  	this.routes = recruiter
   }
 }
