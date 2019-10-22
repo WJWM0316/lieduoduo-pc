@@ -326,7 +326,6 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import { switchId, getUserIdentity } from '../../../config.js'
-import { changeBaseURL } from '../../api/index'
 import { switchRoleApi, getMyInfoApi } from '../../api/auth'
 
 @Component({
@@ -373,7 +372,6 @@ export default class ComponentHeader extends Vue {
 			}
 		}
 		switchId(this.identity)
-		changeBaseURL()
 	}
 
 	refresh(){
@@ -391,7 +389,6 @@ export default class ComponentHeader extends Vue {
 	  	this.identity = identity
 	  	this.userInfo.isBusiness = this.identity === 'zhaopin' ? 1 : 0
 	  	this.$store.dispatch('login', this.userInfo)
-	  	changeBaseURL()
 	  	this.$router.push({
 	  		name: identity === 'zhaopin' ? 'candidate' : 'applyIndex'
 	  	})

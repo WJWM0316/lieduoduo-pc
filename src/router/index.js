@@ -26,6 +26,7 @@ const router = new Router({
   }
 })
 
+
 router.beforeEach((to, from, next) => {
   store.dispatch('setPageName', {name: to.name})
   if (from.name !== to.name) {

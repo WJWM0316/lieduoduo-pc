@@ -200,7 +200,6 @@
 	import { getPositionTypeApi, getPositionTypeListApi, getResumeShareApi, getCodeUrl } from '../../api/position'
 	import { getSearchMyCollectApi, getSearchCollectApi, putCollectUserApi, cancelCollectUserApi } from '../../api/collect'
 	import { getSearchBrowseMyselfApi, getMyNavDataApi, getJobHunterPositionTypeApi } from '../../api/browse'
-	import { changeBaseURL } from '../../api/index'
 
 	import { applyInterviewApi, confirmInterviewApi } from '../../api/interview'
 

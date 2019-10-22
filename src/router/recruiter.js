@@ -1,4 +1,4 @@
-export const recruiter = [
+const recruiter = [
 	{
     path: '/candidate',
     name: 'candidate',
@@ -38,3 +38,4 @@ export const recruiter = [
     component: resolve => require(['../views/issueRule/issueRule.vue'], resolve)
   }
 ]
+export default recruiter
