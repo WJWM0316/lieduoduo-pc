@@ -1,22 +1,14 @@
 import axios from 'axios'
 import { Loading } from 'element-ui'
 import router from '../router/index'
-import { baseHost, changeBaseHost } from '../../config.js'
-
-let loadingInstance = null
 import { getAccessToken, removeAccessToken } from './cacheService'
-
-// 请求的跟地址
-axios.defaults.baseURL = baseHost()
-export const changeBaseURL = (type) => {
-  axios.defaults.baseURL = type ? changeBaseHost(type) :baseHost()
-}
+let loadingInstance = null,
+    localStorage = window.localStorage
 
 // 请求拦截器
 axios.interceptors.request.use(
   config => {
     config.headers.common['Authorization'] = getAccessToken()
-    config.headers.common['Wechat-Version'] = 102
     return config
   },
   error => {
@@ -42,15 +34,27 @@ axios.interceptors.response.use(
 )
 
 
-export const request = (url, method, params = {}, isChangeHost) => {
+export const request = (url, method, params = {}, config) => {
+  // 切换api host
+  console.log(config, 111, axios.defaults.baseURL)
+  switch (config.host) {
+    case 'zhaopin':
+      axios.defaults.baseURL = process.env.VUE_WEB_ZHAOPIN_API
+      break
+    case 'qiuzhi':
+      axios.defaults.baseURL = process.env.VUE_WEB_QIUZHI_API
+      break
+    case 'pub':
+      axios.defaults.baseURL = process.env.VUE_WEB_ZHAOPIN_API
+      break
+    default:
+      axios.defaults.baseURL = process.env.VUE_WEB_ZHAOPIN_API
+      break
+  }
+  
   if (params.globalLoading) {
     loadingInstance = Loading.service({})
     delete params.globalLoading
-  }
-  if (isChangeHost) {
-    changeBaseURL(1)
-  } else {
-    changeBaseURL()
   }
 
   return axios[method](url, method === 'get' ? { params } : params)

@@ -4,21 +4,51 @@
 import { request } from './index.js'
 
 // 查询我感兴趣的
-export const getSearchMyCollectApi = data => request('/collect/search_my_collect', 'get',data)
+export const getSearchMyCollectApi = data => request({
+	url: '/collect/search_my_collect',  
+	method: 'get', 
+	params: data, 
+	config: {host: 'pub'}
+})
 
 // 对我感兴趣的
-export const getSearchCollectApi = data => request('/collect/search_collect', 'get',data)
+export const getSearchCollectApi = data => request({
+	url: '/collect/search_collect',  
+	method: 'get', 
+	params: data, 
+	config: {host: 'pub'}
+})
 
 
 // 收藏求职者
-export const putCollectUserApi = data => request(`/collect/collectUser/${data.uid}`, 'put',data)
+export const putCollectUserApi = data => request({
+	url: `/collect/collectUser/${data.uid}`,  
+	method: 'put', 
+	params: data, 
+	config: {host: 'pub'}
+})
 
 
 // 取消收藏求职者
-export const cancelCollectUserApi = data => request(`/collect/collectUser/${data.uid}`, 'delete',data)
+export const cancelCollectUserApi = data => request({
+	url: `/collect/collectUser/${data.uid}`, 
+	method: 'delete', 
+	params: data, 
+	config: {host: 'pub'}
+})
 
 // 收藏职位
-export const putCollectPositionApi = data => request(`/collect/collectPosition/${data.positionId}`, 'put',data)
+export const putCollectPositionApi = data => request({
+	url: `/collect/collectPosition/${data.positionId}`, 
+	method: 'put',
+	params: data, 
+	config: {host: 'pub'}
+})
 
 // 取消收藏职位
-export const cancelCollectPositionApi = data => request(`/collect/collectPosition/${data.positionId}`, 'delete',data)
+export const cancelCollectPositionApi = data => request({
+	url: `/collect/collectPosition/${data.positionId}`,  
+	method: 'delete', 
+	params: data, 
+	config: {host: 'pub'}
+})

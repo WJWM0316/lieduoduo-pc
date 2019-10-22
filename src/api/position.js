@@ -4,95 +4,185 @@
 import { request } from './index.js'
 
 // 导师列表
-export const getTutorListApi = data => request('/tutor/', 'get',data)
+export const getTutorListApi = data => request({
+  url: '/tutor', 
+  method: 'get', 
+  params: data,
+  config: {host: 'zhaopin'}
+})
 
 // 获取导师的详情
-export const getTutorDetailApi = data => request(`/tutor/info/${data.id}`, 'get',data)
+export const getTutorDetailApi = data => request({
+  url: '/tutor/info/${data.id}', 
+  method: 'get', 
+  params: data,
+  config: {host: 'zhaopin'}
+})
 
 // 编辑导师资料
-export const editTutorApi = data => request(`/tutor/edit/${data.tutorId}`, 'post',data)
+export const editTutorApi = data => request({
+  url: '/tutor/edit/${data.tutorId}', 
+  method: 'post', 
+  params: data,
+  config: {host: 'zhaopin'}
+})
 
 // 专业领域列表
-export const getFiledListApi = data => request(`/filed`, 'get')
+export const getFiledListApi = data => request({
+  url: '/filed', 
+  method: 'get', 
+  params: data,
+  config: {host: 'zhaopin'}
+})
 
 // 职位搜索列表
-export const getListApi = data => request(`/position/list`, 'get', data)
+export const getListApi = data => request({
+  url: '/position/list', 
+  method: 'get', 
+  params: data,
+  config: {host: 'zhaopin'}
+})
 
 // 当前招聘官职位搜索列表（只返回招聘官自己的职位）
-export const getMyListApi = data => request(`/position/mylist`, 'get', data)
+export const getMyListApi = data => request({
+  url: '/position/mylist', 
+  method: 'get', 
+  params: data,
+  config: {host: 'zhaopin'}
+})
 
 // 搜索职位名称列表
-export const getJobNameListApi = data => request(`/position/namelist`, 'get', data)
+export const getJobNameListApi = data => request({
+  url: '/position/namelist', 
+  method: 'get', 
+  params: data,
+  config: {host: 'zhaopin'}
+})
 
 // 创建职位
-export const addPositionApi = data => request(`/position`, 'post', data)
+export const addPositionApi = data => request({
+  url: '/position', 
+  method: 'post', 
+  params: data,
+  config: {host: 'zhaopin'}
+})
 
 // 获取职位信息
-export const getPositionApi = data => request(`/position/${data.id}`, 'get', data)
+export const getPositionApi = data => request({
+  url: '/position/${data.id}', 
+  method: 'get', 
+  params: data,
+  config: {host: 'zhaopin'}
+})
 
 // 编辑职位信息
-export const editPositionApi = data => request(`/position/${data.id}`, 'put', data)
+export const editPositionApi = data => request({
+  url: '/position/${data.id}', 
+  method: 'put', 
+  params: data,
+  config: {host: 'zhaopin'}
+})
 
 // 删除职位信息
-export const deletePositionApi = data => request(`/position/${data.id}`, 'delete', data)
+export const deletePositionApi = data => request({
+  url: '/position/${data.id}', 
+  method: 'delete', 
+  params: data,
+  config: {host: 'zhaopin'}
+})
 
 // 关闭职位
-export const closePositionApi = data => request(`/position/close/${data.id}`, 'put', data)
+export const closePositionApi = data => request({
+  url: '/position/close/${data.id}', 
+  method: 'put', 
+  params: data,
+  config: {host: 'zhaopin'}
+})
 
 // 开始职位
-export const openPositionApi = data => request(`/position/open/${data.id}`, 'put', data)
+export const openPositionApi = data => request({
+  url: '/position/open/${data.id}', 
+  method: 'put', 
+  params: data,
+  config: {host: 'zhaopin'}
+})
 
 // 职业标签列表
-export const getPositionListApi = data => request(`/label/position`, 'get')
+export const getPositionListApi = data => request({
+  url: '/label/position', 
+  method: 'get', 
+  params: data,
+  config: {host: 'zhaopin'}
+})
 
 // 职业类型列表 
-export const getPositionTypeListApi = data => request(`/label/positionType`, 'get')
+export const getPositionTypeListApi = data => request({
+  url: '/label/positionType', 
+  method: 'get', 
+  params: data,
+  config: {host: 'zhaopin'}
+})
 
 // 搜索-职业标签
-export const searchPositionApi = data => request(`/search/position`, 'get', data)
+export const searchPositionApi = data => request({
+  url: '/search/position', 
+  method: 'get', 
+  params: data,
+  config: {host: 'zhaopin'}
+})
 
 
 // 职位分状态按条件数量统计
-export const getStatusTotalApi = data => request(`/position/statustotal`, 'get', data)
+export const getStatusTotalApi = data => request({
+  url: '/position/statustotal', 
+  method: 'get', 
+  params: data,
+  config: {host: 'zhaopin'}
+})
 
 // 职业标签列表
-export const getLabelPositionListApi = data => request(
-	 `/label/position`,
-	'get',
-	data
-)
+export const getLabelPositionListApi = data => request({
+  url: '/label/position', 
+  method: 'get', 
+  params: data,
+  config: {host: 'zhaopin'}
+})
 // 职位技能列表
-export const professionalSkillsApi = data => request(
-	`/label/professionalSkills`,
-	'get',
-	data
-)
+export const professionalSkillsApi = data => request({
+  url: '/label/professionalSkills', 
+  method: 'get', 
+  params: data,
+  config: {host: 'zhaopin'}
+})
 
 // 职位技能列表
-export const getTypeListApi = data => request(
-	`/position/typelist`,
-	'get',
-	data
-)
+export const getTypeListApi = data => request({
+  url: '/position/typelist', 
+  method: 'get', 
+  params: data,
+  config: {host: 'zhaopin'}
+})
 
 // 获取职位二维码
-export const getCodeUrl = data => request(
-	`/position/get_code_url`,
-	'get',
-	data
-)
+export const getCodeUrl = data => request({
+  url: '/position/get_code_url', 
+  method: 'get', 
+  params: data,
+  config: {host: 'zhaopin'}
+})
 
 // 简历分享信息
-export const getResumeShareApi = data => request(
-	`/share/resume_share`,
-	'get',
-	data,
-	true
-)
+export const getResumeShareApi = data => request({
+  url: '/share/resume_share', 
+  method: 'get', 
+  params: data,
+  config: {host: 'zhaopin'}
+})
 
 // 获取招聘官在招职位类型
-export const getPositionTypeApi = data => request(
-	`/browse/get_position_type`,
-	'get',
-	data
-)
+export const getPositionTypeApi = data => request({
+  url: '/browse/get_position_type', 
+  method: 'get', 
+  params: data,
+  config: {host: 'zhaopin'}
+})
