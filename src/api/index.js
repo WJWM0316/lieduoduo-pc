@@ -4,7 +4,9 @@ import router from '../router/index'
 import { getAccessToken, removeAccessToken } from './cacheService'
 let loadingInstance = null,
     localStorage = window.localStorage
-
+const VUE_WEB_ZHAOPIN_API = process.env.VUE_APP_WEB_ZHAOPIN_API,
+      VUE_WEB_QIUZHI_API  = process.env.VUE_APP_WEB_QIUZHI_API,
+      VUE_WEB_PUB_API     = process.env.VUE_APP_WEB_PUB_API
 // 请求拦截器
 axios.interceptors.request.use(
   config => {
@@ -34,24 +36,20 @@ axios.interceptors.response.use(
 )
 
 
-export const request = (url, method, params = {}, config) => {
+export const request = ({url, method, params = {}, config = {host: 'pub'}}) => {
   // 切换api host
-  console.log(config, 111, axios.defaults.baseURL)
+  
   switch (config.host) {
     case 'zhaopin':
-      axios.defaults.baseURL = process.env.VUE_WEB_ZHAOPIN_API
+      axios.defaults.baseURL = VUE_WEB_ZHAOPIN_API
       break
     case 'qiuzhi':
-      axios.defaults.baseURL = process.env.VUE_WEB_QIUZHI_API
+      axios.defaults.baseURL = VUE_WEB_QIUZHI_API
       break
     case 'pub':
-      axios.defaults.baseURL = process.env.VUE_WEB_ZHAOPIN_API
-      break
-    default:
-      axios.defaults.baseURL = process.env.VUE_WEB_ZHAOPIN_API
+      axios.defaults.baseURL = VUE_WEB_PUB_API
       break
   }
-  
   if (params.globalLoading) {
     loadingInstance = Loading.service({})
     delete params.globalLoading
