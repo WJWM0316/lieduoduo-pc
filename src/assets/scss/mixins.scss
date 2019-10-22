@@ -1,0 +1,49 @@
+// 水平垂直居中
+@mixin flex-center() {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// 仅仅垂直居中
+@mixin flex-v-center() {
+  display: flex;
+  align-items: center;
+}
+
+// 单行省略号
+@mixin ellipsis(){
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+// 多行省略号
+@mixin ellipsis-two() {
+  overflow:hidden;
+  text-overflow:ellipsis;
+  display:-webkit-box; 
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2; 
+}
+
+// a链接
+@mixin a-block($color) {
+  color: $color;
+  text-decoration: none;
+  display: block;
+}
+
+// img border-radius 
+@mixin img-radius($height, $width, $radius:50%, $bgcolor: #ABABAB) {
+  width: $height;
+  height: $width;
+  border-radius: $radius;
+  background: $bgcolor;
+  overflow: hidden;
+  text-align: center;
+  img {
+    max-width: 100%;
+    max-height: 100%;
+  }
+}

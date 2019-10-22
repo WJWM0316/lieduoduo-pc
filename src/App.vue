@@ -13,7 +13,8 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import PageFooter from './components/pageFooter/index.vue'
-import PageHeader from './components/pageHeader/index.vue'
+// import PageHeader from './components/pageHeader/index.vue'
+import PageHeader from '@/views/layout/header/'
 import PageAside from './components/pageAside/index.vue'
 import PageHeader2 from './components/pageHeader2/index.vue'
 
