@@ -1,11 +1,56 @@
+
+.inner {
+	margin: 0 auto;
+	max-width: $page-width;
+}
 .positionDetail {
 	width: 100%;
 	background: #fff;
 	.header {
 		width: 100%;
 		background: #F5F5F5;
+		padding: 34px 0 30px;
 		.inner {
-			max-width: $page-width;
+			overflow: hidden;
+			.content {
+				width: 70%;
+				float: left;
+				.title {
+					font-size: 0;
+					display: flex;
+					align-items: center;
+					.name {
+						color: $font-color-3;
+						font-size: 24px;
+						font-weight:400;
+						line-height:34px;
+					}
+					.icon {
+						width:60px;
+						height:26px;
+						background:#FF7F4C;
+						border-radius:2px;
+						text-align: center;
+						line-height: 26px;
+						display: inline-block;
+						font-size:14px;
+						font-weight:400;
+						color:#fff;
+						line-height:26px;
+						margin-right: 11px;
+					}
+				}
+				.salary {
+					font-size:36px;
+					font-weight:500;
+					color:#FF7F4C;
+					line-height:50px;
+				}
+			}
+			.aside {
+				width: 30%;
+				float: right;
+			}
 		}
 	}
 }

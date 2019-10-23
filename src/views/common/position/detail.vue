@@ -34,6 +34,19 @@
 		</header>
 	</div>
 </template>
+<script>
+import Vue from 'vue'
+import Component from 'vue-class-component'
+@Component({
+  name: 'positionDetail'
+})
+export default class PositionDetail extends Vue {
+  cdnPath = this.$cdnPath
+  created () {
+  	
+  }
+}
+</script>
 <style lang="scss">
-@import url('./detail.scss');
+@import './detail.scss';
 </style>

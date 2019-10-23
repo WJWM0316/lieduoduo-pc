@@ -52,10 +52,10 @@ export const request = ({url, method, params = {}, config}) => {
       axios.defaults.baseURL = VUE_WEB_PUB_API
       break
     case 'qiuzhi':
-      axios.defaults.baseURL = VUE_APP_WEB_QIUZHI_API
+      axios.defaults.baseURL = VUE_WEB_QIUZHI_API
       break
     case 'zhaopin':
-      axios.defaults.baseURL = VUE_APP_WEB_ZHAOPIN_API
+      axios.defaults.baseURL = VUE_WEB_ZHAOPIN_API
       break
   }
 

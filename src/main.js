@@ -9,6 +9,7 @@ import './util'
 import './eleui'
 
 Vue.config.productionTip = false
+Vue.prototype.$cdnPath = process.env.VUE_APP_CDN_PATH
 Vue.prototype._ = _
 new Vue({
   router,
