@@ -79,7 +79,7 @@ export default class App extends Vue {
 .pages {
   min-height: calc(100vh - #{$page-header-height} - #{$page-footer-height});
 }
-.page .main-center {
+.pages .main-center {
   width: $page-width;
   margin:0 auto;
 }
