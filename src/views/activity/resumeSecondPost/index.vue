@@ -38,7 +38,7 @@
 
         <div class="form">
           <div class="formItem">
-            <input maxlength="20" placeholder="请输入公司名称" v-model="form2.company"></input>
+            <input maxlength="20" placeholder="请输入公司名称" v-model="form2.company" />
 
             <div class="limit">
               <span>{{form2.company.length}}</span>/<span>20</span>
@@ -74,7 +74,7 @@
           </div>
 
           <div class="formItem">
-            <input maxlength="20" placeholder="请输入职位名称" v-model="form2.position"></input>
+            <input maxlength="20" placeholder="请输入职位名称" v-model="form2.position" />
             <div class="limit">
               <span>{{form2.position.length}}</span>/<span>20</span>
             </div>
@@ -120,7 +120,7 @@
           </div>
 
           <div class="formItem" @click="openMask">
-            <input maxlength="1000" disabled placeholder="请输入工作内容" v-model="form2.duty" ></input>
+            <input maxlength="1000" disabled placeholder="请输入工作内容" v-model="form2.duty" />
             <div class="limit">
               <span>{{form2.duty.length}}</span>/<span>1000</span>
             </div>
@@ -168,9 +168,7 @@
 <script>
   import Vue from 'vue'
   import Component from 'vue-class-component'
-  import { getUserInfoApi, getResumeSecondApi, setResumeSecondApi, getLabelPositionListApi} from '../../../api/putIn'
-  import { getUserIdentity, switchId } from '../../../../config.js'
-  import { getAccessToken } from '../../../api/cacheService.js'
+  import {  getResumeSecondApi, setResumeSecondApi, getLabelPositionListApi} from '../../../api/putIn'
   @Component({
     name: 'resumeSecondPost',
     methods: {
@@ -195,7 +193,7 @@
             : dateTime.getMonth() + 1;
         const D =
           dateTime.getDate() < 10 ? '0' + dateTime.getDate() : dateTime.getDate();
-        const hh =
+        /* const hh =
           dateTime.getHours() < 10
             ? '0' + dateTime.getHours()
             : dateTime.getHours();
@@ -206,7 +204,7 @@
         const ss =
           dateTime.getSeconds() < 10
             ? '0' + dateTime.getSeconds()
-            : dateTime.getSeconds();
+            : dateTime.getSeconds(); */
         return `${YY}-${MM}-${D}`
         // return `${YY}-${MM}-${D} ${hh}:${mm}`;
       }
@@ -249,7 +247,7 @@
     options = []
     postion = []
     mounted () {
-      let query = this.$route.query
+      // let query = this.$route.query
       this.userInfo = this.$store.state.userInfo
       console.log(this.userInfo)
     }
@@ -339,14 +337,14 @@
     }
 
     // 提交
-    submit (index) {
+    submit () {
       if(this.validate()) {
         const params = this.transformData()
         let data = {
           careers: []
         }
         data.careers.push(params)
-        setResumeSecondApi(data).then(res => {
+        setResumeSecondApi(data).then(() => {
           this.$router.push({name: 'resumeThirdPost'})
         }).catch(e => {
           this.setHint(e.data.msg || '')

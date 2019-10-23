@@ -95,14 +95,14 @@ export default class mapSearch extends Vue {
           } else {
             that.nowPosiInfo.addressComponents = result.detail.addressComponents
           }
-          let data = {
+          /* let data = {
             areaName: result.detail.addressComponents.city || '',
             //address: result.detail.address,
             address: that.adressInput,
             doorplate: that.addressData.doorplate,
             lng: result.detail.location.lng,
             lat: result.detail.location.lat
-          }
+          } */
         },//若服务请求失败，则运行以下函数
         error: function(e) {
           console.log(e)
@@ -147,7 +147,7 @@ export default class mapSearch extends Vue {
   /* 选中搜索后的地址 */
   clickAdress (e) {
     let that = this
-    this.nowResults.map((item, index) => {
+    this.nowResults.map((item) => {
       if (item.address === e.target.innerText || item.name === e.target.innerText) {
         that.nowPosiInfo = item
         let latLng = new that.qqMapObj.maps.LatLng(item.latLng.lat, item.latLng.lng)
@@ -159,6 +159,7 @@ export default class mapSearch extends Vue {
   /* 清除上次查询后地图上的标注 */
   clearOverlays (overlays) {
     var overlay;
+    // eslint-disable-next-line no-cond-assign
     while (overlay = overlays.pop()) {
       overlay.setMap(null);
     }

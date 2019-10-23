@@ -1,0 +1,46 @@
+
+
+// 主样式
+$main-color-1: #652791;
+$main-color-2: #8452A7;
+$main-color-3: #BC94D7;
+
+// element-ui
+$--color-primary: $main-color-1;
+
+// 辅助颜色
+$sub-color-1: #FFDC29;
+
+// 警告颜色
+$error-color-1: #FF7F4C;
+
+// 背景颜色
+$bg-color-1: #FBFBFF;
+$bg-color-2: #323236;
+$bg-color-3: #4A4534;
+
+
+// 线条颜色
+$border-color-1: #E8E9EB;
+
+// #000-#FFF
+$font-color-3: #333333;
+$font-color-6: #6D696E;
+$font-color-10: #A29CA6;
+$font-color-11: #ABABAB;
+
+// 标题颜色
+$title-color-1: $font-color-3;
+$title-color-2: $font-color-6;
+$title-color-3: $font-color-10;
+
+// 导航颜色
+$nav-color-hover: #fff;
+$nav-color-default: $font-color-11;
+
+// 阴影
+$shadow-1: 0 0 30px 0 rgba(22,39,77,0.07);
+$shadow-2: 0 0 30px 2px rgba(24,22,77,0.10);
+
+// 页面宽度
+$page-width: 1260px;

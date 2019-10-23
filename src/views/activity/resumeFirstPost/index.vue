@@ -100,8 +100,7 @@
 <script>
   import Vue from 'vue'
   import Component from 'vue-class-component'
-  import { getUserInfoApi, searchResumeStepApi, setResumeFirstApi, setResumeSecondApi, setResumeThirdApi, setResumeFourthApi, getResumeFirstApi } from '../../../api/putIn'
-  import { getUserIdentity, switchId } from '../../../../config.js'
+  import { searchResumeStepApi, setResumeFirstApi, setResumeSecondApi, setResumeThirdApi, setResumeFourthApi, getResumeFirstApi } from '../../../api/putIn'
 
   import MyCropper from '../../../components/cropper/index.vue'
   import { getAccessToken } from '../../../api/cacheService.js'
@@ -133,7 +132,7 @@
             : dateTime.getMonth() + 1;
         const D =
           dateTime.getDate() < 10 ? '0' + dateTime.getDate() : dateTime.getDate();
-        const hh =
+        /* const hh =
           dateTime.getHours() < 10
             ? '0' + dateTime.getHours()
             : dateTime.getHours();
@@ -144,7 +143,7 @@
         const ss =
           dateTime.getSeconds() < 10
             ? '0' + dateTime.getSeconds()
-            : dateTime.getSeconds();
+            : dateTime.getSeconds(); */
         return `${YY}-${MM}-${D}`
         // return `${YY}-${MM}-${D} ${hh}:${mm}`;
       }
@@ -212,7 +211,7 @@
 
 
     mounted () {
-      let query = this.$route.query
+      // let query = this.$route.query
       this.handleHeaders['Authorization'] = getAccessToken()
       this.userInfo = this.$store.state.userInfo
     }
@@ -230,11 +229,11 @@
 
     //查询简历完善步数
     searchResumeStep() {
-      searchResumeStepApi().then(res => {})
+      searchResumeStepApi().then(() => {})
     }
 
     getResumeFirst() {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve) => {
         getResumeFirstApi().then(res => {
           let data = res.data.data
           this.form1.from = 1
@@ -260,7 +259,7 @@
 
     // 第一步
       checkAva() {
-        var pattern = /^[\u4E00-\u9FA5\s]{2,10}$/
+        // var pattern = /^[\u4E00-\u9FA5\s]{2,10}$/
         if(!this.form1.avatar && this.form1.avatar!==0){
           this.setHint('请上传你的头像')
           return false
@@ -289,7 +288,7 @@
       }
 
       checkWorkYear() {
-        var pattern = /^1(3|4|5|6|7|8|9)\d{9}$/
+        // var pattern = /^1(3|4|5|6|7|8|9)\d{9}$/
         if(!this.form1.startWorkYear && this.form1.startWorkYear != 0){
           this.setHint('请选择工作时间')
           return false
@@ -327,7 +326,7 @@
     // 提交
     submit (index) {
       let name = `validate${index}`
-      let form = `form${index}`
+      // let form = `form${index}`
       let subName = ''
       if(this[name]()) {
         switch(index) {
@@ -347,7 +346,7 @@
             break
         }
         const params = this.transformData(this.form1)
-        subName({...params}).then(res => {
+        subName({...params}).then(() => {
           this.getResumeFirst().then(res => {
             let userInfo = this.userInfo;
             userInfo.avatarInfo = res.avatar

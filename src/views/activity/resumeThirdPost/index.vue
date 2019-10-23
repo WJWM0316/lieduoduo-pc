@@ -115,16 +115,10 @@
   import Vue from 'vue'
   import Component from 'vue-class-component'
   import {
-    getUserInfoApi,
-    searchResumeStepApi,
-    setResumeFirstApi,
-    setResumeSecondApi,
-    setResumeThirdApi,
-    setResumeFourthApi,
     getDegreeAllListsApi,
-    getResumeThirdStepApi
+    getResumeThirdStepApi,
+    setResumeThirdApi
   } from '../../../api/putIn'
-  import { getUserIdentity, switchId } from '../../../../config.js'
   import { getAccessToken } from '../../../api/cacheService.js'
   @Component({
     name: 'resumeThirdPost',
@@ -138,7 +132,7 @@
             : dateTime.getMonth() + 1;
         const D =
           dateTime.getDate() < 10 ? '0' + dateTime.getDate() : dateTime.getDate();
-        const hh =
+        /* const hh =
           dateTime.getHours() < 10
             ? '0' + dateTime.getHours()
             : dateTime.getHours();
@@ -149,7 +143,7 @@
         const ss =
           dateTime.getSeconds() < 10
             ? '0' + dateTime.getSeconds()
-            : dateTime.getSeconds();
+            : dateTime.getSeconds(); */
         return `${YY}-${MM}-${D}`
         // return `${YY}-${MM}-${D} ${hh}:${mm}`;
       }
@@ -283,7 +277,7 @@
       )
     }
     mounted () {
-      let query = this.$route.query
+      // let query = this.$route.query
       this.handleHeaders['Authorization'] = getAccessToken()
       this.userInfo = this.$store.state.userInfo
       this.getDegreeAllLists()

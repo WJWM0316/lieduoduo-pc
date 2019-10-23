@@ -17,6 +17,6 @@ export default class PageAside extends Vue {
 
 
   created() {
-  	this.routes = recruiter
+    this.routes = recruiter
   }
 }

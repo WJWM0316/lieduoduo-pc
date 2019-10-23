@@ -1,6 +1,5 @@
 import Vue from 'vue'
-import 'element-ui/lib/theme-chalk/index.css'
-import "@/assets/theme/index.css"
+import './element.custom.scss'
 import {
   // Pagination,
   Dialog,

@@ -4,7 +4,7 @@
         <div class="footer_left">
           <img class="ft_logo" src="../../assets/images/logo.png" />
           <p class="left_p black" @click="toUserDeal">用户协议</p>
-          <p class="gray"><a href="http://www.beian.miit.gov.cn" style="color:#bcbcbc;text-decoration:none">Copyright &#169老虎科技 粤ICP备16060093号-4</a></p>
+          <p class="gray"><a href="http://www.beian.miit.gov.cn" style="color:#bcbcbc;text-decoration:none">Copyright © 老虎科技 粤ICP备16060093号-4</a></p>
         </div>
         <div class="footer_center ">
             <h3 class="relation">联系我们</h3>
