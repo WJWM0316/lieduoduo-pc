@@ -2,8 +2,24 @@ let webpack = require('webpack')
 let path = require('path')
 const CompressionPlugin = require('compression-webpack-plugin')
 
-let resolve  = dir => { return path.join(__dirname, dir) }
-
+let resolve  = dir => { return path.join(__dirname, dir) },
+		plugins = [
+			new webpack.ProvidePlugin({
+				mapActions: ['vuex', 'mapActions'],
+				mapMutations: ['vuex', 'mapMutations'],
+				mapGetters: ['vuex', 'mapGetters'],
+				mapState: ['vuex', 'mapState']
+			})
+		]
+if (process.env.NODE_ENV === 'production') {
+	plugins.push(
+		new CompressionPlugin({
+      test: /\.js$|\.css$|\.html/,
+      threshold: 10240,
+      deleteOriginalAssets: false
+    })
+	)
+}
 module.exports = {
 	lintOnSave: true,
 	configureWebpack: {
@@ -27,19 +43,7 @@ module.exports = {
         'COMPONENTS': resolve('src/components')
       }
     },
-		plugins: [
-			new CompressionPlugin({
-        test: /\.js$|\.css$|\.html/,
-        threshold: 10240,
-        deleteOriginalAssets: false
-      }),
-			new webpack.ProvidePlugin({
-				mapActions: ['vuex', 'mapActions'],
-				mapMutations: ['vuex', 'mapMutations'],
-				mapGetters: ['vuex', 'mapGetters'],
-				mapState: ['vuex', 'mapState']
-			})
-		]
+		plugins: plugins
 	},
 	chainWebpack: config => {
 		// 不需要预加载

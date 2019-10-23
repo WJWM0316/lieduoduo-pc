@@ -39,14 +39,26 @@ axios.interceptors.response.use(
 let host_pub = false
 export const request = ({url, method, params = {}, config}) => {
   // 切换api host
-  if (config && config.host) {
-    if (!host_pub) axios.defaults.baseURL = VUE_WEB_PUB_API
-    host_pub = true
-  } else {
-    if (host_pub) this.upDateBaseURL()
-      host_pub = false
-  }
+  // if (config && config.host) {
+  //   if (!host_pub) axios.defaults.baseURL = VUE_WEB_PUB_API
+  //   host_pub = true
+  // } else {
+  //   if (host_pub) this.upDateBaseURL()
+  //     host_pub = false
+  // }
   
+  switch(config.host) {
+    case 'pub':
+      axios.defaults.baseURL = VUE_WEB_PUB_API
+      break
+    case 'qiuzhi':
+      axios.defaults.baseURL = VUE_APP_WEB_QIUZHI_API
+      break
+    case 'zhaopin':
+      axios.defaults.baseURL = VUE_APP_WEB_ZHAOPIN_API
+      break
+  }
+
   if (params.globalLoading) {
     loadingInstance = Loading.service({})
     delete params.globalLoading
@@ -55,8 +67,8 @@ export const request = ({url, method, params = {}, config}) => {
   return axios[method](url, method === 'get' ? { params } : params)
 }
 
-export const upDateBaseURL = () => {
-  let role = this.$store.getters('userIdentity')
-  axios.defaults.baseURL = role !== 'applicant' ? VUE_WEB_ZHAOPIN_API : VUE_WEB_QIUZHI_API
-}
+// export const upDateBaseURL = () => {
+//   let role = this.$store.getters('userIdentity')
+//   axios.defaults.baseURL = role !== 'applicant' ? VUE_WEB_ZHAOPIN_API : VUE_WEB_QIUZHI_API
+// }
 

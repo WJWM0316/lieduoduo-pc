@@ -26,13 +26,14 @@
 					<div class="botBtnBox">
 						<span class="botBtn"><i class="iconfont"></i>微信分享</span>
 						<span class="botBtn"><i class="iconfont"></i>生成海报</span>
-						<span class="botBtn"><i class="iconfont"></i>感兴趣</span>
+						<span class="botBtn"><i class="iconfont"></i>感兴趣sdsd1121</span>
+
 					</div>
 				</div>
 			</div>
 		</header>
 	</div>
 </template>
-<style lang="scss" scoped>
-@import url(./detail.scss);
+<style lang="scss">
+@import url('./detail.scss');
 </style>
