@@ -41,9 +41,9 @@ import Component from 'vue-class-component'
   name: 'positionDetail'
 })
 export default class PositionDetail extends Vue {
-  cdnPath = this.$cdnPath
+  cdnPath = `${this.$cdnPath}/images/`
   created () {
-  	
+
   }
 }
 </script>
