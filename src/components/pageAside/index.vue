@@ -13,7 +13,6 @@
             :class="{'active' : $route.name === item.name}"  :key="`item.name`+index"
            >  
               <router-link :to="{ name: item.name}" class="a_warp">
-               <!-- <i :class="`zike-icon icon iconfont ${item.meta.icon}`"></i>   -->
                <div class="side_icon" v-if="item.name==='candidate'">
                  <img src="../../assets/images/candidate_sel.png" v-if="$route.name === item.name"  />
                  <img src="../../assets/images/candidate.png" v-else />

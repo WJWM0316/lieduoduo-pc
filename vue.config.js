@@ -1,5 +1,7 @@
 let webpack = require('webpack')
 let path = require('path')
+const CompressionPlugin = require('compression-webpack-plugin')
+
 let resolve  = dir => { return path.join(__dirname, dir) }
 
 module.exports = {
@@ -15,6 +17,11 @@ module.exports = {
 	    eleui: [ resolve('src/eleui/index.js') ]
   	},
     plugins: [
+      new CompressionPlugin({
+        test: /\.js$|\.css$|\.html/,
+        threshold: 10240,
+        deleteOriginalAssets: false
+      }),
       new webpack.ProvidePlugin({
 	      mapActions: ['vuex', 'mapActions'],
 	      mapMutations: ['vuex', 'mapMutations'],
@@ -25,6 +32,6 @@ module.exports = {
   },
   chainWebpack: config => {
   	// 不需要预加载
-    config.plugins.delete('prefetch')
+    // config.plugins.delete('prefetch')
   }
 }
