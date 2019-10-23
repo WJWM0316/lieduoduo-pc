@@ -33,3 +33,6 @@
 		</header>
 	</div>
 </template>
+<style lang="scss" scoped>
+@import url(./detail.scss);
+</style>
