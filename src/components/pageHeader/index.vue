@@ -75,7 +75,7 @@
     </section>
   </header>
 </template>
-<style lang="less">
+<style lang="less" scoped>
 #page-header{
   height:60px;
   background: rgba(101,39,145,1);

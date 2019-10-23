@@ -1,90 +1,11 @@
 <template>
-  <section id="app">
-    <page-header v-if="shouldTopShown()" />
-    <page-header2 v-if="shouldTopShown2()" />
-    <router-view class="pages" />
-
-    <page-footer v-if="!shouldBottomShown()" />
-    <page-aside v-if="shouldSaideShown()" />
-  </section>
+  <router-view />
 </template>
-<script>
-
-import Vue from 'vue'
-import Component from 'vue-class-component'
-import PageFooter from './components/pageFooter/index.vue'
-// import PageHeader from './components/pageHeader/index.vue'
-import PageHeader from '@/views/layout/header/'
-import PageAside from './components/pageAside/index.vue'
-import PageHeader2 from './components/pageHeader2/index.vue'
-
-@Component({
-  name: 'App',
-  components: {
-    PageFooter,
-    PageHeader,
-    PageHeader2,
-    PageAside
-  },
-  watch: {
-  }
-})
-
-export default class App extends Vue {
-  cdnPath = `${process.env.VUE_CDN_PATH}/front-assets/`
-
-  // 下面路由显示管理页面顶部的导航栏
-  shouldTopShown() {
-    return [
-      'applyIndex',
-    ].includes(this.$store.state.pageName)
-  }
-
-  // 下面路由不显示管理页面的侧边栏,和顶部的导航栏
-  shouldTopShown2() {
-    return [
-      'candidate',
-      'postJob',
-      'recruiterIndex'
-    ].includes(this.$store.state.pageName)
-  }
-
-  // 下面路由显示管理页面的侧边栏
-  shouldSaideShown() {
-    return [
-      'candidate',
-      'postJob',
-      'recruiterIndex'
-    ].includes(this.$store.state.pageName)
-  }
-
-  // 下面路由不显示管理页面的侧边栏,和顶部的导航栏
-  shouldBottomShown() {
-    return [
-      'login',
-      'postJob',
-      'candidate',
-      'recruiterIndex',
-      'resumeFirstPost',
-      'resumeSecondPost',
-      'resumeThirdPost',
-      'resumeFourthPost',
-      '404'
-    ].includes(this.$store.state.pageName)
-  }
-}
-</script>
 
 <style lang="less">
 @import url('./assets/css/index.css');
-.pages {
-  background: #FBFBFF;
-  padding: 100px 0 230px 0px;
-  width: 100%;
-}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  text-align: center;
   color: #2c3e50;
   height: 100vh;
   background: #FBFBFF;

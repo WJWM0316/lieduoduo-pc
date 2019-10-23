@@ -31,12 +31,20 @@
       </ul>
       <div class="header-user-info">
         <div class="system">
-          <span class="search-job">我要找工作</span>
-          <span class="recruite">我要招聘</span>
+          <template v-if="isLogin">
+            <span class="resume">简历</span>
+          </template>
+          <template v-else>
+            <div>
+              <span class="search-job">我要找工作</span>
+              <span class="recruite">我要招聘</span>
+            </div>
+          </template>
+         
         </div>
         <div class="header-info">
           <template v-if="isLogin">
-            <el-dropdown placement="bottom-start" :hide-on-click="false">
+            <el-dropdown trigger="click" placement="bottom-start" >
               <div>
                 <div class="user-avatar">
                   <img :src="userInfo.avatarInfo && userInfo.avatarInfo.smallUrl" alt="">
@@ -45,10 +53,8 @@
                   {{userInfo.realname}}
                 </span>
               </div>
-              <el-dropdown-menu slot="dropdown"  class="drop-wrapper">
-                <ul>
-                  <li>退出</li>
-                </ul>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item>退出登陆</el-dropdown-item>
               </el-dropdown-menu>
           </el-dropdown>
           </template>
@@ -69,7 +75,7 @@ export default {
   data() {
     return {
       navList: [
-        { name: '首页', url: '/applyIndex', type: 'link' },
+        { name: '首页', url: '/index', type: 'link' },
         { name: '职位', url: '/position', type: 'link' },
         { name: 'APP', url: app_qrcode, type: 'hover' },
         { name: '小程序', url: mp_qrcode, type: 'hover' },
@@ -88,8 +94,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-$header-height-1: 50px;
-$header-height-2: 90px;
+$header-height-1: $page-header-height;
 .page-header {
   height: $header-height-1;
   background: $bg-color-2;
@@ -125,6 +130,7 @@ $header-height-2: 90px;
   width: 340px;
   li {
     width:68px;
+    text-align: center;
     cursor: pointer;
     line-height: $header-height-1;
     height: 100%;
@@ -149,6 +155,9 @@ $header-height-2: 90px;
   }
 }
 .system {
+  div {
+    padding-right: 24px;
+  }
   span ~ span {
     padding-left: 12px;
   }
@@ -157,7 +166,7 @@ $header-height-2: 90px;
   }
 }
 .header-info {
-  padding-left: 64px;
+  padding-left: 40px;
   .login-btn, .register-btn{
     padding:0 12px 0  12px;
   }
@@ -169,11 +178,6 @@ $header-height-2: 90px;
     display: inline-block;
     vertical-align: middle;
     margin: 0 12px;
-  }
-  .drop-wrapper {
-    width: 200px;
-    background: #fff;
-    height: 200px;
   }
 }
 </style>

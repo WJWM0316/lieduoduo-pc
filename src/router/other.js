@@ -3,7 +3,7 @@ const other = [
     path: '/',
     // 默认进入控制台
     redirect: {
-      name: 'applyIndex'
+      name: 'index'
     },
     meta: {
       useNav: false
@@ -18,7 +18,7 @@ const other = [
     // 元信息
     meta: {
       // 一级路由需要设置， 是否在侧边栏显示
-      useNav: 　false,
+      useNav: false,
       // 当前所属的模块
       module: '404'
     }
