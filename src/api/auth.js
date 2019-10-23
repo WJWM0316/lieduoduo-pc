@@ -111,38 +111,33 @@ export const downApi = data => request({
 export const saveResumeMsgApi = data => request({
 	url: '/jobhunter/save_attach', 
 	method: 'post', 
-	params: data, 
-	config: {host: 'pub'}
+	params: data
 })
 
 // 获取附件简历
 export const getResumeMsgApi = data => request({
 	url: '/jobhunter/attach_resume', 
 	method: 'get', 
-	params: data, 
-	config: {host: 'pub'}
+	params: data
 })
 
 // 删除附件简历
 export const deleteFileMsgApi = data => request({
 	url: '/jobhunter/del_attach', 
 	method: 'delete', 
-	params: data, 
-	config: {host: 'pub'}
+	params: data
 })
 
 // 招聘官-我的信息(“我的”页面)
 export const getMyInfoApi = data => request({
 	url: `/recruiter/myInfo`, 
 	method: 'get',
-	params: data, 
-	config: {host: 'zhaopin'}
+	params: data
 })
 
 // 获取用户信息
 export const getUserInfosApi = () => request({
 	url: `/cur/user_info`, 
 	method: 'get', 
-	params: data, 
-	config: {host: 'pub'}
+	params: data
 })

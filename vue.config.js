@@ -1,8 +1,8 @@
 let webpack = require('webpack')
 let path = require('path')
-let resolve = dir => {
-	return path.join(__dirname, dir)
-}
+const CompressionPlugin = require('compression-webpack-plugin')
+
+let resolve  = dir => { return path.join(__dirname, dir) }
 
 module.exports = {
 	lintOnSave: true,
@@ -28,6 +28,11 @@ module.exports = {
       }
     },
 		plugins: [
+			new CompressionPlugin({
+        test: /\.js$|\.css$|\.html/,
+        threshold: 10240,
+        deleteOriginalAssets: false
+      }),
 			new webpack.ProvidePlugin({
 				mapActions: ['vuex', 'mapActions'],
 				mapMutations: ['vuex', 'mapMutations'],
@@ -50,5 +55,5 @@ module.exports = {
 				path.resolve(__dirname, './src/assets/scss/mixins.scss')
 			]
 		}
-	},
+	}
 }

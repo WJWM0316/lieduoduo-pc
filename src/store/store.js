@@ -11,7 +11,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     // 在state中去声明全局变量，可以通过 this.$store.state 访问
     state: {
-        userIdentity: null,
+        userIdentity: 'applicant',
         userInfo: getUserInfo() || null,
         token: getAccessToken(),
         pageName: '',
@@ -21,16 +21,15 @@ export default new Vuex.Store({
     getters: {
         // 接受state作为参数，每次 count发生变化时 ， 都会被调用
         pageName: state => state.pageName,
+        userIdentity: state => state.userIdentity,
         userInfo: state => state.userInfo,
         token: state => state.token
     },
     // 只能执行同步方法，不要去执行异步方法 通过 this.$store.commit 方法去调用
     mutations: {
-      
         setUserIdentity: (state, data) => {
             state.userIdentity = data
         },
-
         // mutations的第一个参数即为 state对象，并且可以向mutation传入额外的参数
         setUserInfo: (state, data) => {
             saveUserInfo(data, state.loginValidTime)
