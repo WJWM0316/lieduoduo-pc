@@ -2,78 +2,72 @@ import Layout from '@/views/layout'
 const applicant = [
   {
     path: '/index',
-    name: 'index',
     title: '首页',
     component: Layout,
     children: [
       {
         path: '',
-        name: 'indexPage',
+        name: 'index',
         component: resolve => require(['../views/index'], resolve)
       }
     ]
   },
   {
     path: '/applyIndex',
-    name: 'applyIndex',
     title: '简历上传',
     component: Layout,
     children: [
       {
         path: '',
-        name: 'applyIndexPage',
+        name: 'applyIndex',
         component: resolve => require(['../views/apply/apply.vue'], resolve)
       }
     ]
   },
   {
     path: '/resumeFirstPost',
-    name: 'resumeFirstPost',
     title: '猎多多 | 简历',
     component: Layout,
     children: [
       {
         path: '',
-        name: 'resumeFirstPostIndex',
+        name: 'resumeFirstPost',
         component: resolve => require(['../views/activity/resumeFirstPost/index.vue'], resolve)
       }
     ]
   },
   {
     path: '/resumeSecondPost',
-    name: 'resumeSecondPost',
     title: '猎多多 | 简历',
     component: Layout,
     children: [
       {
         path: '',
-        name: 'resumeSecondPostIndex',
+        name: 'resumeSecondPost',
         component: resolve => require(['../views/activity/resumeSecondPost/index.vue'], resolve)
       }
     ]
   },
   {
     path: '/resumeThirdPost',
-    name: 'resumeThirdPost',
     title: '猎多多 | 简历',
     component: Layout,
     children: [
       {
         path: '',
-        name: 'resumeThirdPostIndex',
+        name: 'resumeThirdPost',
         component: resolve => require(['../views/activity/resumeThirdPost/index.vue'], resolve)
       }
     ]
   },
   {
     path: '/resumeFourthPost',
-    name: 'resumeFourthPost',
     title: '猎多多 | 简历',
     component: Layout,
     children: [
       {
         path: '',
-        name: 'resumeFourthPostIndex',
+        name: 'resumeFourthPost',
         component: resolve => require(['../views/activity/resumeFourthPost/index.vue'], resolve)
       }
     ]
