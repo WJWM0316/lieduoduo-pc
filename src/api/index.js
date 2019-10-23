@@ -59,3 +59,4 @@ export const upDateBaseURL = () => {
   let role = this.$store.getters('userIdentity')
   axios.defaults.baseURL = role !== 'applicant' ? VUE_WEB_ZHAOPIN_API : VUE_WEB_QIUZHI_API
 }
+
