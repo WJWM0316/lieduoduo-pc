@@ -6,7 +6,7 @@ import { request } from './index.js'
 
 //获取用户信息
 export const getUserInfoApi = data => request({
-  url: '/users/${data.vkey}', 
+  url: `/users/${data.vkey}`, 
   method: 'get', 
   params: data,
   config: {host: 'zhaopin'}

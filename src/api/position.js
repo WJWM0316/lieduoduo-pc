@@ -69,15 +69,15 @@ export const addPositionApi = data => request({
 
 // 获取职位信息
 export const getPositionApi = data => request({
-  url: '/position/${data.id}', 
+  url: `/position/${data.id}`, 
   method: 'get', 
   params: data,
-  config: {host: 'zhaopin'}
+  config: {host: 'qiuzhi'}
 })
 
 // 编辑职位信息
 export const editPositionApi = data => request({
-  url: '/position/${data.id}', 
+  url: `/position/${data.id}`, 
   method: 'put', 
   params: data,
   config: {host: 'zhaopin'}
@@ -85,7 +85,7 @@ export const editPositionApi = data => request({
 
 // 删除职位信息
 export const deletePositionApi = data => request({
-  url: '/position/${data.id}', 
+  url: `/position/${data.id}`, 
   method: 'delete', 
   params: data,
   config: {host: 'zhaopin'}
@@ -93,7 +93,7 @@ export const deletePositionApi = data => request({
 
 // 关闭职位
 export const closePositionApi = data => request({
-  url: '/position/close/${data.id}', 
+  url: `/position/close/${data.id}`, 
   method: 'put', 
   params: data,
   config: {host: 'zhaopin'}
@@ -101,7 +101,7 @@ export const closePositionApi = data => request({
 
 // 开始职位
 export const openPositionApi = data => request({
-  url: '/position/open/${data.id}', 
+  url: `/position/open/${data.id}`, 
   method: 'put', 
   params: data,
   config: {host: 'zhaopin'}
@@ -186,3 +186,25 @@ export const getPositionTypeApi = data => request({
   params: data,
   config: {host: 'zhaopin'}
 })
+
+
+
+// 收藏职位
+export const putMycollectPositionApi = (data, hasLoading) => {
+  return request({
+    method: 'put',
+    url: `/collect/collectPosition/${data.id}`,
+    params: data,
+    config: {host: 'qiuzhi'}
+  })
+}
+
+// 取消收藏职位
+export const deleteMycollectPositionApi = (data, hasLoading) => {
+  return request({
+    method: 'delete',
+    url: `/collect/collectPosition/${data.id}`,
+    params: data,
+    config: {host: 'qiuzhi'}
+  })
+}

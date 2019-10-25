@@ -21,7 +21,7 @@ export const signInappropriateApi = data => request({
 
 // 确定约面
 export const confirmInterviewApi = data => request({
-  url: '/interview/confirm/${data.id}', 
+  url: `/interview/confirm/${data.id}`, 
   method: 'post', 
   params: data,
   config: {host: 'zhaopin'}
