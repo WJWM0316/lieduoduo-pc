@@ -1,11 +1,250 @@
+$content-left: 757px;
+$content-right: 298px;
+
+.inner {
+	margin: 0 auto;
+	max-width: $page-width;
+}
+
 .positionDetail {
 	width: 100%;
 	background: #fff;
 	.header {
 		width: 100%;
 		background: #F5F5F5;
+		padding: 34px 0 30px;
 		.inner {
-			max-width: $page-width;
+			overflow: hidden;
+			.content {
+				width: $content-left;
+				float: left;
+				.title {
+					font-size: 0;
+					display: flex;
+					align-items: center;
+					.name {
+						color: $font-color-3;
+						font-size: 24px;
+						font-weight:400;
+						line-height:34px;
+					}
+					.icon {
+						width:60px;
+						height:26px;
+						border-radius:2px;
+						text-align: center;
+						line-height: 26px;
+						display: inline-block;
+						font-size:14px;
+						font-weight:400;
+						color:#fff;
+						line-height:26px;
+						margin-right: 11px;
+						&.jipin {
+							background: url('https://attach.lieduoduo.ziwork.com/front-assets/web/images/tag_job_detail.png') no-repeat;
+							background-size: 100% 100%;
+						}
+					}
+				}
+				.salary {
+					font-size:36px;
+					font-weight:500;
+					color:$lightFont-color-orange;
+					line-height:50px;
+					display: flex;
+					align-items: center;
+					.unit {
+						font-size:30px;
+						font-weight:500;
+						color:$lightFont-color-orange;
+						margin: 0 0 0 5px;
+					}
+				}
+				.infos {
+					margin-top: 7px;
+					font-size: 0;
+					.info-item {
+						font-size:12px;
+						font-weight:400;
+						color:$font-color-6;
+						line-height:18px;
+						margin-right: 20px;
+						display: inline-block;
+						.icon {
+							font-size: 16px;
+							color: $iconFont-gray;
+							margin-right: 7px;
+						}
+					}
+				}
+				.labels {
+					margin-top: 20px;
+					.label-item {
+						padding: 0 16px;
+						height: 24px;
+						line-height: 24px;
+						background: #fff;
+						border-radius:18px;
+						margin-right: 16px;
+						font-size:12px;
+						font-weight:400;
+						color: $font-color-6;
+						display: inline-block;
+					}
+				}
+			}
+			.aside {
+				width: $content-right;
+				float: right;
+				height: 100%;
+				padding-left: 50px;
+				padding-top: 40px;
+				.operBox {
+					.btn {
+						width: 100%;
+						height:36px;
+						line-height: 36px;
+						background:$bg-color-4;
+						border-radius:4px;
+						font-size:14px;
+						font-weight:400;
+						color:#fff;
+						text-align: center;
+						padding: 0;
+					}
+				}
+				.botBtnBox {
+					margin-top: 15px;
+					.botBtn {
+						font-size:14px;
+						font-weight:400;
+						color:$lightFont-color-purple;
+						line-height:20px;
+						margin-right: 37px;
+						white-space: nowrap;
+						&.noMargin {
+							margin-right: 0;
+						}
+						.icon {
+							font-size: 14px;
+							margin-right: 8px;
+						}
+					}
+				}
+			}
+		}
+	}
+	.content {
+		overflow: hidden;
+		padding-top: 40px;
+		.content-article {
+			width: $content-left;
+			float: left;
+			.part {
+				margin-bottom: 40px;
+				.title {
+					font-size:16px;
+					font-weight:500;
+					color:$font-color-3;
+					line-height:24px;
+					padding-bottom: 24px;
+					position: relative;
+					&:after {
+						content: '';
+						position: absolute;
+						left: 0;
+						bottom: 14px;
+						width:22px;
+						height:2px;
+						background:$main-color-1;
+					}
+				}
+				.labels {
+					font-size: 0;
+					.label-item {
+						font-size:14px;
+						font-weight:400;
+						color:$font-color-6;
+						line-height:20px;
+						padding: 4px 14px;
+						background: #F2F1F5;
+						margin-right: 16px;
+						display: inline-block;
+					}
+				}
+				.richText {
+					font-size:14px;
+					font-weight:400;
+					color:$font-color-3;
+					line-height:26px;
+				}
+			}
+		}
+		.content-aside {
+			width: $content-right;
+			float: right;
+			.loginBox {
+				width:298px;
+				height:215px;
+				background::#fff;
+				box-shadow:0px 0px 13px 0px rgba(22,39,77,0.04);
+				padding: 45px 39px 36px;
+				box-sizing: border-box;
+				.login, .register {
+					width: 100%;
+					height:36px;
+					background:$main-color-1;
+					border-radius:4px;
+					margin: 0;
+					border: none;
+					&.login {
+						margin: 23px 0 10px;
+						color: #fff;
+					}
+					&.register {
+						background:$sub-color-1;
+						color: $font-color-3;
+					}
+				}
+			}
+			.companyInfos {
+				margin-top: 28px;
+				.title {
+					font-size:16px;
+					font-weight:500;
+					color:$font-color-3;
+					line-height:24px;
+				}
+				.details {
+					margin: 14px 0 21px;
+					.logo {
+						width:73px;
+						height:73px;
+						border-radius:4px;
+						float: left;
+					}
+					.name {
+						margin-left: 87px;
+						height: 73px;
+						line-height: 73px;
+						font-size:16px;
+						font-weight:400;
+						color:$font-color-3;
+					}
+				}
+				.infos {
+					.info-item {
+						font-size:14px;
+						font-weight:400;
+						color:$font-color-6;
+						line-height:20px;
+						.icon {
+							font-size: 14px;
+							margin-right: 12px;
+						}
+					}
+				}
+			}
 		}
 	}
 }
