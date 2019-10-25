@@ -2,8 +2,8 @@ import axios from 'axios'
 import { Loading } from 'element-ui'
 import router from '../router/index'
 import { getAccessToken, removeAccessToken } from './cacheService'
-let loadingInstance = null,
-    localStorage = window.localStorage
+let loadingInstance = null
+    // localStorage = window.localStorage
 const VUE_WEB_ZHAOPIN_API = process.env.VUE_APP_WEB_ZHAOPIN_API,
       VUE_WEB_QIUZHI_API  = process.env.VUE_APP_WEB_QIUZHI_API,
       VUE_WEB_PUB_API     = process.env.VUE_APP_WEB_PUB_API,
@@ -37,7 +37,7 @@ axios.interceptors.response.use(
   }
 )
 
-let host_pub = false
+// let host_pub = false
 export const request = ({url, method, params = {}, config}) => {
   // 切换api host
   // if (config && config.host) {

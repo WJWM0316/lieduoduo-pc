@@ -40,7 +40,7 @@ export const getListApi = data => request({
   url: '/position/list', 
   method: 'get', 
   params: data,
-  config: {host: 'zhaopin'}
+  config: {host: 'qiuzhi'}
 })
 
 // 当前招聘官职位搜索列表（只返回招聘官自己的职位）
@@ -188,7 +188,6 @@ export const getPositionTypeApi = data => request({
 })
 
 
-
 // 收藏职位
 export const putMycollectPositionApi = (data, hasLoading) => {
   return request({
@@ -208,3 +207,11 @@ export const deleteMycollectPositionApi = (data, hasLoading) => {
     config: {host: 'qiuzhi'}
   })
 }
+
+// 职位搜索
+export const getPositionSearch = data => request({
+  url: '/positions/sch', 
+  method: 'get', 
+  params: data,
+  config: {host: 'qiuzhi'} 
+})

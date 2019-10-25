@@ -2,6 +2,7 @@ let webpack = require('webpack')
 let path = require('path')
 // const CompressionPlugin = require('compression-webpack-plugin')
 
+const scssPath = process.env.VUE_APP_ENV === 'development' ? '_dev' : '_prod';
 let resolve  = dir => { return path.join(__dirname, dir) },
 		plugins = [
 			new webpack.ProvidePlugin({
@@ -55,6 +56,7 @@ module.exports = {
 			patterns: [
 				// 这个是加上自己的路径，
 				// 注意：试过不能使用别名路径
+				path.resolve(__dirname, `../src/assets/scss/${scssPath}.scss`),
 				path.resolve(__dirname, './src/assets/scss/vars.scss'),
 				path.resolve(__dirname, './src/assets/scss/mixins.scss')
 			]
