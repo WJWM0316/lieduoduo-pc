@@ -11,7 +11,7 @@ class Util {
    * @param {*} value
    * @param {*} replace 是否使用replace替换路由
    */
-  setPathQuery (key, value, replace = false) {
+  setPathQuery(key, value, replace = false) {
     // 如果传入单个对象，则拆分
     if (key instanceof Object && !(key instanceof Array)) {
       for (let [k, v] of Object.entries(key)) {
@@ -56,7 +56,7 @@ class Util {
    * @param {Object} params
    * @return {Object}
    */
-  filterParams (params) {
+  filterParams(params) {
     if (!(params instanceof Object) || params instanceof Array) {
       return params
     }
@@ -65,8 +65,8 @@ class Util {
     for (let [key, value] of Object.entries(params)) {
       // 空数组、空对象、非0的空值，跳过赋值
       if ((value instanceof Array && value.length <= 0) ||
-          (value instanceof Object && Object.keys(value).length <= 0) ||
-          (value !== 0 && !value)) {
+        (value instanceof Object && Object.keys(value).length <= 0) ||
+        (value !== 0 && !value)) {
         continue
       }
 
@@ -82,7 +82,7 @@ class Util {
    * @param {Array} keys 键值数组
    * @param {Object} keyOptions 键值转换对象
    */
-  getObjectByKeys (source, keys, keyOptions = {}) {
+  getObjectByKeys(source, keys, keyOptions = {}) {
     const obj = {}
     for (let [key, value] of Object.entries(source)) {
       if (keys.indexOf(key) > -1) {
@@ -96,12 +96,12 @@ class Util {
 
   // 获取cookie
   getcookie(name) {
-   const arr = document.cookie.match(new RegExp('[sS]*'+ name +'=([^;]*)'))
-   if(arr !== null)
-    return unescape(arr[1])
-   return null
+    const arr = document.cookie.match(new RegExp('[sS]*' + name + '=([^;]*)'))
+    if (arr !== null)
+      return unescape(arr[1])
+    return null
   }
-  
+
   /**
    * 改变数组某项索引（直接修改源数组）
    * @param {Array} array 操作数组
@@ -109,7 +109,7 @@ class Util {
    * @param {Number} targetIndex 目标索引
    * @return {Array} 返回结果数组
    */
-  changeArrayItemIndex (array, index, targetIndex) {
+  changeArrayItemIndex(array, index, targetIndex) {
     const items = array.splice(index, 1)
     array.splice(targetIndex, 0, ...items)
     return array
@@ -119,7 +119,7 @@ class Util {
    * 判断是否是绝对url路径
    * @param {String} url
    */
-  isAbsoulteURL (url) {
+  isAbsoulteURL(url) {
     const reg = /^(https?:\/\/)/
     return reg.test(url)
   }
@@ -130,7 +130,7 @@ class Util {
    * @param {*} queryParams url query对象
    * @param {*} types 需要强制转换的类型对象，如 { title: 'string' }
    */
-  getListInitDataByQueryParams (source = {}, queryParams = {}, types = {}) {
+  getListInitDataByQueryParams(source = {}, queryParams = {}, types = {}) {
     const form = {}
     const pagination = {}
     for (let [key, value] of Object.entries(queryParams)) {
@@ -184,15 +184,15 @@ class Util {
    * 换行符转换br标签
    * @param reverse 是否反向转换（将br标签转换成换行符），默认false
    */
-  transformBlank (source, reverse = false) {
+  transformBlank(source, reverse = false) {
     if (!source) {
       return ''
     }
 
     source = source.toString()
-    return reverse
-      ? source.replace(/<br\s*\/?>/g, '\n').replace(/&nbsp;/g, ' ')
-      : source.replace(/\n\s*\r/g, '<br/>').replace(/\n/g, '<br/>').replace(/\r/g, '<br/>').replace(/\s/g, '&nbsp;')
+    return reverse ?
+      source.replace(/<br\s*\/?>/g, '\n').replace(/&nbsp;/g, ' ') :
+      source.replace(/\n\s*\r/g, '<br/>').replace(/\n/g, '<br/>').replace(/\r/g, '<br/>').replace(/\s/g, '&nbsp;')
   }
 
   /**
@@ -201,7 +201,7 @@ class Util {
    * @param {*} fractionDigits 位数
    * @param {*} type 保留值类型：round=>四舍五入，ceil=>往上增，floor=>直接截取
    */
-  toFixed (num, fractionDigits, type = 'round') {
+  toFixed(num, fractionDigits, type = 'round') {
     if (typeof num !== 'number') {
       return
     }
@@ -218,7 +218,7 @@ class Util {
    * @param {Blob} fileBlob 文件Blob对象
    * @param {String} suffix 文件后缀名
    */
-  downloadFile (fileBlob, filename, suffix = 'xlsx') {
+  downloadFile(fileBlob, filename, suffix = 'xlsx') {
     const url = URL.createObjectURL(fileBlob)
     const downloadLink = document.createElement('a')
     downloadLink.download = `${filename || moment(new Date()).format('YYYY-MM-DD')}.${suffix}`
@@ -229,28 +229,57 @@ class Util {
     document.body.removeChild(downloadLink)
   }
 
-    // 获取指定Url参数
-    getUrlParam (paraName) {
-　　　　var url = document.location.toString();
-　　　　var arrObj = url.split("?");
+  // 获取指定Url参数
+  getUrlParam(paraName) {
+    var url = document.location.toString();
+    var arrObj = url.split("?");
 
-　　　　if (arrObj.length > 1) {
-　　　　　　var arrPara = arrObj[1].split("&");
-　　　　　　var arr;
+    if (arrObj.length > 1) {
+      var arrPara = arrObj[1].split("&");
+      var arr;
 
-　　　　　　for (var i = 0; i < arrPara.length; i++) {
-　　　　　　　　arr = arrPara[i].split("=");
+      for (var i = 0; i < arrPara.length; i++) {
+        arr = arrPara[i].split("=");
 
-　　　　　　　　if (arr != null && arr[0] == paraName) {
-　　　　　　　　　　return arr[1];
-　　　　　　　　}
-　　　　　　}
-　　　　　　return "";
-　　　　}
-　　　　else {
-　　　　　　return "";
-　　　　}
-　　　}
+        if (arr != null && arr[0] == paraName) {
+          return arr[1];
+        }
+      }
+      return "";
+    } else {
+      return "";
+    }
+  }
+  /**
+   * @desc 获取距离结束时间的 天数，小时，分钟，秒
+   * @param {String Date} endDateStr 结束时间
+   * @returns {Object}
+   */
+  setTimeDown(endDateStr) {
+    //结束时间
+    var endDate = new Date(endDateStr);
+    //当前时间
+    var nowDate = new Date();
+    //相差的总秒数
+    var totalSeconds = parseInt((endDate - nowDate) / 1000);
+    //天数
+    var days = Math.floor(totalSeconds / (60 * 60 * 24));
+    //取模（余数）
+    var modulo = totalSeconds % (60 * 60 * 24);
+    //小时数
+    var hours = Math.floor(modulo / (60 * 60));
+    modulo = modulo % (60 * 60);
+    //分钟
+    var minutes = Math.floor(modulo / 60);
+    //秒
+    var seconds = modulo % 60;
+    return {
+      days,
+      hours,
+      mins: minutes,
+      seconds
+    }
+  }
 }
 
 export default new Util()

@@ -1,9 +1,7 @@
 <template>
   <div class="page-header">
     <div class="page-header-wrapper">
-      <div class="header-logo">
-
-      </div>
+      <div class="header-logo">猎多多</div>
       <div class="header-address">
         <span class="el-icon-location-information">广州</span>
         <span class="change-address">[切换城市]</span>
@@ -106,9 +104,10 @@ $header-height-1: $page-header-height;
   font-size: 14px;
 }
 .header-logo {
-  width: 50px;
-  height: 30px;
-  background: #fff;
+  width: 60px;
+  text-align: center;
+  font-size: 20px;
+  color: #fff;
 }
 .header-address {
   cursor: pointer;

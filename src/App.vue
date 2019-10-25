@@ -2,13 +2,13 @@
   <router-view />
 </template>
 
-<style lang="less">
+<style lang="scss">
 @import url('./assets/css/index.css');
+@import './assets/scss/button.scss';
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   color: #2c3e50;
-  height: 100vh;
-  background: #FBFBFF;
+  background: $bg-color-1;
 }
 .hidden {
   display: none;

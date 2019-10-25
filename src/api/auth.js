@@ -68,7 +68,7 @@ export const switchRoleApi = data => request({
 })
 
 // 退出接口
-export const logoutApi = () => request({
+export const logoutApi = (data) => request({
 	url: '/auth/logout', 
 	method: 'get', 
 	params: data, 
@@ -136,7 +136,7 @@ export const getMyInfoApi = data => request({
 })
 
 // 获取用户信息
-export const getUserInfosApi = () => request({
+export const getUserInfosApi = (data) => request({
 	url: `/cur/user_info`, 
 	method: 'get', 
 	params: data

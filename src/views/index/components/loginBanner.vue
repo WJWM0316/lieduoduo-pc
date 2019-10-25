@@ -1,5 +1,5 @@
 <template>
-  <div class="index-login">
+  <div class="index-login" :style="{'background-image': `url(${banner[0] && banner[0].bigImgUrl})`}">
     <div class="main-center index-login-wrapper">
       <div class="position-number">
         <div class="position-number-wrapper">
@@ -19,6 +19,12 @@
 </template>
 <script>
 export default {
+  props: {
+    banner: {
+      type: Array,
+      default: () => ([])
+    }
+  },
   data() {
     return {
       loginForm: {
