@@ -12,7 +12,7 @@ export default new Vuex.Store({
     // 在state中去声明全局变量，可以通过 this.$store.state 访问
     state: {
         userIdentity: 'applicant',
-        userInfo: getUserInfo() || null,
+        userInfo: getUserInfo() || {},
         token: getAccessToken(),
         pageName: '',
         loginValidTime: 60 * 60 * 24 * 7 * 1000
@@ -44,7 +44,7 @@ export default new Vuex.Store({
         },
 
         LOGOUT (state) {
-            state.userInfo = null
+            state.userInfo = {}
             state.token = null
         },
 

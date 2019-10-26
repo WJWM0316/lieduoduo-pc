@@ -58,8 +58,8 @@
           </template>
           <template v-else>
             <div class="no-login">
-              <span class="login-btn"><i class="el-icon-user"></i> 登陆</span> | 
-              <span class="register-btn">注册</span>
+              <span class="login-btn"  @click="handleToLogin('login')"><i class="el-icon-user"></i> 登陆</span> | 
+              <span class="register-btn" @click="handleToLogin('register')">注册</span>
             </div>
           </template>
         </div>
@@ -83,7 +83,7 @@ export default {
   },
   computed: {
     isLogin() {
-      return !!this.$store.state.token
+      return !!this.$store.state.userInfo.id
     },
     userInfo() {
       return  this.$store.state.userInfo || {}
@@ -97,6 +97,14 @@ export default {
             this.$router.push({name: 'login'})
           })
       }
+    },
+    handleToLogin(type) {
+      this.$router.push({
+        path: '/login',
+        query: {
+          type: type
+        }
+      })
     }
   }
 }

@@ -39,8 +39,8 @@ export default {
   computed: {
     scrollTop () {
       // 如果是登陆状态是 50 非登陆状态 是 170
-      const {token} = this.$store.state
-      return token ? 50 : 170 
+      const {userInfo} = this.$store.state
+      return userInfo&&userInfo.id ? 50 : 170 
     }
   },
   mounted() {

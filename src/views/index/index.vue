@@ -48,7 +48,7 @@ export default {
   },
   computed: {
     isLogin() {
-      return !!this.$store.state.token
+      return !!this.$store.state.userInfo.id
     }
   },
   methods: {
