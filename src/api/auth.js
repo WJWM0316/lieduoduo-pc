@@ -141,3 +141,11 @@ export const getUserInfosApi = (data) => request({
 	method: 'get', 
 	params: data
 })
+
+//pc登录注册
+export const loginPutInApipc = data => request({
+	url: '/auth/web/login', 
+	method: 'post', 
+	params: data, 
+	config: {host: 'pub'}
+})
