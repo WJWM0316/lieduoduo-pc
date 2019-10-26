@@ -19,7 +19,7 @@ export const applyListApi = data => request({
 })
 
 export const applyDetailApi = data => request({
-  url: '/tutorApply/info/${data.tutorId}', 
+  url: `/tutorApply/info/${data.tutorId}`, 
   method: 'get', 
   params: data,
   config: {host: 'zhaopin'}

@@ -21,12 +21,18 @@ export const signInappropriateApi = data => request({
 
 // 确定约面
 export const confirmInterviewApi = data => request({
-  url: '/interview/confirm/${data.id}', 
+  url: `/interview/confirm/${data.id}`, 
   method: 'post', 
   params: data,
   config: {host: 'zhaopin'}
 })
 
-
-
-
+//获取底部面试状态
+export const getInterviewStatusApi = (data, hasLoading) => {
+  return request({
+    method: 'get',
+    url: '/interview/getInterviewStatus',
+    params: data,
+    config: {host: 'qiuzhi'}
+  })
+}

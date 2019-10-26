@@ -6,8 +6,9 @@ let loadingInstance = null
     // localStorage = window.localStorage
 const VUE_WEB_ZHAOPIN_API = process.env.VUE_APP_WEB_ZHAOPIN_API,
       VUE_WEB_QIUZHI_API  = process.env.VUE_APP_WEB_QIUZHI_API,
-      VUE_WEB_PUB_API     = process.env.VUE_APP_WEB_PUB_API
-      
+      VUE_WEB_PUB_API     = process.env.VUE_APP_WEB_PUB_API,
+      VUE_WEB_NODE_API    = process.env.VUE_APP_WEB_NODE_API
+
 // 请求拦截器
 axios.interceptors.request.use(
   config => {
@@ -56,6 +57,9 @@ export const request = ({url, method, params = {}, config}) => {
       break
     case 'zhaopin':
       axios.defaults.baseURL = VUE_WEB_ZHAOPIN_API
+      break
+    case 'node':
+      axios.defaults.baseURL = VUE_WEB_NODE_API
       break
   }
 

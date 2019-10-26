@@ -1,6 +1,7 @@
 let webpack = require('webpack')
 let path = require('path')
-const CompressionPlugin = require('compression-webpack-plugin')
+// const CompressionPlugin = require('compression-webpack-plugin')
+
 const scssPath = process.env.VUE_APP_ENV === 'development' ? '_dev' : '_prod';
 let resolve  = dir => { return path.join(__dirname, dir) },
 		plugins = [
@@ -11,15 +12,15 @@ let resolve  = dir => { return path.join(__dirname, dir) },
 				mapState: ['vuex', 'mapState']
 			})
 		]
-if (process.env.NODE_ENV === 'production') {
-	plugins.push(
-		new CompressionPlugin({
-      test: /\.js$|\.css$|\.html/,
-      threshold: 10240,
-      deleteOriginalAssets: false
-    })
-	)
-}
+// if (process.env.NODE_ENV === 'production') {
+// 	plugins.push(
+// 		new CompressionPlugin({
+//       test: /\.js$|\.css$|\.html/,
+//       threshold: 10240,
+//       deleteOriginalAssets: false
+//     })
+// 	)
+// }
 module.exports = {
 	lintOnSave: true,
 	configureWebpack: {
