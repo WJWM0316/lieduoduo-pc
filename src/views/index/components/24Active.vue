@@ -14,7 +14,7 @@
             <div class="list-image">
               <img :src="item.companyInfo.logoInfo.smallUrl" />
             </div>
-            <div class="list-company">{{item.companyInfo.companyName}}</div>
+            <div class="list-company">{{item.companyInfo.companyShortname}}</div>
             <div class="list-company-info">{{item.companyInfo.industry}}·{{item.companyInfo.employeesInfo}}·{{item.companyInfo.financingInfo}}</div>
           </div>
           <div class="list-position-info">
@@ -28,7 +28,7 @@
               <span><i></i>{{item.educationName}}</span>
             </div>
           </div>
-          <div class="list-details">{{item.describe}}</div>
+          <div class="list-details">{{item.oneSentenceIntro || '-'}}</div>
           <div class="list-footer">
             <div class="count-down">
               <span>还剩</span>
@@ -37,9 +37,9 @@
               <span class="list-hour">{{listCountDown[index].hours}}</span>:<span class="list-mins">{{listCountDown[index].mins}}</span>:<span class="list-second">{{listCountDown[index].seconds}}</span>
             </div>
             <div class="position-count">
-              <p>还有<b>{{item.seatsNum > 99 ? '99+' : item.seatsNum}}</b>个席位</p>
+              <p>还有<b>{{(item.seatsNum -  item.applyNum - item.natureApplyNum) > 99 ? '99+' : item.seatsNum -  item.applyNum - item.natureApplyNum}}</b>个席位</p>
               <span class="position-process">
-                <span class="position-process-width" :style="{width: `${(item.seatsNum -  item.applyNum - item.natureApplyNum)/item.seatsNum}%`}"></span>
+                <span class="position-process-width" :style="{width: `${30 + (item.applyNum + item.natureApplyNum)/item.seatsNum*70}%`}"></span>
               </span>
             </div>
             <el-button type="primary" size="medium" style="width: 71px" round>马上抢</el-button>
@@ -53,9 +53,9 @@
   </div>
 </template>
 <script>
-import {getRapidlyData} from 'API/common'
+import { getRapidlyData } from 'API/common'
 export default {
-  data() {
+  data () {
     return {
       bubbleList: [],
       listData: [],
@@ -63,13 +63,13 @@ export default {
       listCountDown: [] // 倒计时数据
     }
   },
-  created() {
+  created () {
     this.getLists()
   },
   methods: {
-    getLists() {
-      getRapidlyData().then(({data}) => {
-        const {items, toastTips, buttons} = data.data
+    getLists () {
+      getRapidlyData().then(({ data }) => {
+        const { items, toastTips, buttons } = data.data
         this.listData = items.slice(0, 6)
         this.bubbleList = toastTips
         this.buttons = buttons
@@ -87,17 +87,17 @@ export default {
         this.setCountDown()
       })
     },
-    setCountDown() {
+    setCountDown () {
       this.listCountDown.forEach(val => {
         const results = this.$util.setTimeDown(val.endTime)
         Object.assign(val, results)
       })
-      this.countDownTimer = setTimeout( () =>  {
-          this.setCountDown();
+      this.countDownTimer = setTimeout(() => {
+        this.setCountDown()
       }, 1000)
     }
   },
-  destroyed() {
+  destroyed () {
     clearTimeout(this.countDownTimer)
   }
 }

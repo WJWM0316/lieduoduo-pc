@@ -51,7 +51,7 @@ export default class App extends Vue {
   // }
 
   // 下面路由显示管理页面的侧边栏
-  shouldSaideShown() {
+  shouldSaideShown () {
     return [
       'candidate',
       'postJob',
@@ -60,7 +60,7 @@ export default class App extends Vue {
   }
 
   // 下面路由不显示管理页面的侧边栏,和顶部的导航栏
-  shouldBottomShown() {
+  shouldBottomShown () {
     return [
       'login',
       'postJob',

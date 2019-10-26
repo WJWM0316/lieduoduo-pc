@@ -5,6 +5,7 @@
 <style lang="scss">
 @import url('./assets/css/index.css');
 @import './assets/scss/button.scss';
+@import './eleui/element.reset.scss';
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   color: #2c3e50;

@@ -1,0 +1,14 @@
+/** 设置h46px 的按钮 */
+.el-button.el-button-h46 {
+  padding: 13px 20px;
+  border-radius: 0;
+  font-size:18px;
+}
+
+/** 设置分页组件样式 */
+.el-pagination.is-background .el-pager li.number, .el-pagination.is-background .el-pager li.more{
+  background: transparent;
+}
+.el-pagination.is-background .el-pager li.number:hover {
+  background: $bg-color-5;
+}
