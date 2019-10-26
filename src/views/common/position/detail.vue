@@ -1,6 +1,6 @@
 <template>
 	<div class="positionDetail">
-		<header class="header" :class="infos.isRapidly ? 'isRapidly' : ''">
+		<header class="header" :class="infos.isRapidly === 1 ? 'isRapidly' : ''">
 			<div class="inner">
 				<div class="header-content">
 					<div class="title">
@@ -18,12 +18,18 @@
 					</div>
 				</div>
 				<div class="aside">
-					<div v-if="infos.isRapidly" class="icon yuemian24">
+					<div v-if="infos.isRapidly === 1" class="icon yuemian24">
 						<img class="logo" :src="cdnPath + 'tag_24hour.png'" alt="">
 						<div class="number"><span class="num">{{remainingSeats}}</span>个<p class="desc">约面席位</p></div>
 						<div class="timeBox">
 							<div class="time">还剩<span class="little-box">{{remainingTime.day}}</span>天<span class="little-box">{{remainingTime.hour}}</span>:<span class="little-box">{{remainingTime.minute}}</span>:<span class="little-box">{{remainingTime.second}}</span></div>
-							<p class="desc">现在申请24小时内必定反馈<i class="icon iconfont icon-question-circle"></i></p>
+							<p class="desc">现在申请24小时内必定反馈<el-tooltip class="item" effect="dark" popper-class="tooltip" placement="bottom-end">
+								<p slot="content">1.抢占约面席位后将享【急速反馈服务】。</br>
+									2.急速约面服务</br>
+								  （1）法定工作日（除节假日前一天）内抢占约面席位，面试官将在抢占成功后的24小时内给与答复。</br>
+								  （2）节假日前一天及节假日内抢占约面席位，面试官将在假期结束后的24小时内给与答复。</p>
+					     	<i class="icon iconfont icon-question-circle"></i>
+					    </el-tooltip></p>
 						</div>
 					</div>
 					<div class="operBox">
