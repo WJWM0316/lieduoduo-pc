@@ -341,12 +341,16 @@ img {
 						}
 					}
 				}
-				.botBtn {
-					color: #fff !important;
+				.operBox {
+					.kailiao {
+						background: $sub-color-1 !important;
+						color: $main-color-1 !important;
+					}
 				}
-				.kailiao {
-					background: $sub-color-1 !important;
-					color: $sub-color-1 !important;
+				.botBtnBox {
+					.botBtn {
+						color: #fff !important;
+					}
 				}
 			}
 		}

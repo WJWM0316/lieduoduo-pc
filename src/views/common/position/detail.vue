@@ -20,14 +20,14 @@
 				<div class="aside">
 					<div v-if="infos.isRapidly" class="icon yuemian24">
 						<img class="logo" :src="cdnPath + 'tag_24hour.png'" alt="">
-						<div class="number"><span class="num">30</span>个<p class="desc">约面席位</p></div>
+						<div class="number"><span class="num">{{remainingSeats}}</span>个<p class="desc">约面席位</p></div>
 						<div class="timeBox">
-							<div class="time">还剩<span class="little-box">1</span>天<span class="little-box">10</span>:<span class="little-box">11</span>:<span class="little-box">12</span></div>
+							<div class="time">还剩<span class="little-box">{{remainingTime.day}}</span>天<span class="little-box">{{remainingTime.hour}}</span>:<span class="little-box">{{remainingTime.minute}}</span>:<span class="little-box">{{remainingTime.second}}</span></div>
 							<p class="desc">现在申请24小时内必定反馈<i class="icon iconfont icon-question-circle"></i></p>
 						</div>
 					</div>
 					<div class="operBox">
-						<el-button class="btn kailiao">开撩约面</el-button>
+						<interviewBtn :infos="infos" type="position"></interviewBtn>
 					</div>
 					<div class="botBtnBox">
 						<span class="botBtn" @mouseenter="mouseenEven($event, 'shareQrcode')" @mouseleave="mouseenEven($event, 'shareQrcode')"><i class="icon iconfont icon-weixin"></i>微信分享</span>
@@ -106,12 +106,20 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import {getPositionApi, putMycollectPositionApi, deleteMycollectPositionApi} from '@/api/position.js'
 import {getPositionQrcodeApi} from '@/api/qrcode.js'
+import timePocessor from '@/util/timePocessor.js'
 import {TMap} from '@/util/TMap.js'
 import poster from '@/components/poster'
+import interviewBtn from '@/components/interview/interviewBtn.vue'
 @Component({
   name: 'positionDetail',
   components: {
-  	poster
+  	poster,
+  	interviewBtn
+  },
+  computed: {
+  	remainingSeats() {
+  		return this.infos.rapidlyInfo.seatsNum - this.infos.rapidlyInfo.applyNum - this.infos.rapidlyInfo.natureApplyNum
+  	}
   }
 })
 export default class PositionDetail extends Vue {
@@ -123,6 +131,7 @@ export default class PositionDetail extends Vue {
   posterParmas = {} // 海报参数
 	longPosters = '' // 长海报
 	shortPoster = '' // 短海报
+	remainingTime = {} // 倒计时
   id = 0
   qrcodeUrl = ''
   infos = {
@@ -130,6 +139,13 @@ export default class PositionDetail extends Vue {
   		intro: '',
   		companyShortname: '',
   		logoInfo: {}
+  	},
+  	rapidlyInfo: {
+  		seatsNum: 0,
+  		applyNum: 0,
+  		natureApplyNum: 0,
+  		endTime: '',
+  		startTime: ''
   	}
   }
   mouseenEven (e, type) {
@@ -146,6 +162,10 @@ export default class PositionDetail extends Vue {
   	let that = this
   	getPositionApi({id: this.id}).then(res => {
 			this.infos = res.data.data
+			this.remainingTime = timePocessor.restTime(that.infos.rapidlyInfo.endTime)
+			timePocessor.countDown(this.remainingTime).then(res => {
+  			this.remainingTime = res
+  		})
 			this.getMapLocation(that.infos.lat, that.infos.lng)
 	  })
   }

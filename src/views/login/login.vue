@@ -173,19 +173,13 @@
   </div>
 </template>
 <script>
-import Vue from "vue";
-import Component from "vue-class-component";
-import {
-  loginApi,
-  scanApi,
-  getQrCodeApi,
-  loginPutInApipc,
-  getCodeApi,
-  getCaptchaApi
-} from "../../api/auth";
-import { getUserIdentity, switchId } from "../../../config.js";
-import { changeBaseURL } from "../../api/index";
-import { mobileReg } from "../../util/fieldRegular.js";
+	import Vue from 'vue'
+	import Component from 'vue-class-component'
+	import { loginApi, scanApi, getQrCodeApi,loginPutInApipc,getCodeApi,getCaptchaApi } from '@/api/auth'
+	import { getUserIdentity, switchId } from '../../../config.js'
+  import { changeBaseURL } from '@/api/index'
+  import { mobileReg } from '@/util/fieldRegular.js'
+  import { saveAccessToken } from '@/api/cacheService'
 
 @Component({
   name: "lighthouse-list",
@@ -486,16 +480,14 @@ export default class CourseList extends Vue {
     })
       .then(res => {
         this.fromPop(res.data.msg);
-        console.log(res.data)
+        // console.log(res.data)
+        saveAccessToken(res.data.data.token)
         
-        if(res.data.isBusiness == 0) {
-          
-        }
-        
+        this.$router.push({path:'/index'})
       })
       .catch(res => {
-        this.fromPop(res.data.msg);
-      });
+        this.fromPop(res.data.msg)
+      })
   }
 
   //发送短信验证码
