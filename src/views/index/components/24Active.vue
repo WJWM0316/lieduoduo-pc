@@ -14,7 +14,7 @@
             <div class="list-image">
               <img :src="item.companyInfo.logoInfo.smallUrl" />
             </div>
-            <div class="list-company">{{item.companyInfo.companyName}}</div>
+            <div class="list-company">{{item.companyInfo.companyShortname}}</div>
             <div class="list-company-info">{{item.companyInfo.industry}}·{{item.companyInfo.employeesInfo}}·{{item.companyInfo.financingInfo}}</div>
           </div>
           <div class="list-position-info">
@@ -28,7 +28,7 @@
               <span><i></i>{{item.educationName}}</span>
             </div>
           </div>
-          <div class="list-details">{{item.describe}}</div>
+          <div class="list-details">{{item.oneSentenceIntro || '-'}}</div>
           <div class="list-footer">
             <div class="count-down">
               <span>还剩</span>
@@ -37,9 +37,9 @@
               <span class="list-hour">{{listCountDown[index].hours}}</span>:<span class="list-mins">{{listCountDown[index].mins}}</span>:<span class="list-second">{{listCountDown[index].seconds}}</span>
             </div>
             <div class="position-count">
-              <p>还有<b>{{item.seatsNum > 99 ? '99+' : item.seatsNum}}</b>个席位</p>
+              <p>还有<b>{{(item.seatsNum -  item.applyNum - item.natureApplyNum) > 99 ? '99+' : item.seatsNum -  item.applyNum - item.natureApplyNum}}</b>个席位</p>
               <span class="position-process">
-                <span class="position-process-width" :style="{width: `${(item.seatsNum -  item.applyNum - item.natureApplyNum)/item.seatsNum}%`}"></span>
+                <span class="position-process-width" :style="{width: `${30 + (item.applyNum + item.natureApplyNum)/item.seatsNum*70}%`}"></span>
               </span>
             </div>
             <el-button type="primary" size="medium" style="width: 71px" round>马上抢</el-button>

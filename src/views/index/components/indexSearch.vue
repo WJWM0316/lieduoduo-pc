@@ -11,7 +11,7 @@
           clearable>
           <i slot="prefix" class="el-input__icon el-icon-search"></i>
         </el-autocomplete>
-        <el-button type="primary">搜索</el-button>
+        <el-button class="el-button-h46" type="primary">搜索</el-button>
       </div>
       <p class="hot-word">
         <span>热门搜索：</span>
@@ -116,13 +116,10 @@ $search-width-wrapper: 936px;
   & /deep/ .el-input__inner {
     border-radius: 0px;
   }
-  .el-button {
-    height: 46px;
-    border-radius: 0;
+  .el-button-h46 {
     display: inline-block;
     vertical-align: top;
     width: 140px;
-    font-size:18px;
   }
   .search-fixed-title {
     display: none

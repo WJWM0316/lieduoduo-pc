@@ -13,6 +13,18 @@ const applicant = [
     ]
   },
   {
+    path: '/position',
+    title: '职位',
+    component: Layout,
+    children: [
+      {
+        path: '',
+        name: 'position',
+        component: resolve => require(['../views/position'], resolve)
+      }
+    ]
+  },
+  {
     path: '/applyIndex',
     title: '简历上传',
     component: Layout,
