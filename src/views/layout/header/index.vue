@@ -94,7 +94,7 @@ export default {
       if (e === 'logout') {
         this.$store.dispatch('logoutApi')
           .then(() => {
-            this.$router.push({ name: 'login' })
+            // this.$router.push({ name: 'login' })
           })
       }
     },
