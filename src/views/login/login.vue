@@ -2,143 +2,85 @@
   <div id="login">
     <div class="_wrap"></div>
     <div class="login_cont">
-      <el-alert
-        v-if="formalert.alertone"
-        class="alert_warning"
-        :class="{alert_two: formalert.alertstyle }"
-        :title="formalert.text"
-        type="warning"
-        :closable="false"
-        show-icon
-      ></el-alert>
 
       <!-- 切换登录方式type -->
-      <div class="login_type" v-if="logintype.type !== '注册'">
-        <div class="login_text" @click="changetype">{{logintype.type}}</div>
+      <div class="login_type" v-if="type === 'msgLogin' || type === 'qrcodeLogin'">
+        <div class="login_text" @click="changetype">{{type === 'msgLogin' ? '二维码登录' : '短信验证登录'}}</div>
         <div class="login-img">
           <img :src="cdnPath + 'loginimg.png'" @click="changetype" />
         </div>
       </div>
+
       <!-- 二维码登录 -->
-      <div class="logind" v-if="logintype.type == '短信验证登录'">
-        <h3 class="cont_tit" style="margin-bottom:24px">扫码登录</h3>
-        <div class="cont_p">使用「猎多多小程序」扫码登录</div>
+      <template v-if="type === 'qrcodeLogin'">
+        <div class="logind">
+          <h3 class="cont_tit" style="margin-bottom:24px">扫码登录</h3>
+          <div class="cont_p">使用「猎多多小程序」扫码登录</div>
 
-        <div class="cont_help">
-          <div class="cont_help_left">
-            <span>?</span>
+          <div class="cont_help">
+            <div class="cont_help_left">
+              <span>?</span>
+            </div>
+            <span class="cont_help_right" @click="openHelp = !openHelp">扫码帮助</span>
           </div>
-          <span class="cont_help_right">扫码帮助</span>
-        </div>
-        <div class="login_pic_warp">
-          <img class="loginCode" v-bind:src="codeData.image" />
-          <div class="pastDue" v-if="isPast">
-            <p>请重新刷新二维码</p>
-            <div class="pastBtn" @click="refreshCode">刷新</div>
+          <div class="login_pic_warp">
+            <img class="loginCode" :src="codeData.image" />
+            <div class="pastDue" v-if="isPast">
+              <p>请重新刷新二维码</p>
+              <div class="pastBtn" @click="refreshCode">刷新</div>
+            </div>
+            <div class="bottom_text bottom_bnt">
+              没有账号
+              <span @click="changetypeto">立即注册</span>
+            </div>
           </div>
-          <div class="bottom_text bottom_bnt">
-            没有账号
-            <span @click="changetypeto">立即注册</span>
+        </div>
+        <!-- 左侧引导图 -->
+        <div class="help_cont" v-show="openHelp">
+          <h3>扫码帮助</h3>
+          <div class="help_type">
+            <div :class="{ helptype: !helptype}" @click="helptype = !helptype">求职者</div>
+            <div :class="{ helptype: helptype}" @click="helptype = !helptype">招聘者</div>
+          </div>
+          <p class="help_text">职位管理 > 发布职位 > 扫码上传</p>
+
+          <div class="help_img">
+            <img :src="!helptype ? cdnPath + 'scanhelp.png' : ''" />
           </div>
         </div>
-      </div>
+      </template>
 
-      <!-- 左侧引导图 -->
-      <div class="help_cont" v-if="logintype.type == '短信验证登录'">
-        <h3>扫码帮助</h3>
-        <div class="help_type">
-          <div :class="{ helptype: !helptype}" @click="helpto">求职者</div>
-          <div :class="{ helptype: helptype}" @click="helpto">招聘者</div>
-        </div>
-        <p class="help_text">职位管理 > 发布职位 > 扫码上传</p>
+      <!-- 短信登录 或者 注册 -->
+      <div class="logind" :class="{ cont_ti: imgcode }" v-if="type === 'msgLogin' || type === 'register'">
 
-        <div class="help_img">
-          <img :src="cdnPath + 'scanhelp.png'" />
-        </div>
-      </div>
+        <ul class="sign_type" v-if="type === 'register'">
+          <li :class="{ active : !identity }" @click="toggle(0)">我是求职者</li>
+          <li :class="{ active : identity }" @click="toggle(1)">我是招聘官</li>
+        </ul>
 
-      <!-- 短信登录 -->
-      <div class="logind" v-if="logintype.type == '二维码登录'">
-        <h3 class="cont_tit" style="margin-bottom: 40px;" :class="{ cont_ti: loginto.captcha }">短信登录</h3>
-        <form method="post" action="javascript:;" class="logind_form">
-          <div class="input_wrap" :class="{ input_to: loginto.captcha }">
+        <h3 v-if="type === 'msgLogin'" class="cont_tit" style="margin-bottom: 40px;">短信登录</h3>
+        <div class="logind_form">
+          <div class="input_wrap">
             <div class="input_box">
               <i class="input_img iconfont icon-shoujihao" />
-              <input placeholder="请输入手机号码" maxlength="11" v-model="loginto.mobile" />
+              <input placeholder="请输入手机号码" maxlength="11" v-model="mobile" />
             </div>
-            <!-- 图片验证码 -->
-            <div class="input_box" v-if="loginto.captcha">
+            <div class="input_box" v-if="imgcode">
               <i class="input_img iconfont icon-shoujihao" />
-              <input placeholder="请输入图片验证码" maxlength="5" v-model="captchaimg.captchaValue" />
-              <img :src="captchaimg.imgcode" class="imgcode" />
+              <input placeholder="请输入图片验证码"  v-model="captchaValue" />
+              <img :src="imgcode" class="imgcode"/>
             </div>
             <div class="input_box">
               <i class="input_img iconfont icon-yanzhengma" />
-              <input placeholder="请输入短信验证码" maxlength="4" v-model="loginto.cValue" />
-              <span v-if="loginto.type" @click="sms(loginto.mobile)">发送验证码</span>
-              <span v-if="!loginto.type" style="margin-left:40px">{{loginto.text}}s</span>
+              <input placeholder="请输入短信验证码" maxlength="4" v-model="cValue" />
+              <span class="msgText" @click="sms">{{text}}</span>
             </div>
           </div>
-        </form>
-        <div
-          class="login_button"
-          :class="{ login_butto: loginto.captcha }"
-          @click="logintoo(
-      loginto.mobile,
-      loginto.cValue,
-      registered.entrance,
-      captchaimg.captchaKey,
-      captchaimg.captchaValue)"
-        >
-          <span>登录</span>
         </div>
+        <el-button class="login_button" @click="logintoo">登录</el-button>
         <div class="bottom_text">
           没有账号
           <span @click="changetypeto">立即注册</span>
-        </div>
-      </div>
-
-      <!-- ！！！注册 -->
-      <div class="sign" v-if="logintype.type == '注册'">
-        <ul class="sign_type">
-          <li :class="{ active : registered.entrance == 0 }" @click="typeto(0)">我是求职者</li>
-          <li :class="{ active : registered.entrance == 1 }" @click="typeto(1)">我是招聘官</li>
-        </ul>
-        <form method="post" action="javascript:;" class="logind_form">
-          <div class="input_wrap" :class="{ input_to: registered.captcha }">
-            <div class="input_box">
-              <i class="input_img iconfont icon-shoujihao" />
-              <input placeholder="请输入手机号码" maxlength="11" v-model="registered.mobile" />
-            </div>
-            <!-- 图片验证码 -->
-            <div class="input_box" v-if="registered.captcha">
-              <i class="input_img iconfont icon-shoujihao" />
-              <input placeholder="请输入图片验证码" maxlength="6" v-model="captchaimg.captchaValue" />
-              <img :src="captchaimg.imgcode" class="imgcode" />
-            </div>
-            <div class="input_box">
-              <i class="input_img iconfont icon-yanzhengma" />
-              <input placeholder="请输入短信验证码" maxlength="4" v-model="registered.cValue" />
-              <span v-if="registered.type" @click="sms(registered.mobile)">发送验证码</span>
-              <span v-if="!registered.type" style="margin-left:40px">{{registered.text}}s</span>
-            </div>
-          </div>
-        </form>
-        <div
-          class="login_button"
-          :class="{ login_butto: registered.captcha }"
-          @click="logintoo(
-      registered.mobile,
-      registered.cValue,
-      registered.entrance,
-      captchaimg.captchaKey,
-      captchaimg.captchaValue)"
-        >
-          <span>注册</span>
-        </div>
-        <div class="bottom_text">
-          已有账号
-          <span @click="changetypeto">马上登录</span>
         </div>
       </div>
     </div>
@@ -169,7 +111,6 @@
         </div>
       </div>
     </div>
-    <!-- <div class="login_btn" @click="login">模拟登陆</div> -->
   </div>
 </template>
 <script>
@@ -196,51 +137,20 @@
   components: {}
 })
 export default class CourseList extends Vue {
-  //注册表单数据
-  registered = {
-    mobile: "", //手机号
-    cValue: "", //验证码
-    entrance: 0, //注册身份识别
-    //发送短信后的文案状态
-    text: "发送验证码",
-    type: true,
-    timerto: 0, //发送短信次数累加
-    captcha: false //显示图片验证输入框
-  };
-  //登录表单数据
-  loginto = {
-    mobile: "", //手机号
-    cValue: "", //验证码
-    //发送短信后的文案状态
-    text: "发送验证码",
-    type: true,
-    timerto: 0, //发送短信次数累加
-    captcha: false
-  };
-  //表单弹窗
-  formalert = {
-    alertone: false,
-    text: "",
-    alertstyle: false
-  };
-  //登录方式切换变量存放
-  logintype = {
-    type: "二维码登录"
-  };
-  //左侧引导栏
-  helptype = true;
-  //验证码图片
-  captchaimg = {
-    imgcode: "", //base64图片
-    captchaKey: "", //传回来的key
-    captchaValue: "" //图片验证码的value
-  };
-
+  mobile = "" //手机号
+  cValue = "" //验证码
+  imgcode = "" //base64图片
+  captchaKey = "" //传回来的key
+  captchaValue = "" //图片验证码的value
+  text = "发送验证码"
+  type = 'msgLogin' // msgLogin 短信登录, qrcodeLogin 二维码登录, register 注册
+  helptype = false
+  openHelp = false 
   //cdn图片地址
-  cdnPath = `${process.env.VUE_APP_CDN_PATH}/images/`;
-
-  codeData = {}; // 二维码信息
-  userInfo = {};
+  cdnPath = `${process.env.VUE_APP_CDN_PATH}/images/`
+  identity = 0 // 0 求职者 1 招聘官
+  codeData = {} // 二维码信息
+  userInfo = {}
   pop = {
     isShow: true,
     type: "help"
@@ -250,7 +160,6 @@ export default class CourseList extends Vue {
   isPast = true;
   timer = null;
   num = 1;
-  identity = ""; //身份
   showError = false;
   /**
    * 初始化表单、分页页面数据
@@ -276,7 +185,6 @@ export default class CourseList extends Vue {
       this.status = query.type;
     }
 
-    //  console.log(this.registered.entrance)
   }
 
   closeMask() {
@@ -297,17 +205,14 @@ export default class CourseList extends Vue {
           name: this.userInfo.isBusiness === 1 ? "candidate" : "applyIndex"
         });
       })
-      .catch(error => {
-        setTimeout(() => {
-          //console.log(`${error.msg}~`);
-        });
-      });
   }
 
   init() {
-    this.getCode();
+    if (!this.$route.query.type) this.type = 'qrcodeLogin'
+    if (this.type === 'qrcodeLogin') this.getCode()
   }
 
+  // 获取二维码
   getCode() {
     let that = this;
     getQrCodeApi().then(res => {
@@ -327,9 +232,9 @@ export default class CourseList extends Vue {
       }, 3000);
     });
   }
-
+  // 判断扫码登录
   scan() {
-    if(this.logintype.type == '二维码登录'){ return }
+    if(this.type == '二维码登录'){ return }
     scanApi({
       uuid: this.codeData.uuid
     }).then(res => {
@@ -337,7 +242,7 @@ export default class CourseList extends Vue {
       //console.log('==>',res.data)
       if (res.data.data && res.data.data.id) {
         clearInterval(this.timer);
-        this.identity = res.data.data.isBusiness === 1 ? "zhaopin" : "qiuzhi";
+        this.identity = res.data.data.isBusiness === 1 ? 1 : 0;
         switchId(this.identity);
         changeBaseURL();
         this.isPast = false;
@@ -348,45 +253,15 @@ export default class CourseList extends Vue {
 
         this.userInfo = this.$store.state.userInfo;
         this.$router.push({
-          name: this.identity === "qiuzhi" ? "applyIndex" : "candidate"
+          name: this.identity === 0 ? "applyIndex" : "candidate"
         });
       }
     });
   }
 
+  // 刷新获取二维码
   refreshCode() {
     this.getCode();
-  }
-
-  clickHelp() {
-    this.pop.isShow = !this.pop.isShow;
-  }
-
-  changeStatus() {
-    this.status = this.status === "login" ? "register" : "login";
-    // this.pop.isShow = !this.pop.isShow
-  }
-
-  identitySelect(status) {
-    this.identitystatus = status;
-  }
-
-  todoAction(type, id) {
-    if (!id) {
-      return;
-    }
-    switch (type) {
-      case "detail":
-        this.$router.push({
-          name: "teacherDetail",
-          query: {
-            id: id
-          }
-        });
-        break;
-      default:
-        break;
-    }
   }
 
   //左侧引导栏切换
@@ -396,63 +271,35 @@ export default class CourseList extends Vue {
 
   // 登录方式切换
   changetype() {
-    this.logintype.type =
-      this.logintype.type == "二维码登录" ? "短信验证登录" : "二维码登录";
+    if (this.type === "msgLogin") {
+      this.type = "qrcodeLogin"
+      this.getCode()
+    } else {
+      this.type = "msgLogin"
+      clearInterval(this.timer)
+    }
   }
+
   //短信登录注册切换
   changetypeto() {
-    this.logintype.type =
-      this.logintype.type == "二维码登录" ||
-      this.logintype.type == "短信验证登录"
-        ? "注册"
-        : "二维码登录";
-    this.getCaptcha();
+    this.type =
+      this.type == "msgLogin" ||
+      this.type == "qrcodeLogin"
+        ? "register"
+        : "msgLogin"
   }
 
   // 注册角色切换type
-  typeto(type) {
-    this.registered.entrance = type;
+  toggle (type) {
+    this.identity = type
   }
-
-  //手机号校验
-  checkMobile(phonenumber) {
-    if (!mobileReg.test(phonenumber)) {
-      this.fromPop("请填写格式正确的手机号码");
-      return false;
+  checkMobile () {
+    if (!mobileReg.test(this.mobile)) {
+      this.$message.error('手机号码格式不正确');
+      return false
     } else {
-      return true;
+      return true
     }
-  }
-
-  //验证码校验
-  checkCode(captcha) {
-    var pattern = /^[0-9A-Za-z]{4}$/;
-    if (!pattern.test(captcha)) {
-      this.fromPop("短信验证码错误");
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-  //表单弹窗
-  fromPop(text) {
-    this.formalert = {
-      alertone: true,
-      text: text,
-      alertstyle: false
-    };
-    if (
-      this.formalert.text == "短信验证码发送成功！" ||
-      this.formalert.text == "操作成功！"
-    ) {
-      this.formalert.alertstyle = true;
-    }
-    clearTimeout(this.hintSetTime);
-    this.hintSetTime = setTimeout(() => {
-      this.formalert.alertone = false;
-      this.formalert.alertstyle = false;
-    }, 1500);
   }
 
   // 刷新验证码图片
@@ -460,123 +307,58 @@ export default class CourseList extends Vue {
     getCaptchaApi({}).then(res => {
       this.captchaimg.imgcode = res.data.data.img;
       this.captchaimg.captchaKey = res.data.data.key;
-      // console.log(res.data.data)
     });
-  }
-
-  //短信登录提交   //注册提交
-  logintoo(mobile, code, isBusiness, captchaKey, captchaValue) {
-    if (!this.checkMobile(mobile)) {
-      return;
-    } else if (!this.checkCode(code)) {
-      return;
-    }
-    loginPutInApipc({
-      mobile: mobile,
-      code: code,
-      isBusiness: isBusiness,
-      captchaKey: captchaKey,
-      captchaValue: captchaValue
-    })
-      .then(res => {
-        this.fromPop(res.data.msg);
-        // console.log(res.data)
-        saveAccessToken(res.data.data.token)
-        
-        this.$router.push({path:'/index'})
-      })
-      .catch(res => {
-        this.fromPop(res.data.msg)
-      })
   }
 
   //发送短信验证码
-  sms(mobile) {
-    if (!this.checkMobile(mobile)) {
+  sms() {
+    if (!this.checkMobile()) {
       return;
     }
-    getCodeApi({
-      mobile: mobile
-    }).then(res => {
-      // console.log(res.data)
-      this.formalert.text = res.data.msg;
-      // console.log(this.formalert.text)
-      this.fromPop(this.formalert.text);
-    });
-    //判断是登录注册页执行不同的倒计时
-    if (this.logintype.type == "二维码登录") {
-      this.loginto.timerto++; // 累加器
-
-      // console.log(this.registered.timerto)
-      this.getCaptcha();
-      if (this.loginto.timerto > 3) {
-        this.loginto.captcha = true;
-      }
-      this.loginto.type = false;
+    getCodeApi({mobile: this.mobile}).then(res => {
       this.smstime();
-    } else {
-      this.registered.timerto++; // 累加器
-
-      this.getCaptcha();
-      if (this.registered.timerto > 3) {
-        this.registered.captcha = true;
-      }
-      this.registered.type = false;
-      this.smstimer();
-    }
+    })
   }
 
   //登录短信验证码倒计时
   smstime() {
-    this.loginto.text = 60;
+    this.text = 60;
     let timeout = setInterval(() => {
-      this.loginto.text--;
-      if (this.loginto.text == 0) {
+      this.text--;
+      if (this.text == 0) {
         clearInterval(timeout);
-        this.loginto.text = "发送验证码";
-        this.loginto.type = true;
-      }
-    }, 1000);
-  }
-  //注册短信验证码倒计时
-  smstimer() {
-    this.registered.text = 60;
-    let timeout = setInterval(() => {
-      this.registered.text--;
-      if (this.registered.text == 0) {
-        clearInterval(timeout);
-        this.registered.text = "发送验证码";
-        this.registered.type = true;
+        this.text = "发送验证码";
       }
     }, 1000);
   }
 
-  //ajax 请求函数，
-  ajax_request() {
-    i++;
-    //如果已经请求20此没有请求成功，则强制结束，给出提示信息，因为每3s调用一次，供调用20次，大概就是一分钟的时间
-    if (i > 20) {
-      clearInterval(timer);
-      this.isPast = true;
-      return;
+
+  //短信登录提交   //注册提交
+  logintoo() {
+    if (!this.checkMobile()) {
+      return
     }
-    $.ajax({
-      type: "post",
-      url: "{:U('User/login_qrcode')}",
-      timeout: 3000,
-      data: { scene_id: $("#scene_id").val() },
-      success: function(msg) {
-        if (1 == msg.status) {
-          $(".login_info1").html(
-            '<span style="color:#0C9;">' + msg.info + "</span>"
-          );
-          setTimeout(refresh, 3000);
-          return;
-        }
-      },
-      error: function() {}
-    });
+    let params = {
+      mobile: this.mobile,
+      code: this.cValue,
+      isBusiness: this.identity,
+      captchaKey: this.captchaKey,
+      captchaValue: this.captchaValue
+    }
+    this.$store.dispatch('login', params).then(() => {
+      console.log(111111111111)
+    })
+
+    // loginPutInApipc(params)
+    //   .then(res => {
+    //     this.$message({
+    //       message: '登录成功',
+    //       type: 'success'
+    //     })
+    //     saveAccessToken(res.data.data.token)
+    //   })
   }
+
 }
 </script>
 <style lang="less">
@@ -1016,11 +798,10 @@ export default class CourseList extends Vue {
       box-sizing: border-box;
       text-align: left;
       line-height: 46px;
-
+      font-size: 0;
       .input_img {
         margin: 0 12px 0 29px;
-        vertical-align: middle !important;
-        width: 18px;
+        font-size: 18px
       }
 
       input::-webkit-input-placeholder {
@@ -1046,21 +827,21 @@ export default class CourseList extends Vue {
 
       input {
         width: 220px;
-        height: 38px;
-        vertical-align: middle !important;
+        height: 48px;
         font-size: 16px;
         font-weight: 500;
       }
 
-      span {
+      .msgText {
         color: #652791;
         font-weight: 500;
         font-family: PingFangSC-Medium, PingFang SC;
         font-size: 16px;
-        line-height: 47px;
+        line-height: 48px;
         display: inline-block;
-        margin-left: 20px;
+        float: right;
         cursor: pointer;
+        margin-right: 26px;
       }
 
       .imgcode {
@@ -1076,6 +857,7 @@ export default class CourseList extends Vue {
     .login_button {
       width: 406px;
       height: 50px;
+      line-height: 50px;
       background: #652791;
       border-radius: 100px;
       cursor: pointer;

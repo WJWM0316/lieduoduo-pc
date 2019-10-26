@@ -2,6 +2,7 @@ import axios from 'axios'
 import { Loading } from 'element-ui'
 import router from '../router/index'
 import { getAccessToken, removeAccessToken } from './cacheService'
+import Vue from 'vue'
 let loadingInstance = null
     // localStorage = window.localStorage
 const VUE_WEB_ZHAOPIN_API = process.env.VUE_APP_WEB_ZHAOPIN_API,
@@ -26,11 +27,15 @@ axios.interceptors.response.use(
     return res
   },
   err => {
+    // 错误提示
+    if(err.response.data.httpStatus !== 200) {
+      Vue.message.error(err.response.data.msg);
+    }
+
     // 登陆过期或者未登录
     if(err.response.data.httpStatus === 401) {
       router.replace({name: 'login'})
       removeAccessToken()
-      return
     }
     if (loadingInstance) loadingInstance.close()
     return Promise.reject(err.response)

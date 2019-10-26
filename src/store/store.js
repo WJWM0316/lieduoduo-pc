@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { saveAccessToken, removeAccessToken, getAccessToken, getUserInfo, saveUserInfo } from '../api/cacheService'
+import { loginPutInApipc } from '@/api/auth'
 import {
   loginApi,
   logoutApi
@@ -64,9 +65,17 @@ export default new Vuex.Store({
     },
 
     login (store, data) {
-      store.commit('LOGIN', data)
+      // store.commit('LOGIN', data)
+      return loginPutInApipc(data)
+      .then(res => {
+        // this.$message({
+        //   message: '登录成功',
+        //   type: 'success'
+        // })
+        saveAccessToken(res.data.data.token)
+      })
     },
-
+    
     testLogin (store, data) {
       return loginApi(data)
         .then(res => {
