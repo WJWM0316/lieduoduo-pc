@@ -9,6 +9,7 @@ img {
 		height: 100%;
 	}
 }
+
 .inner {
 	margin: 0 auto;
 	width: $page-width;
@@ -362,8 +363,9 @@ img {
 			width: $content-left;
 			float: left;
 			border-right: 1px solid $border-color-3;
-			padding-right: 100xp;
 			box-sizing: border-box;
+			padding-right: 100px;
+			margin: 0;
 			.part {
 				margin-bottom: 40px;
 				&:last-child {
@@ -404,6 +406,7 @@ img {
 					font-weight:400;
 					color:$font-color-3;
 					line-height:26px;
+					white-space: pre-wrap;
 				}
 				.address {
 					width:750px;
