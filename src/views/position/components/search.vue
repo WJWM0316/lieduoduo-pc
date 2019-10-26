@@ -27,13 +27,25 @@ export default {
       address: '广州'
     }
   },
+  mounted () {
+    window.addEventListener('scroll', this.handleScroll)
+  },
   methods: {
     querySearch () {
 
     },
+    handleScroll () {
+      // 得到页面滚动的距离
+      let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+      // 判断页面滚动的距离是否大于吸顶元素的位置
+      this.headerFixed = scrollTop > this.scrollTop
+    },
     handleSelect () {
 
     }
+  },
+  destroyed () {
+    window.removeEventListener('scroll', this.handleScroll)
   }
 }
 </script>

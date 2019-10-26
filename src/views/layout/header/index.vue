@@ -3,7 +3,7 @@
     <div class="page-header-wrapper">
       <div class="header-logo">猎多多</div>
       <div class="header-address">
-        <span class="el-icon-location-information">广州</span>
+        <span class="iconfont icon-dizhi">广州</span>
         <span class="change-address">[切换城市]</span>
       </div>
       <ul class="header-nav">
@@ -134,6 +134,9 @@ $header-height-1: $page-header-height;
   span:first-child {
     color: $sub-color-1;
     padding-right: 16px;
+  }
+  .iconfont {
+    font-size: 14px;
   }
 }
 .share-image {

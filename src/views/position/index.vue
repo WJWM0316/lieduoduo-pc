@@ -2,8 +2,9 @@
   <div class="position-wrapper">
     <search />
     <div class="main-center">
-      <div class="position-lists">
-        <div class="position-list"  v-for="item in listData" :key="item.id">
+      <div class="position-lists" v-loading="getLoading">
+        <no-found v-if="!getLoading && !listData.length"></no-found>
+        <div class="position-list"   v-for="item in listData" :key="item.id">
           <div class="position-info">
             <p>
               <!-- 急聘 -->
@@ -14,9 +15,9 @@
               <span class="position-pay">{{item.emolumentMin}}-{{item.emolumentMax}}·{{item.annualSalaryDesc}}</span>
             </p>
             <p class="position-require">
-              <span><i class="el-icon-plus"></i>{{item.city}}{{item.district}}</span>
-              <span><i class="el-icon-plus"></i>{{item.workExperienceName}}</span>
-              <span><i class="el-icon-plus"></i>{{item.educationName}}</span>
+              <span><i class="iconfont icon-dizhi"></i>{{item.city}}{{item.district}}</span>
+              <span><i class="iconfont icon-zhiwei"></i>{{item.workExperienceName}}</span>
+              <span><i class="iconfont icon-jiaoyu"></i>{{item.educationName}}</span>
             </p>
           </div>
           <div class="company-info">
@@ -34,7 +35,7 @@
             </div>
           </div>
         </div>
-        <div class="pagination">
+        <div class="pagination" v-if="total > 0">
           <el-pagination
             background
             @current-change="(val) => handleSearch(val, 'page')"
@@ -44,51 +45,72 @@
             :total="total">
           </el-pagination>
         </div>
+
       </div>
+      <!-- 登陆广告位置 -->
+      <div></div>
     </div>
+    <scroll-to-top ref="scrollToTop"></scroll-to-top>
   </div>
 </template>
 <script>
+import ScrollToTop from 'COMPONENTS/scrollToTop'
 import Search from './components/search'
 import { getListApi } from 'API/position'
+import NoFound from 'COMPONENTS/noFound'
 export default {
   components: {
-    Search
+    Search,
+    ScrollToTop,
+    NoFound
   },
   data () {
     return {
       params: {
         page: 1,
-        count: 20
+        count: 20,
+        name: ''
       },
       listData: [],
-      total: 0 // 职位总数
+      total: 0, // 职位总数
+      getLoading: true
     }
   },
   created () {
     this.getPositionList()
+    const { query } = this.$route
+    for (let item in this.params) {
+      if (query[item]) this.params[item] = query[item]
+    }
   },
   methods: {
     // 获取职位列表
     getPositionList () {
+      this.getLoading = true
       getListApi(this.params).then(({ data }) => {
+        this.getLoading = false
         this.listData = data.data || []
         this.total = data.meta.total
+        if (this.$refs.scrollToTop) this.$refs.scrollToTop.toTop()
       })
     },
-    handleSearch () {
-
+    handleSearch (value, type) {
+      if (value) this.params[type] = value
+      this.getPositionList()
     }
   }
 }
 </script>
 <style lang="scss" scoped>
 .main-center {
+  margin-top: 24px;
   padding-bottom: 40px;
+  display: flex;
 }
 .position-lists {
   box-shadow: $shadow-1;
-  margin-top: 24px;
+  margin-right: 20px;
+  min-height: 108px;
   width: 882px;
   .position-list:not(:last-child) {
     border-bottom: none;
@@ -152,6 +174,9 @@ export default {
     span {
       display: inline-block;
       vertical-align: middle;
+    }
+    .iconfont {
+      font-size: 12px;
     }
   }
 }

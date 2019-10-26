@@ -23,9 +23,9 @@
               <span class="list-pay">{{item.emolumentMin}}~{{item.emolumentMax}} · {{item.annualSalaryDesc}}</span>
             </div>
             <div class="list-position-require">
-              <span><i></i>{{item.city}}{{item.district}}</span>
-              <span><i></i>{{item.workExperienceName}}</span>
-              <span><i></i>{{item.educationName}}</span>
+              <span><i class="iconfont icon-dizhi"></i>{{item.city}}{{item.district}}</span>
+              <span><i class="iconfont icon-zhiwei"></i>{{item.workExperienceName}}</span>
+              <span><i class="iconfont icon-dizhi"></i>{{item.educationName}}</span>
             </div>
           </div>
           <div class="list-details">{{item.oneSentenceIntro || '-'}}</div>
@@ -39,7 +39,7 @@
             <div class="position-count">
               <p>还有<b>{{(item.seatsNum -  item.applyNum - item.natureApplyNum) > 99 ? '99+' : item.seatsNum -  item.applyNum - item.natureApplyNum}}</b>个席位</p>
               <span class="position-process">
-                <span class="position-process-width" :style="{width: `${30 + (item.applyNum + item.natureApplyNum)/item.seatsNum*70}%`}"></span>
+                <span class="position-process-width" :style="{width: `${30 + item.applyNum/(item.seatsNum - item.natureApplyNum)*70}%`}"></span>
               </span>
             </div>
             <el-button type="primary" size="medium" style="width: 71px" round>马上抢</el-button>
@@ -216,6 +216,9 @@ export default {
     color: $title-color-3;
     span + span {
       margin-left: 22px;
+    }
+    .iconfont {
+      font-size: 14px;
     }
   }
   .list-details {
