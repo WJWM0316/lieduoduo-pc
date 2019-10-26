@@ -163,6 +163,7 @@ export default {
     color: $title-color-3;
     .iconfont {
       font-size: 14px;
+      padding-right: 3px;
     }
     span + span {
       margin-left: 22px;

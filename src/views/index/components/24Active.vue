@@ -244,6 +244,7 @@ export default {
     }
     .iconfont {
       font-size: 14px;
+      padding-right: 3px;
     }
   }
   .list-details {

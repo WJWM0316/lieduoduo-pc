@@ -31,6 +31,7 @@ export default {
 <style lang="scss" scoped>
 .no-found {
   width: 100%;
+  min-height: 200px;
   padding: 20px;
   text-align: center;
   box-sizing: border-box;

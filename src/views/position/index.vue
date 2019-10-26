@@ -177,6 +177,7 @@ export default {
     }
     .iconfont {
       font-size: 12px;
+      padding-right: 3px;
     }
   }
 }
