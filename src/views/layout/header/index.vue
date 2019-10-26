@@ -3,7 +3,7 @@
     <div class="page-header-wrapper">
       <div class="header-logo">猎多多</div>
       <div class="header-address">
-        <span class="el-icon-location-information">广州</span>
+        <span class="iconfont icon-dizhi">广州</span>
         <span class="change-address">[切换城市]</span>
       </div>
       <ul class="header-nav">
@@ -34,8 +34,8 @@
           </template>
           <template v-else>
             <div>
-              <span class="search-job">我要找工作</span>
-              <span class="recruite">我要招聘</span>
+              <router-link tag="span" to="/login?type=login" class="search-job">我要找工作</router-link>
+              <router-link tag="span" to="/login?type=login" class="recruite">我要招聘</router-link>
             </div>
           </template>
 
@@ -52,6 +52,8 @@
                 </span>
               </div>
               <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item command="usercenter">个人中心</el-dropdown-item>
+                <el-dropdown-item command="">切换为面试官</el-dropdown-item>
                 <el-dropdown-item command="logout">退出登陆</el-dropdown-item>
               </el-dropdown-menu>
           </el-dropdown>
@@ -96,6 +98,8 @@ export default {
           .then(() => {
             // this.$router.push({ name: 'login' })
           })
+      } else if (e === 'usercenter') {
+        this.$router.push('/position')
       }
     },
     handleToLogin (type) {
@@ -134,6 +138,9 @@ $header-height-1: $page-header-height;
   span:first-child {
     color: $sub-color-1;
     padding-right: 16px;
+  }
+  .iconfont {
+    font-size: 14px;
   }
 }
 .share-image {

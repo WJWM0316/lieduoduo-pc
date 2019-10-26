@@ -1,5 +1,5 @@
 const other = [
-	{
+  {
     path: '/',
     // 默认进入控制台
     redirect: {
@@ -10,7 +10,7 @@ const other = [
     }
   },
 
-	{
+  {
     path: '/404',
     name: '404',
     title: '页面不存在',
@@ -23,11 +23,11 @@ const other = [
       module: '404'
     }
   },
-	{
+  {
     path: '/putIn',
     name: 'putIn',
     title: '猎多多 | 投放',
     component: resolve => require(['../views/activity/putIn/index.vue'], resolve)
-  },
+  }
 ]
 export default other

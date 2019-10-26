@@ -11,7 +11,7 @@
           clearable>
           <i slot="prefix" class="el-input__icon el-icon-search"></i>
         </el-autocomplete>
-        <el-button class="el-button-h46" type="primary">搜索</el-button>
+        <el-button class="el-button-h46" type="primary" @click="handleToSearch">搜索</el-button>
       </div>
       <p class="hot-word">
         <span>热门搜索：</span>
@@ -63,7 +63,7 @@ export default {
       this.$router.push({
         path: '/position',
         query: {
-          kw: value.value
+          name: value.value
         }
       })
     },
@@ -77,6 +77,14 @@ export default {
       let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
       // 判断页面滚动的距离是否大于吸顶元素的位置
       this.headerFixed = scrollTop > this.scrollTop
+    },
+    // 首页搜索
+    handleToSearch () {
+      let path = '/position'
+      if (this.searchValue) {
+        path = `${path}?name=${this.searchValue}`
+      }
+      this.$router.push(path)
     }
   },
   destroyed () {

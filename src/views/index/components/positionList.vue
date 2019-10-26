@@ -16,23 +16,23 @@
           <div class="list-header">
             <div class="position-name">{{item.positionName}}</div>
             <div class="position-contact">
-              <i class="el-icon-plus"></i> 开约
+              <i class="iconfont icon-weixin"></i> 开约
             </div>
           </div>
           <div class="list-pay">
             {{item.emolumentMin}}~{{item.emolumentMax}} · {{item.annualSalaryDesc}}
           </div>
           <div class="list-position-require">
-            <span class="position-address"><i></i>{{item.city}}{{item.district}}</span>
-            <span><i></i>{{item.workExperienceName}}</span>
-            <span><i></i>{{item.educationName}}</span>
+            <span class="position-address"><i class="iconfont icon-dizhi"></i>{{item.city}}{{item.district}}</span>
+            <span><i class="iconfont icon-zhiwei"></i>{{item.workExperienceName}}</span>
+            <span><i class="iconfont icon-jiaoyu"></i>{{item.educationName}}</span>
           </div>
           <div class="list-footer">
             <div class="company-logo">
               <img :src="item.companyInfo.logoInfo.smallUrl" alt="">
             </div>
             <div class="">
-              <p class="company-name">{{item.companyInfo.companyName}}</p>
+              <p class="company-name">{{item.companyInfo.companyShortname}}</p>
               <p class="company-specia">{{item.companyInfo.financingInfo}}·{{item.companyInfo.employeesInfo}}·{{item.companyInfo.industry}}</p>
             </div>
           </div>
@@ -136,9 +136,12 @@ export default {
   .list-header {
     @include flex-v-center;
     color: $main-color-1;
-    font-size: 12px;
     .position-contact {
       margin-left: auto;
+      font-size: 12px;
+      .iconfont {
+        font-size: 12px;
+      }
     }
     .position-name {
       font-size: 16px;
@@ -158,6 +161,10 @@ export default {
     margin-top: 4px;
     font-size: 14px;
     color: $title-color-3;
+    .iconfont {
+      font-size: 14px;
+      padding-right: 3px;
+    }
     span + span {
       margin-left: 22px;
     }

@@ -41,6 +41,8 @@ $index-login-height: 120px;
   background: $bg-color-4;
   height: $index-login-height;
   width: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 .index-login-wrapper {
   @include flex-v-center;

@@ -9,7 +9,7 @@
               <span class="item-title">{{item.name}}</span>
               <div>
                 <template v-for="child in item.children">
-                  <span :key="child.labelId">{{child.name}}</span>
+                  <router-link tag="span" :to="`/position/?name=${child.name}`"  :key="child.labelId">{{child.name}}</router-link>
                 </template>
               </div>
               <span class="item-icon el-icon-arrow-right"></span>
@@ -18,7 +18,7 @@
               <div class="position-details-wrapper" v-for="child in item.all.children" :key="child.labelId">
                 <p>{{child.name}}</p>
                 <div class="detaisl-span">
-                  <router-link to="#" v-for="link in child.children" :key="link.labelId">{{link.name}}</router-link>
+                  <router-link :to="`/position/?name=${link.name}`" v-for="link in child.children" :key="link.labelId">{{link.name}}</router-link>
                 </div>
               </div>
             </div>
@@ -34,7 +34,7 @@
                 <span class="item-title">{{item.name}}</span>
                 <div>
                   <template v-for="child in item.children">
-                    <span :key="child.labelId">{{child.name}}</span>
+                    <router-link tag="span" :to="`/position/?name=${child.name}`"  :key="child.labelId">{{child.name}}</router-link>
                   </template>
                 </div>
                 <span class="item-icon el-icon-arrow-right"></span>
@@ -43,7 +43,7 @@
                 <div class="position-details-wrapper" v-for="child in item.all.children" :key="child.labelId">
                   <p>{{child.name}}</p>
                   <div class="detaisl-span">
-                    <router-link to="#" v-for="link in child.children" :key="link.labelId">{{link.name}}</router-link>
+                    <router-link :to="`/position/?name=${link.name}`" v-for="link in child.children" :key="link.labelId">{{link.name}}</router-link>
                   </div>
                 </div>
               </div>

@@ -1,5 +1,5 @@
 const recruiter = [
-	{
+  {
     path: '/candidate',
     name: 'candidate',
     title: '候选人',

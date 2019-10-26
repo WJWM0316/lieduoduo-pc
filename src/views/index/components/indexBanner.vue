@@ -2,7 +2,7 @@
   <div class="swiper" @mouseover="pause" @mouseout="play">
     <ul class="swiper-group" :style="groupStyle">
       <li class="swiper-item" v-for="(item,index) in items" ref="item" :key="index">
-        <img :src="item.bigImgUrl" alt="">
+        <a target="_blank"  :href="item.otherUrl"><img :src="item.bigImgUrl" alt=""></a>
       </li>
     </ul>
     <div class="swiper-arrow">
@@ -154,6 +154,9 @@ ul {
 .swiper-item {
   flex: 0 0 100%;
   height: 100%;
+  a {
+    display: block;
+  }
 }
 .swiper-arrow {
   font-size: 36px;
