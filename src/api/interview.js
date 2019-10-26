@@ -27,6 +27,12 @@ export const confirmInterviewApi = data => request({
   config: {host: 'zhaopin'}
 })
 
-
-
-
+//获取底部面试状态
+export const getInterviewStatusApi = (data, hasLoading) => {
+  return request({
+    method: 'get',
+    url: '/interview/getInterviewStatus',
+    params: data,
+    config: {host: 'qiuzhi'}
+  })
+}
