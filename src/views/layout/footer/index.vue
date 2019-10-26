@@ -25,7 +25,7 @@
             <p class="black">扫码打开小程序</p>
           </div>
         </div>
-        
+
     </section>
   </footer>
 </template>
@@ -40,7 +40,7 @@ export default PageFooter
   text-align: left;
   font-size: 14px;
   box-shadow: 0px 2px 8px 0px rgba(29,45,53,0.06);
-  
+
   z-index: 2;
   overflow: hidden;
 

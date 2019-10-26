@@ -83,7 +83,7 @@ const applicant = [
         component: resolve => require(['../views/activity/resumeFourthPost/index.vue'], resolve)
       }
     ]
-  },
+  }
 ]
 
 export default applicant

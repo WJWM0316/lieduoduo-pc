@@ -20,11 +20,11 @@
         </template>
       </p>
     </div>
-    
+
   </div>
 </template>
 <script>
-import {getMatchesPosition, getHotKeyword} from 'API/search'
+import { getMatchesPosition, getHotKeyword } from 'API/search'
 export default {
   data () {
     return {
@@ -33,33 +33,33 @@ export default {
       headerFixed: false
     }
   },
-  created() {
+  created () {
     this.getWords()
   },
   computed: {
     scrollTop () {
       // 如果是登陆状态是 50 非登陆状态 是 170
-      const {userInfo} = this.$store.state
-      return userInfo&&userInfo.id ? 50 : 170 
+      const { userInfo } = this.$store.state
+      return userInfo && userInfo.id ? 50 : 170
     }
   },
-  mounted() {
-    window.addEventListener('scroll', this.handleScroll);
+  mounted () {
+    window.addEventListener('scroll', this.handleScroll)
   },
   methods: {
     // 查询
-    querySearchAsync(queryString, cb) {
-      clearTimeout(this.timeout);
+    querySearchAsync (queryString, cb) {
+      clearTimeout(this.timeout)
       this.timeout = setTimeout(() => {
-        if(!queryString.length) return
-        getMatchesPosition({position: queryString}).then(({data}) => {
+        if (!queryString.length) return
+        getMatchesPosition({ position: queryString }).then(({ data }) => {
           const reslutes = data.data || []
-          cb(reslutes.map((val,index) => ({value: val, id: index})))
+          cb(reslutes.map((val, index) => ({ value: val, id: index })))
         })
-      }, 50);
+      }, 50)
     },
     // 选择查询到的数据
-    handleSelect(value) {
+    handleSelect (value) {
       this.$router.push({
         path: '/position',
         query: {
@@ -68,19 +68,19 @@ export default {
       })
     },
     getWords () {
-      getHotKeyword().then(({data}) => {
+      getHotKeyword().then(({ data }) => {
         this.hotKeyWork = data.data.items || []
       })
     },
-    handleScroll(){
+    handleScroll () {
       // 得到页面滚动的距离
-      let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+      let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
       // 判断页面滚动的距离是否大于吸顶元素的位置
       this.headerFixed = scrollTop > this.scrollTop
     }
   },
-  destroyed() {
-    window.removeEventListener('scroll', this.handleScroll);
+  destroyed () {
+    window.removeEventListener('scroll', this.handleScroll)
   }
 }
 </script>

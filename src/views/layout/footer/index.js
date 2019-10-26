@@ -4,21 +4,19 @@ import Component from 'vue-class-component'
 @Component({
   name: 'page-footer',
   methods: {
-    //...mapActions(['showMsg'])
+    // ...mapActions(['showMsg'])
   }
 })
 export default class PageFooter extends Vue {
-
-  mouted() {
+  mouted () {
 
   }
 
-  shouldFixed() {
+  shouldFixed () {
     return [
-      //'recruiterIndex'
+      // 'recruiterIndex'
     ].includes(this.$store.state.pageName)
   }
-
 
   toUserDeal () {
     let urlData = this.$router.resolve({

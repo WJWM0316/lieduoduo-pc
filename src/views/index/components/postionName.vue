@@ -6,7 +6,7 @@
         <template v-for="item in forepartData">
           <li class="list-item" :key="item.labelId" @mouseover.self="mouseOverEvent">
             <div class="list-item-wrapper">
-              <span class="item-title">{{item.name}}</span> 
+              <span class="item-title">{{item.name}}</span>
               <div>
                 <template v-for="child in item.children">
                   <span :key="child.labelId">{{child.name}}</span>
@@ -31,7 +31,7 @@
           <template v-for="item in backendData">
             <li class="list-item" :key="item.labelId" @mouseover.self="mouseOverEvent">
               <div class="list-item-wrapper">
-                <span class="item-title">{{item.name}}</span> 
+                <span class="item-title">{{item.name}}</span>
                 <div>
                   <template v-for="child in item.children">
                     <span :key="child.labelId">{{child.name}}</span>
@@ -63,7 +63,7 @@ export default {
       default: () => ([])
     }
   },
-  data() {
+  data () {
     return {
     }
   },
@@ -78,7 +78,7 @@ export default {
     },
     // 后部分
     backendData () {
-      if(this.list.length <= 8) return []
+      if (this.list.length <= 8) return []
       return this.list.slice(8, this.list.length)
     }
   },
@@ -86,14 +86,14 @@ export default {
     /**
      * 设置posotion details 显示的位置
      */
-    mouseOverEvent(e) {
+    mouseOverEvent (e) {
       // 元素离顶部的高度
       const top = e.target.getClientRects()[0].top
       // details 可见高度
-      const dClientHeight =  e.target.querySelector('.position-details').clientHeight
+      const dClientHeight = e.target.querySelector('.position-details').clientHeight
       // 屏幕的高度
       const maxHeight = document.documentElement.clientHeight
-      if(maxHeight <  (dClientHeight + top)) {
+      if (maxHeight < (dClientHeight + top)) {
         // 截取超出屏幕部分
         const outHeight = dClientHeight - (maxHeight - top)
         // 上移的高度

@@ -53,9 +53,9 @@
   </div>
 </template>
 <script>
-import {getRapidlyData} from 'API/common'
+import { getRapidlyData } from 'API/common'
 export default {
-  data() {
+  data () {
     return {
       bubbleList: [],
       listData: [],
@@ -63,13 +63,13 @@ export default {
       listCountDown: [] // 倒计时数据
     }
   },
-  created() {
+  created () {
     this.getLists()
   },
   methods: {
-    getLists() {
-      getRapidlyData().then(({data}) => {
-        const {items, toastTips, buttons} = data.data
+    getLists () {
+      getRapidlyData().then(({ data }) => {
+        const { items, toastTips, buttons } = data.data
         this.listData = items.slice(0, 6)
         this.bubbleList = toastTips
         this.buttons = buttons
@@ -87,17 +87,17 @@ export default {
         this.setCountDown()
       })
     },
-    setCountDown() {
+    setCountDown () {
       this.listCountDown.forEach(val => {
         const results = this.$util.setTimeDown(val.endTime)
         Object.assign(val, results)
       })
-      this.countDownTimer = setTimeout( () =>  {
-          this.setCountDown();
+      this.countDownTimer = setTimeout(() => {
+        this.setCountDown()
       }, 1000)
     }
   },
-  destroyed() {
+  destroyed () {
     clearTimeout(this.countDownTimer)
   }
 }

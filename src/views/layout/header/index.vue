@@ -38,7 +38,7 @@
               <span class="recruite">我要招聘</span>
             </div>
           </template>
-         
+
         </div>
         <div class="header-info">
           <template v-if="isLogin">
@@ -58,7 +58,7 @@
           </template>
           <template v-else>
             <div class="no-login">
-              <span class="login-btn"  @click="handleToLogin('login')"><i class="el-icon-user"></i> 登陆</span> | 
+              <span class="login-btn"  @click="handleToLogin('login')"><i class="el-icon-user"></i> 登陆</span> |
               <span class="register-btn" @click="handleToLogin('register')">注册</span>
             </div>
           </template>
@@ -68,37 +68,37 @@
   </div>
 </template>
 <script>
-import {mp_qrcode, wx_qrcode, app_qrcode} from 'IMAGES/image'
+import { mp_qrcode, wx_qrcode, app_qrcode } from 'IMAGES/image'
 export default {
-  data() {
+  data () {
     return {
       navList: [
         { name: '首页', url: '/index', type: 'link' },
         { name: '职位', url: '/position', type: 'link' },
         { name: 'APP', url: app_qrcode, type: 'hover' },
         { name: '小程序', url: mp_qrcode, type: 'hover' },
-        { name: '公众号', url: wx_qrcode, type: 'hover' },
+        { name: '公众号', url: wx_qrcode, type: 'hover' }
       ]
     }
   },
   computed: {
-    isLogin() {
+    isLogin () {
       return !!this.$store.state.userInfo.id
     },
-    userInfo() {
-      return  this.$store.state.userInfo || {}
+    userInfo () {
+      return this.$store.state.userInfo || {}
     }
   },
   methods: {
-    handleClick(e) {
-      if(e === 'logout'){
+    handleClick (e) {
+      if (e === 'logout') {
         this.$store.dispatch('logoutApi')
           .then(() => {
-            this.$router.push({name: 'login'})
+            this.$router.push({ name: 'login' })
           })
       }
     },
-    handleToLogin(type) {
+    handleToLogin (type) {
       this.$router.push({
         path: '/login',
         query: {

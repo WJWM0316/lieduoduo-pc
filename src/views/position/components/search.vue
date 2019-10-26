@@ -2,8 +2,8 @@
   <div class="search-wrapper">
     <div class="main-center">
       <div class="search-input">
-        <el-autocomplete 
-          placeholder="搜索职位、公司" 
+        <el-autocomplete
+          placeholder="搜索职位、公司"
           v-model="searchValue"
           :fetch-suggestions="querySearch"
           @select="handleSelect">
@@ -21,17 +21,17 @@
 </template>
 <script>
 export default {
-  data() {
+  data () {
     return {
       searchValue: '',
       address: '广州'
     }
   },
   methods: {
-    querySearch() {
+    querySearch () {
 
     },
-    handleSelect() {
+    handleSelect () {
 
     }
   }

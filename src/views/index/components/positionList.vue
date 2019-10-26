@@ -46,7 +46,7 @@
 </template>
 <script>
 import ScrollPane from 'COMPONENTS/scrollPane'
-import {getPositionSearch} from 'API/position'
+import { getPositionSearch } from 'API/position'
 export default {
   props: {
     nameList: {
@@ -66,7 +66,7 @@ export default {
     // 获取职位列表
     getPositionList () {
       this.getLoading = true
-      getPositionSearch({positionTypeIds: this.currentId}).then(({data}) => {
+      getPositionSearch({ positionTypeIds: this.currentId }).then(({ data }) => {
         this.getLoading = false
         this.listData = data.data.slice(0, 12)
       })
@@ -191,7 +191,7 @@ export default {
     margin-right: 9px;
     @include img-radius(36px, 36px)
   }
-  
+
 }
 .position-list-wrapper:hover {
   box-shadow: $shadow-2;

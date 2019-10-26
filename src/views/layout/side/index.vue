@@ -9,9 +9,9 @@
           <template v-for="(item, index) in routes">
             <li
               v-if="item.meta && item.meta.useNav"
-              :class="{'active' : $route.name === item.name}"  
+              :class="{'active' : $route.name === item.name}"
               :key="`item.name`+index"
-            >  
+            >
                 <router-link :to="{ name: item.name}" class="a_warp">
                 <!-- <i :class="`zike-icon icon iconfont ${item.meta.icon}`"></i>   -->
                 <div class="side_icon" v-if="item.name==='candidate'">

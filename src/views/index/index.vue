@@ -23,7 +23,7 @@ import Active from './components/24Active'
 // 职位列表
 import PositionList from './components/positionList.vue'
 import ScrollToTop from 'COMPONENTS/scrollToTop'
-import {getBanners, getIndexData} from 'API/common'
+import { getBanners, getIndexData } from 'API/common'
 export default {
   components: {
     LoginBanner,
@@ -34,7 +34,7 @@ export default {
     PositionList,
     ScrollToTop
   },
-  data() {
+  data () {
     return {
       loginBannerList: [], // 登陆模块的banner
       bannerLists: [], // index banner
@@ -42,12 +42,12 @@ export default {
       positionLabel: [] // 部分职位名称tab数据
     }
   },
-  created() {
+  created () {
     this.getBannerList()
-    this.getPageData();
+    this.getPageData()
   },
   computed: {
-    isLogin() {
+    isLogin () {
       return !!this.$store.state.userInfo.id
     }
   },
@@ -56,23 +56,22 @@ export default {
     getBannerList () {
       getBanners({
         location: 'jobhunter_pc_index_head,jobhunter_pc_index_middle'
-      }).then(({data}) => {
-         const {jobhunterPcIndexHead, jobhunterPcIndexMiddle} = data.data
-         this.loginBannerList = jobhunterPcIndexHead || []
-         this.bannerLists = jobhunterPcIndexMiddle || []
-         if(this.bannerLists.length > 1) {
-           this.$refs.indexBanner.autoplay()
-         }
-         
+      }).then(({ data }) => {
+        const { jobhunterPcIndexHead, jobhunterPcIndexMiddle } = data.data
+        this.loginBannerList = jobhunterPcIndexHead || []
+        this.bannerLists = jobhunterPcIndexMiddle || []
+        if (this.bannerLists.length > 1) {
+          this.$refs.indexBanner.autoplay()
+        }
       })
     },
     // 获取页面数据 比如职位，地址等等
-    getPageData() {
-      getIndexData({}).then(({data}) => {
-        const {positionType, label} = data.data
+    getPageData () {
+      getIndexData({}).then(({ data }) => {
+        const { positionType, label } = data.data
         this.positionData = positionType
         this.positionLabel = label || []
-        if(this.positionLabel[0]) {
+        if (this.positionLabel[0]) {
           this.$refs.positionList.handleChange(this.positionLabel[0])
         }
       })

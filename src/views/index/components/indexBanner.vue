@@ -24,112 +24,112 @@ export default {
     }
   },
   computed: {
-    groupStyle() {
+    groupStyle () {
       return {
         transform: `translate3d(${this.offset}px, 0, 0)`,
-        "transition-duration": `${this.duration}ms`
-      };
+        'transition-duration': `${this.duration}ms`
+      }
     }
   },
-  data() {
+  data () {
     return {
       index: 0, // 当前轮播项索引
       offset: 0, // swipe组的偏移量
       duration: 0, // 过渡动画时长
       itemWidth: 0 // 轮播项宽度
-    };
+    }
   },
-  mounted() {
+  mounted () {
     if (this.$el) {
-      this.itemWidth = this.$el.getBoundingClientRect().width;
+      this.itemWidth = this.$el.getBoundingClientRect().width
     }
   },
   methods: {
     // index 超出范围时调整
-    correctIndex() {
-      this.duration = 0;
-      const total = this.items.length;
+    correctIndex () {
+      this.duration = 0
+      const total = this.items.length
       if (this.index < 0) {
-        this.next(total, true);
+        this.next(total, true)
       } else if (this.index > total - 1) {
-        this.next(-total, true);
+        this.next(-total, true)
       }
     },
     // 移动到达目标 index 途中的所有 swipe-item
-    moveItems(indexOffset) {
-      const targetIndex = this.index + indexOffset;
+    moveItems (indexOffset) {
+      const targetIndex = this.index + indexOffset
       if (this.index < targetIndex) {
         // 向左
         for (let i = this.index; i < targetIndex; i++) {
-          this.moveItem(i + 1);
+          this.moveItem(i + 1)
         }
       } else {
         // 向右
         for (let i = targetIndex; i < this.index; i++) {
-          this.moveItem(i);
+          this.moveItem(i)
         }
       }
     },
     // 移动 swipe-item
-    moveItem(index) {
-      const total = this.items.length;
-      const itemIndex = index % total < 0 ? (index % total) + total : index % total;
-      if(!this.$refs.item[itemIndex]) return
+    moveItem (index) {
+      const total = this.items.length
+      const itemIndex = index % total < 0 ? (index % total) + total : index % total
+      if (!this.$refs.item[itemIndex]) return
       // 目标 index 超出范围时调整对应 swipe-item 的偏移值
       if (index > total - 1) {
         this.$refs.item[itemIndex].style.transform = `translateX(${total *
-          this.itemWidth}px)`;
+          this.itemWidth}px)`
       } else if (index < 0) {
         this.$refs.item[itemIndex].style.transform = `translateX(${-total *
-          this.itemWidth}px)`;
+          this.itemWidth}px)`
       } else {
-        this.$refs.item[itemIndex].style.transform = "translateX(0px)";
+        this.$refs.item[itemIndex].style.transform = 'translateX(0px)'
       }
     },
-    resetItems() {
+    resetItems () {
       this.$refs.item.forEach($item => {
-        $item.style.transform = "translateX(0px)";
-      });
+        $item.style.transform = 'translateX(0px)'
+      })
     },
     // 向左/右方向切换 indexOffset 个 swipe-item
-    next(indexOffset, isCorrect) {
-      isCorrect ? this.resetItems() : this.moveItems(indexOffset);
-      this.index += indexOffset;
-      this.offset = -this.index * this.itemWidth;
+    next (indexOffset, isCorrect) {
+      isCorrect ? this.resetItems() : this.moveItems(indexOffset)
+      this.index += indexOffset
+      this.offset = -this.index * this.itemWidth
     },
-    autoplay() {
+    autoplay () {
       clearInterval(this.player)
       this.player = setInterval(() => {
-        this.duration = 0;
-        this.correctIndex();
+        this.duration = 0
+        this.correctIndex()
         setTimeout(() => {
-          this.duration = 500;
-          this.next(1);
-        }, 30);
-      }, 3000);
+          this.duration = 500
+          this.next(1)
+        }, 30)
+      }, 3000)
     },
-    handlePage(indexOffset) {
-      this.duration = 0;
-      this.correctIndex();
+    handlePage (indexOffset) {
+      this.duration = 0
+      this.correctIndex()
       // 30ms延时是为了屏蔽 reset 过程中的过渡动画
       setTimeout(() => {
-        this.duration = 500;
-        this.next(indexOffset);
+        this.duration = 500
+        this.next(indexOffset)
         // this.play()
-      }, 30);
+      }, 30)
     },
     // 暂停
-    pause() {
+    pause () {
       clearInterval(this.player)
     },
     play () {
       this.autoplay()
     }
   },
-  destroyed() {
+  destroyed () {
     clearInterval(this.player)
   }
-};
+}
 </script>
 <style lang="scss" scoped>
 ul {

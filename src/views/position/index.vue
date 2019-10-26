@@ -50,12 +50,12 @@
 </template>
 <script>
 import Search from './components/search'
-import {getListApi} from 'API/position'
+import { getListApi } from 'API/position'
 export default {
   components: {
     Search
   },
-  data() {
+  data () {
     return {
       params: {
         page: 1,
@@ -65,18 +65,18 @@ export default {
       total: 0 // 职位总数
     }
   },
-  created() {
+  created () {
     this.getPositionList()
   },
   methods: {
     // 获取职位列表
     getPositionList () {
-      getListApi(this.params).then(({data}) => {
+      getListApi(this.params).then(({ data }) => {
         this.listData = data.data || []
         this.total = data.meta.total
       })
     },
-    handleSearch() {
+    handleSearch () {
 
     }
   }
@@ -170,7 +170,7 @@ export default {
   span + span {
     padding-left: 8px;
   }
-} 
+}
 .recruiter-info {
   margin-left: auto;
   text-align: right;
