@@ -42,7 +42,7 @@
         </div>
         <div class="header-info">
           <template v-if="isLogin">
-            <el-dropdown trigger="click" placement="bottom-start" >
+            <el-dropdown trigger="click" placement="bottom-start" @command="handleClick">
               <div>
                 <div class="user-avatar">
                   <img :src="userInfo.avatarInfo && userInfo.avatarInfo.smallUrl" alt="">
@@ -52,7 +52,7 @@
                 </span>
               </div>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item>退出登陆</el-dropdown-item>
+                <el-dropdown-item command="logout">退出登陆</el-dropdown-item>
               </el-dropdown-menu>
           </el-dropdown>
           </template>
@@ -87,6 +87,16 @@ export default {
     },
     userInfo() {
       return  this.$store.state.userInfo || {}
+    }
+  },
+  methods: {
+    handleClick(e) {
+      if(e === 'logout'){
+        this.$store.dispatch('logoutApi')
+          .then(() => {
+            this.$router.push({name: 'login'})
+          })
+      }
     }
   }
 }
