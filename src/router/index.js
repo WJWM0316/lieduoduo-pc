@@ -21,14 +21,13 @@ Vue.use(Router)
 const router = new Router({
   mode: 'history',
   routes,
-  scrollBehavior(to, from, savedPosition) {
-    return savedPosition ? savedPosition : { x: 0, y: 0 }
+  scrollBehavior (to, from, savedPosition) {
+    return savedPosition || { x: 0, y: 0 }
   }
 })
 
-
 router.beforeEach((to, from, next) => {
-  store.dispatch('setPageName', {name: to.name})
+  store.dispatch('setPageName', { name: to.name })
   if (from.name !== to.name) {
     window.scrollTo(0, 0)
   }
@@ -36,4 +35,3 @@ router.beforeEach((to, from, next) => {
 })
 
 export default router
-

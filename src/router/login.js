@@ -1,5 +1,5 @@
- const login = [
-	{
+const login = [
+  {
     path: '/login',
     name: 'login',
     title: '登陆',
