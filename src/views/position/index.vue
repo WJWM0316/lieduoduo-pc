@@ -21,7 +21,7 @@
             </p>
           </div>
           <div class="company-info">
-            <p class="company-name">{{item.companyInfo.companyName}}</p>
+            <p class="company-name">{{item.companyInfo.companyShortname}}</p>
             <p><span>{{item.companyInfo.financingInfo}}</span>|<span>{{item.companyInfo.employeesInfo}}</span>|<span>{{item.companyInfo.industry}}</span></p>
           </div>
           <div class="recruiter-info">

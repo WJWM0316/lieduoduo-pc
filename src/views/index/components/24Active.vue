@@ -5,7 +5,9 @@
       <span class="position-tag">高薪热门职位</span>
       <span class="position-tag">职业顾问服务</span>
       <span class="position-tag">200元到面红包</span>
-      <div class="bubble-wrapper"></div>
+      <div class="bubble-wrapper" v-if="bubbleList.length">
+         <p>{{bubbleList[bubbleIndex]}}</p>
+      </div>
     </div>
     <div class="active-list">
       <template v-for="(item,index) in listData">
@@ -57,6 +59,7 @@ import { getRapidlyData } from 'API/common'
 export default {
   data () {
     return {
+      bubbleIndex: 0,
       bubbleList: [],
       listData: [],
       buttons: [],
@@ -85,6 +88,8 @@ export default {
         })
         // 跑倒计时
         this.setCountDown()
+        // 跑气泡
+        this.bubbleDown()
       })
     },
     setCountDown () {
@@ -95,10 +100,22 @@ export default {
       this.countDownTimer = setTimeout(() => {
         this.setCountDown()
       }, 1000)
+    },
+    bubbleDown () {
+      if (!this.bubbleList.length) return
+      this.bubbleDownTimer = setTimeout(() => {
+        if (this.bubbleIndex >= this.bubbleList.length - 1) {
+          this.bubbleIndex = 0
+        } else {
+          this.bubbleIndex++
+        }
+        this.bubbleDown()
+      }, 5000)
     }
   },
   destroyed () {
     clearTimeout(this.countDownTimer)
+    clearTimeout(this.bubbleDownTimer)
   }
 }
 </script>
@@ -136,14 +153,22 @@ export default {
     background: $bg-color-5;
   }
   .bubble-wrapper {
-    width: 226px;
-    height: 30px;
-    line-height: 30px;
+    width: 266px;
     text-align: center;
     margin-left: auto;
-    border-radius: 15px;
-    color: #fff;
-    background: linear-gradient(to left, $main-color-2, $main-color-1);
+    overflow: hidden;
+    p {
+      border-radius: 15px;
+      height: 30px;
+      white-space: nowrap;
+      font-size: 14px;
+      line-height: 30px;
+      opacity: 0;
+      transform: translateY(30px);
+      color: #fff;
+      background: linear-gradient(to left, $main-color-2, $main-color-1);
+      animation: bubble 5s infinite;
+    }
   }
 }
 .active-list {
@@ -296,4 +321,21 @@ export default {
     width: 385px;
   }
 }
+@keyframes bubble{
+  0% {}
+  30% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  70% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  90% {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  100% {}
+}
+
 </style>

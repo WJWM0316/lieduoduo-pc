@@ -32,7 +32,7 @@
               <img :src="item.companyInfo.logoInfo.smallUrl" alt="">
             </div>
             <div class="">
-              <p class="company-name">{{item.companyInfo.companyName}}</p>
+              <p class="company-name">{{item.companyInfo.companyShortname}}</p>
               <p class="company-specia">{{item.companyInfo.financingInfo}}·{{item.companyInfo.employeesInfo}}·{{item.companyInfo.industry}}</p>
             </div>
           </div>
