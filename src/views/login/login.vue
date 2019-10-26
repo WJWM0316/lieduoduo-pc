@@ -160,12 +160,11 @@
 <script>
 	import Vue from 'vue'
 	import Component from 'vue-class-component'
-	import { loginApi, scanApi, getQrCodeApi,loginPutInApipc,getCodeApi,getCaptchaApi } from '../../api/auth'
+	import { loginApi, scanApi, getQrCodeApi,loginPutInApipc,getCodeApi,getCaptchaApi } from '@/api/auth'
 	import { getUserIdentity, switchId } from '../../../config.js'
-  import { changeBaseURL } from '../../api/index'
-  import { 
-    mobileReg,
-   } from '../../util/fieldRegular.js'
+  import { changeBaseURL } from '@/api/index'
+  import { mobileReg } from '@/util/fieldRegular.js'
+  import { saveAccessToken } from '@/api/cacheService'
 
 	@Component({
 	  name: 'lighthouse-list',
@@ -459,8 +458,8 @@
         captchaKey: captchaKey,
         captchaValue: captchaValue,
 			}).then(res => {
+        saveAccessToken(res.data.data.token)
         this.fromPop(res.data.msg)
-        // console.log(res.data)
       }).catch(res => {
         this.fromPop(res.data.msg)
       })
