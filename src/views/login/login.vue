@@ -354,18 +354,10 @@ export default class CourseList extends Vue {
       captchaKey: this.captchaKey,
       captchaValue: this.captchaValue
     }
+
     this.$store.dispatch('login', params).then(() => {
       console.log(111111111111)
     })
-
-    // loginPutInApipc(params)
-    //   .then(res => {
-    //     this.$message({
-    //       message: '登录成功',
-    //       type: 'success'
-    //     })
-    //     saveAccessToken(res.data.data.token)
-    //   })
   }
 }
 </script>

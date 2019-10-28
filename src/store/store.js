@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { saveAccessToken, removeAccessToken, getAccessToken, getUserInfo, saveUserInfo } from '../api/cacheService'
 import { loginPutInApipc } from '@/api/auth'
+import router from 'vue-router'
 import {
   loginApi,
   logoutApi
@@ -12,7 +13,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   // 在state中去声明全局变量，可以通过 this.$store.state 访问
   state: {
-    userIdentity: 'applicant',
+    userIdentity: 0, // 0 C端  1 B端
     userInfo: getUserInfo() || {},
     token: getAccessToken(),
     pageName: '',
@@ -65,15 +66,19 @@ export default new Vuex.Store({
     },
 
     login (store, data) {
-      // store.commit('LOGIN', data)
+      // 
       return loginPutInApipc(data)
       .then(res => {
         // this.$message({
         //   message: '登录成功',
         //   type: 'success'
         // })
-        console.log(54)
-        saveAccessToken(res.data.data.token)
+        let loginData = res.data.data
+        store.commit('LOGIN', loginData)
+        // if (!store.userIdentity) {
+        //   console.log(router, 1111, Vue.router)
+        //   Vue.router.push({path: '/index'})
+        // }
       })
     },
     
