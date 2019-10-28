@@ -4,7 +4,7 @@
 			<div class="inner">
 				<div class="header-content">
 					<div class="title">
-						<span v-if="infos.isUrgency" class="icon jipin"></span>
+						<span v-if="infos.isUrgency === 1" class="icon jipin"></span>
 						<span class="name">{{infos.positionName}}</span>
 					</div>
 					<div class="salary">{{infos.emolumentMin}}~{{infos.emolumentMax}}K<template v-if="infos.annualSalary > 12">·{{infos.annualSalary}}<span class="unit">薪</span></template></div>
@@ -105,6 +105,7 @@
 				</aside>
 			</div>
 		</div>
+		<loginPop v-show="!hideLoginPop"></loginPop>
 	</div>
 </template>
 <script>
@@ -114,12 +115,14 @@ import {getPositionApi, putMycollectPositionApi, deleteMycollectPositionApi} fro
 import {getPositionQrcodeApi} from '@/api/qrcode.js'
 import timePocessor from '@/util/timePocessor.js'
 import {TMap} from '@/util/TMap.js'
-import poster from '@/components/poster'
+import poster from '@/components/common/poster'
 import interviewBtn from '@/components/interview/interviewBtn.vue'
+import loginPop from '@/components/common/loginPop'
 @Component({
   name: 'positionDetail',
   components: {
   	poster,
+  	loginPop,
   	interviewBtn
   },
   computed: {
@@ -130,6 +133,7 @@ import interviewBtn from '@/components/interview/interviewBtn.vue'
 })
 export default class PositionDetail extends Vue {
   cdnPath = `${this.$cdnPath}/images/`
+  hideLoginPop = true
   verticalLogo = false // 是否竖版图片， 控制logo展示格式
   showShareQrcode = false // 分享二维码
   showSharePoster = false // 分享海报

@@ -34,7 +34,7 @@ axios.interceptors.response.use(
 
     // 登陆过期或者未登录
     if(err.response.data.httpStatus === 401) {
-      router.replace({name: 'login'})
+      router.push({name: 'login', query: {type: 'needBack'}})
       removeAccessToken()
     }
     if (loadingInstance) loadingInstance.close()

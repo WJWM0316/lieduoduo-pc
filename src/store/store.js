@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { saveAccessToken, removeAccessToken, getAccessToken, getUserInfo, saveUserInfo } from '../api/cacheService'
-import { loginPutInApipc } from '@/api/auth'
+import { loginPutInApipc, getUserRoleInfoApi } from '@/api/auth'
 import router from '@/router/index.js'
+import { mobileReg } from '@/util/fieldRegular.js'
 
 import {
   loginApi,
@@ -14,10 +15,13 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   // 在state中去声明全局变量，可以通过 this.$store.state 访问
   state: {
+    roleInfos: {}, // 用户角色信息
+    hasLogin: 0, // 是否登录
     userIdentity: 0, // 0 C端  1 B端
     userInfo: getUserInfo() || {},
     token: getAccessToken(),
     pageName: '',
+    guideCreateRecruiter: false,
     loginValidTime: 60 * 60 * 24 * 7 * 1000
   },
   // 在getters中声明state中变量的计算函数，缓存计算后的数据， 通过 this.$store.getters 调用
@@ -39,13 +43,44 @@ export default new Vuex.Store({
       state.userInfo = data
     },
 
-    LOGIN (state, data) {
+    LOGINCALLBACK: (state, data) => {
+      Vue.message({
+        message: '登录成功',
+        type: 'success'
+      })
       saveAccessToken(data.token, state.loginValidTime)
       saveUserInfo(data, state.loginValidTime)
       state.userInfo = data
       state.token = data.token
+      state.hasLogin = 1
+      if (data.hasOwnProperty('isBusiness')) state.userIdentity = data.isBusiness
+      // 获取用户角色信息
+      getUserRoleInfoApi().then(res => {
+        state.roleInfos = res.data.data
+        // 判断是否求职者且未完善简历四步
+        if (!state.userIdentity && !state.roleInfos.isJobhunter) {
+          router.replace({path: '/resumeFirstPost'})
+          return
+        }
+        if (state.userIdentity && !state.roleInfos.isRecruiter) {
+          state.guideCreateRecruiter = true
+          return
+        }
+        // 登录跳转
+        if (data.refresh) {
+          window.Refresh()
+        } else if (data.needBack) {
+          router.go(-1)
+        } else {
+          let userIdentity = state.userIdentity
+          !userIdentity ? router.replace('index') : router.replace('candidate')
+        }
+      })
     },
 
+    GETROLEINFO: (state, data) => {
+
+    },
     LOGOUT (state) {
       state.userInfo = {}
       state.token = null
@@ -65,24 +100,22 @@ export default new Vuex.Store({
     setUserInfo: (store, data) => {
       store.commit('setUserInfo', data)
     },
-
     login (store, data) {
-      // 
-      return loginPutInApipc(data)
-      .then(res => {
-        // this.$message({
-        //   message: '登录成功',
-        //   type: 'success'
-        // })
-        let loginData = res.data.data
-        store.commit('LOGIN', loginData)
-
-
-
-        if (!store.userIdentity) {
-          console.log(router, 1111, Vue.router)
-          router.push('index')
-        }
+      if (!mobileReg.test(data.mobile)) {
+        Vue.message.error('手机号码格式不正确')
+        return
+      } 
+      return new Promise((resolve, reject) => {
+        loginPutInApipc(data).then(res => {
+          let loginData = {
+            ...res.data.data,
+            ...data
+          }
+          store.commit('LOGINCALLBACK', loginData)
+          resolve(res)
+        }).catch(e => {
+          reject(e)
+        })
       })
     },
     

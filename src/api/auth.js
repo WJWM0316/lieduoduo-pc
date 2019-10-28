@@ -142,6 +142,14 @@ export const getUserInfosApi = (data) => request({
 	params: data
 })
 
+// 获取用户角色信息
+export const getUserRoleInfoApi = (data) => request({
+	url: `/user/roleinfo`, 
+	method: 'get', 
+	params: data, 
+	config: {host: 'qiuzhi'}
+})
+
 //pc登录注册
 export const loginPutInApipc = data => request({
 	url: '/auth/web/login', 

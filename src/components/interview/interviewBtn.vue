@@ -123,7 +123,11 @@ export default class InterviewBtn extends Component {
   	this.showSharePop = !this.showSharePop
   }
   jobHunterChat () {
+  	let isSpecail = this.infos.isRapidly === 1 
+	                  && !this.interviewInfos.applied
+	                  && this.infos.rapidlyInfo.applyNum + this.infos.rapidlyInfo.natureApplyNum < this.infos.rapidlyInfo.seatsNum
   	let parmas = {recruiterUid: this.infos.recruiterInfo.uid, positionId: this.infos.id}
+  	if (isSpecail) params.interview_type = 2
   	applyInterviewApi(parmas).then(res => {
   		this.getInterviewStatus()
   		this.$message({
