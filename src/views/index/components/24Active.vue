@@ -54,7 +54,7 @@
       </template>
     </div>
     <div class="active-btn">
-      <div class="c-btn c-big-btn">查看更多</div>
+      <div class="c-btn c-big-btn" @click="handleShowMore">查看更多</div>
     </div>
   </div>
 </template>
@@ -76,6 +76,9 @@ export default {
   computed: {
     cityid () {
       return this.$store.state.cityId || 0
+    },
+    isLogin () {
+      return !!this.$store.state.userInfo.id
     }
   },
   methods: {
@@ -126,6 +129,13 @@ export default {
         }
         this.bubbleDown()
       }, 5000)
+    },
+    handleShowMore () {
+      if (this.isLogin) {
+        this.$router.push('/position')
+      } else {
+        // 小程序弹窗
+      }
     }
   },
   watch: {

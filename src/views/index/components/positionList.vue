@@ -62,6 +62,11 @@ export default {
       listData: []
     }
   },
+  computed: {
+    isLogin () {
+      return !!this.$store.state.userInfo.id
+    }
+  },
   methods: {
     // 获取职位列表
     getPositionList () {
@@ -74,6 +79,13 @@ export default {
     handleChange (item) {
       this.currentId = item.labelId
       this.getPositionList()
+    },
+    handleShowMore () {
+      if (this.isLogin) {
+        this.$router.push('/position')
+      } else {
+        this.$router.push('/login?type=login')
+      }
     }
   }
 }
