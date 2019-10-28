@@ -6,7 +6,7 @@ export const getRapidlyViwePostApi = (data) => {
     method: 'get',
     url: '/rapidlyViwe',
     params: data,
-    config: {host: 'node'}
+    config: { host: 'node' }
   })
 }
 
@@ -16,7 +16,7 @@ export const getPositionPostApi = (data) => {
     method: 'get',
     url: '/position',
     params: data,
-    config: {host: 'node'}
+    config: { host: 'node' }
   })
 }
 
@@ -26,7 +26,7 @@ export const getPositionMinPostApi = (data) => {
     method: 'get',
     url: '/position_min',
     params: data,
-    config: {host: 'node'}
+    config: { host: 'node' }
   })
 }
 
@@ -36,7 +36,7 @@ export const getResumePostApi = (data) => {
     method: 'get',
     url: '/resume',
     params: data,
-    config: {host: 'node'}
+    config: { host: 'node' }
   })
 }
 
@@ -46,7 +46,7 @@ export const getRecruiterPostApi = (data) => {
     method: 'get',
     url: '/recruiter',
     params: data,
-    config: {host: 'node'}
+    config: { host: 'node' }
   })
 }
 
@@ -56,6 +56,6 @@ export const getWantYouApi = (data) => {
     method: 'get',
     url: '/wantYou',
     params: data,
-    config: {host: 'node'}
+    config: { host: 'node' }
   })
 }

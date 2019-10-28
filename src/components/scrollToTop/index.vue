@@ -14,60 +14,60 @@ export default {
       default: true
     }
   },
-  data() {
+  data () {
     return {
       backToTopShow: false
-    };
+    }
   },
   methods: {
-    toTop() {
+    toTop () {
       if (this.animation) {
-        let top = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop,
-          to = 0,
-          duration = 500;
+        let top = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+        let to = 0
+        let duration = 500
         if (!window.requestAnimationFrame) {
           window.requestAnimationFrame =
             window.webkitRequestAnimationFrame ||
             window.mozRequestAnimationFrame ||
             window.msRequestAnimationFrame ||
-            function(callback) {
-              return window.setTimeout(callback, 1000 / 60);
-            };
+            function (callback) {
+              return window.setTimeout(callback, 1000 / 60)
+            }
         }
-        const s = Math.abs(top - to);
-        const v = Math.ceil((s / duration) * 50);
+        const s = Math.abs(top - to)
+        const v = Math.ceil((s / duration) * 50)
 
         // eslint-disable-next-line no-inner-declarations
-        function scroll(start, end, step) {
-          if (start === end) return;
+        function scroll (start, end, step) {
+          if (start === end) return
 
-          let d = start + step > end ? end : start + step;
+          let d = start + step > end ? end : start + step
           if (start > end) {
-            d = start - step < end ? end : start - step;
+            d = start - step < end ? end : start - step
           }
-          window.scrollTo(d, d);
-          window.requestAnimationFrame(() => scroll(d, end, step));
+          window.scrollTo(d, d)
+          window.requestAnimationFrame(() => scroll(d, end, step))
         }
-        scroll(s, to, v);
+        scroll(s, to, v)
       } else {
-        this.tableDom.scrollTop = 0;
+        this.tableDom.scrollTop = 0
       }
     },
-    handleScroll(){
+    handleScroll () {
       // 得到页面滚动的距离
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
       // 页面高度
       // const cHeight = document.documentElement.clientHeight
       this.backToTopShow = scrollTop > 200
     }
   },
-  mounted() {
-    window.addEventListener('scroll', this.handleScroll);
+  mounted () {
+    window.addEventListener('scroll', this.handleScroll)
   },
-  destroyed() {
-    window.removeEventListener('scroll', this.handleScroll);
+  destroyed () {
+    window.removeEventListener('scroll', this.handleScroll)
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
