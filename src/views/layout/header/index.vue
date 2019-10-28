@@ -3,8 +3,16 @@
     <div class="page-header-wrapper">
       <div class="header-logo">猎多多</div>
       <div class="header-address">
-        <span class="iconfont icon-dizhi">广州</span>
-        <span class="change-address">[切换城市]</span>
+        <drop-down
+          v-model="addressId"
+          :items="cityList"
+          :props="{
+            value: 'areaId',
+            label: 'name'
+          }">
+          <span class="iconfont icon-dizhi">广州</span>
+          <span class="change-address">[切换城市]</span>
+        </drop-down>
       </div>
       <ul class="header-nav">
         <template v-for="(item, index) in navList">
@@ -38,7 +46,6 @@
               <router-link tag="span" to="/login?type=login" class="recruite">我要招聘</router-link>
             </div>
           </template>
-
         </div>
         <div class="header-info">
           <template v-if="isLogin">
@@ -71,9 +78,13 @@
 </template>
 <script>
 import { mp_qrcode, wx_qrcode, app_qrcode } from 'IMAGES/image'
+import DropDown from 'COMPONENTS/dropDown'
 export default {
+  components: { DropDown },
   data () {
     return {
+      addressId: 1,
+      cityList: [{ 'areaId': 0, 'name': '全国', 'provinceId': 0, 'provinceName': '全国' }, { 'areaId': 110100, 'name': '北京市', 'provinceId': 110000, 'provinceName': '北京市' }, { 'areaId': 310100, 'name': '上海市', 'provinceId': 310000, 'provinceName': '上海市' }, { 'areaId': 440100, 'name': '广州市', 'provinceId': 440000, 'provinceName': '广东省' }, { 'areaId': 440300, 'name': '深圳市', 'provinceId': 440000, 'provinceName': '广东省' }],
       navList: [
         { name: '首页', url: '/index', type: 'link' },
         { name: '职位', url: '/position', type: 'link' },
@@ -141,6 +152,10 @@ $header-height-1: $page-header-height;
   }
   .iconfont {
     font-size: 14px;
+  }
+  & /deep/ .drop-down-header {
+    height: $header-height-1;
+    line-height: $header-height-1;
   }
 }
 .share-image {
