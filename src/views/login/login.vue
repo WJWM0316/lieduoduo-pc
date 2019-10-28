@@ -1,120 +1,121 @@
 <template>
   <div id="login">
-    <div class="_wrap"></div>
-    <div class="login_cont">
+    <div class="inner">
+      <div class="login_cont">
 
-      <!-- 切换登录方式type -->
-      <div class="login_type" v-if="type === 'msgLogin' || type === 'qrcodeLogin'" v-show="!loginsuccess">
-        <div class="login_text" @click="changetype">{{type === 'msgLogin' ? '二维码登录' : '短信验证登录'}}</div>
-        <div class="login-img">
-          <img :src="cdnPath + 'loginimg.png'" @click="changetype" />
+        <!-- 切换登录方式type -->
+        <div class="login_type" v-if="type === 'msgLogin' || type === 'qrcodeLogin'" v-show="!loginsuccess">
+          <div class="login_text" @click="changetype">{{type === 'msgLogin' ? '二维码登录' : '短信验证登录'}}</div>
+          <div class="login-img">
+            <img :src="cdnPath + 'loginimg.png'" @click="changetype" />
+          </div>
+        </div>
+
+        <!-- 二维码登录 -->
+        <template v-if="type === 'qrcodeLogin'">
+          <div class="logind" v-show="!loginsuccess">
+            <h3 class="cont_tit" style="margin-bottom:24px">扫码登录</h3>
+            <div class="cont_p">使用「猎多多小程序」扫码登录</div>
+
+            <div class="cont_help">
+              <div class="cont_help_left">
+                <span>?</span>
+              </div>
+              <span class="cont_help_right" @click="openHelp = !openHelp">扫码帮助</span>
+            </div>
+            <div class="login_pic_warp">
+              <img class="loginCode" :src="codeData.image" />
+              <div class="pastDue" v-if="isPast">
+                <p>请重新刷新二维码</p>
+                <div class="pastBtn" @click="refreshCode">刷新</div>
+              </div>
+              <div class="bottom_text bottom_bnt">
+                没有账号
+                <span @click="changetypeto">立即注册</span>
+              </div>
+            </div>
+          </div>
+          <!-- 左侧引导图 -->
+          <div class="help_cont" v-show="openHelp">
+            <h3>扫码帮助</h3>
+            <div class="help_type">
+              <div :class="{ helptype: !helptype}" @click="helptype = !helptype">求职者</div>
+              <div :class="{ helptype: helptype}" @click="helptype = !helptype">招聘者</div>
+            </div>
+            <p class="help_text">职位管理 > 发布职位 > 扫码上传</p>
+
+            <div class="help_img">
+              <img :src="!helptype ? cdnPath + 'scanhelp.png' : cdnPath + 'scanhelptoo.png'" />
+            </div>
+          </div>
+        </template>
+
+        <!-- 短信登录 或者 注册 -->
+        <div class="logind" :class="{ logindtoo: false }" v-if="type === 'msgLogin' || type === 'register'" v-show="!loginsuccess">
+
+          <ul class="sign_type" v-if="type === 'register'">
+            <li :class="{ active : !identity }" @click="toggle(0)">我是求职者</li>
+            <li :class="{ active : identity }" @click="toggle(1)">我是招聘官</li>
+          </ul>
+
+          <h3 v-if="type === 'msgLogin'" class="cont_tit cont_ti" style="margin-bottom: 40px;">短信登录</h3>
+          <div class="logind_form">
+            <div class="input_wrap input_to">
+              <div class="input_box">
+                <i class="input_img iconfont icon-shoujihao" />
+                <input placeholder="请输入手机号码" maxlength="11" v-model="mobile" />
+              </div>
+              <div class="input_box" v-if="imgcode">
+                <i class="input_img iconfont icon-anquan_huaban" />
+                <input placeholder="请输入图片验证码"  v-model="captchaValue" />
+                <img :src="imgcode" class="imgcode"/>
+              </div>
+              <div class="input_box">
+                <i class="input_img iconfont icon-yanzhengma" />
+                <input placeholder="请输入短信验证码" maxlength="4" v-model="cValue" />
+                <span class="msgText" @click="sms">{{text}}</span>
+              </div>
+            </div>
+          </div>
+          <el-button class="login_button login_bnt" @click="logintoo">登录</el-button>
+          <div class="bottom_text">
+            {{ this.type === 'msgLogin' ? '没有账号' : '已有账号' }}
+            <span @click="changetypeto">{{ this.type === 'msgLogin' ? '立即注册' : '马上登录' }}</span>
+          </div>
+        </div>
+
+        <!-- 登陆成功引导图 -->
+        <div class="login_after" v-show="loginsuccess">
+          <h3 class="after_title">登录注册成功</h3>
+          <p class="after_text">尚未是认证面试官，微信「扫一扫」认证</p>
+          <img class="after_img"/>
         </div>
       </div>
 
-      <!-- 二维码登录 -->
-      <template v-if="type === 'qrcodeLogin'">
-        <div class="logind" v-show="!loginsuccess">
-          <h3 class="cont_tit" style="margin-bottom:24px">扫码登录</h3>
-          <div class="cont_p">使用「猎多多小程序」扫码登录</div>
-
-          <div class="cont_help">
-            <div class="cont_help_left">
-              <span>?</span>
-            </div>
-            <span class="cont_help_right" @click="openHelp = !openHelp">扫码帮助</span>
+      <div class="overlayout" v-if="showError">
+        <div class="box">
+          <i class="el-icon-close" @click="closeMask"></i>
+          <div class="header">
+            <i class="el-icon-warning"></i>
+            登录失败
           </div>
-          <div class="login_pic_warp">
-            <img class="loginCode" :src="codeData.image" />
-            <div class="pastDue" v-if="isPast">
-              <p>请重新刷新二维码</p>
-              <div class="pastBtn" @click="refreshCode">刷新</div>
-            </div>
-            <div class="bottom_text bottom_bnt">
-              没有账号
-              <span @click="changetypeto">立即注册</span>
+          <ul>
+            <li class="h10">可能是由于以下原因导致：</li>
+            <li>1、未注册猎多多小程序；</li>
+            <li>2、招聘官身份尚未审核通过；</li>
+            <li>3、招聘官身份尚未加入该公司；</li>
+            <li>4、招聘官身份所属公司尚未通过审核。</li>
+          </ul>
+          <div class="code-tips">
+            <img class="pic_3" src="../../assets/images/inf_qrcode@2x.png" />
+            <div class="text10">
+              使用「微信」扫描小程序码，
+              <br />进入猎多多小程序解决以上问题
             </div>
           </div>
-        </div>
-        <!-- 左侧引导图 -->
-        <div class="help_cont" v-show="openHelp">
-          <h3>扫码帮助</h3>
-          <div class="help_type">
-            <div :class="{ helptype: !helptype}" @click="helptype = !helptype">求职者</div>
-            <div :class="{ helptype: helptype}" @click="helptype = !helptype">招聘者</div>
+          <div class="login-next">
+            <span>重新登录>></span>
           </div>
-          <p class="help_text">职位管理 > 发布职位 > 扫码上传</p>
-
-          <div class="help_img">
-            <img :src="!helptype ? cdnPath + 'scanhelp.png' : cdnPath + 'scanhelptoo.png'" />
-          </div>
-        </div>
-      </template>
-
-      <!-- 短信登录 或者 注册 -->
-      <div class="logind" :class="{ logindtoo: false }" v-if="type === 'msgLogin' || type === 'register'" v-show="!loginsuccess">
-
-        <ul class="sign_type" v-if="type === 'register'">
-          <li :class="{ active : !identity }" @click="toggle(0)">我是求职者</li>
-          <li :class="{ active : identity }" @click="toggle(1)">我是招聘官</li>
-        </ul>
-
-        <h3 v-if="type === 'msgLogin'" class="cont_tit cont_ti" style="margin-bottom: 40px;">短信登录</h3>
-        <div class="logind_form">
-          <div class="input_wrap input_to">
-            <div class="input_box">
-              <i class="input_img iconfont icon-shoujihao" />
-              <input placeholder="请输入手机号码" maxlength="11" v-model="mobile" />
-            </div>
-            <div class="input_box" v-if="imgcode">
-              <i class="input_img iconfont icon-anquan_huaban" />
-              <input placeholder="请输入图片验证码"  v-model="captchaValue" />
-              <img :src="imgcode" class="imgcode"/>
-            </div>
-            <div class="input_box">
-              <i class="input_img iconfont icon-yanzhengma" />
-              <input placeholder="请输入短信验证码" maxlength="4" v-model="cValue" />
-              <span class="msgText" @click="sms">{{text}}</span>
-            </div>
-          </div>
-        </div>
-        <el-button class="login_button login_bnt" @click="logintoo">登录</el-button>
-        <div class="bottom_text">
-          {{ this.type === 'msgLogin' ? '没有账号' : '已有账号' }}
-          <span @click="changetypeto">{{ this.type === 'msgLogin' ? '立即注册' : '马上登录' }}</span>
-        </div>
-      </div>
-
-      <!-- 引导图 -->
-      <div class="login_after" v-show="loginsuccess">
-        <h3 class="after_title">登录注册成功</h3>
-        <p class="after_text">尚未是认证面试官，微信「扫一扫」认证</p>
-        <img class="after_img"/>
-      </div>
-    </div>
-
-    <div class="overlayout" v-if="showError">
-      <div class="box">
-        <i class="el-icon-close" @click="closeMask"></i>
-        <div class="header">
-          <i class="el-icon-warning"></i>
-          登录失败
-        </div>
-        <ul>
-          <li class="h10">可能是由于以下原因导致：</li>
-          <li>1、未注册猎多多小程序；</li>
-          <li>2、招聘官身份尚未审核通过；</li>
-          <li>3、招聘官身份尚未加入该公司；</li>
-          <li>4、招聘官身份所属公司尚未通过审核。</li>
-        </ul>
-        <div class="code-tips">
-          <img class="pic_3" src="../../assets/images/inf_qrcode@2x.png" />
-          <div class="text10">
-            使用「微信」扫描小程序码，
-            <br />进入猎多多小程序解决以上问题
-          </div>
-        </div>
-        <div class="login-next">
-          <span>重新登录>></span>
         </div>
       </div>
     </div>
@@ -362,9 +363,9 @@ export default class CourseList extends Vue {
 </script>
 <style lang="less">
 #login {
+  min-width: 1200px;
   height: 100vh;
   box-sizing: border-box;
-  min-width: 1100px;
   width: 100%;
   display: flex;
   align-items: center;
@@ -373,9 +374,19 @@ export default class CourseList extends Vue {
     no-repeat;
   background-size: cover;
   background-position: center;
+  .inner {
+    width: 1200px;
+    box-sizing: border-box;
+    margin: 0 auto;
+    overflow: hidden;
+    padding: 0 30px;
+    box-sizing: border-box;
+    .login_cont {
+      float: right;
+    }
+  }
   .logind {
     height: 400px;
-
     .logind_form {
       width: 560px;
       margin-bottom: 41px;
