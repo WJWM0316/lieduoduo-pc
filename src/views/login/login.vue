@@ -4,7 +4,7 @@
     <div class="login_cont">
 
       <!-- 切换登录方式type -->
-      <div class="login_type" v-if="type === 'msgLogin' || type === 'qrcodeLogin'">
+      <div class="login_type" v-if="type === 'msgLogin' || type === 'qrcodeLogin'" v-show="!loginsuccess">
         <div class="login_text" @click="changetype">{{type === 'msgLogin' ? '二维码登录' : '短信验证登录'}}</div>
         <div class="login-img">
           <img :src="cdnPath + 'loginimg.png'" @click="changetype" />
@@ -13,7 +13,7 @@
 
       <!-- 二维码登录 -->
       <template v-if="type === 'qrcodeLogin'">
-        <div class="logind">
+        <div class="logind" v-show="!loginsuccess">
           <h3 class="cont_tit" style="margin-bottom:24px">扫码登录</h3>
           <div class="cont_p">使用「猎多多小程序」扫码登录</div>
 
@@ -45,13 +45,13 @@
           <p class="help_text">职位管理 > 发布职位 > 扫码上传</p>
 
           <div class="help_img">
-            <img :src="!helptype ? cdnPath + 'scanhelp.png' : ''" />
+            <img :src="!helptype ? cdnPath + 'scanhelp.png' : cdnPath + 'scanhelptoo.png'" />
           </div>
         </div>
       </template>
 
       <!-- 短信登录 或者 注册 -->
-      <div class="logind" :class="{ cont_ti: imgcode }" v-if="type === 'msgLogin' || type === 'register'">
+      <div class="logind" :class="{ cont_ti: imgcode }" v-if="type === 'msgLogin' || type === 'register'" v-show="!loginsuccess">
 
         <ul class="sign_type" v-if="type === 'register'">
           <li :class="{ active : !identity }" @click="toggle(0)">我是求职者</li>
@@ -59,7 +59,7 @@
         </ul>
 
         <h3 v-if="type === 'msgLogin'" class="cont_tit" style="margin-bottom: 40px;">短信登录</h3>
-        <div class="logind_form">
+        <div class="logind_form" :class="{ }">
           <div class="input_wrap">
             <div class="input_box">
               <i class="input_img iconfont icon-shoujihao" />
@@ -79,9 +79,16 @@
         </div>
         <el-button class="login_button" @click="logintoo">登录</el-button>
         <div class="bottom_text">
-          没有账号
-          <span @click="changetypeto">立即注册</span>
+          {{ this.type === 'msgLogin' ? '没有账号' : '已有账号' }}
+          <span @click="changetypeto">{{ this.type === 'msgLogin' ? '立即注册' : '马上登录' }}</span>
         </div>
+      </div>
+
+      <!-- 引导图 -->
+      <div class="login_after" v-show="loginsuccess">
+        <h3 class="after_title">登录注册成功</h3>
+        <p class="after_text">尚未是认证面试官，微信「扫一扫」认证</p>
+        <img class="after_img"/>
       </div>
     </div>
 
@@ -114,22 +121,22 @@
   </div>
 </template>
 <script>
-	import Vue from 'vue'
-	import Component from 'vue-class-component'
-	import { loginApi, scanApi, getQrCodeApi,loginPutInApipc,getCodeApi,getCaptchaApi } from '@/api/auth'
-	import { getUserIdentity, switchId } from '../../../config.js'
-  import { changeBaseURL } from '@/api/index'
-  import { mobileReg } from '@/util/fieldRegular.js'
-  import { saveAccessToken } from '@/api/cacheService'
+import Vue from 'vue'
+import Component from 'vue-class-component'
+import { loginApi, scanApi, getQrCodeApi, loginPutInApipc, getCodeApi, getCaptchaApi } from '@/api/auth'
+import { getUserIdentity, switchId } from '../../../config.js'
+import { changeBaseURL } from '@/api/index'
+import { mobileReg } from '@/util/fieldRegular.js'
+import { saveAccessToken } from '@/api/cacheService'
 
 @Component({
-  name: "lighthouse-list",
+  name: 'lighthouse-list',
   methods: {},
   computed: {},
   watch: {
     $route: {
-      handler() {
-        this.init();
+      handler () {
+        this.init()
       },
       immediate: true
     }
@@ -137,26 +144,27 @@
   components: {}
 })
 export default class CourseList extends Vue {
-  mobile = "" //手机号
-  cValue = "" //验证码
-  imgcode = "" //base64图片
-  captchaKey = "" //传回来的key
-  captchaValue = "" //图片验证码的value
-  text = "发送验证码"
+  mobile = '' // 手机号
+  cValue = '' // 验证码
+  imgcode = '' // base64图片
+  captchaKey = '' // 传回来的key
+  captchaValue = '' // 图片验证码的value
+  text = '发送验证码'
   type = 'msgLogin' // msgLogin 短信登录, qrcodeLogin 二维码登录, register 注册
   helptype = false
-  openHelp = false 
-  //cdn图片地址
+  openHelp = false
+  loginsuccess = false // 登录成功引导页
+  // cdn图片地址
   cdnPath = `${process.env.VUE_APP_CDN_PATH}/images/`
   identity = 0 // 0 求职者 1 招聘官
   codeData = {} // 二维码信息
   userInfo = {}
   pop = {
     isShow: true,
-    type: "help"
+    type: 'help'
   };
-  status = "login";
-  identitystatus = "qiuzhi"; // 引导图 状态
+  status = 'login';
+  identitystatus = 'qiuzhi'; // 引导图 状态
   isPast = true;
   timer = null;
   num = 1;
@@ -165,128 +173,126 @@ export default class CourseList extends Vue {
    * 初始化表单、分页页面数据
    */
 
-  returnHome() {
-    window.location.href = `${process.env.VUE_APP_WEB_INDEX}`;
+  returnHome () {
+    window.location.href = `${process.env.VUE_APP_WEB_INDEX}`
   }
 
-  mounted() {
-    let query = this.$route.query;
-    //百度统计
+  mounted () {
+    let query = this.$route.query
+    // 百度统计
     let _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?f7fe68c0039c09911deef47214587f2f";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
+    (function () {
+      var hm = document.createElement('script')
+      hm.src = 'https://hm.baidu.com/hm.js?f7fe68c0039c09911deef47214587f2f'
+      var s = document.getElementsByTagName('script')[0]
+      s.parentNode.insertBefore(hm, s)
+    })()
     if (!query.type) {
-      this.status = "login";
+      this.status = 'login'
     } else {
-      this.status = query.type;
+      this.status = query.type
     }
-
   }
 
-  closeMask() {
-    this.showError = !this.showError;
+  closeMask () {
+    this.showError = !this.showError
   }
 
-  login() {
+  login () {
     let data = {
-      email: "302982210@qq.com",
+      email: '302982210@qq.com',
       password: 123456
-    };
+    }
     this.$store
-      .dispatch("testLogin", data)
+      .dispatch('testLogin', data)
       .then(res => {
-        this.$store.dispatch("setUserInfo", res.data.data);
-        this.userInfo = this.$store.state.userInfo;
+        this.$store.dispatch('setUserInfo', res.data.data)
+        this.userInfo = this.$store.state.userInfo
         this.$router.push({
-          name: this.userInfo.isBusiness === 1 ? "candidate" : "applyIndex"
-        });
+          name: this.userInfo.isBusiness === 1 ? 'candidate' : 'applyIndex'
+        })
       })
   }
 
-  init() {
+  init () {
     if (!this.$route.query.type) this.type = 'qrcodeLogin'
     if (this.type === 'qrcodeLogin') this.getCode()
   }
 
   // 获取二维码
-  getCode() {
-    let that = this;
+  getCode () {
+    let that = this
     getQrCodeApi().then(res => {
-      //console.log('==>',res)
-      this.codeData = res.data.data;
-      this.isPast = false;
-      clearInterval(this.timer);
+      // console.log('==>',res)
+      this.codeData = res.data.data
+      this.isPast = false
+      clearInterval(this.timer)
       this.timer = setInterval(() => {
-        this.num += 1;
+        this.num += 1
         if (this.num > 40) {
-          this.num = 1;
-          clearInterval(this.timer);
-          this.isPast = true;
+          this.num = 1
+          clearInterval(this.timer)
+          this.isPast = true
         } else {
-          this.scan();
+          this.scan()
         }
-      }, 3000);
-    });
+      }, 3000)
+    })
   }
   // 判断扫码登录
-  scan() {
-    if(this.type == '二维码登录'){ return }
+  scan () {
     scanApi({
       uuid: this.codeData.uuid
     }).then(res => {
-      //isBusiness==1 b
-      //console.log('==>',res.data)
+      // isBusiness==1 b
+      // console.log('==>',res.data)
       if (res.data.data && res.data.data.id) {
-        clearInterval(this.timer);
-        this.identity = res.data.data.isBusiness === 1 ? 1 : 0;
-        switchId(this.identity);
-        changeBaseURL();
-        this.isPast = false;
+        clearInterval(this.timer)
+        this.identity = res.data.data.isBusiness === 1 ? 1 : 0
+        switchId(this.identity)
+        changeBaseURL()
+        this.isPast = false
 
-        this.$store.dispatch("setUserIdentity", this.identity);
-        this.$store.dispatch("setUserInfo", res.data.data);
-        this.$store.dispatch("login", res.data.data);
+        this.$store.dispatch('setUserIdentity', this.identity)
+        this.$store.dispatch('setUserInfo', res.data.data)
+        this.$store.dispatch('login', res.data.data)
 
-        this.userInfo = this.$store.state.userInfo;
+        this.userInfo = this.$store.state.userInfo
         this.$router.push({
-          name: this.identity === 0 ? "applyIndex" : "candidate"
-        });
+          name: this.identity === 0 ? 'applyIndex' : 'candidate'
+        })
       }
-    });
+    })
   }
 
   // 刷新获取二维码
-  refreshCode() {
-    this.getCode();
+  refreshCode () {
+    this.getCode()
   }
 
-  //左侧引导栏切换
-  helpto() {
-    this.helptype = !this.helptype;
+  // 左侧引导栏切换
+  helpto () {
+    this.helptype = !this.helptype
   }
 
   // 登录方式切换
-  changetype() {
-    if (this.type === "msgLogin") {
-      this.type = "qrcodeLogin"
+  changetype () {
+    if (this.type === 'msgLogin') {
+      this.type = 'qrcodeLogin'
       this.getCode()
     } else {
-      this.type = "msgLogin"
+      this.type = 'msgLogin'
       clearInterval(this.timer)
     }
   }
 
-  //短信登录注册切换
-  changetypeto() {
+  // 短信登录注册切换
+  changetypeto () {
     this.type =
-      this.type == "msgLogin" ||
-      this.type == "qrcodeLogin"
-        ? "register"
-        : "msgLogin"
+      this.type == 'msgLogin' ||
+      this.type == 'qrcodeLogin'
+        ? 'register'
+        : 'msgLogin'
   }
 
   // 注册角色切换type
@@ -295,7 +301,7 @@ export default class CourseList extends Vue {
   }
   checkMobile () {
     if (!mobileReg.test(this.mobile)) {
-      this.$message.error('手机号码格式不正确');
+      this.$message.error('手机号码格式不正确')
       return false
     } else {
       return true
@@ -303,38 +309,41 @@ export default class CourseList extends Vue {
   }
 
   // 刷新验证码图片
-  getCaptcha() {
+  getCaptcha () {
     getCaptchaApi({}).then(res => {
-      this.captchaimg.imgcode = res.data.data.img;
-      this.captchaimg.captchaKey = res.data.data.key;
-    });
-  }
-
-  //发送短信验证码
-  sms() {
-    if (!this.checkMobile()) {
-      return;
-    }
-    getCodeApi({mobile: this.mobile}).then(res => {
-      this.smstime();
+      this.imgcode = res.data.data.img
+      this.captchaKey = res.data.data.key
     })
   }
 
-  //登录短信验证码倒计时
-  smstime() {
-    this.text = 60;
-    let timeout = setInterval(() => {
-      this.text--;
-      if (this.text == 0) {
-        clearInterval(timeout);
-        this.text = "发送验证码";
-      }
-    }, 1000);
+  // 发送短信验证码
+  sms () {
+    if (!this.checkMobile()) {
+      return
+    }
+    getCodeApi({ mobile: this.mobile }).then(res => {
+      this.$message({
+        message: res.data.msg,
+        type: 'success'
+      })
+      this.smstime()
+    })
   }
 
+  // 登录短信验证码倒计时
+  smstime () {
+    this.text = 60
+    let timeout = setInterval(() => {
+      this.text--
+      if (this.text == 0) {
+        clearInterval(timeout)
+        this.text = '发送验证码'
+      }
+    }, 1000)
+  }
 
-  //短信登录提交   //注册提交
-  logintoo() {
+  // 短信登录提交   //注册提交
+  logintoo () {
     if (!this.checkMobile()) {
       return
     }
@@ -358,7 +367,6 @@ export default class CourseList extends Vue {
     //     saveAccessToken(res.data.data.token)
     //   })
   }
-
 }
 </script>
 <style lang="less">
@@ -530,30 +538,6 @@ export default class CourseList extends Vue {
       }
     }
 
-    //弹窗
-    .alert_warning {
-      position: absolute;
-      left: 50%;
-      top: 10px;
-      width: 210px;
-      height: 36px;
-      transform: translateX(-50%);
-      background: #fff4e5 !important;
-      border-radius: 4px;
-      box-shadow: 0px 2px 12px 0px rgba(75, 72, 71, 0.06);
-      color: #ff7f4c;
-      span {
-        color: #6d696e;
-        font-size: 12px;
-        font-weight: 400;
-        line-height: 18px;
-      }
-    }
-    .alert_two {
-      background: #f4ffee !important;
-      color: #52c41a;
-    }
-
     .bottom_text {
       font-family: PingFangSC-Regular, PingFang SC;
       font-weight: 400;
@@ -627,29 +611,6 @@ export default class CourseList extends Vue {
           height: 278px;
         }
       }
-      .identitySelect {
-        width: 158px;
-        height: 34px;
-        border-radius: 17px;
-        border: 1px solid rgba(239, 233, 244, 1);
-        margin: 24px auto 0px auto;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        .addJob {
-          width: 84px;
-          height: 34px;
-          border-radius: 17px;
-          font-family: PingFang-SC-Regular;
-          font-weight: 400;
-          color: rgba(101, 39, 145, 1);
-          line-height: 34px;
-          box-sizing: border-box;
-          &.select {
-            background: rgba(239, 233, 244, 1);
-          }
-        }
-      }
       h3 {
         font-size: 20px;
         font-weight: Medium;
@@ -672,6 +633,10 @@ export default class CourseList extends Vue {
     }
     .cont_ti {
       margin-bottom: 32px !important;
+
+      .input_to {
+      height: 190px;
+      }
     }
     .cont_p {
       font-size: 14px;
@@ -786,9 +751,6 @@ export default class CourseList extends Vue {
       justify-content: space-between;
       margin: 0 auto;
     }
-    .input_to {
-      height: 190px;
-    }
 
     .input_box {
       width: 406px;
@@ -857,7 +819,6 @@ export default class CourseList extends Vue {
     .login_button {
       width: 406px;
       height: 50px;
-      line-height: 50px;
       background: #652791;
       border-radius: 100px;
       cursor: pointer;
@@ -868,7 +829,27 @@ export default class CourseList extends Vue {
         font-family: PingFangSC-Medium, PingFang SC;
         font-weight: 500;
         font-size: 20px;
-        line-height: 50px;
+      }
+    }
+    // 引导图
+    .login_after{
+      width: 560px;
+      height: 400px;
+      font-weight:500;
+      font-family:PingFangSC-Medium,PingFang SC;
+      padding-top: 50px;
+      .after_title{
+        font-size: 30px;
+        color: #652791;
+      }
+      .after_text{
+        color: #333333;
+        font-size: 18px;
+        margin: 40px auto 50px auto;
+      }
+      .after_img{
+        width: 188px;
+        height: 188px;
       }
     }
 
@@ -926,54 +907,6 @@ export default class CourseList extends Vue {
     margin: 0 auto;
     background: #fff;
     margin-top: 30px;
-  }
-}
-
-.triangle_border_left {
-  width: 0;
-  height: 0;
-  border-width: 8px 11px 8px 0;
-  border-style: solid;
-  border-color: transparent #fff transparent transparent;
-  position: absolute;
-  left: -10px;
-  top: 50%;
-  margin-top: -20px;
-}
-.triangle_border_left span {
-  display: block;
-  width: 0;
-  height: 0;
-  border-width: 28px 28px 28px 0;
-  border-style: solid;
-  border-color: transparent #fc0 transparent transparent; /*透明 黄 透明 透明 */
-  position: absolute;
-  top: 0px;
-  left: 0px;
-}
-#auth {
-  .mask {
-    position: fixed;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    background: rgb(20, 26, 72);
-  }
-  .login-box {
-    width: 400px;
-    height: 200px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    margin: auto;
-    background: white;
-    position: fixed;
-    border-radius: 5px;
-    box-sizing: border-box;
-    padding: 20px;
   }
 }
 </style>
