@@ -47,8 +47,16 @@
         </div>
 
       </div>
-      <!-- 登陆广告位置 -->
-      <div></div>
+      <!-- 登陆&广告位置 -->
+      <div>
+        <div class="banner-list">
+          <template v-for="(item, index) in bannerList">
+            <a :href="item.otherUrl" target="_blank" :key="index">
+              <img :src="item.bigImgUrl" alt="" >
+            </a>
+          </template>
+        </div>
+      </div>
     </div>
     <scroll-to-top ref="scrollToTop"></scroll-to-top>
   </div>
@@ -58,6 +66,7 @@ import ScrollToTop from 'COMPONENTS/scrollToTop'
 import Search from './components/search'
 import { getListApi } from 'API/position'
 import NoFound from 'COMPONENTS/noFound'
+import { getBanners } from 'API/common'
 export default {
   components: {
     Search,
@@ -73,7 +82,8 @@ export default {
       },
       listData: [],
       total: 0, // 职位总数
-      getLoading: true
+      getLoading: true,
+      bannerList: []
     }
   },
   created () {
@@ -82,6 +92,7 @@ export default {
     for (let item in this.params) {
       if (query[item]) this.params[item] = query[item]
     }
+    this.getBannerList()
   },
   methods: {
     // 获取职位列表
@@ -97,6 +108,11 @@ export default {
     handleSearch (value, type) {
       if (value) this.params[type] = value
       this.getPositionList()
+    },
+    getBannerList () {
+      getBanners({ location: 'jobhunter_pc_position_list' }).then(({ data }) => {
+        this.bannerList = data.data.jobhunterPcPositionList || []
+      })
     }
   }
 }
@@ -111,7 +127,7 @@ export default {
   box-shadow: $shadow-1;
   margin-right: 20px;
   min-height: 108px;
-  width: 882px;
+  min-width: 882px;
   .position-list:not(:last-child) {
     border-bottom: none;
   }
@@ -251,5 +267,14 @@ export default {
   background: #fff;
   padding: 30px 0;
   text-align: center;
+}
+.banner-list {
+  a {
+    display: block;
+    margin-bottom: 22px;
+    img {
+      max-width: 100%;
+    }
+  }
 }
 </style>

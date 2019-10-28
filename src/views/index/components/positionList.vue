@@ -12,7 +12,7 @@
     <div class="position-lists-wrapper" v-loading="getLoading">
       <!-- 隔离层 防止nth-child 多读取一个div -->
       <div class="position-lists">
-        <div class="position-list-wrapper" v-for="(item,index) in listData" :key="index">
+        <router-link tag="div" :to="`/position/details?positionId=${item.id}`" class="position-list-wrapper" v-for="(item,index) in listData" :key="index">
           <div class="list-header">
             <div class="position-name">{{item.positionName}}</div>
             <div class="position-contact">
@@ -36,7 +36,7 @@
               <p class="company-specia">{{item.companyInfo.financingInfo}}·{{item.companyInfo.employeesInfo}}·{{item.companyInfo.industry}}</p>
             </div>
           </div>
-        </div>
+        </router-link>
       </div>
     </div>
     <div class="position-more-btn" v-if="!getLoading && listData.length">
