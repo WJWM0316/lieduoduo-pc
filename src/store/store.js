@@ -2,7 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { saveAccessToken, removeAccessToken, getAccessToken, getUserInfo, saveUserInfo } from '../api/cacheService'
 import { loginPutInApipc } from '@/api/auth'
-import router from 'vue-router'
+import router from '@/router/index.js'
+
 import {
   loginApi,
   logoutApi
@@ -75,10 +76,13 @@ export default new Vuex.Store({
         // })
         let loginData = res.data.data
         store.commit('LOGIN', loginData)
-        // if (!store.userIdentity) {
-        //   console.log(router, 1111, Vue.router)
-        //   Vue.router.push({path: '/index'})
-        // }
+
+
+
+        if (!store.userIdentity) {
+          console.log(router, 1111, Vue.router)
+          router.push('index')
+        }
       })
     },
     
