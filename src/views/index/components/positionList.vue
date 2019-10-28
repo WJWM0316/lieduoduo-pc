@@ -20,7 +20,7 @@
             </div>
           </div>
           <div class="list-pay">
-            {{item.emolumentMin}}~{{item.emolumentMax}} · {{item.annualSalaryDesc}}
+            {{item.emolumentMin}}~{{item.emolumentMax}}K · {{item.annualSalaryDesc}}
           </div>
           <div class="list-position-require">
             <span class="position-address"><i class="iconfont icon-dizhi"></i>{{item.city}}{{item.district}}</span>
@@ -62,6 +62,11 @@ export default {
       listData: []
     }
   },
+  computed: {
+    isLogin () {
+      return !!this.$store.state.userInfo.id
+    }
+  },
   methods: {
     // 获取职位列表
     getPositionList () {
@@ -74,6 +79,13 @@ export default {
     handleChange (item) {
       this.currentId = item.labelId
       this.getPositionList()
+    },
+    handleShowMore () {
+      if (this.isLogin) {
+        this.$router.push('/position')
+      } else {
+        this.$router.push('/login?type=login')
+      }
     }
   }
 }

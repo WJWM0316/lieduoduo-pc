@@ -275,9 +275,9 @@ class Util {
     var seconds = modulo % 60;
     return {
       days,
-      hours,
-      mins: minutes,
-      seconds
+      hours: hours > 9 ? hours : '0' + hours,
+      mins: minutes > 9 ? minutes : '0' + minutes,
+      seconds: seconds > 9 ? seconds : '0' + seconds,
     }
   }
 }

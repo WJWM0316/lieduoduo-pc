@@ -4,12 +4,12 @@
       <div class="position-number">
         <div class="position-number-wrapper">
           <h3>找高薪工作 就上猎多多</h3>
-          <p><span>23</span>酷公司 <i>|</i> <span>32</span>好机会</p>
+          <p><span>{{total.coolCompanyNum}}</span>酷公司 <i>|</i> <span>{{total.goodChanceNum}}</span>好机会</p>
         </div>
       </div>
       <div class="login-wrapper">
         <el-input class="login-phone-input" placeholder="请输入手机号码" v-model="loginForm.phone" size="medium" />
-        <el-input  class="login-code-input" placeholder="验证码" v-model="loginForm.phone" size="medium">
+        <el-input  class="login-code-input" placeholder="验证码" v-model="loginForm.code" size="medium">
             <span class="code-span" slot="suffix">获取</span>
         </el-input>
         <div class="login-btn">登陆/注册</div>
@@ -23,6 +23,10 @@ export default {
     banner: {
       type: Array,
       default: () => ([])
+    },
+    total: {
+      type: Object,
+      default: () => ({})
     }
   },
   data () {

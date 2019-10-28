@@ -21,16 +21,18 @@
           </div>
           <div class="list-position-info">
             <div>
-              <span class="list-position-name">{{item.positionName}}</span>
-              <span class="list-pay">{{item.emolumentMin}}~{{item.emolumentMax}} · {{item.annualSalaryDesc}}</span>
+               <div>
+                <span class="list-position-name">{{item.positionName}}</span>
+                <span class="list-pay">{{item.emolumentMin}}~{{item.emolumentMax}}K · {{item.annualSalaryDesc}}</span>
+              </div>
+              <div class="list-position-require">
+                <span><i class="iconfont icon-dizhi"></i>{{item.city}}{{item.district}}</span>
+                <span><i class="iconfont icon-zhiwei"></i>{{item.workExperienceName}}</span>
+                <span><i class="iconfont icon-dizhi"></i>{{item.educationName}}</span>
+              </div>
             </div>
-            <div class="list-position-require">
-              <span><i class="iconfont icon-dizhi"></i>{{item.city}}{{item.district}}</span>
-              <span><i class="iconfont icon-zhiwei"></i>{{item.workExperienceName}}</span>
-              <span><i class="iconfont icon-dizhi"></i>{{item.educationName}}</span>
-            </div>
+            <div class="list-details" v-if="item.companyInfo.oneSentenceIntro">{{item.companyInfo.oneSentenceIntro}}</div>
           </div>
-          <div class="list-details">{{item.oneSentenceIntro || '-'}}</div>
           <div class="list-footer">
             <div class="count-down">
               <span>还剩</span>
@@ -41,7 +43,9 @@
             <div class="position-count">
               <p>还有<b>{{(item.seatsNum -  item.applyNum - item.natureApplyNum) > 99 ? '99+' : item.seatsNum -  item.applyNum - item.natureApplyNum}}</b>个席位</p>
               <span class="position-process">
-                <span class="position-process-width" :style="{width: `${30 + item.applyNum/(item.seatsNum - item.natureApplyNum)*70}%`}"></span>
+                <span
+                  class="position-process-width"
+                  :style="{width: `${item.percent}%`}"></span>
               </span>
             </div>
             <el-button type="primary" size="medium" style="width: 71px" round>马上抢</el-button>
@@ -50,7 +54,7 @@
       </template>
     </div>
     <div class="active-btn">
-      <div class="c-btn c-big-btn">查看更多</div>
+      <div class="c-btn c-big-btn" @click="handleShowMore">查看更多</div>
     </div>
   </div>
 </template>
@@ -69,15 +73,23 @@ export default {
   created () {
     this.getLists()
   },
+  computed: {
+    cityid () {
+      return this.$store.state.cityId || 0
+    },
+    isLogin () {
+      return !!this.$store.state.userInfo.id
+    }
+  },
   methods: {
     getLists () {
-      getRapidlyData().then(({ data }) => {
+      getRapidlyData({ page: 1, city: this.cityid }).then(({ data }) => {
         const { items, toastTips, buttons } = data.data
-        this.listData = items.slice(0, 6)
+        const listData = items.slice(0, 6)
         this.bubbleList = toastTips
         this.buttons = buttons
         // 保存倒计时数据
-        this.listCountDown = this.listData.map(val => {
+        this.listCountDown = listData.map(val => {
           return {
             endTime: val.endTime,
             days: '',
@@ -86,6 +98,12 @@ export default {
             seconds: ''
           }
         })
+        // 计算百分比
+        listData.forEach(val => {
+          let _default = val.natureApplyNum && val.applyNum ? 30 : 0
+          val.percent = _default + val.applyNum / (val.seatsNum - val.natureApplyNum) * 70
+        })
+        this.listData = listData
         // 跑倒计时
         this.setCountDown()
         // 跑气泡
@@ -111,6 +129,18 @@ export default {
         }
         this.bubbleDown()
       }, 5000)
+    },
+    handleShowMore () {
+      if (this.isLogin) {
+        this.$router.push('/position')
+      } else {
+        // 小程序弹窗
+      }
+    }
+  },
+  watch: {
+    cityid (value) {
+      this.getLists()
     }
   },
   destroyed () {
@@ -222,7 +252,16 @@ export default {
     padding: 18px;
     text-align: center;
     background-color: #fff;
-    padding: 18px 16px;
+    box-sizing: border-box;
+    padding: 18px 16px 0 18px;
+    min-height: 138px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    & > div {
+      width: 100%;
+    }
   }
   .list-position-name {
     color: $title-color-1;
@@ -249,11 +288,12 @@ export default {
   }
   .list-details {
     background: $bg-color-8;
-    box-sizing: border-box;
     padding:10px 35px;
-    height: 50px;
+    margin: 0px -26px 0;
+    align-self: flex-end;
     width: 100%;
     font-size: 12px;
+    min-height: 30px;
     line-height: 1.6;
     color: $font-color-10;
     @include ellipsis-two;
@@ -336,7 +376,6 @@ export default {
     opacity: 0;
     transform: translateY(-30px);
   }
-  100% {}
 }
 
 </style>

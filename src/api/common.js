@@ -44,3 +44,13 @@ export const getQrcodeApi = data => request({
     host: 'pub'
   }
 })
+
+// 获取热门城市
+export const getHotArea = data => request({
+  url: '/area/hotArea',
+  method: 'get',
+  params: data,
+  config: {
+    host: 'qiuzhi'
+  }
+})

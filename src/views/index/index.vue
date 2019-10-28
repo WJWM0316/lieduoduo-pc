@@ -1,6 +1,6 @@
 <template>
   <div class="index-wrapper">
-    <login-banner  v-if="!isLogin" :banner="loginBannerList"></login-banner>
+    <login-banner  v-if="!isLogin" :banner="loginBannerList" :total="total"></login-banner>
     <search-wrapper></search-wrapper>
     <div class="position-wrapper main-center">
       <div class="index-part-1">
@@ -39,7 +39,11 @@ export default {
       loginBannerList: [], // 登陆模块的banner
       bannerLists: [], // index banner
       positionData: [], // 职位类型数据
-      positionLabel: [] // 部分职位名称tab数据
+      positionLabel: [], // 部分职位名称tab数据
+      total: {
+        coolCompanyNum: '',
+        goodChanceNum: ''
+      }
     }
   },
   created () {
@@ -68,9 +72,10 @@ export default {
     // 获取页面数据 比如职位，地址等等
     getPageData () {
       getIndexData({}).then(({ data }) => {
-        const { positionType, label } = data.data
+        const { positionType, label, coolCompanyNum, goodChanceNum } = data.data
         this.positionData = positionType
         this.positionLabel = label || []
+        this.total = { coolCompanyNum, goodChanceNum }
         if (this.positionLabel[0]) {
           this.$refs.positionList.handleChange(this.positionLabel[0])
         }
