@@ -35,7 +35,7 @@ export const confirmInterviewApi = data => request({
   }
 })
 
-//获取底部面试状态
+// 获取底部面试状态
 export const getInterviewStatusApi = (data, hasLoading) => {
   return request({
     method: 'get',
@@ -47,8 +47,7 @@ export const getInterviewStatusApi = (data, hasLoading) => {
   })
 }
 
-
-//编辑不合适 或者暂不考虑
+// 编辑不合适 或者暂不考虑
 export const refuseInterviewApi = (data, hasLoading) => {
   return request({
     method: 'post',

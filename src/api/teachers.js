@@ -5,24 +5,22 @@ import { request } from './index.js'
 
 // 申请导师
 export const applyApi = data => request({
-  url: '/tutorApply/apply', 
-  method: 'post', 
+  url: '/tutorApply/apply',
+  method: 'post',
   params: data,
-  config: {host: 'zhaopin'}
+  config: { host: 'zhaopin' }
 })
 
 export const applyListApi = data => request({
-  url: '/tutorApply', 
-  method: 'get', 
+  url: '/tutorApply',
+  method: 'get',
   params: data,
-  config: {host: 'zhaopin'}
+  config: { host: 'zhaopin' }
 })
 
 export const applyDetailApi = data => request({
-  url: `/tutorApply/info/${data.tutorId}`, 
-  method: 'get', 
+  url: `/tutorApply/info/${data.tutorId}`,
+  method: 'get',
   params: data,
-  config: {host: 'zhaopin'}
+  config: { host: 'zhaopin' }
 })
-
-
