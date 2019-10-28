@@ -47,7 +47,7 @@
         </div>
 
       </div>
-      <!-- 登陆&广告位置 -->
+      <div></div>
       <div>
         <div class="banner-list">
           <template v-for="(item, index) in bannerList">

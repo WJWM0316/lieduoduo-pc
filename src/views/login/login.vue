@@ -51,22 +51,22 @@
         </template>
 
         <!-- 短信登录 或者 注册 -->
-        <div class="logind" :class="{ cont_ti: imgcode }" v-if="type === 'msgLogin' || type === 'register'" v-show="!loginsuccess">
+        <div class="logind" :class="{ logindtoo: false }" v-if="type === 'msgLogin' || type === 'register'" v-show="!loginsuccess">
 
           <ul class="sign_type" v-if="type === 'register'">
             <li :class="{ active : !identity }" @click="toggle(0)">我是求职者</li>
             <li :class="{ active : identity }" @click="toggle(1)">我是招聘官</li>
           </ul>
 
-          <h3 v-if="type === 'msgLogin'" class="cont_tit" style="margin-bottom: 40px;">短信登录</h3>
-          <div class="logind_form" :class="{ }">
-            <div class="input_wrap">
+          <h3 v-if="type === 'msgLogin'" class="cont_tit cont_ti" style="margin-bottom: 40px;">短信登录</h3>
+          <div class="logind_form">
+            <div class="input_wrap input_to">
               <div class="input_box">
                 <i class="input_img iconfont icon-shoujihao" />
                 <input placeholder="请输入手机号码" maxlength="11" v-model="mobile" />
               </div>
               <div class="input_box" v-if="imgcode">
-                <i class="input_img iconfont icon-shoujihao" />
+                <i class="input_img iconfont icon-anquan_huaban" />
                 <input placeholder="请输入图片验证码"  v-model="captchaValue" />
                 <img :src="imgcode" class="imgcode"/>
               </div>
@@ -77,20 +77,21 @@
               </div>
             </div>
           </div>
-          <el-button class="login_button" @click="logintoo">登录</el-button>
+          <el-button class="login_button login_bnt" @click="logintoo">登录</el-button>
           <div class="bottom_text">
             {{ this.type === 'msgLogin' ? '没有账号' : '已有账号' }}
             <span @click="changetypeto">{{ this.type === 'msgLogin' ? '立即注册' : '马上登录' }}</span>
           </div>
         </div>
 
-        <!-- 引导图 -->
+        <!-- 登陆成功引导图 -->
         <div class="login_after" v-show="loginsuccess">
           <h3 class="after_title">登录注册成功</h3>
           <p class="after_text">尚未是认证面试官，微信「扫一扫」认证</p>
           <img class="after_img"/>
         </div>
       </div>
+
       <div class="overlayout" v-if="showError">
         <div class="box">
           <i class="el-icon-close" @click="closeMask"></i>
@@ -118,7 +119,6 @@
         </div>
       </div>
     </div>
-    
   </div>
 </template>
 <script>
@@ -336,7 +336,7 @@ export default class CourseList extends Vue {
     this.text = 60
     let timeout = setInterval(() => {
       this.text--
-      if (this.text == 0) {
+      if (this.text === 0) {
         clearInterval(timeout)
         this.text = '发送验证码'
       }
@@ -355,7 +355,6 @@ export default class CourseList extends Vue {
       captchaKey: this.captchaKey,
       captchaValue: this.captchaValue
     }
-
     this.$store.dispatch('login', params).then(() => {
       console.log(111111111111)
     })
@@ -375,7 +374,6 @@ export default class CourseList extends Vue {
     no-repeat;
   background-size: cover;
   background-position: center;
-
   .inner {
     width: 1200px;
     box-sizing: border-box;
@@ -554,7 +552,6 @@ export default class CourseList extends Vue {
     .bottom_bnt {
       margin-top: 34px;
     }
-
     .help_cont::after {
       content: " ";
       position: absolute;
@@ -635,11 +632,16 @@ export default class CourseList extends Vue {
       margin-bottom: 44px;
       box-sizing: border-box;
     }
-    .cont_ti {
-      margin-bottom: 32px !important;
+    .logindtoo{
 
+      .cont_ti {
+        margin-bottom: 31px !important;
+      }
       .input_to {
       height: 190px;
+      }
+      .login_bnt{
+        margin-bottom: 22px;
       }
     }
     .cont_p {
@@ -763,7 +765,7 @@ export default class CourseList extends Vue {
       border: 1px solid #d8dce6;
       box-sizing: border-box;
       text-align: left;
-      line-height: 46px;
+      // line-height: 46px;
       font-size: 0;
       .input_img {
         margin: 0 12px 0 29px;
@@ -814,7 +816,8 @@ export default class CourseList extends Vue {
         width: 102px;
         height: 41px;
         vertical-align: middle;
-        margin-left: 5px;
+        // margin-left: 5px;
+        margin: -12px 0 0 5px;
       }
     }
     .login_butto {
@@ -858,12 +861,6 @@ export default class CourseList extends Vue {
     }
 
     // 注册
-    .sign {
-      .logind_form {
-        width: 560px;
-        margin-bottom: 40px;
-      }
-    }
     .sign_type {
       width: 460px;
       height: 38px;
@@ -902,15 +899,6 @@ export default class CourseList extends Vue {
         color: #652791;
       }
     }
-  }
-  .login_btn {
-    width: 200px;
-    height: 40px;
-    line-height: 40px;
-    border: 1px solid #ccc;
-    margin: 0 auto;
-    background: #fff;
-    margin-top: 30px;
   }
 }
 </style>
