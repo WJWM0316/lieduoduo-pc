@@ -72,6 +72,7 @@ export default new Vuex.Store({
         //   message: '登录成功',
         //   type: 'success'
         // })
+        console.log(54)
         saveAccessToken(res.data.data.token)
       })
     },
