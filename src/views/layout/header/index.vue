@@ -2,15 +2,16 @@
   <div class="page-header">
     <div class="page-header-wrapper">
       <div class="header-logo">猎多多</div>
-      <div class="header-address">
+      <div class="header-address" v-if="$route.path === '/index'">
         <drop-down
           v-model="addressId"
           :items="cityList"
           :props="{
             value: 'areaId',
             label: 'name'
-          }">
-          <span class="iconfont icon-dizhi">广州</span>
+          }"
+          @on-select="changeLocation">
+          <span class="iconfont icon-dizhi">{{addressName}}</span>
           <span class="change-address">[切换城市]</span>
         </drop-down>
       </div>
@@ -59,15 +60,15 @@
                 </span>
               </div>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item command="usercenter">个人中心</el-dropdown-item>
+                <!-- <el-dropdown-item command="usercenter">个人中心</el-dropdown-item> -->
                 <el-dropdown-item command="">切换为面试官</el-dropdown-item>
-                <el-dropdown-item command="logout">退出登陆</el-dropdown-item>
+                <el-dropdown-item command="logout">退出登录</el-dropdown-item>
               </el-dropdown-menu>
           </el-dropdown>
           </template>
           <template v-else>
             <div class="no-login">
-              <span class="login-btn"  @click="handleToLogin('login')"><i class="el-icon-user"></i> 登陆</span> |
+              <span class="login-btn"  @click="handleToLogin('login')"><i class="el-icon-user"></i> 登录</span> |
               <span class="register-btn" @click="handleToLogin('register')">注册</span>
             </div>
           </template>
@@ -78,13 +79,14 @@
 </template>
 <script>
 import { mp_qrcode, wx_qrcode, app_qrcode } from 'IMAGES/image'
+import { getHotArea } from 'API/common'
 import DropDown from 'COMPONENTS/dropDown'
 export default {
   components: { DropDown },
   data () {
     return {
-      addressId: 1,
-      cityList: [{ 'areaId': 0, 'name': '全国', 'provinceId': 0, 'provinceName': '全国' }, { 'areaId': 110100, 'name': '北京市', 'provinceId': 110000, 'provinceName': '北京市' }, { 'areaId': 310100, 'name': '上海市', 'provinceId': 310000, 'provinceName': '上海市' }, { 'areaId': 440100, 'name': '广州市', 'provinceId': 440000, 'provinceName': '广东省' }, { 'areaId': 440300, 'name': '深圳市', 'provinceId': 440000, 'provinceName': '广东省' }],
+      addressName: '全国',
+      addressId: 0,
       navList: [
         { name: '首页', url: '/index', type: 'link' },
         { name: '职位', url: '/position', type: 'link' },
@@ -94,12 +96,19 @@ export default {
       ]
     }
   },
+  created () {
+    this.getHotAreas()
+    this.addressId = this.$store.getters.cityId
+  },
   computed: {
     isLogin () {
       return !!this.$store.state.userInfo.id
     },
     userInfo () {
       return this.$store.state.userInfo || {}
+    },
+    cityList () {
+      return this.$store.getters.areaList || []
     }
   },
   methods: {
@@ -119,6 +128,17 @@ export default {
         query: {
           type: type
         }
+      })
+    },
+    changeLocation (item) {
+      this.addressName = item.name
+      this.$store.commit('setCityId', item.areaId)
+    },
+    // 获取热门城市地址
+    getHotAreas () {
+      getHotArea().then(({ data }) => {
+        const areas = [{ 'areaId': 0, 'name': '全国', 'provinceId': 0, 'provinceName': '全国' }, ...data.data]
+        this.$store.commit('setAreas', areas)
       })
     }
   }
@@ -141,10 +161,11 @@ $header-height-1: $page-header-height;
   text-align: center;
   font-size: 20px;
   color: #fff;
+  margin-right: 70px;
 }
 .header-address {
   cursor: pointer;
-  margin:0 70px;
+  margin-right: 70px;
   color: $nav-color-default;
   span:first-child {
     color: $sub-color-1;

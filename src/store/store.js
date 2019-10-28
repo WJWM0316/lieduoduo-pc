@@ -18,7 +18,9 @@ export default new Vuex.Store({
     userInfo: getUserInfo() || {},
     token: getAccessToken(),
     pageName: '',
-    loginValidTime: 60 * 60 * 24 * 7 * 1000
+    loginValidTime: 60 * 60 * 24 * 7 * 1000,
+    cityId: 0, // 用户地址id
+    areaList: []
   },
   // 在getters中声明state中变量的计算函数，缓存计算后的数据， 通过 this.$store.getters 调用
   getters: {
@@ -26,7 +28,9 @@ export default new Vuex.Store({
     pageName: state => state.pageName,
     userIdentity: state => state.userIdentity,
     userInfo: state => state.userInfo,
-    token: state => state.token
+    token: state => state.token,
+    areaList: state => state.areaList,
+    cityId: state => state.cityId
   },
   // 只能执行同步方法，不要去执行异步方法 通过 this.$store.commit 方法去调用
   mutations: {
@@ -53,6 +57,14 @@ export default new Vuex.Store({
 
     setPageName (state, options) {
       state.pageName = options.name
+    },
+
+    setAreas (state, area) {
+      state.areaList = area
+    },
+
+    setCityId (state, id) {
+      state.cityId = id
     }
   },
   // 借助actions的手去 执行 mutations ， 通过  this.$store.dispatch 的方式调用
@@ -67,25 +79,23 @@ export default new Vuex.Store({
     },
 
     login (store, data) {
-      // 
+      //
       return loginPutInApipc(data)
-      .then(res => {
+        .then(res => {
         // this.$message({
         //   message: '登录成功',
         //   type: 'success'
         // })
-        let loginData = res.data.data
-        store.commit('LOGIN', loginData)
+          let loginData = res.data.data
+          store.commit('LOGIN', loginData)
 
-
-
-        if (!store.userIdentity) {
-          console.log(router, 1111, Vue.router)
-          router.push('index')
-        }
-      })
+          if (!store.userIdentity) {
+            console.log(router, 1111, Vue.router)
+            router.push('index')
+          }
+        })
     },
-    
+
     testLogin (store, data) {
       return loginApi(data)
         .then(res => {

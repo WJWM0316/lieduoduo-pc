@@ -64,7 +64,7 @@
 <script>
 import ScrollToTop from 'COMPONENTS/scrollToTop'
 import Search from './components/search'
-import { getListApi } from 'API/position'
+import { getPositionSearch } from 'API/position'
 import NoFound from 'COMPONENTS/noFound'
 import { getBanners } from 'API/common'
 export default {
@@ -78,7 +78,8 @@ export default {
       params: {
         page: 1,
         count: 20,
-        name: ''
+        keywork: '',
+        cityNums: this.cityid
       },
       listData: [],
       total: 0, // 职位总数
@@ -94,11 +95,16 @@ export default {
     }
     this.getBannerList()
   },
+  computed: {
+    cityid () {
+      return this.$store.state.cityId || 0
+    }
+  },
   methods: {
     // 获取职位列表
     getPositionList () {
       this.getLoading = true
-      getListApi(this.params).then(({ data }) => {
+      getPositionSearch(this.params).then(({ data }) => {
         this.getLoading = false
         this.listData = data.data || []
         this.total = data.meta.total

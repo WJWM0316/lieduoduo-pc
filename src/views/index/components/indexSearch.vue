@@ -6,8 +6,9 @@
         <el-autocomplete
           v-model="searchValue"
           :fetch-suggestions="querySearchAsync"
-          placeholder="搜索职位、公司"
+          placeholder="搜索职位"
           @select="handleSelect"
+          :maxlength="50"
           clearable>
           <i slot="prefix" class="el-input__icon el-icon-search"></i>
         </el-autocomplete>
@@ -16,7 +17,7 @@
       <p class="hot-word">
         <span>热门搜索：</span>
         <template v-for="(item, index) in hotKeyWork">
-          <router-link :to="`/position?query=${item.word}`" :key="index">{{item.word}}</router-link>
+          <router-link :to="`/position?keyword=${item.word}`" :key="index">{{item.word}}</router-link>
         </template>
       </p>
     </div>
@@ -49,9 +50,13 @@ export default {
   methods: {
     // 查询
     querySearchAsync (queryString, cb) {
+      if (!queryString.length) {
+        // eslint-disable-next-line standard/no-callback-literal
+        cb([])
+        return
+      }
       clearTimeout(this.timeout)
       this.timeout = setTimeout(() => {
-        if (!queryString.length) return
         getMatchesPosition({ position: queryString }).then(({ data }) => {
           const reslutes = data.data || []
           cb(reslutes.map((val, index) => ({ value: val, id: index })))
@@ -63,7 +68,7 @@ export default {
       this.$router.push({
         path: '/position',
         query: {
-          name: value.value
+          keywork: value.value
         }
       })
     },
@@ -82,7 +87,7 @@ export default {
     handleToSearch () {
       let path = '/position'
       if (this.searchValue) {
-        path = `${path}?name=${this.searchValue}`
+        path = `${path}?keyword=${this.searchValue}`
       }
       this.$router.push(path)
     }
