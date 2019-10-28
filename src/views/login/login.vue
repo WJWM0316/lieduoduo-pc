@@ -1,7 +1,7 @@
 <template>
   <div id="login">
     <div class="loginBox">
-      <login-form :loginType="loginType"></login-form>
+      <login-form id="loginForm" :loginType="loginType"></login-form>
     </div>
   </div>
 </template>
@@ -45,11 +45,12 @@ export default class login extends Vue {
   align-items: center;
   .loginBox {
     width: 1200px;
+    padding: 0 10px;
     box-sizing: border-box;
-    margin: 0 auto;
     overflow: hidden;
-    padding: 0 30px;
-    box-sizing: border-box;
+    #loginForm {
+      float: right;
+    }
   }
 }
   

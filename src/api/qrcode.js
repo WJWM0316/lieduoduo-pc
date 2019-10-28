@@ -6,7 +6,7 @@ export const getPositionQrcodeApi = (data) => {
     method: 'get',
     url: '/share/position_share',
     params: data,
-    config: {host: 'pub'}
+    config: { host: 'pub' }
   })
 }
 
@@ -16,7 +16,7 @@ export const getCompanyQrcodeApi = (data) => {
     method: 'get',
     url: '/share/company_share',
     params: data,
-    config: {host: 'pub'}
+    config: { host: 'pub' }
   })
 }
 
@@ -26,7 +26,7 @@ export const getResumerCodeApi = (data) => {
     method: 'get',
     url: '/share/resume_share',
     params: data,
-    config: {host: 'pub'}
+    config: { host: 'pub' }
   })
 }
 
@@ -37,7 +37,6 @@ export const getRecruiterQrcodeApi = (data) => {
     url: '/share/recruiter_share',
     data,
     params: data,
-    config: {host: 'pub'}
+    config: { host: 'pub' }
   })
 }
-

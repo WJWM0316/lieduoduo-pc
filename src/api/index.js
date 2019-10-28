@@ -4,11 +4,11 @@ import router from '../router/index'
 import { getAccessToken, removeAccessToken } from './cacheService'
 import Vue from 'vue'
 let loadingInstance = null
-    // localStorage = window.localStorage
-const VUE_WEB_ZHAOPIN_API = process.env.VUE_APP_WEB_ZHAOPIN_API,
-      VUE_WEB_QIUZHI_API  = process.env.VUE_APP_WEB_QIUZHI_API,
-      VUE_WEB_PUB_API     = process.env.VUE_APP_WEB_PUB_API,
-      VUE_WEB_NODE_API    = process.env.VUE_APP_WEB_NODE_API
+// localStorage = window.localStorage
+const VUE_WEB_ZHAOPIN_API = process.env.VUE_APP_WEB_ZHAOPIN_API
+const VUE_WEB_QIUZHI_API = process.env.VUE_APP_WEB_QIUZHI_API
+const VUE_WEB_PUB_API = process.env.VUE_APP_WEB_PUB_API
+const VUE_WEB_NODE_API = process.env.VUE_APP_WEB_NODE_API
 
 // 请求拦截器
 axios.interceptors.request.use(
@@ -28,8 +28,8 @@ axios.interceptors.response.use(
   },
   err => {
     // 错误提示
-    if(err.response.data.httpStatus !== 200) {
-      Vue.message.error(err.response.data.msg);
+    if (err.response.data.httpStatus !== 200) {
+      Vue.message.error(err.response.data.msg)
     }
 
     // 登陆过期或者未登录
@@ -41,9 +41,8 @@ axios.interceptors.response.use(
     return Promise.reject(err.response)
   }
 )
-
 // let host_pub = false
-export const request = ({url, method, params = {}, config}) => {
+export const request = ({ url, method, params = {}, config }) => {
   // 切换api host
   // if (config && config.host) {
   //   if (!host_pub) axios.defaults.baseURL = VUE_WEB_PUB_API
@@ -52,8 +51,8 @@ export const request = ({url, method, params = {}, config}) => {
   //   if (host_pub) this.upDateBaseURL()
   //     host_pub = false
   // }
-  
-  switch(config.host) {
+
+  switch (config.host) {
     case 'pub':
       axios.defaults.baseURL = VUE_WEB_PUB_API
       break
@@ -80,4 +79,3 @@ export const request = ({url, method, params = {}, config}) => {
 //   let role = this.$store.getters('userIdentity')
 //   axios.defaults.baseURL = role !== 'applicant' ? VUE_WEB_ZHAOPIN_API : VUE_WEB_QIUZHI_API
 // }
-
