@@ -21,6 +21,12 @@ const applicant = [
         path: '',
         name: 'position',
         component: resolve => require(['../views/position'], resolve)
+      },
+      {
+        path: 'details',
+        name: 'positionDetail',
+        title: '职位详情',
+        component: resolve => require(['../views/common/position/detail.vue'], resolve)
       }
     ]
   },

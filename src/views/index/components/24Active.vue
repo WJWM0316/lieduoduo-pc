@@ -11,7 +11,7 @@
     </div>
     <div class="active-list">
       <template v-for="(item,index) in listData">
-        <div class="active-list-wrapper" :key="item.lableId">
+        <router-link tag="div" :to="`/position/details?positionId=${item.id}`" class="active-list-wrapper" :key="item.lableId">
           <div class="list-header">
             <div class="list-image">
               <img :src="item.companyInfo.logoInfo.smallUrl" />
@@ -46,7 +46,7 @@
             </div>
             <el-button type="primary" size="medium" style="width: 71px" round>马上抢</el-button>
           </div>
-        </div>
+        </router-link>
       </template>
     </div>
     <div class="active-btn">

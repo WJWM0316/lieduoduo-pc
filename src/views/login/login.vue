@@ -289,8 +289,8 @@ export default class CourseList extends Vue {
   // 短信登录注册切换
   changetypeto () {
     this.type =
-      this.type === 'msgLogin' ||
-      this.type === 'qrcodeLogin'
+      this.type == 'msgLogin' ||
+      this.type == 'qrcodeLogin'
         ? 'register'
         : 'msgLogin'
   }
