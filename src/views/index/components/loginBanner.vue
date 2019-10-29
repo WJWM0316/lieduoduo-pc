@@ -1,5 +1,5 @@
 <template>
-  <div class="index-login" :style="{'background-image': `url(${banner[0] && banner[0].bigImgUrl})`}">
+  <div class="index-login">
     <div class="main-center index-login-wrapper">
       <div class="position-number">
         <div class="position-number-wrapper">
@@ -53,11 +53,11 @@ export default {
     // 登录短信验证码倒计时
     smstime () {
       this.text = 60
-      clearInterval(timeout)
-      let timeout = setInterval(() => {
+      clearInterval(this.timeout)
+      this.timeout = setInterval(() => {
         this.text--
-        if (this.text == 0) {
-          clearInterval(timeout)
+        if (this.text === 0) {
+          clearInterval(this.timeout)
           this.text = '获取'
         }
       }, 1000)
@@ -79,6 +79,9 @@ export default {
       }
       this.$store.dispatch('login', parmas)
     }
+  },
+  destroyed () {
+    window.clearTimeout(this.timeout)
   }
 }
 </script>
@@ -88,6 +91,7 @@ $index-login-height: 120px;
   background: $bg-color-4;
   height: $index-login-height;
   width: 100%;
+  background-image: url('https://attach.lieduoduo.ziwork.com/front-assets/web/images/index-banner.gif');
   background-size: cover;
   background-repeat: no-repeat;
 }

@@ -54,3 +54,13 @@ export const getHotArea = data => request({
     host: 'qiuzhi'
   }
 })
+
+// 获取搜索页的数据集合
+export const getSearchCollect = data => request({
+  url: '/aggr/search',
+  method: 'get',
+  params: data,
+  config: {
+    host: 'qiuzhi'
+  }
+})
