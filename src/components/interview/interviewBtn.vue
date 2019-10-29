@@ -53,6 +53,7 @@
 			<!-- 求职者已经已收到招聘官的邀请 end-->
 		</section>
 
+		<loginPop ref="loginPop" v-if="!hasLogin"></loginPop>
 
 		<div class="qrCodePop" v-show="showSharePop">
 			<div class="inner">
@@ -66,10 +67,14 @@
 <script>
 import Vue from 'vue'
 import Component from 'vue-class-component'
+import loginPop from '@/components/common/loginPop'
 import {getQrcodeApi} from '@/api/common'
 import {getInterviewStatusApi, applyInterviewApi, confirmInterviewApi, refuseInterviewApi} from '@/api/interview.js'
 @Component({
   name: 'interviewBtn',
+  components: {
+    loginPop
+  },
   props: {
   	infos: {
       type: Object,
@@ -84,6 +89,9 @@ import {getInterviewStatusApi, applyInterviewApi, confirmInterviewApi, refuseInt
       default: ''
     }
   },
+  computed: mapState({
+    hasLogin: state => state.hasLogin
+  }),
   watch: {
   	infos () {
   		this.getInterviewStatus()
@@ -138,6 +146,10 @@ export default class InterviewBtn extends Component {
   }
   
   todoAction (type) {
+  	if (!this.hasLogin) {
+  		this.$refs.loginPop.showLoginPop = true
+  		return
+  	}
   	switch (type) {
   		case 'job-hunting-chat':
   			this.jobHunterChat()

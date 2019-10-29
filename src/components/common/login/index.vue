@@ -9,7 +9,6 @@
             <img :src="cdnPath + 'loginimg.png'" @click="changetype" />
           </div>
         </div>
-        <i class="close iconfont icon-close" v-if="!toggleType"></i>
         <!-- 二维码登录 -->
         <template v-if="type === 'qrcodeLogin'">
           <div class="logind" v-show="!loginsuccess">
@@ -166,16 +165,10 @@ import { saveAccessToken } from '@/api/cacheService'
   	}
   },
   watch: {
-    $route: {
-      handler () {
-        this.init()
-      },
-      visible (value) {
-        if (value) {
-          this.visibleDialog = value
-        }
-      },
-      immediate: true
+    visible (value) {
+      if (value) {
+        this.visibleDialog = value
+      }
     }
   },
   components: {}
@@ -210,6 +203,7 @@ export default class loginForm extends Component {
 
   mounted () {
     this.type = this.loginType
+    this.init()
   }
 
   closeMask () {
@@ -217,7 +211,7 @@ export default class loginForm extends Component {
   }
 
   init () {
-    if (!this.$route.query.type) this.type = 'qrcodeLogin'
+    if (this.$route.name === 'login' && !this.$route.query.type) this.type = 'qrcodeLogin'
     if (this.type === 'qrcodeLogin') this.getCode()
   }
 
@@ -455,14 +449,6 @@ export default class loginForm extends Component {
     border-radius: 8px;
     position: relative;
     box-sizing: border-box;
-    .close {
-    	font-size: 12px;
-    	position: absolute;
-    	top: 0;
-    	right: 0;
-    	color: #BCBCBC;
-    	padding: 16px;
-    }
     .login_type {
       width: 180px;
       position: absolute;
@@ -641,6 +627,7 @@ export default class loginForm extends Component {
         color: #ffffff;
         font-size: 8px;
         line-height: 18px;
+        cursor: pointer;
 
         span {
           position: relative;
@@ -654,6 +641,7 @@ export default class loginForm extends Component {
         display: inline-block;
         font-weight: 400;
         line-height: 20px;
+        cursor: pointer;
       }
     }
     .login_pic_warp {

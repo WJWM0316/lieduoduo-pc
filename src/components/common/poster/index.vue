@@ -175,6 +175,7 @@ export default class poster extends Component {
 			box-sizing: border-box;
 			z-index: 2;
 			display: flex;
+			color: #fff;
 			.btn {
 				line-height: 46px;
 				flex: 1;
