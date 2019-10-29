@@ -4,19 +4,19 @@
       <div class="login_cont">
         <!-- 切换登录方式type -->
         <div class="login_type" v-if="toggleType && (type === 'msgLogin' || type === 'qrcodeLogin')" v-show="!loginsuccess">
-          <div class="login_text" @click="changetype">{{type === 'msgLogin' ? '二维码登录' : toggleType ? '短信验证登录' : '登录/注册猎多多'}}</div>
+          <div class="login_text" @click="changetype">{{type === 'msgLogin' ? '二维码登录' : '短信验证登录'}}</div>
           <div class="login-img">
             <img :src="cdnPath + 'loginimg.png'" @click="changetype" />
           </div>
         </div>
         <!-- 二维码登录 -->
-        <template v-if="type === 'qrcodeLogin'">
+        <template v-if="type === 'qrcodeLogin' && toggleType">
           <div class="logind" v-show="!loginsuccess">
             <h3 class="cont_tit" style="margin-bottom:24px">扫码登录</h3>
             <div class="cont_p">使用「猎多多小程序」扫码登录</div>
 
             <div class="cont_help">
-              <div class="cont_help_left">
+              <div class="cont_help_left" @click="openHelp = !openHelp">
                 <span>?</span>
               </div>
               <span class="cont_help_right" @click="openHelp = !openHelp">扫码帮助</span>
@@ -48,13 +48,13 @@
           </div>
         </template>
         <!-- 短信登录 或者 注册 -->
-        <div class="logind" :class="{ cont_ti: imgcode }" v-if="(type === 'msgLogin' || type === 'register') || type === 'loginRegister'" v-show="!loginsuccess">
+        <div class="logind" :class="{ cont_ti: imgcode }" v-if="type === 'msgLogin' || type === 'register' || !toggleType" v-show="!loginsuccess">
           <ul class="sign_type" v-if="type === 'register'">
             <li :class="{ active : !identity }" @click="toggle(0)">我是求职者</li>
             <li :class="{ active : identity }" @click="toggle(1)">我是面试官</li>
           </ul>
 
-          <h3 v-if="type === 'msgLogin' || type === 'loginRegister'" class="cont_tit" style="margin-bottom: 40px;">{{ type === 'msgLogin' ? '短信登录' : '登录/注册猎多多' }}</h3>
+          <h3 v-if="type === 'msgLogin' || !toggleType" class="cont_tit" style="margin-bottom: 40px;">{{toggleType ? '短信验证登录' : '登录/注册猎多多'}}</h3>
           <div class="logind_form" >
             <div class="input_wrap">
               <div class="input_box">
@@ -67,26 +67,25 @@
                 <img :src="imgcode" class="imgcode"/>
               </div>
               <div class="input_box">
-                <i class="input_img iconfont icon-yanzhengma" />
+                <i class="input_img input_i iconfont icon-yanzhengma" />
                 <input placeholder="请输入短信验证码" maxlength="4" v-model="cValue" />
-                <span class="msgText" @click="sms">{{text}}</span>
+                <span class="msgText" @click="sms">{{text + (text !== '发送验证码' ? ' s' : '') }}</span>
               </div>
             </div>
           </div>
-          <el-button class="login_button" @click="logintoo">{{ type === 'msgLogin' ? '登录' : type === 'register' ? '注册' : '登录/注册' }}</el-button>
-          <div class="bottom_text" v-if=" ! (type === 'loginRegister')">
-            {{ this.type === 'msgLogin' ? '没有账号' : '已有账号' }}
-            <span @click="changetypeto">{{ this.type === 'msgLogin' ? '立即注册' : '马上登录' }}</span>
+          <el-button class="login_button" @click="logintoo">{{type === 'register' ? '注册' : type === 'msgLogin' && toggleType ? '登录' : '登录/注册' }}</el-button>
+          <div class="bottom_text" v-if="toggleType">
+            {{type === 'msgLogin' ? '没有账号' : '已有账号' }}
+            <span @click="changetypeto">{{ type === 'msgLogin' ? '立即注册' : '马上登录' }}</span>
           </div>
-          <div class="bottom_txt" v-if="type === 'loginRegister'">
+          <div class="bottom_txt" v-if="!toggleType">
             <a href="https://sao.lieduoduo.com/userAgreement" class="login_text">注册代表你已同意 猎多多用户协议&隐私政策</a>
             <p class="login_href" @click="$router.push('login')">企业登录/注册</p>
           </div>
         </div>
 
         <!-- 登录/注册猎多多c端引导 -->
-        <div class="guide" v-if="type === 'loginRegister'">
-            <i class="iconfont icon-danchuang-guanbi open" @click="handleClose"></i>
+        <div class="guide" v-if="!toggleType">
             <div class="guide_header">
                 <img :src="cdnPath + 'guide_logo.png'"/>
                 <p>精英人才招聘神器</p>
@@ -304,6 +303,7 @@ export default class loginForm extends Component {
       return
     }
     getCodeApi({ mobile: this.mobile }).then(res => {
+      this.$message.success('验证码发送成功')
       this.smstime()
     })
   }
@@ -313,7 +313,7 @@ export default class loginForm extends Component {
     this.text = 60
     let timeout = setInterval(() => {
       this.text--
-      if (this.text == 0) {
+      if (this.text === 0) {
         clearInterval(timeout)
         this.text = '发送验证码'
       }
@@ -555,8 +555,8 @@ export default class loginForm extends Component {
       .help_img {
         margin-top: 13px;
         img {
-          width: 233px;
-          height: 278px;
+          width: 230px;
+          height: 270px;
         }
       }
       h3 {
@@ -638,6 +638,7 @@ export default class loginForm extends Component {
         font-weight: 400;
         line-height: 20px;
         cursor: pointer;
+        line-height: 18px;
       }
     }
     .login_pic_warp {
@@ -711,26 +712,29 @@ export default class loginForm extends Component {
         margin: 0 12px 0 29px;
         font-size: 18px
       }
+      .input_i{
+        font-size: 14px !important;
+      }
 
       input::-webkit-input-placeholder {
         /* WebKit browsers */
         color: #d8dce6;
-        font-weight: 500;
+        font-weight: 400;
       }
       input:-moz-placeholder {
         /* Mozilla Firefox 4 to 18 */
         color: #d8dce6;
-        font-weight: 500;
+        font-weight: 400;
       }
       input::-moz-placeholder {
         /* Mozilla Firefox 19+ */
         color: #d8dce6;
-        font-weight: 500;
+        font-weight: 400;
       }
       input:-ms-input-placeholder {
         /* Internet Explorer 10+ */
         color: #d8dce6;
-        font-weight: 500;
+        font-weight: 400;
       }
 
       input {
@@ -770,6 +774,7 @@ export default class loginForm extends Component {
       margin: 0 auto 58px auto;
       color: #fff;
       font-size: 20px;
+      border: 0;
       span {
         color: #fff;
         font-weight: 500;
@@ -784,12 +789,6 @@ export default class loginForm extends Component {
       top:0;
       left: -180px;
       border-radius: 8px;
-      .open{
-          position: absolute;
-          top: 16px;
-          left: 702px;
-          cursor: pointer;
-      }
       .guide_header{
           text-align: center;
           margin: 68px auto 36px auto;
@@ -838,8 +837,7 @@ export default class loginForm extends Component {
         display: inline-block;
         width: 203px;
         height: 40px;
-        font-size: 24px;
-        font-weight: 400;
+        font-size: 20px;
         color: #929292;
         font-weight: 400;
         font-family: PingFangSC-Regular, PingFang SC;
@@ -865,6 +863,7 @@ export default class loginForm extends Component {
       .active {
         border-color: #652791;
         color: #652791;
+        font-weight: 550;
       }
     }
   }
