@@ -16,11 +16,11 @@ import loginForm from '@/components/common/login'
   }
 })
 export default class login extends Vue {
-  loginType = 'qrcodeLogin'
+  loginType = 'msgLogin'
   mounted () {
     let query = this.$route.query
     if (query.type) this.loginType = query.type
-    this.loginType 
+    this.loginType
     // 百度统计
     let _hmt = _hmt || [];
     (function () {
@@ -54,5 +54,5 @@ export default class login extends Vue {
     }
   }
 }
-  
+
 </style>
