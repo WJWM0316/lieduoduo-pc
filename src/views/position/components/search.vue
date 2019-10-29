@@ -2,37 +2,133 @@
   <div class="search-wrapper">
     <div class="main-center">
       <div class="search-input">
+        <drop-down
+            class="search-location"
+            v-model="params.cityNums"
+            :items="areaList"
+            :showArrow="true"
+            :default-width="100"
+            :props="{
+              value: 'areaId',
+              label: 'name'
+            }"
+          @on-select="handleSelectLocaltion">
+          <span class="address-name">{{address}}</span>
+        </drop-down>
         <el-autocomplete
-          placeholder="搜索职位、公司"
-          v-model="searchValue"
+          placeholder="搜索职位"
+          v-model="params.keyword"
           :fetch-suggestions="querySearch"
-          @select="handleSelect">
-          <el-select v-model="address" slot="prepend" placeholder="请选择">
-            <el-option value="广州">广州</el-option>
-            <el-option value="深圳">深圳</el-option>
-            <el-option value="北京">北京</el-option>
-            <el-option value="上海">上海</el-option>
-          </el-select>
-        </el-autocomplete>
-        <el-button class="el-button-h46 " type="primary">搜索</el-button>
+          @select="handleSelectPosition" />
+        <el-button class="el-button-h46 " type="primary" @click="handleSelect">搜索</el-button>
+      </div>
+      <div class="search-filter">
+        <drop-down
+          v-model="params.emolumentIds"
+          :items="emolumentList"
+          :showArrow="true"
+          :props="{
+            value: 'id',
+            label: 'text'
+          }"
+          @on-select="handleSelect">
+          <span class="filter-name">薪资范围 <span>{{params.emolumentIds !== '' ? '(1)' : '' }}</span></span>
+        </drop-down>
+        <drop-down
+          v-model="params.financingIds"
+          :items="financingList"
+          :multiple="true"
+          :showArrow="true"
+          :limit="3"
+          :props="{
+            value: 'value',
+            label: 'text'
+          }"
+          @on-select="handleSelect">
+          <span class="filter-name">融资规模 <span v-if="params.financingIds.length">({{params.financingIds.length}})</span></span>
+        </drop-down>
+        <drop-down
+          v-model="params.employeeIds"
+          :items="experienceList"
+          :multiple="true"
+          :limit="3"
+          :showArrow="true"
+          :props="{
+            value: 'value',
+            label: 'text'
+          }"
+          @on-select="handleSelect">
+          <span class="filter-name">人员规模 <span v-if="params.employeeIds.length">({{params.employeeIds.length}})</span></span>
+        </drop-down>
+        <drop-down
+          v-model="params.industryIds"
+          :items="industryList"
+          :multiple="true"
+          :showArrow="true"
+          :col="3"
+          :limit="3"
+          :props="{
+            value: 'labelId',
+            label: 'name'
+          }"
+          @on-select="handleSelect">
+          <span class="filter-name">行业领域 <span v-if="params.industryIds.length">({{params.industryIds.length}})</span></span>
+        </drop-down>
+        <span class="filter-remove" @click="handleRemove">清空筛选条件</span>
       </div>
     </div>
   </div>
 </template>
 <script>
+import { getSearchCollect } from 'API/common'
+import { getMatchesPosition } from 'API/search'
+import DropDown from 'COMPONENTS/dropDown'
 export default {
   data () {
     return {
-      searchValue: '',
-      address: '广州'
+      address: '',
+      params: {
+        keyword: '',
+        cityNums: this.cityid,
+        emolumentIds: '', // 薪资
+        financingIds: [], // 融资
+        employeeIds: [], // 人员规模
+        industryIds: [] // 行业领域
+      },
+      emolumentList: [], // 薪资范围
+      employeeList: [], // 人员规模
+      experienceList: [], // 学历要求
+      financingList: [], // 融资范围
+      industryList: [], // 行业列表
+      areaList: [] // 热门城市地址
+    }
+  },
+  components: { DropDown },
+  created () {
+    this.getCollectList()
+  },
+  computed: {
+    cityid () {
+      return this.$store.state.cityId || 0
     }
   },
   mounted () {
     window.addEventListener('scroll', this.handleScroll)
   },
   methods: {
-    querySearch () {
-
+    querySearch (str, cb) {
+      if (!str.length) {
+        // eslint-disable-next-line standard/no-callback-literal
+        cb([])
+        return
+      }
+      clearTimeout(this.timeout)
+      this.timeout = setTimeout(() => {
+        getMatchesPosition({ position: str }).then(({ data }) => {
+          const reslutes = data.data || []
+          cb(reslutes.map((val, index) => ({ value: val, id: index })))
+        })
+      }, 50)
     },
     handleScroll () {
       // 得到页面滚动的距离
@@ -41,7 +137,47 @@ export default {
       this.headerFixed = scrollTop > this.scrollTop
     },
     handleSelect () {
-
+      const params = {}
+      for (let item in this.params) {
+        params[item] = Array.isArray(this.params[item]) ? this.params[item].join(',') : this.params[item]
+      }
+      this.$emit('on-search', params)
+    },
+    // 地址选择
+    handleSelectLocaltion (address) {
+      this.address = address.name
+    },
+    // 职位选择
+    handleSelectPosition (item) {
+      this.params.keyword = item.value
+      this.handleSelect()
+    },
+    // 获取集合数据
+    getCollectList () {
+      getSearchCollect().then(({ data }) => {
+        const { emolument, employee, experience, financing, industry, area } = data.data
+        this.emolumentList = emolument
+        this.employeeList = employee
+        this.experienceList = experience
+        this.financingList = financing
+        this.industryList = industry
+        this.areaList = area
+        const address = area.find(val => val.areaId === this.cityId) || area[0]
+        this.address = address.name
+      })
+    },
+    // 清空筛选
+    handleRemove () {
+      this.params = {
+        emolumentIds: '', // 薪资
+        financingIds: [], // 融资
+        employeeIds: [], // 人员规模
+        industryIds: [] // 行业领域
+      }
+      this.financingList.forEach(val => { if (val.checked) val.checked = false })
+      this.industryList.forEach(val => { if (val.checked) val.checked = false })
+      this.experienceList.forEach(val => { if (val.checked) val.checked = false })
+      this.handleSelect()
     }
   },
   destroyed () {
@@ -52,23 +188,48 @@ export default {
 <style lang="scss" scoped>
 .search-wrapper {
   width: 100%;
+  background: #fff;
   box-shadow: $shadow-1;
 }
 .search-input {
   padding: 24px 0;
+  position: relative;
   .el-autocomplete,& /deep/ .el-input__inner{
     height: 46px;
   }
-  .el-select {
+  .search-location {
     width: 100px;
-    height: 100%;
-    vertical-align: middle;
+    text-align: center;
+    position: absolute;
+    padding: 15px 0;
+    top:24px;
+    z-index: 1;
+    left: 0;
+    .address-name {
+      display: inline-block;
+      min-width: 50px;
+      color: $title-color-2;
+    }
+    & /deep/ .drop-down-wrapper {
+      margin-top: 14px;
+    }
+  }
+  .search-location::after {
+    content: "";
+    position: absolute;
+    height: 20px;
+    top: 13px;
+    right: 0;
+    width: 1px;
+    background: $barder-color-4;
   }
   .el-autocomplete {
-    width: 750px;
+    width: 850px;
   }
   & /deep/ .el-input__inner {
     border-radius: 0px;
+    padding-left: 112px;
+    box-sizing: border-box;
   }
   .el-button-h46 {
     display: inline-block;
@@ -77,6 +238,32 @@ export default {
   }
   .search-fixed-title {
     display: none
+  }
+}
+.search-filter {
+  @include flex-v-center;
+  padding: 0px 0 20px;;
+  &>div {
+    min-width: 168px;
+    margin-right: 40px;
+  }
+  & /deep/ .drop-down-wrapper {
+    margin-top: 20px;
+  }
+  .filter-name {
+    min-width: 86px;
+    display: inline-block;
+    color: $title-color-1;
+    font-size: 14px;
+    span {
+      color: $main-color-1;
+    }
+  }
+  .filter-remove {
+    margin-left: auto;
+    color: $font-color-10;
+    font-size: 14px;
+    cursor: pointer;
   }
 }
 </style>

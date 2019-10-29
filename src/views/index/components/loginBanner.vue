@@ -1,5 +1,5 @@
 <template>
-  <div class="index-login" :style="{'background-image': `url(${banner[0] && banner[0].bigImgUrl})`}">
+  <div class="index-login">
     <div class="main-center index-login-wrapper">
       <div class="position-number">
         <div class="position-number-wrapper">
@@ -18,6 +18,7 @@
   </div>
 </template>
 <script>
+// :style="{'background-image': `url(${require('../../../assets/images/index/banner.gif')})`}"
 export default {
   props: {
     banner: {
@@ -45,6 +46,7 @@ $index-login-height: 120px;
   background: $bg-color-4;
   height: $index-login-height;
   width: 100%;
+  background-image: url('https://attach.lieduoduo.ziwork.com/front-assets/web/images/index-banner.gif');
   background-size: cover;
   background-repeat: no-repeat;
 }

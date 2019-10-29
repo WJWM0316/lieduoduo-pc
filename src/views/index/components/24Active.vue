@@ -290,6 +290,7 @@ export default {
     background: $bg-color-8;
     padding:10px 35px;
     margin: 0px -26px 0;
+    text-align: left;
     align-self: flex-end;
     width: 100%;
     font-size: 12px;

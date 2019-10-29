@@ -1,6 +1,6 @@
 <template>
   <div class="position-wrapper">
-    <search />
+    <search @on-search="(val) => handleSearch(val, 'append')" />
     <div class="main-center">
       <div class="position-lists" v-loading="getLoading">
         <no-found v-if="!getLoading && !listData.length"></no-found>
@@ -45,7 +45,6 @@
             :total="total">
           </el-pagination>
         </div>
-
       </div>
       <div></div>
       <div>
@@ -106,13 +105,23 @@ export default {
       this.getLoading = true
       getPositionSearch(this.params).then(({ data }) => {
         this.getLoading = false
-        this.listData = data.data || []
+        const listData = data.data || []
+        this.listData = listData.filter(val => val.id)
         this.total = data.meta.total
         if (this.$refs.scrollToTop) this.$refs.scrollToTop.toTop()
       })
     },
     handleSearch (value, type) {
-      if (value) this.params[type] = value
+      if (type !== 'page') this.params.page = 1
+      if (type === 'append') {
+        this.params = {
+          ...this.params,
+          ...value
+        }
+      } else {
+        if (value) this.params[type] = value
+      }
+
       this.getPositionList()
     },
     getBannerList () {
