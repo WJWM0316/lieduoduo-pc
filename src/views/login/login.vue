@@ -38,7 +38,7 @@ export default class login extends Vue {
   height: 100vh;
   box-sizing: border-box;
   width: 100%;
-  background: url("https://lieduoduo-uploads-test.oss-cn-shenzhen.aliyuncs.com/front-assets/web/images/bg_loginpage.png") no-repeat;
+  background: #652791 url("https://lieduoduo-uploads-test.oss-cn-shenzhen.aliyuncs.com/front-assets/web/images/bg_loginpage.png") no-repeat;
   background-size: auto 100%;
   background-position: center;
   display: flex;
@@ -48,6 +48,7 @@ export default class login extends Vue {
     padding: 0 10px;
     box-sizing: border-box;
     overflow: hidden;
+    margin: 0 auto;
     #loginForm {
       float: right;
     }

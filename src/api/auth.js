@@ -139,7 +139,8 @@ export const getMyInfoApi = data => request({
 export const getUserInfosApi = (data) => request({
   url: `/cur/user_info`,
   method: 'get',
-  params: data
+  params: data,
+  config: { host: 'qiuzhi', noCheckLogin: true }
 })
 
 // 获取用户角色信息
