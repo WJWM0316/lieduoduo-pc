@@ -49,13 +49,13 @@
           </div>
         </template>
         <!-- 短信登录 或者 注册 -->
-        <div class="logind" :class="{ cont_ti: imgcode }" v-if="type === 'msgLogin' || type === 'register'" v-show="!loginsuccess">
+        <div class="logind" :class="{ cont_ti: imgcode }" v-if="(type === 'msgLogin' || type === 'register') || type === 'loginRegister'" v-show="!loginsuccess">
           <ul class="sign_type" v-if="type === 'register'">
             <li :class="{ active : !identity }" @click="toggle(0)">我是求职者</li>
             <li :class="{ active : identity }" @click="toggle(1)">我是招聘官</li>
           </ul>
 
-          <h3 v-if="type === 'msgLogin'" class="cont_tit" style="margin-bottom: 40px;">短信登录</h3>
+          <h3 v-if="type === 'msgLogin' || type === 'loginRegister'" class="cont_tit" style="margin-bottom: 40px;">{{ type === 'msgLogin' ? '短信登录' : '登录/注册猎多多' }}</h3>
           <div class="logind_form" >
             <div class="input_wrap">
               <div class="input_box">
@@ -74,11 +74,38 @@
               </div>
             </div>
           </div>
-          <el-button class="login_button" @click="logintoo">登录</el-button>
-          <div class="bottom_text">
+          <el-button class="login_button" @click="logintoo">{{ type === 'msgLogin' ? '登录' : type === 'register' ? '注册' : '登录/注册' }}</el-button>
+          <div class="bottom_text" v-if=" ! (type === 'loginRegister')">
             {{ this.type === 'msgLogin' ? '没有账号' : '已有账号' }}
             <span @click="changetypeto">{{ this.type === 'msgLogin' ? '立即注册' : '马上登录' }}</span>
           </div>
+          <div class="bottom_txt" v-if="type === 'loginRegister'">
+            <a href="https://sao.lieduoduo.com/userAgreement" class="login_text">注册代表你已同意 猎多多用户协议&隐私政策</a>
+            <p class="login_href" @click="$router.push('login')">企业登录/注册</p>
+          </div>
+        </div>
+
+        <!-- 登录/注册猎多多c端引导 -->
+        <div class="guide" v-if="type === 'loginRegister'">
+            <i class="iconfont icon-danchuang-guanbi open" @click="handleClose"></i>
+            <div class="guide_header">
+                <img :src="cdnPath + 'guide_logo.png'"/>
+                <p>精英人才招聘神器</p>
+            </div>
+            <div class="text_wrap">
+                <div class="guide_text">
+                    <i class="iconfont icon-haojihui"></i>
+                    <span>100000+好机会</span>
+                </div>
+                <div class="guide_text">
+                    <i class="iconfont icon-qiye"></i>
+                    <span>300+知名企业</span>
+                </div>
+                <div class="guide_text">
+                    <i class="iconfont icon-weixin"></i>
+                    <span>一键约面，急速入职</span>
+                </div>
+            </div>
         </div>
 
         <!-- 引导图 -->
@@ -143,6 +170,11 @@ import { saveAccessToken } from '@/api/cacheService'
       handler () {
         this.init()
       },
+      visible (value) {
+        if (value) {
+          this.visibleDialog = value
+        }
+      },
       immediate: true
     }
   },
@@ -155,10 +187,11 @@ export default class loginForm extends Component {
   captchaKey = '' // 传回来的key
   captchaValue = '' // 图片验证码的value
   text = '发送验证码'
-  type = 'msgLogin' // msgLogin 短信登录, qrcodeLogin 二维码登录, register 注册
+  type = 'msgLogin' // msgLogin 短信登录, qrcodeLogin 二维码登录, register 注册, loginRegister 登录/注册
   helptype = false
   openHelp = false
   loginsuccess = false // 登录成功引导页
+  visibleDialog = true // 弹窗关闭
   // cdn图片地址
   cdnPath = `${process.env.VUE_APP_CDN_PATH}/images/`
   identity = 0 // 0 求职者 1 招聘官
@@ -168,6 +201,12 @@ export default class loginForm extends Component {
   timer = null;
   num = 1;
   showError = false;
+
+  // 关闭弹窗
+  handleClose () {
+    this.visibleDialog = false
+    this.$emit('update:visible', false)
+  }
 
   mounted () {
     this.type = this.loginType
@@ -238,8 +277,8 @@ export default class loginForm extends Component {
   // 短信登录注册切换
   changetypeto () {
     this.type =
-      this.type == 'msgLogin' ||
-      this.type == 'qrcodeLogin'
+      this.type === 'msgLogin' ||
+      this.type === 'qrcodeLogin'
         ? 'register'
         : 'msgLogin'
   }
@@ -310,7 +349,7 @@ export default class loginForm extends Component {
 </script>
 <style lang="less" scoped>
 .inner {
-	text-align: center;
+  text-align: center;
   .logind {
     .logind_form {
       width: 560px;
@@ -462,6 +501,22 @@ export default class loginForm extends Component {
         cursor: pointer;
       }
     }
+    .bottom_txt{
+      margin-top: -30px;
+      .login_text{
+        font-size: 12px;
+        color: #A29CA6;
+        line-height: 17px;
+        font-weight: 400;
+      }
+      .login_href{
+        font-weight: 400;
+        color: #652791;
+        cursor: pointer;
+        margin-top: 20px;
+      }
+    }
+
     .bottom_bnt {
       margin-top: 34px;
     }
@@ -736,6 +791,52 @@ export default class loginForm extends Component {
         font-size: 20px;
       }
     }
+    .guide{
+      width: 192px;
+      height: 458px;
+      background: #FBFBFF;
+      position: absolute;
+      top:0;
+      left: -180px;
+      border-radius: 8px;
+      .open{
+          position: absolute;
+          top: 16px;
+          left: 702px;
+          cursor: pointer;
+      }
+      .guide_header{
+          text-align: center;
+          margin: 68px auto 36px auto;
+          img{
+              width: 46px;
+          }
+          p{
+              color: #652791;
+              font-weight: 500;
+              margin-top: 13px;
+          }
+      }
+      .text_wrap{
+          width: 146px;
+          height: 104px;
+          margin-left: 30px;
+          text-align: left;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          i{
+              font-size: 16px;
+              color: #652791;
+              margin-right: 3px;
+          }
+          span{
+              font-size: 12px;
+              color: #6D696E;
+          }
+        }
+      }
+
     .sign {
       .logind_form {
         width: 560px;
@@ -745,7 +846,8 @@ export default class loginForm extends Component {
     .sign_type {
       width: 460px;
       height: 38px;
-      margin: 50px auto 32px auto;
+      margin: 0 auto 32px auto;
+      padding-top: 50px;
 
       li {
         display: inline-block;
