@@ -51,7 +51,7 @@
         <div class="logind" :class="{ cont_ti: imgcode }" v-if="(type === 'msgLogin' || type === 'register') || type === 'loginRegister'" v-show="!loginsuccess">
           <ul class="sign_type" v-if="type === 'register'">
             <li :class="{ active : !identity }" @click="toggle(0)">我是求职者</li>
-            <li :class="{ active : identity }" @click="toggle(1)">我是招聘官</li>
+            <li :class="{ active : identity }" @click="toggle(1)">我是面试官</li>
           </ul>
 
           <h3 v-if="type === 'msgLogin' || type === 'loginRegister'" class="cont_tit" style="margin-bottom: 40px;">{{ type === 'msgLogin' ? '短信登录' : '登录/注册猎多多' }}</h3>
