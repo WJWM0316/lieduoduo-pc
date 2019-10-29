@@ -98,6 +98,7 @@
 							<p class="info-item"><i class="icon iconfont icon-gongsileixing"></i>{{infos.companyInfo.industry}}</p>
 						</div>
 					</div>
+					<adpostion position="positionDetail"></adpostion>
 				</aside>
 			</div>
 		</div>
@@ -113,11 +114,13 @@ import {TMap} from '@/util/TMap.js'
 import poster from '@/components/common/poster'
 import interviewBtn from '@/components/interview/interviewBtn.vue'
 import guideLogin from '@/components/common/guideLogin'
+import adpostion from '@/components/common/adpostion'
 @Component({
   name: 'positionDetail',
   components: {
   	poster,
   	guideLogin,
+  	adpostion,
   	interviewBtn
   },
   computed: {

@@ -48,13 +48,7 @@
       </div>
       <div></div>
       <div>
-        <div class="banner-list">
-          <template v-for="(item, index) in bannerList">
-            <a :href="item.otherUrl" target="_blank" :key="index">
-              <img :src="item.bigImgUrl" alt="" >
-            </a>
-          </template>
-        </div>
+        <adpostion position="searchResult"></adpostion>
       </div>
     </div>
     <scroll-to-top ref="scrollToTop"></scroll-to-top>
@@ -66,11 +60,13 @@ import Search from './components/search'
 import { getPositionSearch } from 'API/position'
 import NoFound from 'COMPONENTS/noFound'
 import { getBanners } from 'API/common'
+import adpostion from 'COMPONENTS/common/adpostion'
 export default {
   components: {
     Search,
     ScrollToTop,
-    NoFound
+    NoFound,
+    adpostion
   },
   data () {
     return {
