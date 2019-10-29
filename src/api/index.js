@@ -4,7 +4,6 @@ import router from '../router/index'
 import { getAccessToken, removeAccessToken } from './cacheService'
 import Vue from 'vue'
 let loadingInstance = null
-// localStorage = window.localStorage
 const VUE_WEB_ZHAOPIN_API = process.env.VUE_APP_WEB_ZHAOPIN_API
 const VUE_WEB_QIUZHI_API = process.env.VUE_APP_WEB_QIUZHI_API
 const VUE_WEB_PUB_API = process.env.VUE_APP_WEB_PUB_API
@@ -28,15 +27,6 @@ axios.interceptors.response.use(
   },
   err => {
     // 错误提示
-    if (err.response.data.httpStatus !== 200) {
-      Vue.message.error(err.response.data.msg)
-    }
-
-    // 登陆过期或者未登录
-    if(err.response.data.httpStatus === 401) {
-      router.push({name: 'login', query: {type: 'needBack'}})
-      removeAccessToken()
-    }
     if (loadingInstance) loadingInstance.close()
     return Promise.reject(err.response)
   }
@@ -72,7 +62,21 @@ export const request = ({ url, method, params = {}, config }) => {
     delete params.globalLoading
   }
 
-  return axios[method](url, method === 'get' ? { params } : params)
+  return new Promise((resolve, reject) => {
+    axios[method](url, method === 'get' ? { params } : params).then(res => {
+      resolve(res)
+    }).catch(err => {
+      if (!config.noCheckLogin && err.data.httpStatus !== 200) {
+        Vue.message.error(err.data.msg)
+      }
+      // 登陆过期或者未登录
+      if(!config.noCheckLogin && err.data.httpStatus === 401) {
+        router.push({name: 'login', query: {type: 'needBack'}})
+        removeAccessToken()
+      }
+      reject(err)
+    })
+  })
 }
 
 // export const upDateBaseURL = () => {

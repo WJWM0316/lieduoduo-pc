@@ -8,17 +8,19 @@
         </div>
       </div>
       <div class="login-wrapper">
-        <el-input class="login-phone-input" placeholder="请输入手机号码" v-model="loginForm.phone" size="medium" />
+        <el-input class="login-phone-input" maxlength="11" placeholder="请输入手机号码" v-model="loginForm.mobile" size="medium" />
         <el-input  class="login-code-input" placeholder="验证码" v-model="loginForm.code" size="medium">
-            <span class="code-span" slot="suffix">获取</span>
+          <span class="code-span" slot="suffix"  @click="getCode">{{text}}</span>
         </el-input>
-        <div class="login-btn">登陆/注册</div>
+        <div class="login-btn" @click="login">登陆/注册</div>
       </div>
     </div>
   </div>
 </template>
 <script>
-// :style="{'background-image': `url(${require('../../../assets/images/index/banner.gif')})`}"
+import { getCodeApi } from '@/api/auth'
+import { mobileReg } from '@/util/fieldRegular.js'
+
 export default {
   props: {
     banner: {
@@ -32,11 +34,54 @@ export default {
   },
   data () {
     return {
+      text: '获取',
       loginForm: {
-        phone: '',
+        mobile: '',
         code: ''
       }
     }
+  },
+  methods: {
+    checkMobile () {
+      if (!mobileReg.test(this.loginForm.mobile)) {
+        this.$message.error('手机号码格式不正确')
+        return false
+      } else {
+        return true
+      }
+    },
+    // 登录短信验证码倒计时
+    smstime () {
+      this.text = 60
+      clearInterval(this.timeout)
+      this.timeout = setInterval(() => {
+        this.text--
+        if (this.text === 0) {
+          clearInterval(this.timeout)
+          this.text = '获取'
+        }
+      }, 1000)
+    },
+    getCode () {
+      if (!this.loginForm.mobile || this.text !== '获取' || !this.checkMobile()) {
+        return
+      }
+      getCodeApi({ mobile: this.loginForm.mobile }).then(res => {
+        this.code = res.data.data
+        this.smstime()
+      })
+    },
+    login () {
+      let parmas = {
+        ...this.loginForm,
+        isBusiness: 0,
+        refresh: true
+      }
+      this.$store.dispatch('login', parmas)
+    }
+  },
+  destroyed () {
+    window.clearTimeout(this.timeout)
   }
 }
 </script>

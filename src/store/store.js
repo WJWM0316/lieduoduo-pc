@@ -32,12 +32,16 @@ export default new Vuex.Store({
     pageName: state => state.pageName,
     userIdentity: state => state.userIdentity,
     userInfo: state => state.userInfo,
+    hasLogin: state => state.hasLogin,
     token: state => state.token,
     areaList: state => state.areaList,
     cityId: state => state.cityId
   },
   // 只能执行同步方法，不要去执行异步方法 通过 this.$store.commit 方法去调用
   mutations: {
+    SETLOGIN:  (state, data) => {
+      state.hasLogin = data
+    }, 
     setUserIdentity: (state, data) => {
       state.userIdentity = data
     },
@@ -153,7 +157,7 @@ export default new Vuex.Store({
           return Promise.reject(error.data || {})
         })
     },
-
+    
     setPageName (store, options) {
       store.commit('setPageName', options)
     }

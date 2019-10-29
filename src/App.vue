@@ -2,7 +2,25 @@
   <router-view />
 </template>
 <script>
-  
+import Vue from 'vue'
+import Component from 'vue-class-component'
+import {getUserInfosApi} from '@/api/auth.js'
+@Component({
+  name: 'APP'
+})
+export default class APP extends Vue {
+  getUserInfo () {
+    getUserInfosApi().then(res => {
+      this.$store.commit('SETLOGIN', 1)
+      this.$store.commit('setUserInfo', res.data.data)
+    }).catch(e => {
+      this.$store.commit('SETLOGIN', 0)
+    })
+  }
+  created () {
+    this.getUserInfo()
+  }
+}
 </script>
 <style lang="scss">
 @import url('./assets/css/index.css');

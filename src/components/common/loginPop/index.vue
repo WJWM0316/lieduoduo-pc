@@ -1,8 +1,9 @@
 <template>
-	<div class="loginPop" v-show="hideLoginPop">
+	<div class="loginPop" v-show="showLoginPop">
 		<div class="bg"></div>
 		<div class="loginBox">
       <login-form ref="login-form" loginType="msgLogin" :toggleType="false"></login-form>
+    	<i class="close iconfont icon-close" @click="close"></i>
     </div>
 	</div>
 </template>
@@ -17,7 +18,10 @@ import loginForm from '@/components/common/login'
   }
 })
 export default class login extends Vue {
-	hideLoginPop = false
+	showLoginPop = false
+	close () {
+		this.showLoginPop = false
+	}
   mounted () {
   }
 }
@@ -45,6 +49,15 @@ export default class login extends Vue {
 			top: 50%;
 			left: 50%;
 			z-index: 2;
+			.close {
+    		font-size: 12px;
+	    	position: absolute;
+	    	top: 0;
+	    	right: 0;
+	    	color: #BCBCBC;
+	    	padding: 16px;
+	    	cursor: pointer;
+	    }
 		}
 	}
 </style>
