@@ -40,7 +40,7 @@
               <div :class="{ helptype: !helptype}" @click="helptype = !helptype">求职者</div>
               <div :class="{ helptype: helptype}" @click="helptype = !helptype">招聘者</div>
             </div>
-            <p class="help_text">职位管理 > 发布职位 > 扫码上传</p>
+            <p class="help_text">我的 > 右上角「扫码」登录</p>
 
             <div class="help_img">
               <img :src="!helptype ? cdnPath + 'scanhelp.png' : cdnPath + 'scanhelptoo.png'" />
@@ -772,7 +772,8 @@ export default class loginForm extends Component {
       border-radius: 100px;
       cursor: pointer;
       margin: 0 auto 58px auto;
-			color: #fff;
+      color: #fff;
+      font-size: 20px;
       span {
         color: #fff;
         font-weight: 500;
