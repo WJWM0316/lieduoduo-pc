@@ -9,9 +9,9 @@
 					</div>
 					<div class="salary">{{infos.emolumentMin}}~{{infos.emolumentMax}}K<template v-if="infos.annualSalary > 12">·{{infos.annualSalary}}<span class="unit">薪</span></template></div>
 					<div class="infos">
-						<span class="info-item"><i class="icon iconfont"></i>{{infos.city}} {{infos.district}}</span>
+						<span class="info-item"><i class="icon iconfont icon-dizhi"></i>{{infos.city}} {{infos.district}}</span>
 						<span class="info-item"><i class="icon iconfont icon-zhiwei"></i>{{infos.workExperienceName}}</span>
-						<span class="info-item"><i class="icon iconfont"></i>{{infos.educationName}}</span>
+						<span class="info-item"><i class="icon iconfont icon-jiaoyu"></i>{{infos.educationName}}</span>
 					</div>
 					<div class="labels">
 						<span class="label-item" v-for="n in infos.lightspotInfo" :key="n">{{n}}</span>
@@ -62,7 +62,7 @@
 		<div class="content">
 			<div class="inner">
 				<article class="content-article">
-					<section class="part">
+					<section class="part" v-if="infos.skillsLabel.length > 0">
 						<div class="title">技能要求</div>
 						<div class="labels">
 							<span class="label-item" v-for="n in infos.skillsLabel" :key="n.labelId">{{n.name}}</span>
@@ -85,7 +85,7 @@
 					</section>
 				</article>
 				<aside class="content-aside">
-					<guideLogin></guideLogin>
+					<guideLogin v-if="!hasLogin"></guideLogin>
 					<div class="companyInfos">
 						<p class="title">公司基本信息</p>
 						<div class="details">
@@ -95,7 +95,7 @@
 						<div class="infos">
 							<p class="info-item"><i class="icon iconfont icon-rongzi"></i>{{infos.companyInfo.financingInfo}}</p>
 							<p class="info-item"><i class="icon iconfont icon-renshu1"></i>{{infos.companyInfo.employeesInfo}}</p>
-							<p class="info-item"><i class="icon iconfont icon-gongsileixing"></i>{{infos.companyInfo.financingInfo}}</p>
+							<p class="info-item"><i class="icon iconfont icon-gongsileixing"></i>{{infos.companyInfo.industry}}</p>
 						</div>
 					</div>
 				</aside>
@@ -121,6 +121,9 @@ import guideLogin from '@/components/common/guideLogin'
   	interviewBtn
   },
   computed: {
+  	...mapState({
+  		hasLogin: state => state.hasLogin
+  	}),
   	remainingSeats() {
   		return this.infos.rapidlyInfo.seatsNum - this.infos.rapidlyInfo.applyNum - this.infos.rapidlyInfo.natureApplyNum
   	}
@@ -139,6 +142,7 @@ export default class PositionDetail extends Vue {
   id = 0
   qrcodeUrl = ''
   infos = {
+  	skillsLabel: [],
   	companyInfo: {
   		intro: '',
   		companyShortname: '',

@@ -118,6 +118,7 @@ export default class InterviewBtn extends Component {
   		this.qrCodeUrl = res.data.data.positionQrCodeUrl
   	})
   }
+  // 求职者确认约面
   confirmInterview () {
   	confirmInterviewApi({id: this.interviewInfos.data[0].interviewId}).then(res => {
       this.getInterviewStatus()
@@ -130,12 +131,13 @@ export default class InterviewBtn extends Component {
   hideSharePop () {
   	this.showSharePop = !this.showSharePop
   }
+  // 求职者开撩
   jobHunterChat () {
   	let isSpecail = this.infos.isRapidly === 1 
 	                  && !this.interviewInfos.applied
 	                  && this.infos.rapidlyInfo.applyNum + this.infos.rapidlyInfo.natureApplyNum < this.infos.rapidlyInfo.seatsNum
   	let parmas = {recruiterUid: this.infos.recruiterInfo.uid, positionId: this.infos.id}
-  	if (isSpecail) params.interview_type = 2
+  	if (isSpecail) parmas.interview_type = 2
   	applyInterviewApi(parmas).then(res => {
   		this.getInterviewStatus()
   		this.$message({
@@ -144,13 +146,25 @@ export default class InterviewBtn extends Component {
       });
   	})
   }
-  
+  // 求职标记不合适
+  jobRejectChat () {
+  	refuseInterviewApi({id: this.infos.recruiterInfo.uid}).then(res => {
+  		this.getInterviewStatus()
+  		this.$message({
+        message: '已标记暂不考虑',
+        type: 'success'
+      });
+  	})
+  }
   todoAction (type) {
   	if (!this.hasLogin) {
   		this.$refs.loginPop.showLoginPop = true
   		return
   	}
   	switch (type) {
+  		case 'job-hunting-reject':
+  			this.jobRejectChat()
+  			break
   		case 'job-hunting-chat':
   			this.jobHunterChat()
   			break
@@ -189,6 +203,7 @@ export default class InterviewBtn extends Component {
 				color: $main-color-1;
 				border: none;
 				cursor: pointer;
+				margin: 0;
 			}
 			.accept {
 				width: 50%;
@@ -197,6 +212,7 @@ export default class InterviewBtn extends Component {
 				color: #fff;
 				border: none;
 				cursor: pointer;
+				margin: 0;
 			}
 		}
 		

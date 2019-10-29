@@ -63,7 +63,7 @@ export default {
       }, 1000)
     },
     getCode () {
-      if (this.text !== '获取' || !this.checkMobile()) {
+      if (!this.loginForm.mobile || this.text !== '获取' || !this.checkMobile()) {
         return
       }
       getCodeApi({ mobile: this.loginForm.mobile }).then(res => {

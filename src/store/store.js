@@ -157,7 +157,7 @@ export default new Vuex.Store({
           return Promise.reject(error.data || {})
         })
     },
-
+    
     setPageName (store, options) {
       store.commit('setPageName', options)
     }

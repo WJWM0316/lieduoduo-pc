@@ -263,10 +263,6 @@ export default class loginForm extends Component {
       return
     }
     getCodeApi({ mobile: this.mobile }).then(res => {
-      this.$message({
-        message: res.data.msg,
-        type: 'success'
-      })
       this.smstime()
     })
   }
