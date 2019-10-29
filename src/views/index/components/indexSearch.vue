@@ -16,7 +16,7 @@
       </div>
       <p class="hot-word">
         <span>热门搜索：</span>
-        <template v-for="(item, index) in hotKeyWork">
+        <template v-for="(item, index) in hotkeyWord">
           <router-link :to="`/position?keyword=${item.word}`" :key="index">{{item.word}}</router-link>
         </template>
       </p>
@@ -30,7 +30,7 @@ export default {
   data () {
     return {
       searchValue: '', // 需要查询的值
-      hotKeyWork: [], // 热门关键词
+      hotkeyWord: [], // 热门关键词
       headerFixed: false
     }
   },
@@ -68,13 +68,13 @@ export default {
       this.$router.push({
         path: '/position',
         query: {
-          keywork: value.value
+          keyword: value.value
         }
       })
     },
     getWords () {
       getHotKeyword().then(({ data }) => {
-        this.hotKeyWork = data.data.items || []
+        this.hotkeyWord = data.data.items || []
       })
     },
     handleScroll () {
@@ -114,7 +114,7 @@ $search-width-wrapper: 936px;
     padding: 0 10px;
   }
   span {
-    color: $font-color-1;
+    color: $title-color-2;
   }
 }
 .index-search-wrapper {
@@ -127,12 +127,15 @@ $search-width-wrapper: 936px;
     width: 793px;
   }
   & /deep/ .el-input__inner {
-    border-radius: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
   }
   .el-button-h46 {
     display: inline-block;
     vertical-align: top;
     width: 140px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
   }
   .search-fixed-title {
     display: none

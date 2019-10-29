@@ -39,7 +39,7 @@
       <div class="header-user-info">
         <div class="system">
           <template v-if="isLogin">
-            <span class="resume">简历</span>
+            <router-link tag="span" class="resume" to="/resumeFirstPost">简历</router-link>
           </template>
           <template v-else>
             <div>

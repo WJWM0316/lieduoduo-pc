@@ -106,6 +106,8 @@ export default {
   components: { DropDown },
   created () {
     this.getCollectList()
+    const { query } = this.$route
+    if (query.keyword) this.params.keyword = query.keyword
   },
   computed: {
     cityid () {
@@ -169,6 +171,7 @@ export default {
     // 清空筛选
     handleRemove () {
       this.params = {
+        keyword: '',
         emolumentIds: '', // 薪资
         financingIds: [], // 融资
         employeeIds: [], // 人员规模

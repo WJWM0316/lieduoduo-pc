@@ -6,7 +6,7 @@
       <span class="position-tag">职业顾问服务</span>
       <span class="position-tag">200元到面红包</span>
       <div class="bubble-wrapper" v-if="bubbleList.length">
-         <p>{{bubbleList[bubbleIndex]}}</p>
+         <p ref="bubble">{{bubbleList[bubbleIndex]}}</p>
       </div>
     </div>
     <div class="active-list">
@@ -20,15 +20,15 @@
             <div class="list-company-info">{{item.companyInfo.industry}}·{{item.companyInfo.employeesInfo}}·{{item.companyInfo.financingInfo}}</div>
           </div>
           <div class="list-position-info">
-            <div>
+            <div class="list-position-content">
                <div>
                 <span class="list-position-name">{{item.positionName}}</span>
-                <span class="list-pay">{{item.emolumentMin}}~{{item.emolumentMax}}K · {{item.annualSalaryDesc}}</span>
+                <span class="list-pay">{{item.emolumentMin}}~{{item.emolumentMax}}K <template v-if="item.annualSalary > 12">· {{item.annualSalaryDesc}}</template></span>
               </div>
               <div class="list-position-require">
                 <span><i class="iconfont icon-dizhi"></i>{{item.city}}{{item.district}}</span>
                 <span><i class="iconfont icon-zhiwei"></i>{{item.workExperienceName}}</span>
-                <span><i class="iconfont icon-dizhi"></i>{{item.educationName}}</span>
+                <span><i class="iconfont icon-jiaoyu"></i>{{item.educationName}}</span>
               </div>
             </div>
             <div class="list-details" v-if="item.companyInfo.oneSentenceIntro">{{item.companyInfo.oneSentenceIntro}}</div>
@@ -121,6 +121,16 @@ export default {
     },
     bubbleDown () {
       if (!this.bubbleList.length) return
+      if (!this.$refs.bubble) {
+        // un mounted
+        window.clearTimeout(this.cryExecTimer)
+        this.cryExecTimer = setTimeout(() => {
+          this.bubbleDown()
+        }, 500)
+        return
+      } else {
+        if (!this.$refs.bubble.querySelector('animation')) this.$refs.bubble.classList.add('animation')
+      }
       this.bubbleDownTimer = setTimeout(() => {
         if (this.bubbleIndex >= this.bubbleList.length - 1) {
           this.bubbleIndex = 0
@@ -146,6 +156,7 @@ export default {
   destroyed () {
     clearTimeout(this.countDownTimer)
     clearTimeout(this.bubbleDownTimer)
+    clearTimeout(this.cryExecTimer)
   }
 }
 </script>
@@ -190,13 +201,18 @@ export default {
     p {
       border-radius: 15px;
       height: 30px;
-      white-space: nowrap;
+      padding: 0 26px;
+      box-sizing: border-box;
+      overflow: hidden;
+      width: 100%;
       font-size: 14px;
       line-height: 30px;
       opacity: 0;
       transform: translateY(30px);
       color: #fff;
       background: linear-gradient(to left, $main-color-2, $main-color-1);
+    }
+    p.animation {
       animation: bubble 5s infinite;
     }
   }
@@ -217,14 +233,17 @@ export default {
     box-sizing: border-box;
     box-shadow: $shadow-1;
     border-radius:4px;
+    background-color: #fff;
   }
   .active-list-wrapper:hover {
     box-shadow: $shadow-2;
   }
   .list-header {
     background-color: #fff;
-    padding: 10px 16px;
+    padding: 10px 0px;
     @include flex-v-center;
+    margin:0 16px;
+    box-sizing: border-box;
     color: $font-color-6;
     border-bottom: 1px dashed $border-color-1;
     .list-image {
@@ -253,7 +272,7 @@ export default {
     text-align: center;
     background-color: #fff;
     box-sizing: border-box;
-    padding: 18px 16px 0 18px;
+    padding: 0px 16px 0 18px;
     min-height: 138px;
     display: flex;
     flex-direction: row;
@@ -261,6 +280,9 @@ export default {
     align-items: center;
     & > div {
       width: 100%;
+    }
+    .list-position-content {
+      padding: 18px 0;
     }
   }
   .list-position-name {
@@ -277,13 +299,14 @@ export default {
   .list-position-require {
     margin-top: 10px;
     font-size: 14px;
-    color: $title-color-3;
+    color: $title-color-2;
     span + span {
       margin-left: 22px;
     }
     .iconfont {
       font-size: 14px;
       padding-right: 3px;
+      color: $title-color-2;
     }
   }
   .list-details {
@@ -334,9 +357,11 @@ export default {
     margin-left: 13px;
     p {
       font-size: 12px;
+      font-weight: 300;
       color: $font-color-2;
       b {
-        color: $main-color-1
+        color: $main-color-1;
+        font-weight: 500;
       }
     }
     span {
@@ -366,6 +391,9 @@ export default {
 @keyframes bubble{
   0% {}
   30% {
+    transform: translateY(30px);
+  }
+  50% {
     transform: translateY(0);
     opacity: 1;
   }
