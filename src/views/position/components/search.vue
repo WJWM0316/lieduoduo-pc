@@ -49,7 +49,7 @@
         </drop-down>
         <drop-down
           v-model="params.employeeIds"
-          :items="experienceList"
+          :items="employeeList"
           :multiple="true"
           :limit="3"
           :showArrow="true"
@@ -179,7 +179,7 @@ export default {
       }
       this.financingList.forEach(val => { if (val.checked) val.checked = false })
       this.industryList.forEach(val => { if (val.checked) val.checked = false })
-      this.experienceList.forEach(val => { if (val.checked) val.checked = false })
+      this.employeeList.forEach(val => { if (val.checked) val.checked = false })
       this.handleSelect()
     }
   },

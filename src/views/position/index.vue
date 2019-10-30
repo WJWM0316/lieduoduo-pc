@@ -72,7 +72,7 @@ export default {
     return {
       params: {
         page: 1,
-        count: 20,
+        count: 15,
         keyword: '',
         cityNums: this.cityid
       },
@@ -109,6 +109,9 @@ export default {
     },
     handleSearch (value, type) {
       if (type !== 'page') this.params.page = 1
+      if (type === 'page' && !this.isLogin) {
+        return
+      }
       if (type === 'append') {
         this.params = {
           ...this.params,

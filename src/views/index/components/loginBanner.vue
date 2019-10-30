@@ -91,7 +91,7 @@ $index-login-height: 120px;
   background: $bg-color-4;
   height: $index-login-height;
   width: 100%;
-  background-image: url('https://attach.lieduoduo.ziwork.com/front-assets/web/images/index-banner.gif');
+  background-image: url(#{$image-cdn-url}/images/index-banner.gif);
   background-size: cover;
   background-repeat: no-repeat;
 }
