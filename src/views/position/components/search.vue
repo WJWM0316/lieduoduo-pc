@@ -19,6 +19,8 @@
           <el-autocomplete
             placeholder="搜索职位"
             v-model="params.keyword"
+            @keyup.native.enter="handleSelect()"
+            :maxlength="50"
             :fetch-suggestions="querySearch"
             @select="handleSelectPosition" />
           <el-button class="el-button-h46 " type="primary" @click="handleSelect">搜索</el-button>
@@ -167,19 +169,18 @@ export default {
         this.financingList = financing
         this.industryList = industry
         this.areaList = area
-        const address = area.find(val => val.areaId === this.cityId) || area[0]
+        const address = area.find(val => val.areaId === this.cityid) || area[0]
         this.address = address.name
       })
     },
     // 清空筛选
     handleRemove () {
-      this.params = {
-        keyword: '',
+      Object.assign(this.params, {
         emolumentIds: '', // 薪资
         financingIds: [], // 融资
         employeeIds: [], // 人员规模
         industryIds: [] // 行业领域
-      }
+      })
       this.financingList.forEach(val => { if (val.checked) val.checked = false })
       this.industryList.forEach(val => { if (val.checked) val.checked = false })
       this.employeeList.forEach(val => { if (val.checked) val.checked = false })

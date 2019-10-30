@@ -8,6 +8,7 @@
           :fetch-suggestions="querySearchAsync"
           placeholder="搜索职位"
           @select="handleSelect"
+          @keyup.native.enter="handleSelect()"
           :maxlength="50"
           clearable>
           <i slot="prefix" class="el-input__icon el-icon-search"></i>
@@ -68,7 +69,7 @@ export default {
       this.$router.push({
         path: '/position',
         query: {
-          keyword: value.value
+          keyword: value ? value.value : this.searchValue
         }
       })
     },

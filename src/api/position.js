@@ -213,3 +213,19 @@ export const getPositionSearch = data => request({
   params: data,
   config: { host: 'qiuzhi' }
 })
+
+// 获取职位列表搜索条件
+export const getPositionSearchType = data => request({
+  url: '/position/search',
+  method: 'get',
+  params: data,
+  config: { host: 'qiuzhi' }
+})
+
+// 获取职位推荐列表
+export const getRecommendPosition = data => request({
+  url: '/recommend/oppty/list',
+  method: 'get',
+  params: data,
+  config: { host: 'qiuzhi' }
+})

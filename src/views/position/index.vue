@@ -4,7 +4,11 @@
     <div class="main-center">
       <div class="position-lists" v-loading="getLoading">
         <no-found v-if="!getLoading && !listData.length"></no-found>
-        <router-link tag="div" :to="`/position/details?positionId=${item.id}`" class="position-list"   v-for="item in listData" :key="item.id">
+        <router-link
+          target="_blank"
+          :to="`/position/details?positionId=${item.id}`"
+          class="position-list"
+          v-for="item in listData" :key="item.id">
           <div class="position-info">
             <p>
               <!-- 急聘 -->
@@ -31,7 +35,7 @@
               <p class="">{{item.numOfVisitors}}人已看过</p>
             </div>
             <div class="contact-recruiter">
-              <el-button type="primary" size="small" @click.stop>开约</el-button>
+              <el-button type="primary" size="small">开约</el-button>
             </div>
           </div>
         </router-link>
@@ -57,7 +61,7 @@
 <script>
 import ScrollToTop from 'COMPONENTS/scrollToTop'
 import Search from './components/search'
-import { getPositionSearch } from 'API/position'
+import { getPositionSearch, getPositionSearchType, getRecommendPosition } from 'API/position'
 import NoFound from 'COMPONENTS/noFound'
 import adpostion from 'COMPONENTS/common/adpostion'
 import GuideLogin from 'COMPONENTS/common/guideLogin'
@@ -80,6 +84,8 @@ export default {
       listData: [],
       total: 0, // 职位总数
       getLoading: true,
+      isGetSearchType: false,
+      recommended: 0,
       bannerList: []
     }
   },
@@ -102,7 +108,23 @@ export default {
     // 获取职位列表
     getPositionList () {
       this.getLoading = true
-      getPositionSearch(this.params).then(({ data }) => {
+      if (!this.isGetSearchType) {
+        this.getSearchType()
+        return
+      }
+      let apiMethod = getPositionSearch
+      if (this.recommended) {
+        apiMethod = getRecommendPosition
+        // 判断筛选条件
+        let search = ['keyword', 'financingIds', 'employeeIds', 'industryIds']
+        for (let item of search) {
+          if (this.params[item]) {
+            apiMethod = getPositionSearch
+            break
+          }
+        }
+      }
+      apiMethod(this.params).then(({ data }) => {
         this.getLoading = false
         const listData = data.data || []
         this.listData = listData.filter(val => val.id)
@@ -127,9 +149,22 @@ export default {
       }
       this.$router.replace({
         path: '/position',
-        query: this.params
+        query: {
+          ...this.params,
+          q: Date.now()
+        }
       })
       this.getPositionList()
+    },
+    getSearchType () {
+      getPositionSearchType().then(({ data }) => {
+        if (data.httpStatus === 200) {
+          this.isGetSearchType = true
+          this.recommended = data.data.recommended
+          // 如果还在获取列表状态中
+          if (this.getLoading) this.getPositionList()
+        }
+      })
     }
   }
 }
@@ -155,6 +190,7 @@ export default {
 .position-list {
    cursor: pointer;
    @include flex-v-center;
+   width: 100%;
    position: relative;
    background: #fff;
    box-sizing: border-box;
@@ -241,14 +277,19 @@ export default {
     vertical-align: middle;
     display: inline-block;
     font-size: 14px;
+    color: $title-color-1;
   }
   .recruiter-name {
     max-width: 56px;
-    @include ellipsis;
     margin: 0 6px;
+  }
+  .recruiter-name,  .recruiter-position {
+    @include ellipsis;
   }
   .recruiter-position {
     margin-left: 6px;
+    max-width: 85px;
+
   }
   .recruiter-profile {
     @include img-radius(22px, 22px)
