@@ -106,13 +106,14 @@
             </div>
         </div>
 
-        <!-- 引导图 -->
+        <!-- 登录成功引导图 -->
         <div class="login_after" v-show="loginsuccess">
           <h3 class="after_title">登录注册成功</h3>
           <p class="after_text">尚未是认证面试官，微信「扫一扫」认证</p>
-          <img class="after_img"/>
+          <img class="after_img" :src="cdnPath + 'cIndex.jpg'"/>
         </div>
       </div>
+
       <div class="overlayout" v-if="showError">
         <div class="box">
           <i class="el-icon-close" @click="closeMask"></i>
@@ -172,7 +173,7 @@ export default class loginForm extends Component {
   captchaKey = '' // 传回来的key
   captchaValue = '' // 图片验证码的value
   text = '发送验证码'
-  type = 'msgLogin' // msgLogin 短信登录, qrcodeLogin 二维码登录, register 注册, loginRegister 登录/注册
+  type = 'msgLogin' // msgLogin 短信登录, qrcodeLogin 二维码登录, register 注册
   helptype = false
   openHelp = false
   loginsuccess = false // 登录成功引导页
@@ -811,6 +812,26 @@ export default class loginForm extends Component {
               font-size: 12px;
               color: #6D696E;
           }
+        }
+      }
+      .login_after{
+        height: 316px;
+        padding: 50px 0 92px 0;
+        .after_title{
+          font-size: 30px;
+          color: #652791;
+          font-weight:500;
+        }
+        .after_text{
+          font-size: 18px;
+          line-height: 26px;
+          color: #333333;
+          font-weight:500;
+          margin: 48px 0 38px 0;
+        }
+        .after_img{
+          width: 188px;
+          height: 174px;
         }
       }
 
