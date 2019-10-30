@@ -4,6 +4,7 @@ import { saveAccessToken, removeAccessToken, getAccessToken, getUserInfo, saveUs
 import { loginPutInApipc, getUserRoleInfoApi } from '@/api/auth'
 import router from '@/router/index.js'
 import { mobileReg } from '@/util/fieldRegular.js'
+import {getMyResumeApi} from '@/api/resume.js'
 
 import {
   loginApi,
@@ -24,7 +25,8 @@ export default new Vuex.Store({
     guideCreateRecruiter: false,
     loginValidTime: 60 * 60 * 24 * 7 * 1000,
     cityId: 0, // 用户地址id
-    areaList: []
+    areaList: [],
+    myResume: {} // 我的简历详情
   },
   // 在getters中声明state中变量的计算函数，缓存计算后的数据， 通过 this.$store.getters 调用
   getters: {
@@ -49,6 +51,7 @@ export default new Vuex.Store({
     setUserInfo: (state, data) => {
       saveUserInfo(data, state.loginValidTime)
       state.userInfo = data
+      console.log(state.userInfo, 22222222222222222222)
     },
 
     LOGINCALLBACK: (state, data) => {
@@ -65,7 +68,7 @@ export default new Vuex.Store({
       // 获取用户角色信息
       getUserRoleInfoApi().then(res => {
         state.roleInfos = res.data.data
-        // 判断是否求职者且未完善简历四步
+        // 判断是否求职者且未完善简历四步        
         if (!state.userIdentity && !state.roleInfos.isJobhunter) {
           router.replace({path: '/resumeFirstPost'})
           return
@@ -76,7 +79,7 @@ export default new Vuex.Store({
         }
         // 登录跳转
         if (data.refresh) {
-          window.Refresh()
+          window.location.reload()
         } else if (data.needBack) {
           router.go(-1)
         } else {
@@ -104,6 +107,16 @@ export default new Vuex.Store({
 
     setCityId (state, id) {
       state.cityId = id
+    },
+
+    setMyResume (state, data) {
+      getMyResumeApi().then(res => {
+        state.myResume = res.data.data
+        if (!state.userInfo.realname) {
+          state.userInfo.realname = state.myResume.name
+          state.userInfo.avatarInfo = state.myResume.avatar
+        }
+      })
     }
   },
   // 借助actions的手去 执行 mutations ， 通过  this.$store.dispatch 的方式调用
@@ -149,8 +162,13 @@ export default new Vuex.Store({
     logoutApi (store) {
       return logoutApi()
         .then(res => {
+          Vue.message({
+            message: '退出成功',
+            type: 'success'
+          })
           removeAccessToken()
           store.commit('LOGOUT')
+          window.location.reload()
           return res
         })
         .catch(error => {
@@ -160,6 +178,10 @@ export default new Vuex.Store({
     
     setPageName (store, options) {
       store.commit('setPageName', options)
+    },
+    // 获取我的简历详情
+    getMyResume (store, data) {
+      store.commit('setMyResume', data)
     }
   }
 })

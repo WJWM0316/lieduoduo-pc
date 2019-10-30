@@ -1,80 +1,82 @@
 <template>
-  <div class="search-wrapper">
-    <div class="main-center">
-      <div class="search-input">
-        <drop-down
-            class="search-location"
-            v-model="params.cityNums"
-            :items="areaList"
+  <div class="search-wrapper" :class="{'search-fixed': headerFixed}">
+    <div :class="{'search-fixed-wrapper': headerFixed}">
+      <div class="main-center">
+        <div class="search-input">
+          <drop-down
+              class="search-location"
+              v-model="params.cityNums"
+              :items="areaList"
+              :showArrow="true"
+              :default-width="100"
+              :props="{
+                value: 'areaId',
+                label: 'name'
+              }"
+            @on-select="handleSelectLocaltion">
+            <span class="address-name">{{address}}</span>
+          </drop-down>
+          <el-autocomplete
+            placeholder="搜索职位"
+            v-model="params.keyword"
+            :fetch-suggestions="querySearch"
+            @select="handleSelectPosition" />
+          <el-button class="el-button-h46 " type="primary" @click="handleSelect">搜索</el-button>
+        </div>
+        <div class="search-filter">
+          <drop-down
+            v-model="params.emolumentIds"
+            :items="emolumentList"
             :showArrow="true"
-            :default-width="100"
             :props="{
-              value: 'areaId',
+              value: 'id',
+              label: 'text'
+            }"
+            @on-select="handleSelect">
+            <span class="filter-name">薪资范围 <span>{{params.emolumentIds !== '' ? '(1)' : '' }}</span></span>
+          </drop-down>
+          <drop-down
+            v-model="params.financingIds"
+            :items="financingList"
+            :multiple="true"
+            :showArrow="true"
+            :limit="3"
+            :props="{
+              value: 'value',
+              label: 'text'
+            }"
+            @on-select="handleSelect">
+            <span class="filter-name">融资规模 <span v-if="params.financingIds.length">({{params.financingIds.length}})</span></span>
+          </drop-down>
+          <drop-down
+            v-model="params.employeeIds"
+            :items="employeeList"
+            :multiple="true"
+            :limit="3"
+            :showArrow="true"
+            :props="{
+              value: 'value',
+              label: 'text'
+            }"
+            @on-select="handleSelect">
+            <span class="filter-name">人员规模 <span v-if="params.employeeIds.length">({{params.employeeIds.length}})</span></span>
+          </drop-down>
+          <drop-down
+            v-model="params.industryIds"
+            :items="industryList"
+            :multiple="true"
+            :showArrow="true"
+            :col="3"
+            :limit="3"
+            :props="{
+              value: 'labelId',
               label: 'name'
             }"
-          @on-select="handleSelectLocaltion">
-          <span class="address-name">{{address}}</span>
-        </drop-down>
-        <el-autocomplete
-          placeholder="搜索职位"
-          v-model="params.keyword"
-          :fetch-suggestions="querySearch"
-          @select="handleSelectPosition" />
-        <el-button class="el-button-h46 " type="primary" @click="handleSelect">搜索</el-button>
-      </div>
-      <div class="search-filter">
-        <drop-down
-          v-model="params.emolumentIds"
-          :items="emolumentList"
-          :showArrow="true"
-          :props="{
-            value: 'id',
-            label: 'text'
-          }"
-          @on-select="handleSelect">
-          <span class="filter-name">薪资范围 <span>{{params.emolumentIds !== '' ? '(1)' : '' }}</span></span>
-        </drop-down>
-        <drop-down
-          v-model="params.financingIds"
-          :items="financingList"
-          :multiple="true"
-          :showArrow="true"
-          :limit="3"
-          :props="{
-            value: 'value',
-            label: 'text'
-          }"
-          @on-select="handleSelect">
-          <span class="filter-name">融资规模 <span v-if="params.financingIds.length">({{params.financingIds.length}})</span></span>
-        </drop-down>
-        <drop-down
-          v-model="params.employeeIds"
-          :items="employeeList"
-          :multiple="true"
-          :limit="3"
-          :showArrow="true"
-          :props="{
-            value: 'value',
-            label: 'text'
-          }"
-          @on-select="handleSelect">
-          <span class="filter-name">人员规模 <span v-if="params.employeeIds.length">({{params.employeeIds.length}})</span></span>
-        </drop-down>
-        <drop-down
-          v-model="params.industryIds"
-          :items="industryList"
-          :multiple="true"
-          :showArrow="true"
-          :col="3"
-          :limit="3"
-          :props="{
-            value: 'labelId',
-            label: 'name'
-          }"
-          @on-select="handleSelect">
-          <span class="filter-name">行业领域 <span v-if="params.industryIds.length">({{params.industryIds.length}})</span></span>
-        </drop-down>
-        <span class="filter-remove" @click="handleRemove">清空筛选条件</span>
+            @on-select="handleSelect">
+            <span class="filter-name">行业领域 <span v-if="params.industryIds.length">({{params.industryIds.length}})</span></span>
+          </drop-down>
+          <span class="filter-remove" @click="handleRemove">清空筛选条件</span>
+        </div>
       </div>
     </div>
   </div>
@@ -86,6 +88,7 @@ import DropDown from 'COMPONENTS/dropDown'
 export default {
   data () {
     return {
+      headerFixed: false,
       address: '',
       params: {
         keyword: '',
@@ -136,7 +139,7 @@ export default {
       // 得到页面滚动的距离
       let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
       // 判断页面滚动的距离是否大于吸顶元素的位置
-      this.headerFixed = scrollTop > this.scrollTop
+      this.headerFixed = scrollTop > 50
     },
     handleSelect () {
       const params = {}
@@ -268,5 +271,18 @@ export default {
     font-size: 14px;
     cursor: pointer;
   }
+}
+.search-fixed {
+  height: 130px;
+}
+.search-fixed-wrapper {
+  top: 0;
+  left: 0;
+  background: #fff;
+  position: fixed;
+  width: 100%;
+  height: 130px;
+  box-shadow: $shadow-2;
+  z-index: 99;
 }
 </style>

@@ -67,6 +67,10 @@ export default {
         return
       }
       getCodeApi({ mobile: this.loginForm.mobile }).then(res => {
+        this.$message({
+          message: '发送成功',
+          type: 'success'
+        })
         this.code = res.data.data
         this.smstime()
       })

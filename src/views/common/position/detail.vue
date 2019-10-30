@@ -23,7 +23,7 @@
 						<div class="number"><span class="num">{{remainingSeats}}</span>个<p class="desc">约面席位</p></div>
 						<div class="timeBox">
 							<div class="time">还剩<span class="little-box">{{remainingTime.day}}</span>天<span class="little-box">{{remainingTime.hour}}</span>:<span class="little-box">{{remainingTime.minute}}</span>:<span class="little-box">{{remainingTime.second}}</span></div>
-							<p class="desc">现在申请24小时内必定反馈<el-tooltip class="item" effect="dark" popper-class="tooltip" placement="bottom-end">
+							<p class="desc">{{chatDesc}}<el-tooltip class="item" effect="dark" popper-class="tooltip" placement="bottom-end">
 								<p slot="content">1.抢占约面席位后将享【急速反馈服务】。</br>
 									2.急速约面服务</br>
 								  （1）法定工作日（除节假日前一天）内抢占约面席位，面试官将在抢占成功后的24小时内给与答复。</br>
@@ -129,6 +129,15 @@ import adpostion from '@/components/common/adpostion'
   	}),
   	remainingSeats() {
   		return this.infos.rapidlyInfo.seatsNum - this.infos.rapidlyInfo.applyNum - this.infos.rapidlyInfo.natureApplyNum
+  	},
+  	chatDesc () {
+  		if (this.remainingSeats === 0) {
+  			return '现在申请，不享受24h反馈'
+  		} else if (this.infos.rapidlyInfo.rapidlyServiceEndTime) {
+  			return `现在申请最迟${this.infos.rapidlyInfo.serviceEndTime}反馈`
+  		} else {
+  			return `现在申请24小时内必定反馈`
+  		}
   	}
   }
 })
