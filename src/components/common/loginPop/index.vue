@@ -20,10 +20,10 @@ import loginForm from '@/components/common/login'
 export default class login extends Vue {
 	showLoginPop = false
 	close () {
-		this.showLoginPop = false
+	  this.showLoginPop = false
 	}
-  mounted () {
-  }
+	mounted () {
+	}
 }
 </script>
 <style lang="scss" scoped>
@@ -33,7 +33,7 @@ export default class login extends Vue {
 		position: fixed;
 		top: 0;
 		left: 0;
-		z-index: 10;
+		z-index: 1010;
 		.bg {
 			width: 100%;
 			height: 100%;
@@ -41,16 +41,16 @@ export default class login extends Vue {
 			top: 0;
 			left: 0;
 			background: rgba(0, 0, 0, .5);
-			z-index: 1;
+			z-index: 1000;
 		}
 		.loginBox {
 			position: absolute;
 			transform: translate3d(-50%, -50%, 0);
 			top: 50%;
 			left: 50%;
-			z-index: 2;
+			z-index: 1002;
 			.close {
-    		font-size: 12px;
+    		font-size: 14px;
 	    	position: absolute;
 	    	top: 0;
 	    	right: 0;

@@ -1,7 +1,7 @@
 <template>
   <div id="loginForm">
     <div class="inner">
-      <div class="login_cont">
+      <div class="login_cont" :class="{ toggleType: !toggleType}">
         <!-- 切换登录方式type -->
         <div class="login_type" v-if="toggleType && (type === 'msgLogin' || type === 'qrcodeLogin')" v-show="!loginsuccess">
           <div class="login_text" @click="changetype">{{type === 'msgLogin' ? '二维码登录' : '短信验证登录'}}</div>
@@ -55,7 +55,7 @@
           </ul>
 
           <h3 v-if="type === 'msgLogin' || !toggleType" class="cont_tit" style="margin-bottom: 40px;">{{toggleType ? '短信验证登录' : '登录/注册猎多多'}}</h3>
-          <div class="logind_form" >
+          <div class="logind_form">
             <div class="input_wrap">
               <div class="input_box">
                 <i class="input_img iconfont icon-shoujihao" />
@@ -80,7 +80,7 @@
           </div>
           <div class="bottom_txt" v-if="!toggleType">
             <a href="https://sao.lieduoduo.com/userAgreement" class="login_text">注册代表你已同意 猎多多用户协议&隐私政策</a>
-            <p class="login_href" @click="$router.push('login')">企业登录/注册</p>
+            <p class="login_href" @click="$router.push('/login')">企业登录/注册</p>
           </div>
         </div>
 
@@ -100,7 +100,7 @@
                     <span>300+知名企业</span>
                 </div>
                 <div class="guide_text">
-                    <i class="iconfont icon-weixin"></i>
+                    <i class="iconfont icon-weixin" style="font-size: 14px;"></i>
                     <span>一键约面，急速入职</span>
                 </div>
             </div>
@@ -145,7 +145,7 @@
 <script>
 import Vue from 'vue'
 import Component from 'vue-class-component'
-import { loginApi, scanApi, getQrCodeApi, loginPutInApipc, getCodeApi, getCaptchaApi } from '@/api/auth'
+import { loginApi, scanApi, getQrCodeApi, getCodeApi, getCaptchaApi } from '@/api/auth'
 import { mobileReg } from '@/util/fieldRegular.js'
 import { saveAccessToken } from '@/api/cacheService'
 
@@ -154,20 +154,13 @@ import { saveAccessToken } from '@/api/cacheService'
   methods: {},
   computed: {},
   props: {
-  	toggleType: {
-  		type: Boolean,
-  		default: true
-  	},
-  	loginType: {
-  		type: String,
-  		default: ''
-  	}
-  },
-  watch: {
-    visible (value) {
-      if (value) {
-        this.visibleDialog = value
-      }
+    toggleType: {
+      type: Boolean,
+      default: true
+    },
+    loginType: {
+      type: String,
+      default: ''
     }
   },
   components: {}
@@ -193,12 +186,6 @@ export default class loginForm extends Component {
   timer = null;
   num = 1;
   showError = false;
-
-  // 关闭弹窗
-  handleClose () {
-    this.visibleDialog = false
-    this.$emit('update:visible', false)
-  }
 
   mounted () {
     this.type = this.loginType
@@ -484,7 +471,7 @@ export default class loginForm extends Component {
       }
     }
     .bottom_txt{
-      margin-top: -30px;
+      // margin-top: -46px;
       .login_text{
         font-size: 12px;
         color: #A29CA6;
@@ -496,6 +483,7 @@ export default class loginForm extends Component {
         color: #652791;
         cursor: pointer;
         margin-top: 20px;
+        text-decoration: underline;
       }
     }
 
@@ -782,13 +770,13 @@ export default class loginForm extends Component {
       }
     }
     .guide{
-      width: 192px;
-      height: 458px;
+      width: 179px;
+      height: 440px;
       background: #FBFBFF;
       position: absolute;
       top:0;
-      left: -180px;
-      border-radius: 8px;
+      left: -178px;
+      border-radius: 8px 0 0 8px;
       .guide_header{
           text-align: center;
           margin: 68px auto 36px auto;
@@ -804,7 +792,7 @@ export default class loginForm extends Component {
       .text_wrap{
           width: 146px;
           height: 104px;
-          margin-left: 30px;
+          margin-left: 26px;
           text-align: left;
           display: flex;
           flex-direction: column;
@@ -812,7 +800,7 @@ export default class loginForm extends Component {
           i{
               font-size: 16px;
               color: #652791;
-              margin-right: 3px;
+              margin-right: 6px;
           }
           span{
               font-size: 12px;
@@ -865,6 +853,61 @@ export default class loginForm extends Component {
         color: #652791;
         font-weight: 550;
       }
+    }
+  }
+
+  .toggleType{
+    width: 471px;
+    height: 440px;
+    border-radius: 0 8px 8px 0;
+    .logind_form{
+      width: 471px;
+      height: 124px;
+      .input_wrap{
+        width: 354px;
+        height: 124px;
+        .input_box{
+          width: 354px;
+          height: 46px;
+          .input_img{
+            color: #CDCBCF;
+            margin-left: 14px;
+          }
+
+          input::-webkit-input-placeholder {
+            /* WebKit browsers */
+            font-size: 14px;
+          }
+          input:-moz-placeholder {
+            /* Mozilla Firefox 4 to 18 */
+            font-size: 14px;
+          }
+          input::-moz-placeholder {
+            /* Mozilla Firefox 19+ */
+            font-size: 14px;
+          }
+          input:-ms-input-placeholder {
+            /* Internet Explorer 10+ */
+            font-size: 14px;
+          }
+
+          input{
+            width: 200px;
+            height: 44px;
+          }
+          .msgText{
+            margin-right: 15px;
+            font-size: 14px;
+          }
+        }
+      }
+    }
+    .login_button{
+      width: 354px;
+      height: 46px;
+      font-weight: 400;
+      font-size: 16px;
+      margin-bottom: 14px;
     }
   }
 }
