@@ -42,19 +42,19 @@
 						<div class="wxShare" v-show="showShareQrcode"><img class="qrcode" :src="qrcodeUrl"></div>
 						<div class="poster" v-show="showSharePoster" @mouseleave="mouseenEven($event, 'sharePoster')">
 							<div class="poster-content">
-								<div class="poster-item" @click="todoAction('getPoster', 'long')">
+								<div class="poster-item" @click="todoAction('getPoster', 'short')">
 									<img class="icon" :src="cdnPath + 'ic_share_poster.png'" alt="">
 									<div class="title">生成精美海报<span class="label">抓眼球</span></div>
 									<p class="desc">提练职位核心信息，发圈更抓人眼球</p> 
 								</div>
-								<div class="poster-item" @click="todoAction('getPoster', 'short')">
+								<div class="poster-item" @click="todoAction('getPoster', 'long')">
 									<img class="icon" :src="cdnPath + 'ic_share_detailpic.png'" alt="">
 									<div class="title">生成职位长图<span class="label">最详情</span></div>
 									<p class="desc">呈现所有职位信息，细节一目了然</p> 
 								</div>
 							</div>
 						</div>
-						<poster  @closePoster="closePoster" :showPoster.sync="showPoster" :params='posterParmas'></poster>
+						<poster @closePoster="closePoster" :showPoster.sync="showPoster" :params='posterParmas'></poster>
 					</div>
 				</div>
 			</div>
@@ -89,7 +89,7 @@
 					<div class="companyInfos">
 						<p class="title">公司基本信息</p>
 						<div class="details">
-							<div class="logo"><img ref="logo" :class="verticalLogo ? 'vertical' : true" @load="imgLoad" :src="infos.companyInfo.logoInfo.smallUrl" alt=""></div>
+							<div class="logo"><el-image ref="logo" :class="verticalLogo ? 'vertical' : true" @load="imgLoad" :src="infos.companyInfo.logoInfo.smallUrl" alt="" fit='scale-down'></el-image></div>
 							<div class="name">{{infos.companyInfo.companyShortname}}</div>
 						</div>
 						<div class="infos">
@@ -133,8 +133,9 @@ import adpostion from '@/components/common/adpostion'
   	chatDesc () {
   		if (this.remainingSeats === 0) {
   			return '现在申请，不享受24h反馈'
-  		} else if (this.infos.rapidlyInfo.rapidlyServiceEndTime) {
-  			return `现在申请最迟${this.infos.rapidlyInfo.serviceEndTime}反馈`
+  		} else if (this.infos.rapidlyServiceEndTime) {
+  			let serviceEndTime = `${parseInt(this.infos.rapidlyServiceEndTime.slice(5, 7))}月${parseInt(this.infos.rapidlyServiceEndTime.slice(8, 10))}日`
+  			return `现在申请最迟${serviceEndTime}反馈`
   		} else {
   			return `现在申请24小时内必定反馈`
   		}

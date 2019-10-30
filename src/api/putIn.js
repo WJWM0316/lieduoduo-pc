@@ -8,7 +8,7 @@ export const getUserInfoApi = data => request({
   url: `/users/${data.vkey}`,
   method: 'get',
   params: data,
-  config: { host: 'zhaopin' }
+  config: { host: 'qiuzhi' }
 })
 
 // 查询简历完善步数
@@ -16,7 +16,7 @@ export const searchResumeStepApi = data => request({
   url: '/jobhunter/resume/four/step',
   method: 'get',
   params: data,
-  config: { host: 'zhaopin' }
+  config: { host: 'qiuzhi' }
 })
 
 // 完善简历-第一步
@@ -24,7 +24,7 @@ export const setResumeFirstApi = data => request({
   url: '/jobhunter/resume/four/firstStep',
   method: 'post',
   params: data,
-  config: { host: 'zhaopin' }
+  config: { host: 'qiuzhi' }
 })
 
 // 完善简历-第2步

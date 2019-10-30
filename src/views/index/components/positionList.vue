@@ -40,7 +40,7 @@
       </div>
     </div>
     <div class="position-more-btn" v-if="!getLoading && listData.length">
-      <div class="c-btn c-big-btn">查看更多</div>
+      <div class="c-btn c-big-btn" @click="handleShowMore">查看更多</div>
     </div>
   </div>
 </template>
@@ -64,7 +64,7 @@ export default {
   },
   computed: {
     isLogin () {
-      return !!this.$store.state.userInfo.id
+      return !!this.$store.state.hasLogin
     }
   },
   methods: {
@@ -81,10 +81,10 @@ export default {
       this.getPositionList()
     },
     handleShowMore () {
-      if (this.isLogin) {
-        this.$router.push('/position')
-      } else {
+      if (!this.isLogin) {
         this.$router.push('/login?type=login')
+      } else {
+        this.$store.commit('guideQrcodePop', {switch: true, type: 'tobIndex'})
       }
     }
   }

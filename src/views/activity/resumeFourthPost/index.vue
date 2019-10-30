@@ -301,7 +301,7 @@
         fieldIds: this.form.fields.map(field => field.fieldId).join(',')
       }
       setResumeFourthApi(params).then(() => {
-        this.$router.push({name: 'applyIndex'})
+        this.$router.replace({name: 'index'})
       }).catch(
         err => this.setHint(err.data.msg || '错误')
       )

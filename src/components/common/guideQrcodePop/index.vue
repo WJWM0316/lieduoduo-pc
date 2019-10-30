@@ -1,42 +1,57 @@
 <template>
-	<div class="qrCodePop" v-show="showPop">
+	<div class="qrCodePop" v-if="guideQrcodePop.switch" @click="close($event)">
 		<div class="inner">
 			<p class="title">微信扫一扫<br>查看面试详情</p>
-			<img class="qrcode" :src="qrCodeUrl" alt="">
-			<i class="close iconfont icon-close" @click="showPop = !showPop"></i>
+			<el-image class="qrcode" :src="qrCodeUrl" alt=""></el-image>
+			<i class="close iconfont icon-close" @click="hidePop"></i>
 		</div>
 	</div>
 </template>
 <script>
 	import {getMyQrcodeApi} from '@/api/qrcode'
 	export default {
-		props: {
-			type: {
-				type: String,
-				default: ''
+		computed: {
+			...mapState({
+				guideQrcodePop: state => state.guideQrcodePop
+			})
+		},
+		watch: {
+			guideQrcodePop (val) {
+				if (val) {
+					switch (this.guideQrcodePop.type) {
+						case 'interviewDetail':
+							let param = {
+								path: 'page/common/pages/arrangement/arrangement',
+								params: `id=${this.guideQrcodePop.params.interviewId}`
+							}
+							this.getQrcode(param)
+							break
+						case 'tobIndex':
+							this.qrCodeUrl = 'https://attach.lieduoduo.ziwork.com/front-assets/web/images/bIndex.jpg'
+							break
+						case 'tocIndex':
+							this.qrCodeUrl = 'https://attach.lieduoduo.ziwork.com/front-assets/web/images/cIndex.jpg'
+							break	
+					}
+				}
 			}
 		},
 		data () {
 			return {
-				showPop: false,
 				qrCodeUrl: '' // 二维码
 			}
 		},
 		created () {
-			if (this.qrCodeUrl) return
-			switch (this.type) {
-				case 'interviewDetail':
-					let params = {
-						path: 'page/common/pages/arrangement/arrangement',
-						params: `id=${this.interviewInfos.data[0].interviewId}`
-					}
-					this.getQrcode(params)
-					break
-			}
 		},
 		methods: {
-			getQrcode () {
-		  	getMyQrcodeApi(params).then(res => {
+			hidePop () {
+				this.$store.commit('guideQrcodePop', false)
+			},
+			close (e) {
+				if (e.target.className === 'qrCodePop') this.hidePop()
+			},
+			getQrcode (param) {
+		  	getMyQrcodeApi(param).then(res => {
 		  		this.qrCodeUrl = res.data.data.url
 		  	})
 		  }

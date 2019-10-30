@@ -54,7 +54,7 @@
 		</section>
 
 		<loginPop ref="loginPop" v-if="!hasLogin"></loginPop>
-		<guideQrcodePop ref="guideQrcodePop" type="interviewDetail"></guideQrcodePop>
+		<guideQrcodePop ref="guideQrcodePop" type="interviewDetail" :params="popParmas"></guideQrcodePop>
 	</div>
 </template>
 <script>
@@ -96,7 +96,7 @@ export default class InterviewBtn extends Component {
 	interviewInfos = {
     haveInterview: 0
   }
-  
+  popParmas = {} // 弹窗需要的参数
   hasStatus = false
   showSharePop = false
   getInterviewStatus () {
@@ -160,12 +160,14 @@ export default class InterviewBtn extends Component {
   			this.confirmInterview()
   			break
   		case 'job-hunting-view-detail':
-  			this.$refs.guideQrcodePop = true
+  			let popParmas = {
+  				interviewId: this.interviewInfos.data[0].interviewId
+  			}
+  			this.$store.commit('guideQrcodePop', {switch: true, type: 'interviewDetail', params: popParmas})
   			break
   	}
   }
 	created () {
-		
 	}
 }
 </script>

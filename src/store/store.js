@@ -22,9 +22,14 @@ export default new Vuex.Store({
     userInfo: getUserInfo() || {},
     token: getAccessToken(),
     pageName: '',
-    guideCreateRecruiter: false,
     loginValidTime: 60 * 60 * 24 * 7 * 1000,
     cityId: 0, // 用户地址id
+    showGuideQrcodePop: false, // 引导二维码
+    guideQrcodePop: { // 引导二维码参数
+      switch: false,
+      type: 'tocIndex',
+      params: ''
+    }, 
     areaList: [],
     myResume: {} // 我的简历详情
   },
@@ -51,9 +56,8 @@ export default new Vuex.Store({
     setUserInfo: (state, data) => {
       saveUserInfo(data, state.loginValidTime)
       state.userInfo = data
-      console.log(state.userInfo, 22222222222222222222)
     },
-
+    // 登录回调
     LOGINCALLBACK: (state, data) => {
       Vue.message({
         message: '登录成功',
@@ -88,10 +92,10 @@ export default new Vuex.Store({
         }
       })
     },
-
+    // 获取用户信息
     GETROLEINFO: (state, data) => {
-
     },
+    // 退出登录
     LOGOUT (state) {
       state.userInfo = {}
       state.token = null
@@ -108,7 +112,10 @@ export default new Vuex.Store({
     setCityId (state, id) {
       state.cityId = id
     },
-
+    guideQrcodePop (state, data) {
+      state.guideQrcodePop = data
+    },
+    // 设置我的简历信息
     setMyResume (state, data) {
       getMyResumeApi().then(res => {
         state.myResume = res.data.data
@@ -180,8 +187,8 @@ export default new Vuex.Store({
       store.commit('setPageName', options)
     },
     // 获取我的简历详情
-    getMyResume (store, data) {
-      store.commit('setMyResume', data)
+    getMyResume (store, options) {
+      store.commit('setMyResume', options)
     }
   }
 })

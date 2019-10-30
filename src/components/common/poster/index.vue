@@ -2,7 +2,7 @@
 	<div class="wrap" v-show="showPop">
 		<div class="bg"></div>
 		<div class="inner">
-			<span class="posterUrl"><img :src="posterUrl" alt=""></span>
+			<div class="posterUrl"><el-image class="img" fit='contain' :src="posterUrl" alt=""></el-image></div>
 		</div>
 		<div class="operBox">
 			<div class="btn" @click="oper('download')"><i class="icon iconfont icon-xiazai"></i>下载</div>
@@ -156,10 +156,11 @@ export default class poster extends Component {
 			padding: $page-header-height 0 $page-footer-height;
 			box-sizing: border-box;
 			text-align: center;
-			img {
-				width: auto;
+			.posterUrl {
+				width: 100%;
 				height: 100%;
-				margin: 0 auto;
+				display: flex;
+				justify-content: center;
 			}
 		}
 		.operBox {

@@ -2,7 +2,7 @@
 	<div class="wrap" v-if="adList.length > 0">
 		<div class="adList">
 			<div class="ad-img1" v-for="(item, index) in adList" :key="index">
-				<img :src="item.bigImgUrl" alt="">
+				<el-image :src="item.bigImgUrl" alt=""></el-image>
 			</div>
 		</div>
 	</div>

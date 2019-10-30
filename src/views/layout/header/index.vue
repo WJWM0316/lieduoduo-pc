@@ -63,7 +63,7 @@
               </div>
               <el-dropdown-menu slot="dropdown">
                 <!-- <el-dropdown-item command="usercenter">个人中心</el-dropdown-item> -->
-                <el-dropdown-item command="">切换为面试官</el-dropdown-item>
+                <el-dropdown-item command="toggleIdentity">切换为面试官</el-dropdown-item>
                 <el-dropdown-item command="logout">退出登录</el-dropdown-item>
               </el-dropdown-menu>
           </el-dropdown>
@@ -103,25 +103,32 @@ export default {
     this.addressId = this.$store.getters.cityId
   },
   computed: {
-    isLogin () {
-      return !!this.$store.state.userInfo.id
-    },
-    userInfo () {
-      return this.$store.state.userInfo || {}
-    },
-    cityList () {
-      return this.$store.getters.areaList || []
-    }
+    ...mapState({
+      isLogin: state => state.hasLogin,
+      roleInfos: state => state.roleInfos,
+      userInfo: state => state.userInfo,
+      cityList: state => state.areaList,
+      userIdentity: state => state.userIdentity
+    })
   },
   methods: {
     handleClick (e) {
-      if (e === 'logout') {
-        this.$store.dispatch('logoutApi')
-          .then(() => {
-            // this.$router.push({ name: 'login' })
-          })
-      } else if (e === 'usercenter') {
-        this.$router.push('/position')
+      switch (e) {
+        case 'logout':
+          this.$store.dispatch('logoutApi')
+          break
+        case 'usercenter':
+          this.$router.push('/position')
+          break
+        case 'toggleIdentity':
+          // 切换到B端
+          if (!this.userIdentity) {
+            if (this.roleInfos.isRecruiter) {
+              this.$router.replace({name: 'candidate'})
+            } else {
+              this.$store.commit('guideQrcodePop', {switch: true, type: 'tobIndex'})
+            }
+          } 
       }
     },
     handleToLogin (type) {

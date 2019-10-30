@@ -141,10 +141,10 @@ export default {
       }, 5000)
     },
     handleShowMore () {
-      if (this.isLogin) {
-        this.$router.push('/position')
+      if (!this.isLogin) {
+        this.$router.push('/login?type=msgLogin')
       } else {
-        // 小程序弹窗
+        this.$store.commit('guideQrcodePop', {switch: true, type: 'tocIndex'})
       }
     }
   },

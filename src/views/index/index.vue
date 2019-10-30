@@ -11,9 +11,11 @@
       <position-list :nameList="positionLabel" ref="positionList"></position-list>
     </div>
     <scroll-to-top></scroll-to-top>
+    <guideQrcodePop ref="guideQrcodePop" type="tobIndex"></guideQrcodePop>
   </div>
 </template>
 <script>
+import guideQrcodePop from 'COMPONENTS/common/guideQrcodePop'
 import LoginBanner from './components/loginBanner'
 import SearchWrapper from './components/indexSearch'
 // 职位类型列表
@@ -26,6 +28,7 @@ import ScrollToTop from 'COMPONENTS/scrollToTop'
 import { getBanners, getIndexData } from 'API/common'
 export default {
   components: {
+    guideQrcodePop,
     LoginBanner,
     SearchWrapper,
     PositionName,
