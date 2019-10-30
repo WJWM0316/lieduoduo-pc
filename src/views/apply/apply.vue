@@ -5,7 +5,6 @@
       <div class="main_cont">
         <h3 class="hint">上传后，招聘官即可查看你的附件简历</h3>
         <h3 class="hint">如需要编辑在线简历，请前往猎多多小程序进行操作</h3>
-
         <el-upload
           class
           :action="fileUpload.action"
@@ -145,23 +144,22 @@
   </div>
 </template>
 <script>
-import Vue from "vue";
-import Component from "vue-class-component";
+import Vue from 'vue'
+import Component from 'vue-class-component'
 import {
   saveResumeMsgApi,
   getResumeMsgApi,
   deleteFileMsgApi
-} from "../../api/auth";
-import { baseHost } from "../../../config.js";
+} from '../../api/auth'
 
 @Component({
-  name: "apply",
+  name: 'apply',
   methods: {},
   computed: {},
   watch: {
     $route: {
-      handler() {
-        this.init();
+      handler () {
+        this.init()
       },
       immediate: true
     }
@@ -172,41 +170,41 @@ export default class CourseList extends Vue {
   isUpload = false;
   isService = false;
   uploadFileData = []; // 上传的
-  userInfo = {};
+  token = '';
   fileList = [];
 
-  fileUploadType = "img";
+  fileUploadType = 'img';
   // 文件上传
   fileUpload = {
-    action: `${baseHost()}/attaches`,
+    action: `${process.env.VUE_APP_WEB_QIUZHI_API}/attaches`,
     list: [],
     limit: 2,
     accept:
-      ".png, .jpg, .jpeg, .pdf,.doc,.docx,.DOC,.DOCX,.PNG, .JPG, .JPEG, .PDF",
+      '.png, .jpg, .jpeg, .pdf,.doc,.docx,.DOC,.DOCX,.PNG, .JPG, .JPEG, .PDF',
     progress: 0,
-    btnTxt: "选择文件",
-    progressText: "上传中",
+    btnTxt: '选择文件',
+    progressText: '上传中',
     headers: {
-      Authorization: ""
+      Authorization: ''
     },
     params: {
-      attach_type: "img",
-      sadasd: "222"
+      attach_type: 'img',
+      sadasd: '222'
     },
-    status: "processing",
+    status: 'processing',
     infos: {},
     show: false
   };
   upload_hint_pop = false;
 
-  imgExt = [".png", ".jpg", ".jpeg"]; //图片文件的后缀名
-  docExt = [".doc", ".docx", ".pdf"]; //word文件的后缀名
-  filePicList = [".excel", ".jpg", ".pdf", ".png"];
-  filePic = "default";
+  imgExt = ['.png', '.jpg', '.jpeg']; // 图片文件的后缀名
+  docExt = ['.doc', '.docx', '.pdf']; // word文件的后缀名
+  filePicList = ['.excel', '.jpg', '.pdf', '.png'];
+  filePic = 'default';
 
   pop = {
     isShow: false,
-    type: "delete"
+    type: 'delete'
   };
 
   contentHeight = 400;
@@ -214,114 +212,112 @@ export default class CourseList extends Vue {
   /**
    * 初始化表单、分页页面数据
    */
-  init() {
-    this.userInfo = this.$store.state.userInfo;
-    console.log(this.userInfo);
-
-    if (this.userInfo && this.userInfo.id) {
-      this.fileUpload.headers.Authorization = this.userInfo.token;
-      this.getResumeMsg();
+  init () {
+    this.token = this.$store.state.token
+    if (this.token) {
+      this.fileUpload.headers.Authorization = this.token
+      this.getResumeMsg()
     } else {
-      this.$router.push({ name: "login" });
+      this.$router.push({ name: 'login' })
     }
     // let w = document.documentElement.clientWidth || document.body.clientWidth;
-    let h = document.documentElement.clientHeight || document.body.clientHeight;
+    let h = document.documentElement.clientHeight || document.body.clientHeight
 
     if (h - 60 - 200 > 400) {
-      this.contentHeight = h - 60 - 200;
+      this.contentHeight = h - 60 - 200
     }
 
     if (h - 60 - 200 > 630) {
-      this.contentHeight2 = h - 60 - 200;
+      this.contentHeight2 = h - 60 - 200
     }
   }
 
-  saveResumeMsg() {
+  saveResumeMsg () {
     let data = {
       attach_resume: this.uploadFileData[0].id,
       attach_name: this.uploadFileData[0].fileName
-    };
+    }
     saveResumeMsgApi(data)
       .then(() => {})
       .catch(err => {
-        this.$message.error(err.msg);
-      });
+        this.$message.error(err.msg)
+      })
   }
 
-  getResumeMsg() {
+  getResumeMsg () {
     getResumeMsgApi()
       .then(res => {
         if (res.data.data.id) {
-          this.isUpload = true;
-          this.uploadFileData = [];
-          this.uploadFileData.push(res.data.data);
+          this.isUpload = true
+          this.uploadFileData = []
+          this.uploadFileData.push(res.data.data)
 
-          this.fileUpload.progress = 100;
-          this.setFilePic(res.data.data.fileName);
+          this.fileUpload.progress = 100
+          this.setFilePic(res.data.data.fileName)
         }
       })
       .catch(() => {
-        this.isUpload = false;
-      });
+        this.isUpload = false
+      })
   }
 
-  todoAction(type) {
+  todoAction (type) {
     switch (type) {
-      case "detail":
+      case 'detail':
         this.$router.push({
-          name: "teacherDetail",
+          name: 'teacherDetail',
           query: {
             // id: id
           }
-        });
-        break;
-      case "service":
-        this.isService = !this.isService;
-        break;
-      case "openDelete":
-        this.pop.isShow = true;
-        break;
-      case "cloPop":
-        this.pop.isShow = false;
-        break;
-      case "delete":
+        })
+        break
+      case 'service':
+        this.isService = !this.isService
+        break
+      case 'openDelete':
+        this.pop.isShow = true
+        break
+      case 'cloPop':
+        this.pop.isShow = false
+        break
+      case 'delete':
         deleteFileMsgApi()
           .then(() => {
-            this.isUpload = false;
-            this.uploadFileData = [];
+            this.isUpload = false
+            this.uploadFileData = []
             this.$message({
-              type: "success",
-              message: "删除成功!"
-            });
-            this.pop.isShow = false;
+              type: 'success',
+              message: '删除成功!'
+            })
+            this.pop.isShow = false
           })
           .catch(() => {
             this.$message({
-              type: "info",
-              message: "已取消删除"
-            });
-            this.pop.isShow = false;
-          });
-        break;
+              type: 'info',
+              message: '已取消删除'
+            })
+            this.pop.isShow = false
+          })
+        break
       default:
-        break;
+        break
     }
   }
 
-  filePreview() {
-    let fileLink = this.uploadFileData[0].url;
-    let event = new MouseEvent("click");
-    let a = document.createElement("a");
-    a.target = "view_window";
+  filePreview () {
+    let fileLink = this.uploadFileData[0].url
+    let event = new MouseEvent('click')
+    let a = document.createElement('a')
+    a.target = 'view_window'
 
     if (
-      fileLink.indexOf(".png") != -1 ||
-      fileLink.indexOf(".jpeg") != -1 ||
-      fileLink.indexOf(".jpg") != -1
+      fileLink.indexOf('.png') !== -1 ||
+      fileLink.indexOf('.jpeg') !== -1 ||
+      fileLink.indexOf('.jpg') !== -1
     ) {
-      a.href = fileLink;
+      a.href = fileLink
     } else {
-      a.href = `https://view.officeapps.live.com/op/view.aspx?src=${fileLink}`;
+      a.href = `https://view.officeapps.live.com/op/view.aspx?src=${fileLink}`
     }
 
     // let fileLink = this.uploadFileData[0].url
@@ -329,131 +325,131 @@ export default class CourseList extends Vue {
     //    let a = document.createElement('a')
     //    a.target = 'view_window'
     //    a.href = fileLink
-    a.dispatchEvent(event);
+    a.dispatchEvent(event)
   }
 
-  downFile() {
-    let fileLink = `${baseHost()}/attaches/download/${
+  downFile () {
+    let fileLink = `${process.env.VUE_APP_WEB_QIUZHI_API}/attaches/download/${
       this.uploadFileData[0].vkey
-    }?token=${this.userInfo.token}`;
-    let event = new MouseEvent("click");
-    let a = document.createElement("a");
-    a.target = "view_window";
-    a.href = fileLink;
-    a.dispatchEvent(event);
+    }?token=${this.token}`
+    let event = new MouseEvent('click')
+    let a = document.createElement('a')
+    a.target = 'view_window'
+    a.href = fileLink
+    a.dispatchEvent(event)
   }
 
   /**
    * @detail   文件上传成功
    */
-  handleFileSuccess(res) {
-    this.isUpload = true;
-    this.uploadFileData = [];
-    this.uploadFileData.push(res.data[0]);
+  handleFileSuccess (res) {
+    this.isUpload = true
+    this.uploadFileData = []
+    this.uploadFileData.push(res.data[0])
 
-    this.fileUpload.progress = 100;
-    this.setFilePic(res.data[0].fileName);
-    this.saveResumeMsg();
+    this.fileUpload.progress = 100
+    this.setFilePic(res.data[0].fileName)
+    this.saveResumeMsg()
   }
 
   /**
    * @detail   文件上传之前的处理
    */
-  beforeFileUpload(file) {
+  beforeFileUpload (file) {
     // this.$refs.file.abort()
-    const isLtM = file.size / 1024 / 1024 < 10;
+    const isLtM = file.size / 1024 / 1024 < 10
     if (!isLtM) {
-      this.$message.error("上传文件大小不能超过 10MB!");
+      this.$message.error('上传文件大小不能超过 10MB!')
     } else {
-      let isImg = this.typeMatch(this.imgExt, file.name);
+      let isImg = this.typeMatch(this.imgExt, file.name)
       if (isImg) {
-        this.fileUpload.params.attach_type = "img";
+        this.fileUpload.params.attach_type = 'img'
       }
 
-      let isDoc = this.typeMatch(this.docExt, file.name);
+      let isDoc = this.typeMatch(this.docExt, file.name)
       if (isDoc) {
-        this.fileUpload.params.attach_type = "doc";
+        this.fileUpload.params.attach_type = 'doc'
       }
 
       if (!isImg && !isDoc) {
-        this.$message.error("附件简历类型仅支持pdf、jpg、png、jpeg、doc、docx");
-        this.$refs.file.abort();
+        this.$message.error('附件简历类型仅支持pdf、jpg、png、jpeg、doc、docx')
+        this.$refs.file.abort()
       }
 
-      this.fileUpload.status = "loading";
-      this.fileUpload.progress = 0;
-      this.fileUpload.progressText = "上传中";
+      this.fileUpload.status = 'loading'
+      this.fileUpload.progress = 0
+      this.fileUpload.progressText = '上传中'
 
-      this.nowLoadUid = file.uid;
-      this.fileUpload.infos = file;
-      this.fileUpload.show = true;
-      this.fileUpload.btnTxt = "重新上传";
+      this.nowLoadUid = file.uid
+      this.fileUpload.infos = file
+      this.fileUpload.show = true
+      this.fileUpload.btnTxt = '重新上传'
     }
 
-    return isLtM;
+    return isLtM
   }
 
   /**
    * @detail   上传进度
    */
-  uploadFileProcess(event, file) {
-    this.fileUpload.progress = file.percentage.toFixed(0);
+  uploadFileProcess (event, file) {
+    this.fileUpload.progress = file.percentage.toFixed(0)
   }
 
   /**
    * @detail   文件上传失败
    */
-  handleFileError(err) {
-    this.fileUpload.status = "error";
-    this.fileUpload.progress = 0;
-    this.fileUpload.progressText = "上传失败";
-    this.fileUpload.btnTxt = "重新上传";
-    this.$message.error(err.msg);
+  handleFileError (err) {
+    this.fileUpload.status = 'error'
+    this.fileUpload.progress = 0
+    this.fileUpload.progressText = '上传失败'
+    this.fileUpload.btnTxt = '重新上传'
+    this.$message.error(err.msg || '上传失败！')
   }
 
-  handleRemove() {}
-  handlePreview() {}
+  handleRemove () {}
+  handlePreview () {}
 
-  //获取文件名后缀名
-  extension(str) {
-    var ext = null;
-    var name = str.toLowerCase();
-    var i = name.lastIndexOf(".");
+  // 获取文件名后缀名
+  extension (str) {
+    var ext = null
+    var name = str.toLowerCase()
+    var i = name.lastIndexOf('.')
     if (i > -1) {
-      ext = name.substring(i);
+      ext = name.substring(i)
     }
-    return ext;
+    return ext
   }
 
-  //判断Array中是否包含某个值
-  contain(type, obj) {
+  // 判断Array中是否包含某个值
+  contain (type, obj) {
     for (var i = 0; i < type.length; i++) {
-      if (type[i] === obj) return true;
+      if (type[i] === obj) return true
     }
-    return false;
+    return false
   }
 
-  setFilePic(fileName) {
-    this.filePic = this.getFilePic(this.filePicList, fileName);
+  setFilePic (fileName) {
+    this.filePic = this.getFilePic(this.filePicList, fileName)
   }
 
-  getFilePic(type, fielname) {
-    var ext = this.extension(fielname);
+  getFilePic (type, fielname) {
+    var ext = this.extension(fielname)
 
     if (this.contain(type, ext)) {
-      ext = ext.substr(1);
-      return ext;
+      ext = ext.substr(1)
+      return ext
     }
 
-    return "default";
+    return 'default'
   }
 
-  typeMatch(type, fielname) {
-    var ext = this.extension(fielname);
+  typeMatch (type, fielname) {
+    var ext = this.extension(fielname)
     if (this.contain(type, ext)) {
-      return true;
+      return true
     }
-    return false;
+    return false
   }
 }
 </script>

@@ -21,7 +21,12 @@
         <template v-for="(item, index) in navList">
           <li :key="index">
             <template v-if="item.type === 'link'">
-              <router-link :to="item.url">{{item.name}}</router-link>
+              <router-link :to="item.url" v-slot="{ href, isActive, isExactActive }">
+                <span
+                  class="router-link"
+                  :class="[isActive && 'router-link-active', isExactActive && 'router-link-exact-active']"
+                  @click="handeToDefault(item)">{{ item.name }}</span>
+              </router-link>
             </template>
             <template v-else>
               <el-popover
@@ -45,8 +50,8 @@
           </template>
           <template v-else>
             <div>
-              <router-link tag="span" to="/login?type=login" class="search-job">我要找工作</router-link>
-              <router-link tag="span" to="/login?type=login" class="recruite">我要招聘</router-link>
+              <router-link tag="span" to="/login?type=msgLogin" class="search-job">我要找工作</router-link>
+              <router-link tag="span" to="/login?type=msgLogin" class="recruite">我要招聘</router-link>
             </div>
           </template>
         </div>
@@ -70,7 +75,7 @@
           </template>
           <template v-else>
             <div class="no-login">
-              <span class="login-btn"  @click="handleToLogin('login')"><i class="el-icon-user"></i> 登录</span> |
+              <span class="login-btn"  @click="handleToLogin('msgLogin')"><i class="el-icon-user"></i> 登录</span> |
               <span class="register-btn" @click="handleToLogin('register')">注册</span>
             </div>
           </template>
@@ -83,6 +88,7 @@
 import { mp_qrcode, wx_qrcode, app_qrcode } from 'IMAGES/image'
 import { getHotArea } from 'API/common'
 import DropDown from 'COMPONENTS/dropDown'
+import { mapState } from 'vuex'
 export default {
   components: { DropDown },
   data () {
@@ -124,11 +130,11 @@ export default {
           // 切换到B端
           if (!this.userIdentity) {
             if (this.roleInfos.isRecruiter) {
-              this.$router.replace({name: 'candidate'})
+              this.$router.replace({ name: 'candidate' })
             } else {
-              this.$store.commit('guideQrcodePop', {switch: true, type: 'tobIndex'})
+              this.$store.commit('guideQrcodePop', { switch: true, type: 'tobIndex' })
             }
-          } 
+          }
       }
     },
     handleToLogin (type) {
@@ -137,6 +143,12 @@ export default {
         query: {
           type: type
         }
+      })
+    },
+    handeToDefault (item) {
+      if (this.$route.path === item.url) return
+      this.$router.push({
+        path: item.url
       })
     },
     changeLocation (item) {
@@ -208,7 +220,7 @@ $header-height-1: $page-header-height;
     line-height: $header-height-1;
     height: 100%;
   }
-  a {
+  .router-link {
     @include a-block($nav-color-default);
   }
   .nav-name {

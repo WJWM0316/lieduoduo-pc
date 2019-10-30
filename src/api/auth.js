@@ -111,28 +111,32 @@ export const downApi = data => request({
 export const saveResumeMsgApi = data => request({
   url: '/jobhunter/save_attach',
   method: 'post',
-  params: data
+  params: data,
+  config: { host: 'qiuzhi' }
 })
 
 // 获取附件简历
 export const getResumeMsgApi = data => request({
   url: '/jobhunter/attach_resume',
   method: 'get',
-  params: data
+  params: data,
+  config: { host: 'qiuzhi' }
 })
 
 // 删除附件简历
 export const deleteFileMsgApi = data => request({
   url: '/jobhunter/del_attach',
   method: 'delete',
-  params: data
+  params: data,
+  config: { host: 'qiuzhi' }
 })
 
 // 招聘官-我的信息(“我的”页面)
 export const getMyInfoApi = data => request({
   url: `/recruiter/myInfo`,
   method: 'get',
-  params: data
+  params: data,
+  config: { host: 'qiuzhi' }
 })
 
 // 获取用户信息
@@ -145,13 +149,13 @@ export const getUserInfosApi = (data) => request({
 
 // 获取用户角色信息
 export const getUserRoleInfoApi = (data) => request({
-	url: `/user/roleinfo`, 
-	method: 'get', 
-	params: data, 
-	config: {host: 'qiuzhi'}
+  url: `/user/roleinfo`,
+  method: 'get',
+  params: data,
+  config: { host: 'qiuzhi' }
 })
 
-//pc登录注册
+// pc登录注册
 export const loginPutInApipc = data => request({
   url: '/auth/web/login',
   method: 'post',

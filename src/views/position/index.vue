@@ -79,7 +79,7 @@ export default {
         page: 1,
         count: 15,
         keyword: '',
-        cityNums: this.cityid
+        cityNums: 0
       },
       listData: [],
       total: 0, // 职位总数
@@ -90,11 +90,12 @@ export default {
     }
   },
   created () {
-    this.getPositionList()
     const { query } = this.$route
     for (let item in this.params) {
       if (query[item]) this.params[item] = isNaN(query[item]) ? query[item] : Number(query[item])
     }
+    this.params.cityNums = query['cityNums'] || this.cityid
+    this.getPositionList()
   },
   computed: {
     cityid () {
@@ -116,7 +117,7 @@ export default {
       if (this.recommended) {
         apiMethod = getRecommendPosition
         // 判断筛选条件
-        let search = ['keyword', 'financingIds', 'employeeIds', 'industryIds']
+        let search = ['cityNums', 'keyword', 'financingIds', 'employeeIds', 'industryIds']
         for (let item of search) {
           if (this.params[item]) {
             apiMethod = getPositionSearch
@@ -250,6 +251,7 @@ export default {
     .iconfont {
       font-size: 12px;
       padding-right: 3px;
+      color: $font-color-12;
     }
   }
 }
@@ -264,6 +266,7 @@ export default {
     color: $title-color-2;
     font-size: 12px;
     padding-right: 8px;
+    font-weight: 300;
   }
   span + span {
     padding-left: 8px;
@@ -298,6 +301,7 @@ export default {
     font-size: 12px;
     color: $title-color-2;
     margin-top: 10px;
+    font-weight: 300;
   }
   .contact-recruiter {
     display: none;
