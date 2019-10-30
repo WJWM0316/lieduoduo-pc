@@ -12,7 +12,7 @@
     <div class="position-lists-wrapper" v-loading="getLoading">
       <!-- 隔离层 防止nth-child 多读取一个div -->
       <div class="position-lists">
-        <router-link tag="div" :to="`/position/details?positionId=${item.id}`" class="position-list-wrapper" v-for="(item,index) in listData" :key="index">
+        <router-link target="_blank"  :to="`/position/details?positionId=${item.id}`" class="position-list-wrapper" v-for="(item,index) in listData" :key="index">
           <div class="list-header">
             <div class="position-name">{{item.positionName}}</div>
             <div class="position-contact">

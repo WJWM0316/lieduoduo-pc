@@ -11,7 +11,7 @@
     </div>
     <div class="active-list">
       <template v-for="(item,index) in listData">
-        <router-link tag="div" :to="`/position/details?positionId=${item.id}`" class="active-list-wrapper" :key="item.lableId">
+        <router-link target="_blank" :to="`/position/details?positionId=${item.id}`" class="active-list-wrapper" :key="item.lableId">
           <div class="list-header">
             <div class="list-image">
               <img :src="item.companyInfo.logoInfo.smallUrl" />
@@ -41,7 +41,7 @@
               <span class="list-hour">{{listCountDown[index].hours}}</span>:<span class="list-mins">{{listCountDown[index].mins}}</span>:<span class="list-second">{{listCountDown[index].seconds}}</span>
             </div>
             <div class="position-count">
-              <p>还有<b>{{(item.seatsNum -  item.applyNum - item.natureApplyNum) > 99 ? '99+' : item.seatsNum -  item.applyNum - item.natureApplyNum}}</b>个席位</p>
+              <p>还剩<b>{{(item.seatsNum -  item.applyNum - item.natureApplyNum) > 99 ? '99+' : item.seatsNum -  item.applyNum - item.natureApplyNum}}</b>个席位</p>
               <span class="position-process">
                 <span
                   class="position-process-width"

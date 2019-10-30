@@ -72,7 +72,6 @@ export default PageFooter
     .footer_right {
       display: flex;
       flex-direction: row;
-
       .right_code_blo {
         margin-left: 40px;
         .code {
@@ -80,11 +79,7 @@ export default PageFooter
           height:94px;
           background:#fff;
           margin-bottom: 13px;
-          &.app {
-            width:96px;
-            height:96px;
-            border: none;
-          }
+          overflow: hidden;
           &.applet {
             border-radius: 50%;
           }

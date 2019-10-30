@@ -274,7 +274,7 @@ class Util {
     //秒
     var seconds = modulo % 60;
     return {
-      days: days > 9 ? days : '0' + days,
+      days: days > 9 || days <= 0 ? days : '0' + days,
       hours: hours > 9 ? hours : '0' + hours,
       mins: minutes > 9 ? minutes : '0' + minutes,
       seconds: seconds > 9 ? seconds : '0' + seconds,
