@@ -135,7 +135,7 @@
   .tit {
     font-size:18px;
     font-family:PingFangSC;
-    font-weight:500;
+    font-weight:700;
     color:rgba(40,40,40,1);
     line-height:22px;
     margin-bottom: 10px;

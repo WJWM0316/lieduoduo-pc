@@ -516,7 +516,7 @@
       background:rgba(101,39,145,1);
       border-radius:84px;
       font-size:14px;
-      font-weight:500;
+      font-weight:700;
       color:rgba(255,255,255,1);
       line-height:34px;
       text-align: center;
@@ -560,7 +560,7 @@
   }
   .h11 {
     font-size:22px;
-    font-weight:500;
+    font-weight:700;
     color:#fff;
     line-height:32px;
     padding-bottom: 38px;
@@ -700,7 +700,7 @@
       height:50px;
       line-height: 50px;
       font-size:16px;
-      font-weight:500;
+      font-weight:700;
       cursor: pointer;
       position: relative;
       margin-top: 48px;
@@ -791,7 +791,7 @@
       h3{
         display: inline-block;
         // float: left;
-        font-weight:500;
+        font-weight:700;
         color:rgba(40,40,40,1);
         font-size:24px;
       }
@@ -859,7 +859,7 @@
     .label{
       font-size:16px;
       font-family:PingFangSC;
-      font-weight:500;
+      font-weight:700;
       color:rgba(40,40,40,1);
     }
     .tips{

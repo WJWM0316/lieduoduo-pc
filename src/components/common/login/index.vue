@@ -3,7 +3,7 @@
     <div class="inner">
       <div class="login_cont" :class="{ toggleType: !toggleType}">
         <!-- 切换登录方式type -->
-        <div class="login_type" v-if="toggleType && (type === 'msgLogin' || type === 'qrcodeLogin')" v-show="!loginsuccess">
+        <div class="login_type" v-if="toggleType && (type === 'msgLogin' || type === 'qrcodeLogin')" v-show="!guideCreateRecruiter">
           <div class="login_text" @click="changetype">{{type === 'msgLogin' ? '二维码登录' : '短信验证登录'}}</div>
           <div class="login-img">
             <img :src="cdnPath + 'loginimg.png'" @click="changetype" />
@@ -11,7 +11,7 @@
         </div>
         <!-- 二维码登录 -->
         <template v-if="type === 'qrcodeLogin' && toggleType">
-          <div class="logind" v-show="!loginsuccess">
+          <div class="logind">
             <h3 class="cont_tit" style="margin-bottom:24px">扫码登录</h3>
             <div class="cont_p">使用「猎多多小程序」扫码登录</div>
 
@@ -48,7 +48,7 @@
           </div>
         </template>
         <!-- 短信登录 或者 注册 -->
-        <div class="logind" :class="{ cont_ti: imgcode }" v-if="type === 'msgLogin' || type === 'register' || !toggleType" v-show="!loginsuccess">
+        <div class="logind" :class="{ cont_ti: imgcode }" v-if="type === 'msgLogin' || type === 'register' || !toggleType" v-show="!guideCreateRecruiter">
           <ul class="sign_type" v-if="type === 'register'">
             <li :class="{ active : !identity }" @click="toggle(0)">我是求职者</li>
             <li :class="{ active : identity }" @click="toggle(1)">我是面试官</li>
@@ -107,10 +107,10 @@
         </div>
 
         <!-- 登录成功引导图 -->
-        <div class="login_after" v-show="loginsuccess">
+        <div class="login_after" v-if="guideCreateRecruiter">
           <h3 class="after_title">登录注册成功</h3>
           <p class="after_text">尚未是认证面试官，微信「扫一扫」认证</p>
-          <img class="after_img" :src="cdnPath + 'cIndex.jpg'"/>
+          <img class="after_img" :src="cdnPath + 'bIndex.jpg'"/>
         </div>
       </div>
 
@@ -153,7 +153,6 @@ import { saveAccessToken } from '@/api/cacheService'
 @Component({
   name: 'loginForm',
   methods: {},
-  computed: {},
   props: {
     toggleType: {
       type: Boolean,
@@ -164,7 +163,9 @@ import { saveAccessToken } from '@/api/cacheService'
       default: ''
     }
   },
-  components: {}
+  computed: mapState({
+    guideCreateRecruiter: state => state.guideCreateRecruiter
+  })
 })
 export default class loginForm extends Component {
   mobile = '' // 手机号
@@ -176,7 +177,6 @@ export default class loginForm extends Component {
   type = 'msgLogin' // msgLogin 短信登录, qrcodeLogin 二维码登录, register 注册
   helptype = false
   openHelp = false
-  loginsuccess = false // 登录成功引导页
   visibleDialog = true // 弹窗关闭
   // cdn图片地址
   cdnPath = `${process.env.VUE_APP_CDN_PATH}/images/`
@@ -191,18 +191,17 @@ export default class loginForm extends Component {
   beforeDestroy () {
     clearInterval(this.timer)
   }
-
-  mounted () {
-    this.type = this.loginType
+  created () {
     this.init()
   }
-
   closeMask () {
     this.showError = !this.showError
   }
 
   init () {
+    if (this.loginType) this.type = this.loginType
     if (this.$route.name === 'login' && !this.$route.query.type) this.type = 'qrcodeLogin'
+    if (this.$route.query.type) this.type = this.$route.query.type
     if (this.type === 'qrcodeLogin') this.getCode()
   }
 
@@ -370,7 +369,7 @@ export default class loginForm extends Component {
       text-align: left;
       height: 24px;
       font-size: 16px;
-      font-weight: 500;
+      font-weight: 700;
       color: rgba(53, 64, 72, 1);
       line-height: 24px;
       position: relative;
@@ -564,7 +563,7 @@ export default class loginForm extends Component {
     }
     .cont_tit {
       font-size: 30px;
-      font-weight: 500;
+      font-weight: 700;
       color: #652791;
       line-height: 30px;
       padding-top: 50px;
@@ -579,7 +578,7 @@ export default class loginForm extends Component {
     }
     .cont_p {
       font-size: 14px;
-      font-weight: 500;
+      font-weight: 700;
       color: #626262;
       line-height: 20px;
       margin-bottom: 8px;
@@ -664,7 +663,7 @@ export default class loginForm extends Component {
         p {
           font-size: 16px;
           font-family: PingFang-SC-Medium;
-          font-weight: 500;
+          font-weight: 700;
           color: rgba(101, 39, 145, 1);
           margin-bottom: 33px;
         }
@@ -676,7 +675,7 @@ export default class loginForm extends Component {
           margin-bottom: 14px;
           font-size: 14px;
           font-family: PingFang-SC-Medium;
-          font-weight: 500;
+          font-weight: 700;
           color: rgba(255, 255, 255, 1);
           line-height: 38px;
           text-align: center;
@@ -735,12 +734,12 @@ export default class loginForm extends Component {
         width: 220px;
         height: 48px;
         font-size: 16px;
-        font-weight: 500;
+        font-weight: 700;
         background: none;
       }
       .msgText {
         color: #652791;
-        font-weight: 500;
+        font-weight: 700;
         font-size: 16px;
         line-height: 48px;
         display: inline-block;
@@ -771,7 +770,7 @@ export default class loginForm extends Component {
       border: 0;
       span {
         color: #fff;
-        font-weight: 500;
+        font-weight: 700;
         font-size: 20px;
       }
     }
@@ -791,7 +790,7 @@ export default class loginForm extends Component {
           }
           p{
               color: #652791;
-              font-weight: 500;
+              font-weight: 700;
               margin-top: 13px;
           }
       }
@@ -820,13 +819,13 @@ export default class loginForm extends Component {
         .after_title{
           font-size: 30px;
           color: #652791;
-          font-weight:500;
+          font-weight:700;
         }
         .after_text{
           font-size: 18px;
           line-height: 26px;
           color: #333333;
-          font-weight:500;
+          font-weight:700;
           margin: 48px 0 38px 0;
         }
         .after_img{

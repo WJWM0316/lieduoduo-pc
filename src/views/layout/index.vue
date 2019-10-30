@@ -7,6 +7,10 @@
 
     <page-footer />
     <page-aside v-if="shouldSaideShown()" />
+
+    <guide-qrcode-pop></guide-qrcode-pop>
+
+    
   </section>
 </template>
 <script>
@@ -14,17 +18,17 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import PageFooter from '@/views/layout/footer/index.vue'
-// import PageHeader from './components/pageHeader/index.vue'
 import PageHeader from '@/views/layout/header/'
 import PageAside from '@/views/layout/side/'
-// import PageHeader2 from './components/pageHeader2/index.vue'
+import GuideQrcodePop from 'COMPONENTS/common/guideQrcodePop'
+
 
 @Component({
   name: 'App',
   components: {
     PageFooter,
     PageHeader,
-    // PageHeader2,
+    GuideQrcodePop,
     PageAside
   },
   watch: {
