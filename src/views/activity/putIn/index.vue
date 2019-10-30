@@ -570,7 +570,7 @@
           justify-content: center;
           .modal-top-title {
             font-size:20px;
-            font-weight:500;
+            font-weight:700;
             color:rgba(51,51,51,1);
             line-height:28px;
             margin-bottom: 4px;
@@ -780,7 +780,7 @@
         background:rgba(101,39,145,1);
         border-radius:84px;
         font-size:14px;
-        font-weight:500;
+        font-weight:700;
         color:rgba(255,255,255,1);
         line-height:34px;
         text-align: center;
@@ -895,7 +895,7 @@
               }
               .search-bar-btn {
                 font-size:14px;
-                font-weight:500;
+                font-weight:700;
                 color:rgba(255,255,255,1);
                 width:101px;
                 height:40px;
@@ -1102,14 +1102,14 @@
                   width: 100%;
                   font-size:16px;
                   font-family:PingFangSC;
-                  font-weight:500;
+                  font-weight:700;
                   color:rgba(51,51,51,1);
                 }
                 .emolument {
                   width: 100%;
                   font-size:18px;
                   font-family:PingFangSC;
-                  font-weight:500;
+                  font-weight:700;
                   color:rgba(255,127,76,1);
                   line-height:18px;
                 }
@@ -1260,7 +1260,7 @@
             margin: 0 auto;
             margin-bottom: 16px;
             font-size:18px;
-            font-weight:500;
+            font-weight:700;
             color:rgba(255,255,255,1);
             text-align: center;
             width:328px;

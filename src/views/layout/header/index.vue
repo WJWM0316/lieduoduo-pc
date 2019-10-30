@@ -128,7 +128,8 @@ export default {
             } else {
               this.$store.commit('guideQrcodePop', {switch: true, type: 'tobIndex'})
             }
-          } 
+          }
+          break
       }
     },
     handleToLogin (type) {

@@ -361,7 +361,7 @@ export default {
       color: $font-color-2;
       b {
         color: $main-color-1;
-        font-weight: 500;
+        font-weight: 700;
       }
     }
     span {

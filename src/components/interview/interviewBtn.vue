@@ -54,7 +54,6 @@
 		</section>
 
 		<loginPop ref="loginPop" v-if="!hasLogin"></loginPop>
-		<guideQrcodePop ref="guideQrcodePop" type="interviewDetail" :params="popParmas"></guideQrcodePop>
 	</div>
 </template>
 <script>
@@ -62,12 +61,10 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import loginPop from '@/components/common/loginPop'
 import {getInterviewStatusApi, applyInterviewApi, confirmInterviewApi, refuseInterviewApi} from '@/api/interview.js'
-import guideQrcodePop from '@/components/common/guideQrcodePop'
 @Component({
   name: 'interviewBtn',
   components: {
-    loginPop,
-    guideQrcodePop
+    loginPop
   },
   props: {
   	infos: {

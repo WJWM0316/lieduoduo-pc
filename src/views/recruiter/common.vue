@@ -710,7 +710,7 @@ export default class CourseList extends Vue {
       height: 110px;
       line-height: 110px;
       font-size: 24px;
-      font-weight: 500;
+      font-weight: 700;
       color: rgba(40, 40, 40, 1);
       text-align: left;
       position: relative;
@@ -751,7 +751,7 @@ export default class CourseList extends Vue {
         line-height: 24px;
         font-size: 16px;
         font-family: PingFang-SC-Medium;
-        font-weight: 500;
+        font-weight: 700;
         width: 254px;
         .job_top {
           color: rgba(53, 64, 72, 1);
@@ -900,7 +900,7 @@ export default class CourseList extends Vue {
   .service {
     font-size: 16px;
     font-family: PingFang-SC-Medium;
-    font-weight: 500;
+    font-weight: 700;
     color: rgba(101, 39, 145, 1);
     line-height: 18px;
     position: fixed;
@@ -1037,7 +1037,7 @@ export default class CourseList extends Vue {
       .mb_tit {
         font-size: 16px;
         font-family: PingFangSC-Medium;
-        font-weight: 500;
+        font-weight: 700;
         color: rgba(53, 64, 72, 1);
         line-height: 24px;
       }
@@ -1137,7 +1137,7 @@ export default class CourseList extends Vue {
       .share_help_text {
         font-size: 14px;
         font-family: PingFang-SC-Medium;
-        font-weight: 500;
+        font-weight: 700;
         color: rgba(101, 39, 145, 1);
         line-height: 22px;
         text-align: center;

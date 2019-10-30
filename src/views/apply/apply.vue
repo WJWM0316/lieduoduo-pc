@@ -501,7 +501,7 @@ export default class CourseList extends Vue {
         .mb_tit {
           font-size: 16px;
           font-family: PingFangSC-Medium;
-          font-weight: 500;
+          font-weight: 700;
           color: rgba(53, 64, 72, 1);
           line-height: 24px;
         }
@@ -601,7 +601,7 @@ export default class CourseList extends Vue {
         .share_help_text {
           font-size: 14px;
           font-family: PingFang-SC-Medium;
-          font-weight: 500;
+          font-weight: 700;
           color: rgba(101, 39, 145, 1);
           line-height: 22px;
           text-align: center;
@@ -658,7 +658,7 @@ export default class CourseList extends Vue {
       .hint {
         font-size: 20px;
         font-family: PingFang-SC-Medium;
-        font-weight: 500;
+        font-weight: 700;
         color: rgba(101, 39, 145, 1);
         line-height: 32px;
       }
@@ -775,7 +775,7 @@ export default class CourseList extends Vue {
             &.file_name {
               font-size: 14px;
               font-family: PingFang-SC-Medium;
-              font-weight: 500;
+              font-weight: 700;
               color: rgba(17, 17, 17, 1);
               margin-bottom: 2px;
               width: 100%;
@@ -797,7 +797,7 @@ export default class CourseList extends Vue {
 
             font-size: 12px;
             font-family: PingFang-SC-Medium;
-            font-weight: 500;
+            font-weight: 700;
             color: rgba(101, 39, 145, 1);
             line-height: 20px;
           }
@@ -862,7 +862,7 @@ export default class CourseList extends Vue {
       border: 1px solid rgba(101, 39, 145, 1);
       font-size: 16px;
       font-family: PingFang-SC-Medium;
-      font-weight: 500;
+      font-weight: 700;
       color: rgba(255, 255, 255, 1);
     }
   }
@@ -872,7 +872,7 @@ export default class CourseList extends Vue {
   .service {
     font-size: 16px;
     font-family: PingFang-SC-Medium;
-    font-weight: 500;
+    font-weight: 700;
     color: rgba(101, 39, 145, 1);
     line-height: 18px;
     position: fixed;

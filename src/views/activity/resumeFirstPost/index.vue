@@ -459,7 +459,7 @@ export default class CourseList extends Vue {
         background:rgba(101,39,145,1);
         border-radius:84px;
         font-size:14px;
-        font-weight:500;
+        font-weight:700;
         color:rgba(255,255,255,1);
         line-height:34px;
         text-align: center;
@@ -528,7 +528,7 @@ export default class CourseList extends Vue {
   .title {
     font-size:22px;
     font-family:PingFangSC;
-    font-weight:500;
+    font-weight:700;
     color:#fff;
     line-height:32px;
     padding-top: 48px;

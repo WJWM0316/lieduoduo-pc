@@ -485,7 +485,7 @@
   .title {
     font-size:22px;
     font-family:PingFangSC;
-    font-weight:500;
+    font-weight:700;
     color:#fff;
     line-height:32px;
     margin-top: 48px;
@@ -537,7 +537,7 @@
     .form-title {
       font-size:24px;
       font-family:PingFangSC;
-      font-weight:500;
+      font-weight:700;
       color:rgba(40,40,40,1);
       line-height:33px;
       text-align: center;
@@ -642,7 +642,7 @@
       height:50px;
       line-height: 50px;
       font-size:16px;
-      font-weight:500;
+      font-weight:700;
       cursor: pointer;
       position: relative;
       margin-top: 48px;
@@ -708,7 +708,7 @@
         .duty-tit {
           font-size:16px;
           font-family:PingFangSC;
-          font-weight:500;
+          font-weight:700;
           color:rgba(40,40,40,1);
           line-height:22px;
           margin-bottom: 18px;
@@ -727,7 +727,7 @@
         .btn-blo {
           text-align: center;
           font-size:16px;
-          font-weight:500;
+          font-weight:700;
           border-radius:25px;
           line-height:40px;
           
@@ -851,7 +851,7 @@
         background:rgba(101,39,145,1);
         border-radius:84px;
         font-size:14px;
-        font-weight:500;
+        font-weight:700;
         color:rgba(255,255,255,1);
         line-height:34px;
         text-align: center;
