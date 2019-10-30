@@ -1,7 +1,9 @@
 <template>
   <div class="page-header">
     <div class="page-header-wrapper">
-      <div class="header-logo">猎多多</div>
+      <router-link tag="div" to="/index" class="header-logo">
+        <img src="../../../assets/images/index/logo.png" alt="">
+      </router-link>
       <div class="header-address" v-if="$route.path === '/index'">
         <drop-down
           v-model="addressId"
@@ -39,7 +41,7 @@
       <div class="header-user-info">
         <div class="system">
           <template v-if="isLogin">
-            <span class="resume">简历</span>
+            <router-link tag="span" class="resume" to="/applyIndex">简历</router-link>
           </template>
           <template v-else>
             <div>
@@ -161,7 +163,11 @@ $header-height-1: $page-header-height;
   text-align: center;
   font-size: 20px;
   color: #fff;
+  height: 20px;
   margin-right: 70px;
+  img {
+    max-height: 100%;
+  }
 }
 .header-address {
   cursor: pointer;

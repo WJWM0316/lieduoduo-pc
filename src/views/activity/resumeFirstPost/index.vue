@@ -4,7 +4,7 @@
   <header id="resumeHeader" >
     <section>
       <img class="left_logo" src="../../../assets/images/activity/putIn/logo_lieduodou@2x.png" />
-       
+
         <el-dropdown trigger="click"  @command="handleClick" >
           <div class="headerBtn">
             <div class="right" v-if="userInfo && userInfo.token">
@@ -20,7 +20,7 @@
               </el-dropdown-item>
             </el-dropdown-menu>
         </el-dropdown>
-      
+
     </section>
   </header>
   <div class="middle">
@@ -79,7 +79,7 @@
             <div v-if="!form1.startWorkYear">选择参加工作时间</div>
             <div v-else>{{form1.startWorkYear | formatDate}}</div>
             <!-- :pickerOptions="pickerOptions" -->
-            <el-date-picker     
+            <el-date-picker
               type="date"
               placeholder="选择参加工作时间"
               v-model="form1.startWorkYear"
@@ -98,12 +98,12 @@
 
 </template>
 <script>
-  import Vue from 'vue'
-  import Component from 'vue-class-component'
-  import { searchResumeStepApi, setResumeFirstApi, setResumeSecondApi, setResumeThirdApi, setResumeFourthApi, getResumeFirstApi } from '../../../api/putIn'
+import Vue from 'vue'
+import Component from 'vue-class-component'
+import { searchResumeStepApi, setResumeFirstApi, setResumeSecondApi, setResumeThirdApi, setResumeFourthApi, getResumeFirstApi } from '../../../api/putIn'
 
-  import MyCropper from '../../../components/cropper/index.vue'
-  import { getAccessToken } from '../../../api/cacheService.js'
+import MyCropper from '@/components/common/cropper'
+import { getAccessToken } from '../../../api/cacheService.js'
 
   @Component({
     name: 'lighthouse-list',
@@ -113,25 +113,25 @@
     },
     watch: {
       '$route': {
-        handler() {
+        handler () {
           this.init()
         },
         immediate: true
       }
     },
     components: {
-      MyCropper,
+      MyCropper
     },
     filters: {
-      formatDate(date) {
+      formatDate (date) {
         const dateTime = new Date(date)
         const YY = dateTime.getFullYear()
         const MM =
           dateTime.getMonth() + 1 < 10
             ? '0' + (dateTime.getMonth() + 1)
-            : dateTime.getMonth() + 1;
+            : dateTime.getMonth() + 1
         const D =
-          dateTime.getDate() < 10 ? '0' + dateTime.getDate() : dateTime.getDate();
+          dateTime.getDate() < 10 ? '0' + dateTime.getDate() : dateTime.getDate()
         /* const hh =
           dateTime.getHours() < 10
             ? '0' + dateTime.getHours()
@@ -149,7 +149,7 @@
       }
     }
   })
-  export default class CourseList extends Vue {
+export default class CourseList extends Vue {
     userInfo = {}
     messagePop = {
       isShow: false,
@@ -158,10 +158,10 @@
     form1 = {
       avatar: '',
       gender: '1',
-      name: '',  
+      name: '',
       startWorkYear: '',
       birth: '',
-      from: 1,
+      from: 1
     }
     augustInterval = null
     isShowMask = false
@@ -169,12 +169,12 @@
     timer = 60
     imageUrl = ''
     handleHeaders = {
-      'Authorization': '',
+      'Authorization': ''
     }
     handleData = {
       'attach_type': 'avatar'
     }
-    formHint = {    //form提示框
+    formHint = { // form提示框
       isShow: false,
       text: ''
     }
@@ -196,19 +196,18 @@
       ]
     }
 
-    imageUploadSuccess(res) {
+    imageUploadSuccess (res) {
       this.form1.avatar = res.id
       this.imageUrl = res.url
     }
 
-    imageUploadFail(res) {
-      if(Object.prototype.toString.call(res) === '[object String]') {
+    imageUploadFail (res) {
+      if (Object.prototype.toString.call(res) === '[object String]') {
         this.setHint(`${res}~`)
       } else {
         this.setHint(`${res.msg}~`)
       }
     }
-
 
     mounted () {
       // let query = this.$route.query
@@ -222,17 +221,17 @@
     }
 
     // 返回上一步
-    lastStep() {
-      if(this.step < 1) return
+    lastStep () {
+      if (this.step < 1) return
       this.step -= 1
     }
 
-    //查询简历完善步数
-    searchResumeStep() {
+    // 查询简历完善步数
+    searchResumeStep () {
       searchResumeStepApi().then(() => {})
     }
 
-    getResumeFirst() {
+    getResumeFirst () {
       return new Promise((resolve) => {
         getResumeFirstApi().then(res => {
           let data = res.data.data
@@ -249,87 +248,85 @@
     }
 
     // 验证
-    validate1() {
-      if(!this.checkName()) return false
-      if(!this.checkWorkYear()) return false
-      if(!this.checkBirth()) return false
-      if(!this.checkAva()) return false
+    validate1 () {
+      if (!this.checkName()) return false
+      if (!this.checkWorkYear()) return false
+      if (!this.checkBirth()) return false
+      if (!this.checkAva()) return false
       return true
     }
 
     // 第一步
-      checkAva() {
-        // var pattern = /^[\u4E00-\u9FA5\s]{2,10}$/
-        if(!this.form1.avatar && this.form1.avatar!==0){
-          this.setHint('请上传你的头像')
-          return false
-        }else {
-          return true
-        }
-      }
-      checkName() {
-        var pattern = /^[\u4E00-\u9FA5\s]{2,10}$/
-        if(!pattern.test(this.form1.name)){
-          this.setHint('请填写2-10字的真实姓名')
-          return false
-        }else {
-          return true
-        }
-      }
-
-      checkBirth() {
-        var pattern = /^1(3|4|5|6|7|8|9)\d{9}$/
-        if(!this.form1.birth && !pattern.test(this.form1.birth)){
-          this.setHint('请选择出生年月')
-          return false
-        }else {
-          return true
-        }
-      }
-
-      checkWorkYear() {
-        // var pattern = /^1(3|4|5|6|7|8|9)\d{9}$/
-        if(!this.form1.startWorkYear && this.form1.startWorkYear != 0){
-          this.setHint('请选择工作时间')
-          return false
-        }else {
-          return true
-        }
-      }
-    // 第一步
-
-
-    // 下载
-      handleAvatarSuccess(res, file) {
-        this.imageUrl = URL.createObjectURL(file.raw);
-        this.form1.avatar = file.response.data[0].id
-      }
-
-      beforeAvatarUpload(file) {
-        const fileNames = ['png','jpg','jpeg','gif','JPG','JPEG','GIF','PNG']
-        const isLt10M = file.size / 1024 / 1024 < 10
-        let name = file.name.split(".")[1]
-        let isUpload = fileNames.indexOf(name)
-        if(isUpload<0 || !isLt10M){
-          this.$alert('提示', '只支持JPG、JPEG、GIF、PNG格式，文件小于10M', {
-            type: 'warning',
-            confirmButtonText: '确定',
-          })
-          return false
-        }
-
+    checkAva () {
+      // var pattern = /^[\u4E00-\u9FA5\s]{2,10}$/
+      if (!this.form1.avatar && this.form1.avatar !== 0) {
+        this.setHint('请上传你的头像')
+        return false
+      } else {
         return true
       }
-    // 下载
+    }
+    checkName () {
+      var pattern = /^[\u4E00-\u9FA5\s]{2,10}$/
+      if (!pattern.test(this.form1.name)) {
+        this.setHint('请填写2-10字的真实姓名')
+        return false
+      } else {
+        return true
+      }
+    }
 
+    checkBirth () {
+      var pattern = /^1(3|4|5|6|7|8|9)\d{9}$/
+      if (!this.form1.birth && !pattern.test(this.form1.birth)) {
+        this.setHint('请选择出生年月')
+        return false
+      } else {
+        return true
+      }
+    }
+
+    checkWorkYear () {
+      // var pattern = /^1(3|4|5|6|7|8|9)\d{9}$/
+      if (!this.form1.startWorkYear && this.form1.startWorkYear !== 0) {
+        this.setHint('请选择工作时间')
+        return false
+      } else {
+        return true
+      }
+    }
+    // 第一步
+
+    // 下载
+    handleAvatarSuccess (res, file) {
+      this.imageUrl = URL.createObjectURL(file.raw)
+      this.form1.avatar = file.response.data[0].id
+    }
+
+    beforeAvatarUpload (file) {
+      const fileNames = ['png', 'jpg', 'jpeg', 'gif', 'JPG', 'JPEG', 'GIF', 'PNG']
+      const isLt10M = file.size / 1024 / 1024 < 10
+      let name = file.name.split('.')[1]
+      let isUpload = fileNames.indexOf(name)
+      if (isUpload < 0 || !isLt10M) {
+        this.$alert('提示', '只支持JPG、JPEG、GIF、PNG格式，文件小于10M', {
+          type: 'warning',
+          confirmButtonText: '确定'
+        })
+        return false
+      }
+
+      return true
+    }
+    // 下载
 
     // 提交
     submit (index) {
       let name = `validate${index}`
       // let form = `form${index}`
       let subName = ''
-      if(this[name]()) {
-        switch(index) {
+      if (this[name]()) {
+        switch (index) {
           case 1:
             subName = setResumeFirstApi
             break
@@ -346,13 +343,13 @@
             break
         }
         const params = this.transformData(this.form1)
-        subName({...params}).then(() => {
+        subName({ ...params }).then(() => {
           this.getResumeFirst().then(res => {
-            let userInfo = this.userInfo;
+            let userInfo = this.userInfo
             userInfo.avatarInfo = res.avatar
             userInfo.realname = res.name
-            this.$store.dispatch('setUserInfo', userInfo);
-            this.$router.push({name: 'resumeSecondPost'})
+            this.$store.dispatch('setUserInfo', userInfo)
+            this.$router.push({ name: 'resumeSecondPost' })
           })
         }).catch(
           err => this.setHint(err.data.msg || '错误')
@@ -362,38 +359,38 @@
 
     transformData () {
       const newForm = Object.assign({}, this.form1 || {})
-      newForm.birth =  newForm.birth/1000
-      if(newForm.startWorkYear === 0) {
-        newForm.startWorkYear =  ''
+      newForm.birth = newForm.birth / 1000
+      if (newForm.startWorkYear === 0) {
+        newForm.startWorkYear = ''
       } else {
-        newForm.startWorkYear =  newForm.startWorkYear/1000
+        newForm.startWorkYear = newForm.startWorkYear / 1000
       }
       return newForm
     }
-    
+
     setHint (text) {
-      this.formHint = {    //form提示框
+      this.formHint = { // form提示框
         isShow: true,
         text: text
       }
-      clearTimeout(this.hintSetTime) 
-      this.hintSetTime = setTimeout(()=> {
+      clearTimeout(this.hintSetTime)
+      this.hintSetTime = setTimeout(() => {
         this.formHint.isShow = false
-      }, 3000);
+      }, 3000)
     }
 
-    handleClick(e) {
-      if(e === 'out'){
+    handleClick (e) {
+      if (e === 'out') {
         this.$store.dispatch('logoutApi')
           .then(() => {
-            this.$router.push({name: 'putIn'})
+            this.$router.push({ name: 'putIn' })
           })
       }
     }
-    focus(dom){
+    focus (dom) {
       document.querySelector(dom).className = 'el-icon-caret-bottom defalut-position icon_active'
     }
-    blur(dom) {
+    blur (dom) {
       document.querySelector(dom).className = 'el-icon-caret-bottom defalut-position'
     }
   }
@@ -729,6 +726,5 @@
     }
   }
 }
-
 
 </style>

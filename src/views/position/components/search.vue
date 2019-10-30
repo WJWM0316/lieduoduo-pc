@@ -49,7 +49,7 @@
         </drop-down>
         <drop-down
           v-model="params.employeeIds"
-          :items="experienceList"
+          :items="employeeList"
           :multiple="true"
           :limit="3"
           :showArrow="true"
@@ -106,6 +106,8 @@ export default {
   components: { DropDown },
   created () {
     this.getCollectList()
+    const { query } = this.$route
+    if (query.keyword) this.params.keyword = query.keyword
   },
   computed: {
     cityid () {
@@ -169,6 +171,7 @@ export default {
     // 清空筛选
     handleRemove () {
       this.params = {
+        keyword: '',
         emolumentIds: '', // 薪资
         financingIds: [], // 融资
         employeeIds: [], // 人员规模
@@ -176,7 +179,7 @@ export default {
       }
       this.financingList.forEach(val => { if (val.checked) val.checked = false })
       this.industryList.forEach(val => { if (val.checked) val.checked = false })
-      this.experienceList.forEach(val => { if (val.checked) val.checked = false })
+      this.employeeList.forEach(val => { if (val.checked) val.checked = false })
       this.handleSelect()
     }
   },

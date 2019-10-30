@@ -13,15 +13,15 @@
         </div>
         <div class="footer_right">
           <div class="right_code_blo">
-            <img class="code app" src="../../../assets/images/uploadAPP.png" />
+            <img class="code app" :src="images.app_qrcode" />
             <p class="black">扫码下载APP</p>
           </div>
           <div class="right_code_blo">
-            <img class="code public" src="../../../assets/images/gzh.png" />
+            <img class="code public" :src="images.wx_qrcode" />
             <p class="black">扫码关注公众号</p>
           </div>
           <div class="right_code_blo">
-            <img class="code applet" src="../../../assets/images/xcx.png" />
+            <img class="code applet" :src="images.mp_qrcode" />
             <p class="black">扫码打开小程序</p>
           </div>
         </div>
@@ -78,8 +78,7 @@ export default PageFooter
         .code {
           width:94px;
           height:94px;
-          background:rgba(255,255,255,1);
-          border:1px solid rgba(239,233,244,1);
+          background:#fff;
           margin-bottom: 13px;
           &.app {
             width:96px;

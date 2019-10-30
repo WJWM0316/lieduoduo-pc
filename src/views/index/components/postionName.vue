@@ -9,7 +9,7 @@
               <span class="item-title">{{item.name}}</span>
               <div>
                 <template v-for="child in item.children">
-                  <router-link tag="span" :to="`/position/?name=${child.name}`"  :key="child.labelId">{{child.name}}</router-link>
+                  <router-link tag="span" :to="`/position/?keyword=${child.name}`"  :key="child.labelId">{{child.name}}</router-link>
                 </template>
               </div>
               <span class="item-icon el-icon-arrow-right"></span>
@@ -18,7 +18,7 @@
               <div class="position-details-wrapper" v-for="child in item.all.children" :key="child.labelId">
                 <p>{{child.name}}</p>
                 <div class="detaisl-span">
-                  <router-link :to="`/position/?name=${link.name}`" v-for="link in child.children" :key="link.labelId">{{link.name}}</router-link>
+                  <router-link  :to="`/position/?keyword=${link.name}`" v-for="link in child.children" :key="link.labelId">{{link.name}}</router-link>
                 </div>
               </div>
             </div>
@@ -34,7 +34,7 @@
                 <span class="item-title">{{item.name}}</span>
                 <div>
                   <template v-for="child in item.children">
-                    <router-link tag="span" :to="`/position/?name=${child.name}`"  :key="child.labelId">{{child.name}}</router-link>
+                    <router-link tag="span" :to="`/position/?keyword=${child.name}`"  :key="child.labelId">{{child.name}}</router-link>
                   </template>
                 </div>
                 <span class="item-icon el-icon-arrow-right"></span>
@@ -43,7 +43,7 @@
                 <div class="position-details-wrapper" v-for="child in item.all.children" :key="child.labelId">
                   <p>{{child.name}}</p>
                   <div class="detaisl-span">
-                    <router-link :to="`/position/?name=${link.name}`" v-for="link in child.children" :key="link.labelId">{{link.name}}</router-link>
+                    <router-link  :to="`/position/?keyword=${link.name}`" v-for="link in child.children" :key="link.labelId">{{link.name}}</router-link>
                   </div>
                 </div>
               </div>
@@ -167,6 +167,7 @@ $position-details-width: 528px;
   .item-title {
     color: $title-color-1;
     font-size:16px;
+    font-weight: bold;
     padding-right: 13px;
     height: 100%;
   }
@@ -213,6 +214,7 @@ $position-details-width: 528px;
       display: inline-block;
       margin-right: 26px;
       margin-bottom: 14px;
+      color: $title-color-2;
     }
     a:hover {
       color: $main-color-1;

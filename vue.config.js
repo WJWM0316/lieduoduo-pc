@@ -58,7 +58,7 @@ module.exports = {
         // 注意：试过不能使用别名路径
         path.resolve(__dirname, './src/assets/scss/vars.scss'),
         path.resolve(__dirname, './src/assets/scss/mixins.scss'),
-        path.resolve(__dirname, `../src/assets/scss/${scssPath}.scss`)
+        path.resolve(__dirname, `./src/assets/scss/${scssPath}.scss`)
       ]
 
     }

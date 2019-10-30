@@ -74,6 +74,7 @@ export default {
   },
   methods: {
     toggle () {
+      if (!this.isActive) document.body.click() // 关闭其他
       this.isActive = !this.isActive
     },
     handleClose () {

@@ -4,7 +4,7 @@
     <div class="main-center">
       <div class="position-lists" v-loading="getLoading">
         <no-found v-if="!getLoading && !listData.length"></no-found>
-        <div class="position-list"   v-for="item in listData" :key="item.id">
+        <router-link tag="div" :to="`/position/details?positionId=${item.id}`" class="position-list"   v-for="item in listData" :key="item.id">
           <div class="position-info">
             <p>
               <!-- 急聘 -->
@@ -12,7 +12,7 @@
               <span class="position-name">{{item.positionName}}</span>
               <!-- 24反馈 -->
               <span class="position-24hour" v-if="item.isRapidly === 1"></span>
-              <span class="position-pay">{{item.emolumentMin}}-{{item.emolumentMax}}·{{item.annualSalaryDesc}}</span>
+              <span class="position-pay">{{item.emolumentMin}}-{{item.emolumentMax}}K <template v-if="item.annualSalary > 12">· {{item.annualSalaryDesc}}</template></span>
             </p>
             <p class="position-require">
               <span><i class="iconfont icon-dizhi"></i>{{item.city}}{{item.district}}</span>
@@ -31,10 +31,10 @@
               <p class="">{{item.numOfVisitors}}人已看过</p>
             </div>
             <div class="contact-recruiter">
-              <el-button type="primary" size="small">开约</el-button>
+              <el-button type="primary" size="small" @click.stop>开约</el-button>
             </div>
           </div>
-        </div>
+        </router-link>
         <div class="pagination" v-if="total > 0">
           <el-pagination
             background
@@ -72,8 +72,8 @@ export default {
     return {
       params: {
         page: 1,
-        count: 20,
-        keywork: '',
+        count: 15,
+        keyword: '',
         cityNums: this.cityid
       },
       listData: [],
@@ -86,7 +86,7 @@ export default {
     this.getPositionList()
     const { query } = this.$route
     for (let item in this.params) {
-      if (query[item]) this.params[item] = query[item]
+      if (query[item]) this.params[item] = isNaN(query[item]) ? query[item] : Number(query[item])
     }
     this.getBannerList()
   },
@@ -109,6 +109,9 @@ export default {
     },
     handleSearch (value, type) {
       if (type !== 'page') this.params.page = 1
+      if (type === 'page' && !this.isLogin) {
+        return
+      }
       if (type === 'append') {
         this.params = {
           ...this.params,
@@ -117,7 +120,10 @@ export default {
       } else {
         if (value) this.params[type] = value
       }
-
+      this.$router.replace({
+        path: '/position',
+        query: this.params
+      })
       this.getPositionList()
     },
     getBannerList () {
