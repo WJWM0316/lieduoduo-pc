@@ -194,6 +194,9 @@ export default class loginForm extends Component {
   num = 1;
   showError = false;
 
+  beforeDestroy () {
+    clearInterval(this.timer)
+  }
   // 关闭弹窗
   handleClose () {
     this.visibleDialog = false
@@ -332,6 +335,7 @@ export default class loginForm extends Component {
       captchaKey: this.captchaKey,
       captchaValue: this.captchaValue
     }
+    if (!this.toggleType) params.refresh = true
     if (this.$route.query.needBack) params.needBack = true
     this.$store.dispatch('login', params)
   }

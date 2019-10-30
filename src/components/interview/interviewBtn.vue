@@ -54,26 +54,20 @@
 		</section>
 
 		<loginPop ref="loginPop" v-if="!hasLogin"></loginPop>
-
-		<div class="qrCodePop" v-show="showSharePop">
-			<div class="inner">
-				<p class="title">微信扫一扫<br>查看面试详情</p>
-				<img class="qrcode" :src="qrCodeUrl" alt="">
-				<i class="close iconfont icon-close" @click="hideSharePop"></i>
-			</div>
-		</div>
+		<guideQrcodePop ref="guideQrcodePop" type="interviewDetail"></guideQrcodePop>
 	</div>
 </template>
 <script>
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import loginPop from '@/components/common/loginPop'
-import {getQrcodeApi} from '@/api/common'
 import {getInterviewStatusApi, applyInterviewApi, confirmInterviewApi, refuseInterviewApi} from '@/api/interview.js'
+import guideQrcodePop from '@/components/common/guideQrcodePop'
 @Component({
   name: 'interviewBtn',
   components: {
-    loginPop
+    loginPop,
+    guideQrcodePop
   },
   props: {
   	infos: {
@@ -102,7 +96,7 @@ export default class InterviewBtn extends Component {
 	interviewInfos = {
     haveInterview: 0
   }
-  qrCodeUrl = '' // 二维码
+  
   hasStatus = false
   showSharePop = false
   getInterviewStatus () {
@@ -111,13 +105,7 @@ export default class InterviewBtn extends Component {
 			this.hasStatus = true
 		})
   }
-  getQrcode () {
-  	this.showSharePop = !this.showSharePop
-  	if (this.qrCodeUrl) return
-  	getQrcodeApi({type: 'user_interview_detail', itemId: this.interviewInfos.data[0].interviewId}).then(res => {
-  		this.qrCodeUrl = res.data.data.positionQrCodeUrl
-  	})
-  }
+  
   // 求职者确认约面
   confirmInterview () {
   	confirmInterviewApi({id: this.interviewInfos.data[0].interviewId}).then(res => {
@@ -172,7 +160,7 @@ export default class InterviewBtn extends Component {
   			this.confirmInterview()
   			break
   		case 'job-hunting-view-detail':
-  			this.getQrcode()
+  			this.$refs.guideQrcodePop = true
   			break
   	}
   }
@@ -227,49 +215,6 @@ export default class InterviewBtn extends Component {
 		&.canView.specailBtn {
 			background: $sub-color-1;
 			color: $main-color-1;
-		}
-	}
-	.qrCodePop {
-		width: 100%;
-		height: 100%;
-		position: fixed;
-		top: 0;
-		left: 0;
-		z-index: 10;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		background:rgba(0,0,0,0.5);
-		.inner {
-			width:300px;
-			padding: 38px 0 62px;
-			background:#fff;
-			box-shadow:0px -2px 4px 0px rgba(101,39,145,0.1),0px 2px 4px 0px rgba(132,82,167,0.1);
-			border-radius:4px;
-			text-align: center;
-			position: relative;
-			.title {
-				font-size:20px;
-				font-weight:500;
-				color:$font-color-2;
-				line-height:29px;
-			}
-			.qrcode {
-				width: 124px;
-				height: 124px;
-				margin: 50px auto 0;
-				border-radius:70px;
-				padding: 8px;
-				border:1px solid rgba(239,233,244,1);
-			}
-			.close {
-				font-size: 12px;
-				color: #BCBCBC;
-				padding: 16px;
-				position: absolute;
-				top: 0;
-				right: 0;
-			}
 		}
 	}
 }
