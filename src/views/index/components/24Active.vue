@@ -45,7 +45,7 @@
               <span class="position-process" :class="(item.applyNum + item.natureApplyNum) === 0 ? 'noApply' : ''">
                 <span
                   class="position-process-width"
-                  :style="{width: `${item.percent}%`}"></span>
+                  :style="{width: (item.applyNum + item.natureApplyNum) / item.seatsNum * 100 + '%'}"></span>
               </span>
             </div>
             <el-button type="primary" size="medium" style="width: 71px" round>马上抢</el-button>
@@ -97,11 +97,6 @@ export default {
             mins: '',
             seconds: ''
           }
-        })
-        // 计算百分比
-        listData.forEach(val => {
-          let _default = val.natureApplyNum && val.applyNum ? 30 : 0
-          val.percent = _default + val.applyNum / (val.seatsNum - val.natureApplyNum) * 70
         })
         this.listData = listData
         // 跑倒计时
