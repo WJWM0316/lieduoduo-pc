@@ -84,7 +84,7 @@ export default {
       if (!this.isLogin) {
         this.$router.push('/login?type=login')
       } else {
-        this.$store.commit('guideQrcodePop', {switch: true, type: 'tobIndex'})
+        this.$store.commit('guideQrcodePop', { switch: true, type: 'tobIndex' })
       }
     }
   }

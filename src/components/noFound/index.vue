@@ -1,7 +1,7 @@
 <template>
   <div class="no-found">
     <div>
-      <img :src="imageUrl" alt="">
+      <img :style="{'max-width': maxWidth ? maxWidth + 'px' : 'auto' }" :src="imageUrl" alt="">
     </div>
     <p v-if="showText">{{tipText}}</p>
   </div>
@@ -24,6 +24,9 @@ export default {
     showText: {
       type: Boolean,
       default: true
+    },
+    maxWidth: {
+      default: ''
     }
   }
 }

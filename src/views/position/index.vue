@@ -2,52 +2,54 @@
   <div class="position-wrapper">
     <search @on-search="(val) => handleSearch(val, 'append')" />
     <div class="main-center">
-      <div class="position-lists" v-loading="getLoading">
-        <no-found v-if="!getLoading && !listData.length"></no-found>
-        <router-link
-          target="_blank"
-          :to="`/position/details?positionId=${item.id}`"
-          class="position-list"
-          v-for="item in listData" :key="item.id">
-          <div class="position-info">
-            <p>
-              <!-- 急聘 -->
-              <span class="position-active" v-if="item.isUrgency === 1"></span>
-              <span class="position-name">{{item.positionName}}</span>
-              <!-- 24反馈 -->
-              <span class="position-24hour" v-if="item.isRapidly === 1"></span>
-              <span class="position-pay">{{item.emolumentMin}}-{{item.emolumentMax}}K <template v-if="item.annualSalary > 12">· {{item.annualSalaryDesc}}</template></span>
-            </p>
-            <p class="position-require">
-              <span><i class="iconfont icon-dizhi"></i>{{item.city}}{{item.district}}</span>
-              <span><i class="iconfont icon-zhiwei"></i>{{item.workExperienceName}}</span>
-              <span><i class="iconfont icon-jiaoyu"></i>{{item.educationName}}</span>
-            </p>
-          </div>
-          <div class="company-info">
-            <p class="company-name">{{item.companyInfo.companyShortname}}</p>
-            <p><span>{{item.companyInfo.financingInfo}}</span>|<span>{{item.companyInfo.employeesInfo}}</span>|<span>{{item.companyInfo.industry}}</span></p>
-          </div>
-          <div class="recruiter-info">
-            <div class="recruiter-base-info">
-              <span class="recruiter-profile"><img :src="item.recruiterInfo.avatar.smallUrl" alt=""></span>
-              <span class="recruiter-name">{{item.recruiterInfo.name}}</span>|<span class="recruiter-position">{{item.recruiterInfo.position}}</span>
-              <p class="">{{item.numOfVisitors}}人已看过</p>
+      <div class="lists-wrapper" v-loading="getLoading">
+        <no-found v-if="!getLoading && !listData.length" :max-width="400"></no-found>
+        <div class="position-lists" v-else>
+          <router-link
+            target="_blank"
+            :to="`/position/details?positionId=${item.id}`"
+            class="position-list"
+            v-for="item in listData" :key="item.id">
+            <div class="position-info">
+              <p>
+                <!-- 急聘 -->
+                <span class="position-active" v-if="item.isUrgency === 1"></span>
+                <span class="position-name">{{item.positionName}}</span>
+                <!-- 24反馈 -->
+                <span class="position-24hour" v-if="item.isRapidly === 1"></span>
+                <span class="position-pay">{{item.emolumentMin}}-{{item.emolumentMax}}K <template v-if="item.annualSalary > 12">· {{item.annualSalaryDesc}}</template></span>
+              </p>
+              <p class="position-require">
+                <span><i class="iconfont icon-dizhi"></i>{{item.city}}{{item.district}}</span>
+                <span><i class="iconfont icon-zhiwei"></i>{{item.workExperienceName}}</span>
+                <span><i class="iconfont icon-jiaoyu"></i>{{item.educationName}}</span>
+              </p>
             </div>
-            <div class="contact-recruiter">
-              <el-button type="primary" size="small">开约</el-button>
+            <div class="company-info">
+              <p class="company-name">{{item.companyInfo.companyShortname}}</p>
+              <p><span>{{item.companyInfo.financingInfo}}</span>|<span>{{item.companyInfo.employeesInfo}}</span>|<span>{{item.companyInfo.industry}}</span></p>
             </div>
+            <div class="recruiter-info">
+              <div class="recruiter-base-info">
+                <span class="recruiter-profile"><img :src="item.recruiterInfo.avatar.smallUrl" alt=""></span>
+                <span class="recruiter-name">{{item.recruiterInfo.name}}</span>|<span class="recruiter-position">{{item.recruiterInfo.position}}</span>
+                <p class="">{{item.numOfVisitors}}人已看过</p>
+              </div>
+              <div class="contact-recruiter">
+                <el-button type="primary" size="small">开约</el-button>
+              </div>
+            </div>
+          </router-link>
+          <div class="pagination" v-if="total > 0">
+            <el-pagination
+              background
+              @current-change="(val) => handleSearch(val, 'page')"
+              :current-page.sync ="params.page"
+              :page-size="params.count"
+              layout="prev, pager, next"
+              :total="total">
+            </el-pagination>
           </div>
-        </router-link>
-        <div class="pagination" v-if="total > 0">
-          <el-pagination
-            background
-            @current-change="(val) => handleSearch(val, 'page')"
-            :current-page.sync ="params.page"
-            :page-size="params.count"
-            layout="prev, pager, next"
-            :total="total">
-          </el-pagination>
         </div>
       </div>
       <div>
@@ -176,11 +178,13 @@ export default {
   padding-bottom: 40px;
   display: flex;
 }
-.position-lists {
-  box-shadow: $shadow-1;
+.lists-wrapper {
   margin-right: 20px;
   min-height: 108px;
   min-width: 882px;
+}
+.position-lists {
+  box-shadow: $shadow-1;
   .position-list:not(:last-child) {
     border-bottom: none;
   }
@@ -244,12 +248,12 @@ export default {
     span + span {
       margin-left: 22px;
     }
-    span {
+    span, i {
       display: inline-block;
       vertical-align: middle;
     }
     .iconfont {
-      font-size: 12px;
+      font-size: 14px;
       padding-right: 3px;
       color: $font-color-12;
     }

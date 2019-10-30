@@ -234,14 +234,17 @@ export default {
     width: 850px;
   }
   & /deep/ .el-input__inner {
-    border-radius: 0px;
     padding-left: 112px;
     box-sizing: border-box;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
   }
   .el-button-h46 {
     display: inline-block;
     vertical-align: top;
     width: 130px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
   }
   .search-fixed-title {
     display: none

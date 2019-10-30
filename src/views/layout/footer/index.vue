@@ -6,7 +6,7 @@
           <p class="left_p black" @click="toUserDeal">用户协议</p>
           <p class="gray"><a href="http://www.beian.miit.gov.cn" style="color:#bcbcbc;text-decoration:none">Copyright © 老虎科技 粤ICP备16060093号-4</a></p>
         </div>
-        <div class="footer_center ">
+        <div class="footer_center">
             <h3 class="relation">联系我们</h3>
             <p class="black center_p">全国咨询热线：400-065-5788</p>
             <p class="black">邮箱：lieduoduo@thetiger.com.cn</p>
@@ -25,7 +25,6 @@
             <p class="black">扫码打开小程序</p>
           </div>
         </div>
-
     </section>
   </footer>
 </template>
@@ -40,21 +39,18 @@ export default PageFooter
   text-align: left;
   font-size: 14px;
   box-shadow: 0px 2px 8px 0px rgba(29,45,53,0.06);
-
   z-index: 2;
   overflow: hidden;
-
   font-size:14px;
-  font-family:PingFang-SC-Regular;
   font-weight:400;
-
+  width: 100%;
   section {
-    width: 1000px;
     height: 100%;
-    margin: 0 auto;
+    width: $page-width;
     display: flex;
     flex-direction: row;
     align-items: center;
+    margin: 0 auto;
     justify-content: space-between;
     .footer_left {
       .left_p {
@@ -85,6 +81,9 @@ export default PageFooter
           }
         }
       }
+      p.black {
+        color: $title-color-1;
+      }
     }
     .footer_center {
       width: 220px;
@@ -92,24 +91,21 @@ export default PageFooter
         line-height:26px;
         margin: 16px 0 4px 0;
       }
+      .black {
+        color: $font-color-10;
+      }
     }
     .relation {
       font-size:22px;
-      font-family:PingFangSC-Semibold;
       font-weight:600;
       color:rgba(40,40,40,1);
     }
-
-  }
-  .black {
-    color:rgba(40,40,40,1)
   }
   .gray {
     font-size: 12px;
-    color:rgba(188,188,188,1);
+    color: $font-color-10;
   }
 }
-
 .isFixed {
   position: fixed;
   bottom: 0;

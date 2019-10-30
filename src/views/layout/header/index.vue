@@ -244,7 +244,7 @@ $header-height-1: $page-header-height;
     padding-right: 24px;
   }
   span ~ span {
-    padding-left: 12px;
+    padding-left: 24px;
   }
   span:hover,.active {
     color: $sub-color-1;

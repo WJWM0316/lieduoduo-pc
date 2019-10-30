@@ -10,7 +10,6 @@
 
     <guide-qrcode-pop></guide-qrcode-pop>
 
-    
   </section>
 </template>
 <script>
@@ -21,7 +20,6 @@ import PageFooter from '@/views/layout/footer/index.vue'
 import PageHeader from '@/views/layout/header/'
 import PageAside from '@/views/layout/side/'
 import GuideQrcodePop from 'COMPONENTS/common/guideQrcodePop'
-
 
 @Component({
   name: 'App',
