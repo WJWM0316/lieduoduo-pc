@@ -42,7 +42,7 @@
             </div>
             <div class="position-count">
               <p>还剩<b>{{(item.seatsNum -  item.applyNum - item.natureApplyNum) > 99 ? '99+' : item.seatsNum -  item.applyNum - item.natureApplyNum}}</b>个席位</p>
-              <span class="position-process">
+              <span class="position-process" :class="(item.applyNum + item.natureApplyNum) === 0 ? 'noApply' : ''">
                 <span
                   class="position-process-width"
                   :style="{width: `${item.percent}%`}"></span>
@@ -367,19 +367,37 @@ export default {
     span {
       display: inline-block;
       height:8px;
-      border-radius:4px;
     }
   }
   .position-process {
     background: #fff;
-    width:79px;
+    width:53px;
     position: relative;
+    margin-left: 26px;
+    border-radius: 0 4px 4px 0;
+    &:after {
+      width: 26px;
+      height: 8px;
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0;
+      left: -26px;
+      background: $bg-color-4;
+      border-radius:4px 0 0 4px;
+    }
+    &.noApply {
+      &:after {
+        background: #fff;
+      }
+    }
   }
   .position-process-width {
     background: $bg-color-4;
     position: absolute;
     left: 0;
     top: 0;
+    border-radius: 0 4px 4px 0;
   }
 }
 .active-btn {
