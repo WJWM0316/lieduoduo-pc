@@ -46,8 +46,8 @@
           </el-pagination>
         </div>
       </div>
-      <div></div>
       <div>
+        <guide-login class="guide-login" v-if="!isLogin" ref="guideLogin"></guide-login>
         <adpostion position="searchResult"></adpostion>
       </div>
     </div>
@@ -59,12 +59,13 @@ import ScrollToTop from 'COMPONENTS/scrollToTop'
 import Search from './components/search'
 import { getPositionSearch } from 'API/position'
 import NoFound from 'COMPONENTS/noFound'
-import { getBanners } from 'API/common'
 import adpostion from 'COMPONENTS/common/adpostion'
+import GuideLogin from 'COMPONENTS/common/guideLogin'
 export default {
   components: {
     Search,
     ScrollToTop,
+    GuideLogin,
     NoFound,
     adpostion
   },
@@ -88,11 +89,13 @@ export default {
     for (let item in this.params) {
       if (query[item]) this.params[item] = isNaN(query[item]) ? query[item] : Number(query[item])
     }
-    this.getBannerList()
   },
   computed: {
     cityid () {
       return this.$store.state.cityId || 0
+    },
+    isLogin () {
+      return !!this.$store.state.userInfo.id
     }
   },
   methods: {
@@ -110,6 +113,8 @@ export default {
     handleSearch (value, type) {
       if (type !== 'page') this.params.page = 1
       if (type === 'page' && !this.isLogin) {
+        this.params.page = 1
+        this.$refs.guideLogin.openPop()
         return
       }
       if (type === 'append') {
@@ -125,11 +130,6 @@ export default {
         query: this.params
       })
       this.getPositionList()
-    },
-    getBannerList () {
-      getBanners({ location: 'jobhunter_pc_position_list' }).then(({ data }) => {
-        this.bannerList = data.data.jobhunterPcPositionList || []
-      })
     }
   }
 }
@@ -148,6 +148,9 @@ export default {
   .position-list:not(:last-child) {
     border-bottom: none;
   }
+}
+.guide-login {
+  margin-bottom: 20px;
 }
 .position-list {
    cursor: pointer;
@@ -284,14 +287,5 @@ export default {
   background: #fff;
   padding: 30px 0;
   text-align: center;
-}
-.banner-list {
-  a {
-    display: block;
-    margin-bottom: 22px;
-    img {
-      max-width: 100%;
-    }
-  }
 }
 </style>
