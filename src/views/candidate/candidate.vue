@@ -1,7 +1,7 @@
 <template>
-  <div id="candidate">
+  <div id="candidate" class="main-center">
     <div class="main_top_warp" :class="{'isFixed':navBarFixed}">
-        <div class="main_top" > 
+        <div class="main_top" >
           <div class="topBlo topStatusBlo borright " :class="{'cur':navType==='searchBrowseMyself'}" @click="changeNav('searchBrowseMyself')">
             <img class="preview" src="../../assets/images/preview.png" v-if="navType === 'searchBrowseMyself'"  />
             <img class="preview" src="../../assets/images/preview_off.png" v-else />
@@ -32,7 +32,6 @@
               {{selectedScreen.length > 0 ||  (positionTypeList.length > 0 ? positionTypeList[positionTypeList.length-1].active:false) ? '清除筛选' :'高级筛选' }}
             </div>
 
-
             <div class="topSelected2" @click="screenList(2)">
               <img class="screen_icon" src="../../assets/images/arrows2.png" v-if="isShowScreen" />
               <img class="screen_icon" src="../../assets/images/arrows2.png" v-else />
@@ -55,7 +54,7 @@
     </div>
     <div class="main_top_warp" v-if="navBarFixed"></div>
     <div class="recruiter_main">
-      
+
       <div id="box" class="main_cont" v-if="candidateList.length>0">
         <div class="candidate_blo" v-for="(item,index) in candidateList" @click="todoAction('openPop',index)" :key="index">
           <div class="bloTop">
@@ -65,7 +64,7 @@
             <div class="topText" v-if="navType === 'searchMyCollect'">对Ta感兴趣</div>
 
             <div class="topText topText2">
-              <span v-if="item.positionInfo.area">{{item.positionInfo.area}} | </span> 
+              <span v-if="item.positionInfo.area">{{item.positionInfo.area}} | </span>
               <span v-if="item.positionInfo.positionName">{{item.positionInfo.positionName}} | </span>
               <span v-if="item.positionInfo.emolument"> {{item.positionInfo.emolument}}</span></div>
           </div>
@@ -78,7 +77,7 @@
                   <img class="userIcon" :src="item.avatar.middleUrl" />
                   <div class="infoRight">
                     <div class="infoName textEllipsis">
-                      <block v-if="!item.glass">{{item.name}}</block>
+                      <span v-if="!item.glass">{{item.name}}</span>
                       <img v-else class="invisible2" src="https://attach.lieduoduo.ziwork.com/front-assets/images/invisible2.png">
                     </div>
 
@@ -111,7 +110,7 @@
                 <div class="experienceText textEllipsis" v-if="item.education && item.education.major">{{item.education.major}}</div>
               </div>
             </div>
-            
+
             <div class="userOp">
               <div class="like_user" @click.stop="ownerOp(true,item.uid)" v-if="item.interested">
                 <img class="like" src="../../assets/images/like.png"/>
@@ -137,7 +136,6 @@
               </div>
             </div>
           </div>
-          
         </div>
       </div>
       <div class="cont_none" v-else>
@@ -194,30 +192,30 @@
   </div>
 </template>
 <script>
-  import Vue from 'vue'
-  import Component from 'vue-class-component'
-  import { getMyInfoApi } from '../../api/auth'
-  import { getPositionTypeApi, getResumeShareApi } from '../../api/position'
-  import { getSearchMyCollectApi, getSearchCollectApi, putCollectUserApi, cancelCollectUserApi } from '../../api/collect'
-  import { getSearchBrowseMyselfApi, getMyNavDataApi, getJobHunterPositionTypeApi } from '../../api/browse'
+import Vue from 'vue'
+import Component from 'vue-class-component'
+import { getMyInfoApi } from '../../api/auth'
+import { getPositionTypeApi, getResumeShareApi } from '../../api/position'
+import { getSearchMyCollectApi, getSearchCollectApi, putCollectUserApi, cancelCollectUserApi } from '../../api/collect'
+import { getSearchBrowseMyselfApi, getMyNavDataApi, getJobHunterPositionTypeApi } from '../../api/browse'
 
-  @Component({
-    name: 'lighthouse-list',
-    methods: {
-    },
-    computed: {},
-    watch: {
-      '$route': {
-        handler() {
-          this.init()
-        },
-        immediate: true
-      }
-    },
-    components: {
+@Component({
+  name: 'lighthouse-list',
+  methods: {
+  },
+  computed: {},
+  watch: {
+    '$route': {
+      handler () {
+        this.init()
+      },
+      immediate: true
     }
-  })
-  export default class CourseList extends Vue {
+  },
+  components: {
+  }
+})
+export default class CourseList extends Vue {
     userInfo = {}
 
     pageInfo = {
@@ -240,37 +238,37 @@
     }
 
     navBarFixed = false // nav是否置顶
-    statusTotal = {}   //  
+    statusTotal = {} //
     uid = null
     shareSelectItem = {
       qrCodeUrl: ''
-    }    //分享选中
-    isShowPic = false  // 分类更多
+    } // 分享选中
+    isShowPic = false // 分类更多
     picStyle = {
       x: '',
       y: ''
     }
     isShowTop = false //
-    isService = false  
+    isService = false
 
-    navType = 'searchBrowseMyself' 
-    loading = false //翻页 
+    navType = 'searchBrowseMyself'
+    loading = false // 翻页
     candidateList = []
     searchMyCollect = []
     searchCollect = []
     searchBrowseMyselfList = []
-    positionTypeList = []  // 职业标签列表
+    positionTypeList = [] // 职业标签列表
     isShowScreen = false
     selectedScreen = [] // 筛选选中条件
     sharePicIds = [] // 下载中的图片
     navNum = {} // nav 数量
     selectBlo = {}
-    init() {
+    init () {
       this.form = Object.assign(this.form, this.$route.query || {})
       this.userInfo = this.$store.state.userInfo
       let query = this.$route.query
-      if(query.navType){
-        switch(query.navType) {
+      if (query.navType) {
+        switch (query.navType) {
           case 'searchMyCollect':
             this.getSearchMyCollect(1)
             this.getJobHunterPositionType()
@@ -289,8 +287,8 @@
             break
         }
         this.navType = query.navType
-      }else {
-        this.navType = 'searchBrowseMyself' 
+      } else {
+        this.navType = 'searchBrowseMyself'
         this.getSearchBrowseMyself(1)
         this.getPositionTypeList()
       }
@@ -298,7 +296,7 @@
     }
     // 获取另外的选择
     getOtherActive () {
-      let otherActive = this.positionTypeList.length > 0 ? this.positionTypeList[this.positionTypeList.length-1].active : false
+      let otherActive = this.positionTypeList.length > 0 ? this.positionTypeList[this.positionTypeList.length - 1].active : false
       return otherActive
     }
     setPath (res) {
@@ -306,11 +304,11 @@
       this.setPathQuery(res)
     }
 
-    sharePicOp (type,index) {
+    sharePicOp (type, index) {
       if (type) {
         this.candidateList[index].isShowPic = true
         this.getPic(index)
-      }else {
+      } else {
         this.candidateList[index].isShowPic = false
       }
     }
@@ -319,7 +317,7 @@
       return this.navType === 'searchBrowseMyself' ? '看过我的职位类型' : this.navType === 'searchCollect' ? '简历职位类型' : '感兴趣职位类型'
     }
     screenOp (status) {
-      switch(status) {
+      switch (status) {
         case 'cancel':
           this.setDefaultScreen()
           this.isShowScreen = false
@@ -337,13 +335,13 @@
     // 列表筛选
     screenList (type) {
       let otherActive = this.getOtherActive()
-      if (type === 1 ) {
+      if (type === 1) {
         if (this.selectedScreen.length > 0 || otherActive) {
           this.setDefaultScreen()
           if (!this.isShowScreen) {
             this.getList()
           }
-        }else{
+        } else {
           this.isShowScreen = !this.isShowScreen
         }
         // 清楚筛选
@@ -370,43 +368,43 @@
 
     // 职位操作
     positionOp (type, index) {
-      if(type){
+      if (type) {
         this.candidateList[index].isShowPic = true
-      }else {
+      } else {
         this.candidateList[index].isShowPic = false
       }
     }
 
     changeNav (type) {
       let type2 = this.navType
-      if(type2 === type){
+      if (type2 === type) {
         return
       }
 
-      if(type === 'searchMyCollect') {
+      if (type === 'searchMyCollect') {
         this.getJobHunterPositionType()
-      }else {
+      } else {
         this.getPositionTypeList()
       }
       this.navType = type
-      //this.toTop()
+      // this.toTop()
       this.setDefaultScreen()
-      this.setPath({navType: type})
-      //this.getList()
+      this.setPath({ navType: type })
+      // this.getList()
       this.isShowScreen = false
     }
 
-    getMyNavData() {
+    getMyNavData () {
       getMyNavDataApi().then(res => {
         this.navNum = res.data.data
       })
     }
 
-    getList (type, page=1) {
-      let status = type ? type : this.navType
+    getList (type, page = 1) {
+      let status = type || this.navType
       if (type) this.navType = type
 
-      switch(status) {
+      switch (status) {
         case 'searchMyCollect':
           this.getSearchMyCollect(page)
           break
@@ -425,7 +423,7 @@
       let otherActive = this.getOtherActive()
       let data = {
         category: this.selectedScreen.length > 0 || otherActive ? 1 : 0,
-        type: otherActive ? '0':this.selectedScreen.join(),
+        type: otherActive ? '0' : this.selectedScreen.join(),
         index: this.positionTypeList.length > 0 && otherActive ? 1 : 0,
         page: page || this.pageInfo.page || 1,
         count: this.pageInfo.count
@@ -437,13 +435,13 @@
           item.isShowPic = false
           item.src = ''
         })
-        if (data.page === 1){
+        if (data.page === 1) {
           this.candidateList = msg.data
         } else {
           this.candidateList = this.candidateList.concat(msg.data)
         }
         this.loading = false
-        this.pageInfo.totalPage = msg.meta.total/data.count || 0
+        this.pageInfo.totalPage = msg.meta.total / data.count || 0
         this.pageInfo.page = data.page
       }).catch(() => {
         this.loading = false
@@ -467,13 +465,13 @@
           item.isShowPic = false
           item.src = ''
         })
-        if (data.page === 1){
+        if (data.page === 1) {
           this.candidateList = msg.data
         } else {
           this.candidateList = this.candidateList.concat(msg.data)
         }
         this.loading = false
-        this.pageInfo.totalPage = msg.meta.total/data.count || 0
+        this.pageInfo.totalPage = msg.meta.total / data.count || 0
         this.pageInfo.page = data.page
       }).catch(() => {
         this.loading = false
@@ -482,7 +480,7 @@
     }
     // 浏览过我的求职者
     getSearchBrowseMyself (page) {
-      let otherActive = this.positionTypeList.length > 0 ? this.positionTypeList[this.positionTypeList.length-1].active:false
+      let otherActive = this.positionTypeList.length > 0 ? this.positionTypeList[this.positionTypeList.length - 1].active : false
       let data = {
         category: this.selectedScreen.length > 0 || otherActive ? 1 : 0,
         type: this.selectedScreen.join(),
@@ -497,13 +495,13 @@
           item.isShowPic = false
           item.src = ''
         })
-        if (data.page === 1){
+        if (data.page === 1) {
           this.candidateList = msg.data
         } else {
           this.candidateList = this.candidateList.concat(msg.data)
         }
         this.loading = false
-        this.pageInfo.totalPage = msg.meta.total/data.count || 0
+        this.pageInfo.totalPage = msg.meta.total / data.count || 0
         this.pageInfo.page = data.page
       }).catch(() => {
         this.loading = false
@@ -514,7 +512,7 @@
     getPositionTypeList () {
       getPositionTypeApi().then(res => {
         let data = res.data.data
-        data.map(item=>{
+        data.map(item => {
           item.active = false
         })
 
@@ -529,7 +527,7 @@
           labelId: 'index',
           active: false
         })
-        
+
         this.positionTypeList = data
       })
     }
@@ -538,7 +536,7 @@
     getJobHunterPositionType () {
       getJobHunterPositionTypeApi().then(res => {
         let data = res.data.data
-        data.map(item=>{
+        data.map(item => {
           item.active = false
         })
         data.unshift({
@@ -559,25 +557,25 @@
       let data = this.positionTypeList[index]
 
       data.active = !data.active
-      if( (data.labelId === 'all'||data.labelId === 'index') && data.active) {
+      if ((data.labelId === 'all' || data.labelId === 'index') && data.active) {
         this.selectedScreen = []
-        if(data.labelId === 'index') {
+        if (data.labelId === 'index') {
           this.setDefaultScreen('index')
-        }else {
+        } else {
           this.setDefaultScreen()
         }
-      }else {
+      } else {
         if (data.active) {
           this.selectedScreen.push(data.labelId)
         } else {
-          this.selectedScreen.splice(this.selectedScreen.indexOf(data.labelId),1)
+          this.selectedScreen.splice(this.selectedScreen.indexOf(data.labelId), 1)
         }
         this.positionTypeList[0].active = false
-        this.positionTypeList[this.positionTypeList.length-1].active = false
+        this.positionTypeList[this.positionTypeList.length - 1].active = false
       }
     }
-    //是否感兴趣操作
-    ownerOp (status,uid) {
+    // 是否感兴趣操作
+    ownerOp (status, uid) {
       let data = {
         uid: uid
       }
@@ -605,19 +603,19 @@
       }
     }
 
-    handleSearch() {
+    handleSearch () {
       this.form.page = 1
       this.setPathQuery(this.form)
     }
 
     mounted () {
-      //setTimeout(function(){
-        window.addEventListener('scroll', this.handleScroll)
-      //},1300)
+      window.addEventListener('scroll', this.handleScroll)
     }
-
-    todoAction(type, index) {
-      switch(type) {
+    destroyed () {
+      window.removeEventListener('scroll', this.handleScroll)
+    }
+    todoAction (type, index) {
+      switch (type) {
         case 'cloPop':
           this.pop = {
             isShow: false,
@@ -637,45 +635,46 @@
       }
     }
 
-    handleScroll(){
+    handleScroll () {
       let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
       let pageHeight = document.documentElement.clientHeight
-      let box = document.getElementById("box")
+      let box = document.getElementById('box')
+      if (!box) return
       let contentHeight = window.getComputedStyle(box).height
-      contentHeight = contentHeight.slice(0,contentHeight.length-2)
+      contentHeight = contentHeight.slice(0, contentHeight.length - 2)
       // 148
-      let otherHeight = 148+30 
-      let value = pageHeight-otherHeight+scrollTop
-      if(scrollTop > 155){
+      let otherHeight = 148 + 30
+      let value = pageHeight - otherHeight + scrollTop
+      if (scrollTop > 155) {
         this.navBarFixed = true
-        if(scrollTop > 500){
+        if (scrollTop > 500) {
           this.isShowTop = true
         }
-      }else {
+      } else {
         this.navBarFixed = false
         this.isShowTop = false
       }
 
       // 翻页
-      if( contentHeight - value < 20){
+      if (contentHeight - value < 20) {
         if (!this.loading && this.pageInfo.page < this.pageInfo.totalPage) {
-          this.getList(this.navType,this.pageInfo.page + 1)
+          this.getList(this.navType, this.pageInfo.page + 1)
         }
       }
     }
 
-    getMyInfo(){
-      return getMyInfoApi().then(res=>{
+    getMyInfo () {
+      return getMyInfoApi().then(res => {
         this.uid = res.data.data.uid
       }).catch(e => {
         this.$message.error(e.data.msg)
-       })
+      })
     }
-    toTop(){
-      document.documentElement.scrollTop=0;
+    toTop () {
+      document.documentElement.scrollTop = 0
     }
 
-    getPic(index){
+    getPic (index) {
       let ids = this.sharePicIds
       let item = this.candidateList[index]
       if (item.src.length < 1 && !ids.includes[item.uid]) {
@@ -689,7 +688,7 @@
         })
       }
     }
-  }
+}
 </script>
 <style lang="less">
 @import "./candidate.less";

@@ -58,16 +58,16 @@
           <div class="logind_form">
             <div class="input_wrap">
               <div class="input_box">
-                <i class="input_img iconfont icon-shoujihao" />
+                <i class="input_img iconfont icon-shoujihaoma" />
                 <input placeholder="请输入手机号码" maxlength="11" v-model="mobile" />
               </div>
               <div class="input_box" v-if="imgcode">
-                <i class="input_img iconfont icon-shoujihao" />
+                <i class="input_img iconfont icon-anquan_huaban" />
                 <input placeholder="请输入图片验证码"  v-model="captchaValue" />
                 <img :src="imgcode" class="imgcode"/>
               </div>
               <div class="input_box">
-                <i class="input_img input_i iconfont icon-yanzhengma" />
+                <i class="input_img input_i iconfont icon-duanxinyanzheng" />
                 <input placeholder="请输入短信验证码" maxlength="4" v-model="cValue" />
                 <span class="msgText" @click="sms">{{text + (text !== '发送验证码' ? ' s' : '') }}</span>
               </div>

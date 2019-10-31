@@ -22,7 +22,7 @@
         </div>
       </slot>
       <div class="drop-down-footer" v-if="multiple">
-        <el-button type="text" size="small" style="width: 64px" @click.stop="resetDropDown">重置</el-button>
+        <el-button class="reset-button" type="text" size="small" style="width: 60px" @click.stop="resetDropDown">重置</el-button>
         <el-button type="primary" size="small" style="width: 88px" @click.stop="handleSelected">确定</el-button>
       </div>
     </div>
@@ -198,6 +198,12 @@ $drop-height: 46px;
   text-align: right;
   .el-button {
     margin-left: 0;
+  }
+  .reset-button {
+    margin-right: 5px;
+  }
+  .reset-button:hover {
+    background: $bg-color-5;
   }
 }
 </style>

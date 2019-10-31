@@ -64,7 +64,7 @@
     <div class="btn-box">
       <div class="over-lay">
         <div class="btn-pre" @click="lastStep">上一步</div>
-        <div class="btn-confirm" @click="check">继续</div>
+        <div class="btn-confirm" @click="submit">继续</div>
       </div>
       <div class="mask"></div>
     </div>

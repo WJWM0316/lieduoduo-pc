@@ -1,35 +1,48 @@
+import Layout from '@/views/b-layout'
 const recruiter = [
   {
     path: '/candidate',
-    name: 'candidate',
     title: '候选人',
-    component: resolve => require(['../views/candidate/candidate.vue'], resolve),
-    // 元信息
+    component: Layout,
     meta: {
       // 一级路由需要设置， 是否在侧边栏显示
       useNav: true,
       // 当前所属的模块
-      module: 'recruiterResource'
-    }
+      module: 'recruiterResource',
+      icon: 'iconfont icon-zhaopintuandui'
+    },
+    children: [
+      {
+        path: '',
+        name: 'candidate',
+        component: resolve => require(['../views/candidate/candidate.vue'], resolve)
+      }
+    ]
   },
   {
     path: '/recruiterIndex',
-    name: 'recruiterIndex',
     title: '职位管理',
-    component: resolve => require(['../views/recruiter/recruiter.vue'], resolve),
-    // 元信息
+    component: Layout,
     meta: {
       // 一级路由需要设置， 是否在侧边栏显示
       useNav: true,
       // 当前所属的模块
-      module: 'recruiterResource'
-    }
-  },
-  {
-    path: '/postJob',
-    name: 'postJob',
-    title: '操作职位',
-    component: resolve => require(['../views/postJob/postJob.vue'], resolve)
+      module: 'recruiterResource',
+      icon: 'iconfont icon-zhiwei'
+    },
+    children: [
+      {
+        path: '',
+        name: 'recruiterIndex',
+        component: resolve => require(['../views/recruiter/recruiter.vue'], resolve)
+      },
+      {
+        path: 'postJob',
+        title: '操作职位',
+        name: 'postJob',
+        component: resolve => require(['../views/postJob/postJob.vue'], resolve)
+      }
+    ]
   },
   {
     path: '/issueRule',
