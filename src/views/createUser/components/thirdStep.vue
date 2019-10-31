@@ -13,6 +13,9 @@
     </div>
     <div class="formItem">
       <input placeholder="请输入专业名称" v-model="form.major" class="default" />
+      <div class="limit">
+        <span>{{form.major.length}}</span>/<span>50</span>
+      </div>
     </div>
     <div class="formItem">
       <el-select v-model="form.degree" placeholder="请选择学历" @focus="focus('#degree')"
@@ -29,7 +32,7 @@
     <div class="formItem2">
       <div class="start-time">
         <div v-if="!form.startTime" style="padding-left: 30px; color: #929292; font-weight: 300;">请选择开始时间</div>
-        <div v-else style="padding-left: 30px; color: #282828">{{form.startTime | formatDate}}</div>
+        <div v-else style="padding-left: 30px; color: #282828">{{form.startTime | date('YYYY-MM-DD')}}</div>
         <i class="el-icon-caret-bottom defalut-position" id="startTime"></i>
         <el-date-picker
           v-model="form.startTime"
@@ -48,7 +51,7 @@
             至今
           </template>
         </div>
-        <div v-else style="padding-left: 30px; color: #282828">{{form.endTime | formatDate}}</div>
+        <div v-else style="padding-left: 30px; color: #282828">{{form.endTime | date('YYYY-MM-DD')}}</div>
         <i class="el-icon-caret-bottom defalut-position" id="endTime"></i>
 
         <el-date-picker
@@ -75,6 +78,7 @@
 <script>
   import Vue from 'vue'
   import Component from 'vue-class-component'
+  import {schoolNameReg, majorNameReg} from '@/util/fieldRegular.js'
   import {
     getDegreeAllListsApi,
     getResumeThirdStepApi,
@@ -151,6 +155,28 @@
         startTime: Date.parse(this.form.startTime)/1000,
         endTime: this.form.endTime ? Date.parse(this.form.endTime)/1000 : 0
       }
+      let title = ''
+      if (!item.school) {
+        title = '请输入学校名称'
+      } else if (!schoolNameReg.test(item.school)) {
+        title = '学校名称需为2~50个字符'
+      } else if (!item.major) {
+        title = '请输入专业名称'
+      } else if (!majorNameReg.test(item.major)) {
+        title = '专业名称需为2~50个字符'
+      } else if (!item.degree) {
+        title = '请选择学历'
+      } else if (!item.startTime) {
+        title = '请选择开始时间'
+      } else if (!item.endTime) {
+        title = '请选择结束时间'
+      } else if (item.startTime > item.endTime) {
+        title = '结束时间不能小于开始时间'
+      }
+      if (title) {
+        this.$message.error(title)
+        return
+      }
       let educations = this.form.educations
       educations.shift()
       educations.push(item)
@@ -187,7 +213,6 @@
   }
   .content {
     position: relative;
-    // background: #00b38a;
     background-repeat: no-repeat;
     background-position: bottom;
     width: 100%;

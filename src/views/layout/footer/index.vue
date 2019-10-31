@@ -2,8 +2,9 @@
   <footer id="page-footer" class="page-footer" :class="{'isFixed': shouldFixed(), 'blackBg' : blackBg()}">
     <section>
         <div class="footer_left">
+          <p class="left_p black" @click="toUserDeal">用户协议</p>
           <div class="footer-header-title">
-            <img class="ft_logo" :src="blackBg() ? cdnPath + 'logo_white.png' : cdnPath + 'logo.png'" />
+             <img class="ft_logo" :src="blackBg() ? cdnPath + 'logo_white.png' : cdnPath + 'logo.png'" />
           </div>
           <p class="left_p black" @click="toUserDeal">
             <span>关于我们</span><span>用户协议</span>
@@ -103,6 +104,7 @@ export default PageFooter
       font-size:16px;
       font-weight:700;
       color:$font-color-2;
+    }
   }
   .footer_left .left_p {
     font-size: 14px;

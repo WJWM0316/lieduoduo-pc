@@ -8,10 +8,11 @@
 	      <img class="slogon-box" v-if="step === 1" :src="cdnPath + 'img_sentence_01@2x.png'"/>
 				<img class="slogon-box" v-if="step === 2" :src="cdnPath + 'img_sentence_02@2x.png'"/>
 				<img class="slogon-box" v-if="step === 3" :src="cdnPath + 'img_sentence_03@2x.png'"/>
-				
+				<img class="slogon-box" v-if="step === 4" :src="cdnPath + 'img_sentence_04@2x.png'"/>
 	      <first-step  v-show="step === 1"></first-step>
 	      <second-step v-show="step === 2"></second-step>
 	      <third-step v-show="step === 3"></third-step>
+	      <fourth-step v-show="step === 4"></fourth-step>
 	    </div>
  		</div>
  	</div>
@@ -24,6 +25,8 @@ import myHeader from './components/header.vue'
 import firstStep from './components/firstStep.vue'
 import secondStep from './components/secondStep.vue'
 import thirdStep from './components/thirdStep.vue'
+import fourthStep from './components/fourthStep.vue'
+
 import { searchResumeStepApi } from '@/api/putIn'
 
 
@@ -33,7 +36,8 @@ import { searchResumeStepApi } from '@/api/putIn'
     myHeader,
     firstStep,
     secondStep,
-    thirdStep
+    thirdStep,
+    fourthStep
   },
   computed: {
   	...mapState({
@@ -43,7 +47,7 @@ import { searchResumeStepApi } from '@/api/putIn'
 })
 export default class createUser extends Vue {
 	cdnPath = `${this.$cdnPath}/images/`
-	step = 3 // 创建步数
+	step = 4 // 创建步数
 	created () {
 		this.getStep()
 	}
