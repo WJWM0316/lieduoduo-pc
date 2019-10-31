@@ -1,6 +1,6 @@
 <template>
   <div class="index-wrapper">
-    <login-banner  v-if="!isLogin" :banner="loginBannerList" :total="total"></login-banner>
+    <login-banner v-if="!isLogin" :banner="loginBannerList" :total="total"></login-banner>
     <search-wrapper></search-wrapper>
     <div class="position-wrapper main-center">
       <div class="index-part-1">

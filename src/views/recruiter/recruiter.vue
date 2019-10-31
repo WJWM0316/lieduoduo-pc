@@ -1,6 +1,6 @@
 <template>
   <div id="recruiter">
-    <div class="recruiter_cont">
+    <div class="recruiter_cont main-center">
       <div class="header_warp">
         <h2 class="title">
           职位管理
@@ -18,12 +18,12 @@
             </ul>
             <div class="job_classify_wrap" v-if="jobNameList.length>0">
               <!-- <ul class="job_classify">
-						<li class="" v-for="item,index in jobNameList" @click="catchJob(index)" :class="{'slet':item.active}">{{item.name}}</li>
+            <li class="" v-for="item,index in jobNameList" @click="catchJob(index)" :class="{'slet':item.active}">{{item.name}}</li>
               </ul>-->
               <!-- <ul class="job_classify">
-						<li class="" v-for="item,index in jobNameList" @click="catchJob(index)" :class="{'slet':item.active}" v-if="index<9">{{item.name}}</li>
+            <li class="" v-for="item,index in jobNameList" @click="catchJob(index)" :class="{'slet':item.active}" v-if="index<9">{{item.name}}</li>
 
-						<li class="more" @click="todoAction('moreClassily')" :class="{'slet':false}" v-if="jobNameList.length>9">更多</li>v-show="isShowClassily"
+            <li class="more" @click="todoAction('moreClassily')" :class="{'slet':false}" v-if="jobNameList.length>9">更多</li>v-show="isShowClassily"
               </ul>-->
               <ul class="job_classify job_classify2">
                 <li
@@ -60,7 +60,7 @@
           >{{navSelectName}}</div>
           <div class="blo_center">
             <!-- <div class="center_status">审核中</div>
-				<div class="center_status">审核中</div>
+        <div class="center_status">审核中</div>
             <div class="center_status">审核中</div>-->
             <div class="center_time">发布于 {{item.createdAt}}</div>
           </div>
@@ -177,9 +177,9 @@
   </div>
 </template>
 <script>
-import Vue from "vue";
-import Component from "vue-class-component";
-import {  getMyInfoApi } from "../../api/auth";
+import Vue from 'vue'
+import Component from 'vue-class-component'
+import { getMyInfoApi } from '../../api/auth'
 import {
   getMyListApi,
   closePositionApi,
@@ -187,16 +187,16 @@ import {
   getStatusTotalApi,
   getTypeListApi,
   getCodeUrl
-} from "../../api/position";
+} from '../../api/position'
 
 @Component({
-  name: "lighthouse-list",
+  name: 'lighthouse-list',
   methods: {},
   computed: {},
   watch: {
     $route: {
-      handler() {
-        this.init();
+      handler () {
+        this.init()
       },
       immediate: true
     }
@@ -215,26 +215,26 @@ export default class CourseList extends Vue {
   // close关闭，open 开放，审核通过，audit 审核中，fail 审核失败
   recruiterList = [
     {
-      name: "招聘中",
-      status: "1,2",
+      name: '招聘中',
+      status: '1,2',
       total: 0,
       active: true
     },
     {
-      name: "已关闭",
-      status: "0,1",
+      name: '已关闭',
+      status: '0,1',
       total: 0,
       active: false
     },
     {
-      name: "审核中",
-      status: "3",
+      name: '审核中',
+      status: '3',
       total: 0,
       active: false
     },
     {
-      name: "未过审",
-      status: "4",
+      name: '未过审',
+      status: '4',
       total: 0,
       active: false
     }
@@ -244,15 +244,15 @@ export default class CourseList extends Vue {
   // 文件上传
   pop = {
     isShow: false,
-    type: "share"
+    type: 'share'
   };
 
   form = {
     page: 1,
     recruiter: 5,
-    status: "1,2", // 状态
+    status: '1,2', // 状态
     is_online: 1,
-    type: ""
+    type: ''
   };
 
   searchBarFixed = false; // nav是否置顶
@@ -260,323 +260,315 @@ export default class CourseList extends Vue {
   uid = null;
   isHelpShow = false;
   shareSelectItem = {
-    qrCodeUrl: ""
-  }; //分享选中
+    qrCodeUrl: ''
+  }; // 分享选中
   isService = false;
-  navSelectName = ""; //  nav选中文字
+  navSelectName = ''; //  nav选中文字
   jobSelectId = null; // 职位开启关闭选中
   isShowClassily = false; // 分类更多
   isShowTop = false; //
-  opJob(type, id) {
-    this.pop.isShow = true;
-    if (type === "close") {
-      this.pop.type = "closeJob";
-    } else if (type === "open") {
-      this.pop.type = "openJob";
+  opJob (type, id) {
+    this.pop.isShow = true
+    if (type === 'close') {
+      this.pop.type = 'closeJob'
+    } else if (type === 'open') {
+      this.pop.type = 'openJob'
     }
 
-    this.jobSelectId = id;
+    this.jobSelectId = id
   }
 
-  handleSearch() {
-    this.form.page = 1;
-    this.setPathQuery(this.form);
+  handleSearch () {
+    this.form.page = 1
+    this.setPathQuery(this.form)
   }
 
-  mounted() {
-    window.addEventListener("scroll", this.handleScroll);
+  mounted () {
+    window.addEventListener('scroll', this.handleScroll)
   }
 
-  init() {
-    this.form = Object.assign(this.form, this.$route.query || {});
-    this.userInfo = this.$store.state.userInfo;
+  init () {
+    this.form = Object.assign(this.form, this.$route.query || {})
+    this.userInfo = this.$store.state.userInfo
 
-    let query = this.$route.query;
+    let query = this.$route.query
 
     if (query.status) {
       this.recruiterList.map(item => {
         if (item.status === query.status) {
-          item.active = true;
+          item.active = true
         } else {
-          item.active = false;
+          item.active = false
         }
-      });
+      })
     }
-    this.getJobNameList();
-    this.getPositionList();
+    this.getJobNameList()
+    this.getPositionList()
 
     this.getMyInfo().then(() => {
-      this.getStatusTotal();
-    });
+      this.getStatusTotal()
+    })
   }
 
-  todoAction(type, id) {
+  todoAction (type, id) {
     switch (type) {
-      case "cloPop":
+      case 'cloPop':
         this.pop = {
           isShow: false,
-          type: ""
-        };
-        break;
-      case "cloPop2":
+          type: ''
+        }
+        break
+      case 'cloPop2':
         this.pop = {
           isShow: false,
-          type: ""
-        };
+          type: ''
+        }
 
         this.shareSelectItem = {
-          qrCodeUrl: ""
-        };
-        break;
-      case "addJob":
+          qrCodeUrl: ''
+        }
+        break
+      case 'addJob':
         this.$router.push({
-          name: "postJob",
+          name: 'postJob',
           query: {
-            type: "add"
+            type: 'add'
           }
-        });
-        break;
-      case "editJob":
+        })
+        break
+      case 'editJob':
         this.$router.push({
-          name: "postJob",
+          name: 'postJob',
           query: {
-            type: "edit",
+            type: 'edit',
             id: id
           }
-        });
-        break;
-      case "closeJob":
+        })
+        break
+      case 'closeJob':
         closePositionApi({ id: this.jobSelectId })
           .then(() => {
             this.$message({
-              type: "success",
-              message: "成功!"
-            });
+              type: 'success',
+              message: '成功!'
+            })
 
             this.pop = {
               isShow: false,
-              type: ""
-            };
-            this.getStatusTotal();
-            this.getPositionList();
+              type: ''
+            }
+            this.getStatusTotal()
+            this.getPositionList()
           })
           .catch(e => {
-            this.$message.error(e.data.msg);
-          });
-        break;
-      case "openJob":
+            this.$message.error(e.data.msg)
+          })
+        break
+      case 'openJob':
         openPositionApi({ id: this.jobSelectId })
           .then(() => {
             this.$message({
-              type: "success",
-              message: "成功!"
-            });
+              type: 'success',
+              message: '成功!'
+            })
             this.pop = {
               isShow: false,
-              type: ""
-            };
-            this.getStatusTotal();
-            this.getPositionList();
+              type: ''
+            }
+            this.getStatusTotal()
+            this.getPositionList()
           })
           .catch(e => {
-            this.$message.error(e.data.msg);
-          });
-        break;
+            this.$message.error(e.data.msg)
+          })
+        break
 
-      case "moreClassily":
-        this.isShowClassily = true;
-        break;
+      case 'moreClassily':
+        this.isShowClassily = true
+        break
 
-      case "closeClassily":
-        this.isShowClassily = false;
-        break;
+      case 'closeClassily':
+        this.isShowClassily = false
+        break
       default:
-        break;
+        break
     }
   }
 
-  handleScroll() {
+  handleScroll () {
     var scrollTop =
       window.pageYOffset ||
       document.documentElement.scrollTop ||
-      document.body.scrollTop;
+      document.body.scrollTop
     if (scrollTop > 155) {
-      this.searchBarFixed = true;
+      this.searchBarFixed = true
       if (scrollTop > 1500) {
-        this.isShowTop = true;
+        this.isShowTop = true
       }
     } else {
-      this.searchBarFixed = false;
-      this.isShowTop = false;
+      this.searchBarFixed = false
+      this.isShowTop = false
     }
   }
   /**
    * 初始化表单、分页页面数据
    */
-  getStatusTotal() {
+  getStatusTotal () {
     getStatusTotalApi({
       uid: this.uid
     }).then(res => {
-      this.statusTotal = res.data.data;
+      this.statusTotal = res.data.data
       this.recruiterList.map(item => {
-        if (item.name === "招聘中") {
-          item.total = res.data.data.online;
+        if (item.name === '招聘中') {
+          item.total = res.data.data.online
         }
-        if (item.name === "已关闭") {
-          item.total = res.data.data.close;
+        if (item.name === '已关闭') {
+          item.total = res.data.data.close
         }
-        if (item.name === "审核中") {
-          item.total = res.data.data.audit;
+        if (item.name === '审核中') {
+          item.total = res.data.data.audit
         }
-        if (item.name === "未过审") {
-          item.total = res.data.data.fail;
+        if (item.name === '未过审') {
+          item.total = res.data.data.fail
         }
-      });
-    });
+      })
+    })
   }
 
-  getMyInfo() {
+  getMyInfo () {
     return getMyInfoApi()
       .then(res => {
-        this.uid = res.data.data.uid;
+        this.uid = res.data.data.uid
       })
       .catch(e => {
-        this.$message.error(e.data.msg);
-      });
+        this.$message.error(e.data.msg)
+      })
   }
 
-  getPositionList({ page } = {}) {
+  getPositionList ({ page } = {}) {
     if (page) {
-      this.form.page = page || 1;
+      this.form.page = page || 1
     }
 
     let data = {
       count: this.pageInfo.count,
       recruiter: 5,
       ...this.form
-    };
+    }
 
     getMyListApi(data)
       .then(res => {
-        let meta = res.data.meta;
-        this.jobList = [...res.data.data];
-        this.pageInfo.totalPage = meta.lastPage;
-        this.pageInfo.total = meta.total;
+        let meta = res.data.meta
+        this.jobList = [...res.data.data]
+        this.pageInfo.totalPage = meta.lastPage
+        this.pageInfo.total = meta.total
       })
       .catch(e => {
-        this.$message.error(e.data.msg);
-      });
+        this.$message.error(e.data.msg)
+      })
   }
 
   // nav状态列表
-  getJobNameList() {
+  getJobNameList () {
     let data = {
       status: this.form.status
-    };
+    }
     getTypeListApi(data).then(res => {
-      let data = [];
+      let data = []
       if (res.data.data.length > 0) {
         res.data.data.map(item => {
-          item.active = false;
-        });
+          item.active = false
+        })
         if (res.data.data.length > 1) {
           res.data.data.unshift({
-            name: "全部",
+            name: '全部',
             active: true
-          });
+          })
         } else {
-          res.data.data[0].active = true;
+          res.data.data[0].active = true
         }
-        data = res.data.data;
+        data = res.data.data
       }
-      this.jobNameList = data;
-    });
+      this.jobNameList = data
+    })
   }
 
-  handleCurrentPageChange(page) {
-    this.setPathQuery({ page: page });
+  handleCurrentPageChange (page) {
+    this.setPathQuery({ page: page })
   }
 
-  catchRecruiter(index) {
-    let that = this;
+  catchRecruiter (index) {
+    let that = this
 
-    let query = {};
+    let query = {}
     this.recruiterList.map((item, idx) => {
       if (idx === index) {
-        item.active = true;
+        item.active = true
         if (index !== 0) {
-          query.is_online = 2;
-          query.status = item.status;
+          query.is_online = 2
+          query.status = item.status
 
-          that.form.is_online = 2;
-          that.navSelectName = item.name;
-          that.form.status = item.status;
+          that.form.is_online = 2
+          that.navSelectName = item.name
+          that.form.status = item.status
         } else {
-          query.is_online = 1;
-          query.status = "1,2";
+          query.is_online = 1
+          query.status = '1,2'
 
-          that.navSelectName = "";
-          that.form.status = "1,2";
-          that.form.is_online = 1;
+          that.navSelectName = ''
+          that.form.status = '1,2'
+          that.form.is_online = 1
         }
 
-        query.page = 1;
-        this.form.type = "";
-        this.setPathQuery(query);
+        query.page = 1
+        this.form.type = ''
+        this.setPathQuery(query)
         // that.getPositionList({page:1})
       } else {
-        item.active = false;
+        item.active = false
       }
-    });
+    })
   }
 
-  catchJob(index) {
-    let that = this;
+  catchJob (index) {
+    let that = this
     this.jobNameList.map((item, idx) => {
       if (idx === index) {
-        item.active = !item.active;
-        that.form.type = item.name !== "全部" ? item.id : "";
+        item.active = !item.active
+        that.form.type = item.name !== '全部' ? item.id : ''
 
-        that.getPositionList({ page: 1 });
+        that.getPositionList({ page: 1 })
       } else {
-        item.active = false;
+        item.active = false
       }
-    });
+    })
   }
 
-  toTop() {
-    document.documentElement.scrollTop = 0;
+  toTop () {
+    document.documentElement.scrollTop = 0
   }
 
-  openShare(index, id) {
+  openShare (index, id) {
     getCodeUrl({ id }).then(res => {
-      this.shareSelectItem.qrCodeUrl = res.data.data.qrCodeUrl;
-    });
+      this.shareSelectItem.qrCodeUrl = res.data.data.qrCodeUrl
+    })
 
     this.pop = {
       isShow: true,
-      type: "share"
-    };
+      type: 'share'
+    }
   }
 }
 </script>
 <style lang="less">
 @media screen and (max-width: 1200px) {
     .blo_center{
-			width: 221px !important;
-			max-width: 221px !important;
-		}
+      width: 221px !important;
+      max-width: 221px !important;
+    }
 }
 #recruiter {
-  // padding-top: 92px;
-  padding-bottom: 32px;
-  min-height: calc(100vh - 337px);
-  padding-left: 200px;
-  box-sizing: border-box;
-  padding-top: 84px;
   .recruiter_cont {
-    width: 100%;
-    margin: 0 auto;
     background: #ffffff;
     position: relative;
   }
@@ -609,7 +601,6 @@ export default class CourseList extends Vue {
         width: 100%;
         li {
           font-size: 16px;
-          font-family: PingFang-SC-Bold;
           font-weight: 400;
           color: rgba(98, 98, 98, 1);
           margin-right: 40px;
@@ -675,7 +666,6 @@ export default class CourseList extends Vue {
           li {
             padding: 1px 14px;
             font-size: 14px;
-            font-family: PingFang-SC-Regular;
             font-weight: 400;
             color: rgba(40, 40, 40, 1);
             display: block;
@@ -694,7 +684,6 @@ export default class CourseList extends Vue {
             }
             &.slet {
               background: rgba(132, 82, 167, 1);
-              font-family: PingFang-SC-Medium;
               color: rgba(255, 255, 255, 1);
             }
           }
@@ -750,7 +739,6 @@ export default class CourseList extends Vue {
         text-align: left;
         line-height: 24px;
         font-size: 16px;
-        font-family: PingFang-SC-Medium;
         font-weight: 700;
         width: 254px;
         .job_top {
@@ -772,7 +760,6 @@ export default class CourseList extends Vue {
         .job_info {
           span {
             font-size: 12px;
-            font-family: PingFang-SC-Regular;
             font-weight: 400;
             color: rgba(98, 98, 98, 1);
             padding: 1px 6px;
@@ -787,7 +774,6 @@ export default class CourseList extends Vue {
         width: 120px;
         text-align: center;
         font-size: 14px;
-        font-family: PingFangSC-Regular;
         font-weight: 400;
         color: rgba(146, 146, 146, 1);
         &.audit {
@@ -797,14 +783,12 @@ export default class CourseList extends Vue {
       .blo_center {
         flex: 1;
         font-size: 14px;
-        font-family: PingFangSC-Regular;
         font-weight: 400;
         color: rgba(146, 146, 146, 1);
       }
       .blo_right {
         .job_op {
           font-size: 14px;
-          font-family: PingFangSC-Regular;
           font-weight: 400;
           color: rgba(101, 39, 145, 1);
           margin-right: 38px;
@@ -823,7 +807,6 @@ export default class CourseList extends Vue {
     align-items: center;
     .none_hint {
       font-size: 14px;
-      font-family: PingFang-SC-Regular;
       font-weight: 400;
       color: rgba(146, 146, 146, 1);
       line-height: 20px;
@@ -861,7 +844,6 @@ export default class CourseList extends Vue {
     }
     .total {
       font-size: 12px;
-      font-family: PingFangSC-Regular;
       font-weight: 400;
       color: rgba(102, 102, 102, 1);
     }
@@ -899,7 +881,6 @@ export default class CourseList extends Vue {
   }
   .service {
     font-size: 16px;
-    font-family: PingFang-SC-Medium;
     font-weight: 700;
     color: rgba(101, 39, 145, 1);
     line-height: 18px;
@@ -938,7 +919,6 @@ export default class CourseList extends Vue {
         background: rgba(101, 39, 145, 1);
         border-radius: 4px 4px 0px 0px;
         font-size: 20px;
-        font-family: PingFang-SC-Regular;
         font-weight: 400;
         color: rgba(255, 255, 255, 1);
       }
@@ -954,27 +934,23 @@ export default class CourseList extends Vue {
         }
         .pop_text {
           font-size: 20px;
-          font-family: PingFang-SC-Regular;
           font-weight: 400;
           color: rgba(98, 98, 98, 1);
           margin: 48px 0 20px 0;
         }
         .pop_text2 {
           font-size: 24px;
-          font-family: DINAlternate-Bold;
           font-weight: bold;
           color: rgba(40, 40, 40, 1);
         }
         .pop_text3 {
           font-size: 18px;
-          font-family: PingFang-SC-Regular;
           font-weight: 400;
           color: rgba(53, 64, 72, 1);
           margin-bottom: 24px;
         }
         .pop_text4 {
           font-size: 14px;
-          font-family: PingFang-SC-Regular;
           font-weight: 400;
           color: rgba(98, 98, 98, 1);
         }
@@ -1036,7 +1012,6 @@ export default class CourseList extends Vue {
       }
       .mb_tit {
         font-size: 16px;
-        font-family: PingFangSC-Medium;
         font-weight: 700;
         color: rgba(53, 64, 72, 1);
         line-height: 24px;
@@ -1044,7 +1019,6 @@ export default class CourseList extends Vue {
     }
     .mb_cont {
       font-size: 14px;
-      font-family: PingFangSC-Regular;
       font-weight: 400;
       line-height: 22px;
       text-align: left;
@@ -1060,7 +1034,6 @@ export default class CourseList extends Vue {
     margin-top: 28px;
     .btn {
       font-size: 14px;
-      font-family: PingFangSC-Regular;
       font-weight: 400;
       color: rgba(53, 64, 72, 1);
       line-height: 32px;
@@ -1110,7 +1083,6 @@ export default class CourseList extends Vue {
       }
       .pop_tit {
         font-size: 20px;
-        font-family: PingFang-SC-Bold;
         font-weight: bold;
         color: rgba(40, 40, 40, 1);
         line-height: 26px;
@@ -1136,7 +1108,6 @@ export default class CourseList extends Vue {
       }
       .share_help_text {
         font-size: 14px;
-        font-family: PingFang-SC-Medium;
         font-weight: 700;
         color: rgba(101, 39, 145, 1);
         line-height: 22px;

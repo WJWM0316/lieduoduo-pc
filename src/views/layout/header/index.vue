@@ -14,7 +14,7 @@
           }"
           @on-select="changeLocation">
           <span class="iconfont icon-dizhi">{{addressName}}</span>
-          <span class="change-address">[切换城市]</span>
+          <span class="change-address">【切换城市】</span>
         </drop-down>
       </div>
       <ul class="header-nav">
@@ -71,11 +71,11 @@
                 <el-dropdown-item command="toggleIdentity">切换为面试官</el-dropdown-item>
                 <el-dropdown-item command="logout">退出登录</el-dropdown-item>
               </el-dropdown-menu>
-          </el-dropdown>
+            </el-dropdown>
           </template>
           <template v-else>
             <div class="no-login">
-              <span class="login-btn"  @click="handleToLogin('msgLogin')"><i class="el-icon-user"></i> 登录</span> |
+              <span class="login-btn"  @click="handleToLogin('msgLogin')"><i class="iconfont icon-denglu_huaban"></i> 登录</span> |
               <span class="register-btn" @click="handleToLogin('register')">注册</span>
             </div>
           </template>
@@ -254,6 +254,9 @@ $header-height-1: $page-header-height;
   padding-left: 40px;
   .login-btn, .register-btn{
     padding:0 12px 0  12px;
+  }
+  .iconfont {
+    font-size: 14px;
   }
   span:hover{
     color: $sub-color-1;

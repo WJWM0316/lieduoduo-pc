@@ -1,18 +1,20 @@
 <template>
   <div class="index-login">
-    <div class="main-center index-login-wrapper">
-      <div class="position-number">
-        <div class="position-number-wrapper">
-          <h3>找高薪工作 就上猎多多</h3>
-          <p><span>{{total.coolCompanyNum}}</span>酷公司 <i>|</i> <span>{{total.goodChanceNum}}</span>好机会</p>
+    <div class="login-bg">
+      <div class="main-center index-login-wrapper">
+        <div class="position-number">
+          <div class="position-number-wrapper">
+            <h3>找高薪工作 就上猎多多</h3>
+            <p><span>{{total.coolCompanyNum}}</span>酷公司 <i>|</i> <span>{{total.goodChanceNum}}</span>好机会</p>
+          </div>
         </div>
-      </div>
-      <div class="login-wrapper">
-        <el-input class="login-phone-input" maxlength="11" placeholder="请输入手机号码" v-model="loginForm.mobile" size="medium" />
-        <el-input  class="login-code-input" placeholder="验证码" v-model="loginForm.code" size="medium">
-          <span class="code-span" slot="suffix"  @click="getCode">{{text}}</span>
-        </el-input>
-        <div class="login-btn" @click="login">登陆/注册</div>
+        <div class="login-wrapper">
+          <el-input class="login-phone-input" maxlength="11" placeholder="请输入手机号码" v-model="loginForm.mobile" size="medium" />
+          <el-input  class="login-code-input" placeholder="验证码" v-model="loginForm.code" size="medium">
+            <span class="code-span" slot="suffix"  @click="getCode">{{text}}</span>
+          </el-input>
+          <div class="login-btn" @click="login">登陆/注册</div>
+        </div>
       </div>
     </div>
   </div>
@@ -91,13 +93,18 @@ export default {
 </script>
 <style lang="scss" scoped>
 $index-login-height: 120px;
-.index-login {
-  background: $bg-color-4;
-  height: $index-login-height;
-  width: 100%;
-  background-image: url(#{$image-cdn-url}/images/index-banner.gif);
+.login-bg {
+  width: 1400px;
+  margin: 0 auto;
+  background-image: url(#{$image-cdn-url}/images/index_banner.gif);
   background-size: cover;
   background-repeat: no-repeat;
+  height: $index-login-height;
+}
+.index-login {
+  height: $index-login-height;
+  width: 100%;
+  background: #6E1B96;
 }
 .index-login-wrapper {
   @include flex-v-center;

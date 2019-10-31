@@ -1,25 +1,24 @@
 <template>
-  <section id="app">
-    <page-header />
-    <router-view class="pages" />
-    <page-footer />
-    <guide-qrcode-pop></guide-qrcode-pop>
+  <section class="b-app">
+    <page-aside />
+    <div class="b-wrapper">
+      <page-header />
+      <router-view class="pages" />
+    </div>
   </section>
 </template>
 <script>
 
 import Vue from 'vue'
 import Component from 'vue-class-component'
-import PageFooter from '@/views/layout/footer/index.vue'
-import PageHeader from '@/views/layout/header/'
-import GuideQrcodePop from 'COMPONENTS/common/guideQrcodePop'
+import PageHeader from './header/index'
+import PageAside from './side/index.vue'
 
 @Component({
   name: 'App',
   components: {
-    PageFooter,
     PageHeader,
-    GuideQrcodePop
+    PageAside
   },
   watch: {
   }
@@ -45,7 +44,7 @@ export default class App extends Vue {
   // }
 
   // 下面路由不显示管理页面的侧边栏,和顶部的导航栏
-  shouldBottomShown () {
+  /* shouldBottomShown () {
     return [
       'login',
       'postJob',
@@ -57,15 +56,23 @@ export default class App extends Vue {
       'resumeFourthPost',
       '404'
     ].includes(this.$store.state.pageName)
-  }
+  } */
 }
 </script>
 <style lang="scss">
-.pages {
-  min-height: calc(100vh - #{$page-header-height} - #{$page-footer-height});
+.b-app .pages {
+  height: calc(100vh - #{$page-b-header-height});
   min-width: $page-width;
+  padding-top: 30px;
+  box-sizing: border-box;
+  overflow-y: auto;
 }
-.pages .main-center {
+.b-wrapper {
+  margin-left: $page-b-side-width;
+  overflow: hidden;
+  background: $bg-color-1;
+}
+.b-app .main-center {
   width: $page-width;
   margin:0 auto;
 }
