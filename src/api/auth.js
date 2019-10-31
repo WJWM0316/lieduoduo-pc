@@ -60,11 +60,18 @@ export const getCaptchaApi = data => request({
 })
 
 // 切换用户角色（切换到求职端、招聘者端）求职者1，招聘者2
-export const switchRoleApi = data => request({
+export const qzSwitchRoleApi = data => request({
   url: '/user/role/switch',
   method: 'post',
   params: data,
-  config: { host: 'pub' }
+  config: { host: 'qiuzhi' }
+})
+// 切换用户角色（切换到求职端、招聘者端）求职者1，招聘者2
+export const zpSwitchRoleApi = data => request({
+  url: '/user/role/switch',
+  method: 'post',
+  params: data,
+  config: { host: 'zhaopin' }
 })
 
 // 退出接口

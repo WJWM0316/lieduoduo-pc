@@ -1,6 +1,6 @@
 <template>
 	<div class="positionDetail">
-		<header class="header" :class="infos.isRapidly === 1 ? 'isRapidly' : ''">
+		<header class="header" :class="infos.isRapidly === 1 ? 'isRapidly' : ''" :style="{'top': offsetTop + 'px'}">
 			<div class="inner">
 				<div class="header-content">
 					<div class="title">
@@ -144,6 +144,7 @@ import adpostion from '@/components/common/adpostion'
 })
 export default class PositionDetail extends Vue {
   cdnPath = `${this.$cdnPath}/images/`
+  offsetTop = 50
   verticalLogo = false // 是否竖版图片， 控制logo展示格式
   showShareQrcode = false // 分享二维码
   showSharePoster = false // 分享海报
@@ -286,6 +287,13 @@ export default class PositionDetail extends Vue {
   	this.id = this.$route.query.positionId
   	this.getQrcode()
   	this.getDetail()
+  	window.onscroll = () => {
+  		if (window.scrollY > 50) {
+  			if (this.offsetTop > 0) this.offsetTop = 0
+  		} else {
+  			if (this.offsetTop !== 50) this.offsetTop = 50
+  		}
+  	}
   }
 }
 </script>

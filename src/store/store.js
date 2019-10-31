@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { saveAccessToken, removeAccessToken, getAccessToken, getUserInfo, saveUserInfo } from '../api/cacheService'
-import { loginPutInApipc, getUserRoleInfoApi, switchRoleApi } from '@/api/auth'
+import { loginPutInApipc, getUserRoleInfoApi, qzSwitchRoleApi, zpSwitchRoleApi } from '@/api/auth'
 import router from '@/router/index.js'
 import { mobileReg } from '@/util/fieldRegular.js'
 import {getMyResumeApi} from '@/api/resume.js'
@@ -70,13 +70,13 @@ export default new Vuex.Store({
       state.userInfo = data
       state.token = data.token
       state.hasLogin = 1
-      if (data.hasOwnProperty('curInUseRole')) state.userIdentity = data.curInUseRole
+      if (data.curInUseRole) state.userIdentity = data.curInUseRole
       // 获取用户角色信息
       getUserRoleInfoApi().then(res => {
         state.roleInfos = res.data.data
         // 判断是否求职者且未完善简历四步        
         if (state.userIdentity === 1 && !state.roleInfos.isJobhunter) {
-          router.replace({path: '/resumeFirstPost'})
+          router.replace({path: '/createUser'})
           return
         }
         if (state.userIdentity === 2 && !state.roleInfos.isRecruiter) {
@@ -128,9 +128,10 @@ export default new Vuex.Store({
       })
     },
     switchIdentity (state, data) {
-      if (state.userIdentity) {
+      let switchFun = state.userIdentity === 1 ? qzSwitchRoleApi : qzSwitchRoleApi
+      if (state.userIdentity === 1) {
         if (state.roleInfos.isRecruiter) {
-          switchRoleApi().then(res => {
+          switchFun().then(res => {
             state.userIdentity = state.userIdentity === 1 ? 2 : 1
             router.replace({ name: 'candidate' })
           })
@@ -139,7 +140,9 @@ export default new Vuex.Store({
           state.guideQrcodePop = { switch: true, type: 'tobIndex' }
         }
       } else {
-        router.replace({ name: 'index' })
+        switchFun().then(res => {
+          router.replace({ name: 'index' })
+        })
       }
     }
   },

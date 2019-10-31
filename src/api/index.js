@@ -70,7 +70,7 @@ export const request = ({ url, method, params = {}, config }) => {
       }
       // 登陆过期或者未登录
       if (!config.noCheckLogin && err.data.httpStatus === 401) {
-        router.push({ name: 'login', query: { type: 'needBack' } })
+        router.push({ name: 'login', query: { type: 'msgLogin', needBack: true } })
         removeAccessToken()
       }
       reject(err)

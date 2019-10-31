@@ -50,8 +50,8 @@
         <!-- 短信登录 或者 注册 -->
         <div class="logind" :class="{ cont_ti: imgcode }" v-if="type === 'msgLogin' || type === 'register' || !toggleType" v-show="!guideCreateRecruiter">
           <ul class="sign_type" v-if="type === 'register'">
-            <li :class="{ active : !identity }" @click="toggle(0)">我是求职者</li>
-            <li :class="{ active : identity }" @click="toggle(1)">我是面试官</li>
+            <li :class="{ active : identity === 1 }" @click="toggle(1)">我是求职者</li>
+            <li :class="{ active : identity === 2 }" @click="toggle(2)">我是面试官</li>
           </ul>
 
           <h3 v-if="type === 'msgLogin' || !toggleType" class="cont_tit" style="margin-bottom: 40px;">{{toggleType ? '短信验证登录' : '登录/注册猎多多'}}</h3>
@@ -79,7 +79,7 @@
             <span @click="changetypeto">{{ type === 'msgLogin' ? '立即注册' : '马上登录' }}</span>
           </div>
           <div class="bottom_txt" v-if="!toggleType">
-            <a href="https://sao.lieduoduo.com/userAgreement" class="login_text" target="_blank">注册代表你已同意 猎多多用户协议&隐私政策</a>
+            <a href="https://www.lieduoduo.com/userAgreement" class="login_text" target="_blank">注册代表你已同意 猎多多用户协议&隐私政策</a>
             <p class="login_href" @click="$router.push('/login')">企业登录/注册</p>
           </div>
         </div>
@@ -180,7 +180,7 @@ export default class loginForm extends Component {
   visibleDialog = true // 弹窗关闭
   // cdn图片地址
   cdnPath = `${process.env.VUE_APP_CDN_PATH}/images/`
-  identity = 0 // 0 求职者 1 招聘官
+  identity = 1 // 1 求职者 2 招聘官
   codeData = {} // 二维码信息
   userInfo = {}
   isPast = true;
