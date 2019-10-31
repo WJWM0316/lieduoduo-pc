@@ -24,7 +24,7 @@ export const putCollectUserApi = data => request({
   url: `/collect/collectUser/${data.uid}`,
   method: 'put',
   params: data,
-  config: { host: 'pub' }
+  config: { host: 'zhaopin' }
 })
 
 // 取消收藏求职者
@@ -32,7 +32,7 @@ export const cancelCollectUserApi = data => request({
   url: `/collect/collectUser/${data.uid}`,
   method: 'delete',
   params: data,
-  config: { host: 'pub' }
+  config: { host: 'zhaopin' }
 })
 
 // 收藏职位

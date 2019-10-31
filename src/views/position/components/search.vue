@@ -294,5 +294,8 @@ export default {
   height: 130px;
   box-shadow: $shadow-2;
   z-index: 99;
+  .main-center {
+    margin-top: 12px;
+  }
 }
 </style>

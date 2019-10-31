@@ -175,7 +175,7 @@ export const getResumeShareApi = data => request({
   url: '/share/resume_share',
   method: 'get',
   params: data,
-  config: { host: 'zhaopin' }
+  config: { host: 'pub' }
 })
 
 // 获取招聘官在招职位类型
