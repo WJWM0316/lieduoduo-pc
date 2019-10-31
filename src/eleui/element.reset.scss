@@ -16,3 +16,9 @@
 .el-pagination.is-background {
   font-weight: normal;
 }
+
+/** 设置input */
+.el-input.el-input-radius2px .el-input__inner {
+  border-radius: 2px;;
+}
+  

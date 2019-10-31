@@ -57,6 +57,10 @@ export default {
     limit: {
       type: Number,
       default: 0
+    },
+    allValue: { // 全部的值 如果全部选择已经选择，就不能选择其他选项 多选才生效
+      type: [Number, String],
+      default: '-'
     }
   },
   computed: {
@@ -66,7 +70,8 @@ export default {
   },
   data () {
     return {
-      isActive: false
+      isActive: false,
+      isCheckedAll: false
     }
   },
   mounted () {
@@ -88,14 +93,25 @@ export default {
         } else {
           item.checked = !item.checked
         }
-        // 存储数据
-        /* if (item.checked) {
-          this.value.push(item[this.props.value])
-        } else {
-          const index = this.value.findIndex(val => val === item[this.props.value])
-          this.value.splice(index, 1)
-        } */
-        // this.$emit('input', this.value)
+        // 如果点击的不是全选 清空全部的选择状态
+        if (this.isCheckedAll && item[this.props.value] !== this.allValue) {
+          this.isCheckedAll = false
+          const item = this.items.find(val => val[this.props.value] === this.allValue)
+          item.checked = false
+        }
+        // 如果点击的是全选
+        if (!isNaN(this.allValue) && item[this.props.value] === this.allValue) {
+          // 全选确认选择, 清除其他已经选择的项
+          if (item.checked) {
+            this.items.forEach(val => {
+              if (val.checked) {
+                val.checked = false
+              }
+            })
+          }
+          this.isCheckedAll = true
+          item.checked = true
+        }
         this.$emit('on-change', item)
       } else {
         this.$emit('input', item[this.props.value])
@@ -196,6 +212,7 @@ $drop-height: 46px;
 .drop-down-footer {
   padding: 6px;
   text-align: right;
+  box-shadow: -1px 0 5px 0px rgba(22,39,77,0.1);
   .el-button {
     margin-left: 0;
   }

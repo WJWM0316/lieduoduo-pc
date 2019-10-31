@@ -31,9 +31,9 @@
             <template v-else>
               <el-popover
                 placement="bottom"
+                popper-class="share-popover"
                 title=""
-                width="124"
-                trigger="hover">
+                trigger="click">
                 <div class="share-image">
                   <img :src="item.url" />
                 </div>
@@ -250,6 +250,7 @@ $header-height-1: $page-header-height;
   }
   .iconfont {
     font-size: 14px;
+    padding-right: 3px;
   }
   span:hover{
     color: $sub-color-1;
@@ -260,5 +261,12 @@ $header-height-1: $page-header-height;
     vertical-align: middle;
     margin: 0 12px;
   }
+}
+</style>
+<style lang="scss">
+.el-popover.share-popover {
+  width: 158px;
+  box-sizing: border-box;
+  padding: 16px;
 }
 </style>

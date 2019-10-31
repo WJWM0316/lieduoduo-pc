@@ -76,4 +76,5 @@ export default class App extends Vue {
   width: $page-width;
   margin:0 auto;
 }
+
 </style>

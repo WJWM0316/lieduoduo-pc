@@ -2,12 +2,18 @@
   <footer id="page-footer" class="page-footer" :class="{'isFixed': shouldFixed(), 'blackBg' : blackBg()}">
     <section>
         <div class="footer_left">
-          <img class="ft_logo" :src="blackBg() ? cdnPath + 'logo_white.png' : cdnPath + 'logo.png'" />
-          <p class="left_p black" @click="toUserDeal">用户协议</p>
+          <div class="footer-header-title">
+            <img class="ft_logo" :src="blackBg() ? cdnPath + 'logo_white.png' : cdnPath + 'logo.png'" />
+          </div>
+          <p class="left_p black" @click="toUserDeal">
+            <span>关于我们</span><span>用户协议</span>
+          </p>
           <p class="gray"><a href="http://www.beian.miit.gov.cn" style="color:#bcbcbc;text-decoration:none">Copyright © 老虎科技 粤ICP备16060093号-4</a></p>
         </div>
         <div class="footer_center">
-            <h3 class="relation">联系我们</h3>
+            <div class="footer-header-title">
+              <h3 class="relation">联系我们</h3>
+            </div>
             <p class="black center_p">全国咨询热线：400-065-5788</p>
             <p class="black">邮箱：lieduoduo@thetiger.com.cn</p>
         </div>
@@ -97,6 +103,29 @@ export default PageFooter
       font-size:16px;
       font-weight:700;
       color:$font-color-2;
+  }
+  .footer_left .left_p {
+    font-size: 14px;
+    color: $title-color-1;
+    margin-bottom: 12px;
+    span + span {
+      cursor: pointer;
+      margin-left: 44px;
+    }
+  }
+  .footer_center .center_p {
+    margin-bottom: 12px;
+  }
+  .footer-header-title {
+    height: 30px;
+    margin-bottom: 20px;
+    img {
+      max-height: 100%;
+    }
+    h3 {
+      font-size:22px;
+      font-weight:bold;
+      color: $title-color-1;
     }
   }
   .gray {

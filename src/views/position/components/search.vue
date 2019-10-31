@@ -13,7 +13,7 @@
                 value: 'areaId',
                 label: 'name'
               }"
-            @on-select="handleSelectLocaltion">
+              @on-select="handleSelectLocaltion">
             <span class="address-name">{{address}}</span>
           </drop-down>
           <el-autocomplete
@@ -30,6 +30,7 @@
             v-model="params.emolumentIds"
             :items="emolumentList"
             :showArrow="true"
+            :all-value="0"
             :props="{
               value: 'id',
               label: 'text'
@@ -42,6 +43,7 @@
             :items="financingList"
             :multiple="true"
             :showArrow="true"
+            :all-value="0"
             :limit="3"
             :props="{
               value: 'value',
@@ -56,6 +58,7 @@
             :multiple="true"
             :limit="3"
             :showArrow="true"
+            :all-value="0"
             :props="{
               value: 'value',
               label: 'text'
@@ -70,6 +73,7 @@
             :showArrow="true"
             :col="3"
             :limit="3"
+            :all-value="0"
             :props="{
               value: 'labelId',
               label: 'name'
@@ -197,28 +201,33 @@ export default {
   width: 100%;
   background: #fff;
   box-shadow: $shadow-1;
+  padding-top: 24px;
 }
 .search-input {
-  padding: 24px 0;
+  margin-bottom: 24px;
+  width: 880px;
+  border-radius: 4px;
   position: relative;
+  border: 2px solid $border-color-2;
+  height: 46px;
   .el-autocomplete,& /deep/ .el-input__inner{
     height: 46px;
+    padding-left: 10px;
   }
   .search-location {
     width: 100px;
     text-align: center;
-    position: absolute;
     padding: 15px 0;
-    top:24px;
+    display: inline-block;
     z-index: 1;
-    left: 0;
     .address-name {
       display: inline-block;
       min-width: 50px;
       color: $title-color-2;
+      color: $title-color-2;
     }
     & /deep/ .drop-down-wrapper {
-      margin-top: 14px;
+      margin-top: 16px;
     }
   }
   .search-location::after {
@@ -231,20 +240,17 @@ export default {
     background: $barder-color-4;
   }
   .el-autocomplete {
-    width: 850px;
+    width: 640px;
+    display: inline-block;
   }
   & /deep/ .el-input__inner {
-    padding-left: 112px;
     box-sizing: border-box;
-    border-top-right-radius: 0px;
-    border-bottom-right-radius: 0px;
+    border: none;
   }
   .el-button-h46 {
     display: inline-block;
     vertical-align: top;
     width: 130px;
-    border-top-right-radius: 4px;
-    border-bottom-right-radius: 4px;
   }
   .search-fixed-title {
     display: none

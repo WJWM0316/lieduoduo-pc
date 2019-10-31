@@ -2,7 +2,9 @@
   <div class="index-search" :class="{'search-fixed': headerFixed}">
     <div class="index-search-wrapper" :class="{'search-fixed-wrapper': headerFixed}">
       <div class="search-fixed-input">
-        <div class="search-fixed-title">猎多多</div>
+        <div class="search-fixed-title">
+          <img src="../../../assets/images/logo.png" alt="">
+        </div>
         <el-autocomplete
           v-model="searchValue"
           :fetch-suggestions="querySearchAsync"
@@ -11,7 +13,7 @@
           @keyup.native.enter="handleSelect()"
           :maxlength="50"
           clearable>
-          <i slot="prefix" class="el-input__icon el-icon-search"></i>
+          <i slot="prefix" class="el-input__icon iconfont icon-sousuo"></i>
         </el-autocomplete>
         <el-button class="el-button-h46" type="primary" @click="handleToSearch">搜索</el-button>
       </div>
@@ -130,6 +132,10 @@ $search-width-wrapper: 936px;
   & /deep/ .el-input__inner {
     border-top-right-radius: 0px;
     border-bottom-right-radius: 0px;
+    padding-left: 56px;
+  }
+  & /deep/ .el-input__prefix {
+    padding: 0 16px;
   }
   .el-button-h46 {
     display: inline-block;
@@ -139,6 +145,10 @@ $search-width-wrapper: 936px;
     border-bottom-right-radius: 4px;
   }
   .search-fixed-title {
+    width: 70px;
+    img {
+      max-width: 100%;
+    }
     display: none
   }
 }
