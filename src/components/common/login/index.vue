@@ -54,7 +54,7 @@
             <li :class="{ active : identity === 2 }" @click="toggle(2)">我是面试官</li>
           </ul>
 
-          <h3 v-if="type === 'msgLogin' || !toggleType" class="cont_tit" style="margin-bottom: 40px;">{{toggleType ? '短信验证登录' : '登录/注册猎多多'}}</h3>
+          <h3 v-if="type === 'msgLogin' || !toggleType" class="cont_tit" style="margin-bottom: 40px;">{{toggleType ? '短信登录' : '登录/注册猎多多'}}</h3>
           <div class="logind_form">
             <div class="input_wrap">
               <div class="input_box">
