@@ -1,31 +1,9 @@
 <template>
 
 <div class="resumePost">
-  <header id="resumeHeader" >
-    <section>
-      <img class="left_logo" src="../../../assets/images/activity/putIn/logo_lieduodou@2x.png" />
-
-        <el-dropdown trigger="click"  @command="handleClick" >
-          <div class="headerBtn">
-            <div class="right" v-if="userInfo && userInfo.token">
-              <span class="name">欢迎登录猎多多，{{userInfo.realname}}</span>
-              <img class="op_icon aaa" src="../../../assets/images/open.png" v-if="!userInfo.avatarInfo.middleUrl" />
-              <img class="avatar" :src="userInfo.avatarInfo.middleUrl" v-if="userInfo.avatarInfo.middleUrl" />
-            </div>
-          </div>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="out">
-                <img class="drop_icon" src="../../../assets/images/out.png" />
-                退出登录
-              </el-dropdown-item>
-            </el-dropdown-menu>
-        </el-dropdown>
-
-    </section>
-  </header>
+  <my-header></my-header>
   <div class="middle">
     <div class="contain">
-
       <h3 class="title"><span>3分钟</span>创建微简历，<span>1000+名企</span>高薪职位任你选</h3>
       <img class="slogon-box" src="../../../assets/images/activity/putIn/img_sentence_01@2x.png" />
       <div class="resumeOpFirstMain">
@@ -34,7 +12,6 @@
           {{formHint.text}}
         </div>
         <div class="form">
-
           <div class="formPic">
             <myCropper
               class="cropperBox"
@@ -100,17 +77,14 @@
 <script>
 import Vue from 'vue'
 import Component from 'vue-class-component'
+import myHeader from '../components/header.vue'
 import { searchResumeStepApi, setResumeFirstApi, setResumeSecondApi, setResumeThirdApi, setResumeFourthApi, getResumeFirstApi } from '../../../api/putIn'
 
 import MyCropper from '@/components/common/cropper'
 import { getAccessToken } from '../../../api/cacheService.js'
 
   @Component({
-    name: 'lighthouse-list',
-    methods: {
-    },
-    computed: {
-    },
+    name: 'resumeFirstPost',
     watch: {
       '$route': {
         handler () {
@@ -120,7 +94,8 @@ import { getAccessToken } from '../../../api/cacheService.js'
       }
     },
     components: {
-      MyCropper
+      MyCropper,
+      myHeader
     },
     filters: {
       formatDate (date) {
@@ -318,43 +293,19 @@ export default class CourseList extends Vue {
 
       return true
     }
-    // 下载
 
     // 提交
     submit (index) {
-      let name = `validate${index}`
-      // let form = `form${index}`
-      let subName = ''
-      if (this[name]()) {
-        switch (index) {
-          case 1:
-            subName = setResumeFirstApi
-            break
-          case 2:
-            subName = setResumeSecondApi
-            break
-          case 3:
-            subName = setResumeThirdApi
-            break
-          case 4:
-            subName = setResumeFourthApi
-            break
-          default:
-            break
-        }
-        const params = this.transformData(this.form1)
-        subName({ ...params }).then(() => {
-          this.getResumeFirst().then(res => {
-            let userInfo = this.userInfo
-            userInfo.avatarInfo = res.avatar
-            userInfo.realname = res.name
-            this.$store.dispatch('setUserInfo', userInfo)
-            this.$router.push({ name: 'resumeSecondPost' })
-          })
-        }).catch(
-          err => this.setHint(err.data.msg || '错误')
-        )
-      }
+      const params = this.transformData(this.form1)
+      setResumeFirstApi({ ...params }).then(() => {
+        this.getResumeFirst().then(res => {
+          let userInfo = this.userInfo
+          userInfo.avatarInfo = res.avatar
+          userInfo.realname = res.name
+          this.$store.dispatch('setUserInfo', userInfo)
+          this.$router.push({ name: 'resumeSecondPost' })
+        })
+      })
     }
 
     transformData () {
@@ -379,14 +330,6 @@ export default class CourseList extends Vue {
       }, 3000)
     }
 
-    handleClick (e) {
-      if (e === 'out') {
-        this.$store.dispatch('logoutApi')
-          .then(() => {
-            this.$router.push({ name: 'putIn' })
-          })
-      }
-    }
     focus (dom) {
       document.querySelector(dom).className = 'el-icon-caret-bottom defalut-position icon_active'
     }
@@ -403,80 +346,6 @@ export default class CourseList extends Vue {
   min-height: 900px;
   box-sizing: border-box;
   background: url(../../../assets/images/activity/putIn/bg_createjl.png) 100% repeat #652791;
-  #resumeHeader {
-    height:64px;
-    background: #fff;
-    text-align: right;
-    font-size: 14px;
-    box-shadow: 0px 2px 8px 0px rgba(29,45,53,0.06);
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1001;
-
-    section {
-      height:64px;
-      width: 1000px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 0 auto;
-    }
-    .headerBtn {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      .right {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        .name {
-          font-size:14px;
-          font-weight:400;
-          color:#6E1F96;
-        }
-        .avatar {
-          width:30px;
-          height:30px;
-          border-radius: 50%;
-          margin-left: 7px;
-        }
-        .op_icon {
-          width:12px;
-          height:12px;
-          margin: 0 7px;
-        }
-      }
-      .btn_blo {
-        font-size:14px;
-        font-weight:400;
-        color:rgba(110,31,150,1);
-      }
-      .btn_blo2 {
-        width:113px;
-        height:34px;
-        background:rgba(101,39,145,1);
-        border-radius:84px;
-        font-size:14px;
-        font-weight:700;
-        color:rgba(255,255,255,1);
-        line-height:34px;
-        text-align: center;
-        margin-left: 20px;
-      }
-    }
-    .left_logo {
-      width:160px;
-      height:auto;
-      display: block;
-    }
-  }
-/*  .el-date-editor{
-    .el-icon-circle-close{
-      display: none;
-    }
-  }*/
   .defalut-position{
     position: absolute;
     top: 50%;
@@ -491,9 +360,9 @@ export default class CourseList extends Vue {
   }
   .middle {
     position: relative;
-    // background: #00b38a;
     background-repeat: no-repeat;
     background-position: bottom;
+    text-align: center;
     width: 100%;
     background-size: auto 112px;
     .formHint {
@@ -719,11 +588,11 @@ export default class CourseList extends Vue {
     display: flex;
     flex-direction: row;
     align-items: center;
-    .drop_icon {
-      width: 16px;
-      height: 16px;
-      margin-right: 8px;
-    }
+  }
+  .drop_icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
   }
 }
 

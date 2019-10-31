@@ -82,7 +82,7 @@ export default {
     },
     handleShowMore () {
       if (!this.isLogin) {
-        this.$router.push('/login?type=login')
+        this.$router.push('/login?type=msgLogin')
       } else {
         this.$store.commit('guideQrcodePop', { switch: true, type: 'tobIndex' })
       }

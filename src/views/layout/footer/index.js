@@ -10,10 +10,15 @@ import { mp_qrcode, wx_qrcode, app_qrcode } from 'IMAGES/image'
 export default class PageFooter extends Vue {
   data () {
     return {
-      images: { mp_qrcode, wx_qrcode, app_qrcode }
+      images: { mp_qrcode, wx_qrcode, app_qrcode },
+      cdnPath: `${this.$cdnPath}/images/`
     }
   }
-
+  blackBg () {
+    return [
+      'positionDetail'
+    ].includes(this.$store.state.pageName)
+  }
   shouldFixed () {
     return [
       // 'recruiterIndex'
@@ -22,7 +27,7 @@ export default class PageFooter extends Vue {
 
   toUserDeal () {
     let urlData = this.$router.resolve({
-      name: 'issueRule'
+      name: 'userAgreement'
     })
     window.open(urlData.href, '_blank')
   }

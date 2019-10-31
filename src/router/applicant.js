@@ -43,52 +43,10 @@ const applicant = [
     ]
   },
   {
-    path: '/resumeFirstPost',
+    path: '/createUser',
+    name: 'resumeFirstPost',
     title: '猎多多 | 简历',
-    component: Layout,
-    children: [
-      {
-        path: '',
-        name: 'resumeFirstPost',
-        component: resolve => require(['../views/activity/resumeFirstPost/index.vue'], resolve)
-      }
-    ]
-  },
-  {
-    path: '/resumeSecondPost',
-    title: '猎多多 | 简历',
-    component: Layout,
-    children: [
-      {
-        path: '',
-        name: 'resumeSecondPost',
-        component: resolve => require(['../views/activity/resumeSecondPost/index.vue'], resolve)
-      }
-    ]
-  },
-  {
-    path: '/resumeThirdPost',
-    title: '猎多多 | 简历',
-    component: Layout,
-    children: [
-      {
-        path: '',
-        name: 'resumeThirdPost',
-        component: resolve => require(['../views/activity/resumeThirdPost/index.vue'], resolve)
-      }
-    ]
-  },
-  {
-    path: '/resumeFourthPost',
-    title: '猎多多 | 简历',
-    component: Layout,
-    children: [
-      {
-        path: '',
-        name: 'resumeFourthPost',
-        component: resolve => require(['../views/activity/resumeFourthPost/index.vue'], resolve)
-      }
-    ]
+    component: resolve => require(['../views/createUser/index.vue'], resolve)
   }
 ]
 
