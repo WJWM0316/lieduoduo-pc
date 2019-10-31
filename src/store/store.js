@@ -76,7 +76,7 @@ export default new Vuex.Store({
         state.roleInfos = res.data.data
         // 判断是否求职者且未完善简历四步        
         if (state.userIdentity === 1 && !state.roleInfos.isJobhunter) {
-          router.replace({path: '/resumeFirstPost'})
+          router.replace({path: '/createUser'})
           return
         }
         if (state.userIdentity === 2 && !state.roleInfos.isRecruiter) {

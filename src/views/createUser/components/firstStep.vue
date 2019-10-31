@@ -37,13 +37,13 @@
         @blur="blur('#birthDom')"
       ></el-date-picker>
       <div v-if="!formData.birth">选择你的出生年月</div>
-      <div v-else>{{formData.birth | formatDate}}</div>
+      <div v-else>{{formData.birth | date('YYYY-MM-DD')}}</div>
       <i class="el-icon-caret-bottom defalut-position" id="birthDom"></i>
     </div>
 
     <div class="formTimeItem">
       <div v-if="!formData.startWorkYear">选择参加工作时间</div>
-      <div v-else>{{formData.startWorkYear | formatDate}}</div>
+      <div v-else>{{formData.startWorkYear | date('YYYY-MM-DD')}}</div>
       <el-date-picker
         type="date"
         placeholder="选择参加工作时间"
@@ -69,19 +69,6 @@ import {userNameReg} from '@/util/fieldRegular.js'
   name: 'resumeFirstPost',
   components: {
     MyCropper
-  },
-  filters: {
-    formatDate (date) {
-      const dateTime = new Date(date)
-      const YY = dateTime.getFullYear()
-      const MM =
-        dateTime.getMonth() + 1 < 10
-          ? '0' + (dateTime.getMonth() + 1)
-          : dateTime.getMonth() + 1
-      const D =
-        dateTime.getDate() < 10 ? '0' + dateTime.getDate() : dateTime.getDate()
-      return `${YY}-${MM}-${D}`
-    }
   }
 })
 export default class CourseList extends Vue {
