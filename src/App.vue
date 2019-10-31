@@ -4,8 +4,8 @@
 <script>
 import Vue from 'vue'
 import Component from 'vue-class-component'
-import {getUserInfosApi} from '@/api/auth.js'
-import {getUserRoleInfoApi} from '@/api/auth'
+import { getUserInfosApi } from '@/api/auth.js'
+import { getUserRoleInfoApi } from '@/api/auth'
 
 @Component({
   name: 'APP'
@@ -85,6 +85,7 @@ export default class APP extends Vue {
     margin-top: -220px;
     .pop_tit {
       width:300px;
+      text-align: center;
       height:58px;
       line-height:58px;
       background:rgba(101,39,145,1);

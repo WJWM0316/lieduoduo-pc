@@ -4,13 +4,13 @@
       <div class="main-center index-login-wrapper">
         <div class="position-number">
           <div class="position-number-wrapper">
-            <h3>找高薪工作 就上猎多多</h3>
+            <div><img src="../../../assets/images/index/login_text.png" alt=""></div>
             <p><span>{{total.coolCompanyNum}}</span>酷公司 <i>|</i> <span>{{total.goodChanceNum}}</span>好机会</p>
           </div>
         </div>
         <div class="login-wrapper">
-          <el-input class="login-phone-input" maxlength="11" placeholder="请输入手机号码" v-model="loginForm.mobile" size="medium" />
-          <el-input  class="login-code-input" placeholder="验证码" v-model="loginForm.code" size="medium">
+          <el-input class="login-phone-input el-input-radius2px" maxlength="11" placeholder="请输入手机号码" v-model="loginForm.mobile" size="medium" />
+          <el-input  class="login-code-input el-input-radius2px" placeholder="验证码" v-model="loginForm.code" size="medium">
             <span class="code-span" slot="suffix"  @click="getCode">{{text}}</span>
           </el-input>
           <div class="login-btn" @click="login">登陆/注册</div>
@@ -113,14 +113,14 @@ $index-login-height: 120px;
 .position-number {
   flex: 1;
   text-align: center;
-  h3 {
-    font-size: 26px;
-    color: #fff;
-  }
   .position-number-wrapper {
+    margin-left: 130px;
     width: 280px;
     text-align: left;
     display: inline-block;
+    img {
+      max-width: 100%;
+    }
   }
   p {
     color: #fff;
@@ -135,6 +135,9 @@ $index-login-height: 120px;
     }
   }
 }
+.el-input /deep/ .el-input__inner {
+    padding: 0 14px;
+}
 .login-phone-input {
   width:183px;
 }
@@ -142,7 +145,9 @@ $index-login-height: 120px;
   width:143px;
   margin: 0 15px 0 6px;
   .code-span {
+    padding:0 3px 0 3px;
     line-height: 36px;
+    background: #fff;
     cursor: pointer;
     color: $main-color-1;
   }

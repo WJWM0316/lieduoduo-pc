@@ -174,12 +174,12 @@ export default {
   .list-position-require {
     margin-bottom: 9px;
     margin-top: 4px;
-    font-size: 14px;
+    font-size: 12px;
     color: $title-color-2;
     .iconfont {
-      font-size: 14px;
+      font-size: 12px;
       padding-right: 3px;
-      color: $title-color-2;
+      color: $font-color-12;
     }
     span + span {
       margin-left: 22px;

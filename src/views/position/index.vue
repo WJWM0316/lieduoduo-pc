@@ -27,7 +27,7 @@
             </div>
             <div class="company-info">
               <p class="company-name">{{item.companyInfo.companyShortname}}</p>
-              <p><span>{{item.companyInfo.financingInfo}}</span>|<span>{{item.companyInfo.employeesInfo}}</span>|<span>{{item.companyInfo.industry}}</span></p>
+              <p class="company-details"><span>{{item.companyInfo.financingInfo}}</span>|<span>{{item.companyInfo.employeesInfo}}</span>|<span>{{item.companyInfo.industry}}</span></p>
             </div>
             <div class="recruiter-info">
               <div class="recruiter-base-info">
@@ -40,7 +40,7 @@
               </div>
             </div>
           </router-link>
-          <div class="pagination" v-if="total > 0">
+          <div class="pagination" v-if="total > 0 && total > params.count">
             <el-pagination
               background
               @current-change="(val) => handleSearch(val, 'page')"
@@ -254,22 +254,24 @@ export default {
     }
     .iconfont {
       font-size: 14px;
-      padding-right: 3px;
+      padding-right: 6px;
       color: $font-color-12;
     }
   }
 }
 .company-info {
   min-width: 240px;
+  font-size: 16px;
   .company-name {
     color: $title-color-1;
     margin-bottom: 10px;
   }
-  font-size: 16px;
   p span {
-    color: $title-color-2;
-    font-size: 12px;
     padding-right: 8px;
+  }
+  .company-details {
+    font-size: 12px;
+    color: $title-color-2;
     font-weight: 300;
   }
   span + span {

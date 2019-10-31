@@ -8,7 +8,7 @@ export const getSearchMyCollectApi = data => request({
   url: '/collect/search_my_collect',
   method: 'get',
   params: data,
-  config: { host: 'pub' }
+  config: { host: 'zhaopin' }
 })
 
 // 对我感兴趣的
@@ -16,7 +16,7 @@ export const getSearchCollectApi = data => request({
   url: '/collect/search_collect',
   method: 'get',
   params: data,
-  config: { host: 'pub' }
+  config: { host: 'zhaopin' }
 })
 
 // 收藏求职者

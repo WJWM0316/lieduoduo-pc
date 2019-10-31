@@ -7,12 +7,12 @@
           <li class="list-item" :key="item.labelId" @mouseover.self="mouseOverEvent">
             <div class="list-item-wrapper">
               <span class="item-title">{{item.name}}</span>
-              <div>
+              <div class="item-sub-title">
                 <template v-for="child in item.children">
                   <router-link tag="span" :to="`/position/?keyword=${child.name}`"  :key="child.labelId">{{child.name}}</router-link>
                 </template>
               </div>
-              <span class="item-icon el-icon-arrow-right"></span>
+              <span class="item-icon iconfont icon-right"></span>
             </div>
             <div class="position-details">
               <div class="position-details-wrapper" v-for="child in item.all.children" :key="child.labelId">
@@ -32,12 +32,12 @@
             <li class="list-item" :key="item.labelId" @mouseover.self="mouseOverEvent">
               <div class="list-item-wrapper">
                 <span class="item-title">{{item.name}}</span>
-                <div>
+                <div class="item-sub-title">
                   <template v-for="child in item.children">
                     <router-link tag="span" :to="`/position/?keyword=${child.name}`"  :key="child.labelId">{{child.name}}</router-link>
                   </template>
                 </div>
-                <span class="item-icon el-icon-arrow-right"></span>
+                <span class="item-icon iconfont icon-right"></span>
               </div>
               <div class="position-details">
                 <div class="position-details-wrapper" v-for="child in item.all.children" :key="child.labelId">
@@ -118,7 +118,7 @@ $position-details-width: 528px;
   height: 46px;
   line-height: 1.5;
   color: $title-color-1;
-  padding: 12px 20px 12px 30px;
+  padding: 12px 10px 12px 30px;
   box-sizing: border-box;
   cursor: pointer;
 }
@@ -127,9 +127,6 @@ $position-details-width: 528px;
     background: $bg-color-5;
     span, .item-title {
       color: $main-color-1;
-    }
-    .item-icon {
-      color: $font-color-3;
     }
   }
 }
@@ -171,10 +168,14 @@ $position-details-width: 528px;
     padding-right: 13px;
     height: 100%;
   }
+  .item-sub-title {
+    span {
+      padding: 0 13px;
+    }
+  }
   span {
     font-size:14px;
     color: $title-color-2;
-    padding: 0 6px;
     display: inline-block;
     box-sizing: border-box;
   }
@@ -185,6 +186,7 @@ $position-details-width: 528px;
     box-sizing: border-box;
   }
   .item-icon {
+    padding: 0 6px;
     margin-left: auto;
   }
 }

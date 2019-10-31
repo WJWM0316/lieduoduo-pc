@@ -139,7 +139,7 @@ export default {
       if (!this.isLogin) {
         this.$router.push('/login?type=msgLogin')
       } else {
-        this.$store.commit('guideQrcodePop', {switch: true, type: 'tocIndex'})
+        this.$store.commit('guideQrcodePop', { switch: true, type: 'tocIndex' })
       }
     }
   },
@@ -301,7 +301,7 @@ export default {
     .iconfont {
       font-size: 14px;
       padding-right: 3px;
-      color: $title-color-2;
+      color: $font-color-12;
     }
   }
   .list-details {
@@ -331,14 +331,14 @@ export default {
     span {
       vertical-align: middle;
       display: inline-block;
+      height: 24px;
+      line-height: 26px;
     }
   }
   .list-day, .list-hour, .list-mins, .list-second {
     width: 24px;
-    height: 24px;
     background: $font-color-2;
     color: $sub-color-1;
-    line-height: 24px;
     text-align: center;
     border-radius:4px;
     margin: 0 3px;

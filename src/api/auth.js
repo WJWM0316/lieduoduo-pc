@@ -136,7 +136,7 @@ export const getMyInfoApi = data => request({
   url: `/recruiter/myInfo`,
   method: 'get',
   params: data,
-  config: { host: 'qiuzhi' }
+  config: { host: 'zhaopin' }
 })
 
 // 获取用户信息

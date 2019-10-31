@@ -2,12 +2,18 @@
   <footer id="page-footer" class="page-footer" :class="{'isFixed': shouldFixed()}">
     <section>
         <div class="footer_left">
-          <img class="ft_logo" src="../../../assets/images/logo.png" />
-          <p class="left_p black" @click="toUserDeal">用户协议</p>
+          <div class="footer-header-title">
+            <img class="ft_logo" src="../../../assets/images/logo.png" />
+          </div>
+          <p class="left_p black" @click="toUserDeal">
+            <span>关于我们</span><span>用户协议</span>
+          </p>
           <p class="gray"><a href="http://www.beian.miit.gov.cn" style="color:#bcbcbc;text-decoration:none">Copyright © 老虎科技 粤ICP备16060093号-4</a></p>
         </div>
         <div class="footer_center">
-            <h3 class="relation">联系我们</h3>
+            <div class="footer-header-title">
+              <h3 class="relation">联系我们</h3>
+            </div>
             <p class="black center_p">全国咨询热线：400-065-5788</p>
             <p class="black">邮箱：lieduoduo@thetiger.com.cn</p>
         </div>
@@ -52,19 +58,6 @@ export default PageFooter
     align-items: center;
     margin: 0 auto;
     justify-content: space-between;
-    .footer_left {
-      .left_p {
-        font-size:14px;
-        font-weight:400;
-        color:rgba(0,0,0,1);
-        line-height:20px;
-        margin: 24px 0 8px 0;
-      }
-      .ft_logo {
-        width:80px;
-        height:30px;
-      }
-    }
     .footer_right {
       display: flex;
       flex-direction: row;
@@ -85,20 +78,29 @@ export default PageFooter
         color: $title-color-1;
       }
     }
-    .footer_center {
-      width: 220px;
-      .center_p {
-        line-height:26px;
-        margin: 16px 0 4px 0;
-      }
-      .black {
-        color: $font-color-10;
-      }
+  }
+  .footer_left .left_p {
+    font-size: 14px;
+    color: $title-color-1;
+    margin-bottom: 12px;
+    span + span {
+      cursor: pointer;
+      margin-left: 44px;
     }
-    .relation {
+  }
+  .footer_center .center_p {
+    margin-bottom: 12px;
+  }
+  .footer-header-title {
+    height: 30px;
+    margin-bottom: 20px;
+    img {
+      max-height: 100%;
+    }
+    h3 {
       font-size:22px;
-      font-weight:600;
-      color:rgba(40,40,40,1);
+      font-weight:bold;
+      color: $title-color-1;
     }
   }
   .gray {
