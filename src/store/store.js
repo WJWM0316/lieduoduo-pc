@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { saveAccessToken, removeAccessToken, getAccessToken, getUserInfo, saveUserInfo } from '../api/cacheService'
-import { loginPutInApipc, getUserRoleInfoApi } from '@/api/auth'
+import { loginPutInApipc, getUserRoleInfoApi, switchRoleApi } from '@/api/auth'
 import router from '@/router/index.js'
 import { mobileReg } from '@/util/fieldRegular.js'
 import {getMyResumeApi} from '@/api/resume.js'
@@ -18,7 +18,7 @@ export default new Vuex.Store({
   state: {
     roleInfos: {}, // 用户角色信息
     hasLogin: 0, // 是否登录
-    userIdentity: 0, // 0 C端  1 B端
+    userIdentity: 1, // 1 C端  2 B端
     userInfo: getUserInfo() || {},
     token: getAccessToken(),
     pageName: '',
@@ -57,6 +57,7 @@ export default new Vuex.Store({
     setUserInfo: (state, data) => {
       saveUserInfo(data, state.loginValidTime)
       state.userInfo = data
+      state.userIdentity = data.curInUseRole
     },
     // 登录回调
     LOGINCALLBACK: (state, data) => {
@@ -69,16 +70,16 @@ export default new Vuex.Store({
       state.userInfo = data
       state.token = data.token
       state.hasLogin = 1
-      if (data.hasOwnProperty('isBusiness')) state.userIdentity = data.isBusiness
+      if (data.hasOwnProperty('curInUseRole')) state.userIdentity = data.curInUseRole
       // 获取用户角色信息
       getUserRoleInfoApi().then(res => {
         state.roleInfos = res.data.data
         // 判断是否求职者且未完善简历四步        
-        if (!state.userIdentity && !state.roleInfos.isJobhunter) {
+        if (state.userIdentity === 1 && !state.roleInfos.isJobhunter) {
           router.replace({path: '/resumeFirstPost'})
           return
         }
-        if (state.userIdentity && !state.roleInfos.isRecruiter) {
+        if (state.userIdentity === 2 && !state.roleInfos.isRecruiter) {
           state.guideCreateRecruiter = true
           return
         }
@@ -89,7 +90,7 @@ export default new Vuex.Store({
           router.go(-1)
         } else {
           let userIdentity = state.userIdentity
-          !userIdentity ? router.replace('index') : router.replace('candidate')
+          userIdentity === 1 ? router.replace('index') : router.replace('candidate')
         }
       })
     },
@@ -125,6 +126,21 @@ export default new Vuex.Store({
           state.userInfo.avatarInfo = state.myResume.avatar
         }
       })
+    },
+    switchIdentity (state, data) {
+      if (state.userIdentity) {
+        if (state.roleInfos.isRecruiter) {
+          switchRoleApi().then(res => {
+            state.userIdentity = state.userIdentity === 1 ? 2 : 1
+            router.replace({ name: 'candidate' })
+          })
+        } else {
+          // 打开引导弹窗
+          state.guideQrcodePop = { switch: true, type: 'tobIndex' }
+        }
+      } else {
+        router.replace({ name: 'index' })
+      }
     }
   },
   // 借助actions的手去 执行 mutations ， 通过  this.$store.dispatch 的方式调用

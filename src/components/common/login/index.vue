@@ -58,16 +58,16 @@
           <div class="logind_form">
             <div class="input_wrap">
               <div class="input_box">
-                <i class="input_img iconfont icon-shoujihao" />
+                <i class="input_img iconfont icon-shoujihaoma" />
                 <input placeholder="请输入手机号码" maxlength="11" v-model="mobile" />
               </div>
               <div class="input_box" v-if="imgcode">
-                <i class="input_img iconfont icon-shoujihao" />
+                <i class="input_img iconfont icon-anquan_huaban" />
                 <input placeholder="请输入图片验证码"  v-model="captchaValue" />
                 <img :src="imgcode" class="imgcode"/>
               </div>
               <div class="input_box">
-                <i class="input_img input_i iconfont icon-yanzhengma" />
+                <i class="input_img input_i iconfont icon-duanxinyanzheng" />
                 <input placeholder="请输入短信验证码" maxlength="4" v-model="cValue" />
                 <span class="msgText" @click="sms">{{text + (text !== '发送验证码' ? ' s' : '') }}</span>
               </div>
@@ -79,7 +79,7 @@
             <span @click="changetypeto">{{ type === 'msgLogin' ? '立即注册' : '马上登录' }}</span>
           </div>
           <div class="bottom_txt" v-if="!toggleType">
-            <a href="https://sao.lieduoduo.com/userAgreement" class="login_text">注册代表你已同意 猎多多用户协议&隐私政策</a>
+            <a href="https://sao.lieduoduo.com/userAgreement" class="login_text" target="_blank">注册代表你已同意 猎多多用户协议&隐私政策</a>
             <p class="login_href" @click="$router.push('/login')">企业登录/注册</p>
           </div>
         </div>
@@ -319,7 +319,7 @@ export default class loginForm extends Component {
     let params = {
       mobile: this.mobile,
       code: this.cValue,
-      isBusiness: this.identity,
+      curInUseRole: this.identity,
       captchaKey: this.captchaKey,
       captchaValue: this.captchaValue
     }

@@ -68,7 +68,7 @@
               </div>
               <el-dropdown-menu slot="dropdown">
                 <!-- <el-dropdown-item command="usercenter">个人中心</el-dropdown-item> -->
-                <el-dropdown-item command="toggleIdentity">切换为面试官</el-dropdown-item>
+                <el-dropdown-item command="toggleIdentity">切换为{{userIdentity === 1 ? '面试官' : '求职者'}}</el-dropdown-item>
                 <el-dropdown-item command="logout">退出登录</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
@@ -127,14 +127,7 @@ export default {
           this.$router.push('/position')
           break
         case 'toggleIdentity':
-          // 切换到B端
-          if (!this.userIdentity) {
-            if (this.roleInfos.isRecruiter) {
-              this.$router.replace({ name: 'candidate' })
-            } else {
-              this.$store.commit('guideQrcodePop', { switch: true, type: 'tobIndex' })
-            }
-          }
+          this.$store.commit('switchIdentity')
       }
     },
     handleToLogin (type) {
