@@ -443,6 +443,8 @@ export default class CourseList extends Vue {
         })
         if (data.page === 1) {
           this.candidateList = msg.data
+          // 回到顶部
+          this.toTop()
         } else {
           this.candidateList = this.candidateList.concat(msg.data)
         }
@@ -473,6 +475,8 @@ export default class CourseList extends Vue {
         })
         if (data.page === 1) {
           this.candidateList = msg.data
+          // 回到顶部
+          this.toTop()
         } else {
           this.candidateList = this.candidateList.concat(msg.data)
         }
@@ -503,6 +507,8 @@ export default class CourseList extends Vue {
         })
         if (data.page === 1) {
           this.candidateList = msg.data
+          // 回到顶部
+          this.toTop()
         } else {
           this.candidateList = this.candidateList.concat(msg.data)
         }
@@ -669,7 +675,8 @@ export default class CourseList extends Vue {
       })
     }
     toTop () {
-      document.documentElement.scrollTop = 0
+      const dom = document.querySelector('#candidate')
+      if (dom) dom.scrollTop = 0
     }
 
     getPic (index) {
