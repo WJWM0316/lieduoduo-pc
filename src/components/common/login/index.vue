@@ -50,8 +50,8 @@
         <!-- 短信登录 或者 注册 -->
         <div class="logind" :class="{ cont_ti: imgcode }" v-if="type === 'msgLogin' || type === 'register' || !toggleType" v-show="!guideCreateRecruiter">
           <ul class="sign_type" v-if="type === 'register'">
-            <li :class="{ active : identity === 1 }" @click="toggle(1)">我是求职者</li>
-            <li :class="{ active : identity === 2 }" @click="toggle(2)">我是面试官</li>
+            <li :class="{ active:identity === 1 }" @click="toggle(1)">我是求职者</li>
+            <li :class="{ active:identity === 2 }" @click="toggle(2)">我是面试官</li>
           </ul>
 
           <h3 v-if="type === 'msgLogin' || !toggleType" class="cont_tit" style="margin-bottom: 40px;">{{toggleType ? '短信登录' : '登录/注册猎多多'}}</h3>
@@ -73,7 +73,7 @@
               </div>
             </div>
           </div>
-          <el-button class="login_button" @click="logintoo" :loading="loading" :disabled="loading" >{{type === 'register' ? '注册' : type === 'msgLogin' && toggleType ? '登录' : '登录/注册' }}</el-button>
+          <el-button class="login_button" @click="logintoo" :loading="loading">{{type === 'register' ? '注册' : type === 'msgLogin' && toggleType ? '登录' : '登录/注册' }}</el-button>
           <div class="bottom_text" v-if="toggleType">
             {{type === 'msgLogin' ? '没有账号' : '已有账号' }}
             <span @click="changetypeto">{{ type === 'msgLogin' ? '立即注册' : '马上登录' }}</span>
@@ -144,12 +144,10 @@
   </div>
 </template>
 <script>
-import Vue from 'vue'
 import Component from 'vue-class-component'
-import { loginApi, scanApi, getQrCodeApi, getCodeApi, getCaptchaApi } from '@/api/auth'
+import { scanApi, getQrCodeApi, getCodeApi, getCaptchaApi } from '@/api/auth'
 import { mobileReg } from '@/util/fieldRegular.js'
-import { saveAccessToken } from '@/api/cacheService'
-
+import { mapState } from 'vuex'
 @Component({
   name: 'loginForm',
   methods: {},
@@ -167,6 +165,7 @@ import { saveAccessToken } from '@/api/cacheService'
     guideCreateRecruiter: state => state.guideCreateRecruiter
   })
 })
+
 export default class loginForm extends Component {
   mobile = '' // 手机号
   cValue = '' // 验证码
@@ -207,7 +206,6 @@ export default class loginForm extends Component {
 
   // 获取二维码
   getCode () {
-    let that = this
     getQrCodeApi().then(res => {
       // console.log('==>',res)
       this.codeData = res.data.data
@@ -316,6 +314,7 @@ export default class loginForm extends Component {
 
   // 短信登录提交   //注册提交
   logintoo () {
+    if (this.loading) return
     if (!this.checkMobile()) {
       return
     }
@@ -328,11 +327,12 @@ export default class loginForm extends Component {
     }
     if (!this.toggleType) params.refresh = true
     if (this.$route.query.needBack) params.needBack = true
+    this.loading = true
     this.$store.dispatch('login', params)
-      .then((e) => {
-        if (e.status === 200) {
-          this.loading = true
-        }
+      .then(() => {
+        this.loading = false
+      }).catch(() => {
+        this.loading = false
       })
   }
 }
