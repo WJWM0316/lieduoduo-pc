@@ -210,13 +210,8 @@ import { getSearchBrowseMyselfApi, getMyNavDataApi, getJobHunterPositionTypeApi 
     const dom = document.querySelector('#candidate')
     if (dom) dom.removeEventListener('scroll', this.handleScroll)
   },
-  watch: {
-    '$route': {
-      handler () {
-        this.init()
-      },
-      immediate: true
-    }
+  created () {
+    this.init()
   },
   components: {
   }
@@ -308,6 +303,7 @@ export default class CourseList extends Vue {
     setPath (res) {
       this.pageInfo.page = 1
       this.setPathQuery(res)
+      this.init()
     }
 
     sharePicOp (type, index) {
@@ -613,11 +609,6 @@ export default class CourseList extends Vue {
           this.$message.error(err.data.msg)
         })
       }
-    }
-
-    handleSearch () {
-      this.form.page = 1
-      this.setPathQuery(this.form)
     }
     todoAction (type, index) {
       switch (type) {

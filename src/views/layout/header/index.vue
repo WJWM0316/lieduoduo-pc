@@ -33,7 +33,7 @@
                 placement="bottom"
                 popper-class="share-popover"
                 title=""
-                trigger="click">
+                trigger="hover">
                 <div class="share-image">
                   <img :src="item.url" />
                 </div>

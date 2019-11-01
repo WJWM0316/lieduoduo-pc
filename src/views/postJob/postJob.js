@@ -29,11 +29,6 @@ var geocoder = {}
 
       return `${value}${option[unit]}`
     }
-  },
-
-  watch: {
-    form () {
-    }
   }
 })
 export default class CommunityEdit extends Vue {
