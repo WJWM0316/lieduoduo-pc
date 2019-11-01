@@ -277,7 +277,7 @@ export default {
       width: 100%;
     }
     .list-position-content {
-      padding: 18px 0;
+      padding: 14 px 0;
     }
   }
   .list-position-name {

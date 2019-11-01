@@ -3,7 +3,7 @@
   <div class="drop-down" :class="{active: isActive}">
     <div class="drop-down-header"  @click.stop="toggle">
       <slot></slot>
-      <span v-if="showArrow" class="el-icon-arrow-down"></span>
+      <span v-if="showArrow" class="iconfont icon-bottom"></span>
     </div>
     <div class="drop-down-wrapper" :style="{width: wrapperWidth}">
       <slot name="content">
@@ -164,8 +164,11 @@ $drop-height: 46px;
     flex-wrap: wrap;
     overflow-y:auto;
   }
-  .el-icon-arrow-down {
-    transition: transform 400ms
+  .iconfont {
+    transition: transform 400ms;
+    color: $title-color-2;
+    font-size: 12px;
+    display: inline-block;
   }
   .drop-down-item {
     text-align: center;
@@ -203,8 +206,7 @@ $drop-height: 46px;
   transition: height 0ms 0ms, opacity 600ms 0ms;
 }
 .drop-down.active .drop-down-header{
-
-  .el-icon-arrow-down {
+  .icon-bottom {
     transform: rotate(180deg)
   }
 }

@@ -2,8 +2,7 @@
   <div id="recruiter">
     <div class="recruiter_cont main-center">
       <div class="header_warp">
-        <h2 class="title">
-          职位管理
+        <h2 class="title">职位管理
           <div class="addJob" size="small" type="primary" @click="todoAction('addJob')">发布职位</div>
         </h2>
         <div class="header_navs_wrap">
@@ -193,14 +192,17 @@ import {
   name: 'lighthouse-list',
   methods: {},
   computed: {},
-  watch: {
-    $route: {
+  created () {
+    this.init()
+  },
+  /* watch: {
+    '$route': {
       handler () {
         this.init()
       },
       immediate: true
     }
-  },
+  }, */
   components: {}
 })
 export default class CourseList extends Vue {
@@ -277,16 +279,12 @@ export default class CourseList extends Vue {
 
     this.jobSelectId = id
   }
-
-  handleSearch () {
-    this.form.page = 1
-    this.setPathQuery(this.form)
-  }
-
   mounted () {
     window.addEventListener('scroll', this.handleScroll)
   }
-
+  destroyed () {
+    window.removeEventListener('scroll', this.handleScroll)
+  }
   init () {
     this.form = Object.assign(this.form, this.$route.query || {})
     this.userInfo = this.$store.state.userInfo
@@ -498,8 +496,6 @@ export default class CourseList extends Vue {
   }
 
   catchRecruiter (index) {
-    let that = this
-
     let query = {}
     this.recruiterList.map((item, idx) => {
       if (idx === index) {
@@ -508,16 +504,16 @@ export default class CourseList extends Vue {
           query.is_online = 2
           query.status = item.status
 
-          that.form.is_online = 2
-          that.navSelectName = item.name
-          that.form.status = item.status
+          this.form.is_online = 2
+          this.navSelectName = item.name
+          this.form.status = item.status
         } else {
           query.is_online = 1
           query.status = '1,2'
 
-          that.navSelectName = ''
-          that.form.status = '1,2'
-          that.form.is_online = 1
+          this.navSelectName = ''
+          this.form.status = '1,2'
+          this.form.is_online = 1
         }
 
         query.page = 1
@@ -528,6 +524,7 @@ export default class CourseList extends Vue {
         item.active = false
       }
     })
+    this.init()
   }
 
   catchJob (index) {
@@ -1068,6 +1065,7 @@ export default class CourseList extends Vue {
   .share {
     .share_blo {
       position: absolute;
+      text-align: center;
       right: 50%;
       top: 50%;
       z-index: 6;

@@ -4,7 +4,6 @@
       <h3 class="title">职位基本信息</h3>
       <p class="hint">加“ <span style="color: red; font-size: 15px;">*</span> ”内容，在确认发布成功后，将无法修改</p>
 
-
       <el-form-item label="职位名称" prop="position_name" style="width: 450px;" v-if="isEdit">
         <el-input v-model="form.position_name" :disabled="true" placeholder="限制50个字以内" :maxlength="50" style="width: 382px;"></el-input>
       </el-form-item>
@@ -32,7 +31,7 @@
           </el-option>
         </el-select>
       </el-form-item>
-      
+
       <el-form-item label="工作地点" prop="address_id" style="width: 450px;">
         <el-select v-model="form.address_id" placeholder="点击选择工作地点" @change="changeAdress" style="width: 382px;">
           <el-option
@@ -99,7 +98,7 @@
             </el-option>
           </el-select>
         </div>
-        
+
       </el-form-item>
 
       <el-form-item label="技能要求" prop="skill_tag" style="width: 450px;">
@@ -123,12 +122,12 @@
       </el-form-item>
 
       <el-form-item label="职位描述" prop="describe" style="width: 520px;" >
-        <el-input 
-          type="textarea" 
+        <el-input
+          type="textarea"
           :autosize="{ minRows: 6}"
-          placeholder="请填写职位描述" 
-          :maxlength="5000" 
-          v-model="form.describe" 
+          placeholder="请填写职位描述"
+          :maxlength="5000"
+          v-model="form.describe"
           style="width: 520px;"
          ></el-input>
       </el-form-item>
@@ -175,7 +174,6 @@
 
           <el-input style="width: 368px;margin: 13px 0 26px 0;box-sizing: border-box;" v-model="adressInput" placeholder="请输入工作地址）"></el-input>
 
-
           <el-input style="width: 368px;margin: 13px 0 26px 0;box-sizing: border-box;" v-model="adress_id_Input" placeholder="请输入门牌号（选填）"></el-input>
 
           <div class="btn-add">
@@ -184,7 +182,7 @@
           </div>
         </div>
       </div>
-      
+
     </el-form>
   </div>
 </template>
@@ -198,4 +196,3 @@ export default PostJob
 @import "./postJob.less";
 
 </style>
-
