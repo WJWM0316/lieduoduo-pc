@@ -4,30 +4,12 @@
 <script>
 import Vue from 'vue'
 import Component from 'vue-class-component'
-import { getUserInfosApi } from '@/api/auth.js'
-import { getUserRoleInfoApi } from '@/api/auth'
 
 @Component({
   name: 'APP'
 })
 export default class APP extends Vue {
-  getUserInfo () {
-    getUserInfosApi().then(res => {
-      this.$store.commit('SETLOGIN', 1)
-      this.$store.commit('setUserInfo', res.data.data)
-      this.getUserRoleInfo()
-    }).catch(e => {
-      this.$store.commit('SETLOGIN', 0)
-    })
-  }
-  getUserRoleInfo () {
-    getUserRoleInfoApi().then(res => {
-      if (res.data.data.isJobhunter) this.$store.dispatch('getMyResume')
-      this.$store.commit('setRoleInfos', res.data.data)
-    })
-  }
   created () {
-    this.getUserInfo()
   }
 }
 </script>

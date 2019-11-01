@@ -36,29 +36,36 @@
 						<interviewBtn ref="interviewBtn" :infos="infos" type="position"></interviewBtn>
 					</div>
 					<div class="botBtnBox">
-						<span class="botBtn" @mouseenter="mouseenEven($event, 'shareQrcode')" @mouseleave="mouseenEven($event, 'shareQrcode')"><i class="icon iconfont icon-weixin"></i>微信分享</span>
-						<span class="botBtn" @mouseenter="mouseenEven($event, 'sharePoster')" @mouseleave="mouseenEven($event, 'sharePoster')"><i class="icon iconfont icon-shengchenghaibao"></i>生成海报</span>
-						<span class="botBtn noMargin" @click="todoAction('collectPosition')"><i class="icon iconfont" :class="infos.isCollect ? 'icon-yishoucang': 'icon-shoucang'"></i>感兴趣</span>
-						<div class="wxShare" v-show="showShareQrcode"><img class="qrcode" :src="qrcodeUrl"></div>
-						<div class="poster" v-show="showSharePoster" @mouseleave="mouseenEven($event, 'sharePoster')">
-							<div class="poster-content">
-								<div class="poster-item" @click="todoAction('getPoster', 'short')">
+						<el-dropdown trigger="hover" class="botBtn">
+							<div class="botBtn"><i class="icon iconfont icon-weixin"></i>微信分享</div>
+							<el-dropdown-menu slot="dropdown" class="qrcodeBox">
+								<el-dropdown-item disabled><img class="qrcode" :src="qrcodeUrl"></el-dropdown-item>
+							</el-dropdown-menu>
+						</el-dropdown>
+
+						
+
+						<el-dropdown trigger="hover" @command="handleCommand" class="botBtn">
+							<div class="el-dropdown-link"><i class="icon iconfont icon-shengchenghaibao"></i>生成海报</span></div>
+							<el-dropdown-menu slot="dropdown" class="poster-content">
+								<el-dropdown-item command="shortPoster">
 									<img class="icon" :src="cdnPath + 'ic_share_poster.png'" alt="">
 									<div class="title">生成精美海报<span class="label">抓眼球</span></div>
 									<p class="desc">提练职位核心信息，发圈更抓人眼球</p> 
-								</div>
-								<div class="poster-item" @click="todoAction('getPoster', 'long')">
+								</el-dropdown-item>
+								<el-dropdown-item command="longPoster">
 									<img class="icon" :src="cdnPath + 'ic_share_detailpic.png'" alt="">
 									<div class="title">生成职位长图<span class="label">最详情</span></div>
 									<p class="desc">呈现所有职位信息，细节一目了然</p> 
-								</div>
-							</div>
-						</div>
-						<poster @closePoster="closePoster" :showPoster.sync="showPoster" :params='posterParmas'></poster>
+								</el-dropdown-item>
+							</el-dropdown-menu>
+						</el-dropdown>
+						<span class="botBtn noMargin" @click="todoAction('collectPosition')"><i class="icon iconfont" :class="infos.isCollect ? 'icon-yishoucang': 'icon-shoucang'"></i>感兴趣</span>	
 					</div>
 				</div>
 			</div>
 		</header>
+		<poster @closePoster="closePoster" :showPoster.sync="showPoster" :params='posterParmas'></poster>
 		<div class="content">
 			<div class="inner">
 				<article class="content-article">
@@ -115,6 +122,8 @@ import poster from '@/components/common/poster'
 import interviewBtn from '@/components/interview/interviewBtn.vue'
 import guideLogin from '@/components/common/guideLogin'
 import adpostion from '@/components/common/adpostion'
+let that = null
+
 @Component({
   name: 'positionDetail',
   components: {
@@ -194,18 +203,18 @@ export default class PositionDetail extends Vue {
   closePoster () {
   	this.showPoster = false
   }
-  getPoster (type) {
-  	this.showPoster = true
-  	switch (type) {
-  		case 'long':
-  			this.posterParmas = {
-					id: this.id,
+  handleCommand (command) {
+  	that.showPoster = true
+  	switch (command) {
+  		case 'longPoster':
+  			that.posterParmas = {
+					id: that.id,
 					type: 'position'
 				}
   			break
-  		case 'short':
-  			this.posterParmas = {
-					id: this.id,
+  		case 'shortPoster':
+  			that.posterParmas = {
+					id: that.id,
 					type: 'position_min'
 				}
   			break
@@ -217,23 +226,6 @@ export default class PositionDetail extends Vue {
   		return
   	}
   	switch (clickTyp) {
-  		case 'getPoster':
-  			this.showPoster = true
-		  	switch (type) {
-		  		case 'long':
-		  			this.posterParmas = {
-							id: this.id,
-							type: 'position'
-						}
-		  			break
-		  		case 'short':
-		  			this.posterParmas = {
-							id: this.id,
-							type: 'position_min'
-						}
-		  			break
-		  	}
-		  	break
 		  case 'collectPosition':
 		  	if (!this.infos.isCollect) {
 	  			putMycollectPositionApi({id: this.id}).then(res => {
@@ -284,6 +276,7 @@ export default class PositionDetail extends Vue {
   	if (this.$refs.logo.height/this.$refs.logo.width > 2) this.verticalLogo = true
   }
   created () {
+  	that = this
   	this.id = this.$route.query.positionId
   	this.getQrcode()
   	this.getDetail()
@@ -297,6 +290,6 @@ export default class PositionDetail extends Vue {
   }
 }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 @import './detail.scss';
 </style>
