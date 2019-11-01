@@ -73,7 +73,7 @@
               </div>
             </div>
           </div>
-          <el-button class="login_button" @click="logintoo">{{type === 'register' ? '注册' : type === 'msgLogin' && toggleType ? '登录' : '登录/注册' }}</el-button>
+          <el-button class="login_button" @click="logintoo" :loading="loading" :disabled="loading" >{{type === 'register' ? '注册' : type === 'msgLogin' && toggleType ? '登录' : '登录/注册' }}</el-button>
           <div class="bottom_text" v-if="toggleType">
             {{type === 'msgLogin' ? '没有账号' : '已有账号' }}
             <span @click="changetypeto">{{ type === 'msgLogin' ? '立即注册' : '马上登录' }}</span>
@@ -177,7 +177,7 @@ export default class loginForm extends Component {
   type = 'msgLogin' // msgLogin 短信登录, qrcodeLogin 二维码登录, register 注册
   helptype = false
   openHelp = false
-  visibleDialog = true // 弹窗关闭
+  loading = false
   // cdn图片地址
   cdnPath = `${process.env.VUE_APP_CDN_PATH}/images/`
   identity = 1 // 1 求职者 2 招聘官
@@ -293,6 +293,9 @@ export default class loginForm extends Component {
     if (!this.checkMobile()) {
       return
     }
+    if (this.text !== '发送验证码') {
+      return
+    }
     getCodeApi({ mobile: this.mobile }).then(res => {
       this.$message.success('验证码发送成功')
       this.smstime()
@@ -326,6 +329,11 @@ export default class loginForm extends Component {
     if (!this.toggleType) params.refresh = true
     if (this.$route.query.needBack) params.needBack = true
     this.$store.dispatch('login', params)
+      .then((e) => {
+        if (e.status === 200) {
+          this.loading = true
+        }
+      })
   }
 }
 </script>
