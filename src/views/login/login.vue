@@ -1,6 +1,9 @@
 <template>
   <div id="login">
     <div class="loginBox">
+      <div class="login_left">
+        <img :src=" cdnPath + 'loginpage_left.png'" @click="$router.push('/index')" />
+      </div>
       <login-form id="loginForm" :loginType="loginType"></login-form>
     </div>
   </div>
@@ -17,6 +20,7 @@ import loginForm from '@/components/common/login'
 })
 export default class login extends Vue {
   loginType = 'msgLogin'
+  cdnPath = `${process.env.VUE_APP_CDN_PATH}/images/`
   mounted () {
     let query = this.$route.query
     if (query.type) this.loginType = query.type
@@ -49,8 +53,16 @@ export default class login extends Vue {
     box-sizing: border-box;
     overflow: hidden;
     margin: 0 auto;
-    #loginForm {
-      float: right;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .login_left{
+      width: 539px;
+      cursor: pointer;
+      img{
+        max-width: 100%;
+        max-height: 100%;
+      }
     }
   }
 }

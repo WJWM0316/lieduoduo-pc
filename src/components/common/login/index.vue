@@ -6,7 +6,7 @@
         <div class="login_type" v-if="toggleType && (type === 'msgLogin' || type === 'qrcodeLogin')" v-show="!guideCreateRecruiter">
           <div class="login_text" @click="changetype">{{type === 'msgLogin' ? '二维码登录' : '短信验证登录'}}</div>
           <div class="login-img">
-            <img :src="cdnPath + 'loginimg.png'" @click="changetype" />
+            <img :src="cdnPath + (type === 'msgLogin' ? 'loginimg.png': 'loginimg_sms.png')" @click="changetype" />
           </div>
         </div>
         <!-- 二维码登录 -->
@@ -484,7 +484,6 @@ export default class loginForm extends Component {
       }
     }
     .bottom_txt{
-      // margin-top: -46px;
       .login_text{
         font-size: 12px;
         color: #A29CA6;
@@ -742,7 +741,7 @@ export default class loginForm extends Component {
         width: 220px;
         height: 48px;
         font-size: 16px;
-        font-weight: 700;
+        font-weight: 500;
         background: none;
       }
       .msgText {
