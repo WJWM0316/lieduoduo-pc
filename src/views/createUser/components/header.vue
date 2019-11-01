@@ -5,9 +5,9 @@
 	    <el-dropdown trigger="click"  @command="handleClick" >
 	      <div class="headerBtn">
 	        <div class="right">
-	          <span class="name">欢迎登录猎多多，{{userInfo.name}}</span>
-	          <img class="op_icon aaa" :src="cdnPath + 'open.png'" v-if="!userInfo.avatar" />
-	          <img class="avatar" :src="userInfo.avatar.middleUrl" v-if="userInfo.avatar && userInfo.avatar.middleUrl" />
+	          <span class="name">欢迎登录猎多多，{{name}}</span>
+	          <img class="op_icon aaa" :src="cdnPath + 'open.png'" v-if="!avatarUrl" />
+	          <img class="avatar" :src="avatarUrl" v-if="avatarUrl" />
 	        </div>
 	      </div>
 	        <el-dropdown-menu slot="dropdown">
@@ -23,21 +23,28 @@
 	export default {
 		data () {
 			return {
-				cdnPath: `${this.$cdnPath}/images/`
+				cdnPath: `${this.$cdnPath}/images/`,
+        name: null,
+        avatarUrl: ''
 			}
 		},
 		computed: {
-			...mapGetters([
-        'userInfo'
-      ])
+			...mapState({
+        userInfo: state => state.userInfo
+      })
 		},
     watch: {
       userInfo: {
         handler(val, oldVal){
-          console.log(val, this.userInfo)
+          this.name = val.name
+          this.avatarUrl = val.avatar.middleUrl
         },
         deep:true
       }
+    },
+    created () {
+      this.name = this.userInfo.name
+      this.avatarUrl = this.userInfo.avatar.middleUrl
     },
 		methods: {
 	    handleClick (e) {

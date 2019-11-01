@@ -1,6 +1,6 @@
 <template>
 	<div class="positionDetail">
-		<header class="header" :class="infos.isRapidly === 1 ? 'isRapidly' : ''" :style="{'top': offsetTop + 'px'}">
+		<header class="header" :class="infos.isRapidly === 1 ? 'isRapidly' : ''">
 			<div class="inner">
 				<div class="header-content">
 					<div class="title">
@@ -287,13 +287,6 @@ export default class PositionDetail extends Vue {
   	this.id = this.$route.query.positionId
   	this.getQrcode()
   	this.getDetail()
-  	window.onscroll = () => {
-  		if (window.scrollY > 50) {
-  			if (this.offsetTop > 0) this.offsetTop = 0
-  		} else {
-  			if (this.offsetTop !== 50) this.offsetTop = 50
-  		}
-  	}
   }
 }
 </script>

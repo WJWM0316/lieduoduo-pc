@@ -152,8 +152,11 @@ export default class CourseList extends Vue {
       setResumeFirstApi({ ...params }).then(() => {
         this.getResumeFirst().then(res => {
           let userInfo = this.$store.getters.userInfo
+          userInfo.avatarInfo = res.avatar
+          userInfo.realname = res.name
           userInfo.avatar = res.avatar
           userInfo.name = res.name
+          userInfo.firstStep = true
           this.$store.dispatch('setUserInfo', userInfo)
           this.$parent.step++
         })

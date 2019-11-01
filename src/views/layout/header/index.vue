@@ -1,5 +1,5 @@
 <template>
-  <div class="page-header">
+  <div class="page-header" :class="{'fixed' : fixed}">
     <div class="page-header-wrapper">
       <router-link tag="div" to="/index" class="header-logo">
         <img src="../../../assets/images/index/logo.png" alt="">
@@ -120,6 +120,11 @@ export default {
     })
   },
   methods: {
+    fixed () {
+      return [
+        'positionDetail'
+      ].includes(this.$store.state.pageName)
+    },
     handleClick (e) {
       switch (e) {
         case 'logout':
@@ -165,6 +170,13 @@ $header-height-1: $page-header-height;
 .page-header {
   height: $header-height-1;
   background: $bg-color-2;
+  &.fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    width: 100%;
+  }
 }
 .page-header-wrapper {
   @include flex-v-center;
