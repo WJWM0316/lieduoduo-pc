@@ -86,8 +86,8 @@ img {
 						margin-right: 20px;
 						display: inline-block;
 						.icon {
-							font-size: 16px;
-							color: $iconFont-gray;
+							font-size: 14px;
+							color: #fff;
 							margin-right: 7px;
 						}
 					}
@@ -134,13 +134,14 @@ img {
 				.botBtnBox {
 					margin-top: 15px;
 					position: relative;
+					display: flex;
+					justify-content: space-between;
 					.botBtn {
 						cursor: pointer;
 						font-size:14px;
 						font-weight:400;
 						color:$lightFont-color-purple;
 						line-height:20px;
-						margin-right: 37px;
 						white-space: nowrap;
 						display: inline-block;
 						&.noMargin {
@@ -201,66 +202,7 @@ img {
 					    border-right: 10px solid transparent;
 					    border-left: 10px solid transparent;
 						}
-						.poster-content {
-							background: #fff;
-							.poster-item {
-								height: 76px;
-								padding: 20px 22px 17px 68px;
-								position: relative;
-								box-sizing: border-box;
-								cursor: pointer;
-								.icon {
-									width: 30px;
-									position: absolute;
-									top: 21px;
-									left: 26px;
-								}
-								&:first-child {
-									position: relative;
-									&:after {
-										content: '';
-										width:269px;
-										height:1px;
-										position: absolute;
-										bottom: 0;
-										left: 50%;
-										transform: translate3d(-50%, 0, 0);
-										background: #E8E9EB;
-									}
-								}
-								.title {
-									font-size:14px;
-									font-weight:400;
-									color:$font-color-3;
-									line-height:20px;
-									margin-bottom: 2px;
-									.label {
-										width:52px;
-										height:18px;
-										line-height: 18px;
-										border-radius:9px;
-										border:1px solid $lightFont-color-orange;
-										color: $lightFont-color-orange;
-										text-align: center;
-										font-size:12px;
-										display: inline-block;
-										margin-left: 11px;
-									}
-								}
-								.desc {
-									font-size:12px;
-									font-weight:400;
-									color: $font-color-6;
-									line-height:17px;
-								}
-								&:hover {
-									background: #EFE9F4;
-									.title {
-										color: $lightFont-color-purple;
-									}
-								}
-							}
-						}
+						
 					}
 				}
 			}
@@ -323,11 +265,9 @@ img {
 							line-height: 22px;
 							text-align: center;
 							font-size:16px;
-							font-weight:700;
 							color:$main-color-1;
 							display: inline-block;
 							margin: 0 6px;
-							
 							&:last-child {
 								margin-right: 0;
 							}
@@ -400,8 +340,8 @@ img {
 						font-size:14px;
 						font-weight:400;
 						color:$font-color-6;
-						line-height:20px;
-						padding: 4px 14px;
+						line-height:28px;
+						padding: 0 14px;
 						background: #F2F1F5;
 						margin-right: 16px;
 						display: inline-block;
@@ -474,6 +414,93 @@ img {
 						}
 					}
 				}
+			}
+		}
+	}
+}
+
+.el-dropdown-menu {
+	background: #fff;
+	.el-dropdown-menu__item {
+		height: 76px;
+		padding: 20px 22px 17px 68px;
+		position: relative;
+		box-sizing: border-box;
+		cursor: pointer;
+		&.qrcodeBox {
+			height: auto;
+    	padding: 12px;
+			.qrcode {
+				width: 100px;
+				display: block;
+			}
+		}
+		
+		.icon {
+			width: 30px;
+			position: absolute;
+			top: 21px;
+			left: 26px;
+		}
+		&:first-child {
+			position: relative;
+			&:after {
+				content: '';
+				width:269px;
+				height:1px;
+				position: absolute;
+				bottom: 0;
+				left: 50%;
+				transform: translate3d(-50%, 0, 0);
+				background: #E8E9EB;
+			}
+		}
+		.title {
+			font-size:14px;
+			font-weight:400;
+			color:$font-color-3;
+			line-height:20px;
+			margin-bottom: 2px;
+			.label {
+				width:52px;
+				height:18px;
+				line-height: 18px;
+				border-radius:9px;
+				border:1px solid $lightFont-color-orange;
+				color: $lightFont-color-orange;
+				text-align: center;
+				font-size:12px;
+				display: inline-block;
+				margin-left: 11px;
+			}
+		}
+		.desc {
+			font-size:12px;
+			font-weight:400;
+			color: $font-color-6;
+			line-height:17px;
+		}
+		&:hover {
+			background: #EFE9F4;
+			.title {
+				color: $lightFont-color-purple;
+			}
+		}
+	}
+	&.qrcodeBox {
+		padding: 0;
+		.el-dropdown-menu__item {
+			height: auto;
+    	padding: 12px;
+    	&::hover {
+    		background: none;
+    	}
+    	&::after {
+    		display: none;
+    	}
+    	.qrcode {
+				width: 100px;
+				display: block;
 			}
 		}
 	}
