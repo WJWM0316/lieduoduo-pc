@@ -2,14 +2,13 @@
   <footer id="page-footer" class="page-footer" :class="{'isFixed': shouldFixed(), 'blackBg' : blackBg()}">
     <section>
         <div class="footer_left">
-          <p class="left_p black" @click="toUserDeal">用户协议</p>
           <div class="footer-header-title">
              <img class="ft_logo" :src="blackBg() ? cdnPath + 'logo_white.png' : cdnPath + 'logo.png'" />
           </div>
           <p class="left_p black" @click="toUserDeal">
             <span>关于我们</span><span>用户协议</span>
           </p>
-          <p class="gray"><a href="http://www.beian.miit.gov.cn" style="color:#bcbcbc;text-decoration:none">Copyright © 老虎科技 粤ICP备16060093号-4</a></p>
+          <p class="gray"><a href="http://www.beian.miit.gov.cn">Copyright © 老虎科技 粤ICP备16060093号-4</a></p>
         </div>
         <div class="footer_center">
             <div class="footer-header-title">
@@ -48,7 +47,6 @@ export default PageFooter
   box-shadow: 0px 2px 8px 0px rgba(29,45,53,0.06);
   z-index: 2;
   overflow: hidden;
-  font-weight:700;
   width: 100%;
   section {
     height: 100%;
@@ -58,19 +56,6 @@ export default PageFooter
     align-items: center;
     margin: 0 auto;
     justify-content: space-between;
-    .footer_left {
-      .left_p {
-        font-size:14px;
-        font-weight:700;
-        color:rgba(0,0,0,1);
-        line-height:20px;
-        margin: 24px 0 8px 0;
-      }
-      .ft_logo {
-        width:80px;
-        height:30px;
-      }
-    }
     .footer_right {
       display: flex;
       flex-direction: row;
@@ -91,19 +76,9 @@ export default PageFooter
         color: $title-color-1;
       }
     }
-    .footer_center {
-      .center_p {
-        line-height:26px;
-        margin: 16px 0 4px 0;
-      }
-      .black {
-        color: $font-color-10;
-      }
-    }
     .relation {
       font-size:16px;
-      font-weight:700;
-      color:$font-color-2;
+      color:$font-color-1;
     }
   }
   .footer_left .left_p {
@@ -118,20 +93,22 @@ export default PageFooter
   .footer_center .center_p {
     margin-bottom: 12px;
   }
+  .footer_center p {
+    color: $font-color-10;
+  }
   .footer-header-title {
     height: 30px;
+    line-height: 30px;
     margin-bottom: 20px;
     img {
       max-height: 100%;
     }
     h3 {
-      font-size:22px;
-      font-weight:bold;
       color: $title-color-1;
     }
   }
-  .gray {
-    font-size: 12px;
+  .gray, .gray a {
+    font-size: 14px;
     color: $font-color-10;
   }
   &.blackBg {
@@ -157,7 +134,5 @@ export default PageFooter
     right: 0;
   }
 }
-
-
 
 </style>

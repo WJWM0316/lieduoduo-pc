@@ -60,7 +60,7 @@
           >{{navSelectName}}</div>
           <div class="blo_center">
             <!-- <div class="center_status">审核中</div>
-        <div class="center_status">审核中</div>
+            <div class="center_status">审核中</div>
             <div class="center_status">审核中</div>-->
             <div class="center_time">发布于 {{item.createdAt}}</div>
           </div>

@@ -1,60 +1,59 @@
 <template>
-  <div id="candidate" class="main-center">
-    <div class="main_top_warp" :class="{'isFixed':navBarFixed}">
-        <div class="main_top" >
-          <div class="topBlo topStatusBlo borright " :class="{'cur':navType==='searchBrowseMyself'}" @click="changeNav('searchBrowseMyself')">
-            <img class="preview" src="../../assets/images/preview.png" v-if="navType === 'searchBrowseMyself'"  />
-            <img class="preview" src="../../assets/images/preview_off.png" v-else />
-            看过我的({{navNum.browseMyselfCount || 0}})
-          </div>
-          <div class="topBlo topStatusBlo borleft "  :class="{'cur':navType==='searchCollect'}" @click="changeNav('searchCollect')">
-            <span class="border"></span>
-            <img class="like" src="../../assets/images/like_no.png" v-if="navType === 'searchCollect'" />
-            <img class="like" src="../../assets/images/like2.png" v-else />
-            对我感兴趣({{navNum.collectMyselfCount || 0}})
-          </div>
-          <div class="topBlo topStatusBlo2"  :class="{'cur':navType==='searchMyCollect'}" @click="changeNav('searchMyCollect')">
-            <img class="like" src="../../assets/images/like_no.png" v-if="navType === 'searchMyCollect'" />
-            <img class="like" src="../../assets/images/like2.png" v-else />
-            我感兴趣的({{navNum.myCollectCount || 0}})
+  <div id="candidate">
+    <div class="main_top_warp main-center" :class="{'isFixed':navBarFixed}">
+      <div class="main_top" >
+        <div class="topBlo topStatusBlo borright " :class="{'cur':navType==='searchBrowseMyself'}" @click="changeNav('searchBrowseMyself')">
+          <img class="preview" src="../../assets/images/preview.png" v-if="navType === 'searchBrowseMyself'"  />
+          <img class="preview" src="../../assets/images/preview_off.png" v-else />
+          看过我的({{navNum.browseMyselfCount || 0}})
+        </div>
+        <div class="topBlo topStatusBlo borleft "  :class="{'cur':navType==='searchCollect'}" @click="changeNav('searchCollect')">
+          <span class="border"></span>
+          <img class="like" src="../../assets/images/like_no.png" v-if="navType === 'searchCollect'" />
+          <img class="like" src="../../assets/images/like2.png" v-else />
+          对我感兴趣({{navNum.collectMyselfCount || 0}})
+        </div>
+        <div class="topBlo topStatusBlo2"  :class="{'cur':navType==='searchMyCollect'}" @click="changeNav('searchMyCollect')">
+          <img class="like" src="../../assets/images/like_no.png" v-if="navType === 'searchMyCollect'" />
+          <img class="like" src="../../assets/images/like2.png" v-else />
+          我感兴趣的({{navNum.myCollectCount || 0}})
+        </div>
+
+        <div class="screen_cont">
+          <div class="topSelected" @click="screenList(1)" :class="{'selected':isShowScreen}" v-if="isShowScreen">
+            <img class="screen_icon" src="../../assets/images/screen.png" v-if="isShowScreen" />
+            <img class="screen_icon" src="../../assets/images/screen_off.png" v-else />
+            {{ selectedScreen.length > 0 || (positionTypeList.length > 0 ? positionTypeList[positionTypeList.length-1].active:false) ? '清除筛选' :'高级筛选' }}
           </div>
 
-          <div class="screen_cont">
-            <div class="topSelected" @click="screenList(1)" :class="{'selected':isShowScreen}" v-if="isShowScreen">
-              <img class="screen_icon" src="../../assets/images/screen.png" v-if="isShowScreen" />
-              <img class="screen_icon" src="../../assets/images/screen_off.png" v-else />
-              {{ selectedScreen.length > 0 || (positionTypeList.length > 0 ? positionTypeList[positionTypeList.length-1].active:false) ? '清除筛选' :'高级筛选' }}
+          <div class="topSelected" @click="screenList(1)" :class="{'selected':selectedScreen.length>0}" v-else>
+            <img class="screen_icon" src="../../assets/images/screen.png" v-if="selectedScreen.length>0" />
+            <img class="screen_icon" src="../../assets/images/screen_off.png" v-else />
+            {{selectedScreen.length > 0 ||  (positionTypeList.length > 0 ? positionTypeList[positionTypeList.length-1].active:false) ? '清除筛选' :'高级筛选' }}
+          </div>
+
+          <div class="topSelected2" @click="screenList(2)">
+            <img class="screen_icon" src="../../assets/images/arrows2.png" v-if="isShowScreen" />
+            <img class="screen_icon" src="../../assets/images/arrows2.png" v-else />
+          </div>
+
+          <div class="screenBox" v-if="isShowScreen">
+            <div class="triangle_border_top"></div>
+            <div class="screen_tit">{{getPopName()}}</div>
+            <div class="lable_list" >
+              <span v-for="(item,index) in positionTypeList" @click="labelClick(index)" :class="{'cur':item.active}" :key="index"> {{item.name}}</span>
             </div>
 
-            <div class="topSelected" @click="screenList(1)" :class="{'selected':selectedScreen.length>0}" v-else>
-              <img class="screen_icon" src="../../assets/images/screen.png" v-if="selectedScreen.length>0" />
-              <img class="screen_icon" src="../../assets/images/screen_off.png" v-else />
-              {{selectedScreen.length > 0 ||  (positionTypeList.length > 0 ? positionTypeList[positionTypeList.length-1].active:false) ? '清除筛选' :'高级筛选' }}
-            </div>
-
-            <div class="topSelected2" @click="screenList(2)">
-              <img class="screen_icon" src="../../assets/images/arrows2.png" v-if="isShowScreen" />
-              <img class="screen_icon" src="../../assets/images/arrows2.png" v-else />
-            </div>
-
-            <div class="screenBox" v-if="isShowScreen">
-              <div class="triangle_border_top"></div>
-              <div class="screen_tit">{{getPopName()}}</div>
-              <div class="lable_list" >
-                <span v-for="(item,index) in positionTypeList" @click="labelClick(index)" :class="{'cur':item.active}" :key="index"> {{item.name}}</span>
-              </div>
-
-              <div class="screen_btns">
-                <div class="screen_btn true" @click="screenOp('confirm')">确定</div>
-                <div class="screen_btn" @click="screenOp('cancel')">取消</div>
-              </div>
+            <div class="screen_btns">
+              <div class="screen_btn true" @click="screenOp('confirm')">确定</div>
+              <div class="screen_btn" @click="screenOp('cancel')">取消</div>
             </div>
           </div>
         </div>
+      </div>
     </div>
     <div class="main_top_warp" v-if="navBarFixed"></div>
     <div class="recruiter_main">
-
       <div id="box" class="main_cont" v-if="candidateList.length>0">
         <div class="candidate_blo" v-for="(item,index) in candidateList" @click="todoAction('openPop',index)" :key="index">
           <div class="bloTop">
@@ -203,7 +202,14 @@ import { getSearchBrowseMyselfApi, getMyNavDataApi, getJobHunterPositionTypeApi 
   name: 'lighthouse-list',
   methods: {
   },
-  computed: {},
+  mounted () {
+    const dom = document.querySelector('#candidate')
+    if (dom) dom.addEventListener('scroll', this.handleScroll)
+  },
+  destroyed () {
+    const dom = document.querySelector('#candidate')
+    if (dom) dom.removeEventListener('scroll', this.handleScroll)
+  },
   watch: {
     '$route': {
       handler () {
@@ -437,11 +443,13 @@ export default class CourseList extends Vue {
         })
         if (data.page === 1) {
           this.candidateList = msg.data
+          // 回到顶部
+          this.toTop()
         } else {
           this.candidateList = this.candidateList.concat(msg.data)
         }
         this.loading = false
-        this.pageInfo.totalPage = msg.meta.total / data.count || 0
+        this.pageInfo.totalPage = (msg.meta.total / data.count) || 0
         this.pageInfo.page = data.page
       }).catch(() => {
         this.loading = false
@@ -467,6 +475,8 @@ export default class CourseList extends Vue {
         })
         if (data.page === 1) {
           this.candidateList = msg.data
+          // 回到顶部
+          this.toTop()
         } else {
           this.candidateList = this.candidateList.concat(msg.data)
         }
@@ -497,6 +507,8 @@ export default class CourseList extends Vue {
         })
         if (data.page === 1) {
           this.candidateList = msg.data
+          // 回到顶部
+          this.toTop()
         } else {
           this.candidateList = this.candidateList.concat(msg.data)
         }
@@ -607,13 +619,6 @@ export default class CourseList extends Vue {
       this.form.page = 1
       this.setPathQuery(this.form)
     }
-
-    mounted () {
-      window.addEventListener('scroll', this.handleScroll)
-    }
-    destroyed () {
-      window.removeEventListener('scroll', this.handleScroll)
-    }
     todoAction (type, index) {
       switch (type) {
         case 'cloPop':
@@ -635,8 +640,8 @@ export default class CourseList extends Vue {
       }
     }
 
-    handleScroll () {
-      let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+    handleScroll (e) {
+      let scrollTop = e.target.scrollTop
       let pageHeight = document.documentElement.clientHeight
       let box = document.getElementById('box')
       if (!box) return
@@ -654,7 +659,6 @@ export default class CourseList extends Vue {
         this.navBarFixed = false
         this.isShowTop = false
       }
-
       // 翻页
       if (contentHeight - value < 20) {
         if (!this.loading && this.pageInfo.page < this.pageInfo.totalPage) {
@@ -671,7 +675,8 @@ export default class CourseList extends Vue {
       })
     }
     toTop () {
-      document.documentElement.scrollTop = 0
+      const dom = document.querySelector('#candidate')
+      if (dom) dom.scrollTop = 0
     }
 
     getPic (index) {
@@ -690,6 +695,6 @@ export default class CourseList extends Vue {
     }
 }
 </script>
-<style lang="less">
-@import "./candidate.less";
+<style lang="scss" scoped>
+@import "./candidate.scss";
 </style>

@@ -1,10 +1,12 @@
 #candidate {
   .recruiter_main {
     .main_cont {
+      width: $page-width;
+      margin: 0 auto;
       .candidate_blo {
         width: 1200px;
         height: 196px;
-        background: rgba(255,255,255,1);
+        background: #fff;
         border-radius: 8px;
         border: 1px solid rgba(232,233,235,1);
         margin-bottom: 15px;
@@ -129,8 +131,7 @@
             .bloExperience {
               height: 88px;
               width: 285px;
-              font-size:14px;
-              font-family:PingFangSC-Regular;
+              font-size:14px; 
               font-weight:400;
               color:rgba(146,146,146,1);
               line-height:22px;
@@ -190,8 +191,7 @@
               line-height:38px;
               background:rgba(255,220,41,1);
               border-radius:30px;
-              font-size:14px;
-              font-family:PingFangSC-Regular;
+              font-size:14px; 
               font-weight:400;
               color:rgba(40,40,40,1);
               text-align: center;
@@ -205,7 +205,7 @@
     .cont_none {
       width:1200px;
       height:752px;
-      background:rgba(255,255,255,1);
+      background:#fff;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -225,8 +225,7 @@
       }
     }
     .loading {
-      font-size:14px;
-      font-family:PingFangSC-Regular;
+      font-size:14px; 
       font-weight:400;
       color:#bcbcbc;
       line-height:20px;
@@ -241,16 +240,25 @@
   .main_top_warp {
     height:88px;
     position: relative;
+    width: $page-width;
+    margin: 0 auto;
     &.isFixed{
+      width: calc(100% - #{$page-footer-height});
       height: 68px;
       position:fixed;
+      box-shadow: border-box;
+      margin-left: $page-footer-height;
+      
       background-color:#Fff;
       top: 60px;
       left: 0px;
-      right: 0;
       z-index:1;
       //box-shadow:0px 10px 26px 0px rgba(0,0,0,0.08);
       box-shadow:0px 1px 3px 0px rgba(0,0,0,0.08);
+    }
+    &.isFixed .main_top{
+      width: $page-width;
+      margin: 0 auto;
     }
   }
   .main_top {
@@ -264,7 +272,7 @@
       font-weight:400;
       color:rgba(92,86,93,1);
       height:40px;
-      background:rgba(255,255,255,1);
+      background:#fff;
       border-radius:4px;
       border:1px solid rgba(232,233,235,1);
       box-sizing: border-box;
@@ -321,7 +329,7 @@
       .screenBox {
         width:432px;
         // height:248px;
-        background:rgba(255,255,255,1);
+        background:#fff;
         box-shadow:0px 0px 20px 0px rgba(0,0,0,0.15);
         position: absolute;
         top: 60px;
@@ -360,7 +368,7 @@
             white-space: nowrap;
             &.cur {
               height:28px;
-              background:rgba(255,255,255,1);
+              background:#fff;
               border:1px solid rgba(101,39,145,1);
               color:rgba(101,39,145,1);
             }
@@ -375,7 +383,7 @@
             width:64px;
             height:32px;
             line-height:32px;
-            background:rgba(255,255,255,1);
+            background:#fff;
             border-radius:4px;
             border:1px solid rgba(205,203,207,1);
             font-size:14px;
@@ -397,7 +405,7 @@
     .topSelected {
       width:100px;
       height:40px;
-      background:rgba(255,255,255,1);
+      background:#fff;
       border-radius:4px;
       border:1px solid rgba(232,233,235,1);
       display: flex;
@@ -416,7 +424,7 @@
       display: flex;
       justify-content: center;
       align-items:center;
-      background:rgba(255,255,255,1);
+      background:#fff;
       border-radius:4px;
       border:1px solid rgba(232,233,235,1);
       border-top-left-radius: inherit;
@@ -425,9 +433,6 @@
       img {
         margin: 0;
       }
-    }
-    .topStatusBlo {
-      
     }
     .topStatusBlo2 {
       margin-left: 23px;
@@ -455,7 +460,7 @@
   .xcxPic {
     width:240px;
     height:208px;
-    background:rgba(255,255,255,1);
+    background:#fff;
     box-shadow:0px 0px 20px 0px rgba(0,0,0,0.15);
     z-index: 100;
     border-radius: 6px;
@@ -530,7 +535,7 @@
     .xcxPicBox {
       width:600px;
       height:490px;
-      background:rgba(255,255,255,1);
+      background:#fff;
       box-shadow:0px 0px 20px 0px rgba(228,232,235,1);
       border-radius:4px;
       display: flex;

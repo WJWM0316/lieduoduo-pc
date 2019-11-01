@@ -36,6 +36,8 @@ $company-msg-height: 60px;
   color: #fff;
   height: 100vh;
   float: left;
+  position: relative;
+  z-index: 10;
 }
 .logo {
   height: $logo-wrapper-height;

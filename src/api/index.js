@@ -61,7 +61,6 @@ export const request = ({ url, method, params = {}, config }) => {
     loadingInstance = Loading.service({})
     delete params.globalLoading
   }
-
   return new Promise((resolve, reject) => {
     axios[method](url, method === 'get' ? { params } : params).then(res => {
       resolve(res)
@@ -70,8 +69,8 @@ export const request = ({ url, method, params = {}, config }) => {
         Vue.message.error(err.data.msg)
       }
       // 登陆过期或者未登录
-      if(!config.noCheckLogin && err.data.httpStatus === 401) {
-        router.push({name: 'login', query: {type: 'msgLogin', needBack: true}})
+      if (!config.noCheckLogin && err.data.httpStatus === 401) {
+        router.push({ name: 'login', query: { type: 'msgLogin', needBack: true } })
         removeAccessToken()
       }
       reject(err)
