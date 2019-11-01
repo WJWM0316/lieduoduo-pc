@@ -34,7 +34,6 @@ var geocoder = {}
 export default class CommunityEdit extends Vue {
   // 列表
   options= []
-  options2= []
 
   // 职位类别
   typeList = [
@@ -124,7 +123,7 @@ export default class CommunityEdit extends Vue {
     address: '', // 工作地址
 
     doorplate: '', // 工作地址-门牌
-    labels: '', // 技能标签json数组[{’id’:1,’is_diy’:0},{’d’:12,’is_diy’:1}]
+    labels: [], // 技能标签json数组[{’id’:1,’is_diy’:0},{’d’:12,’is_diy’:1}]
     emolument_min: '', // 薪资范围起点
     emolument_max: '', // 薪资范围终点
     work_experience: '', // integer(formData) 经验要求,1:不限, 2:应届生 , 3:一年以内, 4:1-3年, 5:3-5年, 6:5-10年, 7 10年以上
@@ -184,8 +183,6 @@ export default class CommunityEdit extends Vue {
     lat: ''
   }
 
-  professionalSkillsList = []
-
   isEdit = false // 是否编辑
   isOnline = false // 编辑是否在线
   mounted () {
@@ -195,7 +192,6 @@ export default class CommunityEdit extends Vue {
     // this.getTagList()
     this.init()
     this.setEmolumentMin()
-    this.getProfessionalSkills()
     this.getLabelPositionList()
 
     this.getAdressList()
@@ -211,6 +207,7 @@ export default class CommunityEdit extends Vue {
    * 初始化数据
    */
   async init () {
+    await this.getProfessionalSkills()
     try {
       // 如果有id，则为编辑
       if (this.$route.query.id) {
@@ -221,7 +218,6 @@ export default class CommunityEdit extends Vue {
         })
         // // 创建编辑表单数据
         const form = {}
-        let isHasSkill = false
         if (data.data.isOnline === 1) {
           this.isOnline = true
         }
@@ -245,24 +241,10 @@ export default class CommunityEdit extends Vue {
         }
 
         this.selectPositionItem.topPid = data.data.topPid
-        // 设置技能
-        if (data.data.skillsLabel.length > 0) {
-          isHasSkill = true
-        }
 
-        if (this.professionalSkillsList.length < 1) {
-          this.getProfessionalSkills().then(() => {
-            this.setSkillsList(isHasSkill)
-          })
-        } else {
-          this.setSkillsList(isHasSkill)
-        }
-
-        form.labels = []
-        data.data.skillsLabel.map(item => {
-          form.labels.push(item.labelId)
+        form.labels = data.data.skillsLabel.map(val => {
+          return this.getTargetClassify(val.labelId, this.options)
         })
-
         this.addressList[1] = {
           value: data.data.addressId,
           label: data.data.address
@@ -272,9 +254,7 @@ export default class CommunityEdit extends Vue {
         form.emolument_max = data.data.emolumentMax
         this.setEmolumentMax(data.data.emolumentMin)
         this.form = form
-
         this.getAdressList()
-        // this.form = $.extend(true, {}, this.form, form)
       } else {
         // const res = await getCreateCommunityData({
         //   globalLoading: true
@@ -293,6 +273,7 @@ export default class CommunityEdit extends Vue {
   async savePosition () {
     try {
       // this.$store.dispatch('showAjaxLoading')
+
       const params = this.transformData(this.form)
       if (!this.$route.query.id) {
         addPositionApi(params).then(() => {
@@ -408,29 +389,17 @@ export default class CommunityEdit extends Vue {
     }
   }
 
-  handleSelect () {
-  }
-
   // 编辑标题
   get editTitle () {
     return this.$route.query.type !== 'add' ? '编辑职位' : '添加职位'
   }
 
   // 技能
-  getProfessionalSkills () {
-    let that = this
-    return professionalSkillsApi({
+  async getProfessionalSkills () {
+    await professionalSkillsApi({
       type: 'skills'
-    }).then(res => {
-      that.professionalSkillsList = res.data.data.labelProfessionalSkills
-      let options = []
-      res.data.data.labelProfessionalSkills.map((item, index) => {
-        options[index] = {
-          label: item.name,
-          value: item.labelId
-        }
-      })
-      this.options = options
+    }).then(({ data }) => {
+      this.options = this.removeEmptyChild(data.data.labelProfessionalSkills)
     })
   }
 
@@ -507,24 +476,39 @@ export default class CommunityEdit extends Vue {
     }
     this.form.labels = []
     this.form.type = item.labelId
-    this.setSkillsList()
+    // this.setSkillsList()
   }
-
-  // 设置技能列表
-  setSkillsList (isNext) {
-    console.log(isNext)
-    if (this.professionalSkillsList.length > 0) {
-      let topPid = this.selectPositionItem.topPid
-      this.professionalSkillsList.map(item => {
-        if (item.labelId === topPid) {
-          this.options = item.children
+  getTargetClassify (value, data = []) {
+    if (!data) return
+    var target = []
+    let len = data.length
+    if (len) {
+      for (var i = 0; i < len; i++) {
+        var item = data[i]
+        if (item.labelId === value) return [item.labelId]
+        if (item.children) target = this.getTargetClassify(value, item.children)
+        if (target && target.length) {
+          target.unshift(item.labelId)
+          return target
         }
-        // 编辑 显示技能
-        if (isNext) {
-          this.skillChange(isNext)
+      }
+    }
+    return target
+  }
+  removeEmptyChild (data) {
+    // eslint-disable-next-line no-unused-vars
+    function getArr (data) {
+      data.forEach(item => {
+        if (item.children && item.children.length === 0) {
+          delete item.children
+        }
+        if (item.children && item.children.length) {
+          getArr(item.children)
         }
       })
     }
+    getArr(data)
+    return data
   }
 
   changePosition () {
@@ -572,7 +556,7 @@ export default class CommunityEdit extends Vue {
       let labels = []
       newForm.labels.map(item => {
         labels.push({
-          id: item,
+          id: item[item.length - 1],
           is_diy: '0'
         })
       })
@@ -658,16 +642,6 @@ export default class CommunityEdit extends Vue {
     a.target = 'view_window'
     a.href = `${baseUrl()}/issueRule`
     a.dispatchEvent(event)
-  }
-
-  // 技能下拉框显示隐藏
-  skillChange (e) {
-    if (e && this.selectPositionItem.name.length === 0) {
-      this.$message.error('请先选择职位类别')
-      this.options2 = []
-    } else {
-      this.options2 = this.options
-    }
   }
 
   cloJob () {

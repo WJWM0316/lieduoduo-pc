@@ -53,6 +53,9 @@ export default {
   computed: {
     isLogin () {
       return !!this.$store.state.userInfo.id
+    },
+    isJobhunter () {
+      return !!this.$store.state.roleInfos.isJobhunter
     }
   },
   methods: {
@@ -63,7 +66,14 @@ export default {
       }).then(({ data }) => {
         const { jobhunterPcIndexHead, jobhunterPcIndexMiddle } = data.data
         this.loginBannerList = jobhunterPcIndexHead || []
-        this.bannerLists = jobhunterPcIndexMiddle || []
+        const bannerLists = jobhunterPcIndexMiddle || []
+        this.bannerLists = bannerLists.filter(val => {
+          if (val.name === 'createUser' && this.isJobhunter) {
+            return false
+          }
+          return true
+        })
+        console.log(this.bannerLists)
         if (this.bannerLists.length > 1) {
           this.$refs.indexBanner.autoplay()
         }

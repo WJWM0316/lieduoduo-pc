@@ -102,7 +102,7 @@
       </el-form-item>
 
       <el-form-item label="技能要求" prop="skill_tag" style="width: 450px;">
-        <el-select
+        <!-- <el-select
           @visible-change="skillChange"
           style="width: 382px;"
           v-model="form.labels"
@@ -118,7 +118,19 @@
             :label="item.name"
             :value="item.labelId">
           </el-option>
-        </el-select>
+        </el-select> -->
+        <el-cascader
+          v-model="form.labels"
+          :options="options"
+          style="width: 382px;"
+          :props="{
+            value: 'labelId',
+            label: 'name',
+            multiple: true
+          }"
+          clearable
+          collapse-tags>
+        </el-cascader>
       </el-form-item>
 
       <el-form-item label="职位描述" prop="describe" style="width: 520px;" >

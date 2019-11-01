@@ -16,7 +16,7 @@
               :style="{width: defaultWidth + 'px'}"
               @click.stop.prevent="handleSelect(item)">
               <span>{{item[props.label]}}</span>
-              <i class="el-icon-check"></i>
+              <i class="iconfont icon-xuanzhong"></i>
             </div>
           </template>
         </div>
@@ -164,12 +164,6 @@ $drop-height: 46px;
     flex-wrap: wrap;
     overflow-y:auto;
   }
-  .iconfont {
-    transition: transform 400ms;
-    color: $title-color-2;
-    font-size: 12px;
-    display: inline-block;
-  }
   .drop-down-item {
     text-align: center;
     height: $drop-height;
@@ -179,8 +173,9 @@ $drop-height: 46px;
     color: $title-color-2;
     cursor: pointer;
   }
-  .el-icon-check {
-    display: none
+  .icon-xuanzhong {
+    display: none;
+    font-size: 14px;
   }
   .drop-down-item:hover, .drop-down-item.single-active {
     background: $bg-color-5;
@@ -199,6 +194,12 @@ $drop-height: 46px;
 }
 .drop-down-header {
   cursor: pointer;
+  .iconfont {
+    transition: transform 400ms;
+    color: $title-color-2;
+    font-size: 12px;
+    display: inline-block;
+  }
 }
 .drop-down.active .drop-down-wrapper {
   height: auto;
