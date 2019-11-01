@@ -5,7 +5,7 @@
         <a target="_blank"  :href="item.otherUrl"><img :src="item.bigImgUrl" alt=""></a>
       </li>
     </ul>
-    <div class="swiper-arrow">
+    <div class="swiper-arrow" v-if="items.length > 1">
       <span class="el-icon-arrow-left" @click="handlePage(-1)"></span>
       <span class="placeholder-span"></span>
       <span class="el-icon-arrow-right" @click="handlePage(1)"></span>

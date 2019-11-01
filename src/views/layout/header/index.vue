@@ -45,7 +45,7 @@
       </ul>
       <div class="header-user-info">
         <div class="system">
-          <template v-if="isLogin">
+          <template v-if="userInfo.id">
             <router-link tag="span" class="resume" to="/applyIndex">简历</router-link>
           </template>
           <template v-else>
@@ -56,7 +56,7 @@
           </template>
         </div>
         <div class="header-info">
-          <template v-if="isLogin">
+          <template v-if="userInfo.id">
             <el-dropdown trigger="click" placement="bottom-start" @command="handleClick">
               <div>
                 <div class="user-avatar">
@@ -110,7 +110,6 @@ export default {
   },
   computed: {
     ...mapState({
-      isLogin: state => state.hasLogin,
       roleInfos: state => state.roleInfos,
       userInfo: state => state.userInfo,
       cityList: state => state.areaList

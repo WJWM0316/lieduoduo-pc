@@ -31,8 +31,8 @@
             </div>
             <div class="recruiter-info">
               <div class="recruiter-base-info">
-                <span class="recruiter-profile"><img :src="item.recruiterInfo.avatar.smallUrl" alt=""></span>
-                <span class="recruiter-name">{{item.recruiterInfo.name}}</span>|<span class="recruiter-position">{{item.recruiterInfo.position}}</span>
+                <span class="recruiter-profile"><img :src="item.recruiterInfo&&item.recruiterInfo.avatar.smallUrl" alt=""></span>
+                <span class="recruiter-name">{{item.recruiterInfo && item.recruiterInfo.name}}</span>|<span class="recruiter-position">{{item.recruiterInfo && item.recruiterInfo.position}}</span>
                 <p class="">{{item.numOfVisitors}}人已看过</p>
               </div>
               <div class="contact-recruiter">

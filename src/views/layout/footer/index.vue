@@ -61,19 +61,18 @@ export default PageFooter
       flex-direction: row;
       .right_code_blo {
         margin-left: 40px;
+        text-align: center;
         .code {
-          width:94px;
-          height:94px;
+          width:86px;
+          height:86px;
           background:#fff;
-          margin-bottom: 13px;
           overflow: hidden;
-          &.applet {
-            border-radius: 50%;
-          }
         }
       }
       p.black {
+        font-size: 14px;
         color: $title-color-1;
+        margin-top: 0px;
       }
     }
     .relation {
