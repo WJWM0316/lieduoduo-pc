@@ -4,7 +4,7 @@ import { saveAccessToken, removeAccessToken, getAccessToken, getUserInfo, saveUs
 import { loginPutInApipc, getUserRoleInfoApi, qzSwitchRoleApi, zpSwitchRoleApi } from '@/api/auth'
 import router from '@/router/index.js'
 import { mobileReg } from '@/util/fieldRegular.js'
-import {getMyResumeApi} from '@/api/resume.js'
+import { getMyResumeApi } from '@/api/resume.js'
 
 import {
   loginApi,
@@ -30,7 +30,7 @@ export default new Vuex.Store({
       switch: false,
       type: 'tocIndex',
       params: ''
-    }, 
+    },
     areaList: [],
     myResume: {} // 我的简历详情
   },
@@ -47,9 +47,9 @@ export default new Vuex.Store({
   },
   // 只能执行同步方法，不要去执行异步方法 通过 this.$store.commit 方法去调用
   mutations: {
-    SETLOGIN:  (state, data) => {
+    SETLOGIN: (state, data) => {
       state.hasLogin = data
-    }, 
+    },
     setUserIdentity: (state, data) => {
       state.userIdentity = data
     },
@@ -76,7 +76,7 @@ export default new Vuex.Store({
         state.roleInfos = res.data.data
         console.log(state, 1111, res.data.data)
         if (state.userIdentity === 1 && !state.roleInfos.isJobhunter) {
-          router.replace({path: '/createUser'})
+          router.replace({ path: '/createUser' })
           return
         }
         if (state.userIdentity === 2 && !state.roleInfos.isRecruiter) {
@@ -102,7 +102,7 @@ export default new Vuex.Store({
       if (state.userIdentity === 1) {
         router.replace('/index')
       } else {
-        router.replace({path: '/login', query: {type: 'msgLogin'}})
+        router.replace({ path: '/login', query: { type: 'msgLogin' } })
       }
       setTimeout(() => {
         window.location.reload()
@@ -114,7 +114,6 @@ export default new Vuex.Store({
     // 获取用户信息
     GETROLEINFO: (state, data) => {
     },
-    
 
     setPageName (state, options) {
       state.pageName = options.name
@@ -154,7 +153,7 @@ export default new Vuex.Store({
         }
       } else {
         switchFun().then(res => {
-          router.replace({path: '/index'})
+          router.replace({ path: '/index' })
         })
       }
     }
@@ -173,7 +172,7 @@ export default new Vuex.Store({
       if (!mobileReg.test(data.mobile)) {
         Vue.message.error('手机号码格式不正确')
         return
-      } 
+      }
       return new Promise((resolve, reject) => {
         loginPutInApipc(data).then(res => {
           let loginData = {
@@ -199,7 +198,7 @@ export default new Vuex.Store({
           return res
         })
     },
-    
+
     setPageName (store, options) {
       store.commit('setPageName', options)
     },
