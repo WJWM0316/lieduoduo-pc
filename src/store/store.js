@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { saveAccessToken, removeAccessToken, getAccessToken, getUserInfo, saveUserInfo } from '../api/cacheService'
-import { loginPutInApipc, getUserRoleInfoApi, qzSwitchRoleApi, zpSwitchRoleApi } from '@/api/auth'
+import { loginPutInApipc, getUserRoleInfoApi, switchRoleApi } from '@/api/auth'
 import router from '@/router/index.js'
 import { mobileReg } from '@/util/fieldRegular.js'
 import { getMyResumeApi } from '@/api/resume.js'
@@ -140,20 +140,20 @@ export default new Vuex.Store({
       })
     },
     switchIdentity (state, data) {
-      let switchFun = state.userIdentity === 1 ? qzSwitchRoleApi : qzSwitchRoleApi
       if (state.userIdentity === 1) {
         if (state.roleInfos.isRecruiter) {
-          switchFun().then(res => {
+          switchRoleApi().then(res => {
             state.userIdentity = state.userIdentity === 1 ? 2 : 1
-            router.replace({ name: 'candidate' })
+            router.replace({ path: 'candidate' })
           })
         } else {
           // 打开引导弹窗
           state.guideQrcodePop = { switch: true, type: 'tobIndex' }
         }
       } else {
-        switchFun().then(res => {
-          router.replace({ path: '/index' })
+        switchRoleApi().then(res => {
+          state.userIdentity = state.userIdentity === 1 ? 2 : 1
+          router.replace({ path: 'index' })
         })
       }
     }

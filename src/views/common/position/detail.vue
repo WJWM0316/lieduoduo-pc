@@ -1,6 +1,6 @@
 <template>
 	<div class="positionDetail">
-		<header class="header" :class="infos.isRapidly === 1 ? 'isRapidly' : ''" :style="{'top': offsetTop + 'px'}">
+		<header class="header" :class="infos.isRapidly === 1 ? 'isRapidly' : ''">
 			<div class="inner">
 				<div class="header-content">
 					<div class="title">
