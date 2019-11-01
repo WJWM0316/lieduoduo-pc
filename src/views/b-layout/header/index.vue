@@ -65,18 +65,9 @@ export default {
         case 'logout':
           this.$store.dispatch('logoutApi')
           break
-        case 'usercenter':
-          this.$router.push('/position')
-          break
         case 'toggleIdentity':
-          // 切换到B端
-          if (!this.userIdentity) {
-            if (this.roleInfos.isRecruiter) {
-              this.$router.replace({ name: 'candidate' })
-            } else {
-              this.$store.commit('guideQrcodePop', { switch: true, type: 'tobIndex' })
-            }
-          }
+          this.$store.commit('switchIdentity')
+          break
       }
     }
   }

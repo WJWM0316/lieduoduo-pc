@@ -44,7 +44,7 @@ const applicant = [
   },
   {
     path: '/createUser',
-    name: 'resumeFirstPost',
+    name: 'createUser',
     title: '猎多多 | 简历',
     component: resolve => require(['../views/createUser/index.vue'], resolve)
   }

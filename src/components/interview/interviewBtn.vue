@@ -123,12 +123,29 @@ export default class InterviewBtn extends Component {
 	                  && this.infos.rapidlyInfo.applyNum + this.infos.rapidlyInfo.natureApplyNum < this.infos.rapidlyInfo.seatsNum
   	let parmas = {recruiterUid: this.infos.recruiterInfo.uid, positionId: this.infos.id}
   	if (isSpecail) parmas.interview_type = 2
+		let successPop = (res) => {
+      if (res.code === 916) {
+      	this.$alert('opps!约面席位刚被抢光啦~但面试官将尽快处理你的约面申请', '申请成功', {
+          confirmButtonText: '知道了'
+        })
+      } else if (res.code === 915) {
+      	this.$alert('opps!活动刚刚过期啦~但面试官将尽快处理你的约面申请', '申请成功', {
+          confirmButtonText: '知道了'
+        })
+      } else if (res.code === 917) {
+      	this.$message.success(res.msg)
+      } else {
+        if (isSpecail) {
+        	this.$message.success('面试官已收到你的申请，将于24h内反馈')
+          return
+        } else {
+        	this.$message.success('开撩成功')
+        }
+      }
+    }
   	applyInterviewApi(parmas).then(res => {
   		this.getInterviewStatus()
-  		this.$message({
-        message: '开撩成功！',
-        type: 'success'
-      });
+  		successPop(res.data)
   	})
   }
   // 求职标记不合适

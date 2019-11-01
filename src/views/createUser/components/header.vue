@@ -36,9 +36,6 @@
 	    handleClick (e) {
 	      if (e === 'out') {
 	        this.$store.dispatch('logoutApi')
-	          .then(() => {
-	            this.$router.push({ name: 'putIn' })
-	          })
 	      }
 	    }
 		}

@@ -68,7 +68,7 @@
               </div>
               <el-dropdown-menu slot="dropdown">
                 <!-- <el-dropdown-item command="usercenter">个人中心</el-dropdown-item> -->
-                <el-dropdown-item command="toggleIdentity">切换为{{userIdentity === 1 ? '面试官' : '求职者'}}</el-dropdown-item>
+                <el-dropdown-item command="toggleIdentity">切换为面试官</el-dropdown-item>
                 <el-dropdown-item command="logout">退出登录</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
@@ -113,8 +113,7 @@ export default {
       isLogin: state => state.hasLogin,
       roleInfos: state => state.roleInfos,
       userInfo: state => state.userInfo,
-      cityList: state => state.areaList,
-      userIdentity: state => state.userIdentity
+      cityList: state => state.areaList
     })
   },
   methods: {

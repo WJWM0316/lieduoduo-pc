@@ -6,7 +6,7 @@ body,p,h1,h2,h3,h4,h5,h6,ul,ol,dl,li,dt,dd{
     padding: 0;
     /*字体设置*/
     font-size: 14px;
-    font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",SimSun,sans-serif;
+    font-family: '12px/1.5 Microsoft YaHei,tahoma,arial,Hiragino Sans GB,\\5b8b\4f53,sans-serif';
     color: #ccc;
     /* 去掉列表的原点 */
     list-style: none;

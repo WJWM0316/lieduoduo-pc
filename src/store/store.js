@@ -74,7 +74,7 @@ export default new Vuex.Store({
       // 获取用户角色信息
       getUserRoleInfoApi().then(res => {
         state.roleInfos = res.data.data
-        // 判断是否求职者且未完善简历四步        
+        console.log(state, 1111, res.data.data)
         if (state.userIdentity === 1 && !state.roleInfos.isJobhunter) {
           router.replace({path: '/createUser'})
           return
@@ -94,6 +94,9 @@ export default new Vuex.Store({
         }
       })
     },
+    setRoleInfos (state, data) {
+      state.roleInfos = data
+    },
     // 获取用户信息
     GETROLEINFO: (state, data) => {
     },
@@ -101,6 +104,12 @@ export default new Vuex.Store({
     LOGOUT (state) {
       state.userInfo = {}
       state.token = null
+      removeAccessToken()
+      if (state.userIdentity === 1) {
+        router.replace({name})
+      } else {
+        router.replace({path: '/login', query: {type: 'msgLogin'}})
+      }
     },
 
     setPageName (state, options) {
@@ -141,7 +150,7 @@ export default new Vuex.Store({
         }
       } else {
         switchFun().then(res => {
-          router.replace({ name: 'index' })
+          router.replace({path: '/index'})
         })
       }
     }
@@ -175,17 +184,6 @@ export default new Vuex.Store({
       })
     },
 
-    testLogin (store, data) {
-      return loginApi(data)
-        .then(res => {
-          store.commit('LOGIN', res.data.data)
-          return res
-        })
-        .catch(error => {
-          return Promise.reject(error.data || {})
-        })
-    },
-
     logoutApi (store) {
       return logoutApi()
         .then(res => {
@@ -193,13 +191,8 @@ export default new Vuex.Store({
             message: '退出成功',
             type: 'success'
           })
-          removeAccessToken()
           store.commit('LOGOUT')
-          window.location.reload()
           return res
-        })
-        .catch(error => {
-          return Promise.reject(error.data || {})
         })
     },
     

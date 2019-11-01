@@ -47,7 +47,7 @@ import { searchResumeStepApi } from '@/api/putIn'
 })
 export default class createUser extends Vue {
 	cdnPath = `${this.$cdnPath}/images/`
-	step = 4 // 创建步数
+	step = 1 // 创建步数
 	created () {
 		this.getStep()
 	}
