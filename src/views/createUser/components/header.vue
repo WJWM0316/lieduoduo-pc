@@ -4,7 +4,7 @@
 	  	<img class="left_logo" :src="cdnPath + 'logo_lieduodou@2x.png'" />
 	    <el-dropdown trigger="click"  @command="handleClick" >
 	      <div class="headerBtn">
-	        <div class="right" v-if="userInfo && hasLogin">
+	        <div class="right">
 	          <span class="name">欢迎登录猎多多，{{userInfo.name}}</span>
 	          <img class="op_icon aaa" :src="cdnPath + 'open.png'" v-if="!userInfo.avatar" />
 	          <img class="avatar" :src="userInfo.avatar.middleUrl" v-if="userInfo.avatar && userInfo.avatar.middleUrl" />
@@ -27,11 +27,18 @@
 			}
 		},
 		computed: {
-			...mapState({
-				hasLogin: state => state.hasLogin,
-				userInfo: state => state.userInfo
-			})
+			...mapGetters([
+        'userInfo'
+      ])
 		},
+    watch: {
+      userInfo: {
+        handler(val, oldVal){
+          console.log(val, this.userInfo)
+        },
+        deep:true
+      }
+    },
 		methods: {
 	    handleClick (e) {
 	      if (e === 'out') {

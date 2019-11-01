@@ -1,6 +1,6 @@
 <template>
  <div class="wrap">
- 	<my-header :userInfo="userInfo"></my-header>
+ 	<my-header ref="header" v-if="hasRequest"></my-header>
  	<div class="resumePost">
  		<div class="middle">
  			<div class="contain">
@@ -9,10 +9,10 @@
 				<img class="slogon-box" v-if="step === 2" :src="cdnPath + 'img_sentence_02@2x.png'"/>
 				<img class="slogon-box" v-if="step === 3" :src="cdnPath + 'img_sentence_03@2x.png'"/>
 				<img class="slogon-box" v-if="step === 4" :src="cdnPath + 'img_sentence_04@2x.png'"/>
-	      <first-step  v-show="step === 1"></first-step>
-	      <second-step v-show="step === 2"></second-step>
-	      <third-step v-show="step === 3"></third-step>
-	      <fourth-step v-show="step === 4"></fourth-step>
+	      <first-step  v-if="step === 1"></first-step>
+	      <second-step v-if="step === 2"></second-step>
+	      <third-step v-if="step === 3"></third-step>
+	      <fourth-step v-if="step === 4"></fourth-step>
 	    </div>
  		</div>
  	</div>
@@ -26,9 +26,7 @@ import firstStep from './components/firstStep.vue'
 import secondStep from './components/secondStep.vue'
 import thirdStep from './components/thirdStep.vue'
 import fourthStep from './components/fourthStep.vue'
-
 import { searchResumeStepApi } from '@/api/putIn'
-
 
 @Component({
   name: 'createUser',
@@ -38,23 +36,23 @@ import { searchResumeStepApi } from '@/api/putIn'
     secondStep,
     thirdStep,
     fourthStep
-  },
-  computed: {
-  	...mapState({
-  		userInfo: state => state.userInfo
-  	})
   }
 })
 export default class createUser extends Vue {
 	cdnPath = `${this.$cdnPath}/images/`
+	hasRequest = false
 	step = 1 // 创建步数
 	created () {
 		this.getStep()
 	}
 	getStep () {
 		searchResumeStepApi().then(res => {
+			this.hasRequest = true
 			let stepData = res.data.data
-			this.$store.dispatch('setUserInfo', stepData)
+			let userInfo = this.$store.getters.userInfo
+			userInfo.name = stepData.card.name
+			userInfo.avatar = stepData.card.avatar
+			this.$store.dispatch('setUserInfo', userInfo)
 		})
 	}
 }

@@ -191,16 +191,6 @@
       this.$parent.step--
     }
 
-    checkDuty() {
-      let lgh = this.formData.duty.length
-      if(lgh<10 || lgh>1000){
-        this.setHint('请填写10-1000的工作内容')
-        return false
-      }else {
-        return true
-      }
-    }
-
     // 提交
     submit () {
       const params = this.transformData()
@@ -217,9 +207,9 @@
         title = '职位名称需为2~50个字符'
       } else if (!params.startTime) {
         title = '请选择开始时间'
-      } else if (!params.endTime) {
+      } else if (!params.endTime && params.endTime !== 0) {
         title = '请选择结束时间'
-      } else if (params.startTime > params.endTime) {
+      } else if (params.endTime !== 0 && params.startTime > params.endTime) {
         title = '结束时间不能小于开始时间'
       } else if (!params.duty) {
         title = '请输入工作内容'
@@ -231,6 +221,7 @@
       let data = {
         careers: []
       }
+
       data.careers.push(params)
       setResumeSecondApi(data).then(() => {
         this.$parent.step++
@@ -250,7 +241,7 @@
     saveDuty() {
       let lgh = this.textarea.length
       if(lgh<10 || lgh>1000) {
-        this.setHint('请填写10-1000的工作内容')
+        this.$message.error('请填写10-1000的工作内容')
         return
       }
       this.formData.duty = this.textarea

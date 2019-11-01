@@ -168,9 +168,9 @@
         title = '请选择学历'
       } else if (!item.startTime) {
         title = '请选择开始时间'
-      } else if (!item.endTime) {
+      } else if (!item.endTime && item.endTime !== 0) {
         title = '请选择结束时间'
-      } else if (item.startTime > item.endTime) {
+      } else if (item.startTime > item.endTime && item.endTime !== 0) {
         title = '结束时间不能小于开始时间'
       }
       if (title) {

@@ -94,14 +94,8 @@ export default new Vuex.Store({
         }
       })
     },
-    setRoleInfos (state, data) {
-      state.roleInfos = data
-    },
-    // 获取用户信息
-    GETROLEINFO: (state, data) => {
-    },
-    // 退出登录
-    LOGOUT (state) {
+    // 退出登录回调
+    LOGOUT: (state, data) => {
       state.userInfo = {}
       state.token = null
       removeAccessToken()
@@ -110,7 +104,17 @@ export default new Vuex.Store({
       } else {
         router.replace({path: '/login', query: {type: 'msgLogin'}})
       }
+      setTimeout(() => {
+        window.location.reload()
+      }, 1500)
     },
+    setRoleInfos (state, data) {
+      state.roleInfos = data
+    },
+    // 获取用户信息
+    GETROLEINFO: (state, data) => {
+    },
+    
 
     setPageName (state, options) {
       state.pageName = options.name
@@ -184,14 +188,14 @@ export default new Vuex.Store({
       })
     },
 
-    logoutApi (store) {
+    logoutApi (store, data) {
       return logoutApi()
         .then(res => {
           Vue.message({
             message: '退出成功',
             type: 'success'
           })
-          store.commit('LOGOUT')
+          store.commit('LOGOUT', data)
           return res
         })
     },

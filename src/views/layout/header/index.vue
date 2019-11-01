@@ -108,6 +108,9 @@ export default {
     this.getHotAreas()
     this.addressId = this.$store.getters.cityId
   },
+  watch: {
+    '$store.state.userInfo': function (val) {}
+  },
   computed: {
     ...mapState({
       isLogin: state => state.hasLogin,
