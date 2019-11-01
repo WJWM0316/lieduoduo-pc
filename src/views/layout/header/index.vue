@@ -32,7 +32,6 @@
               <el-popover
                 placement="bottom"
                 popper-class="share-popover"
-                title=""
                 trigger="hover">
                 <div class="share-image">
                   <img :src="item.url" />
@@ -206,8 +205,9 @@ $header-height-1: $page-header-height;
   }
 }
 .share-image {
+  height: 146px;
   img {
-    max-width: 100%;
+    width: 100%;
   }
 }
 .header-nav {
@@ -275,6 +275,6 @@ $header-height-1: $page-header-height;
 .el-popover.share-popover {
   width: 158px;
   box-sizing: border-box;
-  padding: 16px;
+  padding: 5px;
 }
 </style>

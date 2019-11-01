@@ -73,7 +73,6 @@ export default {
           }
           return true
         })
-        console.log(this.bannerLists)
         if (this.bannerLists.length > 1) {
           this.$refs.indexBanner.autoplay()
         }
