@@ -287,6 +287,13 @@ export default class PositionDetail extends Vue {
   	this.id = this.$route.query.positionId
   	this.getQrcode()
   	this.getDetail()
+  	window.onscroll = () => {
+  		if (window.scrollY > 50) {
+  			if (this.offsetTop > 0) this.offsetTop = 0
+  		} else {
+  			if (this.offsetTop !== 50) this.offsetTop = 50
+  		}
+  	}
   }
 }
 </script>
