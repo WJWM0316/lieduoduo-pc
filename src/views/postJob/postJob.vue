@@ -93,7 +93,6 @@
           multiple
           :multiple-limit="4"
           filterable
-          collapse-tags
           placeholder="请选择技能要求">
           <el-option
             v-for="item in currentLabels"
