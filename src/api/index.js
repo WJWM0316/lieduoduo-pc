@@ -49,11 +49,11 @@ export const request = ({ url, method, params = {}, config }) => {
       resolve(res)
       loadingBack()
     }).catch(err => {
-      if (!config.noCheckLogin && err.data.httpStatus !== 200) {
-        Vue.message.error(err.data.msg)
+      if (!config.noCheckLogin && err.response.data.httpStatus !== 200) {
+        Vue.message.error(err.response.data.msg)
       }
       // 登陆过期或者未登录
-      if (!config.noCheckLogin && err.data.httpStatus === 401) {
+      if (!config.noCheckLogin && err.response.data.httpStatus === 401) {
         router.push({ name: 'login', query: { type: 'msgLogin', needBack: true } })
         removeAccessToken()
       }

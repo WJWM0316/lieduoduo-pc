@@ -1,6 +1,6 @@
 <template>
 	<div class="positionDetail">
-		<header class="header" :class="{'isRapidly' : infos.isRapidly === 1, 'headerFloat' : headerFloat}">
+		<header ref="header" class="header" :class="{'isRapidly' : infos.isRapidly === 1, 'headerFloat' : headerFloat}">
 			<div class="inner">
 				<div class="header-content">
 					<div v-show="!headerFloat">
@@ -289,8 +289,10 @@ export default class PositionDetail extends Vue {
   	this.id = this.$route.query.positionId
   	this.getQrcode()
   	this.getDetail()
+  	let headerH = 0
   	window.onscroll = () => {
-  		if (window.scrollY > 0) {
+  		if (!headerH) headerH = this.$refs.header.clientHeight + 50
+  		if (window.scrollY > headerH) {
   			if (!this.headerFloat) this.headerFloat = true
   		} else {
   			if (this.headerFloat) this.headerFloat = false
