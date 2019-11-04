@@ -5,8 +5,8 @@
           <div class="footer-header-title">
              <img class="ft_logo" :src="blackBg() ? cdnPath + 'logo_white.png' : cdnPath + 'logo.png'" />
           </div>
-          <p class="left_p ">
-            <span><a class="black" href="https://www.lieduoduo.com/web/CompanyRelated" target="_blank">关于我们</a></span><span><a class="black" href="https://www.lieduoduo.com/web/userAgreement" target="_blank">用户协议</a></span>
+          <p class="left_p">
+            <span><a class="black" href="https://www.lieduoduo.com/web/CompanyRelated" target="_blank">关于我们</a></span><span><a class="black" href="https://www.lieduoduo.com/userAgreement" target="_blank">用户协议</a></span>
           </p>
           <p class="gray"><a href="http://www.beian.miit.gov.cn" target="_blank">Copyright © 老虎科技 粤ICP备16060093号-4</a></p>
         </div>
@@ -122,6 +122,9 @@ export default PageFooter
     .footer_left {
       .left_p {
         color: #fff;
+        a {
+          color: #fff;
+        }
       }
       .gray {
         color: #A29CA6;
