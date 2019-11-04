@@ -145,7 +145,7 @@ export default new Vuex.Store({
         if (state.roleInfos.isRecruiter) {
           switchRoleApi().then(res => {
             state.userIdentity = state.userIdentity === 1 ? 2 : 1
-            router.replace({ path: 'candidate' })
+            router.replace('candidate')
           })
         } else {
           // 打开引导弹窗
@@ -154,7 +154,7 @@ export default new Vuex.Store({
       } else {
         switchRoleApi().then(res => {
           state.userIdentity = state.userIdentity === 1 ? 2 : 1
-          router.replace({ path: 'index' })
+          router.replace('index')
         })
       }
     }

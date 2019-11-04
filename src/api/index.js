@@ -15,7 +15,6 @@ const VUE_WEB_NODE_API = process.env.VUE_APP_WEB_NODE_API
 export const request = ({ url, method, params = {}, config }) => {
   if (params && params.globalLoading) counter++
   if (counter === 1) loadingInstance = Loading.service({})
-  console.log(counter, 11111)
   if (getAccessToken()) axios.defaults.headers.common['Authorization'] = getAccessToken()
   
 
