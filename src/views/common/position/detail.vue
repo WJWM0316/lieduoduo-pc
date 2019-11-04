@@ -37,7 +37,7 @@
 									2.急速约面服务</br>
 								  （1）法定工作日（除节假日前一天）内抢占约面席位，面试官将在抢占成功后的24小时内给与答复。</br>
 								  （2）节假日前一天及节假日内抢占约面席位，面试官将在假期结束后的24小时内给与答复。</p>
-					     	<i class="icon iconfont icon-yanseguanbi_huaban"></i>
+					     	<i class="icon"></i>
 					    </el-tooltip></p>
 						</div>
 					</div>
@@ -51,7 +51,7 @@
 								<el-dropdown-item disabled><img class="qrcode" :src="qrcodeUrl"></el-dropdown-item>
 							</el-dropdown-menu>
 						</el-dropdown>
-						<el-dropdown trigger="hover" @command="handleCommand" class="botBtn">
+						<el-dropdown trigger="hover" @command="handleCommand" class="botBtn" placement="bottom-end">
 							<div class="el-dropdown-link"><i class="icon iconfont icon-shengchenghaibao"></i>生成海报</span></div>
 							<el-dropdown-menu slot="dropdown" class="poster-content">
 								<el-dropdown-item command="shortPoster">

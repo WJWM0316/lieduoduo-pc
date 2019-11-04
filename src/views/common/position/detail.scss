@@ -210,9 +210,9 @@ img {
 			}
 		}
 		&.isRapidly {
-			background: url('https://attach.lieduoduo.ziwork.com/front-assets/web/images/24hour.png'), linear-gradient(321deg,rgba(101,39,145,1) 0%,rgba(50,32,116,1) 34%,rgba(50,32,116,1) 100%);
+			background: url('https://attach.lieduoduo.ziwork.com/front-assets/web/images/24h.png'), linear-gradient(321deg,rgba(101,39,145,1) 0%,rgba(50,32,116,1) 34%,rgba(50,32,116,1) 100%);
 			background-repeat: no-repeat;
-			background-position: right 150%;
+			background-position: right 124%;
 			.inner {
 				.header-content {
 					.name, .info-item {
@@ -291,11 +291,17 @@ img {
 								line-height:14px;
 								margin-top: 5px;
 								transform: scale(0.9);
-								text-align: center;
+								display: flex;
+								align-items: center;
+								justify-content: center;
 								.icon {
-									font-size: 10px;
-									color: #BC94D7;
+									width: 12px;
+									height: 12px;
+									display: inline-block;
+									background: url('https://attach.lieduoduo.ziwork.com/front-assets/web/images/wenhao.png') no-repeat;
+									background-size: 100%;
 									margin-left: 4px;
+									transform: scale(0.9);
 								}
 							}
 						}
@@ -318,6 +324,9 @@ img {
 			}
 		}
 		&.headerFloat {
+			&.isRapidly {
+				background-position: right 40%;
+			}
 			padding: 27px 0;
 			top: -90px;
 			&.headerFloat {
@@ -337,7 +346,6 @@ img {
 	}
 	.content {
 		overflow: hidden;
-		padding-top: 40px;
 		.content-article {
 			width: $content-left;
 			float: left;

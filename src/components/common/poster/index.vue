@@ -13,7 +13,7 @@
 		<div class="operBox">
 			<div class="btn" @click="oper('download')"><i class="icon iconfont icon-xiazai"></i>下载</div>
 			<div class="btn copy" @click="oper('copy')"><i class="icon iconfont icon-fuzhi"></i>复制</div>
-			<div class="btn" @click="oper('close')"><i class="icon iconfont icon-close"></i>关闭</div>
+			<div class="btn" @click="oper('close')"><i class="icon iconfont icon-xiantiaoguanbi"></i>关闭</div>
 		</div>
 	</div>
 </template>
@@ -84,6 +84,7 @@ export default class poster extends Component {
 				}
 				getPoster = getPositionMinPostApi
 		}
+		this.params.globalLoading = true
 		getPoster(this.params).then(res => {
 			this.posterUrl = res.data.data.url
 			switch (this.params.type) {
