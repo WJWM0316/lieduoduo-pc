@@ -240,7 +240,7 @@ export default class CommunityEdit extends Vue {
         }
 
         // this.selectPositionItem.topPid = data.data.topPid
-        this.setCurrentLabels(this.getLabelsTopId(data.data.type, this.positionList))
+        this.setCurrentLabels(data.data.topTypeId)
         form.labels = data.data.skillsLabel.map(val => val.labelId)
 
         this.addressList[1] = {
@@ -478,20 +478,6 @@ export default class CommunityEdit extends Vue {
   setCurrentLabels (topPid) {
     const currentLabels = this.labelsList.find(val => val.labelId === topPid)
     this.currentLabels = (currentLabels && currentLabels.children) || []
-  }
-  getLabelsTopId (id, data) {
-    let topid = id
-    function arr (id, data) {
-      for (let item in data) {
-        if (id === data[item].labelId) {
-          topid = data[item].topPid
-          return
-        }
-        if (data[item].children && data[item].children.length) arr(id, data[item].children)
-      }
-    }
-    arr(id, data)
-    return topid
   }
   changePosition () {
     this.pop = {

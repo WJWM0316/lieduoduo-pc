@@ -59,6 +59,7 @@ $company-msg-height: 60px;
     position: relative;
     width: 100%;
     padding-left: 40px;
+    box-sizing: border-box;
     cursor: pointer;
     line-height: 58px;
     i {

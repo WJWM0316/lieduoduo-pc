@@ -76,11 +76,12 @@ export default class App extends Vue {
   width: $page-width;
   margin:0 auto;
 }
-// @media screen and (max-width: 1440px)  {
-//   .b-app .main-center {
-//     width: 1240px;
-//     padding: 0 20px;
-//     box-sizing: border-box;
-//   }
-// }
+@media screen and (max-width: 1440px)  {
+  .b-app .main-center {
+    width: 1240px;
+    padding: 0 20px;
+    box-sizing: border-box;
+    overflow-x: scroll;
+  }
+}
 </style>

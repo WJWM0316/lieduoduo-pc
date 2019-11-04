@@ -26,8 +26,7 @@
             :key="item.value"
             :label="item.label"
             :value="item.value"
-            style="width: 382px;"
-            >
+            style="width: 382px;">
             <div class="address_line textEllipsis"  v-if="item.value!=='0'">
               {{ item.label }}
             </div>
@@ -94,6 +93,7 @@
           multiple
           :multiple-limit="4"
           filterable
+          collapse-tags
           placeholder="请选择技能要求">
           <el-option
             v-for="item in currentLabels"
