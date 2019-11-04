@@ -66,7 +66,7 @@
 								</el-dropdown-item>
 							</el-dropdown-menu>
 						</el-dropdown>
-						<span class="botBtn noMargin" :class="{'cur' : infos.isCollect}" @click="todoAction('collectPosition')"><i class="icon iconfont" :class="infos.isCollect ? 'icon-yishoucang': 'icon-shoucang'"></i>感兴趣</span>	
+						<span class="botBtn noMargin" :class="{'cur' : infos.isCollect}" @click="todoAction('collectPosition')"><i class="icon iconfont" :class="infos.isCollect ? 'icon-yishoucang': 'icon-shoucang'"></i>感兴趣{{infos.isCollect}}1</span>	
 					</div>
 				</div>
 			</div>
@@ -231,15 +231,20 @@ export default class PositionDetail extends Vue {
   		this.$refs.interviewBtn.$refs.loginPop.showLoginPop = true
   		return
   	}
+  	console.log(this.infos, 111)
   	switch (clickTyp) {
 		  case 'collectPosition':
 		  	if (!this.infos.isCollect) {
 	  			putMycollectPositionApi({id: this.id}).then(res => {
-		  			this.infos.isCollect = true
+	  				let infos = this.infos
+	  				infos.isCollect = true
+	  				this.infos = infos
 		  		})
 		  	} else {
 		  		deleteMycollectPositionApi({id: this.id}).then(res => {
-		  			this.infos.isCollect = false
+		  			let infos = this.infos
+	  				infos.isCollect = false
+	  				this.infos = infos
 		  		})
 		  	}
 	  		break
@@ -250,17 +255,17 @@ export default class PositionDetail extends Vue {
   		this.qrcodeUrl = res.data.data.url
   	})
   }
-  collectPosition () {
-  	if (!this.infos.isCollect) {
-  		putMycollectPositionApi({id: this.id}).then(res => {
-  			this.infos.isCollect = true
-  		})
-  	} else {
-  		deleteMycollectPositionApi({id: this.id}).then(res => {
-  			this.infos.isCollect = false
-  		})
-  	}
-  }
+  // collectPosition () {
+  // 	if (!this.infos.isCollect) {
+  // 		putMycollectPositionApi({id: this.id}).then(res => {
+  // 			this.infos.isCollect = true
+  // 		})
+  // 	} else {
+  // 		deleteMycollectPositionApi({id: this.id}).then(res => {
+  // 			this.infos.isCollect = false
+  // 		})
+  // 	}
+  // }
   getMapLocation (lat, lng) {
   	TMap('TMZBZ-S72K6-66ISB-ES3XG-CVJC6-HKFZG').then(qq => {
 	    this.$nextTick(() => {
