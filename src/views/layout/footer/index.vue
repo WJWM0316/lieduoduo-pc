@@ -5,10 +5,10 @@
           <div class="footer-header-title">
              <img class="ft_logo" :src="blackBg() ? cdnPath + 'logo_white.png' : cdnPath + 'logo.png'" />
           </div>
-          <p class="left_p black" @click="toUserDeal">
-            <span>关于我们</span><span>用户协议</span>
+          <p class="left_p ">
+            <span><a class="black" href="https://www.lieduoduo.com/web/CompanyRelated" target="_blank">关于我们</a></span><span><a class="black" href="https://www.lieduoduo.com/web/userAgreement" target="_blank">用户协议</a></span>
           </p>
-          <p class="gray"><a href="http://www.beian.miit.gov.cn">Copyright © 老虎科技 粤ICP备16060093号-4</a></p>
+          <p class="gray"><a href="http://www.beian.miit.gov.cn" target="_blank">Copyright © 老虎科技 粤ICP备16060093号-4</a></p>
         </div>
         <div class="footer_center">
             <div class="footer-header-title">
@@ -74,6 +74,7 @@ export default PageFooter
         font-size: 14px;
         color: $title-color-1;
         margin-top: 0px;
+
       }
     }
     .relation {
@@ -88,6 +89,9 @@ export default PageFooter
     span + span {
       cursor: pointer;
       margin-left: 44px;
+    }
+    a {
+      color: $title-color-1;
     }
   }
   .footer_center .center_p {
