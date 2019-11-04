@@ -17,7 +17,7 @@
                 <span class="position-name">{{item.positionName}}</span>
                 <!-- 24反馈 -->
                 <span class="position-24hour" v-if="item.isRapidly === 1"></span>
-                <span class="position-pay">{{item.emolumentMin}}-{{item.emolumentMax}}K <template v-if="item.annualSalary > 12">· {{item.annualSalaryDesc}}</template></span>
+                <span class="position-pay">{{item.emolumentMin}}-{{item.emolumentMax}}K<template v-if="item.annualSalary > 12">·{{item.annualSalaryDesc}}</template></span>
               </p>
               <p class="position-require">
                 <span><i class="iconfont icon-dizhi"></i>{{item.city}}{{item.district}}</span>
