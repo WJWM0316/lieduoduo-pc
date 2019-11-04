@@ -5,14 +5,16 @@
         <a target="_blank"  :href="item.otherUrl"><img :src="item.bigImgUrl" alt=""></a>
       </li>
     </ul>
-    <div class="swiper-arrow" v-if="items.length > 1">
-      <span class="el-icon-arrow-left" @click="handlePage(-1)"></span>
-      <span class="placeholder-span"></span>
-      <span class="el-icon-arrow-right" @click="handlePage(1)"></span>
-    </div>
-    <div class="swiper-pager">
-      <span v-for="(item, i) in items" :key="i" class="swiper-pager-item" :class="{active: i ==  index % items.length}"></span>
-    </div>
+    <template v-if="items.length > 1">
+      <div class="swiper-arrow">
+        <span class="el-icon-arrow-left" @click="handlePage(-1)"></span>
+        <span class="placeholder-span"></span>
+        <span class="el-icon-arrow-right" @click="handlePage(1)"></span>
+      </div>
+      <div class="swiper-pager">
+        <span v-for="(item, i) in items" :key="i" class="swiper-pager-item" :class="{active: i ==  index % items.length}"></span>
+      </div>
+    </template>
   </div>
 </template>
 <script>
