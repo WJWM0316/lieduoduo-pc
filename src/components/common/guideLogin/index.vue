@@ -33,8 +33,8 @@ export default class login extends Vue {
   background-size: 100% 100%;
   box-shadow:0px 0px 13px 0px rgba(22,39,77,0.04);
   padding: 45px 0px 36px;
-	box-sizing: border-box;
-	text-align: center;
+  box-sizing: border-box;
+  text-align: center;
   .desc {
     font-size:20px;
     font-weight:700;
@@ -48,7 +48,7 @@ export default class login extends Vue {
     border-radius:4px;
     margin: 0;
     border: none;
-    transition: width 400ms;
+    transition: transform 400ms;
     &.login {
       margin: 23px 0 10px;
       color: #fff;
@@ -59,7 +59,7 @@ export default class login extends Vue {
     }
   }
   .login:hover, .register:hover {
-    width: 250px;
+    transform: scale(1.1, 1.05)
   }
 }
 </style>
