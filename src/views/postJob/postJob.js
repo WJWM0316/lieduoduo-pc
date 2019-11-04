@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
 // import config from '@/configs'
-import { professionalSkillsApi, closePositionApi, getLabelPositionListApi, searchPositionApi, getPositionApi, editPositionApi, addPositionApi } from '@/api/position'
+import { professionalSkillsApi, closePositionApi, getLabelPositionListApi, searchPositionApi, getBtermPositionApi, editPositionApi, addPositionApi } from '@/api/position'
 import { getAdressListApi, addCompanyAdressApi } from '@/api/company'
 import { baseUrl } from '../../../config.js'
 import { getMyInfoApi } from '../../api/auth'
@@ -212,7 +212,7 @@ export default class CommunityEdit extends Vue {
       if (this.$route.query.id) {
         const id = parseInt(this.$route.query.id)
         this.isEdit = true
-        const { data } = await getPositionApi({
+        const { data } = await getBtermPositionApi({
           id: id
         })
         // // 创建编辑表单数据

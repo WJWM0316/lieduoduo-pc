@@ -68,11 +68,19 @@ export const addPositionApi = data => request({
 })
 
 // 获取职位信息
-export const getPositionApi = data => request({
+export const getBtermPositionApi = data => request({
   url: `/position/${data.id}`,
   method: 'get',
   params: data,
   config: { host: 'zhaopin' }
+})
+
+// 获取职位信息
+export const getPositionApi = data => request({
+  url: `/position/${data.id}`,
+  method: 'get',
+  params: data,
+  config: { host: 'qiuzhi' }
 })
 
 // 编辑职位信息
