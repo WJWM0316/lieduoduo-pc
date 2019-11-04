@@ -76,7 +76,7 @@ export default new Vuex.Store({
       getUserRoleInfoApi().then(res => {
         state.roleInfos = res.data.data
         if (state.userIdentity === 1 && !state.roleInfos.isJobhunter) {
-          router.replace('createUser')
+          router.replace({path: '/createUser'})
           return
         }
         if (state.userIdentity === 2 && !state.roleInfos.isRecruiter) {
@@ -90,7 +90,7 @@ export default new Vuex.Store({
           router.go(-1)
         } else {
           let userIdentity = state.userIdentity
-          userIdentity === 1 ? router.replace('index') : router.replace('candidate')
+          userIdentity === 1 ? router.replace({path: '/index'}) : router.replace({path: '/candidate'})
         }
       })
     },
@@ -100,7 +100,7 @@ export default new Vuex.Store({
       state.token = null
       removeAccessToken()
       if (state.userIdentity === 1) {
-        router.replace('/index')
+        router.replace({path: '/index'})
       } else {
         router.replace({ path: '/login', query: { type: 'msgLogin' } })
       }
@@ -144,7 +144,7 @@ export default new Vuex.Store({
         if (state.roleInfos.isRecruiter) {
           switchRoleApi().then(res => {
             state.userIdentity = state.userIdentity === 1 ? 2 : 1
-            router.replace('candidate')
+            router.replace({path: '/candidate'})
           })
         } else {
           // 打开引导弹窗
@@ -153,7 +153,7 @@ export default new Vuex.Store({
       } else {
         switchRoleApi().then(res => {
           state.userIdentity = state.userIdentity === 1 ? 2 : 1
-          router.replace('index')
+          router.replace({path: '/index'})
         })
       }
     }
