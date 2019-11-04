@@ -16,7 +16,7 @@
               :style="{width: defaultWidth + 'px'}"
               @click.stop.prevent="handleSelect(item)">
               <span>{{item[props.label]}}</span>
-              <i class="iconfont icon-xuanzhong1"></i>
+              <i class="iconfont icon-xuanzhong"></i>
             </div>
           </template>
         </div>
@@ -185,10 +185,9 @@ $drop-height: 46px;
     color: $title-color-2;
     cursor: pointer;
   }
-  .icon-xuanzhong1 {
+  .icon-xuanzhong {
     display: none;
-    font-size: 12px;
-    font-weight: 300;
+    font-size: 14px;
   }
   .drop-down-item:hover, .drop-down-item.single-active {
     background: $bg-color-5;
