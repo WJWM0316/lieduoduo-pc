@@ -163,12 +163,14 @@ $header-height-1: $page-header-height;
 .page-header {
   height: $header-height-1;
   background: $bg-color-2;
+   min-width: $page-width;
   &.fixed {
     position: fixed;
     top: 0;
     left: 0;
     z-index: 10;
     width: 100%;
+    min-width: $page-width;
   }
 }
 .page-header-wrapper {

@@ -173,7 +173,8 @@ $drop-height: 46px;
   .drop-down-items {
     @include flex-v-center;
     flex-wrap: wrap;
-    overflow-y:auto;
+    overflow-y: scroll;
+    overflow-y: overlay;
   }
   .drop-down-item {
     text-align: center;
@@ -248,5 +249,14 @@ $drop-height: 46px;
   width: 100%;
   height: 26px;
   background:linear-gradient(180deg,rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
+}
+.drop-down-items::-webkit-scrollbar {
+    width: 6px;
+    height: 10px;
+    background-clip: padding-box;
+}
+.drop-down-items::-webkit-scrollbar-thumb {
+  background-color: $scroll-bar-color;
+  border-radius: 4px;
 }
 </style>
