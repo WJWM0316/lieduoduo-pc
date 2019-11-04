@@ -66,7 +66,7 @@
 								</el-dropdown-item>
 							</el-dropdown-menu>
 						</el-dropdown>
-						<span class="botBtn noMargin" :class="{'cur' : infos.isCollect}" @click="todoAction('collectPosition')"><i class="icon iconfont" :class="infos.isCollect ? 'icon-yishoucang': 'icon-shoucang'"></i>感兴趣{{infos.isCollect}}1</span>	
+						<span class="botBtn noMargin" :class="{'cur' : infos.isCollect}" @click="todoAction('collectPosition')"><i class="icon iconfont" :class="infos.isCollect ? 'icon-yishoucang': 'icon-shoucang'"></i>感兴趣</span>	
 					</div>
 				</div>
 			</div>
