@@ -100,7 +100,9 @@ export default PageFooter
     line-height: 30px;
     margin-bottom: 20px;
     img {
-      max-height: 100%;
+      height: 100%;
+      width: auto;
+      margin: 0;
     }
     h3 {
       color: $title-color-1;

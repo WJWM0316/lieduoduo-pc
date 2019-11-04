@@ -1,6 +1,6 @@
 <template>
 	<div class="positionDetail">
-		<header class="header" :class="infos.isRapidly === 1 ? 'isRapidly' : ''">
+		<header class="header" :class="infos.isRapidly === 1 ? 'isRapidly' : ''" v-show="!headerFloat">
 			<div class="inner">
 				<div class="header-content">
 					<div class="title">
@@ -23,7 +23,7 @@
 						<div class="number"><span class="num">{{remainingSeats}}</span>个<p class="desc">约面席位</p></div>
 						<div class="timeBox">
 							<div class="time">还剩<span class="little-box">{{remainingTime.day}}</span>天<span class="little-box">{{remainingTime.hour}}</span>:<span class="little-box">{{remainingTime.minute}}</span>:<span class="little-box">{{remainingTime.second}}</span></div>
-							<p class="desc">{{chatDesc}}<el-tooltip class="item" effect="dark" popper-class="tooltip" placement="bottom-end">
+							<p class="desc">{{chatDesc}}<el-tooltip class="item" popper-class="tooltip" effect="dark"  placement="bottom-end">
 								<p slot="content">1.抢占约面席位后将享【急速反馈服务】。</br>
 									2.急速约面服务</br>
 								  （1）法定工作日（除节假日前一天）内抢占约面席位，面试官将在抢占成功后的24小时内给与答复。</br>
@@ -60,7 +60,23 @@
 								</el-dropdown-item>
 							</el-dropdown-menu>
 						</el-dropdown>
-						<span class="botBtn noMargin" @click="todoAction('collectPosition')"><i class="icon iconfont" :class="infos.isCollect ? 'icon-yishoucang': 'icon-shoucang'"></i>感兴趣</span>	
+						<span class="botBtn noMargin" :class="{'cur' : infos.isCollect}" @click="todoAction('collectPosition')"><i class="icon iconfont" :class="infos.isCollect ? 'icon-yishoucang': 'icon-shoucang'"></i>感兴趣</span>	
+					</div>
+				</div>
+			</div>
+		</header>
+		<header class="header newHeader" :class="{'isRapidly' : infos.isRapidly === 1, 'headerFloat' : headerFloat}">
+			<div class="inner">
+				<div class="header-content">
+					<div class="title">
+						<span v-if="infos.isUrgency === 1" class="icon jipin"></span>
+						<span class="name">{{infos.positionName}}</span>
+						<span class="salary">{{infos.emolumentMin}}~{{infos.emolumentMax}}K<span v-if="infos.annualSalary > 12">·{{infos.annualSalary}}<span class="unit">薪</span></span></span>
+					</div>
+				</div>
+				<div class="aside">
+					<div class="operBox">
+						<interviewBtn ref="interviewBtn" :infos="infos" type="position"></interviewBtn>
 					</div>
 				</div>
 			</div>
@@ -153,7 +169,7 @@ let that = null
 })
 export default class PositionDetail extends Vue {
   cdnPath = `${this.$cdnPath}/images/`
-  offsetTop = 50
+  headerFloat = false
   verticalLogo = false // 是否竖版图片， 控制logo展示格式
   showShareQrcode = false // 分享二维码
   showSharePoster = false // 分享海报
@@ -281,15 +297,15 @@ export default class PositionDetail extends Vue {
   	this.getQrcode()
   	this.getDetail()
   	window.onscroll = () => {
-  		if (window.scrollY > 50) {
-  			if (this.offsetTop > 0) this.offsetTop = 0
+  		if (window.scrollY > 0) {
+  			if (!this.headerFloat) this.headerFloat = true
   		} else {
-  			if (this.offsetTop !== 50) this.offsetTop = 50
+  			if (this.headerFloat) this.headerFloat = false
   		}
   	}
   }
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 @import './detail.scss';
 </style>

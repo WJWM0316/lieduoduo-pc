@@ -8,8 +8,8 @@
 				</template>
 
 				<template v-else>
-					<el-button @click="todoAction('job-hunting-chat')" class="canView specailBtn" v-if="infos.isRapidly === 1 && !interviewInfos.applied && infos.rapidlyInfo.seatsNum - infos.rapidlyInfo.applyNum - infos.rapidlyInfo.natureApplyNum > 0" >马上抢</el-button>
-					<el-button @click="todoAction('job-hunting-chat')" class="canView" v-else>开撩约面</el-button>
+					<el-button @click="todoAction('job-hunting-chat')" class="canView specailBtn" v-if="infos.isRapidly === 1 && !interviewInfos.applied && infos.rapidlyInfo.seatsNum - infos.rapidlyInfo.applyNum - infos.rapidlyInfo.natureApplyNum > 0" :loading="btnLoad">马上抢</el-button>
+					<el-button @click="todoAction('job-hunting-chat')" :loading="btnLoad" class="canView" v-else>开撩约面</el-button>
 				</template>
 			</template>
 			<!-- 求职者还没有发起开撩动作 职位详情 start-->
@@ -46,8 +46,8 @@
 			<!-- 求职者已经已收到招聘官的邀请 start-->
 			<template v-else-if="interviewInfos.interviewStatus === 12">
 				<div class="button-box">
-					<el-button class="reject" @click="todoAction('job-hunting-reject')">暂不考虑</el-button>
-					<el-button class="accept" @click="todoAction('job-hunting-accept')">接受约面</el-button>
+					<el-button class="reject" @click="todoAction('job-hunting-reject')" :loading="btnLoad">暂不考虑</el-button>
+					<el-button class="accept" @click="todoAction('job-hunting-accept')" :loading="btnLoad">接受约面</el-button>
 				</div>
 			</template>
 			<!-- 求职者已经已收到招聘官的邀请 end-->
@@ -90,6 +90,7 @@ import {getInterviewStatusApi, applyInterviewApi, confirmInterviewApi, refuseInt
   }
 })
 export default class InterviewBtn extends Component {
+  btnLoad = false
 	interviewInfos = {
     haveInterview: 0
   }
@@ -97,20 +98,28 @@ export default class InterviewBtn extends Component {
   hasStatus = false
   showSharePop = false
   getInterviewStatus () {
+    this.btnLoad = true
   	getInterviewStatusApi({type: this.type, vkey: this.infos.vkey}).then(res => {
 			this.interviewInfos = res.data.data
 			this.hasStatus = true
-		})
+      this.btnLoad = false
+		}).catch(e => {
+      this.btnLoad = false
+    })
   }
   
   // 求职者确认约面
   confirmInterview () {
+    this.btnLoad = true
   	confirmInterviewApi({id: this.interviewInfos.data[0].interviewId}).then(res => {
       this.getInterviewStatus()
+      this.btnLoad = false
   		this.$message({
         message: '已接受约面',
         type: 'success'
       });
+    }).catch(e => {
+      this.btnLoad = false
     })
   }
   hideSharePop () {
@@ -118,6 +127,7 @@ export default class InterviewBtn extends Component {
   }
   // 求职者开撩
   jobHunterChat () {
+    this.btnLoad = true
   	let isSpecail = this.infos.isRapidly === 1 
 	                  && !this.interviewInfos.applied
 	                  && this.infos.rapidlyInfo.applyNum + this.infos.rapidlyInfo.natureApplyNum < this.infos.rapidlyInfo.seatsNum
@@ -145,24 +155,32 @@ export default class InterviewBtn extends Component {
     }
   	applyInterviewApi(parmas).then(res => {
   		this.getInterviewStatus()
+      this.btnLoad = false
   		successPop(res.data)
-  	})
+  	}).catch(e => {
+      this.btnLoad = false
+    })
   }
   // 求职标记不合适
   jobRejectChat () {
+    this.btnLoad = true
   	refuseInterviewApi({id: this.infos.recruiterInfo.uid}).then(res => {
   		this.getInterviewStatus()
+      this.btnLoad = false
   		this.$message({
         message: '已标记暂不考虑',
         type: 'success'
       });
-  	})
+  	}).catch(e => {
+      this.btnLoad = false
+    })
   }
   todoAction (type) {
   	if (!this.hasLogin) {
   		this.$refs.loginPop.showLoginPop = true
   		return
   	}
+    if (this.btnLoad) return
   	switch (type) {
   		case 'job-hunting-reject':
   			this.jobRejectChat()
