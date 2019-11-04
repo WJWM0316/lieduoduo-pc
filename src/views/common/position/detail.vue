@@ -71,6 +71,7 @@
 				</div>
 			</div>
 		</header>
+		<div :style="'height:' + headerH + 'px'" v-show="headerFloat"></div>
 		<poster @closePoster="closePoster" :showPoster.sync="showPoster" :params='posterParmas'></poster>
 		<div class="content">
 			<div class="inner">
@@ -169,6 +170,7 @@ export default class PositionDetail extends Vue {
 	shortPoster = '' // 短海报
 	remainingTime = {} // 倒计时
   id = 0
+  headerH = 0
   qrcodeUrl = ''
   infos = {
   	skillsLabel: [],
@@ -183,16 +185,6 @@ export default class PositionDetail extends Vue {
   		natureApplyNum: 0,
   		endTime: '',
   		startTime: ''
-  	}
-  }
-  mouseenEven (e, type) {
-  	switch (type) {
-  		case 'shareQrcode':
-  			this.showShareQrcode = !this.showShareQrcode
-  			break
-  		case 'sharePoster':
-  			this.showSharePoster = !this.showSharePoster
-  			break
   	}
   }
   getDetail () {
@@ -210,6 +202,10 @@ export default class PositionDetail extends Vue {
   	this.showPoster = false
   }
   handleCommand (command) {
+  	if (!this.hasLogin) {
+  		this.$refs.interviewBtn.$refs.loginPop.showLoginPop = true
+  		return
+  	}
   	that.showPoster = true
   	switch (command) {
   		case 'longPoster':
@@ -231,7 +227,6 @@ export default class PositionDetail extends Vue {
   		this.$refs.interviewBtn.$refs.loginPop.showLoginPop = true
   		return
   	}
-  	console.log(this.infos, 111)
   	switch (clickTyp) {
 		  case 'collectPosition':
 		  	if (!this.infos.isCollect) {
@@ -255,17 +250,7 @@ export default class PositionDetail extends Vue {
   		this.qrcodeUrl = res.data.data.url
   	})
   }
-  // collectPosition () {
-  // 	if (!this.infos.isCollect) {
-  // 		putMycollectPositionApi({id: this.id}).then(res => {
-  // 			this.infos.isCollect = true
-  // 		})
-  // 	} else {
-  // 		deleteMycollectPositionApi({id: this.id}).then(res => {
-  // 			this.infos.isCollect = false
-  // 		})
-  // 	}
-  // }
+
   getMapLocation (lat, lng) {
   	TMap('TMZBZ-S72K6-66ISB-ES3XG-CVJC6-HKFZG').then(qq => {
 	    this.$nextTick(() => {
@@ -294,10 +279,10 @@ export default class PositionDetail extends Vue {
   	this.id = this.$route.query.positionId
   	this.getQrcode()
   	this.getDetail()
-  	let headerH = 0
   	window.onscroll = () => {
-  		if (!headerH) headerH = this.$refs.header.clientHeight + 50
-  		if (window.scrollY > headerH) {
+  		if (!this.headerH) this.headerH = this.$refs.header.clientHeight + 50
+  		console.log(this.headerH, 222)
+  		if (window.scrollY > this.headerH) {
   			if (!this.headerFloat) this.headerFloat = true
   		} else {
   			if (this.headerFloat) this.headerFloat = false
