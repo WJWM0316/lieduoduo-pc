@@ -16,6 +16,7 @@ export default SearchBar
   display: block;
   width: 300px;
   font-size: 0;
+  text-align: center;
   vertical-align: middle;
   border-radius: 50px;
   border: solid 1px rgba(220,220,220,1);
@@ -43,4 +44,3 @@ export default SearchBar
   }
 }
 </style>
-

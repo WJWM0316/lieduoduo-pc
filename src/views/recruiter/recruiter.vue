@@ -16,14 +16,6 @@
               >{{item.name}} ({{item.total}})</li>
             </ul>
             <div class="job_classify_wrap" v-if="jobNameList.length>0">
-              <!-- <ul class="job_classify">
-            <li class="" v-for="item,index in jobNameList" @click="catchJob(index)" :class="{'slet':item.active}">{{item.name}}</li>
-              </ul>-->
-              <!-- <ul class="job_classify">
-            <li class="" v-for="item,index in jobNameList" @click="catchJob(index)" :class="{'slet':item.active}" v-if="index<9">{{item.name}}</li>
-
-            <li class="more" @click="todoAction('moreClassily')" :class="{'slet':false}" v-if="jobNameList.length>9">更多</li>v-show="isShowClassily"
-              </ul>-->
               <ul class="job_classify job_classify2">
                 <li
                   v-for="(item,index) in jobNameList"
@@ -31,8 +23,6 @@
                   :class="{'slet':item.active}"
                   :key="index"
                 >{{item.name}}</li>
-
-                <!-- <li class="close" @click="todoAction('closeClassily')" :class="{'slet':false}" v-if="jobNameList.length>9">收起</li> -->
               </ul>
             </div>
           </div>
@@ -58,9 +48,6 @@
             :class="form.status === '3' ? 'audit' :''"
           >{{navSelectName}}</div>
           <div class="blo_center">
-            <!-- <div class="center_status">审核中</div>
-            <div class="center_status">审核中</div>
-            <div class="center_status">审核中</div>-->
             <div class="center_time">发布于 {{item.createdAt}}</div>
           </div>
           <div class="blo_right">
@@ -518,8 +505,10 @@ export default class CourseList extends Vue {
 
         query.page = 1
         this.form.type = ''
-        this.setPathQuery(query)
-        // that.getPositionList({page:1})
+        this.$router.replace({
+          path: this.$route.path,
+          query
+        })
       } else {
         item.active = false
       }
@@ -558,12 +547,6 @@ export default class CourseList extends Vue {
 }
 </script>
 <style lang="less">
-@media screen and (max-width: 1200px) {
-    .blo_center{
-      width: 221px !important;
-      max-width: 221px !important;
-    }
-}
 #recruiter {
   .recruiter_cont {
     background: #ffffff;
@@ -572,16 +555,13 @@ export default class CourseList extends Vue {
   .header_warp {
     min-height: 222px;
     position: relative;
-    width: 1200px;
     box-sizing: border-box;
     .header_navs_wrap {
       min-height: 110px;
-      width: 1200px;
     }
     .header_navs {
       min-height: 110px;
       position: relative;
-      width: 1200px;
       &.isFixed {
         position: fixed;
         background-color: #fff;
@@ -620,11 +600,10 @@ export default class CourseList extends Vue {
       }
       .job_classify_wrap {
         min-height: 62px;
-        width: 1200px;
         position: relative;
 
         .job_classify {
-          width: 1200px;
+          width: 100%;
           min-height: 62px;
           background: rgba(248, 248, 248, 1);
           padding: 20px 56px 5px 56px;
@@ -636,7 +615,6 @@ export default class CourseList extends Vue {
           //overflow-x: scroll;
           position: relative;
           &.job_classify2 {
-            width: 1200px;
             height: auto;
             background: rgba(248, 248, 248, 1);
             //padding-right: 100px;
@@ -686,18 +664,17 @@ export default class CourseList extends Vue {
           }
         }
       }
-      .job_classify::-webkit-scrollbar {
-        //display: none;
-      }
     }
 
     .title {
+      box-sizing: border-box;
       padding-left: 56px;
       height: 110px;
       line-height: 110px;
       font-size: 24px;
-      font-weight: 700;
-      color: rgba(40, 40, 40, 1);
+      font-weight: bold;
+      width: 100%;
+      color: #2D2D2D;
       text-align: left;
       position: relative;
     }
@@ -744,7 +721,7 @@ export default class CourseList extends Vue {
           line-height: 24px;
         }
         .job_name {
-          max-width: 430px;
+          max-width: 220px;
           text-overflow: ellipsis;
           white-space: nowrap;
           overflow: hidden;
@@ -780,6 +757,7 @@ export default class CourseList extends Vue {
       .blo_center {
         flex: 1;
         font-size: 14px;
+        text-align: center;
         font-weight: 400;
         color: rgba(146, 146, 146, 1);
       }
@@ -819,8 +797,6 @@ export default class CourseList extends Vue {
     display: flex;
     justify-content: center;
     align-items: center;
-    .el-pager {
-    }
     .number {
       height: 30px;
       box-sizing: border-box;
@@ -876,84 +852,6 @@ export default class CourseList extends Vue {
       transform: rotate(180deg);
     }
   }
-  .service {
-    font-size: 16px;
-    font-weight: 700;
-    color: rgba(101, 39, 145, 1);
-    line-height: 18px;
-    position: fixed;
-    top: 50%;
-    height: 120px;
-    margin-top: -60px;
-    right: 0;
-    width: 36px;
-    height: 120px;
-    background: rgba(239, 233, 244, 1);
-    border-radius: 4px 0px 0px 4px;
-    box-sizing: border-box;
-    padding: 10px;
-    cursor: pointer;
-    z-index: 100;
-    .service_icon {
-      width: 16px;
-      height: 16px;
-      margin-bottom: 8px;
-    }
-    .service_pop {
-      width: 300px;
-      height: 440px;
-      background: rgba(255, 255, 255, 1);
-      box-shadow: 0px 8px 12px 0px rgba(48, 50, 51, 0.1);
-      border-radius: 4px;
-      position: absolute;
-      left: -320px;
-      top: 50%;
-      margin-top: -220px;
-      .pop_tit {
-        width: 300px;
-        height: 58px;
-        line-height: 58px;
-        background: rgba(101, 39, 145, 1);
-        border-radius: 4px 4px 0px 0px;
-        font-size: 20px;
-        font-weight: 400;
-        color: rgba(255, 255, 255, 1);
-      }
-      .pop_cont {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        .pop_code {
-          width: 112px;
-          height: 112px;
-          margin: 48px auto 10px auto;
-        }
-        .pop_text {
-          font-size: 20px;
-          font-weight: 400;
-          color: rgba(98, 98, 98, 1);
-          margin: 48px 0 20px 0;
-        }
-        .pop_text2 {
-          font-size: 24px;
-          font-weight: bold;
-          color: rgba(40, 40, 40, 1);
-        }
-        .pop_text3 {
-          font-size: 18px;
-          font-weight: 400;
-          color: rgba(53, 64, 72, 1);
-          margin-bottom: 24px;
-        }
-        .pop_text4 {
-          font-size: 14px;
-          font-weight: 400;
-          color: rgba(98, 98, 98, 1);
-        }
-      }
-    }
-  }
 
   .triangle_border_left {
     width: 0;
@@ -968,7 +866,7 @@ export default class CourseList extends Vue {
   }
 
   .pagination {
-    width: 1200px;
+    width: 100%;
     margin: 0 auto;
     box-sizing: border-box;
   }
