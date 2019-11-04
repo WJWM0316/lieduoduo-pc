@@ -175,6 +175,7 @@ export default {
         this.areaList = area
         const address = area.find(val => val.areaId === this.cityid) || area[0]
         this.address = address.name
+        this.params.cityNums = this.cityid
       })
     },
     // 清空筛选
