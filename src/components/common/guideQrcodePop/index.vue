@@ -3,7 +3,7 @@
 		<div class="inner">
 			<p class="title">{{title}}<br>{{qrcodeTxt}}</p>
 			<el-image class="qrcode" :src="qrCodeUrl" alt=""></el-image>
-			<i class="close iconfont icon-close" @click="hidePop"></i>
+			<i class="close iconfont icon-xiantiaoguanbi" @click="hidePop"></i>
 		</div>
 	</div>
 </template>

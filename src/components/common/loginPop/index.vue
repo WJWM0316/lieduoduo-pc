@@ -3,7 +3,7 @@
 		<div class="bg"></div>
 		<div class="loginBox">
       <login-form ref="login-form" loginType="msgLogin" :toggleType="false"></login-form>
-    	<i class="close iconfont icon-close" @click="close"></i>
+    	<i class="close iconfont icon-xiantiaoguanbi" @click="close"></i>
     </div>
 	</div>
 </template>

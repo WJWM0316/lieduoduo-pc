@@ -51,7 +51,7 @@
 								<el-dropdown-item disabled><img class="qrcode" :src="qrcodeUrl"></el-dropdown-item>
 							</el-dropdown-menu>
 						</el-dropdown>
-						<el-dropdown trigger="hover" @command="handleCommand" class="botBtn">
+						<el-dropdown trigger="hover" @command="handleCommand" class="botBtn" placement="bottom-end">
 							<div class="el-dropdown-link"><i class="icon iconfont icon-shengchenghaibao"></i>生成海报</span></div>
 							<el-dropdown-menu slot="dropdown" class="poster-content">
 								<el-dropdown-item command="shortPoster">
