@@ -99,6 +99,8 @@ export default {
     },
     autoplay () {
       clearInterval(this.player)
+      // 如果内容小于 2张 不轮播
+      if (this.items.length <= 1) return
       this.player = setInterval(() => {
         this.duration = 0
         this.correctIndex()

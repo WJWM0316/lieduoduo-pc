@@ -212,6 +212,8 @@ $position-details-width: 528px;
   .position-details-wrapper:not(:last-child) {
     border-bottom: 1px dashed $border-color-1;
     margin-bottom: 14px;
+  }
+  .position-details-wrapper {
     a {
       display: inline-block;
       margin-right: 26px;
