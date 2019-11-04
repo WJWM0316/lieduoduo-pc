@@ -225,4 +225,13 @@ $position-details-width: 528px;
     }
   }
 }
+.position-details::-webkit-scrollbar {
+    width: 6px;
+    height: 10px;
+    background-clip: padding-box;
+}
+.position-details::-webkit-scrollbar-thumb {
+  background-color: $scroll-bar-color;
+  border-radius: 4px;
+}
 </style>
