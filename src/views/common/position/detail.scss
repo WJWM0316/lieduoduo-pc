@@ -19,18 +19,15 @@ img {
 	width: 100%;
 	background: #fff;
 	padding-bottom: 63px;
-	padding-top: 246px;
+	
 	.header {
 		width: 100%;
 		padding: 34px 0 30px;
-		position: fixed;
-		top: $page-header-height;
-		left: 0;
-		z-index: 2;
 		background-color: #F5F5F5;
 		background-position: right center;
 		background-repeat: no-repeat;
 		transition: all .4s;
+		top: -90px;
 		.inner {
 			@include clearfix;
 			.header-content {
@@ -89,7 +86,7 @@ img {
 						display: inline-block;
 						.icon {
 							font-size: 14px;
-							color: #6D696E;
+							color: #CDCBCF;
 							margin-right: 7px;
 						}
 					}
@@ -324,13 +321,13 @@ img {
 			}
 		}
 		&.headerFloat {
+			position: fixed;
+			left: 0;
+			top: 0;
+			z-index: 11;
+			padding: 27px 0;
 			&.isRapidly {
 				background-position: right 40%;
-			}
-			padding: 27px 0;
-			top: -90px;
-			&.headerFloat {
-				top: 0;
 			}
 			.inner {
 				.salary {
@@ -345,6 +342,7 @@ img {
 		}
 	}
 	.content {
+		padding-top: 28px;
 		overflow: hidden;
 		.content-article {
 			width: $content-left;

@@ -36,7 +36,7 @@ export default class mapSearch extends Vue {
 
   mounted () {
     let that = this
-    TMap('TMZBZ-S72K6-66ISB-ES3XG-CVJC6-HKFZG').then(qq => {
+    TMap().then(qq => {
       that.$nextTick(() => {
         let center = new that.qqMapObj.maps.LatLng(39.916527, 116.397128)
         that.map = new that.qqMapObj.maps.Map(document.getElementById('map'), {

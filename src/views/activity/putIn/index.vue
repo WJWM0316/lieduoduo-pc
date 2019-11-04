@@ -375,14 +375,15 @@
         }).then(res => {
             this.$store.commit('LOGIN',res.data.data)
             this.$store.dispatch('setUserInfo', res.data.data)
-            getUserRoleInfo().then(res => {
-              if(res.data.data.isJobhunter === 1) {
-                this.$router.push({name: 'applyIndex'})
-              }else {
-                this.$router.push({name: 'resumeFirstPost'})
-              }
-            })
-          // console.log(res.data.data)
+            setTimeout(() => {
+              getUserRoleInfo().then(res => {
+                if(res.data.data.isJobhunter === 1) {
+                  this.$router.replace('index')
+                }else {
+                  this.$router.replace('createUser')
+                }
+              })
+            }, 300)
         }).catch(e=>{
           this.setHint(e.data.msg || '')
           if(e.data.code && e.data.code === 419) {
@@ -903,6 +904,7 @@
                 background:rgba(101,39,145,1);
                 border-radius:4px;
                 cursor: pointer;
+                text-align: center;
               }
             }
             .select-main {
