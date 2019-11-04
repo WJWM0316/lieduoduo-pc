@@ -132,6 +132,9 @@ export default PageFooter
         color: #fff;
       }
     }
+    .footer_right p.black{
+      color: #fff;
+    }
   }
   &.isFixed {
     position: fixed;
