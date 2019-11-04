@@ -156,6 +156,9 @@ export default class InterviewBtn extends Component {
   	applyInterviewApi(parmas).then(res => {
   		this.getInterviewStatus()
       this.btnLoad = false
+      if (isSpecail) {
+        this.$emit('init')
+      }
   		successPop(res.data)
   	}).catch(e => {
       this.btnLoad = false

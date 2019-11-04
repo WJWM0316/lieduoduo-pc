@@ -2,7 +2,7 @@
 	<div class="wrap" v-if="adList.length > 0">
 		<div class="adList">
 			<div class="ad-img1" v-for="(item, index) in adList" :key="index">
-				<el-image :src="item.bigImgUrl" alt=""></el-image>
+				<a :href="item.targetUrl"  target="_blank"><el-image :src="item.bigImgUrl"></el-image></a>
 			</div>
 		</div>
 	</div>
@@ -38,15 +38,15 @@ export default {
 		}
 		getBanners({location}).then(res => {
 			this.adList = res.data.data.pcPositionDetailSide || res.data.data.jobhunterPcPositionList
-			if (this.roleInfos.isJobhunter) {
-				let createUseIndex = 0
-				this.adList.map((item, index) => {
-					if (item.name === 'createUser') {
-						createUseIndex = index
-					}
-				})
-				this.adList.replace(createUseIndex, 1)
-			}
+			// if (this.roleInfos.isJobhunter) {
+			// 	let createUseIndex = 0
+			// 	this.adList.map((item, index) => {
+			// 		if (item.name === 'createUser') {
+			// 			createUseIndex = index
+			// 		}
+			// 	})
+			// 	this.adList.replace(createUseIndex, 1)
+			// }
 		})
 	}
 }

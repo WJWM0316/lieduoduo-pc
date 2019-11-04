@@ -28,7 +28,6 @@ img {
 		left: 0;
 		z-index: 2;
 		background-color: #F5F5F5;
-		
 		background-position: right center;
 		background-repeat: no-repeat;
 		transition: all .4s;
@@ -211,8 +210,9 @@ img {
 			}
 		}
 		&.isRapidly {
-			background:url('https://attach.lieduoduo.ziwork.com/front-assets/web/images/24hour.png') no-repeat right 126%, linear-gradient(321deg,rgba(101,39,145,1) 0%,rgba(50,32,116,1) 34%,rgba(50,32,116,1) 100%);
-			background-size: auto 120px;
+			background: url('https://attach.lieduoduo.ziwork.com/front-assets/web/images/24hour.png'), linear-gradient(321deg,rgba(101,39,145,1) 0%,rgba(50,32,116,1) 34%,rgba(50,32,116,1) 100%);
+			background-repeat: no-repeat;
+			background-position: right 150%;
 			.inner {
 				.header-content {
 					.name, .info-item {
@@ -317,7 +317,7 @@ img {
 				}
 			}
 		}
-		&.newHeader {
+		&.headerFloat {
 			padding: 27px 0;
 			top: -90px;
 			&.headerFloat {
