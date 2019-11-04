@@ -72,7 +72,7 @@ export const getPositionApi = data => request({
   url: `/position/${data.id}`,
   method: 'get',
   params: data,
-  config: { host: 'qiuzhi' }
+  config: { host: 'zhaopin' }
 })
 
 // 编辑职位信息
