@@ -4,25 +4,12 @@
       <h3 class="title">职位基本信息</h3>
       <p class="hint">加“ <span style="color: red; font-size: 15px;">*</span> ”内容，在确认发布成功后，将无法修改</p>
 
-      <el-form-item label="职位名称" prop="position_name" style="width: 450px;" v-if="isEdit">
-        <el-input v-model="form.position_name" :disabled="true" placeholder="限制50个字以内" :maxlength="50" style="width: 382px;"></el-input>
-      </el-form-item>
-      <el-form-item label="职位名称" prop="position_name" style="width: 450px;" v-else>
-        <el-input v-model="form.position_name" placeholder="限制50个字以内" :maxlength="50" style="width: 382px;"></el-input>
+      <el-form-item label="职位名称" prop="position_name" style="width: 450px;">
+        <el-input v-model="form.position_name" :disabled="isEdit" placeholder="限制50个字以内" :maxlength="50" style="width: 382px;"></el-input>
       </el-form-item>
 
-      <el-form-item label="职位类别" prop="type" style="width: 450px;" v-if="isEdit">
-        <el-select :disabled="true" v-model="selectPositionItem.name" placeholder="点击选择职位类别" @focus="changePosition" style="width: 382px;">
-          <el-option
-            v-for="item in typeList"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="职位类别" prop="type" style="width: 450px;" v-else>
-        <el-select v-model="selectPositionItem.name" placeholder="点击选择职位类别" @focus="changePosition" style="width: 382px;">
+      <el-form-item label="职位类别" prop="type" style="width: 450px;">
+        <el-select :disabled="isEdit" v-model="selectPositionItem.name" placeholder="点击选择职位类别" @focus="changePosition" style="width: 382px;">
           <el-option
             v-for="item in typeList"
             :key="item.value"
@@ -41,7 +28,6 @@
             :value="item.value"
             style="width: 382px;"
             >
-
             <div class="address_line textEllipsis"  v-if="item.value!=='0'">
               {{ item.label }}
             </div>
@@ -102,35 +88,20 @@
       </el-form-item>
 
       <el-form-item label="技能要求" prop="skill_tag" style="width: 450px;">
-        <!-- <el-select
-          @visible-change="skillChange"
+        <el-select
           style="width: 382px;"
           v-model="form.labels"
           multiple
           :multiple-limit="4"
           filterable
-          allow-create
-          default-first-option
           placeholder="请选择技能要求">
           <el-option
-            v-for="item in options2"
+            v-for="item in currentLabels"
             :key="item.labelId"
             :label="item.name"
             :value="item.labelId">
           </el-option>
-        </el-select> -->
-        <el-cascader
-          v-model="form.labels"
-          :options="options"
-          style="width: 382px;"
-          :props="{
-            value: 'labelId',
-            label: 'name',
-            multiple: true
-          }"
-          clearable
-          collapse-tags>
-        </el-cascader>
+        </el-select>
       </el-form-item>
 
       <el-form-item label="职位描述" prop="describe" style="width: 520px;" >

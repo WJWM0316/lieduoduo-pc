@@ -686,9 +686,6 @@ export default class CourseList extends Vue {
           }
         }
       }
-      .job_classify::-webkit-scrollbar {
-        //display: none;
-      }
     }
 
     .title {
@@ -819,8 +816,6 @@ export default class CourseList extends Vue {
     display: flex;
     justify-content: center;
     align-items: center;
-    .el-pager {
-    }
     .number {
       height: 30px;
       box-sizing: border-box;

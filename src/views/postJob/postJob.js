@@ -33,8 +33,8 @@ var geocoder = {}
 })
 export default class CommunityEdit extends Vue {
   // 列表
-  options= []
-
+  currentLabels = [] // 当前职能
+  labelsList = [] // 职能列表
   // 职位类别
   typeList = [
   ]
@@ -192,8 +192,6 @@ export default class CommunityEdit extends Vue {
     // this.getTagList()
     this.init()
     this.setEmolumentMin()
-    this.getLabelPositionList()
-
     this.getAdressList()
     this.getMyInfo()
   }
@@ -208,6 +206,7 @@ export default class CommunityEdit extends Vue {
    */
   async init () {
     await this.getProfessionalSkills()
+    await this.getLabelPositionList()
     try {
       // 如果有id，则为编辑
       if (this.$route.query.id) {
@@ -240,11 +239,10 @@ export default class CommunityEdit extends Vue {
           typeId: data.data.type
         }
 
-        this.selectPositionItem.topPid = data.data.topPid
+        // this.selectPositionItem.topPid = data.data.topPid
+        this.setCurrentLabels(this.getLabelsTopId(data.data.type, this.positionList))
+        form.labels = data.data.skillsLabel.map(val => val.labelId)
 
-        form.labels = data.data.skillsLabel.map(val => {
-          return this.getTargetClassify(val.labelId, this.options)
-        })
         this.addressList[1] = {
           value: data.data.addressId,
           label: data.data.address
@@ -262,6 +260,7 @@ export default class CommunityEdit extends Vue {
         // this.tags = reshaol
       }
     } catch (error) {
+      console.log(error)
       // this.is_course = true;
       // this.$message.error(error.message)
     }
@@ -273,7 +272,6 @@ export default class CommunityEdit extends Vue {
   async savePosition () {
     try {
       // this.$store.dispatch('showAjaxLoading')
-
       const params = this.transformData(this.form)
       if (!this.$route.query.id) {
         addPositionApi(params).then(() => {
@@ -399,7 +397,7 @@ export default class CommunityEdit extends Vue {
     await professionalSkillsApi({
       type: 'skills'
     }).then(({ data }) => {
-      this.options = this.removeEmptyChild(data.data.labelProfessionalSkills)
+      this.labelsList = data.data.labelProfessionalSkills
     })
   }
 
@@ -466,7 +464,6 @@ export default class CommunityEdit extends Vue {
       this.thirdPositionList = []
     }
   }
-
   thirdSecondPosition (item) {
     this.pop.isShow = false
     this.selectPositionItem = {
@@ -476,48 +473,32 @@ export default class CommunityEdit extends Vue {
     }
     this.form.labels = []
     this.form.type = item.labelId
-    // this.setSkillsList()
+    this.setCurrentLabels(item.topPid)
   }
-  getTargetClassify (value, data = []) {
-    if (!data) return
-    var target = []
-    let len = data.length
-    if (len) {
-      for (var i = 0; i < len; i++) {
-        var item = data[i]
-        if (item.labelId === value) return [item.labelId]
-        if (item.children) target = this.getTargetClassify(value, item.children)
-        if (target && target.length) {
-          target.unshift(item.labelId)
-          return target
+  setCurrentLabels (topPid) {
+    const currentLabels = this.labelsList.find(val => val.labelId === topPid)
+    this.currentLabels = (currentLabels && currentLabels.children) || []
+  }
+  getLabelsTopId (id, data) {
+    let topid = id
+    function arr (id, data) {
+      for (let item in data) {
+        if (id === data[item].labelId) {
+          topid = data[item].topPid
+          return
         }
+        if (data[item].children && data[item].children.length) arr(id, data[item].children)
       }
     }
-    return target
+    arr(id, data)
+    return topid
   }
-  removeEmptyChild (data) {
-    // eslint-disable-next-line no-unused-vars
-    function getArr (data) {
-      data.forEach(item => {
-        if (item.children && item.children.length === 0) {
-          delete item.children
-        }
-        if (item.children && item.children.length) {
-          getArr(item.children)
-        }
-      })
-    }
-    getArr(data)
-    return data
-  }
-
   changePosition () {
     this.pop = {
       isShow: true,
       type: 'position'
     }
   }
-
   // 工作地点选择
   changeAdress (e) {
     // this.form.address_id = 1
@@ -531,8 +512,8 @@ export default class CommunityEdit extends Vue {
     return false
   }
 
-  getLabelPositionList () {
-    getLabelPositionListApi().then(res => {
+  async getLabelPositionList () {
+    await getLabelPositionListApi().then(res => {
       res.data.data.map((item, index) => {
         if (index === 0) {
           item.active = true
