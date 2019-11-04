@@ -279,8 +279,6 @@ export default class CommunityEdit extends Vue {
           this.$router.push({
             name: 'recruiterIndex'
           })
-        }).catch(e => {
-          this.$message.error(e.data.msg)
         })
       } else {
         params.id = this.$route.query.id
@@ -289,8 +287,6 @@ export default class CommunityEdit extends Vue {
           this.$router.push({
             name: 'recruiterIndex'
           })
-        }).catch(e => {
-          this.$message.error(e.data.msg)
         })
       }
     } catch (e) {
@@ -523,7 +519,7 @@ export default class CommunityEdit extends Vue {
       let labels = []
       newForm.labels.map(item => {
         labels.push({
-          id: item[item.length - 1],
+          id: item,
           is_diy: '0'
         })
       })
