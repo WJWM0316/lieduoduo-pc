@@ -32,7 +32,7 @@
             <div class="recruiter-info">
               <div class="recruiter-base-info">
                 <span class="recruiter-profile"><img :src="item.recruiterInfo&&item.recruiterInfo.avatar.smallUrl" alt=""></span>
-                <span class="recruiter-name">{{item.recruiterInfo && item.recruiterInfo.name}}</span>|<span class="recruiter-position">{{item.recruiterInfo && item.recruiterInfo.position}}</span>
+                <span class="recruiter-name">{{item.recruiterInfo && item.recruiterInfo.name}}</span><span>|</span><span class="recruiter-position">{{item.recruiterInfo && item.recruiterInfo.position}}</span>
                 <p class="">{{item.numOfVisitors}}人已看过</p>
               </div>
               <div class="contact-recruiter">
@@ -183,24 +183,33 @@ export default {
   min-height: 108px;
   min-width: 882px;
 }
-.position-lists {
-  box-shadow: $shadow-1;
-  .position-list:not(:last-child) {
-    border-bottom: none;
-  }
-}
+
 .guide-login {
   margin-bottom: 20px;
 }
+.position-lists {
+  box-shadow: $shadow-1;
+  .position-list:first-child::after {
+    border-top: none;
+  }
+}
 .position-list {
-   cursor: pointer;
-   @include flex-v-center;
-   width: 100%;
-   position: relative;
-   background: #fff;
-   box-sizing: border-box;
-   padding: 28px 36px;
-   border-bottom: 1px dashed  $border-color-1;
+  cursor: pointer;
+  @include flex-v-center;
+  width: 100%;
+  position: relative;
+  background: #fff;
+  box-sizing: border-box;
+  padding: 28px 36px;
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 0 36px;
+    border-top: 1px dashed $border-color-1;
+  }
 }
 
 .position-info{
@@ -320,7 +329,7 @@ export default {
     z-index: 2;
     .el-button {
       width: 146px;
-      border-radius: 0;
+      border-radius: 2px;
       vertical-align: middle;
     }
   }

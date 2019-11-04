@@ -69,4 +69,10 @@ export default class App extends Vue {
   width: $page-width;
   margin:0 auto;
 }
+@media screen and (max-width: 1263px)  {
+  #app {
+    overflow-x: scroll;
+    min-width: calc(#{$page-width} + 20px);
+  }
+}
 </style>

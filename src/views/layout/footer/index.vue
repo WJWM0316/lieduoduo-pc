@@ -48,6 +48,7 @@ export default PageFooter
   z-index: 2;
   overflow: hidden;
   width: 100%;
+  min-width: $page-width;
   section {
     height: 100%;
     width: $page-width;

@@ -208,7 +208,7 @@ export default {
   width: 880px;
   border-radius: 4px;
   position: relative;
-  border: 2px solid $border-color-2;
+  border: 1px solid $border-color-2;
   height: 46px;
   .el-autocomplete,& /deep/ .el-input__inner{
     height: 46px;

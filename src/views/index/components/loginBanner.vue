@@ -94,13 +94,21 @@ export default {
 <style lang="scss" scoped>
 $index-login-height: 120px;
 .login-bg {
-  width: 1400px;
+  width: 1200px;
   margin: 0 auto;
   background-image: url(#{$image-cdn-url}/images/index_banner.gif);
   background-size: cover;
   background-repeat: no-repeat;
   height: $index-login-height;
 }
+// @media screen and (max-width: 1400px)  {
+//   .login-bg {
+//     width: $page-width;
+//     .position-number-wrapper {
+//       margin-left: 300px !important;
+//     }
+//   }
+// }
 .index-login {
   height: $index-login-height;
   width: 100%;
@@ -114,7 +122,7 @@ $index-login-height: 120px;
   flex: 1;
   text-align: center;
   .position-number-wrapper {
-    margin-left: 130px;
+    margin-left: 300px;
     width: 280px;
     text-align: left;
     display: inline-block;

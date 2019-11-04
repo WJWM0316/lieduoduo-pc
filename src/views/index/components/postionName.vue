@@ -212,6 +212,8 @@ $position-details-width: 528px;
   .position-details-wrapper:not(:last-child) {
     border-bottom: 1px dashed $border-color-1;
     margin-bottom: 14px;
+  }
+  .position-details-wrapper {
     a {
       display: inline-block;
       margin-right: 26px;
@@ -222,5 +224,14 @@ $position-details-width: 528px;
       color: $main-color-1;
     }
   }
+}
+.position-details::-webkit-scrollbar {
+    width: 6px;
+    height: 10px;
+    background-clip: padding-box;
+}
+.position-details::-webkit-scrollbar-thumb {
+  background-color: $scroll-bar-color;
+  border-radius: 4px;
 }
 </style>

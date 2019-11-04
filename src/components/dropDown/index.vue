@@ -7,7 +7,7 @@
     </div>
     <div class="drop-down-wrapper" :style="{width: wrapperWidth}">
       <slot name="content">
-        <div class="drop-down-items" :style="{'max-height': defaultHeight + 'px'}">
+        <div class="drop-down-items" :class="{'has': opacity}" :style="{'max-height': defaultHeight + 'px'}">
           <template v-for="item in items">
             <div
               :key="item[props.value]"
@@ -21,7 +21,7 @@
           </template>
         </div>
       </slot>
-      <div class="drop-down-footer" v-if="multiple">
+      <div class="drop-down-footer" :class="{'opacity': opacity}" v-if="multiple">
         <el-button class="reset-button" type="text" size="small" style="width: 60px" @click.stop="resetDropDown">重置</el-button>
         <el-button type="primary" size="small" style="width: 88px" @click.stop="handleSelected">确定</el-button>
       </div>
@@ -66,6 +66,11 @@ export default {
   computed: {
     wrapperWidth () {
       return this.col * this.defaultWidth + 'px'
+    },
+    opacity () {
+      const len = this.items.length
+      const maxH = Math.ceil(len * 46 / this.col)
+      return maxH > this.defaultHeight
     }
   },
   data () {
@@ -92,6 +97,12 @@ export default {
           this.$set(item, 'checked', true)
         } else {
           item.checked = !item.checked
+        }
+        const len = this.items.filter(val => val.checked)
+        if (len.length > this.limit) {
+          this.$message.warning(`最多只能选择${this.limit}个`)
+          item.checked = false
+          return
         }
         // 如果点击的不是全选 清空全部的选择状态
         if (this.isCheckedAll && item[this.props.value] !== this.allValue) {
@@ -162,13 +173,8 @@ $drop-height: 46px;
   .drop-down-items {
     @include flex-v-center;
     flex-wrap: wrap;
-    overflow-y:auto;
-  }
-  .iconfont {
-    transition: transform 400ms;
-    color: $title-color-2;
-    font-size: 12px;
-    display: inline-block;
+    overflow-y: scroll;
+    overflow-y: overlay;
   }
   .drop-down-item {
     text-align: center;
@@ -180,7 +186,7 @@ $drop-height: 46px;
     cursor: pointer;
   }
   .el-icon-check {
-    display: none
+    display: none;
   }
   .drop-down-item:hover, .drop-down-item.single-active {
     background: $bg-color-5;
@@ -199,6 +205,12 @@ $drop-height: 46px;
 }
 .drop-down-header {
   cursor: pointer;
+  .iconfont {
+    transition: transform 400ms;
+    color: $title-color-2;
+    font-size: 12px;
+    display: inline-block;
+  }
 }
 .drop-down.active .drop-down-wrapper {
   height: auto;
@@ -213,8 +225,8 @@ $drop-height: 46px;
 
 .drop-down-footer {
   padding: 6px;
+  position: relative;
   text-align: right;
-  box-shadow: -1px 0 5px 0px rgba(22,39,77,0.1);
   .el-button {
     margin-left: 0;
   }
@@ -224,5 +236,27 @@ $drop-height: 46px;
   .reset-button:hover {
     background: $bg-color-5;
   }
+}
+.has.drop-down-items {
+  padding-bottom: 12px;
+  box-sizing: border-box;
+}
+.opacity.drop-down-footer::after {
+  content: "";
+  top: -26px;
+  left: 0;
+  position: absolute;
+  width: 100%;
+  height: 26px;
+  background:linear-gradient(180deg,rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
+}
+.drop-down-items::-webkit-scrollbar {
+    width: 6px;
+    height: 10px;
+    background-clip: padding-box;
+}
+.drop-down-items::-webkit-scrollbar-thumb {
+  background-color: $scroll-bar-color;
+  border-radius: 4px;
 }
 </style>

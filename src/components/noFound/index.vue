@@ -35,7 +35,7 @@ export default {
 .no-found {
   width: 100%;
   min-height: 200px;
-  padding: 20px;
+  padding: 150px 20px 150px;
   text-align: center;
   box-sizing: border-box;
   div {
@@ -46,7 +46,7 @@ export default {
   }
   p {
     color: $title-color-2;
-    font-size: 16px;
+    font-size: 14px;
     margin-top: 12px;
   }
 }
