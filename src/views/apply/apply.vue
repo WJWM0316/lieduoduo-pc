@@ -691,6 +691,7 @@ export default class CourseList extends Vue {
     .file_cont {
       // margin-top: 120px;
       .cont_top {
+        text-align: center;
         .cont_pic2 {
           width: 138px;
           height: 104px;
@@ -814,6 +815,7 @@ export default class CourseList extends Vue {
       justify-content: center;
       margin-bottom: 24px;
       position: relative;
+      text-align: center;
       span {
         width: 16px;
         height: 16px;
