@@ -20,7 +20,7 @@
             </div>
           </div>
           <div class="list-pay">
-            {{item.emolumentMin}}~{{item.emolumentMax}}K <template v-if="item.annualSalary > 12">· {{item.annualSalaryDesc}}</template>
+            {{item.emolumentMin}}~{{item.emolumentMax}}K<template v-if="item.annualSalary > 12">·{{item.annualSalaryDesc}}</template>
           </div>
           <div class="list-position-require">
             <span class="position-address"><i class="iconfont icon-dizhi"></i>{{item.city}}{{item.district}}</span>
@@ -123,7 +123,7 @@ export default {
   }
 }
 .position-lists-wrapper {
-  padding-top: 13px;
+  padding-top: 4px;
   min-height: 200px;
   & /deep/ .el-loading-mask {
     background: rgba(255, 255, 255, 0.1);;
@@ -145,7 +145,7 @@ export default {
   padding: 20px;
   box-shadow: $shadow-1;
   box-sizing: border-box;
-  margin: 13px 0;
+  margin-bottom: 13px;
   border-radius:4px;
   cursor: pointer;
   .list-header {
