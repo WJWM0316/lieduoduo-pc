@@ -1,6 +1,6 @@
 let webpack = require('webpack')
 let path = require('path')
-// const CompressionPlugin = require('compression-webpack-plugin')
+const CompressionPlugin = require('compression-webpack-plugin')
 
 const scssPath = process.env.VUE_APP_ENV === 'development' ? '_dev' : '_prod'
 let resolve = dir => { return path.join(__dirname, dir) }
