@@ -16,7 +16,7 @@
               :style="{width: defaultWidth + 'px'}"
               @click.stop.prevent="handleSelect(item)">
               <span>{{item[props.label]}}</span>
-              <i class="el-icon-check"></i>
+              <i class="iconfont icon-xuanzhong1"></i>
             </div>
           </template>
         </div>
@@ -185,8 +185,10 @@ $drop-height: 46px;
     color: $title-color-2;
     cursor: pointer;
   }
-  .el-icon-check {
+  .icon-xuanzhong1 {
     display: none;
+    font-size: 12px;
+    font-weight: 300;
   }
   .drop-down-item:hover, .drop-down-item.single-active {
     background: $bg-color-5;
