@@ -74,7 +74,9 @@ export default {
           return true
         })
         if (this.bannerLists.length > 1) {
-          this.$refs.indexBanner.autoplay()
+          this.$nextTick(() => {
+            this.$refs.indexBanner.autoplay()
+          })
         }
       })
     },
