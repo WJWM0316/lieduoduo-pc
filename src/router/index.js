@@ -28,33 +28,24 @@ const router = new Router({
   }
 })
 let getUserInfo = () => {
-  getUserInfosApi().then(res => {
-    this.$store.commit('SETLOGIN', 1)
-    this.$store.commit('setUserInfo', res.data.data)
-    this.getUserRoleInfo()
+  return getUserInfosApi().then(res => {
+    store.commit('SETLOGIN', 1)
+    store.commit('setUserInfo', res.data.data)
   }).catch(e => {
-    this.$store.commit('SETLOGIN', 0)
+    store.commit('SETLOGIN', 0)
   })
 }
 let getUserRoleInfo = () => {
-  getUserRoleInfoApi().then(res => {
+  return getUserRoleInfoApi().then(res => {
     if (res.data.data.isJobhunter) this.$store.dispatch('getMyResume')
-    this.$store.commit('setRoleInfos', res.data.data)
+    store.commit('setRoleInfos', res.data.data)
   })
 }
 router.beforeEach((to, from, next) => {
   store.dispatch('setPageName', { name: to.name })
-
-
-  // let userInfo = this.$store.getters.userInfo
-  // console.log(userInfo, 1111)
-  // if (userInfo.id)
-
-
   if (from.name !== to.name) {
     window.scrollTo(0, 0)
   }
   next(true)
 })
-
 export default router

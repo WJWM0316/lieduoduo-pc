@@ -22,13 +22,16 @@ img {
 	padding-top: 246px;
 	.header {
 		width: 100%;
-		background: #F5F5F5;
 		padding: 34px 0 30px;
 		position: fixed;
 		top: $page-header-height;
 		left: 0;
 		z-index: 2;
-		transition: all .1s;
+		background-color: #F5F5F5;
+		
+		background-position: right center;
+		background-repeat: no-repeat;
+		transition: all .4s;
 		.inner {
 			@include clearfix;
 			.header-content {
@@ -87,7 +90,7 @@ img {
 						display: inline-block;
 						.icon {
 							font-size: 14px;
-							color: #fff;
+							color: #6D696E;
 							margin-right: 7px;
 						}
 					}
@@ -208,96 +211,126 @@ img {
 			}
 		}
 		&.isRapidly {
-			background:linear-gradient(321deg,rgba(101,39,145,1) 0%,rgba(50,32,116,1) 34%,rgba(50,32,116,1) 100%);
-			.header-content {
-				.name, .info-item {
-					color: #fff !important;
-				}
-				.salary {
-					color: $sub-color-1 !important;
-				}
-				.label-item {
-					color: $main-color-1 !important;
-				}
-			}
-			.aside {
-				padding-top: 6px;
-				.yuemian24 {
-					padding-left: 56px;
-					position: relative;
-					font-size: 0;
-					margin-bottom: 12px;
-					.logo {
-						width: 42px;
-						position: absolute;
-						top: 0;
-						left: 0;
-					}
-					.number {
-						display: inline-block;
-						font-size:14px;
-						font-weight:400;
-						color:#fff;
-						line-height:20px;
-						.num {
-							font-size:24px;
-							font-weight:700;
-							color:$sub-color-1;
-							line-height:20px;
-							margin-right: 3px;
-						}
-						.desc {
-							font-size:12px;
-						}
-					}
-					.timeBox {
-						float: right;
-						display: inline-block;
-						font-size:14px;
-						font-weight:400;
-						color:#fff;
-						line-height:20px;
-						.little-box {
-							width:22px;
-							height:22px;
-							background:#EFE9F4;
-							border-radius:2px;
-							line-height: 22px;
-							text-align: center;
-							font-size:16px;
-							color:$main-color-1;
-							display: inline-block;
-							margin: 0 6px;
-							&:last-child {
-								margin-right: 0;
-							}
-						}
-						.desc {
-							font-size:12px;
-							font-weight:400;
-							color:#fff;
-							line-height:14px;
-							margin-top: 4px;
-							transform: scale(0.9);
-							text-align: center;
-							.icon {
-								font-size: 10px;
-								color: #BC94D7;
-								margin-left: 4px;
-							}
-						}
-					}
-				}
-				.operBox {
-					.kailiao {
-						background: $sub-color-1 !important;
-						color: $main-color-1 !important;
-					}
-				}
-				.botBtnBox {
-					.botBtn {
+			background:url('https://attach.lieduoduo.ziwork.com/front-assets/web/images/24hour.png') no-repeat right 126%, linear-gradient(321deg,rgba(101,39,145,1) 0%,rgba(50,32,116,1) 34%,rgba(50,32,116,1) 100%);
+			background-size: auto 120px;
+			.inner {
+				.header-content {
+					.name, .info-item {
 						color: #fff !important;
 					}
+					.salary {
+						color: $sub-color-1 !important;
+					}
+					.label-item {
+						color: $main-color-1 !important;
+					}
+					.infos {
+						.info-item {
+							.icon {
+								color: #fff;
+							}
+						}
+					}
+				}
+				.aside {
+					padding-top: 6px;
+					.yuemian24 {
+						padding-left: 56px;
+						position: relative;
+						font-size: 0;
+						margin-bottom: 12px;
+						.logo {
+							width: 42px;
+							position: absolute;
+							top: 0;
+							left: 0;
+						}
+						.number {
+							display: inline-block;
+							font-size:14px;
+							font-weight:400;
+							color:#fff;
+							line-height:20px;
+							.num {
+								font-size:24px;
+								font-weight:700;
+								color:$sub-color-1;
+								line-height:20px;
+								margin-right: 3px;
+							}
+							.desc {
+								font-size:12px;
+							}
+						}
+						.timeBox {
+							float: right;
+							display: inline-block;
+							font-size:14px;
+							font-weight:400;
+							color:#fff;
+							line-height:20px;
+							.little-box {
+								width:24px;
+								height:24px;
+								background:#EFE9F4;
+								border-radius:2px;
+								line-height: 24px;
+								text-align: center;
+								font-size:16px;
+								color:$main-color-1;
+								display: inline-block;
+								margin: 0 6px;
+								&:last-child {
+									margin-right: 0;
+								}
+							}
+							.desc {
+								font-size:12px;
+								font-weight:400;
+								color:#fff;
+								line-height:14px;
+								margin-top: 5px;
+								transform: scale(0.9);
+								text-align: center;
+								.icon {
+									font-size: 10px;
+									color: #BC94D7;
+									margin-left: 4px;
+								}
+							}
+						}
+					}
+					.operBox {
+						.kailiao {
+							background: $sub-color-1 !important;
+							color: $main-color-1 !important;
+						}
+					}
+					.botBtnBox {
+						.botBtn {
+							color: #fff;
+							&.cur {
+								color: #FFDC29;
+							}
+						}
+					}
+				}
+			}
+		}
+		&.newHeader {
+			padding: 27px 0;
+			top: -90px;
+			&.headerFloat {
+				top: 0;
+			}
+			.inner {
+				.salary {
+					margin-left: 14px;
+					font-size:30px;
+					line-height: 1;
+				}
+				.aside {
+					padding-top: 0;
 				}
 			}
 		}
@@ -353,6 +386,7 @@ img {
 					color:$font-color-3;
 					line-height:26px;
 					white-space: pre-wrap;
+					margin: 0;
 				}
 				.address {
 					width:750px;
@@ -503,5 +537,15 @@ img {
 				display: block;
 			}
 		}
+	}
+}
+
+
+.el-tooltip__popper.is-dark.tooltip {
+	background: rgba(48,49,51,0.95);
+	box-shadow: 0px 0px 30px 0px rgba(22,39,77,0.07);
+	p {
+		font-size:  12px;
+		line-height: 16px;
 	}
 }

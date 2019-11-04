@@ -2,12 +2,18 @@
 	<div class="wrap" v-show="showPop">
 		<div class="bg"></div>
 		<div class="inner">
-			<div class="posterUrl"><el-image class="img" fit='contain' :src="posterUrl" alt=""></el-image></div>
+			<div class="posterUrl">
+				<el-image class="img" fit='contain' :src="posterUrl" alt="">
+					<div slot="error" class="image-slot">
+	        	<i class="el-icon-picture-outline"></i>
+	      	</div>
+	      </el-image>
+      </div>
 		</div>
 		<div class="operBox">
 			<div class="btn" @click="oper('download')"><i class="icon iconfont icon-xiazai"></i>下载</div>
 			<div class="btn copy" @click="oper('copy')"><i class="icon iconfont icon-fuzhi"></i>复制</div>
-			<div class="btn" @click="oper('close')"><i class="icon iconfont icon-danchuang-guanbi"></i>关闭</div>
+			<div class="btn" @click="oper('close')"><i class="icon iconfont icon-close"></i>关闭</div>
 		</div>
 	</div>
 </template>

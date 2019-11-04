@@ -37,17 +37,14 @@ export default {
 				break
 		}
 		getBanners({location}).then(res => {
-			console.log(this.roleInfos, 111111111111)
 			this.adList = res.data.data.pcPositionDetailSide || res.data.data.jobhunterPcPositionList
 			if (this.roleInfos.isJobhunter) {
-
 				let createUseIndex = 0
 				this.adList.map((item, index) => {
 					if (item.name === 'createUser') {
 						createUseIndex = index
 					}
 				})
-
 				this.adList.replace(createUseIndex, 1)
 			}
 		})
