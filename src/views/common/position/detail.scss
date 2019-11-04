@@ -291,11 +291,17 @@ img {
 								line-height:14px;
 								margin-top: 5px;
 								transform: scale(0.9);
-								text-align: center;
+								display: flex;
+								align-items: center;
+								justify-content: center;
 								.icon {
-									font-size: 10px;
-									color: #BC94D7;
+									width: 12px;
+									height: 12px;
+									display: inline-block;
+									background: url('https://attach.lieduoduo.ziwork.com/front-assets/web/images/wenhao.png') no-repeat;
+									background-size: 100%;
 									margin-left: 4px;
+									transform: scale(0.9);
 								}
 							}
 						}

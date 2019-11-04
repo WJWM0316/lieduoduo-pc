@@ -37,7 +37,7 @@
 									2.急速约面服务</br>
 								  （1）法定工作日（除节假日前一天）内抢占约面席位，面试官将在抢占成功后的24小时内给与答复。</br>
 								  （2）节假日前一天及节假日内抢占约面席位，面试官将在假期结束后的24小时内给与答复。</p>
-					     	<i class="icon iconfont icon-yanseguanbi_huaban"></i>
+					     	<i class="icon"></i>
 					    </el-tooltip></p>
 						</div>
 					</div>
