@@ -84,6 +84,7 @@ export default class poster extends Component {
 				}
 				getPoster = getPositionMinPostApi
 		}
+		this.params.globalLoading = true
 		getPoster(this.params).then(res => {
 			this.posterUrl = res.data.data.url
 			switch (this.params.type) {

@@ -3,45 +3,23 @@ import { Loading } from 'element-ui'
 import router from '../router/index'
 import { getAccessToken, removeAccessToken } from './cacheService'
 import Vue from 'vue'
-let loadingInstance = null
+
+let loadingInstance = null,
+    counter = 0 
 const VUE_WEB_ZHAOPIN_API = process.env.VUE_APP_WEB_ZHAOPIN_API
 const VUE_WEB_QIUZHI_API = process.env.VUE_APP_WEB_QIUZHI_API
 const VUE_WEB_PUB_API = process.env.VUE_APP_WEB_PUB_API
 const VUE_WEB_NODE_API = process.env.VUE_APP_WEB_NODE_API
 
-// 请求拦截器
-axios.interceptors.request.use(
-  config => {
-    config.headers.common['Authorization'] = getAccessToken()
-    return config
-  },
-  error => {
-    return Promise.error(error)
-  }
-)
 
-axios.interceptors.response.use(
-  res => {
-    if (loadingInstance) loadingInstance.close()
-    return res
-  },
-  err => {
-    // 错误提示
-    if (loadingInstance) loadingInstance.close()
-    return Promise.reject(err.response)
-  }
-)
-// let host_pub = false
 export const request = ({ url, method, params = {}, config }) => {
-  // 切换api host
-  // if (config && config.host) {
-  //   if (!host_pub) axios.defaults.baseURL = VUE_WEB_PUB_API
-  //   host_pub = true
-  // } else {
-  //   if (host_pub) this.upDateBaseURL()
-  //     host_pub = false
-  // }
+  if (params && params.globalLoading) counter++
+  if (counter === 1) loadingInstance = Loading.service({})
+  console.log(counter, 11111)
+  if (getAccessToken()) axios.defaults.headers.common['Authorization'] = getAccessToken()
+  
 
+  // 切换api host
   switch (config.host) {
     case 'pub':
       axios.defaults.baseURL = VUE_WEB_PUB_API
@@ -57,13 +35,20 @@ export const request = ({ url, method, params = {}, config }) => {
       break
   }
 
-  if (params.globalLoading) {
-    loadingInstance = Loading.service({})
-    delete params.globalLoading
+  let loadingBack = () => {
+    if (params && params.globalLoading) {
+      counter--
+      if (counter === 0) {
+        Vue.nextTick(() => { // 以服务的方式调用的 Loading 需要异步关闭
+          loadingInstance.close();
+        })
+      }
+    }
   }
   return new Promise((resolve, reject) => {
     axios[method](url, method === 'get' ? { params } : params).then(res => {
       resolve(res)
+      loadingBack()
     }).catch(err => {
       if (!config.noCheckLogin && err.data.httpStatus !== 200) {
         Vue.message.error(err.data.msg)
@@ -74,11 +59,7 @@ export const request = ({ url, method, params = {}, config }) => {
         removeAccessToken()
       }
       reject(err)
+      loadingBack()
     })
   })
 }
-
-// export const upDateBaseURL = () => {
-//   let role = this.$store.getters('userIdentity')
-//   axios.defaults.baseURL = role !== 'applicant' ? VUE_WEB_ZHAOPIN_API : VUE_WEB_QIUZHI_API
-// }
