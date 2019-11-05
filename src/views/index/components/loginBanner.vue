@@ -13,7 +13,7 @@
           <el-input  class="login-code-input el-input-radius2px" placeholder="验证码" v-model="loginForm.code" size="medium">
             <span class="code-span" slot="suffix"  @click="getCode">{{text}}</span>
           </el-input>
-          <div class="login-btn" @click="login">登陆/注册</div>
+          <div class="login-btn" @click="login">登录/注册</div>
         </div>
       </div>
     </div>
