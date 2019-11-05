@@ -191,7 +191,8 @@ export default class PositionDetail extends Vue {
   	let that = this
   	getPositionApi({id: this.id}).then(res => {
 			this.infos = res.data.data
-			this.remainingTime = timePocessor.restTime(that.infos.rapidlyInfo.endTime)
+			let time = that.infos.rapidlyInfo.endTime.replace('-', '/')
+			this.remainingTime = timePocessor.restTime(time)
 			timePocessor.countDown(this.remainingTime).then(res => {
   			this.remainingTime = res
   		})
@@ -281,7 +282,6 @@ export default class PositionDetail extends Vue {
   	this.getDetail()
   	window.onscroll = () => {
   		if (!this.headerH) this.headerH = this.$refs.header.clientHeight + 50
-  		console.log(this.headerH, 222)
   		if (window.scrollY > this.headerH) {
   			if (!this.headerFloat) this.headerFloat = true
   		} else {

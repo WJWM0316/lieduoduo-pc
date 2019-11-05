@@ -56,7 +56,7 @@ img {
 						line-height:26px;
 						margin-right: 11px;
 						&.jipin {
-							background: url('https://attach.lieduoduo.ziwork.com/front-assets/web/images/tag_job_detail.png') no-repeat;
+							background: url(#{$image-cdn-url}/images/tag_job_detail.png) no-repeat;
 							background-size: 100% 100%;
 						}
 					}
@@ -207,7 +207,7 @@ img {
 			}
 		}
 		&.isRapidly {
-			background: url('https://attach.lieduoduo.ziwork.com/front-assets/web/images/24h.png'), linear-gradient(321deg,rgba(101,39,145,1) 0%,rgba(50,32,116,1) 34%,rgba(50,32,116,1) 100%);
+			background: url(#{$image-cdn-url}/images/24h.png), linear-gradient(321deg,rgba(101,39,145,1) 0%,rgba(50,32,116,1) 34%,rgba(50,32,116,1) 100%);
 			background-repeat: no-repeat;
 			background-position: right 124%;
 			.inner {
@@ -295,7 +295,7 @@ img {
 									width: 12px;
 									height: 12px;
 									display: inline-block;
-									background: url('https://attach.lieduoduo.ziwork.com/front-assets/web/images/wenhao.png') no-repeat;
+									background: url(#{$image-cdn-url}/images/wenhao.png) no-repeat;
 									background-size: 100%;
 									margin-left: 4px;
 									transform: scale(0.9);

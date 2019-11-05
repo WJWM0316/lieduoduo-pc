@@ -29,7 +29,7 @@ export default class login extends Vue {
 .loginBox {
   width:298px;
   height:215px;
-  background: url('https://attach.lieduoduo.ziwork.com/front-assets/web/images/bg_login_banner.png') no-repeat;
+  background: url(#{$image-cdn-url}/images/bg_login_banner.png) no-repeat;
   background-size: 100% 100%;
   box-shadow:0px 0px 13px 0px rgba(22,39,77,0.04);
   padding: 45px 0px 36px;

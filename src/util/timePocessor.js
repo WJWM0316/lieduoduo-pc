@@ -41,8 +41,7 @@ class timePocessor {
 	            }
 	          }
 	        }
-	      }
-	      
+	      }	      
 	      time.day = day === 0 || day >= 10 ? day : '0' + day
 	      time.hour = hour >= 10 ? hour : '0' + hour
 	      time.minute = minute >= 10 ? minute : '0' + minute
