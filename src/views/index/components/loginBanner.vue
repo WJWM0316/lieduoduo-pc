@@ -101,14 +101,6 @@ $index-login-height: 120px;
   background-repeat: no-repeat;
   height: $index-login-height;
 }
-// @media screen and (max-width: 1400px)  {
-//   .login-bg {
-//     width: $page-width;
-//     .position-number-wrapper {
-//       margin-left: 300px !important;
-//     }
-//   }
-// }
 .index-login {
   height: $index-login-height;
   width: 100%;
@@ -122,7 +114,7 @@ $index-login-height: 120px;
   flex: 1;
   text-align: center;
   .position-number-wrapper {
-    margin-left: 300px;
+    margin-left: 350px;
     width: 280px;
     text-align: left;
     display: inline-block;

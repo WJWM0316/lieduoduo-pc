@@ -256,10 +256,11 @@ class Util {
    * @returns {Object}
    */
   setTimeDown(endDateStr) {
+    if(endDateStr) endDateStr = endDateStr.replace(/-/g, '/')
     //结束时间
-    var endDate = new Date(endDateStr);
+    var endDate = new Date(endDateStr)
     //当前时间
-    var nowDate = new Date();
+    var nowDate = new Date()
     //相差的总秒数
     var totalSeconds = parseInt((endDate - nowDate) / 1000);
     //天数

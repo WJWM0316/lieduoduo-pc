@@ -274,6 +274,8 @@ export default {
   .company-name {
     color: $title-color-1;
     margin-bottom: 10px;
+    max-width: 200px;
+    @include ellipsis;
   }
   p span {
     padding-right: 8px;

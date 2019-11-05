@@ -157,6 +157,7 @@ export default {
     // 地址选择
     handleSelectLocaltion (address) {
       this.address = address.name
+      this.handleSelect()
     },
     // 职位选择
     handleSelectPosition (item) {
