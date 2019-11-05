@@ -16,6 +16,10 @@ import loginForm from '@/components/common/login'
   name: 'login',
   components: {
     loginForm
+  },
+  beforeRouteLeave (to, form, next) {
+    this.$message.closeAll()
+    next()
   }
 })
 export default class login extends Vue {
