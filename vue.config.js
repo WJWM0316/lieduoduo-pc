@@ -10,17 +10,14 @@ let plugins = [
     mapMutations: ['vuex', 'mapMutations'],
     mapGetters: ['vuex', 'mapGetters'],
     mapState: ['vuex', 'mapState']
+  }),
+  new CompressionPlugin({
+    test: /\.js$|\.css$|\.html/,
+    threshold: 10240,
+    deleteOriginalAssets: false
   })
 ]
-// if (process.env.NODE_ENV === 'production') {
-//   plugins.push(
-//     new CompressionPlugin({
-//       test: /\.js$|\.css$|\.html/,
-//       threshold: 10240,
-//       deleteOriginalAssets: false
-//     })
-//   )
-// }
+
 module.exports = {
   lintOnSave: true,
   configureWebpack: {

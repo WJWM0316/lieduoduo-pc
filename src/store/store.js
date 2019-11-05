@@ -75,9 +75,8 @@ export default new Vuex.Store({
       // 获取用户角色信息
       getUserRoleInfoApi().then(res => {
         state.roleInfos = res.data.data
-        console.log(state, 1111, res.data.data)
         if (state.userIdentity === 1 && !state.roleInfos.isJobhunter) {
-          router.replace({ path: '/createUser' })
+          router.replace('createUser')
           return
         }
         if (state.userIdentity === 2 && !state.roleInfos.isRecruiter) {

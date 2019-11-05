@@ -129,7 +129,7 @@ export default class createUser extends Vue {
 	  .slogon-box{
 	    width:450px;
 	    height:auto;
-	    margin: 38px auto 60px;
+	    margin: 38px auto 50px;
 	  }
 	}
 }

@@ -241,6 +241,9 @@
   import Component from 'vue-class-component'
   import { loginPutInApi, getCodeApi, getCaptchaApi } from '../../../api/auth'
   import { schJobApi, getPositionTypesApi, getAdvListApi, getUserRoleInfo } from '../../../api/putIn'
+
+  import { saveAccessToken } from '@/api/cacheService'
+
   @Component({
     name: 'lighthouse-list',
     methods: {
@@ -373,25 +376,15 @@
           isChangeHost: true,
           ...this.form
         }).then(res => {
-            this.$store.commit('LOGIN',res.data.data)
             this.$store.dispatch('setUserInfo', res.data.data)
-            setTimeout(() => {
-              getUserRoleInfo().then(res => {
-                if(res.data.data.isJobhunter === 1) {
-                  this.$router.replace('index')
-                }else {
-                  this.$router.replace('createUser')
-                }
-              })
-            }, 300)
-        }).catch(e=>{
-          this.setHint(e.data.msg || '')
-          if(e.data.code && e.data.code === 419) {
-            this.codePic = e.data.data
-            this.form.captchaKey = e.data.data.key
-          } else if (e.data.code === 440){
-            this.getPicCode()
-          }
+            saveAccessToken(res.data.data.token)
+            getUserRoleInfo().then(res => {
+              if(res.data.data.isJobhunter === 1) {
+                this.$router.replace('/index')
+              }else {
+                this.$router.replace('/createUser')
+              }
+            })
         })
       }
     }
