@@ -124,6 +124,7 @@ export default {
         }, 500)
         return
       } else {
+        window.clearTimeout(this.cryExecTimer)
         if (!this.$refs.bubble.querySelector('animation')) this.$refs.bubble.classList.add('animation')
       }
       this.bubbleDownTimer = setTimeout(() => {
@@ -242,13 +243,7 @@ export default {
     color: $font-color-6;
     border-bottom: 1px dashed $border-color-1;
     .list-image {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      overflow: hidden;
-    }
-    img {
-      max-width: 100%;
+      @include img-radius(28px, 28px)
     }
     .list-company {
       font-size: 14px;
