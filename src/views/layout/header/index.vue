@@ -58,12 +58,10 @@
           <template v-if="userInfo.id">
             <el-dropdown trigger="click" placement="bottom-start" @command="handleClick">
               <div>
+                <span>{{userInfo.realname}}</span>
                 <div class="user-avatar">
                   <img :src="userInfo.avatarInfo && userInfo.avatarInfo.smallUrl" alt="">
                 </div>
-                <span>
-                  {{userInfo.realname}}
-                </span>
               </div>
               <el-dropdown-menu slot="dropdown">
                 <!-- <el-dropdown-item command="usercenter">个人中心</el-dropdown-item> -->
