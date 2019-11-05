@@ -263,6 +263,14 @@ class Util {
     var nowDate = new Date()
     //相差的总秒数
     var totalSeconds = parseInt((endDate - nowDate) / 1000);
+    if(!totalSeconds || totalSeconds <= 0) {
+      return {
+        days: 0,
+        hours: '00',
+        mins: '00',
+        seconds: '00'
+      } 
+    }
     //天数
     var days = Math.floor(totalSeconds / (60 * 60 * 24));
     //取模（余数）
@@ -278,7 +286,7 @@ class Util {
       days: days > 9 || days <= 0 ? days : '0' + days,
       hours: hours > 9 ? hours : '0' + hours,
       mins: minutes > 9 ? minutes : '0' + minutes,
-      seconds: seconds > 9 ? seconds : '0' + seconds,
+      seconds: seconds > 9 ? seconds : '0' + seconds
     }
   }
 }
