@@ -139,7 +139,7 @@ export default {
       if (!this.isLogin) {
         this.$router.push('/login?type=msgLogin')
       } else {
-        this.$store.commit('guideQrcodePop', { switch: true, type: 'tocIndex' })
+        this.$store.commit('guideQrcodePop', { switch: true, type: 'to24Hours' })
       }
     }
   },

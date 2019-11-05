@@ -10,6 +10,15 @@
 <script>
 	import {getMyQrcodeApi} from '@/api/qrcode'
 	export default {
+		data () {
+			return {
+				cdnPath: `${this.$cdnPath}/images/`,
+				qrcodeTxt: '',
+				qrCodeUrl: '' // 二维码
+			}
+		},
+		created () {
+		},
 		computed: {
 			...mapState({
 				guideQrcodePop: state => state.guideQrcodePop
@@ -29,27 +38,25 @@
 							this.qrCodeUrl = '查看面试详情'
 							break
 						case 'tobIndex':
-							this.qrCodeUrl = 'https://attach.lieduoduo.ziwork.com/front-assets/web/images/bIndex.jpg'
+							this.qrCodeUrl = `${this.cdnPath}bIndex.jpg`
 							this.title = '切换失败'
 							this.qrcodeTxt = '尚未认证招聘官，微信扫一扫认证'
 							break
 						case 'tocIndex':
-							this.qrCodeUrl = 'https://attach.lieduoduo.ziwork.com/front-assets/web/images/cIndex.jpg'
+							this.qrCodeUrl = `${this.cdnPath}cIndex.jpg`
 							this.title = '微信扫一扫'
 							this.qrcodeTxt = '解锁更多职位'
-							break	
+							break
+						case 'to24Hours':
+							this.qrCodeUrl = `${this.cdnPath}24hoursyuemian.jpg`
+							this.title = '微信扫一扫'
+							this.qrcodeTxt = '解锁更多急速约面职位'
+							break
 					}
 				}
 			}
 		},
-		data () {
-			return {
-				qrcodeTxt: '',
-				qrCodeUrl: '' // 二维码
-			}
-		},
-		created () {
-		},
+		
 		methods: {
 			hidePop () {
 				this.$store.commit('guideQrcodePop', false)
