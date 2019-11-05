@@ -97,7 +97,7 @@
                 </div>
                 <div class="guide_text">
                     <i class="iconfont icon-qiye"></i>
-                    <span>300+知名企业</span>
+                    <span>4000+知名企业</span>
                 </div>
                 <div class="guide_text">
                     <i class="iconfont icon-weixin" style="font-size: 14px;"></i>

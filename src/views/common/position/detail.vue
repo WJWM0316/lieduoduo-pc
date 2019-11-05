@@ -61,7 +61,7 @@
 								</el-dropdown-item>
 								<el-dropdown-item command="longPoster">
 									<img class="icon" :src="cdnPath + 'ic_share_detailpic.png'" alt="">
-									<div class="title">生成职位长图<span class="label">最详情</span></div>
+									<div class="title">生成职位长图<span class="label">最详细</span></div>
 									<p class="desc">呈现所有职位信息，细节一目了然</p> 
 								</el-dropdown-item>
 							</el-dropdown-menu>
