@@ -189,11 +189,13 @@ export default class PositionDetail extends Vue {
   	let that = this
   	getPositionApi({id: this.id}).then(res => {
 			this.infos = res.data.data
-			let time = that.infos.rapidlyInfo.endTime.replace(/-/g, '/')
-			this.remainingTime = timePocessor.restTime(time)
-			timePocessor.countDown(this.remainingTime).then(res => {
-  			this.remainingTime = res
-  		})
+			if (that.infos.rapidlyInfo.endTime) {
+				let time = that.infos.rapidlyInfo.endTime.replace(/-/g, '/')
+				this.remainingTime = timePocessor.restTime(time)
+				timePocessor.countDown(this.remainingTime).then(res => {
+	  			this.remainingTime = res
+	  		})
+			}
 			this.getMapLocation(that.infos.lat, that.infos.lng)
 	  })
   }
