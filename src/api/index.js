@@ -17,20 +17,19 @@ export const request = ({ url, method, params = {}, config }) => {
   if (counter === 1) loadingInstance = Loading.service({})
   if (getAccessToken()) axios.defaults.headers.common['Authorization'] = getAccessToken()
   
-
   // 切换api host
   switch (config.host) {
     case 'pub':
-      axios.defaults.baseURL = VUE_WEB_PUB_API
+      if (axios.defaults.baseURL !== VUE_WEB_PUB_API) axios.defaults.baseURL = VUE_WEB_PUB_API
       break
     case 'qiuzhi':
-      axios.defaults.baseURL = VUE_WEB_QIUZHI_API
+      if (axios.defaults.baseURL !== VUE_WEB_QIUZHI_API) axios.defaults.baseURL = VUE_WEB_QIUZHI_API
       break
     case 'zhaopin':
-      axios.defaults.baseURL = VUE_WEB_ZHAOPIN_API
+      if (axios.defaults.baseURL !== VUE_WEB_ZHAOPIN_API) axios.defaults.baseURL = VUE_WEB_ZHAOPIN_API
       break
     case 'node':
-      axios.defaults.baseURL = VUE_WEB_NODE_API
+      if (axios.defaults.baseURL !== VUE_WEB_NODE_API) axios.defaults.baseURL = VUE_WEB_NODE_API
       break
   }
 
