@@ -60,7 +60,7 @@ export default {
 				width: 100%;
 				margin-bottom: 22px;
 				cursor: pointer;
-				img {
+				a, img {
 					width: 100%;
 					display: block;
 				}

@@ -18,13 +18,11 @@
 							<span class="label-item" v-for="n in infos.lightspotInfo" :key="n">{{n}}</span>
 						</div>
 					</div>
-
 					<div class="title" v-show="headerFloat">
 						<span v-if="infos.isUrgency === 1" class="icon jipin"></span>
 						<span class="name">{{infos.positionName}}</span>
 						<span class="salary">{{infos.emolumentMin}}~{{infos.emolumentMax}}K<span v-if="infos.annualSalary > 12">·{{infos.annualSalary}}<span class="unit">薪</span></span></span>
 					</div>
-					
 				</div>
 				<div class="aside">
 					<div v-if="infos.isRapidly === 1" class="icon yuemian24" v-show="!headerFloat">
@@ -191,7 +189,7 @@ export default class PositionDetail extends Vue {
   	let that = this
   	getPositionApi({id: this.id}).then(res => {
 			this.infos = res.data.data
-			let time = that.infos.rapidlyInfo.endTime.replace('-', '/')
+			let time = that.infos.rapidlyInfo.endTime.replace(/-/g, '/')
 			this.remainingTime = timePocessor.restTime(time)
 			timePocessor.countDown(this.remainingTime).then(res => {
   			this.remainingTime = res
