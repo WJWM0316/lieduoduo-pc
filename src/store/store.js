@@ -96,7 +96,7 @@ export default new Vuex.Store({
       state.userInfo = {}
       state.token = null
       removeAccessToken()
-      if (state.userIdentity === 0) {
+      if (state.userIdentity === 1) {
         router.replace({ path: '/index' })
       } else {
         router.replace({ path: '/login', query: { type: 'msgLogin' } })
