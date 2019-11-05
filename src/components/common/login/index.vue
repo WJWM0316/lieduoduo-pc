@@ -337,7 +337,7 @@ export default class loginForm extends Component {
   }
 }
 </script>
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .inner {
   text-align: center;
   .logind {
@@ -742,6 +742,7 @@ export default class loginForm extends Component {
         height: 48px;
         font-size: 16px;
         font-weight: 500;
+        color: $title-color-1;
         background: none;
       }
       .msgText {
@@ -926,6 +927,7 @@ export default class loginForm extends Component {
           input{
             width: 200px;
             height: 44px;
+            color: $title-color-1;
           }
           .msgText{
             margin-right: 15px;

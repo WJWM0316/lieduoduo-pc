@@ -6,10 +6,7 @@ import router from '@/router/index.js'
 import { mobileReg } from '@/util/fieldRegular.js'
 import { getMyResumeApi } from '@/api/resume.js'
 
-import {
-  loginApi,
-  logoutApi
-} from '../api/auth'
+import { logoutApi } from '../api/auth'
 
 Vue.use(Vuex)
 
@@ -62,10 +59,10 @@ export default new Vuex.Store({
     },
     // 登录回调
     LOGINCALLBACK: (state, data) => {
-      Vue.message({
-        message: '登录成功',
-        type: 'success'
-      })
+      // Vue.message({
+      //   message: '登录成功',
+      //   type: 'success'
+      // })
       saveAccessToken(data.token, state.loginValidTime)
       saveUserInfo(data, state.loginValidTime)
       state.userInfo = data
@@ -76,7 +73,7 @@ export default new Vuex.Store({
       getUserRoleInfoApi().then(res => {
         state.roleInfos = res.data.data
         if (state.userIdentity === 1 && !state.roleInfos.isJobhunter) {
-          router.replace({path: '/createUser'})
+          router.replace({ path: '/createUser' })
           return
         }
         if (state.userIdentity === 2 && !state.roleInfos.isRecruiter) {
@@ -90,7 +87,7 @@ export default new Vuex.Store({
           router.go(-1)
         } else {
           let userIdentity = state.userIdentity
-          userIdentity === 1 ? router.replace({path: '/index'}) : router.replace({path: '/candidate'})
+          userIdentity === 1 ? router.replace({ path: '/index' }) : router.replace({ path: '/candidate' })
         }
       })
     },
@@ -100,13 +97,13 @@ export default new Vuex.Store({
       state.token = null
       removeAccessToken()
       if (state.userIdentity === 1) {
-        router.replace({path: '/index'})
+        router.replace({ path: '/index' })
       } else {
         router.replace({ path: '/login', query: { type: 'msgLogin' } })
       }
-      setTimeout(() => {
-        window.location.reload()
-      }, 1500)
+      // setTimeout(() => {
+      //   window.location.reload()
+      // }, 1500)
     },
     setRoleInfos (state, data) {
       state.roleInfos = data
@@ -144,7 +141,7 @@ export default new Vuex.Store({
         if (state.roleInfos.isRecruiter) {
           switchRoleApi().then(res => {
             state.userIdentity = state.userIdentity === 1 ? 2 : 1
-            router.replace({path: '/candidate'})
+            router.replace({ path: '/candidate' })
           })
         } else {
           // 打开引导弹窗
@@ -153,7 +150,7 @@ export default new Vuex.Store({
       } else {
         switchRoleApi().then(res => {
           state.userIdentity = state.userIdentity === 1 ? 2 : 1
-          router.replace({path: '/index'})
+          router.replace({ path: '/index' })
         })
       }
     }
@@ -190,10 +187,10 @@ export default new Vuex.Store({
     logoutApi (store, data) {
       return logoutApi()
         .then(res => {
-          Vue.message({
+          /* Vue.message({
             message: '退出成功',
             type: 'success'
-          })
+          }) */
           store.commit('LOGOUT', data)
           return res
         })
