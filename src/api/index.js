@@ -15,6 +15,14 @@ const VUE_WEB_NODE_API = process.env.VUE_APP_WEB_NODE_API
 export const request = ({ url, method, params = {}, config }) => {
   if (params && params.globalLoading) counter++
   if (counter === 1) loadingInstance = Loading.service({})
+
+  // 添加统计头部
+  let urlParams = new URLSearchParams(location.search)
+  if(urlParams.get('cc')) {
+    axios.defaults.headers.common['Channel-Code'] = urlParams.get('cc')
+  }
+
+  // 添加token头部
   if (getAccessToken()) axios.defaults.headers.common['Authorization'] = getAccessToken()
   
   // 切换api host
