@@ -6,7 +6,8 @@ body,p,h1,h2,h3,h4,h5,h6,ul,ol,dl,li,dt,dd{
     padding: 0;
     /*字体设置*/
     font-size: 14px;
-    font-family: '12px/1.5 Microsoft YaHei,tahoma,arial,Hiragino Sans GB,\\5b8b\4f53,sans-serif';
+    font-family: arial,verdana,helvetica,'PingFang SC','HanHei SC',STHeitiSC-Light,Microsoft Yahei,sans-serif;
+    -webkit-font-smoothing: antialiased;
     color: #ccc;
     /* 去掉列表的原点 */
     list-style: none;
