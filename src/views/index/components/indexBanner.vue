@@ -2,7 +2,7 @@
   <div class="swiper" @mouseover="pause" @mouseout="play">
     <ul class="swiper-group" :style="groupStyle">
       <li class="swiper-item" v-for="(item,index) in items" ref="item" :key="index">
-        <a target="_blank"  :href="item.otherUrl"><img :src="item.bigImgUrl" alt=""></a>
+        <img :src="item.bigImgUrl" alt="">
       </li>
     </ul>
     <template v-if="items.length > 1">
