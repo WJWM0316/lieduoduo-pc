@@ -2,8 +2,8 @@
 	<div class="wrap" v-if="adList.length > 0">
 		<div class="adList">
 			<div class="ad-img1" v-for="(item, index) in adList" :key="index">
-				<!-- <a :href="item.targetUrl"  target="_blank"></a> -->
-				<img :src="item.bigImgUrl"></img>
+				<a :href="item.targetUrl" v-if="item.targetUrl" target="_blank"><img :src="item.bigImgUrl"></img></a>
+				<img :src="item.bigImgUrl" v-else></img>
 			</div>
 		</div>
 	</div>
