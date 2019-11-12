@@ -52,7 +52,6 @@ export default class APP extends Vue {
 
 .service {
   font-size:16px;
-  font-family:PingFang-SC-Medium;
   font-weight:700;
   color:rgba(101,39,145,1);
   line-height:18px;
@@ -92,7 +91,6 @@ export default class APP extends Vue {
       background:rgba(101,39,145,1);
       border-radius:4px 4px 0px 0px;
       font-size:20px;
-      font-family:PingFang-SC-Regular;
       font-weight:400;
       color:rgba(255,255,255,1);
     }
@@ -108,27 +106,23 @@ export default class APP extends Vue {
       }
       .pop_text {
         font-size:20px;
-        font-family:PingFang-SC-Regular;
         font-weight:400;
         color:rgba(98,98,98,1);
         margin: 48px 0 20px 0;
       }
       .pop_text2 {
         font-size:24px;
-        font-family:DINAlternate-Bold;
         font-weight:bold;
         color:rgba(40,40,40,1);
       }
       .pop_text3 {
         font-size:18px;
-        font-family:PingFang-SC-Regular;
         font-weight:400;
         color:rgba(53,64,72,1);
         margin-bottom: 24px;
       }
       .pop_text4 {
         font-size:14px;
-        font-family:PingFang-SC-Regular;
         font-weight:400;
         color:rgba(98,98,98,1);
       }

@@ -58,12 +58,12 @@
           <template v-if="userInfo.id">
             <el-dropdown trigger="click" placement="bottom-start" @command="handleClick">
               <div>
-                <span>{{userInfo.realname}}</span>
+                <span class="user-name">{{userInfo.realname}}</span>
                 <div class="user-avatar">
                   <img :src="userInfo.avatarInfo && userInfo.avatarInfo.smallUrl" alt="">
                 </div>
               </div>
-              <el-dropdown-menu slot="dropdown">
+              <el-dropdown-menu slot="dropdown" class="header-dorpdown-wrapper">
                 <!-- <el-dropdown-item command="usercenter">个人中心</el-dropdown-item> -->
                 <el-dropdown-item command="toggleIdentity">切换为面试官</el-dropdown-item>
                 <el-dropdown-item command="logout">退出登录</el-dropdown-item>
@@ -105,9 +105,9 @@ export default {
     this.getHotAreas()
     this.addressId = this.$store.getters.cityId
   },
-  watch: {
+  /* watch: {
     '$store.state.userInfo': function (val) {}
-  },
+  }, */
   computed: {
     ...mapState({
       roleInfos: state => state.roleInfos,
@@ -263,6 +263,10 @@ $header-height-1: $page-header-height;
   span:hover{
     color: $sub-color-1;
   }
+  .user-name {
+    color: $nav-color-default;
+    vertical-align: middle;
+  }
   .user-avatar {
     @include img-radius(30px, 30px);
     display: inline-block;
@@ -276,5 +280,8 @@ $header-height-1: $page-header-height;
   width: 158px;
   box-sizing: border-box;
   padding: 5px;
+}
+.header-dorpdown-wrapper {
+  min-width: 124px;
 }
 </style>
