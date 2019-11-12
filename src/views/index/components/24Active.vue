@@ -4,7 +4,6 @@
       <img src="../../../assets/images/index/title_24hour.png" />
       <span class="position-tag">高薪热门职位</span>
       <span class="position-tag">职业顾问服务</span>
-      <span class="position-tag">200元到面红包</span>
       <div class="bubble-wrapper" v-if="bubbleList.length">
          <p ref="bubble">{{bubbleList[bubbleIndex]}}</p>
       </div>
