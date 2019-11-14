@@ -66,7 +66,7 @@ export default PageFooter
         .code {
           width:86px;
           height:86px;
-          background:#fff;
+          // background:#fff;
           overflow: hidden;
         }
       }

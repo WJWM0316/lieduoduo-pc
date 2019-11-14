@@ -18,7 +18,7 @@ export const request = ({ url, method, params = {}, config }) => {
 
   // 添加统计头部
   // let urlParams = new URLSearchParams(location.search)
-  let urlParams = Util.getUrlParam(location.search)
+  let urlParams = Util.getUrlParam('cc')
   if (urlParams) {
     axios.defaults.headers.common['Channel-Code'] = urlParams
   }
