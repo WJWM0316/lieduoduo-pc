@@ -96,7 +96,7 @@
               <i class="iconfont icon-shoujihaoma input_icon"></i>
               <input placeholder="请输入常用手机号"  maxlength="11" v-model="form.mobile" @focus="setFocus"></li>
             <li>
-              <i class="iconfont icon-duanxinyanzheng input_icon"></i>
+              <i class="iconfont icon-duanxinyanzheng input_icon input_icon_sms"></i>
               <input placeholder="请输入手机验证码"  maxlength="4" v-model="form.code" >
               <span class="getcode" @click="getCode" v-if="codeStatus">获取验证码</span>
               <span class="getcode false" v-else>{{timer}}s</span>
@@ -1229,6 +1229,11 @@ export default class CourseList extends Vue {
               .input_icon {
                 width: 18px;
                 height: 18px;
+                display: block;
+                margin-right: 10px;
+              }
+              .input_icon_sms{
+                font-size: 14px;
                 display: block;
                 margin-right: 10px;
               }
