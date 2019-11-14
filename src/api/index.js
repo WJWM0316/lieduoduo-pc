@@ -3,6 +3,7 @@ import { Loading } from 'element-ui'
 import router from '../router/index'
 import { getAccessToken, removeAccessToken } from './cacheService'
 import Vue from 'vue'
+import Util from '../util/util'
 
 let loadingInstance = null
 let counter = 0
@@ -16,9 +17,10 @@ export const request = ({ url, method, params = {}, config }) => {
   if (counter === 1) loadingInstance = Loading.service({})
 
   // 添加统计头部
-  let urlParams = new URLSearchParams(location.search)
-  if (urlParams.get('cc')) {
-    axios.defaults.headers.common['Channel-Code'] = urlParams.get('cc')
+  // let urlParams = new URLSearchParams(location.search)
+  let urlParams = Util.getUrlParam('cc')
+  if (urlParams) {
+    axios.defaults.headers.common['Channel-Code'] = urlParams
   }
 
   // 添加token头部

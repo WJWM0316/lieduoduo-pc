@@ -32,14 +32,14 @@
   </body>
 </html>
 <script>
-window.onload = () => {
+window.onload = function () {
+  // eslint-disable-next-line no-use-before-define
   var _hmt = _hmt || [];
-  (function() {
-    var hm = document.createElement("script");
-    hm.src = "https://hm.baidu.com/hm.js?5f82b0d22022b8e62032d593e12df961";
-    var s = document.getElementsByTagName("script")[0]; 
-    s.parentNode.insertBefore(hm, s);
-  })();
+  (function () {
+    var hm = document.createElement('script')
+    hm.src = 'https://hm.baidu.com/hm.js?5f82b0d22022b8e62032d593e12df961'
+    var s = document.getElementsByTagName('script')[0]
+    s.parentNode.insertBefore(hm, s)
+  })()
 }
-
 </script>
