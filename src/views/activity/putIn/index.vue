@@ -39,7 +39,7 @@
                   <div class="op_right" @click="openMask('login')">
                     查看更多
                     <span>{{searchJobData.keyword}}</span>岗位
-                    <img class="arrowsR" src="../../../assets/images/activity/putIn/arrowsR.png" />
+                    <img class="arrowsR" :src="cdnPath + 'arrowsR.png'" />
                   </div>
                 </div>
               </div>
