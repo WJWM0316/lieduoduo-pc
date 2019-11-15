@@ -45,7 +45,7 @@
       <div class="header-user-info">
         <div class="system">
           <template v-if="userInfo.id">
-            <router-link tag="span" class="resume" to="/applyIndex">简历</router-link>
+            <router-link tag="span" class="resume" to="/cresume">简历</router-link>
           </template>
           <template v-else>
             <div>
@@ -238,6 +238,9 @@ $header-height-1: $page-header-height;
   color: $nav-color-default;
   span {
     cursor: pointer;
+  }
+  .resume.router-link-active {
+    color: $sub-color-1;
   }
 }
 .system {

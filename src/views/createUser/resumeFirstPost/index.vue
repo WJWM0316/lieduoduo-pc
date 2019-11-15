@@ -78,7 +78,7 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import myHeader from '../components/header.vue'
-import { searchResumeStepApi, setResumeFirstApi, setResumeSecondApi, setResumeThirdApi, setResumeFourthApi, getResumeFirstApi } from '../../../api/putIn'
+import { searchResumeStepApi, setResumeFirstApi, getResumeFirstApi } from '../../../api/putIn'
 
 import MyCropper from '@/components/common/cropper'
 import { getAccessToken } from '../../../api/cacheService.js'

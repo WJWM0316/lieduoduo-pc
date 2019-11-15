@@ -64,7 +64,7 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import { setResumeFirstApi, getResumeFirstApi } from '@/api/putIn'
 import MyCropper from '@/components/common/cropper'
-import {userNameReg} from '@/util/fieldRegular.js'
+import { userNameReg } from '@/util/fieldRegular.js'
 @Component({
   name: 'resumeFirstPost',
   components: {
@@ -180,7 +180,7 @@ export default class CourseList extends Vue {
     blur (dom) {
       document.querySelector(dom).className = 'el-icon-caret-bottom defalut-position'
     }
-  }
+}
 </script>
 <style lang="scss" scoped>
 .resumeOpFirstMain {
