@@ -3,7 +3,7 @@
 <div class="putIn">
   <header id="putInHeader" >
     <section>
-      <img class="left_logo" src="../../../assets/images/activity/putIn/logo_lieduodou@2x.png" />
+      <img class="left_logo" :src=" cdnPath + 'logo_lieduodou@2x.png'" @click="toIndex"/>
       <div class="headerBtn">
         <span class="btn_blo" @click="openMask('login')">高薪职位</span>
         <div class="btn_blo2" @click="setAnimate">求职者登录</div>
@@ -16,15 +16,14 @@
         <div class="lp_left_content">
           <div class="search-bar">
             <div class="search-bar-top">
-              <img class="i-search" src="../../../assets/images/activity/putIn/search.png" />
+              <i class="i-search iconfont icon-sousuo"></i>
               <input class="search-input" placeholder="搜索职位" maxlength="64" v-model="searchJobData.keyword">
               <div class="search-bar-btn" @click="searchJob">搜索职位</div>
             </div>
             <div class="select-main" v-if="isShowSelect">
               <div class="select-none" v-if="selectList.length<1">
-                <img class="bloSel" src="../../../assets/images/clo.png" @click="isShowSelect = false" />
-
-                <img class="empty-icon" src="../../../assets/images/activity/putIn/live_icon_question.png" />
+                <i class="bloSel iconfont icon-danchuang-guanbi" @click="isShowSelect = false"></i>
+                <i class="iconfont icon-cuowu empty-icon"></i>
                 <p>暂时没有符合该搜索条件的职位</p>
               </div>
               <div class="select_cont" v-else>
@@ -40,7 +39,7 @@
                   <div class="op_right" @click="openMask('login')">
                     查看更多
                     <span>{{searchJobData.keyword}}</span>岗位
-                    <img class="arrowsR" src="../../../assets/images/activity/putIn/arrowsR.png" />
+                    <img class="arrowsR" :src="cdnPath + 'arrowsR.png'" />
                   </div>
                 </div>
               </div>
@@ -52,15 +51,15 @@
             </div>
             <div class="select-search-content" >
               <template v-for="(item, index) in advList">
-                <div class="select_info"  
+                <div class="select_info"
                   @click="setAdv(item)"
                   v-if="index<4"
                   :key="item.id">
                   <img class="banner" :src="item.cardCompanyLogo.middleUrl">
                 </div>
 
-                <div 
-                class="select_info info_type2 ellipsis"  
+                <div
+                class="select_info info_type2 ellipsis"
                 @click="setAdv(item)"
                 v-else-if="index>3&&index<7"
                 :key="item.id">
@@ -84,26 +83,26 @@
             </div>
           </div>
         </div>
-        
+
       </div>
       <div class="lp-login" :class="{'fixed':messagePop.isShow ,'cake':loginModelAnimale}">
-        <img class="icon-pointer" :class="{'companyType': messagePop.type==='job' }" src="../../../assets/images/activity/putIn/arrows.gif" v-if="messagePop.isShow && !isFocus" />
+        <img class="icon-pointer" :class="{'companyType': messagePop.type==='job' }" :src="cdnPath + 'arrows.gif'" v-if="messagePop.isShow && !isFocus" />
         <p class="lp-login-title">
           <span class="green">7秒</span>注册 1000+高薪职位任你选
         </p>
         <form id="phone_form" method="post" action="javascript:;">
           <ul>
             <li>
-              <img class="input_icon" src="../../../assets/images/activity/putIn/icon_number.png" />
+              <i class="iconfont icon-shoujihaoma input_icon"></i>
               <input placeholder="请输入常用手机号"  maxlength="11" v-model="form.mobile" @focus="setFocus"></li>
             <li>
-              <img class="input_icon" src="../../../assets/images/activity/putIn/icon_note.png" />
+              <i class="iconfont icon-duanxinyanzheng input_icon input_icon_sms"></i>
               <input placeholder="请输入手机验证码"  maxlength="4" v-model="form.code" >
               <span class="getcode" @click="getCode" v-if="codeStatus">获取验证码</span>
               <span class="getcode false" v-else>{{timer}}s</span>
             </li>
             <li v-if="codePic.img">
-              <img class="input_icon" src="../../../assets/images/activity/putIn/icon_photo.png" />
+              <i class="iconfont icon-anquan_huaban input_icon"></i>
               <input placeholder="请输入图片验证码" maxlength="4" v-model="form.captchaValue" >
               <img class="codePic" :src="codePic.img" @click="getPicCode" />
             </li>
@@ -119,7 +118,7 @@
           <p @click="toPcLogin" >企业注册/登录</p>
         </div>
         <div class="formHint" v-if="formHint.isShow">
-          <img class="" src="../../../assets/images/activity/putIn/live_icon_question2.png" />
+          <i class="login_btn_icon iconfont icon-cuowu empty-icon"></i>
           {{formHint.text}}
         </div>
       </div>
@@ -128,28 +127,28 @@
   <div class="companyBabels">
     <section>
       <div class="babel_blo">
-        <img class="blo_icon" src="../../../assets/images/activity/putIn/icon_jishufankui@2x.png" />
+        <img class="blo_icon" :src="cdnPath + 'icon_jishufankui@2x.png'" />
         <div class="blo_cont">
           <p class="cont_text">急速反馈</p>
           <p class="cont_text2">24小时急速反馈</p>
         </div>
       </div>
       <div class="babel_blo">
-        <img class="blo_icon" src="../../../assets/images/activity/putIn/icon_kugongsi@2x.png" />
+        <img class="blo_icon" :src="cdnPath + 'icon_kugongsi@2x.png'" />
         <div class="blo_cont">
           <p class="cont_text">酷公司</p>
           <p class="cont_text2">1000+知名企业</p>
         </div>
       </div>
       <div class="babel_blo">
-        <img class="blo_icon" src="../../../assets/images/activity/putIn/icon_haozhiwei@2x.png" />
+        <img class="blo_icon" :src="cdnPath + 'icon_haozhiwei@2x.png'" />
         <div class="blo_cont">
           <p class="cont_text">好职位</p>
           <p class="cont_text2">大量精选高薪职位</p>
         </div>
       </div>
       <div class="babel_blo">
-        <img class="blo_icon" src="../../../assets/images/activity/putIn/icon_yuedaka@2x.png" />
+        <img class="blo_icon" :src="cdnPath + 'icon_yuedaka@2x.png'" />
         <div class="blo_cont">
           <p class="cont_text">约大咖</p>
           <p class="cont_text2">行业大咖在线招聘</p>
@@ -160,14 +159,14 @@
 
   <div class="message" v-if="messagePop.isShow" @click="cloMask">
     <div class="register-modal modal" @click.stop="" v-if="messagePop.type==='login'">
-      <img class="icon-close" src="../../../assets/images/clo.png" @click.stop="cloMask" />
+      <i class="iconfont icon-close icon-danchuang-guanbi" @click.stop="cloMask"></i>
       <p class="register-text">立即注册</p>
       <p class="register-text2">即可查看更多职位信息</p>
     </div>
 
     <div class="company-modal modal" @click.stop="" v-if="messagePop.type==='job' && advList.length>0 && selectAdv">
       <div class="modal-content" >
-        <img class="icon-close" src="../../../assets/images/clo.png" @click.stop="cloMask" />
+        <i class="iconfont icon-close icon-danchuang-guanbi" @click.stop="cloMask"></i>
         <div class="company-content">
           <div class="modal-top">
              <img class="company-logo" :src="selectAdv.cardCompanyLogo.middleUrl" />
@@ -184,7 +183,7 @@
               </div>
           </div>
           <div class="modal-body center-cont" v-if="selectAdv.type === 1 && selectAdv.hotPositions.length>0">
-            <h3 class="modal-category"> 
+            <h3 class="modal-category">
               热招职位
             </h3>
             <div class="hot-position">
@@ -195,7 +194,7 @@
           </div>
 
           <div class="modal-body center-cont" v-if="selectAdv.type === 2 && selectAdv.positionDemand.length>0">
-            <h3 class="modal-category"> 
+            <h3 class="modal-category">
               职位要求
             </h3>
             <div class="hot-position">
@@ -206,7 +205,7 @@
           </div>
 
           <div class="modal-body benefit">
-            <h3 class="modal-category"> 
+            <h3 class="modal-category">
               福利
             </h3>
             <div class="modal-walfare">
@@ -220,7 +219,7 @@
 
         <div class="bottom_hint">
           注册后可查看更多职位信息
-          <img class="" src="../../../assets/images/activity/putIn/arrowsR.png" />
+          <img class="" :src="cdnPath + 'arrowsR.png'" />
         </div>
       </div>
     </div>
@@ -237,12 +236,12 @@
 
 </template>
 <script>
-  import Vue from 'vue'
-  import Component from 'vue-class-component'
-  import { loginPutInApi, getCodeApi, getCaptchaApi } from '../../../api/auth'
-  import { schJobApi, getPositionTypesApi, getAdvListApi, getUserRoleInfo } from '../../../api/putIn'
+import Vue from 'vue'
+import Component from 'vue-class-component'
+import { loginPutInApi, getCodeApi, getCaptchaApi } from '../../../api/auth'
+import { schJobApi, getPositionTypesApi, getAdvListApi, getUserRoleInfo } from '../../../api/putIn'
 
-  import { saveAccessToken } from '@/api/cacheService'
+import { saveAccessToken } from '@/api/cacheService'
 
   @Component({
     name: 'lighthouse-list',
@@ -251,7 +250,7 @@
     computed: {},
     watch: {
       '$route': {
-        handler() {
+        handler () {
           this.init()
         },
         immediate: true
@@ -259,10 +258,10 @@
     },
     components: {}
   })
-  export default class CourseList extends Vue {
+export default class CourseList extends Vue {
     isFocus = false
     userInfo = {}
-    formHint = {    //form提示框
+    formHint = { // form提示框
       isShow: false,
       text: ''
     }
@@ -270,17 +269,17 @@
       isShow: false,
       type: 'help'
     }
-    selectList = []  //搜索结果
+    selectList = [] // 搜索结果
     codePic = {
-      key:'',
+      key: '',
       img: ''
     }
     isShowSelect = false
     form = {
       mobile: '',
       code: '',
-      captchaKey: '',  //验证码Key
-      captchaValue: ''  //验证码
+      captchaKey: '', // 验证码Key
+      captchaValue: '' // 验证码
     }
     augustInterval = null
     hintSetTime = null
@@ -288,50 +287,56 @@
     showError = false
     timer = 60
     codeStatus = true
-    searchJobData = {    //搜索职位
+    searchJobData = { // 搜索职位
       page: 1,
       count: 6,
       keyword: ''
     }
     labType = 1
-    positionTypeList = [] //职位类型列表
-    advList = []   //广告列表
-    selectAdv = {}  //点击logo参数
-    loginModelAnimale = false //登录框动画显示
+    positionTypeList = [] // 职位类型列表
+    advList = [] // 广告列表
+    selectAdv = {} // 点击logo参数
+    loginModelAnimale = false // 登录框动画显示
+    cdnPath = `${process.env.VUE_APP_CDN_PATH}/images/` // cdn图片地址
     mounted () {
       // let query = this.$route.query
       this.getPositionTypes()
 
-      var _hmt = _hmt || [];
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?0db2bb23e62da470d62ce19d419aebc3";
-      var s = document.getElementsByTagName("script")[0]; 
-      s.parentNode.insertBefore(hm, s);
+      // eslint-disable-next-line no-use-before-define
+      var _hmt = _hmt || []
+      var hm = document.createElement('script')
+      hm.src = 'https://hm.baidu.com/hm.js?0db2bb23e62da470d62ce19d419aebc3'
+      var s = document.getElementsByTagName('script')[0]
+      s.parentNode.insertBefore(hm, s)
     }
 
     init () {
 
     }
-    toAgreement() {
-      this.$router.push({name: 'userAgreement'})
+
+    toIndex () {
+      this.$router.push({ name: 'index' })
+    }
+    toAgreement () {
+      this.$router.push({ name: 'userAgreement' })
     }
     toPcLogin () {
-      this.$router.push({name: 'login'})
+      this.$router.push({ name: 'login' })
     }
 
     setHint (text) {
-      this.formHint = {    //form提示框
+      this.formHint = { // form提示框
         isShow: true,
         text: text
       }
-      clearTimeout(this.hintSetTime) 
-      this.hintSetTime = setTimeout(()=> {
+      clearTimeout(this.hintSetTime)
+      this.hintSetTime = setTimeout(() => {
         this.formHint.isShow = false
-      }, 1500);
+      }, 1500)
     }
 
-    //职位类型列表
-    getPositionTypes() {
+    // 职位类型列表
+    getPositionTypes () {
       getPositionTypesApi().then(res => {
         this.positionTypeList = res.data.data
         this.labType = res.data.data[0].positionType
@@ -339,8 +344,8 @@
       })
     }
 
-    //广告列表 - 公司职位
-    getAdvList(type) {
+    // 广告列表 - 公司职位
+    getAdvList (type) {
       getAdvListApi({
         positionType: type,
         count: 10
@@ -349,123 +354,123 @@
       })
     }
 
-    selectLab(type) {
-      if(this.labType === type) return
+    selectLab (type) {
+      if (this.labType === type) return
       this.labType = type
       this.getAdvList(type)
     }
 
-    searchJob() {
-      schJobApi({...this.searchJobData}).then(res => {
+    searchJob () {
+      schJobApi({ ...this.searchJobData }).then(res => {
         this.selectList = res.data.data
         this.isShowSelect = true
       })
     }
 
-    setAnimate(){
+    setAnimate () {
       this.loginModelAnimale = true
-      setTimeout(()=>{
+      setTimeout(() => {
         this.loginModelAnimale = false
-      },2000)
+      }, 2000)
     }
 
     submit () {
       this.isFocus = true
-      if(this.validate()){
+      if (this.validate()) {
         loginPutInApi({
           isChangeHost: true,
           ...this.form
         }).then(res => {
-            this.$store.dispatch('setUserInfo', res.data.data)
-            saveAccessToken(res.data.data.token)
-            getUserRoleInfo().then(res => {
-              if(res.data.data.isJobhunter === 1) {
-                this.$router.replace('/index')
-              }else {
-                this.$router.replace('/createUser')
-              }
-            })
+          this.$store.dispatch('setUserInfo', res.data.data)
+          saveAccessToken(res.data.data.token)
+          getUserRoleInfo().then(res => {
+            if (res.data.data.isJobhunter === 1) {
+              this.$router.replace('/index')
+            } else {
+              this.$router.replace('/createUser')
+            }
+          })
         })
       }
     }
 
-    validate() {
-      if(!this.checkMobile()) return false
-      if(!this.checkCode()) return false
+    validate () {
+      if (!this.checkMobile()) return false
+      if (!this.checkCode()) return false
       return true
     }
 
-    getCode() {
+    getCode () {
       this.isFocus = true
-      if(!this.checkMobile()) return false
-      if(!this.codeStatus) return false
+      if (!this.checkMobile()) return false
+      if (!this.codeStatus) return false
       this.codeStatus = false
       let that = this
 
-      clearInterval(this.augustInterval) 
+      clearInterval(this.augustInterval)
       this.timer = 60
-      this.augustInterval = setInterval(function(){
-          that.timer -= 1
-          if(that.timer < 1){    
-            clearInterval(this.augustInterval);    
-            that.codeStatus = true
-            that.timer = 60
-          }
-      }, 1000);
-      getCodeApi({ 
-        mobile: this.form.mobile 
+      this.augustInterval = setInterval(function () {
+        that.timer -= 1
+        if (that.timer < 1) {
+          clearInterval(this.augustInterval)
+          that.codeStatus = true
+          that.timer = 60
+        }
+      }, 1000)
+      getCodeApi({
+        mobile: this.form.mobile
       }).then(res => {
         console.log(res)
-      }).catch(()=>{
+      }).catch(() => {
       })
     }
 
-    checkCode() {
+    checkCode () {
       var pattern = /^[0-9A-Za-z]{4}$/
-      if(!pattern.test(this.form.code)){
+      if (!pattern.test(this.form.code)) {
         this.setHint('请填写四位数字验证码')
         return false
-      }else {
+      } else {
         return true
       }
     }
 
-    getPicCode() {
+    getPicCode () {
       getCaptchaApi().then(res => {
         this.codePic = res.data.data
         this.form.captchaKey = res.data.data.key
       })
     }
 
-    checkMobile() {
+    checkMobile () {
       var pattern = /^1(3|4|5|6|7|8|9)\d{9}$/
-      if(!pattern.test(this.form.mobile)){
+      if (!pattern.test(this.form.mobile)) {
         this.setHint('请填写格式正确的手机号码')
         return false
-      }else {
+      } else {
         return true
       }
     }
 
-    cloMask() {
+    cloMask () {
       this.messagePop.isShow = false
     }
 
-    setAdv(item) {
+    setAdv (item) {
       this.selectAdv = item
       this.openMask('job')
       this.setAnimate()
     }
 
-    openMask(type) {
+    openMask (type) {
       this.messagePop.isShow = true
       this.messagePop.type = type
     }
 
-    closeMask() {
+    closeMask () {
       this.showError = !this.showError
     }
-    setFocus() {
+    setFocus () {
       this.isFocus = true
     }
   }
@@ -659,7 +664,7 @@
           margin: 47px 0 0;
         }
       }
-      
+
     }
     .bottom_hint {
       width: 100%;
@@ -690,6 +695,7 @@
       position: absolute;
       right: 15px;
       top: 15px;
+      cursor: pointer;
     }
   }
   .register-modal {
@@ -767,6 +773,7 @@
         font-size:14px;
         font-weight:400;
         color:rgba(110,31,150,1);
+        cursor: pointer;
       }
       .btn_blo2 {
         width:113px;
@@ -779,12 +786,15 @@
         line-height:34px;
         text-align: center;
         margin-left: 20px;
+        cursor: pointer;
+
       }
     }
     .left_logo {
-      width:160px;
+      width:176px;
       height:auto;
       display: block;
+      cursor: pointer;
     }
   }
   .companyBabels {
@@ -817,7 +827,7 @@
             color:rgba(0,0,0,1);
             line-height:25px;
             margin-bottom: 4px;
-          } 
+          }
           .cont_text2 {
             font-size:14px;
             font-weight:300;
@@ -903,7 +913,7 @@
             .select-main {
               width:564px;
               height:436px;
-              
+
               background:rgba(255,255,255,1);
               border-radius:4px;
               position: absolute;
@@ -923,6 +933,7 @@
                   right: 15px;
                   width: 20px;
                   height: 20px;
+                  cursor: pointer;
                 }
                 p {
                     font-size:16px;
@@ -931,11 +942,10 @@
                     line-height:22px;
                 }
                 .empty-icon {
-                  width:68px;
-                  height:68px;
-                  display: block;
+                  font-size: 68px;
                   margin: -30px 0 30px 0;
-
+                  color: #652791;
+                  cursor: pointer;
                 }
               }
               .select-cont {
@@ -1026,6 +1036,7 @@
               background:rgba(0,0,0,0.2);
               border-radius:4px;
               .search-lab {
+                cursor: pointer;
                 display: block;
                 font-size: 16px;
                 color: #fff;
@@ -1124,9 +1135,9 @@
               }
             }
           }
-          
+
         }
-        
+
       }
       .lp-login {
         width: 410px;
@@ -1191,6 +1202,7 @@
           p{
             text-decoration: underline;
             color: #652791;
+            cursor: pointer;
           }
         }
         #phone_form {
@@ -1217,6 +1229,11 @@
               .input_icon {
                 width: 18px;
                 height: 18px;
+                display: block;
+                margin-right: 10px;
+              }
+              .input_icon_sms{
+                font-size: 14px;
                 display: block;
                 margin-right: 10px;
               }
@@ -1261,6 +1278,7 @@
             width:328px;
             background:rgba(101,39,145,1);
             border-radius:100px;
+            cursor: pointer;
           }
           .lp_agreeNotice_box {
             font-size: 12px;
@@ -1296,11 +1314,9 @@
           font-weight:400;
           color:rgba(237,92,92,1);
           white-space:nowrap;
-          img {
-            width: 14px;
-            height: 14px;
+          .login_btn_icon {
+            font-size: 14px;
             margin-right: 8px;
-            display: block;
           }
         }
       }
@@ -1382,27 +1398,27 @@
 
 @keyframes move
 {
-    0%{ 
+    0%{
       -webkit-transform:rotate(0deg);
       transform:rotate(0deg);
     }
-    20% {  
+    20% {
       -webkit-transform:rotate(-6deg);
       transform:rotate(-6deg);
     }
-    40% {  
+    40% {
       -webkit-transform:rotate(6deg);
       transform:rotate(6deg);
     }
-    60% {  
+    60% {
       -webkit-transform:rotate(-6deg);
       transform:rotate(-6deg);
     }
-    80% {  
+    80% {
       -webkit-transform:rotate(6deg);
       transform:rotate(6deg);
     }
-    100% {  
+    100% {
       -webkit-transform:rotate(0deg);
       transform:rotate(0deg);
     }
@@ -1410,27 +1426,27 @@
 
 @-webkit-keyframes move
 {
-    0%{ 
+    0%{
       -webkit-transform:rotate(0deg);
       transform:rotate(0deg);
     }
-    20% {  
+    20% {
       -webkit-transform:rotate(-6deg);
       transform:rotate(-6deg);
     }
-    40% {  
+    40% {
       -webkit-transform:rotate(6deg);
       transform:rotate(6deg);
     }
-    60% {  
+    60% {
       -webkit-transform:rotate(-6deg);
       transform:rotate(-6deg);
     }
-    80% {  
+    80% {
       -webkit-transform:rotate(6deg);
       transform:rotate(6deg);
     }
-    100% {  
+    100% {
       -webkit-transform:rotate(0deg);
       transform:rotate(0deg);
     }

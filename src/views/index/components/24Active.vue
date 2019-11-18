@@ -109,6 +109,7 @@ export default {
         const results = this.$util.setTimeDown(val.endTime)
         Object.assign(val, results)
       })
+      clearTimeout(this.countDownTimer)
       this.countDownTimer = setTimeout(() => {
         this.setCountDown()
       }, 1000)

@@ -3,28 +3,29 @@ import { Loading } from 'element-ui'
 import router from '../router/index'
 import { getAccessToken, removeAccessToken } from './cacheService'
 import Vue from 'vue'
+import Util from '../util/util'
 
-let loadingInstance = null,
-    counter = 0 
+let loadingInstance = null
+let counter = 0
 const VUE_WEB_ZHAOPIN_API = process.env.VUE_APP_WEB_ZHAOPIN_API
 const VUE_WEB_QIUZHI_API = process.env.VUE_APP_WEB_QIUZHI_API
 const VUE_WEB_PUB_API = process.env.VUE_APP_WEB_PUB_API
 const VUE_WEB_NODE_API = process.env.VUE_APP_WEB_NODE_API
-
 
 export const request = ({ url, method, params = {}, config }) => {
   if (params && params.globalLoading) counter++
   if (counter === 1) loadingInstance = Loading.service({})
 
   // 添加统计头部
-  let urlParams = new URLSearchParams(location.search)
-  if(urlParams.get('cc')) {
-    axios.defaults.headers.common['Channel-Code'] = urlParams.get('cc')
+  // let urlParams = new URLSearchParams(location.search)
+  let urlParams = Util.getUrlParam('cc')
+  if (urlParams) {
+    axios.defaults.headers.common['Channel-Code'] = urlParams
   }
 
   // 添加token头部
   if (getAccessToken()) axios.defaults.headers.common['Authorization'] = getAccessToken()
-  
+
   // 切换api host
   switch (config.host) {
     case 'pub':
@@ -46,7 +47,7 @@ export const request = ({ url, method, params = {}, config }) => {
       counter--
       if (counter === 0) {
         Vue.nextTick(() => { // 以服务的方式调用的 Loading 需要异步关闭
-          loadingInstance.close();
+          loadingInstance.close()
         })
       }
     }

@@ -7,4 +7,3 @@ Vue.prototype.$util = util
 Vue.prototype.setPathQuery = util.setPathQuery
 Vue.prototype.transformBlank = util.transformBlank
 Vue.prototype.zikeDefaultPageSize = 20
-

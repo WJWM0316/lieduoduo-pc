@@ -20,6 +20,7 @@ let plugins = [
 
 module.exports = {
   lintOnSave: true,
+  productionSourceMap: false,
   configureWebpack: {
     entry: {
       vendors: [

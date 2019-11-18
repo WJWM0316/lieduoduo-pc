@@ -7,30 +7,30 @@
         <div class="btn refresh" @click="refresh">刷新网页</div>
         <div class="btn toIndex" @click="toIndex">返回首页</div>
       </div>
-      
+
     </div>
   </div>
 </template>
 <script>
-  import Vue from 'vue'
-  import Component from 'vue-class-component'
+import Vue from 'vue'
+import Component from 'vue-class-component'
   @Component({
     name: 'lipage404',
     methods: {
     },
-    computed: {},
+    computed: {}
   })
-  export default class CourseList extends Vue {
+export default class CourseList extends Vue {
     userInfo = {}
 
-    init() {
+    init () {
     }
 
-    refresh() {
+    refresh () {
       this.$router.go(0)
     }
 
-    toIndex() {
+    toIndex () {
       this.$router.push({
         name: 'recruiterIndex'
       })
