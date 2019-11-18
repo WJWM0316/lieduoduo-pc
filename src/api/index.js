@@ -13,6 +13,7 @@ const VUE_WEB_PUB_API = process.env.VUE_APP_WEB_PUB_API
 const VUE_WEB_NODE_API = process.env.VUE_APP_WEB_NODE_API
 
 export const request = ({ url, method, params = {}, config }) => {
+  console.log(config)
   if (params && params.globalLoading) counter++
   if (counter === 1) loadingInstance = Loading.service({})
 

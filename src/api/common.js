@@ -64,3 +64,13 @@ export const getSearchCollect = data => request({
     host: 'qiuzhi'
   }
 })
+// 获取招聘官详情
+// export const recruiterDetail = data => request('/recruiter/detail', 'get', data)
+export const recruiterDetail = data => request({
+  url: '/recruiter/detail',
+  method: 'get',
+  params: data,
+  config: {
+    host: 'zhaopin'
+  }
+})

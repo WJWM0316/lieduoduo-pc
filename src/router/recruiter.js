@@ -1,13 +1,28 @@
 import Layout from '@/views/b-layout'
 const recruiter = [
   {
-    path: '/candidate',
-    title: '候选人',
+    path: '/candidateType',
+    title: '候选人动态',
     component: Layout,
     meta: {
-      // 一级路由需要设置， 是否在侧边栏显示
       useNav: true,
-      // 当前所属的模块
+      module: 'recruiterResource',
+      icon: 'iconfont icon-zhaopintuandui'
+    },
+    children: [
+      {
+        path: '',
+        name: 'candidatetype',
+        component: resolve => require(['../views/candidateType/index.vue'], resolve)
+      }
+    ]
+  },
+  {
+    path: '/candidate',
+    title: '候选人库',
+    component: Layout,
+    meta: {
+      useNav: true,
       module: 'recruiterResource',
       icon: 'iconfont icon-zhaopintuandui'
     },
@@ -20,13 +35,28 @@ const recruiter = [
     ]
   },
   {
+    path: '/interviewRecords',
+    title: '面试日程',
+    component: Layout,
+    meta: {
+      useNav: true,
+      module: 'recruiterResource',
+      icon: 'iconfont icon-zhaopintuandui'
+    },
+    children: [
+      {
+        path: '',
+        name: 'interviewRecords',
+        component: resolve => require(['../views/interviewRecords/index.vue'], resolve)
+      }
+    ]
+  },
+  {
     path: '/recruiterIndex',
     title: '职位管理',
     component: Layout,
     meta: {
-      // 一级路由需要设置， 是否在侧边栏显示
       useNav: true,
-      // 当前所属的模块
       module: 'recruiterResource',
       icon: 'iconfont icon-zhiwei'
     },
