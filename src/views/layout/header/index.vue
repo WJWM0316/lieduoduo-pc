@@ -4,7 +4,7 @@
       <router-link tag="div" to="/index" class="header-logo">
         <img src="../../../assets/images/index/logo.png" alt="">
       </router-link>
-      <div class="header-address" v-if="$route.path === '/index'">
+      <div class="header-address" v-if="$route.name === 'index'">
         <drop-down
           v-model="addressId"
           :items="cityList"
