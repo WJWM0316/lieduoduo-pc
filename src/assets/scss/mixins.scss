@@ -24,6 +24,18 @@
   align-items: center;
 }
 
+// 两端对齐
+@mixin flex-between() {
+  display: flex;
+  justify-content: space-between;
+}
+
+// 仅仅垂直居中
+@mixin flex-v-top() {
+  display: flex;
+  align-items: flex-start;
+}
+
 // 单行省略号
 @mixin ellipsis(){
   overflow: hidden;

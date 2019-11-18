@@ -4,9 +4,10 @@ import { saveAccessToken, removeAccessToken, getAccessToken, getUserInfo, saveUs
 import { loginPutInApipc, getUserRoleInfoApi, switchRoleApi } from '@/api/auth'
 import router from '@/router/index.js'
 import { mobileReg } from '@/util/fieldRegular.js'
-import { getMyResumeApi } from '@/api/resume.js'
-
 import { logoutApi } from '../api/auth'
+
+// modules
+import resume from './modules/resume'
 
 Vue.use(Vuex)
 
@@ -28,8 +29,7 @@ export default new Vuex.Store({
       type: 'tocIndex',
       params: ''
     },
-    areaList: [],
-    myResume: {} // 我的简历详情
+    areaList: []
   },
   // 在getters中声明state中变量的计算函数，缓存计算后的数据， 通过 this.$store.getters 调用
   getters: {
@@ -56,6 +56,10 @@ export default new Vuex.Store({
       saveUserInfo(data, state.loginValidTime)
       state.userInfo = data
       state.userIdentity = data.curInUseRole
+    },
+    // 使用简历姓名替换为用户名称
+    setUserRealname: (state, name) => {
+      state.userInfo.realname = name
     },
     // 登录回调
     LOGINCALLBACK: (state, data) => {
@@ -126,16 +130,6 @@ export default new Vuex.Store({
     guideQrcodePop (state, data) {
       state.guideQrcodePop = data
     },
-    // 设置我的简历信息
-    setMyResume (state, data) {
-      getMyResumeApi().then(res => {
-        state.myResume = res.data.data
-        if (!state.userInfo.realname) {
-          state.userInfo.realname = state.myResume.name
-          state.userInfo.avatarInfo = state.myResume.avatar
-        }
-      })
-    },
     switchIdentity (state, data) {
       if (state.userIdentity === 1) {
         if (state.roleInfos.isRecruiter) {
@@ -198,10 +192,9 @@ export default new Vuex.Store({
 
     setPageName (store, options) {
       store.commit('setPageName', options)
-    },
-    // 获取我的简历详情
-    getMyResume (store, options) {
-      store.commit('setMyResume', options)
     }
+  },
+  modules: {
+    resume
   }
 })

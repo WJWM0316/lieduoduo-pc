@@ -34,11 +34,13 @@
     </template>
     <template v-else>
       <div class="single-upload">
-        <div slot="single-wrapper" @click="handleClickInput">
-          <div class="avatar"  v-if="value">
-            <img :src="value" alt />
-          </div>
-          <el-button type="primary" size="small"  round plain :loading="singleLoding">{{value ? '重新上传' : '上传图片'}}</el-button>
+        <div @click="handleClickInput">
+          <slot>
+            <div class="avatar"  v-if="value">
+              <img :src="value" alt />
+            </div>
+            <el-button type="primary" size="small"  round plain :loading="singleLoding">{{value ? '重新上传' : '上传图片'}}</el-button>
+          </slot>
         </div>
         <input
           type="file"

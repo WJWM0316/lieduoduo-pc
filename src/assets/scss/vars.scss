@@ -5,9 +5,6 @@ $main-color-1: #652791;
 $main-color-2: #8452A7;
 $main-color-3: #BC94D7;
 
-// element-ui
-$--color-primary: $main-color-1;
-
 // 辅助颜色
 $sub-color-1: #FFDC29;
 
@@ -16,6 +13,13 @@ $btn-forbid: #E6E6E6;
 
 // 警告颜色
 $error-color-1: #FF7F4C;
+
+// element-ui
+$--color-primary: $main-color-1;
+$--color-warning: $error-color-1;
+$--input-height: 46px;
+
+
 
 // 高亮字体颜色
 $lightFont-color-orange: #FF7F4C;
