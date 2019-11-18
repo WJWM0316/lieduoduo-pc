@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <wrapper>
+    <wrapper :is-empty="isEmpty">
       <template slot="header">自我描述</template>
       <template slot="content">
         <div v-if="resume.signature">
@@ -13,8 +13,8 @@
   </div>
 </template>
 <script>
-import { getSignature } from 'API/resume'
 import Wrapper from './wrapper'
+// import setResumeDesc from 'API/resume'
 export default {
   props: {
     resume: {
@@ -22,23 +22,21 @@ export default {
       default: () => ({})
     }
   },
+  computed: {
+    info () {
+      const { signature, personalizedLabels } = this.resume
+      return {
+        signature, personalizedLabels
+      }
+    },
+    isEmpty () {
+      return !!this.resume.signature
+    }
+  },
   components: {
     Wrapper
   },
-  data () {
-    return {
-      info: {}
-    }
-  },
-  created () {
-    // this.getSignatureList()
-  },
   methods: {
-    getSignatureList () {
-      getSignature().then(({ data }) => {
-        this.info = data.data || {}
-      })
-    }
   }
 }
 </script>

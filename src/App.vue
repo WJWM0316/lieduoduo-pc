@@ -23,9 +23,7 @@ export default class APP extends Vue {
   getUserRoleInfo () {
     getUserRoleInfoApi().then(res => {
       if (res.data.data.isJobhunter) {
-        this.$store.dispatch('getMyResume').then(data => {
-          this.$store.commit('setRoleInfos', data.data)
-        })
+        this.$store.dispatch('getMyResume')
       }
       this.$store.commit('setRoleInfos', res.data.data)
     })

@@ -30,12 +30,12 @@ export const setBaseInfo = (data) => {
   })
 }
 
-// 获取自我描述标签|签名
-export const getSignature = (data) => {
+// 获取自我描述|标签
+export const setResumeDesc = (data) => {
   return request({
-    method: 'get',
-    url: '/jobhunter/signature',
-    data,
+    method: 'post',
+    url: '/jobhunter/self_desc',
+    params: data,
     config: { host: 'qiuzhi' }
   })
 }
