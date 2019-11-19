@@ -2,8 +2,8 @@
   <section class="b-app">
     <page-aside />
     <div class="b-wrapper">
-      <div class="contain">
       <page-header />
+      <div class="contain">
       <router-view class="pages" />
       </div>
     </div>

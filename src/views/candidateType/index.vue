@@ -204,6 +204,9 @@
         <i class="iconfont iconda"></i>
       </div>
         </div>
+        <div class="printing">
+          <span>简历打印</span>
+          </div>
         <div class="resumeLyout">
           <div class="ResumeDetails">
             <!-- 基础信息 -->
@@ -369,6 +372,31 @@
             </div>
           </div>
           <div class="Code">
+            <div class="handlerpring">
+              <div class="onload" @click="hasonload = !hasonload">
+                <i class="iconfont icon-xiazai"></i>
+              </div>
+              <div class="onloadselect" v-show="hasonload">
+                <div class="title">下载简历</div>
+                <div class="select">请选择下载格式:</div>
+                <div class="pdf">
+                  <div class="p_l" v-if="nowResumeMsg.resumeAttach">
+                    <i class="iconfont icon-word" style="color: #2878ff" v-if="nowResumeMsg.resumeAttach.attachType === 'doc'"></i>
+                    <i class="iconfont icon-pdf" v-else style="color: #FA3939"></i>
+                  </div>
+                  <div class="p_c" v-if="nowResumeMsg.resumeAttach">{{nowResumeMsg.resumeAttach.fileName}}</div>
+                  <div class="p_r" v-if="nowResumeMsg.resumeAttach">
+                    <a :href="nowResumeMsg.resumeAttach.url" :download="nowResumeMsg.resumeAttach.fileName"><i class="iconfont icon-xiazai"></i></a>
+                  </div>
+                </div>
+              </div>
+              <div class="dayin">
+                <i class="iconfont icon-dayin-"></i>
+              </div>
+              <div class="share" @click="sharediggle()">
+                <i class="iconfont icon-fenxiang"></i>
+              </div>
+            </div>
             <div class="btnstatus">
               <div class="btn1" @click.stop="setJob(nowResumeMsg.uid, 'recruiter-chat', nowResumeMsg, 2)" v-if="!nowResumeMsg.interviewInfo.data.haveInterview && !nowResumeMsg.interviewInfo.data.isOnProtected && !nowResumeMsg.interviewInfo.data.hasUnsuitRecord">开撩约面</div>
               <div class="btndisable" v-if="!nowResumeMsg.interviewInfo.data.haveInterview && nowResumeMsg.interviewInfo.data.isOnProtected">暂时无法约面</div>
@@ -397,7 +425,7 @@
               </div>
             <div class="msgCode"  v-if="shareResumeImg">
               <img :src="shareResumeImg" />
-              <span>扫码进入</span>
+              <span>扫码分享</span>
             </div>
             <div class="isAdmin">
               <div class="ContactInformation">
@@ -410,11 +438,6 @@
                   <span>微信号:</span>
                   <span >{{nowResumeMsg.wechat}}</span>
                 </div>
-                <p v-if="nowResumeMsg.wechat==''&&nowResumeMsg.mobile==''" class="noUpload">暂无上传</p>
-              </div>
-
-              <div class="TabSelect" v-if="nowResumeMsg.resumeAttach">
-                <p class="addTab"><a :href="nowResumeMsg.resumeAttach.url" :download="nowResumeMsg.resumeAttach.fileName">下载附件</a></p>
               </div>
             </div>
           </div>
@@ -663,6 +686,13 @@
         </div>
       </div>
     </div>
+    <!-- 转发简历弹窗 -->
+    <dynamic-record
+      :visible="toworddiggle"
+      :info.sync="nowResumeMsg"
+      :imagesurl.sync="shareResumeImg"
+      @clickcancel="cancelmessage"
+    ></dynamic-record>
   </div>
 </template>
 <script>
@@ -675,6 +705,7 @@ import { getSearchBrowseMyselfApi, getMyNavDataApi, getJobHunterPositionTypeApi 
 import { getResumeIdApi } from 'API/userJobhunter'
 import { shareResumeApi } from 'API/forward'
 import MapSearch from 'COMPONENTS/map'
+import DynamicRecord from './dynamicrecord.vue'
 import {
   topAdminPositonList,
   recruiterPositonList,
@@ -702,12 +733,15 @@ import { applyInterviewApi } from 'API/interview'
       }
     },
     components: {
-      MapSearch
+      MapSearch,
+      DynamicRecord
     }
   })
 export default class CourseList extends Vue {
     userInfo = {}
     showResume = false
+    hasonload = false
+    toworddiggle = false
     pop = {
       isShow: false,
       Interview: false,
@@ -1486,6 +1520,10 @@ export default class CourseList extends Vue {
         this.getShareResume(resumeId)
       })
     }
+    sharediggle () {
+      this.toworddiggle = true
+      console.log(this.shareResumeImg)
+    }
 
     // 获取另外的选择
     getOtherActive () {
@@ -1760,6 +1798,9 @@ export default class CourseList extends Vue {
     }
     created () {
       this.hasadmin()
+    }
+    cancelmessage () {
+      this.toworddiggle = !this.toworddiggle
     }
     // 点击其他区域关闭弹窗
     closeMsg (event) {

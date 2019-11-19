@@ -299,3 +299,13 @@ export const communicateRecord = data => request({
     host: 'zhaopin'
   }
 })
+
+// 生成简历转发链接地址
+export const generateUrl = data => request({
+  url: `/resumeemail/url/${data.uid}`,
+  method: 'get',
+  params: data,
+  config: {
+    host: 'zhaopin'
+  }
+})

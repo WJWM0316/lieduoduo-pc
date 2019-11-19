@@ -2520,6 +2520,7 @@ export default {
             justify-content: flex-start;
             align-items: flex-start;
             flex-wrap: wrap;
+            padding-bottom: 160px;
             img {
               width: 86px;
               height: 86px;
