@@ -30,7 +30,7 @@ const recruiter = [
       {
         path: '',
         name: 'candidate',
-        component: resolve => require(['../views/candidate/candidate.vue'], resolve)
+        component: resolve => require(['../views/candidate/index.vue'], resolve)
       }
     ]
   },

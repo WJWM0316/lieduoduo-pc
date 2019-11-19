@@ -70,9 +70,9 @@
                     </ul>
                   </div>
                 </div>
-              <div class="intention" v-if="vo.resume.expects.length>0">求职意向：<span class="intentionText intentionTextWidth textEllipsis"> {{vo.resume.expects[0].city}} </span> ·
-                  <span class="intentionText intentionTextWidth2 textEllipsis">{{vo.resume.expects[0].position}}</span> ·
-                  <span class="intentionText2">{{vo.resume.expects[0].salaryFloor}}k~{{vo.resume.expects[0].salaryCeil}}k</span>
+              <div class="intention" v-if="vo.resume.expects">求职意向：<span class="intentionText intentionTextWidth textEllipsis"> {{vo.resume.expects.city}} </span> ·
+                  <span class="intentionText intentionTextWidth2 textEllipsis">{{vo.resume.expects.position}}</span> ·
+                  <span class="intentionText2">{{vo.resume.expects.salaryFloor}}k~{{vo.resume.expects.salaryCeil}}k</span>
                 </div>
                 <div class="intention" v-else>求职意向：暂无求职意向</div>
               </div>
@@ -80,20 +80,19 @@
                 <div class="experienceTitle ">最近工作经历</div>
                 <div class="experienceText textEllipsis" v-if="vo.lastCompanyName">{{vo.lastCompanyName}}</div>
                 <div class="experienceText textEllipsis" v-if="vo.lastPosition">{{vo.lastPosition}}</div>
-                <div class="experienceText textEllipsis" v-if="vo.lastCompanyName.length<1">暂无工作经历</div>
+                <div class="experienceText textEllipsis" v-if="!vo.lastCompanyName">暂无工作经历</div>
               </div>
               <div class="bloExperience educationExperience">
                 <div class="experienceTitle">最近教育经历</div>
-                <div class="experienceText textEllipsis" v-if="vo.resume.school">{{vo.resume.school}}</div>
+                <div class="experienceText textEllipsis" v-if="vo.resume.education.school">{{vo.resume.education.school}}</div>
                 <div class="experienceText textEllipsis" v-else>暂无教育经历</div>
 
-                <div class="experienceText textEllipsis" v-if="vo.resume.major">{{vo.resume.major}}</div>
+                <div class="experienceText textEllipsis" v-if="vo.resume.education.major">{{vo.resume.education.major}}</div>
               </div>
             </div>
 
             <div class="userOp">
               <div class="btn" @click.stop="setJob(vo.jobhunterUid, 'check-invitation', vo, 1)">查看面试详情</div>
-              <!-- <div class="btn" @click.stop="viewdetail(vo)">查看面试详情</div> -->
             </div>
           </div>
         </div>
@@ -113,12 +112,12 @@
         <span class="total">共{{ Math.ceil(form.totalPage) }}页, {{form.total}}条记录</span>
       </el-pagination>
 
-        <div class="null-product" v-show="list.length === 0">
+        <!-- <div class="null-product" v-show="list.length === 0">
           <div class="null-img">
             <img src="@/assets/fly.png" />
           </div>
           <div class="null-text">还没有面试安排哦，主动分享职位获取更多候选人吧</div>
-        </div>
+        </div> -->
 
       </div>
       <div class="pop" v-if="pop.isShow" @click="closeMsg($event)">
@@ -151,16 +150,12 @@
             <div class="base">
               <div class="message">
                 <div class="msgUrl">
-                  <img :src="nowResumeMsg.avatar.url" alt v-if="nowResumeMsg.avatar" />
-                              <!-- <img class="gender" src="~IMAGES/girl.png" v-if="item.resume.gender===2" />
-                  <img class="gender" src="~IMAGES/boy.png" v-else /> -->
+                  <img class="magimg" :src="nowResumeMsg.avatar.url" alt v-if="nowResumeMsg.avatar" />
                   <span class="gender" v-show="nowResumeMsg.gender===2">
-                                <img v-show="nowResumeMsg.gender===2" src="~IMAGES/girl.png" />
-                    <!-- <i v-show="nowResumeMsg.gender===1" class="icon iconfont iconicon_boy"></i> -->
+                    <img class="genderimg1" v-show="nowResumeMsg.gender===2" src="~IMAGES/girl.png" />
                   </span>
                   <span class="gender2" v-show="nowResumeMsg.gender===1">
-                                <img src="~IMAGES/boy.png" v-show="nowResumeMsg.gender===1">
-                    <!-- <i v-show="nowResumeMsg.gender===2" class="icon iconfont iconicon_girl"></i> -->
+                      <img class="genderimg2" src="~IMAGES/boy.png" v-show="nowResumeMsg.gender===1">
                   </span>
                 </div>
                 <div class="msgUserInfo">
@@ -672,8 +667,10 @@ import { getCommentReasonApi, interviewRetract, getInterviewComment, addressList
 import { getResumeIdApi } from 'API/userJobhunter'
 import { shareResumeApi } from 'API/forward'
 import { recruiterDetail } from 'API/common'
+import MapSearch from 'COMPONENTS/map'
 export default {
   components: {
+    MapSearch
   },
   data () {
     return {
@@ -836,7 +833,6 @@ export default {
       })
     },
     handleCurrentPageChange (page) {
-      console.log(page)
       if (this.tablist[0].time) {
         this.tabform.page = page
       } else {
@@ -2257,10 +2253,17 @@ export default {
               justify-content: flex-start;
               align-items: flex-start;
               width: 100%;
-              .msgUrl {
+                            .msgUrl {
                 width: 88px;
                 height: 88px;
                 position: relative;
+                .magimg {
+                  width: 88px;
+                  height: 88px;
+                  border: 2px solid rgba(232, 233, 235, 1);
+                  border-radius: 50%;
+                  vertical-align: middle;
+                }
                 .gender2 {
                   width: 26px;
                   height: 26px;
@@ -2271,7 +2274,7 @@ export default {
                   right: -6px;
                   bottom: -9px;
                   text-align: center;
-                  img{
+                  .genderimg2{
                     width: 100%;
                     height: 100%;
                   }
@@ -2292,7 +2295,7 @@ export default {
                   right: -6px;
                   bottom: -9px;
                   text-align: center;
-                  img{
+                  .genderimg1{
                     width: 100%;
                     height: 100%;
                   }
@@ -2302,13 +2305,6 @@ export default {
                     font-size: 12px;
                     text-align: center;
                   }
-                }
-                img {
-                  width: 88px;
-                  height: 88px;
-                  border: 2px solid rgba(232, 233, 235, 1);
-                  border-radius: 50%;
-                  vertical-align: middle;
                 }
               }
 
@@ -2994,7 +2990,9 @@ export default {
                     width: 70px;
                     height: 14px;
                     margin-left: 56px;
-                    margin-top: 11px;
+                    margin-top: 13px;
+                    font-size: 14px;
+                    color: #5C565D;
                   }
                 }
               }

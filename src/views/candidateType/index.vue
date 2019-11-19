@@ -210,12 +210,12 @@
             <div class="base">
               <div class="message">
                 <div class="msgUrl">
-                  <img :src="nowResumeMsg.avatar.url" alt v-if="nowResumeMsg.avatar" />
+                  <img class="magimg" :src="nowResumeMsg.avatar.url" alt v-if="nowResumeMsg.avatar" />
                   <span class="gender" v-show="nowResumeMsg.gender===2">
-                    <img v-show="nowResumeMsg.gender===2" src="~IMAGES/girl.png" />
+                    <img class="genderimg1" v-show="nowResumeMsg.gender===2" src="~IMAGES/girl.png" />
                   </span>
                   <span class="gender2" v-show="nowResumeMsg.gender===1">
-                      <img src="~IMAGES/boy.png" v-show="nowResumeMsg.gender===1">
+                      <img class="genderimg2" src="~IMAGES/boy.png" v-show="nowResumeMsg.gender===1">
                   </span>
                 </div>
                 <div class="msgUserInfo">
@@ -674,6 +674,7 @@ import { getSearchMyCollectApi, getSearchCollectApi, putCollectUserApi, cancelCo
 import { getSearchBrowseMyselfApi, getMyNavDataApi, getJobHunterPositionTypeApi } from 'API/browse'
 import { getResumeIdApi } from 'API/userJobhunter'
 import { shareResumeApi } from 'API/forward'
+import MapSearch from 'COMPONENTS/map'
 import {
   topAdminPositonList,
   recruiterPositonList,
@@ -701,6 +702,7 @@ import { applyInterviewApi } from 'API/interview'
       }
     },
     components: {
+      MapSearch
     }
   })
 export default class CourseList extends Vue {

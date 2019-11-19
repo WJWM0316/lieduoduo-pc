@@ -836,6 +836,13 @@
                 width: 88px;
                 height: 88px;
                 position: relative;
+                .magimg {
+                  width: 88px;
+                  height: 88px;
+                  border: 2px solid rgba(232, 233, 235, 1);
+                  border-radius: 50%;
+                  vertical-align: middle;
+                }
                 .gender2 {
                   width: 26px;
                   height: 26px;
@@ -846,7 +853,7 @@
                   right: -6px;
                   bottom: -9px;
                   text-align: center;
-                  img{
+                  .genderimg2{
                     width: 100%;
                     height: 100%;
                   }
@@ -867,7 +874,7 @@
                   right: -6px;
                   bottom: -9px;
                   text-align: center;
-                  img{
+                  .genderimg1{
                     width: 100%;
                     height: 100%;
                   }
@@ -877,13 +884,6 @@
                     font-size: 12px;
                     text-align: center;
                   }
-                }
-                img {
-                  width: 88px;
-                  height: 88px;
-                  border: 2px solid rgba(232, 233, 235, 1);
-                  border-radius: 50%;
-                  vertical-align: middle;
                 }
               }
 
@@ -1578,6 +1578,8 @@
             line-height: 30px;
             cursor: pointer;
             position: relative;
+            font-size: 14px;
+            color: #5C565D;
             i{
               margin-right: 10px;
               color: red;
