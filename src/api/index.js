@@ -33,9 +33,11 @@ export const request = ({ url, method, params = {}, config }) => {
       break
     case 'qiuzhi':
       if (axios.defaults.baseURL !== VUE_WEB_QIUZHI_API) axios.defaults.baseURL = VUE_WEB_QIUZHI_API
+      axios.defaults.headers.common['Source'] = 'web_c'
       break
     case 'zhaopin':
       if (axios.defaults.baseURL !== VUE_WEB_ZHAOPIN_API) axios.defaults.baseURL = VUE_WEB_ZHAOPIN_API
+      axios.defaults.headers.common['Source'] = 'web_b'
       break
     case 'node':
       if (axios.defaults.baseURL !== VUE_WEB_NODE_API) axios.defaults.baseURL = VUE_WEB_NODE_API
