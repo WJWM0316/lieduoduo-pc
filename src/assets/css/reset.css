@@ -1,6 +1,6 @@
 
 
-body,p,h1,h2,h3,h4,h5,h6,ul,ol,dl,li,dt,dd{
+body,p,h1,h2,h3,h4,h5,h6,ul,ol,dl,li,dt,dd,pre{
     /* 默认有边距，都要清除 */
     margin: 0;
     padding: 0;
@@ -15,7 +15,6 @@ body,p,h1,h2,h3,h4,h5,h6,ul,ol,dl,li,dt,dd{
     cursor: default;
 }
 
- 
 /*行内块元素*/
 input,img{
     margin: 0;
