@@ -19,12 +19,12 @@
                 <span class="add" @click="addemail()">添加</span>
               </div>
               <div class="eachinput" :key="i" v-for="(item, i) in email">
-                <input type="text" placeholder="请输入同事邮箱地址" @input="searchEmail" v-model="item.text">
+                <input type="text" placeholder="请输入同事邮箱地址" @input="searchEmail" v-model="item.text" @click="historyemailshow = !historyemailshow">
                 <div class="del" v-if="i > 0" @click="delect(i)">
                   <i class="iconfont icon-shouqi"></i>
                 </div>
-                <div class="select">
-                  <div class="select-item" @click="selectemail(item)" v-for="item in 10">123456@163.com</div>
+                <div class="select" v-show="historyemailshow">
+                  <div :class="['select-item', vo.cur ? 'active' : '']" @click="selectemail(vo, i)" :key="j" v-for="(vo, j) in historyemail">{{vo.text}}</div>
                 </div>
               </div>
             </div>
@@ -44,7 +44,7 @@
     </div>
 </template>
 <script>
-import { generateUrl } from 'API/candidateType'
+import { generateUrl, gethistoryUrl } from 'API/candidateType'
 const debounce = (() => {
   let timer = 0
   return (callback, ms) => {
@@ -61,7 +61,14 @@ export default {
   data () {
     return {
       email: [{ text: '' }],
-      forwordurl: ''
+      forwordurl: '',
+      vkey: '',
+      historyemailshow: false,
+      historyemail: [],
+      form: {
+        vkey: '',
+        email: ''
+      }
     }
   },
   computed: {
@@ -71,7 +78,9 @@ export default {
       let data = { uid: this.info.uid }
       generateUrl(data).then((res) => {
         this.forwordurl = res.data.data.url
+        this.vkey = res.data.data.vkey
       })
+      this.email = [{ text: '' }]
     }
   },
   mounted () {
@@ -83,15 +92,17 @@ export default {
     addemail () {
       this.email.push({ text: '' })
     },
-    selectemail (data) {
-      console.log(data)
+    selectemail (data, i) {
+      this.historyemail.map((v, k) => {
+        v.cur = v === data
+      })
+      this.email[i].text = data.text
+      this.historyemailshow = false
     },
     // 失去焦点搜索公司
     searchEmail (e) {
       debounce(() => {
-        // const name = e.target.value
-        // this.companyform.company_name = name
-        // this.companyform.company_name && this.getCompanyNameList()
+        this.gethistorydizhi()
       }, 1000)
     },
     delect (i) {
@@ -99,10 +110,32 @@ export default {
     },
     copy () {
       this.copyStringToClipboard(this.forwordurl)
-      this.$message('复制成功')
+      this.$message({
+        type: 'success',
+        message: '复制成功!'
+      })
     },
     send () {
-      console.log('发送')
+      this.form.vkey = this.vkey
+      let arr = []
+      this.email.map((v, k) => {
+        arr.push(v.text)
+      })
+      this.form.email = arr.join(',')
+      this.$emit('clicksend', this.form)
+    },
+    gethistorydizhi () {
+      gethistoryUrl().then((res) => {
+        let arr = res.data.data
+        let selectarr = []
+        arr.map((v, k) => {
+          selectarr.push({ 'text': v, cur: false })
+        })
+        this.historyemail = selectarr
+        if (this.historyemail.length > 0) {
+          this.historyemailshow = true
+        }
+      })
     },
     copyStringToClipboard (str) {
       var el = document.createElement('textarea')
@@ -267,7 +300,7 @@ export default {
           left: 0px;
           padding-top: 6px;
           width:326px;
-          height:140px;
+          max-height:140px;
           background:rgba(255,255,255,1);
           box-shadow:0px 0px 30px 0px rgba(22,39,77,0.07);
           overflow-y: scroll;
@@ -298,6 +331,12 @@ export default {
               font-size: 14px;
               background:#EFE9F4;
             }
+          }
+          .active{
+            color:#652791;
+            font-weight: bold;
+            font-size: 14px;
+            background:#EFE9F4;
           }
         }
       }

@@ -24,3 +24,14 @@ export const getResumeVkeyApi = data => request({
     host: 'zhaopin'
   }
 })
+
+// 简历转发链接地址-获取简历信息
+// export const getResumeVkeyApi = data => request(`/jobhunter/resume/vkey/${data.vkey}`, 'get', data)
+export const getshareResumeVkeyApi = data => request({
+  url: `/resumeemail/info/${data.vkey}`,
+  method: 'get',
+  params: data,
+  config: {
+    host: 'zhaopin'
+  }
+})

@@ -47,7 +47,7 @@
               :class="{'selected':isShowScreen}"
               v-if="isShowScreen"
             >
-              <i class="iconfont iconshaixuan"></i>
+              <i class="iconfont icon-shaixuan"></i>
               {{ selectedScreen.length > 0 || (positionTypeList.length > 0 ? positionTypeList[positionTypeList.length-1].active:false) ? '清除筛选' :'高级筛选' }}
             </div>
 
@@ -57,12 +57,12 @@
               :class="{'selected':selectedScreen.length>0}"
               v-else
             >
-              <i class="iconfont iconshaixuan"></i>
+              <i class="iconfont icon-shaixuan"></i>
               {{selectedScreen.length > 0 || (positionTypeList.length > 0 ? positionTypeList[positionTypeList.length-1].active:false) ? '清除筛选' :'高级筛选' }}
             </div>
 
             <div class="topSelected2" @click="screenList(2)">
-              <i class="iconfont iconxiangxiajiantou"></i>
+              <i class="iconfont icon-jiantou"></i>
             </div>
 
             <div class="screenBox" v-if="isShowScreen">
@@ -284,18 +284,18 @@
                     <span class="realName">{{nowResumeMsg.name}}</span>
                     <div class="lebalList">
                       <div class="lebalItem">
-                        <i class="icon iconfont iconzhiwei" style></i>
+                        <i class="icon iconfont icon-zhiwei" style></i>
                         <span>{{nowResumeMsg.workAgeDesc}}</span>
                       </div>
                       <div class="lebalItem">
-                        <i class="icon iconfont iconnianling"></i>
+                        <i class="icon iconfont icon-nianling"></i>
                         <span>{{nowResumeMsg.age}}岁</span>
                       </div>
                       <div
                         class="lebalItem"
                         :style="nowResumeMsg.jobStatus===''?'margin-right:0px;':''"
                       >
-                        <i class="icon iconfont iconxueli"></i>
+                        <i class="icon iconfont icon-jiaoyu"></i>
                         <span>{{nowResumeMsg.degreeDesc}}</span>
                       </div>
                       <div class="lebalItem">
@@ -433,6 +433,31 @@
             </div>
           </div>
           <div class="Code">
+            <div class="handlerpring">
+              <div class="onload" @click="hasonload = !hasonload">
+                <i class="iconfont icon-xiazai"></i>
+              </div>
+              <div class="onloadselect" v-show="hasonload">
+                <div class="title">下载简历</div>
+                <div class="select">请选择下载格式:</div>
+                <div class="pdf">
+                  <div class="p_l" v-if="nowResumeMsg.resumeAttach">
+                    <i class="iconfont icon-word" style="color: #2878ff" v-if="nowResumeMsg.resumeAttach.attachType === 'doc'"></i>
+                    <i class="iconfont icon-pdf" v-else style="color: #FA3939"></i>
+                  </div>
+                  <div class="p_c" v-if="nowResumeMsg.resumeAttach">{{nowResumeMsg.resumeAttach.fileName}}</div>
+                  <div class="p_r" v-if="nowResumeMsg.resumeAttach">
+                    <a :href="nowResumeMsg.resumeAttach.url" :download="nowResumeMsg.resumeAttach.fileName"><i class="iconfont icon-xiazai"></i></a>
+                  </div>
+                </div>
+              </div>
+              <div class="dayin">
+                <i class="iconfont icon-dayin-"></i>
+              </div>
+              <div class="share" @click="sharediggle()">
+                <i class="iconfont icon-fenxiang"></i>
+              </div>
+            </div>
             <div class="btnstatus">
               <div class="btn1" @click.stop="setJob(nowResumeMsg.uid, 'recruiter-chat', nowResumeMsg, 2)" v-if="!nowResumeMsg.interviewInfo.data.haveInterview && !nowResumeMsg.interviewInfo.data.isOnProtected && !nowResumeMsg.interviewInfo.data.hasUnsuitRecord">开撩约面</div>
               <div class="btndisable" v-if="!nowResumeMsg.interviewInfo.data.haveInterview && nowResumeMsg.interviewInfo.data.isOnProtected">暂时无法约面</div>
@@ -440,13 +465,9 @@
               <div class="btn1" @click.stop="setJob(nowResumeMsg.uid, 'check-invitation', nowResumeMsg, 2)" v-if="nowResumeMsg.interviewInfo.data.haveInterview && nowResumeMsg.interviewInfo.data.interviewStatus === 12">查看邀约</div>
               <div class="btn1" @click.stop="setJob(nowResumeMsg.uid, 'arranging-interviews', nowResumeMsg, 2)" v-if="nowResumeMsg.interviewInfo.data.haveInterview && nowResumeMsg.interviewInfo.data.interviewStatus === 21">安排面试</div>
               <div class="btn1" @click.stop="setJob(nowResumeMsg.uid, 'arranging-interviews', nowResumeMsg, 2)" v-if="nowResumeMsg.interviewInfo.data.haveInterview && nowResumeMsg.interviewInfo.data.interviewStatus === 31">
-                <!-- <span v-if="nowResumeMsg.interviewInfo.data.data[0].type === 1">查看面试</span>
-                <span v-if="nowResumeMsg.interviewInfo.data.data[0].type === 2">修改面试</span> -->
                 <span>查看面试</span>
                 </div>
               <div class="btn1" @click.stop="setJob(nowResumeMsg.uid, 'arranging-interviews', nowResumeMsg, 2)" v-if="nowResumeMsg.interviewInfo.data.haveInterview && nowResumeMsg.interviewInfo.data.interviewStatus === 32">
-                <!-- <span v-if="nowResumeMsg.interviewInfo.data.data[0].type === 1">查看面试</span>
-                <span v-if="nowResumeMsg.interviewInfo.data.data[0].type === 2">修改面试</span> -->
                 <span>修改面试</span>
               </div>
               <div class="btn1" @click.stop="setJob(nowResumeMsg.uid, 'interview-retract', nowResumeMsg, 2)" v-if="!nowResumeMsg.interviewInfo.data.haveInterview && nowResumeMsg.interviewInfo.data.hasUnsuitRecord">撤回</div>
@@ -456,6 +477,14 @@
               <div class="btn2" @click.stop="setJob(nowResumeMsg.uid, 'watch-reson', nowResumeMsg, 2)"  v-if="!nowResumeMsg.interviewInfo.data.haveInterview && nowResumeMsg.interviewInfo.data.hasUnsuitRecord">查看原因</div>
 
             </div>
+            <div class="like_user" @click.stop="ownerOp(true,nowResumeMsg.uid)" v-if="nowResumeMsg.interested">
+                <img class="like" src="../../assets/images/like.png"/>
+                取消感兴趣
+              </div>
+              <div class="like_user" @click.stop="ownerOp(false,nowResumeMsg.uid)" v-else >
+                <img class="like" src="../../assets/images/like_no.png"/>
+                  对Ta感兴趣
+              </div>
             <div class="msgCode" v-if="shareResumeImg">
               <img :src="shareResumeImg" />
               <span>扫码进入</span>
@@ -464,24 +493,13 @@
               <div class="ContactInformation">
                 <p class="contactTitle" v-if="nowResumeMsg.mobile||nowResumeMsg.wechat">联系方式:</p>
                 <div class="Contact" v-if="nowResumeMsg.mobile">
-                  <span>手机号:</span>
+                  <span>手机号: </span>
                   <span>{{nowResumeMsg.mobile}}</span>
                 </div>
                 <div class="Contact" v-if="nowResumeMsg.wechat">
                   <span>微信号:</span>
-                  <span>{{nowResumeMsg.wechat}}</span>
+                  <span >{{nowResumeMsg.wechat}}</span>
                 </div>
-                <p v-if="nowResumeMsg.wechat==''&&nowResumeMsg.mobile==''" class="noUpload">暂无上传</p>
-              </div>
-
-              <div class="TabSelect" v-if="nowResumeMsg.resumeAttach">
-                <p class="addTab">
-                  <a
-                    :href="nowResumeMsg.resumeAttach.url"
-                    :download="nowResumeMsg.resumeAttach.fileName"
-                  >下载附件</a>
-                </p>
-                <p class="addTab">发送邮件</p>
               </div>
             </div>
           </div>
@@ -535,7 +553,6 @@
               <div class="info-select">
                 {{arrangementInfo.addressName}}
               </div>
-              <!-- <el-input :disabled="true" v-model="arrangementInfo.addressName" placeholder="请填写"></el-input> -->
               </div>
           </div>
         </div>
@@ -591,26 +608,26 @@
         <div class="arrangeinfo" v-if="pop.type === 'preview' && jobhunterInfo">
           <div class="item">
             <div class="icon">
-              <i class="iconfont iconmianshiguan"></i>
+              <i class="iconfont icon-mianshiguan"></i>
             </div>
             <div class="text">{{jobhunterInfo.arrangementInfo.realname}}</div>
             <div class="phone" v-if="jobhunterInfo.arrangementInfo.mobile">{{jobhunterInfo.arrangementInfo.mobile}}</div>
           </div>
           <div class="item" v-if="jobhunterInfo.positionName">
             <div class="icon">
-              <i class="iconfont iconzhiwei"></i>
+              <i class="iconfont icon-zhiwei"></i>
             </div>
             <div class="text">{{jobhunterInfo.positionName}}</div>
           </div>
           <div class="item" v-if="jobhunterInfo.address">
             <div class="icon">
-              <i class="iconfont icondidian"></i>
+              <i class="iconfont icon-didian"></i>
             </div>
             <div class="text">{{jobhunterInfo.address}}{{jobhunterInfo.doorplate}}</div>
           </div>
             <div class="item" v-show="jobhunterInfo.status >= 51">
               <div class="icon">
-                <i class="iconfont iconshijian"></i>
+                <i class="iconfont icon-shijian"></i>
               </div>
               <div class="text">{{jobhunterInfo.arrangementInfo.appointment}}</div>
             </div>
@@ -782,6 +799,14 @@
         </div>
       </div>
     </div>
+    <!-- 转发简历弹窗 -->
+    <dynamic-record
+      :visible="toworddiggle"
+      :info.sync="nowResumeMsg"
+      :imagesurl.sync="shareResumeImg"
+      @clicksend="sendford"
+      @clickcancel="cancelmessage"
+    ></dynamic-record>
   </div>
 </template>
 <script>
@@ -800,6 +825,8 @@ import {
 } from 'API/candidate'
 import { recruiterDetail } from 'API/common'
 import MapSearch from 'COMPONENTS/map'
+import DynamicRecord from '../candidateType/dynamicrecord.vue'
+import { putCollectUserApi, cancelCollectUserApi } from 'API/collect'
 import {
   topAdminPositonList,
   recruiterPositonList,
@@ -809,7 +836,7 @@ import {
   getInterviewComment,
   improperMarkingApi,
   confirmInterviewApi,
-  addressListApi, interviewRetract, addCompanyAdressApi, editCompanyAdressApi, setInterviewInfoApi, setCommentApi, setAttendApi } from 'API/candidateType'
+  addressListApi, interviewRetract, addCompanyAdressApi, editCompanyAdressApi, setInterviewInfoApi, setCommentApi, setAttendApi, emailtoforword } from 'API/candidateType'
 
 @Component({
   name: 'candidate',
@@ -821,13 +848,20 @@ import {
         this.init()
       },
       immediate: true
+    },
+    'pop.isShow': function (n) {
+      if (!n) {
+        this.hasonload = false
+      }
     }
   },
-  components: { MapSearch }
+  components: { MapSearch, DynamicRecord }
 })
 export default class CourseList extends Vue {
   userInfo = {};
   showResume = false
+  hasonload = false
+  toworddiggle = false
   pop = {
     isShow: false,
     Interview: false,
@@ -903,7 +937,8 @@ export default class CourseList extends Vue {
   navNum = {}; // nav 数量
   listType = 0;
   typeList = [];
-  nowResumeMsg = '';
+  nowResumeMsg = {};
+  shareResumeImg = '' // 简历二维码
   positionList = [{}];
   selectPosition = 0;
   invitenum = 0;
@@ -1948,6 +1983,33 @@ export default class CourseList extends Vue {
   addaddress () {
     this.pop.type = 'addaddress'
   }
+  // 是否感兴趣操作
+  ownerOp (status, uid) {
+    let data = {
+      uid: uid
+    }
+    if (!status) {
+      putCollectUserApi(data).then(res => {
+        this.$message({
+          type: 'success',
+          message: '感兴趣成功!'
+        })
+        this.getResume(uid)
+      }).catch(err => {
+        this.$message.error(err.data.msg)
+      })
+    } else {
+      cancelCollectUserApi(data).then(res => {
+        this.$message({
+          type: 'success',
+          message: '取消成功!'
+        })
+        this.getResume(uid)
+      }).catch(err => {
+        this.$message.error(err.data.msg)
+      })
+    }
+  }
   popCancel () {
     if (this.pop.type === 'addaddress') {
       this.pop = {
@@ -2020,6 +2082,25 @@ export default class CourseList extends Vue {
     shareResumeApi({ resumeUid: resumeId, forwardType: 1 }).then(res => {
       this.shareResumeImg = res.data.data.positionQrCodeUrl
     })
+  }
+  sendford (data) {
+    emailtoforword(data).then((res) => {
+      this.init()
+      this.pop.isShow = false
+      this.toworddiggle = false
+      this.$message({
+        type: 'success',
+        message: '转发成功成功!'
+      })
+    })
+  }
+  cancelmessage () {
+    this.toworddiggle = !this.toworddiggle
+    this.pop.isShow = true
+  }
+  sharediggle () {
+    this.pop.isShow = false
+    this.toworddiggle = true
   }
 
   toTop () {

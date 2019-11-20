@@ -7,7 +7,7 @@ const recruiter = [
     meta: {
       useNav: true,
       module: 'recruiterResource',
-      icon: 'iconfont icon-zhaopintuandui'
+      icon: 'iconfont icon-houxuanrendongtai'
     },
     children: [
       {
@@ -24,7 +24,7 @@ const recruiter = [
     meta: {
       useNav: true,
       module: 'recruiterResource',
-      icon: 'iconfont icon-zhaopintuandui'
+      icon: 'iconfont icon-houxuanrenku'
     },
     children: [
       {
@@ -41,7 +41,7 @@ const recruiter = [
     meta: {
       useNav: true,
       module: 'recruiterResource',
-      icon: 'iconfont icon-zhaopintuandui'
+      icon: 'iconfont icon-mianshiguanli'
     },
     children: [
       {
@@ -79,6 +79,12 @@ const recruiter = [
     name: 'issueRule',
     title: '发布规则',
     component: resolve => require(['../views/issueRule/issueRule.vue'], resolve)
+  },
+  {
+    path: '/landingPage',
+    name: 'landingPage',
+    title: '简历',
+    component: resolve => require(['../views/landingPage/index.vue'], resolve)
   }
 ]
 export default recruiter

@@ -503,7 +503,7 @@ height:100%;
   border-left: none;
   i{
     color: #652791;
-    font-size: 12px;
+    font-size: 24px;
   }
   img {
     margin: 0;
@@ -692,6 +692,145 @@ right: -40px;
         width: 198px;
         // border-left: 1px solid #ededed;
         display: inline-block;
+        .msgCode {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          margin-top: 67px;
+          img {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+          }
+          span {
+            font-size: 12px;
+            color: #42334d;
+            width: 72px;
+            height: 26px;
+            background: rgba(237, 237, 237, 1);
+            line-height: 26px;
+            position: relative;
+            text-align: center;
+            margin-top: 6px;
+            &:before {
+              content: "";
+              position: absolute;
+              width: 0;
+              height: 0;
+              border-left: 5px solid transparent;
+              border-right: 5px solid transparent;
+              border-bottom: 7px solid #ededed;
+              left: 31px;
+              top: -6px;
+            }
+          }
+        }
+        .handlerpring{
+          display: flex;
+          font-size:18px;
+          margin-bottom: 20px;
+          position: relative;
+          .onload{
+            width:18px;
+            height:18px;
+            margin: 0 16px 0px 35px;
+            position: relative;
+            cursor: pointer;
+            &::after{
+              content: '';
+              position: absolute;
+              background: #E8E9EB;
+              width: 1px;
+              height: 16px;
+              right: -16px;
+            }
+          }
+          .onloadselect{
+            width:221px;
+            height:199px;
+            background:rgba(255,255,255,1);
+            position: absolute;
+            top: 26px;
+            left: -179px;
+            z-index: 1;
+            box-shadow:0px 0px 26px 0px rgba(22,39,77,0.12);
+            .title{
+              font-size: 14px;
+              color: #333333;
+              font-weight: bold;
+              height:20px;
+              line-height: 20px;
+              padding-left: 20px;
+              margin: 20px 0px 2px 0px;
+            }
+            .select{
+              font-size: 12px;
+              height: 18px;
+              line-height: 18px;
+              color: #6D696E;
+              padding-left: 20px;
+              margin-bottom: 12px;
+            }
+            .pdf{
+              padding: 0 22px 0 20px;
+              display: flex;
+              margin-bottom: 20px;
+              cursor: pointer;
+              .p_l{
+                width:36px;
+                height:36px;
+                border-radius:4px;
+                i{
+                  font-size: 36px;
+                }
+              }
+              .p_c{
+                font-size: 12px;
+                width: 112px;
+                color: #6D696E;
+                line-height: 17px;
+                margin-left: 6px;
+              }
+              .p_r{
+                width: 14px;
+                height: 14px;
+                margin-left: 11px;
+                margin-top: 11px;
+                i{
+                  font-size: 14px;
+                  color: #652791;
+                  vertical-align: super
+                }
+              }
+            }
+          }
+          .dayin{
+            width:18px;
+            height:18px;
+            margin: 0 16px 0px 17px;
+            position: relative;
+            cursor: pointer;
+            &::after{
+              content: '';
+              position: absolute;
+              background: #E8E9EB;
+              width: 1px;
+              height: 16px;
+              right: -17px;
+            }
+          }
+          .share{
+            width:18px;
+            height:18px;
+            margin: 0 0px 0px 16px;
+            cursor: pointer;
+          }
+          i{
+            font-size: 18px;
+            color: #8452A7;
+          }
+        }
         .btnstatus{
           display: flex;
           flex-direction: column;
@@ -732,43 +871,23 @@ right: -40px;
             color:rgba(146,146,146,1);
             text-align: center;
             border-radius:4px;
-            cursor: pointer;
             margin-bottom: 12px;
+            cursor: pointer;
             border:1px solid rgba(205,203,207,1);
           }
         }
-        .msgCode {
+        .like_user {
           display: flex;
-          flex-direction: column;
           justify-content: center;
           align-items: center;
-          margin-top: 48px;
+          flex-direction: row;
+          color: #652791;
+          cursor: pointer;
+          height: 42px;
           img {
-            width: 130px;
-            height: 130px;
-            border-radius: 50%;
-          }
-          span {
-            font-size: 12px;
-            color: #42334d;
-            margin-top: 6px;
-            width: 72px;
-            height: 26px;
-            background: rgba(237, 237, 237, 1);
-            line-height: 26px;
+            margin-right: 7px;
             position: relative;
-            text-align: center;
-            &:before {
-              content: "";
-              position: absolute;
-              width: 0;
-              height: 0;
-              border-left: 5px solid transparent;
-              border-right: 5px solid transparent;
-              border-bottom: 7px solid #ededed;
-              left: 31px;
-              top: -6px;
-            }
+            top: -2px;
           }
         }
         .TabSelect {
@@ -821,8 +940,7 @@ right: -40px;
             font-weight: 700;
           }
           .noUpload {
-            text-align: left;
-            margin-left: 20px;
+            text-align: center;
             font-size: 13px;
             color: #929292;
           }
@@ -834,10 +952,8 @@ right: -40px;
         }
         .download {
           margin-top: 30px;
-
           .noUpload {
-            text-align: left;
-            margin-left: 20px;
+            text-align: center;
             font-size: 13px;
             color: #929292;
           }

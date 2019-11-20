@@ -309,3 +309,23 @@ export const generateUrl = data => request({
     host: 'zhaopin'
   }
 })
+
+// 获取历史发送邮箱地址
+export const gethistoryUrl = data => request({
+  url: `/resumeemail/address`,
+  method: 'get',
+  params: data,
+  config: {
+    host: 'zhaopin'
+  }
+})
+
+// 邮件转发简历
+export const emailtoforword = data => request({
+  url: `/resumeemail/send`,
+  method: 'post',
+  params: data,
+  config: {
+    host: 'zhaopin'
+  }
+})

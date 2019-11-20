@@ -4,32 +4,32 @@
       <div class="main_top_warp">
           <div class="main_top" >
             <div class="topBlo topStatusBlo borright " :class="{'cur':navType==='searchBrowseMyself'}" @click="changeNav('searchBrowseMyself')">
-              <i class="iconfont iconchakan"></i>
+              <i class="iconfont icon-zhengyan"></i>
               看过我的({{navNum.browseMyselfCount || 0}})
             </div>
             <div class="topBlo topStatusBlo borleft "  :class="{'cur':navType==='searchCollect'}" @click="changeNav('searchCollect')">
               <span class="border"></span>
-              <i class="iconfont iconshoucang"></i>
+              <i class="iconfont icon-ganxingqu-"></i>
               对我感兴趣({{navNum.collectMyselfCount || 0}})
             </div>
             <div class="topBlo topStatusBlo2"  :class="{'cur':navType==='searchMyCollect'}" @click="changeNav('searchMyCollect')">
-              <i class="iconfont iconshoucang"></i>
+              <i class="iconfont icon-ganxingqu-"></i>
               我感兴趣的({{navNum.myCollectCount || 0}})
             </div>
 
             <div class="screen_cont">
               <div class="topSelected" @click="screenList(1)" :class="{'selected':isShowScreen}" v-if="isShowScreen">
-                <i class="iconfont iconshaixuan"></i>
+                <i class="iconfont icon-shaixuan"></i>
                 {{ selectedScreen.length > 0 || (positionTypeList.length > 0 ? positionTypeList[positionTypeList.length-1].active:false) ? '清除筛选' :'高级筛选' }}
               </div>
 
               <div class="topSelected" @click="screenList(1)" :class="{'selected':selectedScreen.length>0}" v-else>
-                <i class="iconfont iconshaixuan"></i>
+                <i class="iconfont icon-shaixuan"></i>
                 {{selectedScreen.length > 0 ||  (positionTypeList.length > 0 ? positionTypeList[positionTypeList.length-1].active:false) ? '清除筛选' :'高级筛选' }}
               </div>
 
               <div class="topSelected2" @click="screenList(2)">
-                <i class="iconfont iconxiangxiajiantou"></i>
+                <i class="iconfont icon-jiantou"></i>
               </div>
 
               <div class="screenBox" v-if="isShowScreen">
@@ -226,18 +226,18 @@
                     <span class="realName">{{nowResumeMsg.name}}</span>
                     <div class="lebalList">
                       <div class="lebalItem">
-                        <i class="icon iconfont iconzhiwei" style></i>
+                        <i class="icon iconfont icon-zhiwei" style></i>
                         <span>{{nowResumeMsg.workAgeDesc}}</span>
                       </div>
                       <div class="lebalItem">
-                        <i class="icon iconfont iconnianling"></i>
+                        <i class="icon iconfont icon-nianling"></i>
                         <span>{{nowResumeMsg.age}}岁</span>
                       </div>
                       <div
                         class="lebalItem"
                         :style="nowResumeMsg.jobStatus===''?'margin-right:0px;':''"
                       >
-                        <i class="icon iconfont iconxueli"></i>
+                        <i class="icon iconfont icon-jiaoyu"></i>
                         <span>{{nowResumeMsg.degreeDesc}}</span>
                       </div>
                       <div class="lebalItem">
@@ -546,26 +546,26 @@
         <div class="arrangeinfo" v-if="pop.type === 'preview' && jobhunterInfo">
           <div class="item">
             <div class="icon">
-              <i class="iconfont iconmianshiguan"></i>
+              <i class="iconfont icon-mianshiguan"></i>
             </div>
             <div class="text">{{jobhunterInfo.arrangementInfo.realname}}</div>
             <div class="phone" v-if="jobhunterInfo.arrangementInfo.mobile">{{jobhunterInfo.jobhunterInfo.mobile}}</div>
           </div>
           <div class="item" v-if="jobhunterInfo.positionName">
             <div class="icon">
-              <i class="iconfont iconzhiwei"></i>
+              <i class="iconfont icon-zhiwei"></i>
             </div>
             <div class="text">{{jobhunterInfo.positionName}}</div>
           </div>
           <div class="item">
             <div class="icon">
-              <i class="iconfont icondidian"></i>
+              <i class="iconfont icon-didian"></i>
             </div>
             <div class="text">{{jobhunterInfo.address}}{{jobhunterInfo.doorplate}}</div>
           </div>
           <div class="item" v-show="jobhunterInfo.status === 51">
             <div class="icon">
-              <i class="iconfont iconshijian"></i>
+              <i class="iconfont icon-shijian"></i>
             </div>
             <div class="text">{{jobhunterInfo.arrangementInfo.appointment}}</div>
           </div>
@@ -691,6 +691,7 @@
       :visible="toworddiggle"
       :info.sync="nowResumeMsg"
       :imagesurl.sync="shareResumeImg"
+      @clicksend="sendford"
       @clickcancel="cancelmessage"
     ></dynamic-record>
   </div>
@@ -715,7 +716,7 @@ import {
   getInterviewComment,
   improperMarkingApi,
   confirmInterviewApi,
-  addressListApi, interviewRetract, addCompanyAdressApi, editCompanyAdressApi, setInterviewInfoApi } from 'API/candidateType'
+  addressListApi, interviewRetract, addCompanyAdressApi, editCompanyAdressApi, setInterviewInfoApi, emailtoforword } from 'API/candidateType'
 
 import { applyInterviewApi } from 'API/interview'
 
@@ -730,6 +731,11 @@ import { applyInterviewApi } from 'API/interview'
           this.init()
         },
         immediate: true
+      },
+      'pop.isShow': function (n) {
+        if (!n) {
+          this.hasonload = false
+        }
       }
     },
     components: {
@@ -1521,8 +1527,8 @@ export default class CourseList extends Vue {
       })
     }
     sharediggle () {
+      this.pop.isShow = false
       this.toworddiggle = true
-      console.log(this.shareResumeImg)
     }
 
     // 获取另外的选择
@@ -1651,7 +1657,6 @@ export default class CourseList extends Vue {
       getSearchMyCollectApi(data).then(res => {
         let msg = res.data
         this.candidateList = msg.data
-        console.log(this.candidateList)
         this.form.total = res.data.meta.total
         this.form.totalPage = res.data.meta.lastPage
         this.navNum.myCollectCount = res.data.meta.total
@@ -1801,6 +1806,18 @@ export default class CourseList extends Vue {
     }
     cancelmessage () {
       this.toworddiggle = !this.toworddiggle
+      this.pop.isShow = true
+    }
+    sendford (data) {
+      emailtoforword(data).then((res) => {
+        this.init()
+        this.pop.isShow = false
+        this.toworddiggle = false
+        this.$message({
+          type: 'success',
+          message: '转发成功成功!'
+        })
+      })
     }
     // 点击其他区域关闭弹窗
     closeMsg (event) {

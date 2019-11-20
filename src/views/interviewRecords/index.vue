@@ -463,27 +463,27 @@
           <div class="arrangeinfo" v-if="pop.type === 'preview' && jobhunterInfo">
             <div class="item">
               <div class="icon">
-                <i class="iconfont iconmianshiguan"></i>
+                <i class="iconfont icon-mianshiguan"></i>
               </div>
               <div class="text">{{jobhunterInfo.arrangementInfo.realname}}</div>
               <div class="phone" v-if="jobhunterInfo.arrangementInfo.mobile">{{jobhunterInfo.arrangementInfo.mobile}}</div>
             </div>
             <div class="item" v-if="jobhunterInfo.positionName">
               <div class="icon">
-                <i class="iconfont iconzhiwei"></i>
+                <i class="iconfont icon-zhiwei"></i>
               </div>
               <div class="text">{{jobhunterInfo.positionName}}</div>
             </div>
             <div class="item" v-if="jobhunterInfo.address">
               <div class="icon">
-                <i class="iconfont icondidian"></i>
+                <i class="iconfont icon-didian"></i>
               </div>
               <div class="text">{{jobhunterInfo.address}}{{jobhunterInfo.doorplate}}</div>
             </div>
 
             <div class="item" v-show="jobhunterInfo.status >= 51">
               <div class="icon">
-                <i class="iconfont iconshijian"></i>
+                <i class="iconfont icon-shijian"></i>
               </div>
               <div class="text">{{jobhunterInfo.arrangementInfo.appointment}}</div>
             </div>
