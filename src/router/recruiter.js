@@ -85,6 +85,12 @@ const recruiter = [
     name: 'landingPage',
     title: '简历',
     component: resolve => require(['../views/landingPage/index.vue'], resolve)
+  },
+  {
+    path: '/register',
+    name: 'register',
+    title: '注册',
+    component: resolve => require(['../views/registerCompany/index.vue'], resolve)
   }
 ]
 export default recruiter
