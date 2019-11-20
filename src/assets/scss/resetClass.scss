@@ -6,3 +6,45 @@
 	padding: 11px 12px;
 	box-sizing: border-box;
 }
+.pagination {
+  height: 102px;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .number {
+    height: 30px;
+    box-sizing: border-box;
+    border: 1px solid rgba(220, 220, 220, 1);
+    color: rgba(101, 39, 145, 1);
+    background: #fff;
+    &.active {
+      color: rgba(102, 102, 102, 1);
+      background: none;
+      border: none;
+    }
+  }
+  span {
+    height: 30px;
+    padding: 0px 11px;
+    line-height: 30px;
+    box-sizing: border-box;
+  }
+  .total {
+    font-size: 12px;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+    color: rgba(102, 102, 102, 1);
+  }
+  button {
+    height: 30px;
+    box-sizing: border-box;
+    span {
+      height: 30px;
+      color: rgba(101, 39, 145, 1);
+      background: #fff;
+      border: 1px solid rgba(220, 220, 220, 1);
+      box-sizing: border-box;
+    }
+  }
+}

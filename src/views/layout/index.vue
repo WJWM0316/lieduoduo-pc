@@ -60,7 +60,7 @@ export default class App extends Vue {
   }
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .pages {
   min-height: calc(100vh - #{$page-header-height} - #{$page-footer-height});
   min-width: $page-width;
