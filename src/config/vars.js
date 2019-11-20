@@ -10,6 +10,15 @@ const Gender = [
   { label: '女', value: 2 }
 ]
 
+const Degree = [
+  { label: '初中及以下', value: 5 },
+  { label: '中专/中技', value: 10 },
+  { label: '高中', value: 15 },
+  { label: '大专', value: 20 },
+  { label: '本科', value: 25 },
+  { label: '硕士', value: 30 },
+  { label: '博士', value: 35 }
+]
 export {
-  JobStatus, Gender
+  JobStatus, Gender, Degree
 }

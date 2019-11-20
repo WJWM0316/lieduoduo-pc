@@ -23,4 +23,20 @@
 .el-input.el-input-radius2px .el-input__inner {
   border-radius: 2px;;
 }
-  
+.el-input--medium.el-input-radius .el-input__inner{
+  border-radius: 20px;
+}
+.el-form-item.is-error .el-input.no-error .el-input__inner {
+  border-color: $border-color-2;
+}
+
+
+/** dialog */
+.el-dialog {
+  .el-dialog__header {
+
+  }
+  .el-dialog__body {
+    padding: 0px 20px;
+  }
+}

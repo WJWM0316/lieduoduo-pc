@@ -1,18 +1,32 @@
 <template>
   <div class="base-info">
-    <wrapper class="base-info-wrapper" @command="handleCommand">
+    <wrapper class="base-info-wrapper" @command="handleCommand" :status="status">
       <template slot="header">
-        <Picture :value.sync="info.avatarUrl">
+        <Picture
+          v-if="status !== 'view'"
+          :value.sync="info.avatarUrl"
+          @before="avatarLoading = true"
+          @fail="avatarLoading = false"
+          @change="handleChangeAvatar"
+          v-loading="avatarLoading">
           <div class="avatar-wrapper">
             <div class="avatar">
               <img :src="info.avatarUrl" />
-              <span class="el-icon-camera-solid"></span>
+              <span class="iconfont icon-xiangji"></span>
             </div>
-            <span class="user-gender">
-              <i class="iconfont" :class="info.gender == 1 ? 'icon-xingbiebiaoqian-nan male' : 'icon-xingbiebiaoqian-nv female'"></i>
+            <span class="user-gender" :class="info.gender == 1 ? 'male' : 'female'" >
+              <i class="iconfont" :class="info.gender == 1 ? 'icon-nan' : 'icon-nvsheng'"></i>
             </span>
           </div>
         </Picture>
+        <div class="avatar-wrapper" v-else>
+          <div class="avatar">
+            <img :src="info.avatarUrl" />
+          </div>
+          <span class="user-gender" :class="info.gender == 1 ? 'male' : 'female'" >
+            <i class="iconfont" :class="info.gender == 1 ? 'icon-nan' : 'icon-nvsheng'"></i>
+          </span>
+        </div>
       </template>
       <template slot="content">
         <div class="resume-info">
@@ -21,7 +35,7 @@
             <p class="user-company" v-if="resume.lastCompanyName">{{resume.lastCompanyName}} - {{resume.lastPosition}}</p>
             <p>
               <span><i class="iconfont icon-zhiwei"></i>{{resume.workAgeDesc}}</span>
-              <span><i class="iconfont icon-zhiwei"></i>{{resume.age}}岁</span>
+              <span><i class="iconfont icon-nianling"></i>{{resume.age}}岁</span>
               <span><i class="iconfont icon-jiaoyu"></i>{{resume.degreeDesc}}</span>
             </p>
           </div>
@@ -115,7 +129,8 @@ export default {
     resume: {
       type: Object,
       default: () => ({})
-    }
+    },
+    status: String
   },
   components: {
     Wrapper,
@@ -158,7 +173,8 @@ export default {
         jobStatus: [{ required: true, type: 'number', message: '请选择求职状态', trigger: 'change' }]
       },
       jobstatus: JobStatus,
-      gender: Gender
+      gender: Gender,
+      avatarLoading: false
     }
   },
   methods: {
@@ -198,9 +214,29 @@ export default {
               // eslint-disable-next-line standard/no-callback-literal
               cb(false)
             })
+          } else {
+            // eslint-disable-next-line standard/no-callback-literal
+            cb(false)
           }
         })
       }
+    },
+    handleChangeAvatar (item) {
+      // 将头像信息写入到vuex
+      this.$store.commit('overwriteResume', {
+        avatar: item[0]
+      })
+      let data = {}
+      const arr = ['name', 'gender', 'birth', 'startWorkYear', 'jobStatus', 'mobile']
+      for (let item in arr) {
+        data[arr[item]] = this.resume[arr[item]]
+      }
+      data.avatar = item[0].id
+      setBaseInfo(data).then(({ data }) => {
+        this.avatarLoading = false
+      }).catch(() => {
+        this.avatarLoading = false
+      })
     }
   }
 }
@@ -223,17 +259,22 @@ $image-wrapper: 112px;
     position: absolute;
     bottom: 0;
     right: 0;
-  }
-  .male,.female {
-    font-size: 24px;
-    position: relative;
+    color: #fff;
     z-index: 5;
+    height: 27px;
+    width: 27px;
+    line-height: 28px;
+    border-radius: 50%;
+    text-align: center;
   }
-  .male {
-    color: #2778FF;
+  .user-gender.male {
+    background: #2778FF;
   }
-  .female {
-    color: #FF6796;
+  .user-gender.female {
+    background: #FF6796;
+  }
+  .iconfont {
+    font-size: 28px;
   }
 }
 .avatar {

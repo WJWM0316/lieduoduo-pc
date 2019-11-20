@@ -4,20 +4,20 @@
       <div class="wrapper-header">
         <slot name="header"></slot>
       </div>
-      <div class="wrapper-list-content" v-if="list.length">
+      <div class="wrapper-list-content" v-if="list.length || isDelete">
         <div class="list-item" v-for="(item,index) in list" :key="index">
           <div class="wrapper-info">
             <slot name="content" :row="item"></slot>
           </div>
-          <div class="wrapper-operate">
+          <div class="wrapper-operate" v-if="status !== 'view'">
             <slot name="operate">
               <span class="iconfont icon-shanchu"  @click="handleDelete(item, index)" v-if="isDelete"></span>
-              <span class="el-icon-edit" @click="handleEdit(item, index)"></span>
+              <span class="el-icon-edit" v-if="!isEmpty" @click="handleEdit(item, index)"></span>
             </slot>
           </div>
         </div>
-        <div class="list-item">
-          <div class="wrapper-info wrapper-info-bottom">
+        <div class="list-item"  v-if="status !== 'view'">
+          <div class="wrapper-info">
             <slot name="bottom"></slot>
           </div>
         </div>
@@ -25,11 +25,11 @@
       <div class="wrapper-content"  v-else>
         <div class="wrapper-info">
           <slot name="content"></slot>
-          <slot name="bottom"></slot>
+          <slot name="bottom"  v-if="status !== 'view'"></slot>
         </div>
-        <div class="wrapper-operate">
+        <div class="wrapper-operate" v-if="status !== 'view'">
           <slot name="operate">
-            <span class="el-icon-edit" @click="handleEdit"></span>
+            <span class="el-icon-edit" v-if="!isEmpty"  @click="handleEdit"></span>
           </slot>
         </div>
       </div>
@@ -48,9 +48,15 @@
 export default {
   props: {
     isDelete: Boolean,
+    isEmpty: Boolean,
     list: {
       type: Array,
       default: () => ([])
+    },
+    status: String,
+    config: {
+      type: Object,
+      default: () => ({})
     }
   },
   data () {
@@ -60,20 +66,38 @@ export default {
     }
   },
   methods: {
-    handleDelete () {
-      //
-      this.$emit('command', {
-        type: 'delete'
-      })
+    handleDelete (item, index) {
+      if (this.config.limit) {
+        if (this.list.length <= this.config.limit) {
+          this.$alert(this.config.limitText, '提示', {
+            confirmButtonText: '好的',
+            type: 'warning'
+          })
+          return
+        }
+      }
+      this.$confirm('确定删除本条信息?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$emit('command', {
+          type: 'delete',
+          item,
+          index
+        })
+      }).catch(() => {})
     },
-    handleEdit () {
+    handleEdit (item = {}, index = null) {
       this.unshowEdit = false
       this.$emit('command', {
-        type: 'edit'
+        type: 'edit',
+        item,
+        index
       })
     },
     handleClose () {
-      this.$confirm('退出编辑后，更新的内容不会自动保存?', '有内容没有保存，确定退出编辑吗', {
+      this.$confirm('退出编辑后，更新的内容不会自动保存?', '有内容没有保存?确定退出编辑吗?', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -90,6 +114,9 @@ export default {
           this.unshowEdit = status
         }
       })
+    },
+    showEditCompoents () {
+      this.unshowEdit = false
     }
   }
 }
@@ -108,7 +135,7 @@ export default {
     @include flex-v-top;
   }
   .list-item+.list-item {
-    margin-top: 16px;
+    margin-top: 42px;
   }
   .wrapper-list-content {
     flex: 1;
@@ -125,9 +152,6 @@ export default {
   .wrapper-info {
     flex: 1;
     max-width: 520px;
-  }
-  .wrapper-info-bottom {
-    margin-top: 40px;
   }
   .wrapper-operate {
     width: 100px;

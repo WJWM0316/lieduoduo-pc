@@ -93,24 +93,13 @@ import { searchPositionApi } from '@/api/position'
       handler (arr) {
         if (arr.length) {
           let positionList = this.positionList
-          positionList.map(
-            field =>
-              (field.active = field.labelId === this.data[0])
-          )
+          positionList.map(field => (field.active = field.labelId === this.data[0]))
 
-          let secondPositionList = positionList.find(field => field.active)
-            .children
-          secondPositionList.map(
-            field =>
-              (field.active = field.labelId === this.data[1])
-          )
+          let secondPositionList = positionList.find(field => field.active).children
+          secondPositionList.map(field => (field.active = field.labelId === this.data[1]))
 
-          let thirdPositionList = secondPositionList.find(field => field.active)
-            .children
-          thirdPositionList.map(
-            field =>
-              (field.active = field.labelId === this.data[2])
-          )
+          let thirdPositionList = secondPositionList.find(field => field.active).children
+          thirdPositionList.map(field => (field.active = field.labelId === this.data[2]))
 
           this.positionList = positionList
           this.secondPositionList = secondPositionList
