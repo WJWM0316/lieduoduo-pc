@@ -5,6 +5,7 @@
         <Picture
           v-if="status !== 'view'"
           :value.sync="info.avatarUrl"
+          attach-type="avatar"
           @before="avatarLoading = true"
           @fail="avatarLoading = false"
           @change="handleChangeAvatar"

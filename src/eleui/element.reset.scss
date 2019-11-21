@@ -18,6 +18,9 @@
 .el-pagination.is-background {
   font-weight: normal;
 }
+.el-pagination.is-background .el-pager li.active + li {
+  border-left: 1px solid gainsboro;
+}
 
 /** 设置input */
 .el-input.el-input-radius2px .el-input__inner {

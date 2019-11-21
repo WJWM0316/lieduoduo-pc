@@ -12,7 +12,7 @@ const VUE_WEB_QIUZHI_API = process.env.VUE_APP_WEB_QIUZHI_API
 const VUE_WEB_PUB_API = process.env.VUE_APP_WEB_PUB_API
 const VUE_WEB_NODE_API = process.env.VUE_APP_WEB_NODE_API
 
-export const request = ({ url, method, params = {}, config, onUploadProgress }) => {
+export const request = ({ url, method, params = {}, config }) => {
   if (params && params.globalLoading) counter++
   if (counter === 1) loadingInstance = Loading.service({})
 
@@ -53,7 +53,7 @@ export const request = ({ url, method, params = {}, config, onUploadProgress }) 
     }
   }
   return new Promise((resolve, reject) => {
-    axios[method](url, method === 'get' ? { params } : params, onUploadProgress).then(res => {
+    axios[method](url, method === 'get' ? { params } : params, config).then(res => {
       resolve(res)
       loadingBack()
     }).catch(err => {

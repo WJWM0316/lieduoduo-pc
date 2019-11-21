@@ -225,3 +225,22 @@ export const setMoreIntroduce = (data) => {
     config: { host: 'qiuzhi' }
   })
 }
+
+// 保存附件简历
+export const saveResumeAttach = (data) => {
+  return request({
+    method: 'post',
+    url: '/jobhunter/save_attach',
+    params: data,
+    config: { host: 'qiuzhi' }
+  })
+}
+
+export const deleteResumeAttach = (data) => {
+  return request({
+    url: '/jobhunter/del_attach',
+    method: 'delete',
+    params: data,
+    config: { host: 'qiuzhi' }
+  })
+}

@@ -45,7 +45,12 @@
       <div class="header-user-info">
         <div class="system">
           <template v-if="userInfo.id">
-            <router-link tag="span" class="resume" to="/cresume">简历</router-link>
+            <router-link tag="span" to="/cresume" class="resume" v-slot="{ href, isActive, isExactActive }">
+              <span
+                class="router-link"
+                :class="[isActive && 'router-link-active', isExactActive && 'router-link-exact-active']"
+                @click="handeToResume">简历</span>
+            </router-link>
           </template>
           <template v-else>
             <div>
@@ -141,6 +146,14 @@ export default {
       this.$router.push({
         path: item.url
       })
+    },
+    // 是否可以进入简历页面
+    handeToResume () {
+      if (this.roleInfos.isJobhunter !== 1) {
+        this.$router.push({ path: '/createuser' })
+      } else {
+        this.$router.push({ path: '/cresume' })
+      }
     },
     changeLocation (item) {
       this.addressName = item.name

@@ -29,7 +29,7 @@
         :ref="eventKey"
         @change="handleChange"
         style="display: none;"
-        accept="image/*"
+        :accept="accept"
       />
     </template>
     <template v-else>
@@ -47,7 +47,7 @@
           :ref="eventKey"
           @change="handleChange"
           style="display: none;"
-          accept="image/*"
+          :accept="accept"
         />
       </div>
     </template>
@@ -71,7 +71,7 @@ export default {
     },
     disabled: Boolean,
     showTipText: Boolean,
-    eventKey: {
+    eventKey: { // 同一个组件内调用多次，需要设置 event key
       type: String,
       default: 'input'
     },
@@ -79,11 +79,15 @@ export default {
       type: Number,
       default: 5
     },
+    accept: {
+      type: String,
+      default: 'image/png,image/jpg,image/gif,image/png'
+    },
     limit: { // 限制上传数量
       type: Number,
       default: 5
     },
-    attachType: { // 图片上传的种类 avatar, img, audio, video, doc, compress, application
+    attachType: { // 接口图片上传的种类 avatar, img, audio, video, doc, compress, application
       type: String,
       default: 'img'
     },
@@ -95,7 +99,7 @@ export default {
       type: String,
       default: ''
     },
-    validateEvent: {
+    validateEvent: { // 是在存在el-form-item并且需要验证
       type: Boolean,
       default: false
     },
@@ -148,11 +152,11 @@ export default {
       this.postImage(formData)
       evt.target.value = ''
     },
-    postImage (data) {
+    postImage (formdata) {
       if (!this.multiple) this.singleLoding = true
       if (this.multiple) this.multipleLading = true
       this.$emit('before')
-      uploadApi(data).then(({ data }) => {
+      uploadApi(formdata).then(({ data }) => {
         if (!this.multiple) this.singleLoding = false
         if (this.multiple) this.multipleLading = false
         if (data.httpStatus === 200) {

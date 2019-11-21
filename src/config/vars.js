@@ -19,6 +19,15 @@ const Degree = [
   { label: '硕士', value: 30 },
   { label: '博士', value: 35 }
 ]
+
+const FileType = {
+  pdf: { icon: 'icon-pdf', color: '#FA3939', type: 'pdf' },
+  jpg: { icon: 'icon-jpg', color: '#D53B8F', type: 'jpg' },
+  png: { icon: 'icon-png', color: '#8452A7', type: 'png' },
+  a4: { icon: 'icon-a', color: '#00C4CD', type: 'a4' },
+  doc: { icon: 'icon-word', color: '#4A90E2', type: 'doc' },
+  docx: { icon: 'icon-word', color: '#4A90E2', type: 'docx' }
+}
 export {
-  JobStatus, Gender, Degree
+  JobStatus, Gender, Degree, FileType
 }

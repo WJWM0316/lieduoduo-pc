@@ -114,7 +114,6 @@ export default {
           break
         case 'position':
           const positionLabel = data.data.find(val => val.labelId === this.filter)
-          console.log(positionLabel)
           this.labels = (positionLabel && positionLabel.children) || []
           break
         default:
