@@ -30,7 +30,7 @@
   justify-content: space-between;
 }
 
-// 仅仅垂直居中
+
 @mixin flex-v-top() {
   display: flex;
   align-items: flex-start;
@@ -60,7 +60,7 @@
 }
 
 // img border-radius 
-@mixin img-radius($height, $width, $radius:50%, $bgcolor: #ABABAB) {
+@mixin img-radius($height, $width, $radius:50%, $bgcolor: #fff) {
   width: $height;
   height: $width;
   border-radius: $radius;

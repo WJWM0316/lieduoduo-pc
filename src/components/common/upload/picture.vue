@@ -11,12 +11,12 @@
           :style="`background-image: url(${imageItem.url}); background-size: cover; background-repeat: no-repeat; background-position: center center;`"
           draggable="true">
           <div class="btn-close" @click="handleRemoveImage(imageIndex)">
-            <i class="iconfont iconiconfontshanchu"></i>
+            <i class="iconfont icon-xiantiaoguanbi"></i>
           </div>
         </li>
         <template v-if="!multipleBtn">
           <li class="upload-card" @click="handleClickInput" v-loading="multipleLading" v-if="value.length < 20">
-            <i class="iconfont icontianjia"></i>
+            <i class="el-icon-plus"></i>
           </li>
         </template>
       </ul>
@@ -36,10 +36,10 @@
       <div class="single-upload">
         <div @click="handleClickInput">
           <slot>
-            <div class="avatar"  v-if="value">
+            <div class="avatar" v-if="value">
               <img :src="value" alt />
             </div>
-            <el-button type="primary" size="small"  round plain :loading="singleLoding">{{value ? '重新上传' : '上传图片'}}</el-button>
+            <el-button type="primary" size="small" round plain :loading="singleLoding">{{value ? '重新上传' : '上传图片'}}</el-button>
           </slot>
         </div>
         <input
@@ -75,7 +75,11 @@ export default {
       type: String,
       default: 'input'
     },
-    limit: { // 限制上传文件的大小 单位M
+    size: { // 限制上传文件的大小 单位M
+      type: Number,
+      default: 5
+    },
+    limit: { // 限制上传数量
       type: Number,
       default: 5
     },
@@ -99,7 +103,6 @@ export default {
   },
   data () {
     return {
-      uploadImage: process.env.VUE_APP_B_TERM_API,
       singleLoding: false,
       multipleLading: false
     }
@@ -119,10 +122,17 @@ export default {
         this.$message.error('每次只允许上传一个文件！')
         return
       }
+      // 限制上传图片的数量
+      if (this.multiple && this.value.length + files.length > this.limit) {
+        this.$refs[this.eventKey].value = null
+        this.$message.error(`最多只能上传${this.limit}张图片~`)
+        return
+      }
       // 判断大小
       for (let item = 0; item < files.length; item++) {
-        if (files[item].size / 1024 / 1024 > this.limit) {
+        if (files[item].size / 1024 / 1024 > this.size) {
           this.$message.error('上传的图片大小是5MB~')
+          return
         } else {
           uploadFile.push(files[item])
         }
@@ -141,13 +151,14 @@ export default {
     postImage (data) {
       if (!this.multiple) this.singleLoding = true
       if (this.multiple) this.multipleLading = true
-      uploadApi(data).then(({ data, httpStatus }) => {
+      this.$emit('before')
+      uploadApi(data).then(({ data }) => {
         if (!this.multiple) this.singleLoding = false
         if (this.multiple) this.multipleLading = false
-        if (httpStatus === 200) {
-          const newList = [...this.value, ...data]
-          this.$emit('change', newList)
+        if (data.httpStatus === 200) {
           if (this.multiple) {
+            const newList = [...this.value, ...data.data]
+            this.$emit('change', newList)
             this.$emit('update:value', newList)
             if (this.$parent.$options.componentName === 'ElFormItem') {
               if (this.validateEvent) {
@@ -155,6 +166,7 @@ export default {
               }
             }
           } else {
+            this.$emit('change', data.data)
             this.$emit('update:value', data[0].url)
             if (this.$parent.$options.componentName === 'ElFormItem') {
               if (this.validateEvent) {
@@ -164,6 +176,7 @@ export default {
           }
         }
       }).catch(() => {
+        this.$emit('fail')
         if (!this.multiple) this.singleLoding = false
       })
     },
@@ -184,8 +197,8 @@ export default {
 .common-list {
   position: relative;
   .logo-img {
-    width: 88px;
-    height: 88px;
+    width: 90px;
+    height: 90px;
     position: relative;
     overflow: hidden;
     text-align: center;
@@ -200,63 +213,62 @@ export default {
     }
   }
   li {
-    width: 88px;
-    height: 88px;
+    width: 90px;
+    height: 90px;
     border-radius: 4px;
     position: relative;
     display: inline-block;
     vertical-align: middle;
-    margin-right: 24px;
+    margin: 0 10px 10px 0;
     overflow: hidden;
     text-align: center;
+    cursor: pointer;
+    &:hover {
+      .btn-close {
+        background: rgba(0, 0, 0, 0.9);
+      }
+    }
     img {
       max-width: 100%;
       min-height: 100%;
-    }
-    &:hover {
-      .btn-close {
-        opacity: 1;
-      }
     }
   }
   .upload-card {
     position: relative;
     box-sizing: border-box;
-    border: solid 1px #d8d8d8;
+    border: solid 1px $border-color-2;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 4px;
     overflow: hidden;
-    .icontianjia {
+    .el-icon-plus {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      color: #dcdcdc;
-      font-size: 24px;
+      color: $main-color-1;
+      font-size: 26px;
     }
   }
   .btn-close {
     position: absolute;
     top: 0;
     right: 0;
-    color: #bcbcbc;
-    font-size: 20px;
-    line-height: 1;
+    line-height: 20px;
     cursor: pointer;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6);
+    width: 25px;
+    height: 25px;
+    background: rgba(0, 0, 0, 0.5);
     z-index: 2;
     text-align: center;
-    line-height: 88px;
-    border-radius: 5px;
-    overflow: hidden;
-    color: white;
-    transition: all ease 0.4s;
-    opacity: 0;
+    border-radius: 0 0 0 25px;
+    color: #fff;
+    .iconfont {
+      padding-left: 2px;
+      font-size: 12px;
+    }
   }
 }
-.upload-btn  .el-button{
+.upload-btn .el-button{
   margin-left: 0;
   vertical-align: middle;
 }

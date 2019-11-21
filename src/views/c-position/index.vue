@@ -174,7 +174,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .main-center {
-  margin-top: 24px;
+  padding-top: 24px;
   padding-bottom: 40px;
   display: flex;
 }

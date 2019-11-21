@@ -39,7 +39,7 @@ export default class APP extends Vue {
 @import './assets/css/index.css';
 @import './assets/scss/button.scss';
 @import './eleui/element.reset.scss';
-#app {
+#app, .c-app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   color: #2c3e50;
   background: $bg-color-1;

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Loading } from 'element-ui'
+import { Loading, Message } from 'element-ui'
 import router from '../router/index'
 import { getAccessToken, removeAccessToken } from './cacheService'
 import Vue from 'vue'
@@ -12,7 +12,7 @@ const VUE_WEB_QIUZHI_API = process.env.VUE_APP_WEB_QIUZHI_API
 const VUE_WEB_PUB_API = process.env.VUE_APP_WEB_PUB_API
 const VUE_WEB_NODE_API = process.env.VUE_APP_WEB_NODE_API
 
-export const request = ({ url, method, params = {}, config }) => {
+export const request = ({ url, method, params = {}, config, onUploadProgress }) => {
   if (params && params.globalLoading) counter++
   if (counter === 1) loadingInstance = Loading.service({})
 
@@ -53,12 +53,12 @@ export const request = ({ url, method, params = {}, config }) => {
     }
   }
   return new Promise((resolve, reject) => {
-    axios[method](url, method === 'get' ? { params } : params).then(res => {
+    axios[method](url, method === 'get' ? { params } : params, onUploadProgress).then(res => {
       resolve(res)
       loadingBack()
     }).catch(err => {
       if (!config.noCheckLogin && err.response.data.httpStatus !== 200) {
-        Vue.message.error(err.response.data.msg)
+        Message.error(err.response.data.msg || err.response.data.message)
       }
       // 登陆过期或者未登录
       if (!config.noCheckLogin && err.response.data.httpStatus === 401) {
