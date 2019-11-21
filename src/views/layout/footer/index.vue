@@ -15,7 +15,7 @@
               <h3 class="relation">联系我们</h3>
             </div>
             <p class="black center_p">全国咨询热线：400-065-5788</p>
-            <p class="black">邮箱：lieduoduo@thetiger.com.cn</p>
+            <p class="black">邮箱：kefu@lieduoduo.com</p>
         </div>
         <div class="footer_right">
           <div class="right_code_blo">
