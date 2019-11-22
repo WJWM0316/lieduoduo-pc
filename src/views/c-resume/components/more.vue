@@ -14,6 +14,7 @@
         <div class="c-btn resume-add-btn" @click="handleShowForm()"><i class="el-icon-plus" /> 添加更多介绍</div>
       </template>
       <template slot="edit">
+        <p class="form-header-title">{{isAdd ? '添加': '编辑'}}更多介绍</p>
         <el-form :model="form">
           <div class="form-item" style="width: 100%; padding-left: 0px">
             <p class="form-title">文字集（选填）</p>
@@ -23,7 +24,7 @@
                 placeholder="可以描述你的技能、获奖证书，等等。"
                 v-model="form.introduce"
                 :rows="5"
-                maxlength="125"
+                maxlength="250"
                 show-word-limit />
             </el-form-item>
           </div>
@@ -67,6 +68,7 @@ export default {
   },
   data () {
     return {
+      isAdd: true,
       form: {
         introduce: '',
         imgs: []
@@ -76,9 +78,18 @@ export default {
   methods: {
     handleCommand ({ type, cb }) {
       if (type === 'edit') {
+        this.isAdd = false
         Object.assign(this.form, this.info)
       } else if (type === 'save') {
         const { imgs, introduce } = this.form
+        if (!imgs.length && !introduce) {
+          this.$alert('文字和图片至少一个不为空哦', '提示', {
+            confirmButtonText: '好的',
+            type: 'warning'
+          })
+          // eslint-disable-next-line standard/no-callback-literal
+          return cb(false)
+        }
         setMoreIntroduce({
           introduce,
           attachIds: imgs.map(val => val.id).join(',')
@@ -98,7 +109,8 @@ export default {
         })
       }
     },
-    handleShowForm () {
+    handleShowForm (isAdd = true) {
+      this.isAdd = isAdd
       this.$refs.wrapper.showEditCompoents()
     }
   }

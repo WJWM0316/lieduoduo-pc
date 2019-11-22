@@ -75,11 +75,25 @@ export default {
       this.searchData = []
       getLabelPositionListApi().then(({ data }) => {
         this.listData = data.data || []
+        // 数据复现
+        this.reviewData(this.value)
       })
     },
     handleShowDialog () {
       this.showDialog = true
       this.getLists()
+    },
+    reviewData (id) {
+      if (id) {
+        // 递归找到对应item
+        /* function func(data, results = {}) {
+          data.forEach(data => {
+            if(data.labelId === id)
+          })
+        } */
+      } else {
+        this.handleAsideCheck(this.listData[0])
+      }
     },
     handleSearch () {
       searchPositionApi({ name: this.keyword }).then(({ data }) => {
@@ -122,8 +136,13 @@ export default {
   line-height: normal !important;
 }
 .el-dialog__wrapper {
-  & /deep/ .el-dialog__body {
-    padding: 0;
+  & /deep/ {
+    .el-dialog__header {
+      padding: 32px 20px 20px 42px;
+    }
+    .el-dialog__body {
+      padding: 0;
+    }
   }
 }
 .lists-wrapper {

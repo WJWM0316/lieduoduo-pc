@@ -174,7 +174,7 @@ $header-height-1: $page-header-height;
 .page-header {
   height: $header-height-1;
   background: $bg-color-2;
-   min-width: $page-width;
+  min-width: $page-width;
   &.fixed {
     position: fixed;
     top: 0;

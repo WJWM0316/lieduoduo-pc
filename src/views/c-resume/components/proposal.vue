@@ -1,7 +1,7 @@
 <template>
   <!-- 求职意向 -->
   <div class="proposal-warpper">
-    <wrapper :is-delete="true" :list="list" ref="wrapper" @command="handleCommand" :status="status" :config="{limit: 1, limitText: '至少保留一条求职意向'}">
+    <wrapper :is-delete="true" :list="list" ref="wrapper" @command="handleCommand" :status="status" :config="{limit: 1, max: 3}">
       <template slot="header">求职意向</template>
       <template v-slot:content="{row}">
         <p class="proposal-item" v-if="row">
@@ -17,7 +17,7 @@
         <div class="c-btn resume-add-btn" @click="handleShowForm(true)"><i class="el-icon-plus" /> 添加求职意向</div>
       </template>
       <template slot="edit">
-        <p class="form-header-title">添加求职意向</p>
+        <p class="form-header-title">{{isAdd? '添加' : '编辑'}}求职意向</p>
         <el-form :model="form" :rules="formRules" ref="form">
           <div class="form-item">
             <p class="form-title">期望城市</p>
@@ -217,6 +217,15 @@ export default {
       this.getAreas()
       this.$refs.wrapper.showEditCompoents()
       this.isAdd = isAdd
+      if (this.isAdd) {
+        this.form = {
+          cityNum: [],
+          positionId: null,
+          position: '', // 职位名称
+          salary: '',
+          fieldIds: ''
+        }
+      }
       this.$nextTick(() => {
         this.$refs.salary.handleInit(salary.salaryFloor, salary.salaryCeil)
       })
@@ -250,9 +259,6 @@ export default {
   & /deep/ {
     .list-item + .list-item  {
       margin-top: 16px;
-    }
-    .list-item:last-child {
-      margin-top: 42px;
     }
   }
 

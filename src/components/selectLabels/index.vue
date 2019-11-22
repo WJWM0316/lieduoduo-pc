@@ -15,9 +15,9 @@
       width="450px"
       :visible.sync="dialogStatus"
       :show-close="false">
-      <div slot="title">{{title}} <span v-if="!multiple">(最多选{{limit}}个职业标签)</span></div>
+      <div slot="title">{{title}} <span v-if="!multiple" class="title-tips">(最多选{{limit}}个职业标签)</span></div>
       <div class="">
-        <div class="selected-labels" v-if="selectLabels.length > 0">
+        <div class="selected-labels">
           <template v-for="(item, index) in selectLabels">
             <span class="label-item active" :key="item.labelId" @click="handleRemove(item, index)"><i class="el-icon-error close-icon"></i>{{item.name}}</span>
           </template>
@@ -43,9 +43,9 @@
           </template>
         </div>
       </div>
-      <div slot="footer">
-        <el-button type="default" @click="dialogStatus = false">取消</el-button>
-        <el-button type="primary" @click="handleSave">保存</el-button>
+      <div slot="footer" class="select-labels-button">
+        <el-button type="default" size="small" @click="dialogStatus = false">取消</el-button>
+        <el-button type="primary" size="small" @click="handleSave">保存</el-button>
       </div>
     </el-dialog>
   </div>
@@ -169,7 +169,7 @@ export default {
         const list = this.multipleConfig[item.index]
         const labelIndex = list.checked.findIndex(val => val.labelId === item.labelId)
         const index = list.labels.findIndex(val => val.labelId === item.labelId)
-        if (index >= 0) list.labels[index].item = false
+        if (index >= 0) list.labels[index].check = false
         if (labelIndex >= 0) list.checked.splice(labelIndex, 1)
       } else {
         const index = this.labels.findIndex(val => val.labelId === item.labelId)
@@ -214,11 +214,19 @@ export default {
 <style lang="scss" scoped>
 .select-labels {
   line-height: normal;
+  & /deep/ .el-dialog__header {
+    padding-bottom: 0px;
+  }
 }
 .lables {
   max-height: 300px;
   overflow-y: auto;
 }
+.selected-labels {
+  border-bottom: 1px solid $border-color-1;
+  padding-bottom: 20px;
+}
+
 .labels-title {
   margin-top: 20px;
   color: $title-color-1;
@@ -258,5 +266,8 @@ export default {
 .label-item.active {
   border-color: $border-color-2;
   color: $main-color-1;
+}
+.select-labels-button .el-button {
+  width: 88px;
 }
 </style>

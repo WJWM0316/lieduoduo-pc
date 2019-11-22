@@ -82,6 +82,7 @@ export default {
   },
   methods: {
     handleScrollToView (item) {
+      if (item.value === this.activeIndex) return
       this.activeIndex = item.value
       // 获取对应的节点
       const dom = document.querySelector(item.container)
@@ -191,6 +192,9 @@ export default {
     padding: 16px 0;
     line-height: 22px;
     color: $title-color-2;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    word-break: break-all;
   }
   .resume-hr {
     width: 100%;
