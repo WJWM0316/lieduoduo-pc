@@ -182,6 +182,7 @@ export default {
       }).catch(() => {
         this.$emit('fail')
         if (!this.multiple) this.singleLoding = false
+        if (this.multiple) this.multipleLading = true
       })
     },
     handleRemoveImage (index) {

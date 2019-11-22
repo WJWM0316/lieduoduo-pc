@@ -18,7 +18,17 @@
           </template>
         </ul>
         <div class="lists-content">
-          <el-input class="el-input-radius no-error" :show-message="false" style="width: 320px;" suffix-icon="el-icon-search" size="medium" v-model="keyword" @keyup.native.enter="handleSearch"/>
+          <el-input
+            class="el-input-radius no-error"
+            :show-message="false"
+            style="width: 320px;"
+            size="medium"
+            v-model="keyword"
+            @keyup.native.enter="handleSearch">
+            <template slot="suffix">
+              <i class="el-input__icon el-icon-search" @click="handleSearch"></i>
+            </template>
+          </el-input>
           <div class="lists-items">
             <template v-for="item in parentSelectData">
               <span :key="item.labelId" @click="handleShowDetails(item)">

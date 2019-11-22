@@ -57,3 +57,9 @@ export const majorNameReg = /^[\u0391-\uFFE5A-Za-z\s]{2,50}$/
 
 // 公司简介
 export const companyIntroReg = /^[\u0391-\uFFE5A-Za-z\s]{20,5000}$/
+
+// 项目经历的项目名称
+export const projectNameReg = /^[\u0391-\uFFE5A-Za-z\s]{2,50}$/
+
+// 项目担当的角色
+export const roleNameReg = /^[\u0391-\uFFE5A-Za-z\s]{2,50}$/

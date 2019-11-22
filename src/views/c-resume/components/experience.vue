@@ -35,16 +35,17 @@
             </el-form-item>
           </div>
           <div class="form-item">
-            <p class="form-title">公司名称</p>
+            <p class="form-title">任职时间</p>
             <el-form-item prop="times">
-              <el-date-picker
+              <!-- <el-date-picker
                 v-model="form.times"
                 type="monthrange"
                 format="yyyy-MM"
                 range-separator="至"
                 start-placeholder="开始日期"
                 end-placeholder="结束日期">
-              </el-date-picker>
+              </el-date-picker> -->
+              <date-picker v-model="form.times" :single="false" placeholder="开始日期" end-placeholder="结束日期"  />
             </el-form-item>
           </div>
           <div class="form-item">
@@ -67,6 +68,7 @@
             <p class="form-title">技能标签</p>
             <el-form-item prop="labelIds">
               <select-labels
+                ref="labels"
                 v-model="form.labelIds"
                 :valid-filter="true"
                 valid-filter-text="请选择职位类别"
@@ -84,7 +86,9 @@
                 type="textarea"
                 placeholder="在任职期间，工作职责主要是****，经手过****项目，取得了*****的成绩。"
                 v-model="form.duty"
-                :rows="7" />
+                :rows="7"
+                maxlength="1000"
+                show-word-limit/>
             </el-form-item>
           </div>
         </el-form>
@@ -97,8 +101,10 @@ import Wrapper from './wrapper'
 import SelectLabels from 'COMPONENTS/selectLabels'
 import SelectPositionType from 'COMPONENTS/selectPositionType'
 import { addCareer, setCareer, getAllCareer, deleteCareer } from 'API/resume'
+import DatePicker from './datePicker'
+import { companyNameReg, positionReg } from 'UTIL/fieldRegular'
 export default {
-  components: { Wrapper, SelectLabels, SelectPositionType },
+  components: { Wrapper, SelectLabels, SelectPositionType, DatePicker },
   props: {
     resume: {
       type: Object,
@@ -112,6 +118,20 @@ export default {
     }
   },
   data () {
+    const companyValidate = (rule, value, callback) => {
+      if (companyNameReg.test(value)) {
+        callback()
+      } else {
+        callback(new Error('公司名称需为2-50个字'))
+      }
+    }
+    const positionValidate = (rule, value, callback) => {
+      if (positionReg.test(value)) {
+        callback()
+      } else {
+        callback(new Error('职位名称需为2-20个字'))
+      }
+    }
     return {
       labels: [],
       currentCarcee: null,
@@ -129,12 +149,12 @@ export default {
         times: []
       },
       formRules: {
-        company: [{ required: true, message: '请填写公司名称', trigger: 'blur' }],
+        company: [{ required: true, message: '请填写公司名称', trigger: 'blur' }, { validator: companyValidate, trigger: 'blur' }],
         times: [{ required: true, type: 'array', message: '请选择任职时间', trigger: 'change' }],
         positionTypeId: [{ required: true, type: 'number', message: '请选择职位类型', trigger: 'change' }],
-        position: [{ required: true, message: '请填写职位名称', trigger: 'blur' }],
+        position: [{ required: true, message: '请填写职位名称', trigger: 'blur' }, { validator: positionValidate, trigger: 'blur' }],
         labelIds: [{ required: true, message: '请选择职位技能标签', trigger: 'change' }],
-        duty: [{ required: true, message: '请填写工作内容', trigger: 'blur' }]
+        duty: [{ required: true, message: '请填写工作内容', trigger: 'blur' }, { min: 10, message: '工作内容最少输入10字 ，不允许输入超过1000字', trigger: 'blur' }]
       }
     }
   },
@@ -145,7 +165,7 @@ export default {
         this.handleShowForm(false)
         // 将数据写入到form表单中
         Object.assign(this.form, {
-          times: [new Date(item.startTime * 1000), new Date(item.endTime * 1000)],
+          times: [item.startTimeDesc, item.endTimeDesc],
           company: item.company,
           positionTypeId: item.positionTypeId,
           positionType: item.positionType,
@@ -159,8 +179,8 @@ export default {
         this.$refs.form.validate(valid => {
           if (valid) {
             const { company, times, duty, positionTypeId, position } = this.form
-            const startTime = parseInt(times[0].getTime() / 1000)
-            const endTime = parseInt(times[1].getTime() / 1000)
+            const startTime = parseInt(new Date(times[0].replace('-', '/')).getTime() / 1000)
+            const endTime = times[1] === '至今' ? 0 : parseInt(new Date(times[1].replace('-', '/')).getTime() / 1000)
             const labelIds = this.labels.map(val => val.labelId).join(',')
             if (this.isAdd) {
               addCareer({
@@ -240,6 +260,8 @@ export default {
     selectedPosition (item) {
       this.form.positionType = item.name
       this.form.positionTopid = item.topPid
+      this.form.labelIds = ''
+      if (this.$refs.labels) this.$refs.labels.handleClear()
     },
     handleSelectLabeld (labels) {
       this.labels = labels

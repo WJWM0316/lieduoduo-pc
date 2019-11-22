@@ -45,7 +45,7 @@ export const getLables = (data) => {
   const { type, params } = data
   const typeApi = {
     skills: '/label/professionalSkills',
-    position: '/label/position',
+    position: '/label/professionalSkills?type=skills',
     life: '/label/life',
     field: '/label/field'
   }
