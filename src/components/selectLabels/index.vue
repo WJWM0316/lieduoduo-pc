@@ -169,7 +169,7 @@ export default {
         const list = this.multipleConfig[item.index]
         const labelIndex = list.checked.findIndex(val => val.labelId === item.labelId)
         const index = list.labels.findIndex(val => val.labelId === item.labelId)
-        if (index >= 0) list.labels[index].item = false
+        if (index >= 0) list.labels[index].check = false
         if (labelIndex >= 0) list.checked.splice(labelIndex, 1)
       } else {
         const index = this.labels.findIndex(val => val.labelId === item.labelId)
