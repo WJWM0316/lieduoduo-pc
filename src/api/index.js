@@ -30,6 +30,7 @@ export const request = ({ url, method, params = {}, config }) => {
   switch (config.host) {
     case 'pub':
       if (axios.defaults.baseURL !== VUE_WEB_PUB_API) axios.defaults.baseURL = VUE_WEB_PUB_API
+			if (params.identity) axios.defaults.headers.common['Source'] = params.identity === 1 ? 'web_c' : 'web_b'
       break
     case 'qiuzhi':
       if (axios.defaults.baseURL !== VUE_WEB_QIUZHI_API) axios.defaults.baseURL = VUE_WEB_QIUZHI_API
