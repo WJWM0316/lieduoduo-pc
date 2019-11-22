@@ -122,8 +122,13 @@ export default {
   line-height: normal !important;
 }
 .el-dialog__wrapper {
-  & /deep/ .el-dialog__body {
-    padding: 0;
+  & /deep/ {
+    .el-dialog__header {
+      padding: 32px 20px 20px 42px;
+    }
+    .el-dialog__body {
+      padding: 0;
+    }
   }
 }
 .lists-wrapper {
