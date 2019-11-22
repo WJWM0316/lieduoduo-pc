@@ -24,3 +24,11 @@ export const applycompanyApi = data => request({
   params: data,
   config: { host: 'zhaopin' }
 })
+
+// 完善公司信息或者认证
+export const authcompanyinfoApi = data => request({
+  url: `/company/self_help_verification/${data.id}`,
+  method: 'post',
+  params: data,
+  config: { host: 'zhaopin' }
+})
