@@ -28,7 +28,7 @@ export default {
   padding-top: 6px;
   padding-bottom: 6px;
   width:418px;
-  z-index:3;
+  z-index:99;
   max-height:140px;
   background:rgba(255,255,255,1);
   box-shadow:0px 0px 30px 0px rgba(22,39,77,0.07);
