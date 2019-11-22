@@ -4,7 +4,7 @@
       <template slot="header">自我描述</template>
       <template slot="content">
         <div v-if="resume.signature">
-          <div class="signatrue-text">{{resume.signature}}</div>
+          <div class="resume-list-desc signatrue-text">{{resume.signature}}</div>
           <div class="form-labels-wrapper">
             <span
               v-for="item in resume.personalizedLabels"
@@ -167,7 +167,6 @@ export default {
   }
 }
 .signatrue-text {
-  line-height: 22px;
-  color: $title-color-2;
+  padding: 0 !important;
 }
 </style>

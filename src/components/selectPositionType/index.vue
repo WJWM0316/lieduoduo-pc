@@ -75,11 +75,25 @@ export default {
       this.searchData = []
       getLabelPositionListApi().then(({ data }) => {
         this.listData = data.data || []
+        // 数据复现
+        this.reviewData(this.value)
       })
     },
     handleShowDialog () {
       this.showDialog = true
       this.getLists()
+    },
+    reviewData (id) {
+      if (id) {
+        // 递归找到对应item
+        /* function func(data, results = {}) {
+          data.forEach(data => {
+            if(data.labelId === id)
+          })
+        } */
+      } else {
+        this.handleAsideCheck(this.listData[0])
+      }
     },
     handleSearch () {
       searchPositionApi({ name: this.keyword }).then(({ data }) => {

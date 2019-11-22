@@ -1,6 +1,6 @@
 <template>
   <div>
-    <wrapper ref="wrapper" :list="list" :is-delete="true"  @command="handleCommand" :status="status">
+    <wrapper ref="wrapper" :list="list" :is-delete="true"  @command="handleCommand" :status="status" :config="{limit: 1, max: 10}">
       <template slot="header" >教育经历</template>
       <template v-slot:content="{row}">
         <p class="resume-list-header project-header">
@@ -11,17 +11,15 @@
             <span class="separator">|</span>
             <span>{{row.major}}</span>
           </span>
-          <span class="resume-list-time">{{row.startTimeDesc}}-{{row.endTimeDesc}}</span>
+          <span class="resume-list-time">{{row.startTimeDesc | date('YYYY.MM')}}-{{row.endTimeDesc | date('YYYY.MM')}}</span>
         </p>
-        <div class="resume-list-desc">
-          {{row.experience}}
-        </div>
+        <div class="resume-list-desc">{{row.experience}}</div>
       </template>
       <template slot="bottom">
         <div class="c-btn resume-add-btn" @click="handleShowForm(true)"><i class="el-icon-plus" /> 添加教育经历</div>
       </template>
       <template slot="edit">
-        <p class="form-header-title">添加项目经历</p>
+        <p class="form-header-title">{{isAdd? '添加' : '编辑'}}教育经历</p>
         <el-form :model="form" :rules="formRules" ref="form">
           <div class="form-item">
             <p class="form-title">学校名称</p>
@@ -95,10 +93,11 @@ export default {
   },
   data () {
     return {
+      isAdd: true,
       degree: Degree,
       form: {
         school: '',
-        degree: null,
+        degree: 25,
         major: '',
         times: [],
         experience: ''
@@ -124,36 +123,43 @@ export default {
         this.currentId = item.id
         this.isAdd = false
       } else if (type === 'save') {
-        const { school, degree, major, times, experience } = this.form
-        const startTime = parseInt(times[0].getTime() / 1000)
-        const endTime = parseInt(times[0].getTime() / 1000)
-        if (this.isAdd) {
-          addEducation({ school, degree, major, experience, startTime, endTime }).then(async ({ data }) => {
-            if (data.httpStatus === 200) {
-              await this.getAllEducations()
-              cb()
+        this.$refs.form.validate(valid => {
+          if (valid) {
+            const { school, degree, major, times, experience } = this.form
+            const startTime = parseInt(times[0].getTime() / 1000)
+            const endTime = parseInt(times[0].getTime() / 1000)
+            if (this.isAdd) {
+              addEducation({ school, degree, major, experience, startTime, endTime }).then(async ({ data }) => {
+                if (data.httpStatus === 200) {
+                  await this.getAllEducations()
+                  cb()
+                } else {
+                  // eslint-disable-next-line standard/no-callback-literal
+                  cb(false)
+                }
+              }).catch(() => {
+                // eslint-disable-next-line standard/no-callback-literal
+                cb(false)
+              })
             } else {
-              // eslint-disable-next-line standard/no-callback-literal
-              cb(false)
+              setEducation({ id: this.currentId, school, degree, major, experience, startTime, endTime }).then(async ({ data }) => {
+                if (data.httpStatus === 200) {
+                  await this.getAllEducations()
+                  cb()
+                } else {
+                  // eslint-disable-next-line standard/no-callback-literal
+                  cb(false)
+                }
+              }).catch(() => {
+                // eslint-disable-next-line standard/no-callback-literal
+                cb(false)
+              })
             }
-          }).catch(() => {
+          } else {
             // eslint-disable-next-line standard/no-callback-literal
             cb(false)
-          })
-        } else {
-          setEducation({ id: this.currentId, school, degree, major, experience, startTime, endTime }).then(async ({ data }) => {
-            if (data.httpStatus === 200) {
-              await this.getAllEducations()
-              cb()
-            } else {
-              // eslint-disable-next-line standard/no-callback-literal
-              cb(false)
-            }
-          }).catch(() => {
-            // eslint-disable-next-line standard/no-callback-literal
-            cb(false)
-          })
-        }
+          }
+        })
       } else if (type === 'delete') {
         deleteEducation({ id: item.id }).then(({ data }) => {
           if (data.httpStatus === 200) {
@@ -176,6 +182,15 @@ export default {
     },
     handleShowForm (isAdd = true) {
       this.isAdd = isAdd
+      if (this.isAdd) {
+        this.form = {
+          school: '',
+          degree: 25,
+          major: '',
+          times: [],
+          experience: ''
+        }
+      }
       this.$refs.wrapper.showEditCompoents()
     }
   }

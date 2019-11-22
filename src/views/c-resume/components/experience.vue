@@ -1,7 +1,7 @@
 <template>
   <!-- 工作经历 -->
   <div class="work-experience">
-    <wrapper :is-delete="true" :list="list" ref="wrapper" @command="handleCommand" :status="status">
+    <wrapper :is-delete="true" :list="list" ref="wrapper" @command="handleCommand" :status="status" :config="{limit: 1, max: 10}">
        <template slot="header">工作经历</template>
        <template v-slot:content="{row}">
         <template v-if="row">
@@ -11,11 +11,9 @@
               <span class="separator">|</span>
               <span>{{row.position}}</span>
             </span>
-            <span class="resume-list-time">{{row.startTimeDesc}}-{{row.endTimeDesc}}</span>
+            <span class="resume-list-time">{{row.startTimeDesc | date('YYYY.MM')}}-{{row.endTimeDesc | date('YYYY.MM')}}</span>
           </p>
-          <div class="resume-list-desc">
-            {{row.duty}}
-          </div>
+          <div class="resume-list-desc">{{row.duty}}</div>
           <div class="form-labels-wrapper work-labels">
             <span
               v-for="item in row.technicalLabels"
@@ -28,7 +26,7 @@
         <div class="c-btn resume-add-btn" @click="handleShowForm(true)"><i class="el-icon-plus" /> 添加工作经历</div>
       </template>
       <template slot="edit">
-        <p class="form-header-title">添加工作经历</p>
+        <p class="form-header-title">{{isAdd? '添加' : '编辑'}}工作经历</p>
         <el-form :model="form" :rules="formRules" ref="form">
           <div class="form-item">
             <p class="form-title">公司名称</p>
@@ -223,6 +221,20 @@ export default {
     },
     handleShowForm (isAdd = true) {
       this.isAdd = isAdd
+      if (this.isAdd) {
+        this.form = {
+          company: '',
+          positionTypeId: null,
+          positionType: '',
+          positionTopid: null,
+          position: '',
+          startTime: '',
+          endTime: '',
+          duty: '',
+          labelIds: '',
+          times: []
+        }
+      }
       this.$refs.wrapper.showEditCompoents()
     },
     selectedPosition (item) {

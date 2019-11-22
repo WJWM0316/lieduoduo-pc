@@ -42,7 +42,7 @@
           </div>
           <div>
             <p v-if="resume.jobStatus"><span class="resume-status">{{resume.jobStatusDesc}}</span></p>
-            <p class="user-phone"><i class="iconfont icon-zhiwei"></i>{{resume.mobile}}</p>
+            <p class="user-phone"><i class="iconfont icon-dianhua"></i>{{resume.mobile}}</p>
             <p v-if="resume.wechat" class="user-wechat"><i class="iconfont icon-weixin"></i>{{resume.wechat}}</p>
           </div>
         </div>

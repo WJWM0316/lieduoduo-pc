@@ -39,6 +39,10 @@
   .el-dialog__header {
     font-size: 18px;
     color: $title-color-1;
+    .title-tips {
+      font-size: 14px;
+      color: $font-color-9;
+    }
   }
   .el-dialog__body {
     padding: 0px 20px;

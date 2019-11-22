@@ -11,12 +11,12 @@
           </div>
           <div class="wrapper-operate" v-if="status !== 'view'">
             <slot name="operate">
-              <span class="iconfont icon-shanchu"  @click="handleDelete(item, index)" v-if="isDelete"></span>
+              <span class="iconfont icon-shanchu"  @click="handleDelete(item, index)" v-if="isDelete && list.length > config.limit"></span>
               <span class="el-icon-edit" v-if="!isEmpty" @click="handleEdit(item, index)"></span>
             </slot>
           </div>
         </div>
-        <div class="list-item"  v-if="status !== 'view'">
+        <div class="list-item-buttom"  v-if="status !== 'view' && list.length < config.max">
           <div class="wrapper-info">
             <slot name="bottom"></slot>
           </div>
@@ -56,7 +56,10 @@ export default {
     status: String,
     config: {
       type: Object,
-      default: () => ({})
+      default: () => ({
+        limit: 1,
+        max: 10
+      })
     }
   },
   data () {
@@ -67,15 +70,6 @@ export default {
   },
   methods: {
     handleDelete (item, index) {
-      if (this.config.limit) {
-        if (this.list.length <= this.config.limit) {
-          this.$alert(this.config.limitText, '提示', {
-            confirmButtonText: '好的',
-            type: 'warning'
-          })
-          return
-        }
-      }
       this.$confirm('确定删除本条信息?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -130,11 +124,11 @@ export default {
     flex: 1;
     @include flex-v-top;
   }
-  .list-item {
+  .list-item, .list-item-buttom{
     width: 100%;
     @include flex-v-top;
   }
-  .list-item+.list-item {
+  .list-item+.list-item, .list-item-buttom {
     margin-top: 42px;
   }
   .wrapper-list-content {

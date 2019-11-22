@@ -15,7 +15,7 @@
       width="450px"
       :visible.sync="dialogStatus"
       :show-close="false">
-      <div slot="title">{{title}} <span v-if="!multiple">(最多选{{limit}}个职业标签)</span></div>
+      <div slot="title">{{title}} <span v-if="!multiple" class="title-tips">(最多选{{limit}}个职业标签)</span></div>
       <div class="">
         <div class="selected-labels">
           <template v-for="(item, index) in selectLabels">
