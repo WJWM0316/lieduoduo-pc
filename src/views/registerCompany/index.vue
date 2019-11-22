@@ -4,7 +4,7 @@
       <div class="b-title">猎多多</div>
       <div class="l-title">精英人才招聘神器</div>
       <!-- 创建公司模块 -->
-      <div class="registerBox" v-show="0">
+      <div class="registerBox" v-show="!$route.query.page">
         <div class="box-title">填写个人信息</div>
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
           <el-form-item label="真实姓名" prop="real_name">
@@ -33,7 +33,7 @@
         </div>
       </div>
       <!-- 创建公司提交后状态 -->
-      <div class="registerBox" v-show="0">
+      <div class="registerBox" v-show="$route.query.page === 'submit'">
         <div class="auth-title">创建公司申请已提交</div>
         <div class="sub-desc">我们将在1个工作日内，协助你开通招聘服务</div>
         <div class="authentication">
@@ -49,7 +49,7 @@
             </div>
           </div>
         </div>
-        <div class="auth-btn">
+        <div class="auth-btn" @click="gotowhere('perfect')">
           <span>等不及了，在线自主完成认证</span>
           <i class="iconfont icon-right"></i>
         </div>
@@ -60,7 +60,7 @@
         </div>
       </div>
       <!-- 完善公司信息 -->
-      <div class="registerBox" v-show="0">
+      <div class="registerBox" v-show="$route.query.page === 'perfect'">
         <div class="box-title">完善公司信息</div>
         <el-form :model="authForm" :rules="authrules" ref="ruleauthForm" label-width="100px" class="demo-ruleForm">
           <el-form-item label="公司全称" prop="company_name">
@@ -115,13 +115,13 @@
             </div>
           </el-form-item>
         </el-form>
-        <div :class="['nextstep', isauthcheck ? 'cansubmit' : '']" @click="submitauthForm('ruleauthForm')">下一步</div>
+        <div :class="['nextstep', isauthcheck ? 'cansubmit' : '']" @click="gotowhere('toUpload')">下一步</div>
         <div class="handler">
           <div class="goqiuzhi" @click="gotowhere('qiuzhi')">返回上一步</div>
         </div>
       </div>
       <!-- 完善认证信息 -->
-      <div class="registerBox" v-show="1">
+      <div class="registerBox" v-show="$route.query.page === 'authpage'">
         <div class="box-title" style="margin-bottom:20px;">完善认证信息</div>
         <div class="authtitle">根据人力资源相关法律规定，用人单位开展招聘业务，需提供相关公司认证资质资料，请确保提交真实有效信息。</div>
         <div class="updata">
@@ -178,89 +178,200 @@
         </div>
       </div>
       <!-- 创建公司审核状态 -->
-      <div class="registerBox" v-show="0">
-        <div class="topicon">
-          <img v-if="(companyInfo.status === 0 || companyInfo.status === 3)" src="@/assets/images/adopt.png" />
-          <img v-else src="@/assets/images/notadopt.png" />
+      <div class="registerBox" v-show="$route.query.page === 'status'">
+        
+        <template v-if="$route.query.from === 'company'">
+          <div class="topicon">
+            <img v-if="companyInfo.status === 0" src="@/assets/images/adopt.png" />
+            <img v-else src="@/assets/images/notadopt.png" />
           </div>
-        <div class="status-title">加入公司申请审核中</div>
-        <div class="status-tip">该申请将通知公司管理员审核，审核通过后即可开始招聘</div>
-        <!-- 公司审核通过了 -->
-        <div class="adoptcontent">
-          <div class="tips">
-            <div class="tips-l">
-              <div class="tips-line"></div>
-              <div class="tips-box"></div>
-            </div>
-            <div class="tips-c">获得权益</div>
-            <div class="tips-r">
-              <div class="tips-box"></div>
-              <div class="tips-line"></div>
-            </div>
-          </div>
-          <div class="canfree clearfix">
-            <div class="freeitem">
-              <div class="item">
-              <div class="images"></div>
+
+          <template v-if="companyInfo.status === 0">
+            <div class="status-title">公司认证审核中</div>
+            <div class="status-tip">该申请将在1个工作日内审核，通过后即可开始招聘</div>
+          </template>
+          
+          <!-- 公司审核通过了 -->
+          <template v-if="companyInfo.status === 1">
+            <div class="status-title">公司认证审核已通过</div>
+            <div class="status-tip">{{companyInfos.companyName}}</div>
+            <div class="adoptcontent" v-if="companyInfo.status === 1">
+              <div class="tips">
+                <div class="tips-l">
+                  <div class="tips-line"></div>
+                  <div class="tips-box"></div>
+                </div>
+                <div class="tips-c">获得权益</div>
+                <div class="tips-r">
+                  <div class="tips-box"></div>
+                  <div class="tips-line"></div>
+                </div>
               </div>
-            <div class="item">
-            <div class="text">免费发布职位</div>
-            </div>
-            </div>
-            <div class="freeitem">
-              <div class="item">
-              <div class="images marleft"></div>
+              <div class="canfree clearfix">
+                <div class="freeitem">
+                  <div class="item">
+                  <div class="images"></div>
+                  </div>
+                <div class="item">
+                <div class="text">免费发布职位</div>
+                </div>
+                </div>
+                <div class="freeitem">
+                  <div class="item">
+                  <div class="images marleft"></div>
+                  </div>
+                <div class="item">
+                <div class="text tmarleft">免费查看简历</div>
+                </div>
+                </div>
               </div>
-            <div class="item">
-            <div class="text tmarleft">免费查看简历</div>
+              <div class="startrecruiting">开始招聘</div>
             </div>
+          </template>
+          
+          <template v-if="companyInfo.status === 2">
+            <div class="status-title">公司认证审核未通过</div>
+            <div class="status-tip">请重新提交资料，完成公司创建</div>
+            <div class="status-tip">公司认证审核未通过的原因如下</div>
+            <div class="status-tip">{{companyInfos.reviewNote}}</div>
+          </template>
+
+          <!-- 公司审核不通过或者审核中 -->
+          <div v-show="companyInfo.status === 0 || companyInfo.status === 2">
+            <div class="status-line"></div>
+            <div class="apply-info">
+              <div class="info-item">
+                <span>您的申请</span>
+                <span>申请信息有误？去更改</span>
+              </div>
+              <div class="info-item">
+                <span>公司全称</span>
+                <span>{{companyInfo.companyName}}</span>
+              </div>
+              <div class="info-item">
+                <span>姓名</span>
+                <span>{{companyInfo.realName}}</span>
+              </div>
+              <div class="info-item">
+                <span>担任职务</span>
+                <span>{{companyInfo.userPosition}}</span>
+              </div>
+              <div class="info-item">
+                <span>接收简历邮箱</span>
+                <span>{{companyInfo.userEmail}}</span>
+              </div>
+          </div>
+          <div class="status-line"></div>
+          <div class="contact">
+            <div class="contact-l">
+            <div class="title">快速通道权益</div>
+            <div class="desc">助你创建公司更快捷，欢迎体验～</div>
             </div>
+            <div class="contact-btn">联系体验</div>
           </div>
-          <div class="startrecruiting">开始招聘</div>
-        </div>
-        <!-- 公司审核不通过或者审核中 -->
-        <div v-show="0">
-        <div class="status-line"></div>
-        <div class="apply-info">
-          <div class="info-item">
-            <span>您的申请</span>
-            <span>申请信息有误？去更改</span>
+          <div class="gotoqiuzhi" @click="gotowhere('qiuzhi')">前往求职</div>
           </div>
-          <div class="info-item">
-            <span>公司全称</span>
-            <span>广州老虎信息科技有限公司</span>
+        </template>
+        
+        <template v-if="$route.query.from === 'join'">
+          <div class="topicon">
+            <img v-if="(companyInfo.status === 0)" src="@/assets/images/adopt.png" />
+            <img v-else src="@/assets/images/notadopt.png" />
           </div>
-          <div class="info-item">
-            <span>姓名</span>
-            <span>张思言</span>
-          </div>
-          <div class="info-item">
-            <span>担任职务</span>
-            <span>产品经理</span>
-          </div>
-          <div class="info-item">
-            <span>接收简历邮箱</span>
-            <span>15353636@qq.com</span>
-          </div>
-          <div class="info-admin">
-            <div class="avarat">
-              <img src="" alt="">
+
+          <template v-if="(companyInfo.status === 0)">
+            <div class="status-title">加入公司申请审核中</div>
+            <div class="status-tip">该申请将通知公司管理员审核，审核通过后即可开始招聘</div>
+          </template>
+          <!-- 公司审核通过了 -->
+          <template v-if="(companyInfo.status === 1)">
+            <div class="status-title">加入公司申请通过</div>
+            <div class="status-tip">{{companyInfo.companyName}}</div>
+          
+            <div class="adoptcontent" v-if="companyInfo.status === 1">
+              <div class="tips">
+                <div class="tips-l">
+                  <div class="tips-line"></div>
+                  <div class="tips-box"></div>
+                </div>
+                <div class="tips-c">获得权益</div>
+                <div class="tips-r">
+                  <div class="tips-box"></div>
+                  <div class="tips-line"></div>
+                </div>
+              </div>
+              <div class="canfree clearfix">
+                <div class="freeitem">
+                  <div class="item">
+                  <div class="images"></div>
+                  </div>
+                <div class="item">
+                <div class="text">免费发布职位</div>
+                </div>
+                </div>
+                <div class="freeitem">
+                  <div class="item">
+                  <div class="images marleft"></div>
+                  </div>
+                <div class="item">
+                <div class="text tmarleft">免费查看简历</div>
+                </div>
+                </div>
+              </div>
+              <div class="startrecruiting">开始招聘</div>
             </div>
-            <div class="name">张思言</div>
-            <div class="admin">管理员</div>
-            <div class="notice">通知管理员</div>
+          </template>
+
+          <template v-if="(companyInfo.status === 2)">
+            <div class="status-title">加入公司申请审核失败</div>
+            <div class="status-tip">您提交的申请审核未通过，具体原因请咨询管理员</div>
+          </template>
+
+          <!-- 公司审核不通过或者审核中 -->
+          <div v-show="companyInfo.status === 0 || companyInfo.status === 2">
+            <div class="status-line"></div>
+            <div class="apply-info">
+              <div class="info-item">
+                <span>您的申请</span>
+                <span>申请信息有误？去更改</span>
+              </div>
+              <div class="info-item">
+                <span>公司全称</span>
+                <span>{{companyInfo.companyName}}</span>
+              </div>
+              <div class="info-item">
+                <span>姓名</span>
+                <span>{{companyInfo.realName}}</span>
+              </div>
+              <div class="info-item">
+                <span>担任职务</span>
+                <span>{{companyInfo.userPosition}}</span>
+              </div>
+              <div class="info-item">
+                <span>接收简历邮箱</span>
+                <span>{{companyInfo.userEmail}}</span>
+              </div>
+              <div class="info-admin" v-if="companyInfo.adminInfo">
+                <div class="avarat">
+                  <img :src="companyInfo.adminInfo.avatar.smallUrl" alt="">
+                </div>
+                <div class="name">{{companyInfo.adminInfo.name}}</div>
+                <div class="admin">{{companyInfo.adminInfo.position}}</div>
+                <div class="notice">通知管理员</div>
+              </div>
           </div>
-        </div>
-        <div class="status-line"></div>
-        <div class="contact">
-          <div class="contact-l">
-          <div class="title">快速通道权益</div>
-          <div class="desc">助你创建公司更快捷，欢迎体验～</div>
+          <div class="status-line"></div>
+          <div class="contact">
+            <div class="contact-l">
+            <div class="title">快速通道权益</div>
+            <div class="desc">助你创建公司更快捷，欢迎体验～</div>
+            </div>
+            <div class="contact-btn">联系体验</div>
           </div>
-          <div class="contact-btn">联系体验</div>
-        </div>
-        <div class="gotoqiuzhi" @click="gotowhere('qiuzhi')">前往求职</div>
-        </div>
+          <div class="gotoqiuzhi" @click="gotowhere('qiuzhi')">前往求职</div>
+          </div>
+        </template>
+
       </div>
   </div>
   <!-- 职位弹窗 -->
@@ -271,11 +382,22 @@
 </template>
 <script>
 import { realNameReg, companyNameReg, emailReg, abbreviationReg } from '@/util/fieldRegular.js'
-import { SubmitpersonalApi, SearchcompanylistApi, applycompanyApi } from 'API/register'
+// import { SubmitpersonalApi, getCompanyNameListApi, applycompanyApi } from 'API/register'
 import OptionList from '../registerCompany/components/option.vue'
 import MessageDiggle from '../registerCompany/components/message.vue'
 import Picture from 'COMPONENTS/common/upload/picture'
 import MyModel from '@/components/model/index.vue'
+import {
+  applyCompanyApi,
+  createCompanyApi,
+  getCompanyNameListApi,
+  justifyCompanyExistApi,
+  editApplyCompanyApi,
+  getCompanyIdentityInfosApi,
+  editCompanyFirstStepApi,
+  hasApplayRecordApi,
+  perfectCompanyApi
+} from 'API/register'
 export default {
   components: {
     OptionList,
@@ -283,6 +405,13 @@ export default {
     Picture,
     MessageDiggle
   },
+  // watch: {
+  //   '$route': {
+  //     handler (value) {
+  //       console.log(value)
+  //     }
+  //   }
+  // },
   data () {
     var validateRealname = (rule, value, callback) => {
       if (value === '') {
@@ -455,7 +584,9 @@ export default {
       },
       ischeck: false,
       isauthcheck: false,
-      isupdatacheck: false
+      isupdatacheck: false,
+      page: '',
+      applyJoin: false
     }
   },
   methods: {
@@ -531,7 +662,7 @@ export default {
     },
     getCompanyNameList () {
       let data = { page: 1, count: 100, name: this.ruleForm.company_name }
-      SearchcompanylistApi(data).then(res => {
+      getCompanyNameListApi(data).then(res => {
         let arr = res.data.data
         arr.map((v, k) => {
           if (v.companyName === this.ruleForm.company_name) {
@@ -595,18 +726,37 @@ export default {
       }
     },
     gotowhere (type) {
-      if (type === 'qiuzhi') {
-        this.msg = {
-          messageshow: true,
-          msgtitle: '前往求职端',
-          msgdesc: '是否确认前往求职端？'
-        }
-      } else {
-        this.msg = {
-          messageshow: true,
-          msgtitle: '更换账号',
-          msgdesc: '更换账号登录后不会删除任何历史数据，下次登录依然可以使用本账号。'
-        }
+      switch(type) {
+        case 'qiuzhi':
+          this.msg = {
+            messageshow: true,
+            msgtitle: '前往求职端',
+            msgdesc: '是否确认前往求职端？'
+          }
+          break
+        case 'account':
+          this.msg = {
+            messageshow: true,
+            msgtitle: '更换账号',
+            msgdesc: '更换账号登录后不会删除任何历史数据，下次登录依然可以使用本账号。'
+          }
+          break
+        case 'perfect':
+          this.$router.push({
+            query: {
+              page: 'perfect'
+            }
+          })
+          break
+        case 'toUpload':
+          this.$router.push({
+            query: {
+              page: 'authpage'
+            }
+          })
+          break
+        default:
+          break
       }
     },
     msgcancel () {
@@ -625,28 +775,397 @@ export default {
     },
     // 提交注册
     submitForm (formName) {
-      console.log(this.ruleForm)
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          console.log(this.ruleForm)
+          this.submit()
         } else {
-          console.log('error submit!!')
           return false
         }
       })
     },
     // 提交认证
     submitauthForm (formName) {
-      console.log(this.authForm)
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          console.log(this.authForm)
+          this.submit2()
         } else {
-          console.log('error submit!!')
           return false
         }
       })
+    },
+    editCreateCompany() {
+      let formData = this.ruleForm
+      let params = {
+        id: formData.id,
+        real_name: formData.real_name,
+        user_email: formData.user_email.trim(),
+        user_position: formData.user_position,
+        company_name: formData.company_name
+      }
+      editCompanyFirstStepApi(params).then(() => {
+        this.$router.push({
+          query: {
+            page: 'submit',
+            from: 'company',
+            action: 'edit'
+          }
+        })
+      })
+      // 创建公司后 重新编辑走加入公司逻辑  如果之前有一条加入记录 取之前的加入记录id
+      .catch(err => {
+        if(err.data.code === 307) {
+          this.$message.error(err.data.msg)
+          this.$router.push({
+            query: {
+              page: 'status',
+              from: 'company'
+            }
+          })
+          return
+        }
+
+        hasApplayRecordApi().then(res => {
+          if(res.data.data.id) {
+            this.ruleForm.applyId = res.data.data.id
+            this.ruleForm.id = res.data.data.companyId
+            this.editJoinCompany()
+          } else {
+            if(err.data.code === 990) {
+              this.ruleForm.id = err.data.data.companyId
+              this.joinCompany()
+              return
+            }
+            this.$message.error(err.data.msg)
+            // app.wxToast({ title: err.msg })
+          }
+        })
+
+      })
+    },
+    createCompany() {
+      let formData = this.ruleForm
+      let params = {
+        real_name: formData.real_name,
+        user_email: formData.user_email.trim(),
+        user_position: formData.user_position,
+        position_type_id: formData.position_type_id, 
+        company_name: formData.company_name
+      }
+      createCompanyApi(params).then(res => {
+        this.$router.push({
+          query: {
+            page: 'submit',
+            from: 'company'
+          }
+        })
+      })
+      // 公司存在 直接走加入流程
+      .catch(err => {
+        if(err.data.code === 307) {
+          this.$message.error(err.data.msg)
+          this.$router.push({
+            query: {
+              page: 'status',
+              from: 'company'
+            }
+          })
+          return
+        }
+
+        if(err.data.code === 990) {
+          this.ruleForm.id = err.data.data.companyId
+          this.joinCompany()
+          return
+        }
+      })
+    },
+    editJoinCompany() {
+      let formData = this.ruleForm
+      let params = {
+        id: formData.applyId,
+        real_name: formData.real_name,
+        user_email: formData.user_email.trim(),
+        user_position: formData.user_position,
+        company_name: formData.company_name,
+        company_id: formData.id
+      }
+      // 判断公司是否存在
+      justifyCompanyExistApi({name: formData.company_name}).then(res0 => {
+        if(res0.data.exist) {
+          // 有可能编辑时  加入另一家公司
+          params = Object.assign(params, {company_id: res0.data.id})
+          // 被拒绝并且是新公司
+          if(formData.id !== res0.data.id) {
+            // 查看当前公司是否有申请记录
+            hasApplayRecordApi().then(res1 => {
+              // 当前公司已经申请过
+              if(res1.data.id) {
+                editApplyCompanyApi(params).then(res => {
+                  wx.removeStorageSync('createdCompany')
+                  if(res.data.emailStatus) {
+                    this.$router.push({
+                      query: {
+                        page: 'submit',
+                        from: 'join',
+                        suffix: res.data.suffix,
+                        companyId: res.data.companyId
+                      }
+                    })
+                  } else {
+                    this.$router.push({
+                      query: {
+                        page: 'status',
+                        from: 'join'
+                      }
+                    })
+                  }
+                })
+                .catch(err => {
+                  if(err.data.code === 307) {
+                    this.$message.error(err.data.msg)
+                    this.$router.push({
+                      query: {
+                        page: 'status',
+                        from: 'join'
+                      }
+                    })
+                  } 
+                })
+              } else {
+                this.ruleForm.id = res0.data.id
+                this.joinCompany()
+              }
+            })
+          } else {
+            editApplyCompanyApi(params).then(res => {
+              wx.removeStorageSync('createdCompany')
+              if(res.data.emailStatus) {
+                this.$router.push({
+                  query: {
+                    page: 'submit',
+                    from: 'join',
+                    suffix: res.data.suffix,
+                    companyId: res.data.companyId
+                  }
+                })
+                // wx.navigateTo({url: `${RECRUITER}user/company/identityMethods/identityMethods?from=join&suffix=${res.data.suffix}&companyId=${res.data.companyId}`})
+              } else {
+                this.$router.push({
+                  query: {
+                    page: 'status',
+                    from: 'join'
+                  }
+                })
+                // wx.reLaunch({url: `${RECRUITER}user/company/status/status?from=join`})
+              }
+            })
+            .catch(err => {
+              if(err.data.code === 307) {
+                this.$message.error(err.data.msg)
+                this.$router.push({
+                  query: {
+                    page: 'status',
+                    from: 'join'
+                  }
+                })
+                // app.wxToast({
+                //   title: err.msg,
+                //   callback() {
+                //     wx.reLaunch({url: `${RECRUITER}user/company/status/status?from=join`})
+                //   }
+                // })
+              } 
+            })
+          }
+        } else {
+          this.createCompany()
+        }
+      })
+    },
+    joinCompany() {
+      let formData = this.ruleForm
+      console.log(formData, 'hhh')
+      let params = {
+        real_name: formData.real_name,
+        user_email: formData.user_email.trim(),
+        user_position: formData.user_position,
+        company_name: formData.company_name,
+        position_type_id: formData.position_type_id, 
+        company_id: formData.id
+      }
+      hasApplayRecordApi().then(res => {
+        // 当前公司已经申请过
+        if(res.data.id) {
+          this.editJoinCompany()
+        } else {
+          return applyCompanyApi(params).then(res => {
+            if(res.data.emailStatus) {
+              this.$router.push({
+                query: {
+                  page: 'submit',
+                  from: 'join',
+                  suffix: res.data.suffix,
+                  companyId: res.data.companyId
+                }
+              })
+              // wx.navigateTo({url: `${RECRUITER}user/company/identityMethods/identityMethods?from=join&suffix=${res.data.suffix}&companyId=${res.data.companyId}`})
+            } else {
+              this.$router.push({
+                query: {
+                  page: 'status',
+                  from: 'join'
+                }
+              })
+              // wx.reLaunch({url: `${RECRUITER}user/company/status/status?from=join`})
+            }
+          })
+          .catch(err => {
+            if(err.data.code === 307) {
+              this.$message.error(err.msg)
+              this.$router.push({
+                query: {
+                  page: 'status',
+                  from: 'join'
+                }
+              })
+              // app.wxToast({
+              //   title: err.msg,
+              //   callback() {
+              //     wx.reLaunch({url: `${RECRUITER}user/company/status/status?from=join`})
+              //   }
+              // })
+            } 
+          })
+        }
+      })
+    },
+    submit() {
+      if(Reflect.has(this.$route.query, 'action')) {
+        if(this.applyJoin) {
+          this.editJoinCompany()
+        } else {
+          this.editCreateCompany()
+        }
+      } else {
+        this.createCompany()
+      }
+    },
+    getCompanyIdentityInfos() {
+      let storage = this.ruleForm
+      let applyJoin = this.applyJoin
+      let formData = {}
+      getCompanyIdentityInfosApi().then(res => {
+        let companyInfo = res.data.data.companyInfo
+        applyJoin = res.data.applyJoin
+        // 重新创建一条记录
+        if(companyInfo.status === 2) {
+          this.ruleForm.real_name = storage.real_name
+          this.ruleForm.user_email = storage.user_email
+          this.ruleForm.user_position = storage.user_position
+          this.ruleForm.company_name = storage.company_name
+          this.applyJoin = applyJoin
+        } else {
+
+          this.ruleForm.real_name = storage.real_name || companyInfo.realName
+          this.ruleForm.user_email = storage.user_email || companyInfo.userEmail
+          this.ruleForm.user_position = storage.user_position || companyInfo.userPosition
+          this.ruleForm.company_name = storage.company_name || companyInfo.companyName
+
+          this.authForm.company_name = companyInfo.companyName
+          this.authForm.company_shortname = storage.company_shortname || companyInfo.companyShortname
+          this.authForm.industry_id = storage.industry_id || companyInfo.industryId
+          this.authForm.industry_id_name = storage.industry_id_name || companyInfo.industry
+          this.authForm.financing = storage.financing || companyInfo.financing
+          this.authForm.financingName = storage.financingName || companyInfo.financingInfo
+          this.authForm.employees = storage.employees || companyInfo.employees
+          this.authForm.employeesName = storage.employeesName || companyInfo.employeesInfo
+          this.authForm.intro = storage.intro || companyInfo.intro
+          this.authForm.logo = storage.logo || companyInfo.logoInfo
+          this.authForm.id = companyInfo.id
+          this.authForm.business_license = storage.business_license || companyInfo.businessLicenseInfo
+          this.authForm.on_job = storage.on_job || companyInfo.onJobInfo
+          this.companyInfo = companyInfo
+
+          // 重新编辑 加公司id
+          if(Reflect.has(this.$route.query, 'action')) {
+            this.ruleForm.id = companyInfo.id
+          }
+
+          if(applyJoin) {
+            this.ruleForm.applyId = companyInfo.applyId
+          }
+          this.applyJoin = applyJoin
+          console.log(this)
+        }
+      })
+    },
+    submit2() {
+      let formData = this.authForm
+      let params = {
+        company_name: formData.company_name,
+        industry_id: formData.industry_id,
+        financing: formData.financing,
+        employees: formData.employees,
+        company_shortname: formData.company_shortname,
+        logo: formData.logo.id,
+        intro: formData.intro,
+        business_license: formData.business_license.id,
+        on_job: formData.on_job.id,
+        id: formData.id
+      }
+      perfectCompanyApi(params).then(res => {
+        this.$router.push({
+          query: {
+            page: 'status',
+            from: 'company'
+          }
+        })
+        // wx.removeStorageSync('createdCompany')
+        // wx.reLaunch({url: `${RECRUITER}user/company/status/status?from=company`})
+      })
+      .catch(err => {
+
+        if(err.data.code === 307) {
+          this.$message.error(err.msg)
+          this.$router.push({
+            query: {
+              page: 'status',
+              from: 'company'
+            }
+          })
+          // app.wxToast({
+          //   title: err.msg,
+          //   callback() {
+          //     wx.reLaunch({url: `${RECRUITER}user/company/status/status?from=company`})
+          //   }
+          // })
+          return
+        }
+
+        if(err.data.code === 808) {
+          this.$message.error(err.msg)
+          this.$router.push({
+            query: {
+              page: 'status',
+              from: 'company'
+            }
+          })
+          // app.wxToast({
+          //   title: err.msg,
+          //   callback() {
+          //     wx.removeStorageSync('createdCompany')
+          //     wx.reLaunch({url: `${RECRUITER}user/company/status/status?from=company`})
+          //   }
+          // })
+          return
+        }
+        this.$message.error(err.msg)
+      })
     }
+  },
+  mounted() {
+    this.getCompanyIdentityInfos()
+    console.log(process.env.VUE_APP_CDN_PATH)
   }
 }
 </script>

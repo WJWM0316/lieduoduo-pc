@@ -65,7 +65,7 @@ export const request = ({ url, method, params = {}, config }) => {
         router.push({ name: 'login', query: { type: 'msgLogin', needBack: true } })
         removeAccessToken()
       }
-      reject(err)
+      reject(err.response)
       loadingBack()
     })
   })
