@@ -117,7 +117,7 @@
         </el-form>
         <div :class="['nextstep', isauthcheck ? 'cansubmit' : '']" @click="gotowhere('toUpload')">下一步</div>
         <div class="handler">
-          <div class="goqiuzhi" @click="gotowhere('qiuzhi')">返回上一步</div>
+          <div class="goqiuzhi" @click="gotowhere('toback')">返回上一步</div>
         </div>
       </div>
       <!-- 完善认证信息 -->
@@ -174,7 +174,7 @@
         </div>
         <div :class="['nextstep', isupdatacheck ? 'cansubmit' : '']" @click="submitauthForm('ruleauthForm')">完成</div>
         <div class="handler">
-          <div class="goqiuzhi" @click="gotowhere('qiuzhi')">返回上一步</div>
+          <div class="goqiuzhi" @click="gotowhere('toback')">返回上一步</div>
         </div>
       </div>
       <!-- 创建公司审核状态 -->
@@ -182,7 +182,7 @@
 
         <template v-if="$route.query.from === 'company'">
           <div class="topicon">
-            <img v-if="companyInfo.status === 0" src="@/assets/images/adopt.png" />
+            <img v-if="companyInfo.status === 1" src="@/assets/images/adopt.png" />
             <img v-else src="@/assets/images/notadopt.png" />
           </div>
 
@@ -194,7 +194,7 @@
           <!-- 公司审核通过了 -->
           <template v-if="companyInfo.status === 1">
             <div class="status-title">公司认证审核已通过</div>
-            <div class="status-tip">{{companyInfos.companyName}}</div>
+            <div class="status-tip">{{companyInfo.companyName}}</div>
             <div class="adoptcontent" v-if="companyInfo.status === 1">
               <div class="tips">
                 <div class="tips-l">
@@ -210,7 +210,9 @@
               <div class="canfree clearfix">
                 <div class="freeitem">
                   <div class="item">
-                  <div class="images"></div>
+                  <div class="images">
+                    <img src="@/assets/images/postposition.png" alt="">
+                  </div>
                   </div>
                 <div class="item">
                 <div class="text">免费发布职位</div>
@@ -218,14 +220,16 @@
                 </div>
                 <div class="freeitem">
                   <div class="item">
-                  <div class="images marleft"></div>
+                  <div class="images marleft">
+                    <img src="@/assets/images/viewresume.png" alt="">
+                  </div>
                   </div>
                 <div class="item">
                 <div class="text tmarleft">免费查看简历</div>
                 </div>
                 </div>
               </div>
-              <div class="startrecruiting">开始招聘</div>
+              <div class="startrecruiting" @click="startrecruit()">开始招聘</div>
             </div>
           </template>
 
@@ -233,7 +237,7 @@
             <div class="status-title">公司认证审核未通过</div>
             <div class="status-tip">请重新提交资料，完成公司创建</div>
             <div class="status-tip">公司认证审核未通过的原因如下</div>
-            <div class="status-tip">{{companyInfos.reviewNote}}</div>
+            <div class="status-tip">{{companyInfo.reviewNote}}</div>
           </template>
 
           <!-- 公司审核不通过或者审核中 -->
@@ -303,7 +307,9 @@
               <div class="canfree clearfix">
                 <div class="freeitem">
                   <div class="item">
-                  <div class="images"></div>
+                  <div class="images">
+                    <img src="@/assets/images/postposition.png" alt="">
+                  </div>
                   </div>
                 <div class="item">
                 <div class="text">免费发布职位</div>
@@ -311,14 +317,16 @@
                 </div>
                 <div class="freeitem">
                   <div class="item">
-                  <div class="images marleft"></div>
+                  <div class="images marleft">
+                    <img src="@/assets/images/viewresume.png" alt="">
+                  </div>
                   </div>
                 <div class="item">
                 <div class="text tmarleft">免费查看简历</div>
                 </div>
                 </div>
               </div>
-              <div class="startrecruiting">开始招聘</div>
+              <div class="startrecruiting" @click="startrecruit()">开始招聘</div>
             </div>
           </template>
 
@@ -357,7 +365,7 @@
                 </div>
                 <div class="name">{{companyInfo.adminInfo.name}}</div>
                 <div class="admin">{{companyInfo.adminInfo.position}}</div>
-                <div class="notice">通知管理员</div>
+                <div :class="['notice', miniProgramStatus ? 'default' : '']" @click="noticeadmin()">通知管理员</div>
               </div>
           </div>
           <div class="status-line"></div>
@@ -396,7 +404,8 @@ import {
   getCompanyIdentityInfosApi,
   editCompanyFirstStepApi,
   hasApplayRecordApi,
-  perfectCompanyApi
+  perfectCompanyApi,
+  notifyadminApi
 } from 'API/register'
 export default {
   components: {
@@ -479,6 +488,7 @@ export default {
         company_id: '',
         user_email: ''
       },
+      miniProgramStatus: 0,
       authForm: {
         id: '',
         company_name: '',
@@ -619,7 +629,6 @@ export default {
       this.industryshow = !this.industryshow
     },
     changeindustry (data) {
-      console.log(data)
       this.authForm.industry_name = data.value
       this.authForm.industry_id = data.id
       this.industryshow = false
@@ -642,10 +651,21 @@ export default {
       this.authForm.employees = data.id
       this.employeesshow = false
     },
+    // 通知管理员
+    noticeadmin () {
+      if (!this.miniProgramStatus) {
+        notifyadminApi().then((res) => {
+          this.$message.success('成功通知管理员，请耐心等待')
+        }).catch(e => {
+          this.$message.error(e.data.msg || '')
+        })
+      }
+    },
     resultEvent (res) {
       this.ruleForm.position_type_id = res.labelId
       this.ruleForm.position_name = res.name
       this.showPositionModel = false
+      this.bindButtonStatus()
     },
     bindInput (value, key) {
       this.ruleForm[key] = value
@@ -755,6 +775,9 @@ export default {
             }
           })
           break
+        case 'toback':
+          this.$router.go(-1)
+          break
         default:
           break
       }
@@ -860,23 +883,22 @@ export default {
       })
       // 公司存在 直接走加入流程
         .catch(err => {
-        if(err.data.code === 307) {
-          this.$message.error(err.data.msg)
-          this.$router.push({
-            query: {
-              page: 'status',
-              from: 'company'
-            }
-          })
-          return
-        }
+          if (err.data.code === 307) {
+            this.$message.error(err.data.msg)
+            this.$router.push({
+              query: {
+                page: 'status',
+                from: 'company'
+              }
+            })
+            return
+          }
 
-        if(err.data.code === 990) {
-          this.ruleForm.id = err.data.data.companyId
-          this.joinCompany()
-          
-        }
-      })
+          if (err.data.code === 990) {
+            this.ruleForm.id = err.data.data.companyId
+            this.joinCompany()
+          }
+        })
     },
     editJoinCompany () {
       let formData = this.ruleForm
@@ -1123,7 +1145,6 @@ export default {
       })
         .catch(err => {
           if (err.data.code === 307) {
-            this.$message.error(err.msg)
             this.$router.push({
               query: {
                 page: 'status',
@@ -1140,7 +1161,6 @@ export default {
           }
 
           if (err.data.code === 808) {
-            this.$message.error(err.msg)
             this.$router.push({
               query: {
                 page: 'status',
@@ -1158,6 +1178,10 @@ export default {
           }
           this.$message.error(err.msg)
         })
+    },
+    // 开始招聘
+    startrecruit () {
+      this.$router.push({ name: 'candidatetype' })
     }
   },
   mounted () {
@@ -1548,10 +1572,12 @@ export default {
           .images{
             width: 54px;
             height: 51px;
-            overflow: hidden;
             margin-left: 94px;
             border-radius: 50%;
-            background: #652791;
+            img{
+              width: 100%;
+              height: 100%;
+            }
           }
           .text{
             font-size: 14px;
@@ -1613,6 +1639,10 @@ export default {
           margin-left: 14px;
           height:32px;
           float: left;
+          img{
+            width: 100%;
+            height: 100%;
+          }
         }
         .name{
           color: #282828;
@@ -1640,6 +1670,10 @@ export default {
           text-align: center;
           margin-top: 10px;
           float: right;
+        }
+        .default{
+          background:rgba(232,233,235,1);
+          color: #929292;
         }
       }
     }
