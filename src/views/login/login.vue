@@ -29,7 +29,7 @@ export default class login extends Vue {
   mounted () {
     let query = this.$route.query
     if (query.type) this.loginType = query.type
-    this.loginType
+    // this.loginType
     // 百度统计
     let _hmt = _hmt || [];
     (function () {
@@ -41,13 +41,13 @@ export default class login extends Vue {
   }
 }
 </script>
-<style lang="less">
+<style lang="scss">
 #login {
   min-width: 1200px;
   height: 100vh;
   box-sizing: border-box;
   width: 100%;
-  background: #652791 url("https://lieduoduo-uploads-test.oss-cn-shenzhen.aliyuncs.com/front-assets/web/images/bg_loginpage.png") no-repeat;
+  background: $main-color-1 url("https://lieduoduo-uploads-test.oss-cn-shenzhen.aliyuncs.com/front-assets/web/images/bg_loginpage.png") no-repeat;
   background-size: auto 100%;
   background-position: center;
   display: flex;

@@ -44,8 +44,13 @@
       </ul>
       <div class="header-user-info">
         <div class="system">
-          <template v-if="userInfo.id">
-            <router-link tag="span" class="resume" to="/applyIndex">简历</router-link>
+          <template v-if="headerInfo.id">
+            <router-link tag="span" to="/cresume" class="resume" v-slot="{ href, isActive, isExactActive }">
+              <span
+                class="router-link"
+                :class="[isActive && 'router-link-active', isExactActive && 'router-link-exact-active']"
+                @click="handeToResume">简历</span>
+            </router-link>
           </template>
           <template v-else>
             <div>
@@ -55,12 +60,12 @@
           </template>
         </div>
         <div class="header-info">
-          <template v-if="userInfo.id">
+          <template v-if="headerInfo.id">
             <el-dropdown trigger="click" placement="bottom-start" @command="handleClick">
               <div>
-                <span class="user-name">{{userInfo.realname}}</span>
+                <span class="user-name">{{headerInfo.realname}}</span>
                 <div class="user-avatar">
-                  <img :src="userInfo.avatarInfo && userInfo.avatarInfo.smallUrl" alt="">
+                  <img :src="headerInfo.avatarInfo && headerInfo.avatarInfo.smallUrl" alt="">
                 </div>
               </div>
               <el-dropdown-menu slot="dropdown" class="header-dorpdown-wrapper">
@@ -105,21 +110,32 @@ export default {
     this.getHotAreas()
     this.addressId = this.$store.getters.cityId
   },
-  /* watch: {
-    '$store.state.userInfo': function (val) {}
-  }, */
   computed: {
     ...mapState({
       roleInfos: state => state.roleInfos,
-      userInfo: state => state.userInfo,
       cityList: state => state.areaList
-    })
+    }),
+    headerInfo () {
+      // 有加载简历就用简历里面的 没有就用登陆携带回来的信息
+      const { userInfo, resume: { myResume } } = this.$store.state
+      if (myResume.uid) {
+        return {
+          id: userInfo.id,
+          realname: myResume.name,
+          avatarInfo: myResume.avatar
+        }
+      }
+      return userInfo || {}
+    }
   },
   methods: {
     handleClick (e) {
       switch (e) {
         case 'logout':
-          this.$store.dispatch('logoutApi')
+          this.$store.dispatch('logoutApi').then(() => {
+            this.state.$commit('removeResume')
+          })
+
           break
         case 'usercenter':
           this.$router.push('/position')
@@ -142,6 +158,14 @@ export default {
         path: item.url
       })
     },
+    // 是否可以进入简历页面
+    handeToResume () {
+      if (this.roleInfos.isJobhunter !== 1) {
+        this.$router.push({ path: '/createuser' })
+      } else {
+        this.$router.push({ path: '/cresume' })
+      }
+    },
     changeLocation (item) {
       this.addressName = item.name
       this.$store.commit('setCityId', item.areaId)
@@ -160,8 +184,8 @@ export default {
 $header-height-1: $page-header-height;
 .page-header {
   height: $header-height-1;
-  background: $bg-color-2;
-   min-width: $page-width;
+  background: $nav-color-bg-color;
+  min-width: $page-width;
   &.fixed {
     position: fixed;
     top: 0;
@@ -238,6 +262,9 @@ $header-height-1: $page-header-height;
   color: $nav-color-default;
   span {
     cursor: pointer;
+  }
+  .resume.router-link-active {
+    color: $sub-color-1;
   }
 }
 .system {

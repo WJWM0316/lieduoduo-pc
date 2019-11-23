@@ -30,6 +30,12 @@
   justify-content: space-between;
 }
 
+// 两端对齐
+@mixin flex-between() {
+  display: flex;
+  justify-content: space-between;
+}
+
 // 主轴的项目两侧的间隔相等
 @mixin flex-justify-around() {
   display: flex;
@@ -39,6 +45,10 @@
 // 主轴为垂直方向，起点在上沿
 @mixin flex-direction-column() {
   flex-direction: column;
+
+@mixin flex-v-top() {
+  display: flex;
+  align-items: flex-start;
 }
 
 // 单行省略号
@@ -65,7 +75,7 @@
 }
 
 // img border-radius 
-@mixin img-radius($height, $width, $radius:50%, $bgcolor: #ABABAB) {
+@mixin img-radius($height, $width, $radius:50%, $bgcolor: #fff) {
   width: $height;
   height: $width;
   border-radius: $radius;

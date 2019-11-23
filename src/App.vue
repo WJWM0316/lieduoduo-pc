@@ -6,7 +6,7 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import { getUserInfosApi } from '@/api/auth.js'
 import { getUserRoleInfoApi } from '@/api/auth'
-
+import { getAccessToken } from 'API/cacheService'
 @Component({
   name: 'APP'
 })
@@ -22,12 +22,16 @@ export default class APP extends Vue {
   }
   getUserRoleInfo () {
     getUserRoleInfoApi().then(res => {
-      if (res.data.data.isJobhunter) this.$store.dispatch('getMyResume')
+      if (res.data.data.isJobhunter) {
+        this.$store.dispatch('getMyResume')
+      }
       this.$store.commit('setRoleInfos', res.data.data)
     })
   }
   created () {
-    this.getUserInfo()
+    if (getAccessToken()) {
+      this.getUserInfo()
+    }
   }
 }
 </script>
@@ -35,10 +39,13 @@ export default class APP extends Vue {
 @import './assets/css/index.css';
 @import './assets/scss/button.scss';
 @import './eleui/element.reset.scss';
-#app {
+#app, .c-app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   color: #2c3e50;
   background: $bg-color-1;
+}
+body, html{
+  height: 100%;
 }
 .hidden {
   display: none;

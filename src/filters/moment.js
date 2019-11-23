@@ -9,7 +9,12 @@ moment.locale('zh-cn')
 /**
  * 日期过滤
  */
-Vue.filter('date', (value, format = 'YYYY-MM-DD HH:mm:ss') => moment(value).format(format))
+Vue.filter('date', (value, format = 'YYYY-MM-DD HH:mm:ss') => {
+  const date = moment(value).format(format)
+  // eslint-disable-next-line eqeqeq
+  if (date == 'Invalid date') return value
+  return date
+})
 // MMMDo HH:mm  x月x日 xx:xx
 // moment().format('L');    // 2018-09-26
 // moment().format('LL');   // 2018年9月26日
@@ -19,7 +24,7 @@ Vue.filter('date', (value, format = 'YYYY-MM-DD HH:mm:ss') => moment(value).form
  */
 Vue.filter('duration', timestamp => {
   const duration = moment.duration(timestamp)
-  const days = duration.days()
+  // const days = duration.days()
   const hours = duration.hours()
   const minutes = duration.minutes()
   const seconds = duration.seconds()
@@ -45,7 +50,6 @@ Vue.filter('duration', timestamp => {
   }
   return result
 })
-
 
 /**
  * 活跃时间

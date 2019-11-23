@@ -1,3 +1,4 @@
+// 普通按钮样式
 .c-btn {
   display: inline-block;
   line-height: 1;
@@ -8,7 +9,6 @@
   color: $main-color-1;
   text-align: center;
   box-sizing: border-box;
-  outline: none;
   margin: 0;
   transition: .1s;
   padding: 12px 20px;
@@ -21,4 +21,28 @@
 .c-btn:hover {
   border-color: $bg-color-5;
   background: $bg-color-5;
+}
+
+// 按钮radio样式
+.c-button-group-radio {
+  .c-button-radio {
+    height: 46px;
+    width: 148px;
+    border: 1px solid $border-color-1;
+    line-height: 46px;
+    text-align: center;
+    vertical-align: middle;
+    display: inline-block;
+    background: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 4px;
+  }
+  .c-button-radio + .c-button-radio {
+    margin-left: 20px;
+  }
+  .c-button-radio:hover,.active {
+    background: $bg-color-5;
+    border-color: $border-color-2;
+  }
 }

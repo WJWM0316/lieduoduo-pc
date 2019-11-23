@@ -1,5 +1,5 @@
 <template>
-  <section id="app">
+  <section id="b-app" class="c-app">
     <page-header />
     <router-view class="pages" />
     <page-footer />
@@ -61,16 +61,16 @@ export default class App extends Vue {
 }
 </script>
 <style lang="scss">
-.pages {
+.c-app .pages {
   min-height: calc(100vh - #{$page-header-height} - #{$page-footer-height});
   min-width: $page-width;
 }
-.pages .main-center {
+.c-app .pages .main-center, .c-app .pages.main-center {
   width: $page-width;
   margin:0 auto;
 }
 @media screen and (max-width: 1263px)  {
-  #app {
+  .c-app {
     overflow-x: scroll;
     min-width: calc(#{$page-width} + 20px);
   }

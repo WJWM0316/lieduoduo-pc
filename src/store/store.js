@@ -4,9 +4,10 @@ import { saveAccessToken, removeAccessToken, getAccessToken, getUserInfo, saveUs
 import { loginPutInApipc, getUserRoleInfoApi, switchRoleApi } from '@/api/auth'
 import router from '@/router/index.js'
 import { mobileReg } from '@/util/fieldRegular.js'
-import { getMyResumeApi } from '@/api/resume.js'
-
 import { logoutApi } from '../api/auth'
+
+// modules
+import resume from './modules/resume'
 
 Vue.use(Vuex)
 
@@ -28,8 +29,7 @@ export default new Vuex.Store({
       type: 'tocIndex',
       params: ''
     },
-    areaList: [],
-    myResume: {} // 我的简历详情
+    areaList: []
   },
   // 在getters中声明state中变量的计算函数，缓存计算后的数据， 通过 this.$store.getters 调用
   getters: {
@@ -57,42 +57,21 @@ export default new Vuex.Store({
       state.userInfo = data
       state.userIdentity = data.curInUseRole
     },
+    // 将用户名称替换为简历姓名
+    setUserRealname: (state, name) => {
+      state.userInfo.realname = name
+    },
     // 登录回调
     LOGINCALLBACK: (state, data) => {
-      // Vue.message({
-      //   message: '登录成功',
-      //   type: 'success'
-      // })
       saveAccessToken(data.token, state.loginValidTime)
       saveUserInfo(data, state.loginValidTime)
       state.userInfo = data
       state.token = data.token
       state.hasLogin = 1
       if (data.curInUseRole) state.userIdentity = data.curInUseRole
-      // 获取用户角色信息
-      getUserRoleInfoApi().then(res => {
-        state.roleInfos = res.data.data
-        if (state.userIdentity === 1 && !state.roleInfos.isJobhunter) {
-          router.replace({ path: '/createUser' })
-          return
-        }
-        if (state.userIdentity === 2 && !state.roleInfos.isRecruiter) {
-          state.guideCreateRecruiter = true
-          return
-        }
-        // 登录跳转
-        if (data.refresh) {
-          window.location.reload()
-        } else if (data.needBack) {
-          router.go(-1)
-        } else {
-          let userIdentity = state.userIdentity
-          userIdentity === 1 ? router.replace({ path: '/index' }) : router.replace({ path: '/candidate' })
-        }
-      })
     },
     // 退出登录回调
-    LOGOUT: (state, data) => {
+    LOGOUT: (state) => {
       state.userInfo = {}
       state.token = null
       removeAccessToken()
@@ -101,12 +80,12 @@ export default new Vuex.Store({
       } else {
         router.replace({ path: '/login', query: { type: 'msgLogin' } })
       }
-      // setTimeout(() => {
-      //   window.location.reload()
-      // }, 1500)
     },
     setRoleInfos (state, data) {
       state.roleInfos = data
+    },
+    setCreateRecruiter (state, data) {
+      state.guideCreateRecruiter = data
     },
     // 获取用户信息
     GETROLEINFO: (state, data) => {
@@ -125,16 +104,6 @@ export default new Vuex.Store({
     },
     guideQrcodePop (state, data) {
       state.guideQrcodePop = data
-    },
-    // 设置我的简历信息
-    setMyResume (state, data) {
-      getMyResumeApi().then(res => {
-        state.myResume = res.data.data
-        if (!state.userInfo.realname) {
-          state.userInfo.realname = state.myResume.name
-          state.userInfo.avatarInfo = state.myResume.avatar
-        }
-      })
     },
     switchIdentity (state, data) {
       if (state.userIdentity === 1) {
@@ -177,6 +146,34 @@ export default new Vuex.Store({
             ...data
           }
           store.commit('LOGINCALLBACK', loginData)
+          // 获取用户角色信息
+          const { state } = store
+          getUserRoleInfoApi().then(({ data }) => {
+            const result = data.data || {}
+            store.commit('setRoleInfos', result)
+            if (state.userIdentity === 1 && !result.isJobhunter) {
+              router.replace({ path: '/createUser' })
+              return
+            }
+            if (state.userIdentity === 2 && !result.isRecruiter) {
+              store.commit('setCreateRecruiter', true)
+              return
+            }
+            // 如果是求职者
+            if (result.isJobhunter === 1) {
+              // 获取简历信息
+              store.dispatch('getMyResume')
+            }
+            // 登录跳转
+            if (loginData.refresh) {
+              window.location.reload()
+            } else if (loginData.needBack) {
+              router.go(-1)
+            } else {
+              let userIdentity = state.userIdentity
+              userIdentity === 1 ? router.replace({ path: '/index' }) : router.replace({ path: '/candidate' })
+            }
+          })
           resolve(res)
         }).catch(e => {
           reject(e)
@@ -187,10 +184,6 @@ export default new Vuex.Store({
     logoutApi (store, data) {
       return logoutApi()
         .then(res => {
-          /* Vue.message({
-            message: '退出成功',
-            type: 'success'
-          }) */
           store.commit('LOGOUT', data)
           return res
         })
@@ -198,10 +191,9 @@ export default new Vuex.Store({
 
     setPageName (store, options) {
       store.commit('setPageName', options)
-    },
-    // 获取我的简历详情
-    getMyResume (store, options) {
-      store.commit('setMyResume', options)
     }
+  },
+  modules: {
+    resume
   }
 })
