@@ -9,7 +9,7 @@
           <span>|</span>
           <span>{{row.city}}</span>
           <span>|</span>
-          <span>{{row.fields.map(val=>val.field).join(' ')}}</span>
+          <span class="ellipsis">{{row.fields.map(val=>val.field).join(' ')}}</span>
           <span class="salary">{{row.salaryFloor}}-{{row.salaryCeil}}K</span>
         </p>
       </template>
@@ -246,12 +246,17 @@ export default {
   span {
     font-size: 14px;
     color: $title-color-2;
+    display: inline-block;
+    vertical-align: middle;
   }
   span + span {
     padding-left: 6px;
   }
+  span.ellipsis {
+    max-width: 240px !important;
+  }
   span.salary {
-    padding-left: 15px;
+    padding-left: 12px;
     color: $error-color-1;
   }
 }

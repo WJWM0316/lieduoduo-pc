@@ -5,11 +5,11 @@
       <template v-slot:content="{row}">
         <p class="resume-list-header project-header">
           <span>
-            <span>{{row.school}}</span>
+            <span class="ellipsis">{{row.school}}</span>
             <span class="separator">|</span>
             <span>{{row.degreeDesc}}</span>
             <span class="separator">|</span>
-            <span>{{row.major}}</span>
+            <span class="ellipsis">{{row.major}}</span>
           </span>
           <span class="resume-list-time">{{row.startTimeDesc | date('YYYY.MM')}}-{{row.endTimeDesc | date('YYYY.MM')}}</span>
         </p>

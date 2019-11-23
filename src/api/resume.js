@@ -20,6 +20,16 @@ export const getBaseInfo = (data) => {
   })
 }
 
+// 设置头像
+export const setResumeAvatar = (data) => {
+  return request({
+    method: 'get',
+    url: '/jobhunter/avatar',
+    params: data,
+    config: { host: 'qiuzhi' }
+  })
+}
+
 // 设置求职者信息
 export const setBaseInfo = (data) => {
   return request({
