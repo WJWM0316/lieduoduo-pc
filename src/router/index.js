@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+import company from './company.js'
 import applicant from './applicant.js'
 import recruiter from './recruiter.js'
 import common from './common.js'
@@ -16,7 +17,8 @@ let routes = [
   ...recruiter,
   ...common,
   ...other,
-  ...login
+  ...login,
+  ...company
 ]
 Vue.use(Router)
 

@@ -191,3 +191,19 @@ export const getCityApi = (data) => request({
   params: data,
   config: { host: 'zhaopin' }
 })
+
+/* 获取公司的热招职位 */
+export const getCompanyHotApi = (data) => request({
+  url: `/company/hot_positions/${data.companyId}`,
+  method: 'get',
+  params: data,
+  config: { host: 'qiuzhi' }
+})
+
+/* 获取公司信息 */
+export const getCompanyApi = (data) => request({
+  url: `/company/${data.id}`,
+  method: 'get',
+  params: data,
+  config: { host: 'qiuzhi' }
+})
