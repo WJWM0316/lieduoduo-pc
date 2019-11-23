@@ -184,7 +184,7 @@ export default {
 $header-height-1: $page-header-height;
 .page-header {
   height: $header-height-1;
-  background: $bg-color-2;
+  background: $nav-color-bg-color;
   min-width: $page-width;
   &.fixed {
     position: fixed;

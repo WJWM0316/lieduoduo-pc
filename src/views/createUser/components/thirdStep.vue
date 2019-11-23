@@ -76,18 +76,18 @@
 
 </template>
 <script>
-  import Vue from 'vue'
-  import Component from 'vue-class-component'
-  import {schoolNameReg, majorNameReg} from '@/util/fieldRegular.js'
-  import {
-    getDegreeAllListsApi,
-    getResumeThirdStepApi,
-    setResumeThirdApi
-  } from '@/api/putIn'
+import Vue from 'vue'
+import Component from 'vue-class-component'
+import { schoolNameReg, majorNameReg } from '@/util/fieldRegular.js'
+import {
+  getDegreeAllListsApi,
+  getResumeThirdStepApi,
+  setResumeThirdApi
+} from '@/api/putIn'
   @Component({
     name: 'resumeThirdPost'
   })
-  export default class resumeThirdPost extends Vue {
+export default class resumeThirdPost extends Vue {
     pickerOptions = {
       shortcuts: [
         {
@@ -106,12 +106,12 @@
       educations: []
     }
     degreeAllLists = []
-    getDegreeAllLists() {
-      return getDegreeAllListsApi().then(res => this.degreeAllLists = res.data.data)
+    getDegreeAllLists () {
+      return getDegreeAllListsApi().then(res => (this.degreeAllLists = res.data.data))
     }
 
     // 返回上一步
-    lastStep() {
+    lastStep () {
       this.$parent.step--
     }
 
@@ -124,12 +124,12 @@
         let educations = res.data.data.educations
         let internships = res.data.data.internships
         educations.map(field => {
-          if(field.startTime) {
+          if (field.startTime) {
             field.startTime = new Date(field.startTime * 1000)
           } else {
             field.startTime = new Date()
           }
-          if(field.endTime) {
+          if (field.endTime) {
             field.endTime = new Date(field.endTime * 1000)
           } else {
             field.endTime = new Date()
@@ -137,23 +137,23 @@
         })
         this.internships = internships
         this.educations = educations
-        if(educations.length) {
+        if (educations.length) {
           this.form.school = educations[0].school
           this.form.major = educations[0].major
           this.form.degree = educations[0].degree
           this.form.startTime = educations[0].startTime
-          this.form.endTime = educations[0].endTime 
+          this.form.endTime = educations[0].endTime
         }
       })
     }
 
-    submit() {
+    submit () {
       let item = {
         school: this.form.school,
         major: this.form.major,
         degree: this.form.degree,
-        startTime: Date.parse(this.form.startTime)/1000,
-        endTime: this.form.endTime ? Date.parse(this.form.endTime)/1000 : 0
+        startTime: Date.parse(this.form.startTime) / 1000,
+        endTime: this.form.endTime ? Date.parse(this.form.endTime) / 1000 : 0
       }
       let title = ''
       if (!item.school) {
@@ -187,15 +187,15 @@
         this.$parent.step++
       })
     }
-    focus(dom){
+    focus (dom) {
       document.querySelector(dom).className = 'el-icon-caret-bottom defalut-position icon_active'
     }
-    blur(dom) {
+    blur (dom) {
       document.querySelector(dom).className = 'el-icon-caret-bottom defalut-position'
     }
   }
 </script>
-<style lang="less">
+<style lang="scss">
 .el-input__suffix{
     display: none;
   }
@@ -352,16 +352,16 @@
         height:50px;
         background:rgba(255,255,255,1);
         border-radius:100px 0px 0px 100px;
-        border:1px solid rgba(101,39,145,1);
+        border:1px solid $border-color-2;
         box-sizing: border-box;
         display: inline-block;
-        color:rgba(101,39,145,1);
+        color: $main-color-1;
         vertical-align: middle;
       }
       .btn-confirm{
         width:240px;
         height:50px;
-        background:rgba(101,39,145,1);
+        background: $bg-color-4;
         border-radius:0px 25px 25px 0px;
         box-sizing: border-box;
         display: inline-block;
@@ -376,7 +376,7 @@
         width:360px;
         height:50px;
         border-radius:25px;
-        border:1px solid rgba(101,39,145,1);
+        border:1px solid $border-color-2;
         position: absolute;
         top: 4px;
         z-index: 1;
