@@ -179,7 +179,7 @@
       </div>
       <!-- 创建公司审核状态 -->
       <div class="registerBox" v-show="$route.query.page === 'status'">
-        
+
         <template v-if="$route.query.from === 'company'">
           <div class="topicon">
             <img v-if="companyInfo.status === 0" src="@/assets/images/adopt.png" />
@@ -190,7 +190,7 @@
             <div class="status-title">公司认证审核中</div>
             <div class="status-tip">该申请将在1个工作日内审核，通过后即可开始招聘</div>
           </template>
-          
+
           <!-- 公司审核通过了 -->
           <template v-if="companyInfo.status === 1">
             <div class="status-title">公司认证审核已通过</div>
@@ -228,7 +228,7 @@
               <div class="startrecruiting">开始招聘</div>
             </div>
           </template>
-          
+
           <template v-if="companyInfo.status === 2">
             <div class="status-title">公司认证审核未通过</div>
             <div class="status-tip">请重新提交资料，完成公司创建</div>
@@ -272,7 +272,7 @@
           <div class="gotoqiuzhi" @click="gotowhere('qiuzhi')">前往求职</div>
           </div>
         </template>
-        
+
         <template v-if="$route.query.from === 'join'">
           <div class="topicon">
             <img v-if="(companyInfo.status === 0)" src="@/assets/images/adopt.png" />
@@ -287,7 +287,7 @@
           <template v-if="(companyInfo.status === 1)">
             <div class="status-title">加入公司申请通过</div>
             <div class="status-tip">{{companyInfo.companyName}}</div>
-          
+
             <div class="adoptcontent" v-if="companyInfo.status === 1">
               <div class="tips">
                 <div class="tips-l">
@@ -726,7 +726,7 @@ export default {
       }
     },
     gotowhere (type) {
-      switch(type) {
+      switch (type) {
         case 'qiuzhi':
           this.msg = {
             messageshow: true,
@@ -793,7 +793,7 @@ export default {
         }
       })
     },
-    editCreateCompany() {
+    editCreateCompany () {
       let formData = this.ruleForm
       let params = {
         id: formData.id,
@@ -812,43 +812,42 @@ export default {
         })
       })
       // 创建公司后 重新编辑走加入公司逻辑  如果之前有一条加入记录 取之前的加入记录id
-      .catch(err => {
-        if(err.data.code === 307) {
-          this.$message.error(err.data.msg)
-          this.$router.push({
-            query: {
-              page: 'status',
-              from: 'company'
+        .catch(err => {
+          if (err.data.code === 307) {
+            this.$message.error(err.data.msg)
+            this.$router.push({
+              query: {
+                page: 'status',
+                from: 'company'
+              }
+            })
+            return
+          }
+
+          hasApplayRecordApi().then(res => {
+            if (res.data.data.id) {
+              this.ruleForm.applyId = res.data.data.id
+              this.ruleForm.id = res.data.data.companyId
+              this.editJoinCompany()
+            } else {
+              if (err.data.code === 990) {
+                this.ruleForm.id = err.data.data.companyId
+                this.joinCompany()
+                return
+              }
+              this.$message.error(err.data.msg)
+            // app.wxToast({ title: err.msg })
             }
           })
-          return
-        }
-
-        hasApplayRecordApi().then(res => {
-          if(res.data.data.id) {
-            this.ruleForm.applyId = res.data.data.id
-            this.ruleForm.id = res.data.data.companyId
-            this.editJoinCompany()
-          } else {
-            if(err.data.code === 990) {
-              this.ruleForm.id = err.data.data.companyId
-              this.joinCompany()
-              return
-            }
-            this.$message.error(err.data.msg)
-            // app.wxToast({ title: err.msg })
-          }
         })
-
-      })
     },
-    createCompany() {
+    createCompany () {
       let formData = this.ruleForm
       let params = {
         real_name: formData.real_name,
         user_email: formData.user_email.trim(),
         user_position: formData.user_position,
-        position_type_id: formData.position_type_id, 
+        position_type_id: formData.position_type_id,
         company_name: formData.company_name
       }
       createCompanyApi(params).then(res => {
@@ -860,7 +859,7 @@ export default {
         })
       })
       // 公司存在 直接走加入流程
-      .catch(err => {
+        .catch(err => {
         if(err.data.code === 307) {
           this.$message.error(err.data.msg)
           this.$router.push({
@@ -875,11 +874,11 @@ export default {
         if(err.data.code === 990) {
           this.ruleForm.id = err.data.data.companyId
           this.joinCompany()
-          return
+          
         }
       })
     },
-    editJoinCompany() {
+    editJoinCompany () {
       let formData = this.ruleForm
       let params = {
         id: formData.applyId,
@@ -890,19 +889,19 @@ export default {
         company_id: formData.id
       }
       // 判断公司是否存在
-      justifyCompanyExistApi({name: formData.company_name}).then(res0 => {
-        if(res0.data.exist) {
+      justifyCompanyExistApi({ name: formData.company_name }).then(res0 => {
+        if (res0.data.exist) {
           // 有可能编辑时  加入另一家公司
-          params = Object.assign(params, {company_id: res0.data.id})
+          params = Object.assign(params, { company_id: res0.data.id })
           // 被拒绝并且是新公司
-          if(formData.id !== res0.data.id) {
+          if (formData.id !== res0.data.id) {
             // 查看当前公司是否有申请记录
             hasApplayRecordApi().then(res1 => {
               // 当前公司已经申请过
-              if(res1.data.id) {
+              if (res1.data.id) {
                 editApplyCompanyApi(params).then(res => {
                   wx.removeStorageSync('createdCompany')
-                  if(res.data.emailStatus) {
+                  if (res.data.emailStatus) {
                     this.$router.push({
                       query: {
                         page: 'submit',
@@ -920,17 +919,17 @@ export default {
                     })
                   }
                 })
-                .catch(err => {
-                  if(err.data.code === 307) {
-                    this.$message.error(err.data.msg)
-                    this.$router.push({
-                      query: {
-                        page: 'status',
-                        from: 'join'
-                      }
-                    })
-                  } 
-                })
+                  .catch(err => {
+                    if (err.data.code === 307) {
+                      this.$message.error(err.data.msg)
+                      this.$router.push({
+                        query: {
+                          page: 'status',
+                          from: 'join'
+                        }
+                      })
+                    }
+                  })
               } else {
                 this.ruleForm.id = res0.data.id
                 this.joinCompany()
@@ -939,7 +938,7 @@ export default {
           } else {
             editApplyCompanyApi(params).then(res => {
               wx.removeStorageSync('createdCompany')
-              if(res.data.emailStatus) {
+              if (res.data.emailStatus) {
                 this.$router.push({
                   query: {
                     page: 'submit',
@@ -959,30 +958,30 @@ export default {
                 // wx.reLaunch({url: `${RECRUITER}user/company/status/status?from=join`})
               }
             })
-            .catch(err => {
-              if(err.data.code === 307) {
-                this.$message.error(err.data.msg)
-                this.$router.push({
-                  query: {
-                    page: 'status',
-                    from: 'join'
-                  }
-                })
+              .catch(err => {
+                if (err.data.code === 307) {
+                  this.$message.error(err.data.msg)
+                  this.$router.push({
+                    query: {
+                      page: 'status',
+                      from: 'join'
+                    }
+                  })
                 // app.wxToast({
                 //   title: err.msg,
                 //   callback() {
                 //     wx.reLaunch({url: `${RECRUITER}user/company/status/status?from=join`})
                 //   }
                 // })
-              } 
-            })
+                }
+              })
           }
         } else {
           this.createCompany()
         }
       })
     },
-    joinCompany() {
+    joinCompany () {
       let formData = this.ruleForm
       console.log(formData, 'hhh')
       let params = {
@@ -990,16 +989,16 @@ export default {
         user_email: formData.user_email.trim(),
         user_position: formData.user_position,
         company_name: formData.company_name,
-        position_type_id: formData.position_type_id, 
+        position_type_id: formData.position_type_id,
         company_id: formData.id
       }
       hasApplayRecordApi().then(res => {
         // 当前公司已经申请过
-        if(res.data.id) {
+        if (res.data.id) {
           this.editJoinCompany()
         } else {
           return applyCompanyApi(params).then(res => {
-            if(res.data.emailStatus) {
+            if (res.data.emailStatus) {
               this.$router.push({
                 query: {
                   page: 'submit',
@@ -1019,29 +1018,29 @@ export default {
               // wx.reLaunch({url: `${RECRUITER}user/company/status/status?from=join`})
             }
           })
-          .catch(err => {
-            if(err.data.code === 307) {
-              this.$message.error(err.msg)
-              this.$router.push({
-                query: {
-                  page: 'status',
-                  from: 'join'
-                }
-              })
+            .catch(err => {
+              if (err.data.code === 307) {
+                this.$message.error(err.msg)
+                this.$router.push({
+                  query: {
+                    page: 'status',
+                    from: 'join'
+                  }
+                })
               // app.wxToast({
               //   title: err.msg,
               //   callback() {
               //     wx.reLaunch({url: `${RECRUITER}user/company/status/status?from=join`})
               //   }
               // })
-            } 
-          })
+              }
+            })
         }
       })
     },
-    submit() {
-      if(Reflect.has(this.$route.query, 'action')) {
-        if(this.applyJoin) {
+    submit () {
+      if (Reflect.has(this.$route.query, 'action')) {
+        if (this.applyJoin) {
           this.editJoinCompany()
         } else {
           this.editCreateCompany()
@@ -1050,7 +1049,7 @@ export default {
         this.createCompany()
       }
     },
-    getCompanyIdentityInfos() {
+    getCompanyIdentityInfos () {
       let storage = this.ruleForm
       let applyJoin = this.applyJoin
       let formData = {}
@@ -1058,14 +1057,13 @@ export default {
         let companyInfo = res.data.data.companyInfo
         applyJoin = res.data.applyJoin
         // 重新创建一条记录
-        if(companyInfo.status === 2) {
+        if (companyInfo.status === 2) {
           this.ruleForm.real_name = storage.real_name
           this.ruleForm.user_email = storage.user_email
           this.ruleForm.user_position = storage.user_position
           this.ruleForm.company_name = storage.company_name
           this.applyJoin = applyJoin
         } else {
-
           this.ruleForm.real_name = storage.real_name || companyInfo.realName
           this.ruleForm.user_email = storage.user_email || companyInfo.userEmail
           this.ruleForm.user_position = storage.user_position || companyInfo.userPosition
@@ -1087,11 +1085,11 @@ export default {
           this.companyInfo = companyInfo
 
           // 重新编辑 加公司id
-          if(Reflect.has(this.$route.query, 'action')) {
+          if (Reflect.has(this.$route.query, 'action')) {
             this.ruleForm.id = companyInfo.id
           }
 
-          if(applyJoin) {
+          if (applyJoin) {
             this.ruleForm.applyId = companyInfo.applyId
           }
           this.applyJoin = applyJoin
@@ -1099,7 +1097,7 @@ export default {
         }
       })
     },
-    submit2() {
+    submit2 () {
       let formData = this.authForm
       let params = {
         company_name: formData.company_name,
@@ -1123,47 +1121,46 @@ export default {
         // wx.removeStorageSync('createdCompany')
         // wx.reLaunch({url: `${RECRUITER}user/company/status/status?from=company`})
       })
-      .catch(err => {
+        .catch(err => {
+          if (err.data.code === 307) {
+            this.$message.error(err.msg)
+            this.$router.push({
+              query: {
+                page: 'status',
+                from: 'company'
+              }
+            })
+            // app.wxToast({
+            //   title: err.msg,
+            //   callback() {
+            //     wx.reLaunch({url: `${RECRUITER}user/company/status/status?from=company`})
+            //   }
+            // })
+            return
+          }
 
-        if(err.data.code === 307) {
+          if (err.data.code === 808) {
+            this.$message.error(err.msg)
+            this.$router.push({
+              query: {
+                page: 'status',
+                from: 'company'
+              }
+            })
+            // app.wxToast({
+            //   title: err.msg,
+            //   callback() {
+            //     wx.removeStorageSync('createdCompany')
+            //     wx.reLaunch({url: `${RECRUITER}user/company/status/status?from=company`})
+            //   }
+            // })
+            return
+          }
           this.$message.error(err.msg)
-          this.$router.push({
-            query: {
-              page: 'status',
-              from: 'company'
-            }
-          })
-          // app.wxToast({
-          //   title: err.msg,
-          //   callback() {
-          //     wx.reLaunch({url: `${RECRUITER}user/company/status/status?from=company`})
-          //   }
-          // })
-          return
-        }
-
-        if(err.data.code === 808) {
-          this.$message.error(err.msg)
-          this.$router.push({
-            query: {
-              page: 'status',
-              from: 'company'
-            }
-          })
-          // app.wxToast({
-          //   title: err.msg,
-          //   callback() {
-          //     wx.removeStorageSync('createdCompany')
-          //     wx.reLaunch({url: `${RECRUITER}user/company/status/status?from=company`})
-          //   }
-          // })
-          return
-        }
-        this.$message.error(err.msg)
-      })
+        })
     }
   },
-  mounted() {
+  mounted () {
     this.getCompanyIdentityInfos()
     console.log(process.env.VUE_APP_CDN_PATH)
   }
