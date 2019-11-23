@@ -27,6 +27,10 @@
           </div>
         </div>
         <el-dropdown-menu slot="dropdown">
+           <el-dropdown-item command="perfectauth">
+             身份认证
+             <div class="reddot"></div>
+             </el-dropdown-item>
           <el-dropdown-item command="toggleIdentity">切换为求职者</el-dropdown-item>
           <el-dropdown-item command="logout">退出登录</el-dropdown-item>
         </el-dropdown-menu>
@@ -68,6 +72,8 @@ export default {
         case 'toggleIdentity':
           this.$store.commit('switchIdentity')
           break
+        case 'perfectauth':
+          this.$router.push({ name: 'perfectauth' })
       }
     }
   }
@@ -113,5 +119,14 @@ $header-height-1: $page-b-header-height;
     vertical-align: middle;
     margin: 0 12px;
   }
+}
+.reddot{
+  width:6px;
+  height:6px;
+  border-radius: 50%;
+  right: 27px;
+  position: absolute;
+  top: 24px;
+  background:rgba(255,127,76,1);
 }
 </style>

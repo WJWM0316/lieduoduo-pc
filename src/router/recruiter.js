@@ -91,6 +91,21 @@ const recruiter = [
     name: 'register',
     title: '注册',
     component: resolve => require(['../views/registerCompany/index.vue'], resolve)
+  },
+  {
+    path: '/perfectauth',
+    title: '身份认证',
+    component: Layout,
+    meta: {
+      useNav: false
+    },
+    children: [
+      {
+        path: '',
+        name: 'perfectauth',
+        component: resolve => require(['../views/perfectauth/index.vue'], resolve)
+      }
+    ]
   }
 ]
 export default recruiter
