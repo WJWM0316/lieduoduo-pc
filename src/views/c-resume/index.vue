@@ -2,6 +2,7 @@
   <div class="main-center resume-wrapper">
     <!-- 简历内容 -->
     <div class="resume-content">
+      <p class="resume-update-time">最后更新 {{resume.resumeUpdateTime}}</p>
       <base-info class="base-scroll" :resume="resume" />
       <span class="resume-hr"><span></span></span>
       <desc-info class="desc-scroll" :resume="resume" />
@@ -123,7 +124,13 @@ export default {
   box-shadow: $shadow-1;
   margin-right: 20px;
   & > div {
-    padding: 36px 0;
+    padding: 36px 0 ;
+  }
+  .resume-update-time {
+    padding: 30px 0 0px 46px;
+    font-size: 12px;
+    color: $font-color-10;
+
   }
 }
 .resume-wrapper /deep/ {
@@ -155,6 +162,11 @@ export default {
     margin-bottom: 8px;
     color: $title-color-1;
   }
+  span.ellipsis {
+    display: inline-block;
+    max-width: 180px;
+    @include ellipsis;
+  }
   .form-header-title {
     font-size: 17px;
     margin-bottom: 24px;
@@ -178,6 +190,8 @@ export default {
     span {
       color: $title-color-1;
       font-size: 16px;
+      display: inline-block;
+      vertical-align: middle;
     }
     .separator {
       padding: 0 6px;

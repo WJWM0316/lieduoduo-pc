@@ -7,9 +7,9 @@
         <template v-if="row">
           <p class="resume-list-header">
             <span>
-              <span>{{row.company}}</span>
+              <span class="ellipsis">{{row.company}}</span>
               <span class="separator">|</span>
-              <span>{{row.position}}</span>
+              <span class="ellipsis">{{row.position}}</span>
             </span>
             <span class="resume-list-time">{{row.startTimeDesc | date('YYYY.MM')}}-{{row.endTimeDesc | date('YYYY.MM')}}</span>
           </p>

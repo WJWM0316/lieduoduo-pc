@@ -33,7 +33,9 @@
         <div class="resume-info">
           <div>
             <p class="user-name">{{info.name}}</p>
-            <p class="user-company" v-if="resume.lastCompanyName">{{resume.lastCompanyName}} - {{resume.lastPosition}}</p>
+            <p class="user-company" v-if="resume.lastCompanyName">
+              <span class="ellipsis">{{resume.lastCompanyName}}</span> <span>-</span> <span  class="ellipsis">{{resume.lastPosition}}</span>
+            </p>
             <p>
               <span><i class="iconfont icon-zhiwei"></i>{{resume.workAgeDesc}}</span>
               <span><i class="iconfont icon-nianling"></i>{{resume.age}}岁</span>
@@ -122,7 +124,7 @@
   </div>
 </template>
 <script>
-import { setBaseInfo } from 'API/resume'
+import { setBaseInfo, setResumeAvatar } from 'API/resume'
 import Picture from 'COMPONENTS/common/upload/picture'
 import DatePicker from './datePicker'
 import Wrapper from './wrapper'
@@ -236,13 +238,7 @@ export default {
       this.$store.commit('overwriteResume', {
         avatar: item[0]
       })
-      let data = {}
-      const arr = ['name', 'gender', 'birth', 'startWorkYear', 'jobStatus', 'mobile']
-      for (let item in arr) {
-        data[arr[item]] = this.resume[arr[item]]
-      }
-      data.avatar = item[0].id
-      setBaseInfo(data).then(({ data }) => {
+      setResumeAvatar({ attachId: item[0].id }).then(({ data }) => {
         this.avatarLoading = false
       }).catch(() => {
         this.avatarLoading = false
@@ -350,6 +346,21 @@ $image-wrapper: 112px;
       margin-left: 30px;
     }
   }
+  .user-company span {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 2px;
+  }
+  .user-company span.ellipsis,.user-name {
+    @include ellipsis;
+  }
+  .user-name {
+    max-width: 200px;
+  }
+  .user-company span.ellipsis {
+    max-width: 180px;
+  }
+
   .user-company,.user-name {
     color: $title-color-1;
     font-weight: normal;

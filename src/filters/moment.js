@@ -24,7 +24,7 @@ Vue.filter('date', (value, format = 'YYYY-MM-DD HH:mm:ss') => {
  */
 Vue.filter('duration', timestamp => {
   const duration = moment.duration(timestamp)
-  const days = duration.days()
+  // const days = duration.days()
   const hours = duration.hours()
   const minutes = duration.minutes()
   const seconds = duration.seconds()

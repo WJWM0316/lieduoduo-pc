@@ -62,6 +62,11 @@ export default {
       })
     }
   },
+  computed: {
+    setEditStatus () {
+      return this.$store.state.resume.eidtStatus
+    }
+  },
   data () {
     return {
       unshowEdit: true,
@@ -83,11 +88,8 @@ export default {
       }).catch(() => {})
     },
     handleEdit (item = {}, index = null) {
-      this.unshowEdit = false
-      this.$emit('command', {
-        type: 'edit',
-        item,
-        index
+      this.validateIsEdit('edit', {
+        item, index
       })
     },
     handleClose () {
@@ -96,6 +98,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
+        this.$store.commit('setEditStatus', false)
         this.unshowEdit = true
       })
     },
@@ -106,13 +109,56 @@ export default {
         cb: (status = true) => {
           this.btnLoading = false
           this.unshowEdit = status
+          if (!status) {
+            this.$store.commit('setEditStatus', false)
+          }
         }
       })
     },
     showEditCompoents () {
-      this.unshowEdit = false
+      // 如果是编辑状态不允许检测简历状态
+      if (!this.unshowEdit) return
+      this.validateIsEdit('add')
+    },
+    // 验证时候有编辑状态的表单 | 简历是否在编辑状态
+    validateIsEdit (type = 'add', params) {
+      if (this.setEditStatus) {
+        this.$confirm('简历处于编辑状态，是否关闭其他编辑项？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$store.commit('setEditStatus', false)
+          this.$nextTick(() => {
+            this.unshowEdit = false
+            if (type === 'edit') {
+              this.$emit('command', {
+                type: 'edit',
+                ...params
+              })
+            }
+            this.$store.commit('setEditStatus', true)
+          })
+        })
+      } else {
+        this.$store.commit('setEditStatus', true)
+        this.unshowEdit = false
+        if (type === 'edit') {
+          this.$emit('command', {
+            type: 'edit',
+            ...params
+          })
+        }
+      }
     }
   }
+  /* watch: {
+    setEditStatus (value) {
+      if (!value) {
+        this.unshowEdit = true
+      }
+    }
+  } */
 }
 </script>
 
