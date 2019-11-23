@@ -45,6 +45,7 @@
 // 主轴为垂直方向，起点在上沿
 @mixin flex-direction-column() {
   flex-direction: column;
+}
 
 @mixin flex-v-top() {
   display: flex;
