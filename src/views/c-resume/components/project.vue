@@ -82,6 +82,7 @@ import { projectNameReg, roleNameReg, urlReg } from 'UTIL/fieldRegular'
 export default {
   components: { Wrapper, DatePicker },
   props: {
+    propClass: String,
     resume: {
       type: Object,
       default: () => ({})

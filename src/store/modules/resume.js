@@ -3,7 +3,9 @@ import moment from 'moment'
 export default {
   state: {
     myResume: {}, // 我的简历信息
-    eidtStatus: false // 是否是编辑状态
+    eidtStatus: false, // 是否是编辑状态
+    calculateClick: 0, // 记录点击编辑图标的次数，数值更新触发滚动条滚动
+    propClass: ''
   },
   getters: {},
   mutations: {
@@ -12,7 +14,11 @@ export default {
       state.myResume = data
     },
     // 设置简历表单状态
-    setEditStatus (state, status) {
+    setEditStatus (state, { status, propClass }) {
+      if (propClass) {
+        state.calculateClick = state.calculateClick + 1
+        state.propClass = propClass
+      }
       state.eidtStatus = status
     },
     // 覆盖简历信息
@@ -20,6 +26,10 @@ export default {
       // 更新简历日期
       state.myResume.resumeUpdateTime = moment().format('YYYY-MM-DD h:mm:ss')
       Object.assign(state.myResume, data)
+    },
+    // 清空简历信息
+    removeResume (state) {
+      state.myResume = {}
     }
   },
   actions: {

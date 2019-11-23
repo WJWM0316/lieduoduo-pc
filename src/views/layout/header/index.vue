@@ -44,7 +44,7 @@
       </ul>
       <div class="header-user-info">
         <div class="system">
-          <template v-if="userInfo.id">
+          <template v-if="headerInfo.id">
             <router-link tag="span" to="/cresume" class="resume" v-slot="{ href, isActive, isExactActive }">
               <span
                 class="router-link"
@@ -60,12 +60,12 @@
           </template>
         </div>
         <div class="header-info">
-          <template v-if="userInfo.id">
+          <template v-if="headerInfo.id">
             <el-dropdown trigger="click" placement="bottom-start" @command="handleClick">
               <div>
-                <span class="user-name">{{userInfo.realname}}</span>
+                <span class="user-name">{{headerInfo.realname}}</span>
                 <div class="user-avatar">
-                  <img :src="userInfo.avatarInfo && userInfo.avatarInfo.smallUrl" alt="">
+                  <img :src="headerInfo.avatarInfo && headerInfo.avatarInfo.smallUrl" alt="">
                 </div>
               </div>
               <el-dropdown-menu slot="dropdown" class="header-dorpdown-wrapper">
@@ -110,21 +110,32 @@ export default {
     this.getHotAreas()
     this.addressId = this.$store.getters.cityId
   },
-  /* watch: {
-    '$store.state.userInfo': function (val) {}
-  }, */
   computed: {
     ...mapState({
       roleInfos: state => state.roleInfos,
-      userInfo: state => state.userInfo,
       cityList: state => state.areaList
-    })
+    }),
+    headerInfo () {
+      // 有加载简历就用简历里面的 没有就用登陆携带回来的信息
+      const { userInfo, resume: { myResume } } = this.$store.state
+      if (myResume.uid) {
+        return {
+          id: userInfo.id,
+          realname: myResume.name,
+          avatarInfo: myResume.avatar
+        }
+      }
+      return userInfo || {}
+    }
   },
   methods: {
     handleClick (e) {
       switch (e) {
         case 'logout':
-          this.$store.dispatch('logoutApi')
+          this.$store.dispatch('logoutApi').then(() => {
+            this.state.$commit('removeResume')
+          })
+
           break
         case 'usercenter':
           this.$router.push('/position')

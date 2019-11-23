@@ -3,19 +3,19 @@
     <!-- 简历内容 -->
     <div class="resume-content">
       <p class="resume-update-time">最后更新 {{resume.resumeUpdateTime}}</p>
-      <base-info class="base-scroll" :resume="resume" />
+      <base-info class="base-scroll" prop-class="base-scroll" :resume="resume" />
       <span class="resume-hr"><span></span></span>
-      <desc-info class="desc-scroll" :resume="resume" />
+      <desc-info class="desc-scroll" prop-class="desc-scroll" :resume="resume" />
       <span class="resume-hr"><span></span></span>
-      <proposal class="proposal-scroll" :resume="resume" />
+      <proposal class="proposal-scroll" prop-class="proposal-scroll" :resume="resume" />
       <span class="resume-hr"><span></span></span>
-      <experience class="experience-scroll" :resume="resume" />
+      <experience class="experience-scroll" prop-class="experience-scroll" :resume="resume" />
       <span class="resume-hr"><span></span></span>
-      <project class="project-scroll" :resume="resume" />
+      <project class="project-scroll" prop-class="project-scroll" :resume="resume" />
       <span class="resume-hr"><span></span></span>
-      <education class="education-scroll" :resume="resume" />
+      <education class="education-scroll" prop-class="education-scroll" :resume="resume" />
       <span class="resume-hr"><span></span></span>
-      <more class="more-scroll" :resume="resume" />
+      <more class="more-scroll" prop-class="more-scroll" :resume="resume" />
     </div>
     <!-- 简历配置 -->
     <div class="resume-config">
@@ -79,17 +79,25 @@ export default {
   computed: {
     resume () {
       return this.$store.state.resume.myResume || {}
+    },
+    // 记录到点击事件更新
+    count () {
+      return this.$store.state.resume.calculateClick
     }
   },
   methods: {
+    /**
+     * @param 滚动项
+     * @description 表单滚动到可见位置
+     */
     handleScrollToView (item) {
-      if (item.value === this.activeIndex) return
       this.activeIndex = item.value
       // 获取对应的节点
       const dom = document.querySelector(item.container)
       if (dom) {
         const domBounding = dom.getBoundingClientRect()
         const { y } = domBounding
+        if (y === 0) return
         window.scrollTo(0, document.documentElement.scrollTop + y)
       }
     },
@@ -109,6 +117,16 @@ export default {
   },
   destroyed () {
     window.removeEventListener('scroll', this.handleScroll)
+    this.$store.commit('setEditStatus', { status: false })
+  },
+  watch: {
+    count () {
+      const { propClass } = this.$store.state.resume
+      if (propClass) {
+        let item = this.sideList.find(val => val.container === `.${propClass}`)
+        if (item) this.handleScrollToView(item)
+      }
+    }
   }
 }
 </script>

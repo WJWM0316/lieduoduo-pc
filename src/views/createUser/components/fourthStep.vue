@@ -204,7 +204,8 @@ export default class resumeFourthPost extends Vue {
         return
       }
       setResumeFourthApi(params).then(() => {
-        this.$router.replace({ name: 'index' })
+        // this.$router.replace({ name: 'index' })
+        window.location.replace('/index')
       })
     }
     openModel () {
