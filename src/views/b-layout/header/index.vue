@@ -29,7 +29,7 @@
         <el-dropdown-menu slot="dropdown">
            <el-dropdown-item command="perfectauth">
              身份认证
-             <div class="reddot"></div>
+             <div class="reddot" v-if="isRecruiter"></div>
              </el-dropdown-item>
           <el-dropdown-item command="toggleIdentity">切换为求职者</el-dropdown-item>
           <el-dropdown-item command="logout">退出登录</el-dropdown-item>
@@ -55,7 +55,8 @@ export default {
           desc: '微信扫码打开小程序',
           img: mp_qrcode
         }
-      ]
+      ],
+      isRecruiter: 0
     }
   },
   computed: {
@@ -73,9 +74,13 @@ export default {
           this.$store.commit('switchIdentity')
           break
         case 'perfectauth':
+          this.isRecruiter = 0
           this.$router.push({ name: 'perfectauth' })
       }
     }
+  },
+  mounted () {
+    this.isRecruiter = !this.$store.state.roleInfos.isRecruiter
   }
 }
 </script>
