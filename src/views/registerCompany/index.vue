@@ -86,7 +86,7 @@
             </Picture>
           </div>
           </el-form-item>
-          <el-form-item label="公司简称" prop="company_shortname" @click="selectcompany()">
+          <el-form-item label="公司简称" prop="company_shortname">
             <el-input :value="authForm.company_shortname" placeholder="请填写公司简称" @input="authbindInput($event, 'company_shortname')"></el-input>
             <i class="iconfont icon-bangzhu icontip" @mouseenter="tipsshow = true" @mouseleave="tipsshow = false"></i>
             <div v-show="tipsshow">
@@ -182,7 +182,7 @@
 
         <template v-if="$route.query.from === 'company'">
           <div class="topicon">
-            <img v-if="companyInfo.status === 1" src="@/assets/images/adopt.png" />
+            <img v-if="companyInfo.status === 1 || companyInfo.status === 0" src="@/assets/images/adopt.png" />
             <img v-else src="@/assets/images/notadopt.png" />
           </div>
 
@@ -236,17 +236,22 @@
           <template v-if="companyInfo.status === 2">
             <div class="status-title">公司认证审核未通过</div>
             <div class="status-tip">请重新提交资料，完成公司创建</div>
-            <div class="status-tip">公司认证审核未通过的原因如下</div>
-            <div class="status-tip">{{companyInfo.reviewNote}}</div>
           </template>
 
           <!-- 公司审核不通过或者审核中 -->
           <div v-show="companyInfo.status === 0 || companyInfo.status === 2">
             <div class="status-line"></div>
+            <div class="error-box" v-if="companyInfo.status === 2">
+            <div class="error-head">
+            <div class="title">实名认证审核未通过的原因如下</div> 
+              <div class="chongxin" @click="gotowhere('resetedit')">重新提交认证信息</div>
+              </div>
+            <div class="error-item">{{companyInfo.reviewNote}}</div>
+          </div>
             <div class="apply-info">
               <div class="info-item">
-                <span>您的申请</span>
-                <span>申请信息有误？去更改</span>
+                <span style="color:#333333;font-size:16px;font-weight:bold;">您的申请</span>
+                <span style="color:#652791;cursor: pointer;" @click="gotowhere('resetedit')">申请信息有误？去更改</span>
               </div>
               <div class="info-item">
                 <span>公司全称</span>
@@ -340,8 +345,8 @@
             <div class="status-line"></div>
             <div class="apply-info">
               <div class="info-item">
-                <span>您的申请</span>
-                <span>申请信息有误？去更改</span>
+               <span style="color:#333333;font-size:16px;font-weight:bold;">您的申请</span>
+                <span style="color:#652791;cursor: pointer;" @click="gotowhere('resetedit')">申请信息有误？去更改</span>
               </div>
               <div class="info-item">
                 <span>公司全称</span>
@@ -395,6 +400,7 @@ import OptionList from '../registerCompany/components/option.vue'
 import MessageDiggle from '../registerCompany/components/message.vue'
 import Picture from 'COMPONENTS/common/upload/picture'
 import MyModel from '@/components/model/index.vue'
+import { getLabelFieldListApi } from 'API/putIn'
 import {
   applyCompanyApi,
   createCompanyApi,
@@ -527,16 +533,7 @@ export default {
       })(),
       companylist: [],
       companyshow: false,
-      industrylist: [
-        { value: '未融资', id: '1' },
-        { value: '天使轮', id: '2' },
-        { value: 'A轮', id: '3' },
-        { value: 'B轮', id: '4' },
-        { value: 'C轮', id: '5' },
-        { value: 'D轮及以上', id: '6' },
-        { value: '已上市', id: '7' },
-        { value: '不需要融资', id: '8' }
-      ],
+      industrylist: [],
       industryshow: false,
       financinglist: [
         { value: '未融资', id: '1' },
@@ -632,6 +629,7 @@ export default {
       this.authForm.industry_name = data.value
       this.authForm.industry_id = data.id
       this.industryshow = false
+      this.bindauthButtonStatus()
     },
     // 选择融资
     selectfinancing () {
@@ -641,6 +639,7 @@ export default {
       this.authForm.financing_name = data.value
       this.authForm.financing = data.id
       this.financingshow = false
+      this.bindauthButtonStatus()
     },
     // 选择人员规模
     selectemployees () {
@@ -650,12 +649,14 @@ export default {
       this.authForm.employees_name = data.value
       this.authForm.employees = data.id
       this.employeesshow = false
+      this.bindauthButtonStatus()
     },
     // 通知管理员
     noticeadmin () {
       if (!this.miniProgramStatus) {
         notifyadminApi().then((res) => {
           this.$message.success('成功通知管理员，请耐心等待')
+          this.getCompanyIdentityInfos()
         }).catch(e => {
           this.$message.error(e.data.msg || '')
         })
@@ -700,7 +701,6 @@ export default {
         } else {
           this.companyshow = false
         }
-        console.log(arr)
       }).catch(e => {
         // this.setHint(e.data.msg || '')
       })
@@ -708,18 +708,6 @@ export default {
     changecompany (data) {
       this.ruleForm.company_name = data.companyName
       this.companyshow = false
-    },
-    // 加入公司
-    applycompany () {
-      applycompanyApi(this.ruleForm).then((res) => {
-        console.log(res)
-      })
-    },
-    // 创建公司
-    submitpersonal () {
-      SubmitpersonalApi(this.ruleForm).then((res) => {
-        console.log(res)
-      })
     },
     bindButtonStatus () {
       let form = this.ruleForm
@@ -769,10 +757,17 @@ export default {
           })
           break
         case 'toUpload':
+          if (this.isauthcheck) {
+            this.$router.push({
+              query: {
+                page: 'authpage'
+              }
+            })
+          }
+          break
+        case 'resetedit':
           this.$router.push({
-            query: {
-              page: 'authpage'
-            }
+            query: {}
           })
           break
         case 'toback':
@@ -810,7 +805,9 @@ export default {
     submitauthForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.submit2()
+          if (this.isupdatacheck) {
+            this.submit2()
+          }
         } else {
           return false
         }
@@ -922,7 +919,6 @@ export default {
               // 当前公司已经申请过
               if (res1.data.id) {
                 editApplyCompanyApi(params).then(res => {
-                  wx.removeStorageSync('createdCompany')
                   if (res.data.emailStatus) {
                     this.$router.push({
                       query: {
@@ -959,7 +955,6 @@ export default {
             })
           } else {
             editApplyCompanyApi(params).then(res => {
-              wx.removeStorageSync('createdCompany')
               if (res.data.emailStatus) {
                 this.$router.push({
                   query: {
@@ -969,7 +964,6 @@ export default {
                     companyId: res.data.companyId
                   }
                 })
-                // wx.navigateTo({url: `${RECRUITER}user/company/identityMethods/identityMethods?from=join&suffix=${res.data.suffix}&companyId=${res.data.companyId}`})
               } else {
                 this.$router.push({
                   query: {
@@ -977,7 +971,6 @@ export default {
                     from: 'join'
                   }
                 })
-                // wx.reLaunch({url: `${RECRUITER}user/company/status/status?from=join`})
               }
             })
               .catch(err => {
@@ -989,12 +982,6 @@ export default {
                       from: 'join'
                     }
                   })
-                // app.wxToast({
-                //   title: err.msg,
-                //   callback() {
-                //     wx.reLaunch({url: `${RECRUITER}user/company/status/status?from=join`})
-                //   }
-                // })
                 }
               })
           }
@@ -1005,7 +992,7 @@ export default {
     },
     joinCompany () {
       let formData = this.ruleForm
-      console.log(formData, 'hhh')
+      console.log(formData, 'formData')
       let params = {
         real_name: formData.real_name,
         user_email: formData.user_email.trim(),
@@ -1015,6 +1002,7 @@ export default {
         company_id: formData.id
       }
       hasApplayRecordApi().then(res => {
+        console.log(formData, 'formDatass')
         // 当前公司已经申请过
         if (res.data.id) {
           this.editJoinCompany()
@@ -1029,7 +1017,6 @@ export default {
                   companyId: res.data.companyId
                 }
               })
-              // wx.navigateTo({url: `${RECRUITER}user/company/identityMethods/identityMethods?from=join&suffix=${res.data.suffix}&companyId=${res.data.companyId}`})
             } else {
               this.$router.push({
                 query: {
@@ -1037,7 +1024,6 @@ export default {
                   from: 'join'
                 }
               })
-              // wx.reLaunch({url: `${RECRUITER}user/company/status/status?from=join`})
             }
           })
             .catch(err => {
@@ -1049,12 +1035,6 @@ export default {
                     from: 'join'
                   }
                 })
-              // app.wxToast({
-              //   title: err.msg,
-              //   callback() {
-              //     wx.reLaunch({url: `${RECRUITER}user/company/status/status?from=join`})
-              //   }
-              // })
               }
             })
         }
@@ -1074,63 +1054,57 @@ export default {
     getCompanyIdentityInfos () {
       let storage = this.ruleForm
       let applyJoin = this.applyJoin
-      let formData = {}
       getCompanyIdentityInfosApi().then(res => {
         let companyInfo = res.data.data.companyInfo
         applyJoin = res.data.applyJoin
         // 重新创建一条记录
-        if (companyInfo.status === 2) {
-          this.ruleForm.real_name = storage.real_name
-          this.ruleForm.user_email = storage.user_email
-          this.ruleForm.user_position = storage.user_position
-          this.ruleForm.company_name = storage.company_name
-          this.applyJoin = applyJoin
-        } else {
-          this.ruleForm.real_name = storage.real_name || companyInfo.realName
-          this.ruleForm.user_email = storage.user_email || companyInfo.userEmail
-          this.ruleForm.user_position = storage.user_position || companyInfo.userPosition
-          this.ruleForm.company_name = storage.company_name || companyInfo.companyName
 
-          this.authForm.company_name = companyInfo.companyName
-          this.authForm.company_shortname = storage.company_shortname || companyInfo.companyShortname
-          this.authForm.industry_id = storage.industry_id || companyInfo.industryId
-          this.authForm.industry_id_name = storage.industry_id_name || companyInfo.industry
-          this.authForm.financing = storage.financing || companyInfo.financing
-          this.authForm.financingName = storage.financingName || companyInfo.financingInfo
-          this.authForm.employees = storage.employees || companyInfo.employees
-          this.authForm.employeesName = storage.employeesName || companyInfo.employeesInfo
-          this.authForm.intro = storage.intro || companyInfo.intro
-          this.authForm.logo = storage.logo || companyInfo.logoInfo
-          this.authForm.id = companyInfo.id
-          this.authForm.business_license = storage.business_license || companyInfo.businessLicenseInfo
-          this.authForm.on_job = storage.on_job || companyInfo.onJobInfo
-          this.companyInfo = companyInfo
+        this.ruleForm.real_name = storage.real_name || companyInfo.realName
+        this.ruleForm.user_email = storage.user_email || companyInfo.userEmail
+        this.ruleForm.user_position = storage.user_position || companyInfo.userPosition
+        this.ruleForm.company_name = storage.company_name || companyInfo.companyName
 
-          // 重新编辑 加公司id
-          if (Reflect.has(this.$route.query, 'action')) {
-            this.ruleForm.id = companyInfo.id
-          }
-
-          if (applyJoin) {
-            this.ruleForm.applyId = companyInfo.applyId
-          }
-          this.applyJoin = applyJoin
-          console.log(this)
+        this.authForm.company_name = companyInfo.companyName
+        this.authForm.company_shortname = storage.company_shortname || companyInfo.companyShortname
+        this.authForm.industry_id = storage.industry_id || companyInfo.industryId
+        this.authForm.industry_id_name = storage.industry_id_name || companyInfo.industry
+        this.authForm.financing = storage.financing || companyInfo.financing
+        this.authForm.financingName = storage.financingName || companyInfo.financingInfo
+        this.authForm.employees = storage.employees || companyInfo.employees
+        this.authForm.employeesName = storage.employeesName || companyInfo.employeesInfo
+        this.authForm.intro = storage.intro || companyInfo.intro
+        this.authForm.logo = storage.logo || companyInfo.logoInfo
+        this.authForm.id = companyInfo.id
+        this.authForm.business_license = storage.business_license || companyInfo.businessLicenseInfo
+        this.authForm.on_job = storage.on_job || companyInfo.onJobInfo
+        this.companyInfo = companyInfo
+        if (this.companyInfo.status === 3) {
+          this.$router.push({ name: 'register', query: { page: 'perfect' } })
         }
+        // 重新编辑 加公司id
+        if (Reflect.has(this.$route.query, 'action')) {
+          this.ruleForm.id = companyInfo.id
+        }
+
+        if (applyJoin) {
+          this.ruleForm.applyId = companyInfo.applyId
+        }
+        this.applyJoin = applyJoin
       })
     },
     submit2 () {
       let formData = this.authForm
+      console.log(formData)
       let params = {
         company_name: formData.company_name,
         industry_id: formData.industry_id,
         financing: formData.financing,
         employees: formData.employees,
         company_shortname: formData.company_shortname,
-        logo: formData.logo.id,
+        logo: formData.logo,
         intro: formData.intro,
-        business_license: formData.business_license.id,
-        on_job: formData.on_job.id,
+        business_license: formData.business_license,
+        on_job: formData.on_job,
         id: formData.id
       }
       perfectCompanyApi(params).then(res => {
@@ -1140,8 +1114,7 @@ export default {
             from: 'company'
           }
         })
-        // wx.removeStorageSync('createdCompany')
-        // wx.reLaunch({url: `${RECRUITER}user/company/status/status?from=company`})
+        this.companyInfo.status = 0
       })
         .catch(err => {
           if (err.data.code === 307) {
@@ -1151,12 +1124,6 @@ export default {
                 from: 'company'
               }
             })
-            // app.wxToast({
-            //   title: err.msg,
-            //   callback() {
-            //     wx.reLaunch({url: `${RECRUITER}user/company/status/status?from=company`})
-            //   }
-            // })
             return
           }
 
@@ -1167,13 +1134,6 @@ export default {
                 from: 'company'
               }
             })
-            // app.wxToast({
-            //   title: err.msg,
-            //   callback() {
-            //     wx.removeStorageSync('createdCompany')
-            //     wx.reLaunch({url: `${RECRUITER}user/company/status/status?from=company`})
-            //   }
-            // })
             return
           }
           this.$message.error(err.msg)
@@ -1182,11 +1142,22 @@ export default {
     // 开始招聘
     startrecruit () {
       this.$router.push({ name: 'candidatetype' })
+    },
+    getlabellist () {
+      getLabelFieldListApi().then((res) => {
+        let arr = res.data.data
+        arr.map((v, k) => {
+          v.value = v.name
+          v.id = v.labelId
+        })
+        this.industrylist = arr
+        console.log(this.industrylist)
+      })
     }
   },
   mounted () {
     this.getCompanyIdentityInfos()
-    console.log(process.env.VUE_APP_CDN_PATH)
+    this.getlabellist()
   }
 }
 </script>
@@ -1610,6 +1581,34 @@ export default {
       color: #333333;
       margin-bottom: 30px;
     }
+    .error-box{
+      width: 100%;
+      .error-head{
+        height: 24px;
+        line-height: 24px;
+        font-size: 14px;
+        margin: 14px 0 12px;
+        color: #333333;
+        .title{
+          float: left;
+          font-size: 16px;
+          font-weight: bold;
+        }
+        .chongxin{
+          float: right;
+          color: #652791;
+          cursor: pointer;
+        }
+      }
+      .error-item{
+        width:418px;
+        padding: 13px 19px 11px;
+        background:rgba(255,252,240,1);
+        border-radius:4px;
+        color: #FF7F4C;
+        line-height: 1.5;
+      }
+    }
     .status-line{
       width:418px;
       height:1px;
@@ -1712,6 +1711,7 @@ export default {
       font-size: 14px;
       color: #652791;
       cursor: pointer;
+      text-align: center;
     }
   }
 }
