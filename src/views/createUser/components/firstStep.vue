@@ -10,7 +10,7 @@
         @success="imageUploadSuccess"
         @fail="imageUploadFail"></myCropper>
       <img v-if="imageUrl" :src="imageUrl" class="avatar">
-      <img v-else  class="avatar-uploader-icon" src="../../../assets/images/activity/putIn/btn_pic.png" />
+      <img v-else  class="iconfont icon-xiangji avatar-uploader-icon" />
     </div>
     <div class="formItem">
       <input placeholder="请输入真实姓名" v-model="formData.name" class="default" maxlength="10" />
@@ -197,7 +197,7 @@ export default class CourseList extends Vue {
   .formPic {
     width:106px;
     height:106px;
-    background:rgba(239,232,243,1);
+    background: $bg-color-6;
     border:4px solid rgba(255,255,255,1);
     border-radius: 50%;
     position: absolute;
@@ -219,7 +219,7 @@ export default class CourseList extends Vue {
     }
     .avatar-uploader-icon {
       font-size: 28px;
-      color: #8c939d;
+      color: $main-color-1;
       width:40px;
       height:auto;
       line-height: 100%;
@@ -281,7 +281,7 @@ export default class CourseList extends Vue {
         justify-content: center;
 
         &.is-checked {
-          border: 1px solid #8351A7;
+          border: 1px solid $bg-color-5;
         }
       }
     }
@@ -326,7 +326,7 @@ export default class CourseList extends Vue {
     width:260px;
     height:50px;
     line-height:50px;
-    background:rgba(101,39,145,1);
+    background: $bg-color-4;
     border-radius:25px;
     margin: 0 auto;
     line-height: 50px;

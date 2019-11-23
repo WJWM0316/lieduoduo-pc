@@ -111,15 +111,15 @@
   </div>
 </template>
 <script>
-  import Vue from 'vue'
-  import Component from 'vue-class-component'
-  import {  getResumeSecondApi, setResumeSecondApi, getLabelPositionListApi} from '@/api/putIn'
-  import {companyNameReg, positionReg} from '@/util/fieldRegular.js'
+import Vue from 'vue'
+import Component from 'vue-class-component'
+import { getResumeSecondApi, setResumeSecondApi, getLabelPositionListApi } from '@/api/putIn'
+import { companyNameReg, positionReg } from '@/util/fieldRegular.js'
   @Component({
     name: 'resumeSecondPost',
     computed: {}
   })
-  export default class CourseList extends Vue {
+export default class CourseList extends Vue {
     pickerOptions = {
       shortcuts: [
         {
@@ -135,11 +135,11 @@
     formData = {
       company: '',
       positionTypeId: 0,
-      position: '',  
+      position: '',
       duty: '',
-      startTime: '',  
-      endTime: '',  
-      from: 1,  
+      startTime: '',
+      endTime: '',
+      from: 1
     }
     textarea = ''
     options = []
@@ -153,10 +153,10 @@
       this.getLabelPositionList()
     }
 
-    getResumeSecond() {
+    getResumeSecond () {
       getResumeSecondApi().then(res => {
         let data = res.data.data[0]
-        if(!res.data.data.length ) return
+        if (!res.data.data.length) return
         this.formData.company = data.company
         this.formData.positionTypeId = data.positionTypeId
         this.formData.position = data.position
@@ -168,8 +168,8 @@
       })
     }
 
-    choicePostion(e) {
-      this.formData.positionTypeId = e[e.length - 1];
+    choicePostion (e) {
+      this.formData.positionTypeId = e[e.length - 1]
     }
 
     getLabelPositionList () {
@@ -179,7 +179,7 @@
           item.children.forEach(item1 => {
             item1.children.forEach(item2 => {
               let result = JSON.stringify(item2.children)
-              if (result === "[]") delete item2.children
+              if (result === '[]') delete item2.children
             })
           })
         })
@@ -187,7 +187,7 @@
     }
 
     // 返回上一步
-    lastStep() {
+    lastStep () {
       this.$parent.step--
     }
 
@@ -229,18 +229,18 @@
     }
     transformData () {
       const newForm = Object.assign({}, this.formData || {})
-      newForm.startTime = newForm.startTime/1000
-      newForm.endTime = newForm.endTime/1000
+      newForm.startTime = newForm.startTime / 1000
+      newForm.endTime = newForm.endTime / 1000
       return newForm
     }
-    openMask() {
+    openMask () {
       this.messagePop.isShow = true
-      this.textarea = this.formData.duty 
+      this.textarea = this.formData.duty
     }
 
-    saveDuty() {
+    saveDuty () {
       let lgh = this.textarea.length
-      if(lgh<10 || lgh>1000) {
+      if (lgh < 10 || lgh > 1000) {
         this.$message.error('请填写10-1000的工作内容')
         return
       }
@@ -248,18 +248,18 @@
       this.cloMask()
     }
 
-    cloMask() {
+    cloMask () {
       this.messagePop.isShow = false
     }
-    focus(dom){
+    focus (dom) {
       document.querySelector(dom).className = 'el-icon-caret-bottom defalut-position icon_active'
     }
-    blur(dom) {
+    blur (dom) {
       document.querySelector(dom).className = 'el-icon-caret-bottom defalut-position'
     }
   }
 </script>
-<style lang="less">
+<style lang="scss">
 .resumeOpFirstMain {
   width:450px;
   background:rgba(255,255,255,1);
@@ -407,16 +407,16 @@
       height:50px;
       background:rgba(255,255,255,1);
       border-radius:100px 0px 0px 100px;
-      border:1px solid rgba(101,39,145,1);
+      border: 1px solid $border-color-2;
       box-sizing: border-box;
       display: inline-block;
-      color:rgba(101,39,145,1);
+      color: $main-color-1;
       vertical-align: middle;
     }
     .btn-confirm{
       width:240px;
       height:50px;
-      background:rgba(101,39,145,1);
+      background: $bg-color-4;
       border-radius:0px 25px 25px 0px;
       box-sizing: border-box;
       display: inline-block;
@@ -431,7 +431,7 @@
       width:360px;
       height:50px;
       border-radius:25px;
-      border:1px solid rgba(101,39,145,1);
+      border: 1px solid $border-color-2;
       position: absolute;
       top: 4px;
       z-index: 1;
@@ -476,7 +476,7 @@
       }
     }
     .duty-btn-box {
-      margin-top: 30px; 
+      margin-top: 30px;
       display: flex;
       justify-content: flex-end;
       .btn-blo {
@@ -484,7 +484,7 @@
         font-size:16px;
         border-radius:25px;
         line-height:40px;
-        
+
         &.cancle {
           width:88px;
           height:40px;
@@ -496,8 +496,8 @@
           width:128px;
           height:40px;
           color:#fff;
-          background:rgba(101,39,145,1);
-          border:1px solid rgba(101,39,145,1);
+            background: $bg-color-4;
+          border: 1px solid $border-color-2;
         }
       }
     }
@@ -511,10 +511,9 @@
       display: flex;
       justify-content: center;
       align-items: center;
-
       font-size:16px;
       font-weight:400;
-      color:rgba(101,39,145,1);
+      color: $main-color-1;
       line-height:22px;
       img {
         display: block;
@@ -543,6 +542,5 @@
     }
   }
 }
-
 
 </style>

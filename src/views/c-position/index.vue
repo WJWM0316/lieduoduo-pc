@@ -283,7 +283,6 @@ export default {
   .company-details {
     font-size: 12px;
     color: $title-color-2;
-    font-weight: 300;
   }
   span + span {
     padding-left: 8px;
@@ -318,7 +317,6 @@ export default {
     font-size: 12px;
     color: $title-color-2;
     margin-top: 10px;
-    font-weight: 300;
   }
   .contact-recruiter {
     display: none;

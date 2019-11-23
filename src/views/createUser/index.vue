@@ -66,7 +66,7 @@ export default class createUser extends Vue {
     height: 100vh;
     min-height: 900px;
     box-sizing: border-box;
-    background: url(#{$image-cdn-url}/images/bg_createjl.png) 100% repeat #652791;
+    background: url(#{$image-cdn-url}/images/bg_createjl.png) 100% repeat $bg-color-4;
     .defalut-position{
       position: absolute;
       top: 50%;

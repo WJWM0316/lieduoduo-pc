@@ -87,7 +87,7 @@ export default {
       .name {
         font-size:14px;
         font-weight:400;
-        color:#6E1F96;
+        color: $main-color-1;
       }
       .avatar {
         width:30px;
@@ -104,16 +104,16 @@ export default {
     .btn_blo {
       font-size:14px;
       font-weight:400;
-      color:rgba(110,31,150,1);
+      color: $main-color-1;
     }
     .btn_blo2 {
       width:113px;
       height:34px;
-      background:rgba(101,39,145,1);
+      background: $bg-color-4;
       border-radius:84px;
       font-size:14px;
       font-weight:700;
-      color:rgba(255,255,255,1);
+      color:#fff;
       line-height:34px;
       text-align: center;
       margin-left: 20px;

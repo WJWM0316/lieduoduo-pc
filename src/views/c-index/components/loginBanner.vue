@@ -104,7 +104,7 @@ $index-login-height: 120px;
 .index-login {
   height: $index-login-height;
   width: 100%;
-  background: #6E1B96;
+  background: $bg-color-4;
 }
 .index-login-wrapper {
   @include flex-v-center;

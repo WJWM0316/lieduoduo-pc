@@ -339,7 +339,7 @@ export default class resumeFourthPost extends Vue {
     }
 }
 </script>
-<style lang="less">
+<style lang="scss">
 #resume-four {
   .el-input__suffix{
     display: none;
@@ -486,16 +486,16 @@ export default class resumeFourthPost extends Vue {
         height:50px;
         background:rgba(255,255,255,1);
         border-radius:100px 0px 0px 100px;
-        border:1px solid rgba(101,39,145,1);
+        border:1px solid $bg-color-4;
         box-sizing: border-box;
         display: inline-block;
-        color:rgba(101,39,145,1);
+        color: $main-color-1;
         vertical-align: middle;
       }
       .btn-confirm{
         width:240px;
         height:50px;
-        background:rgba(101,39,145,1);
+        background: $bg-color-4;
         border-radius:0px 25px 25px 0px;
         box-sizing: border-box;
         display: inline-block;
@@ -510,7 +510,7 @@ export default class resumeFourthPost extends Vue {
         width:360px;
         height:50px;
         border-radius:25px;
-        border:1px solid rgba(101,39,145,1);
+        border:1px solid $bg-color-4;
         position: absolute;
         top: 4px;
         z-index: 1;
@@ -619,7 +619,7 @@ export default class resumeFourthPost extends Vue {
       margin-left: 16px;
       width:128px;
       height:40px;
-      background:rgba(101,39,145,1);
+      background: $bg-color-4;
       border-radius:25px;
       color: white;
       cursor: pointer;
@@ -656,7 +656,7 @@ export default class resumeFourthPost extends Vue {
       text-align: center;
       font-size:14px;
       font-weight:400;
-      color:rgba(101,39,145,1);
+      color: $main-color-1;
       line-height: 30px;
       text-align: center;
       box-sizing: border-box;
@@ -714,7 +714,7 @@ export default class resumeFourthPost extends Vue {
     }
     .item2_active{
       border:1px solid #8351A7;
-      color:rgba(101,39,145,1);
+      color: $main-color-1;
     }
   }
 }
