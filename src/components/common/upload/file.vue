@@ -57,6 +57,7 @@ export default {
       type: Number,
       default: 0
     },
+    showTips: Boolean, // 是否提示上传的文件类型
     disabled: Boolean
   },
   computed: {
@@ -145,6 +146,9 @@ export default {
     },
     handleClickInput () {
       if (this.disabled || this.uploadLoading) return
+      /* if(this.showTips) {
+
+      } */
       this.$refs[this.eventKey].click()
     }
 
