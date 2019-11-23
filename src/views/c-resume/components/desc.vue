@@ -75,7 +75,7 @@ export default {
   data () {
     return {
       positionLabelsConfig: [{ title: '职业技能', limit: 3, checked: [] }, { title: '职业素养', limit: 3, checked: [] }],
-      listLabelsConfig: [{ title: '性格', limit: 3, checked: [] }, { title: '生活', limit: 3, checked: [] }],
+      listLabelsConfig: [{ title: '性格', limit: 3, checked: [] }, { title: '爱好', limit: 3, checked: [] }],
       form: {
         signature: '',
         position: '',

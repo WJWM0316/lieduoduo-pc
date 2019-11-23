@@ -40,14 +40,15 @@
           <div class="form-item">
             <p class="form-title">持续时间</p>
             <el-form-item prop="times">
-              <el-date-picker
+              <!-- <el-date-picker
                 v-model="form.times"
                 type="monthrange"
                 format="yyyy-MM"
                 range-separator="至"
                 start-placeholder="开始日期"
                 end-placeholder="结束日期">
-              </el-date-picker>
+              </el-date-picker> -->
+              <date-picker v-model="form.times" :single="false" placeholder="开始日期" end-placeholder="结束日期"  />
             </el-form-item>
           </div>
           <div class="form-item">
@@ -75,9 +76,11 @@
 </template>
 <script>
 import Wrapper from './wrapper'
+import DatePicker from './datePicker'
 import { addProject, setProject, getAllProject, deleteProject } from 'API/resume'
+import { projectNameReg, roleNameReg, urlReg } from 'UTIL/fieldRegular'
 export default {
-  components: { Wrapper },
+  components: { Wrapper, DatePicker },
   props: {
     resume: {
       type: Object,
@@ -86,6 +89,30 @@ export default {
     status: String
   },
   data () {
+    const validateProjectName = (rule, value, callback) => {
+      if (projectNameReg.test(value)) {
+        callback()
+      } else {
+        callback(new Error('项目名称需为2-50个字'))
+      }
+    }
+    const validateRoleName = (rule, value, callback) => {
+      if (roleNameReg.test(value)) {
+        callback()
+      } else {
+        callback(new Error('担当角色需为2-50个字'))
+      }
+    }
+    const validateLink = (rule, value, callback) => {
+      if (value === '') {
+        return callback()
+      }
+      if (urlReg.test(value)) {
+        callback()
+      } else {
+        callback(new Error('请输入正确的链接'))
+      }
+    }
     return {
       isAdd: true,
       currentId: null,
@@ -97,9 +124,10 @@ export default {
         link: ''
       },
       formRules: {
-        name: [{ required: true, message: '请填写项目名称', trigger: 'blur' }],
-        role: [{ required: true, message: '请填写担当角色', trigger: 'blur' }],
+        name: [{ required: true, message: '请填写项目名称', trigger: 'blur' }, { validator: validateProjectName, trigger: 'blur' }],
+        role: [{ required: true, message: '请填写担当角色', trigger: 'blur' }, { validator: validateRoleName, trigger: 'blur' }],
         times: [{ required: true, type: 'array', message: '请选择持续时间段', trigger: 'change' }],
+        link: [{ validator: validateLink, trigger: 'blur' }],
         description: [{ required: true, message: '请填写项目描述', trigger: 'blur' }]
       }
     }
@@ -115,7 +143,7 @@ export default {
         Object.assign(this.form, {
           name: item.name,
           role: item.role,
-          times: [new Date(item.startTime * 1000), new Date(item.endTime * 1000)],
+          times: [item.startTimeDesc, item.endTimeDesc],
           description: item.description,
           link: item.link
         })
@@ -125,8 +153,8 @@ export default {
         this.$refs.form.validate(valid => {
           if (valid) {
             const { name, role, times, description, link } = this.form
-            const startTime = parseInt(times[0].getTime() / 1000)
-            const endTime = parseInt(times[1].getTime() / 1000)
+            const startTime = parseInt(new Date(times[0].replace('-', '/')).getTime() / 1000)
+            const endTime = times[1] === '至今' ? 0 : parseInt(new Date(times[1].replace('-', '/')).getTime() / 1000)
             if (this.isAdd) {
               addProject({ name, role, description, link, startTime, endTime }).then(async ({ data }) => {
                 if (data.httpStatus === 200) {

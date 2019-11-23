@@ -67,21 +67,23 @@
           <div class="form-item">
              <p class="form-title">出生年月</p>
              <el-form-item prop="birth">
-              <el-date-picker
+              <!-- <el-date-picker
                 v-model="form.birth"
                 type="month"
                 placeholder="选择月">
-              </el-date-picker>
+              </el-date-picker> -->
+              <date-picker v-model="form.birth" :skip="15" :year-limit="50" placeholder="选择月" />
              </el-form-item>
           </div>
           <div class="form-item">
              <p class="form-title">开始工作时间</p>
              <el-form-item prop="startWorkYear">
-              <el-date-picker
+              <!-- <el-date-picker
                 v-model="form.startWorkYear"
                 type="month"
                 placeholder="选择月">
-              </el-date-picker>
+              </el-date-picker> -->
+              <date-picker v-model="form.startWorkYear" :year-limit="65" :show-text-select="true" text-value="暂无工作经验" placeholder="选择月" />
              </el-form-item>
           </div>
           <div class="form-item">
@@ -122,6 +124,7 @@
 <script>
 import { setBaseInfo } from 'API/resume'
 import Picture from 'COMPONENTS/common/upload/picture'
+import DatePicker from './datePicker'
 import Wrapper from './wrapper'
 import ButtonRadio from './buttonRadio'
 import { JobStatus, Gender } from '@/config/vars'
@@ -136,7 +139,8 @@ export default {
   components: {
     Wrapper,
     Picture,
-    ButtonRadio
+    ButtonRadio,
+    DatePicker
   },
   computed: {
     info () {
@@ -158,7 +162,9 @@ export default {
         name: '',
         gender: null,
         birth: '',
+        birthDesc: '',
         startWorkYear: '',
+        startWorkYearDesc: '',
         jobStatus: null, // 在职暂不考虑1，离职随时到岗2，在职月内到岗3，在职考虑机会4
         degreeDesc: '',
         mobile: '',
@@ -169,8 +175,8 @@ export default {
       formRules: {
         name: [{ required: true, message: '请填写姓名', trigger: 'blur' }],
         gender: [{ required: true, type: 'number', message: '请选择性别', trigger: 'change' }],
-        birth: [{ required: true, type: 'date', message: '请选择出生年月', trigger: 'change' }],
-        startWorkYear: [{ required: true, type: 'date', message: '请选择工作年份', trigger: 'change' }],
+        birth: [{ required: true, message: '请选择出生年月', trigger: 'change' }],
+        startWorkYear: [{ required: true, message: '请选择工作年份', trigger: 'change' }],
         jobStatus: [{ required: true, type: 'number', message: '请选择求职状态', trigger: 'change' }]
       },
       jobstatus: JobStatus,
@@ -182,16 +188,19 @@ export default {
     handleCommand ({ type, cb }) {
       if (type === 'edit') {
         Object.assign(this.form, this.info)
-        this.form.birth = new Date(this.info.birth * 1000)
-        this.form.startWorkYear = new Date(this.info.startWorkYear * 1000)
+        this.form.birth = this.info.birthDesc
+        this.form.startWorkYear = this.info.startWorkYearDesc
       } else if (type === 'save') {
         this.$refs.form.validate(valid => {
           if (valid) {
             const { birth, startWorkYear } = this.form
             const datas = {
               ...this.form,
-              birth: parseInt(birth.getTime() / 1000),
-              startWorkYear: parseInt(startWorkYear.getTime() / 1000)
+              birthDesc: birth,
+              age: new Date().getFullYear() - new Date(birth.replace('-', '/')).getFullYear(),
+              startWorkYearDesc: startWorkYear,
+              birth: parseInt(new Date(birth.replace('-', '/')).getTime() / 1000),
+              startWorkYear: startWorkYear === '暂无工作经验' ? 0 : parseInt(new Date(startWorkYear.replace('-', '/')).getTime() / 1000)
             }
             setBaseInfo(datas).then(({ data }) => {
               if (data.httpStatus === 200) {

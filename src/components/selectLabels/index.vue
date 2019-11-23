@@ -100,8 +100,8 @@ export default {
           const { labelProfessionalLiteracy, labelProfessionalSkills } = data.data
           const results = labelProfessionalSkills.find(val => val.labelId === this.filter)
           const configs = JSON.parse(JSON.stringify(this.multipleConfig))
-          configs[0].labels = labelProfessionalLiteracy
-          configs[1].labels = (results && results.children) || []
+          configs[0].labels = (results && results.children) || []
+          configs[1].labels = labelProfessionalLiteracy
           this.$emit('update:multiple-config', configs)
           break
         case 'life':
@@ -113,8 +113,8 @@ export default {
           this.$emit('update:multiple-config', lifeconfigs)
           break
         case 'position':
-          const positionLabel = data.data.find(val => val.labelId === this.filter)
-          this.labels = (positionLabel && positionLabel.children) || []
+          var labelProfessional = data.data.labelProfessionalSkills
+          this.labels = labelProfessional.find(val => val.labelId === this.filter).children
           break
         default:
           this.labels = data.data || []
@@ -155,9 +155,9 @@ export default {
     },
     // 是否超出选择的数量
     showLimitTips (item, parent) {
-      const limit = parent ? parent.limit || this.limit : this.limit
-      const select = parent ? parent.checked.length : this.selectLabels.length
-      if (select >= limit) {
+      // const limit = parent ? parent.limit || this.limit : this.limit
+      // const select = parent ? parent.checked.length : this.selectLabels.length
+      if (this.selectLabels.length >= this.limit) {
         this.$message.warning(`${parent ? parent.title : ''}最多只能选择3个`)
         return false
       }
@@ -200,6 +200,12 @@ export default {
       this.$emit('on-selected', this.selectLabels)
       this.$emit('input', this.selectLabels.map(val => val.name).join('、'))
       this.dialogStatus = false
+    },
+    // 清楚数据
+    handleClear () {
+      this.labels = []
+      this.selectLabels = []
+      this.loaded = false
     }
   }
   /* watch: {
@@ -216,6 +222,9 @@ export default {
   line-height: normal;
   & /deep/ .el-dialog__header {
     padding-bottom: 0px;
+  }
+  .el-input__inner {
+    @include ellipsis;
   }
 }
 .lables {
