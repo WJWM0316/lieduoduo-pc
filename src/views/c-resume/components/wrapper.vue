@@ -109,7 +109,7 @@ export default {
         cb: (status = true) => {
           this.btnLoading = false
           this.unshowEdit = status
-          if (!status) {
+          if (status) {
             this.$store.commit('setEditStatus', { status: false })
           }
         }
@@ -174,7 +174,7 @@ export default {
     width: 100%;
     @include flex-v-top;
   }
-  .list-item+.list-item, .list-item-buttom {
+  .list-item+.list-item, .list-item ~ .list-item-buttom {
     margin-top: 42px;
   }
   .wrapper-list-content {

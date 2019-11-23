@@ -26,6 +26,10 @@ export default {
       // 更新简历日期
       state.myResume.resumeUpdateTime = moment().format('YYYY-MM-DD h:mm:ss')
       Object.assign(state.myResume, data)
+    },
+    // 清空简历信息
+    removeResume (state) {
+      state.myResume = {}
     }
   },
   actions: {

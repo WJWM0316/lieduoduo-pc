@@ -124,7 +124,7 @@
   </div>
 </template>
 <script>
-import { setBaseInfo, setResumeAvatar } from 'API/resume'
+import { setResumeBaseInfo, getResumeBaseInfo, setResumeAvatar } from 'API/resume'
 import Picture from 'COMPONENTS/common/upload/picture'
 import DatePicker from './datePicker'
 import Wrapper from './wrapper'
@@ -199,25 +199,12 @@ export default {
             const { birth, startWorkYear } = this.form
             const datas = {
               ...this.form,
-              birthDesc: birth,
-              age: new Date().getFullYear() - new Date(birth.replace('-', '/')).getFullYear(),
-              startWorkYearDesc: startWorkYear,
               birth: parseInt(new Date(birth.replace('-', '/')).getTime() / 1000),
               startWorkYear: startWorkYear === '暂无工作经验' ? 0 : parseInt(new Date(startWorkYear.replace('-', '/')).getTime() / 1000)
             }
-            setBaseInfo(datas).then(({ data }) => {
+            setResumeBaseInfo(datas).then(async ({ data }) => {
               if (data.httpStatus === 200) {
-                // 写入vuex
-                let { avatar } = this.resume
-                avatar.id = datas.avatar
-                avatar.url = datas.avatarUrl
-                // 获取求职昵称
-                const job = this.jobstatus.find(val => val.value === datas.jobStatus)
-                this.$store.commit('overwriteResume', {
-                  ...datas,
-                  jobStatusDesc: job.label,
-                  avatar
-                })
+                await this.getBaseInfo()
                 cb()
               } else {
                 // eslint-disable-next-line standard/no-callback-literal
@@ -235,14 +222,23 @@ export default {
       }
     },
     handleChangeAvatar (item) {
-      // 将头像信息写入到vuex
-      this.$store.commit('overwriteResume', {
-        avatar: item[0]
-      })
+      this.avatarLoading = true
       setResumeAvatar({ attachId: item[0].id }).then(({ data }) => {
+        if (data.httpStatus === 200) {
+          // 将头像信息写入到vuex
+          this.$store.commit('overwriteResume', {
+            avatar: item[0]
+          })
+        }
         this.avatarLoading = false
       }).catch(() => {
         this.avatarLoading = false
+      })
+    },
+    async getBaseInfo () {
+      await getResumeBaseInfo().then(({ data }) => {
+        // 将内容写入到vuex 中
+        this.$store.commit('overwriteResume', data.data || {})
       })
     }
   }

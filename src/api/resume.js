@@ -11,7 +11,7 @@ export const getMyResumeApi = (data) => {
 }
 
 // 获取求职者个人信息
-export const getBaseInfo = (data) => {
+export const getResumeBaseInfo = (data) => {
   return request({
     method: 'get',
     url: '/jobhunter/baseInfo',
@@ -23,7 +23,7 @@ export const getBaseInfo = (data) => {
 // 设置头像
 export const setResumeAvatar = (data) => {
   return request({
-    method: 'get',
+    method: 'post',
     url: '/jobhunter/avatar',
     params: data,
     config: { host: 'qiuzhi' }
@@ -31,7 +31,7 @@ export const setResumeAvatar = (data) => {
 }
 
 // 设置求职者信息
-export const setBaseInfo = (data) => {
+export const setResumeBaseInfo = (data) => {
   return request({
     method: 'post',
     url: '/jobhunter/baseInfo',
