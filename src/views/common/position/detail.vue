@@ -247,7 +247,7 @@ export default class PositionDetail extends Vue {
   	}
   }
   getQrcode () {
-  	getMyQrcodeApi({path: 'page/common/pages/positionDetail/positionDetail', params: `id=${this.id}`}).then(res => {
+  	getMyQrcodeApi({path: 'page/common/pages/positionDetail/positionDetail', params: `positionId=${this.id}`}).then(res => {
   		this.qrcodeUrl = res.data.data.url
   	})
   }
