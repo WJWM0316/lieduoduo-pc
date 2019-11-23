@@ -106,6 +106,7 @@ import { companyNameReg, positionReg } from 'UTIL/fieldRegular'
 export default {
   components: { Wrapper, SelectLabels, SelectPositionType, DatePicker },
   props: {
+    propClass: String,
     resume: {
       type: Object,
       default: () => ({})

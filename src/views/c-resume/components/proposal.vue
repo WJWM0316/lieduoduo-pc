@@ -70,6 +70,7 @@ import Salary from './salary'
 import SelectPositionType from 'COMPONENTS/selectPositionType'
 import SelectLabels from 'COMPONENTS/selectLabels'
 export default {
+  propClass: String,
   props: {
     resume: {
       type: Object,

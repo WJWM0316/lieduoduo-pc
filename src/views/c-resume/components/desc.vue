@@ -66,6 +66,7 @@ import { setResumeDesc } from 'API/resume'
 export default {
   components: { SelectLabels, Wrapper },
   props: {
+    propClass: String,
     resume: {
       type: Object,
       default: () => ({})

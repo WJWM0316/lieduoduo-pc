@@ -132,6 +132,7 @@ import ButtonRadio from './buttonRadio'
 import { JobStatus, Gender } from '@/config/vars'
 export default {
   props: {
+    propClass: String,
     resume: {
       type: Object,
       default: () => ({})

@@ -50,6 +50,7 @@ import Picture from 'COMPONENTS/common/upload/picture'
 import { setMoreIntroduce } from 'API/resume'
 export default {
   props: {
+    propClass: String,
     resume: {
       type: Object,
       default: () => ({})

@@ -89,7 +89,7 @@ export default {
     },
     handleEdit (item = {}, index = null) {
       this.validateIsEdit('edit', {
-        item, index
+        item, index, propClass: this.$parent.propClass
       })
     },
     handleClose () {
@@ -98,7 +98,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.$store.commit('setEditStatus', false)
+        this.$store.commit('setEditStatus', { status: false })
         this.unshowEdit = true
       })
     },
@@ -110,7 +110,7 @@ export default {
           this.btnLoading = false
           this.unshowEdit = status
           if (!status) {
-            this.$store.commit('setEditStatus', false)
+            this.$store.commit('setEditStatus', { status: false })
           }
         }
       })
@@ -121,14 +121,14 @@ export default {
       this.validateIsEdit('add')
     },
     // 验证时候有编辑状态的表单 | 简历是否在编辑状态
-    validateIsEdit (type = 'add', params) {
+    validateIsEdit (type = 'add', params = {}) {
       if (this.setEditStatus) {
-        this.$confirm('简历处于编辑状态，是否关闭其他编辑项？', '提示', {
+        this.$confirm('简历正在编辑状态，是否关闭其他编辑项？', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.$store.commit('setEditStatus', false)
+          this.$store.commit('setEditStatus', { status: false })
           this.$nextTick(() => {
             this.unshowEdit = false
             if (type === 'edit') {
@@ -137,11 +137,11 @@ export default {
                 ...params
               })
             }
-            this.$store.commit('setEditStatus', true)
+            this.$store.commit('setEditStatus', { status: true, propClass: params.propClass })
           })
         })
       } else {
-        this.$store.commit('setEditStatus', true)
+        this.$store.commit('setEditStatus', { status: true, propClass: params.propClass })
         this.unshowEdit = false
         if (type === 'edit') {
           this.$emit('command', {
@@ -151,14 +151,14 @@ export default {
         }
       }
     }
-  }
-  /* watch: {
+  },
+  watch: {
     setEditStatus (value) {
       if (!value) {
         this.unshowEdit = true
       }
     }
-  } */
+  }
 }
 </script>
 

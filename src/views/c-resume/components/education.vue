@@ -82,6 +82,7 @@ import { addEducation, setEducation, getAllEducation, deleteEducation } from 'AP
 export default {
   components: { Wrapper, DatePicker },
   props: {
+    propClass: String,
     resume: {
       type: Object,
       default: () => ({})
