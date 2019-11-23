@@ -25,25 +25,36 @@
       ></el-cascader>
       <i class="el-icon-caret-bottom defalut-position" id="cityNum"></i>
     </div>
-
-    <div class="formItem" @click="openPositionModel">
-      <div class="default-value" v-if="!form.position">请选择期望职位</div>
-      <div class="has-value" v-else>{{form.position}}</div>
-      <i class="el-icon-caret-bottom defalut-position" id="position"></i>
-    </div>
-
-    <div class="formItem" @click="openModel">
-      <div class="default-value" v-if="!form.fields.length">请选择期望领域</div>
-      <div class="has-value" v-else>
-        <span
-          v-for="(item, index) in form.fields"
-          :key="index">
-          {{`${item.field || item.name}${form.fields.length - 1 !== index ? '、' : ''}`}}
-        </span>
+    <select-position-type
+      v-model.number="form.positionId"
+      :label="form.position"
+      @on-selected="resultEvent">
+      <div class="formItem">
+        <div class="default-value" v-if="!form.position">请选择期望职位</div>
+        <div class="has-value" v-else>{{form.position}}</div>
+        <i class="el-icon-caret-bottom defalut-position" id="position"></i>
       </div>
-      <i class="el-icon-caret-bottom defalut-position" id="fields"></i>
-    </div>
-
+    </select-position-type>
+    <select-labels
+        ref="labels"
+        v-model="form.fieldId"
+        valid-filter-text="请选期望领域"
+        :limit="3"
+        title="请选期望领域"
+        type="field"
+        @on-selected="handleSelectLabeld">
+        <div class="formItem">
+          <div class="default-value" v-if="!form.fields.length">请选择期望领域</div>
+          <div class="has-value" v-else>
+            <span
+              v-for="(item, index) in form.fields"
+              :key="index">
+              {{`${item.field || item.name}${form.fields.length - 1 !== index ? '、' : ''}`}}
+            </span>
+          </div>
+          <i class="el-icon-caret-bottom defalut-position" id="fields"></i>
+        </div>
+    </select-labels>
     <div class="formItem2">
       <div class="start-time">
         <el-select v-model="form.salaryFloor" placeholder="请选择期望薪资" @change="changeEmolumentMin" @focus="focus('#salaryFloor')"
@@ -79,60 +90,25 @@
       <div class="mask"></div>
     </div>
   </div>
-  <el-dialog
-    :title="model.title"
-    :visible.sync="model.show"
-    width="450px"
-    :lock-scroll="model.lockScroll"
-    :show-close="model.showClose"
-    :before-close="handleBeforeClose">
-    <div class="innerHtml">
-      <div class="model-header">
-        <span class="label">请选择行业领域</span>
-        <span class="tips">(最多选3个行业领域)</span>
-      </div>
-      <ul class="seleced-box">
-        <li
-          class="item"
-          v-for="(item, index) in model.selected"
-          @click="remove(index, item)"
-          :key="index">{{item.field || item.name}}<i class="el-icon-circle-plus"></i></li>
-      </ul>
-      <ul class="scroll-box">
-        <li
-          class="item2"
-          v-for="(item, index) in labelFieldList"
-          :key="index"
-          @click="onClick(index, item)"
-          :class="{item2_active: item.active}">{{item.name}}</li>
-      </ul>
-    </div>
-    <div slot="footer" class="dialog-footer">
-      <div @click="closeModel" class="btn-cancle">取 消</div>
-      <div @click="confirm" class="btn-confirm">确 定</div>
-    </div>
-  </el-dialog>
-  <MyModel @resultEvent="resultEvent" v-model="model.showPositionModel" :data="model.data"></MyModel>
 </div>
-
 </template>
 <script>
 import Vue from 'vue'
 import Component from 'vue-class-component'
-import MyModel from '@/components/model/index.vue'
-
+import SelectPositionType from '@/components/selectPositionType'
+import SelectLabels from 'COMPONENTS/selectLabels'
 import {
   setResumeFourthApi,
   getResumeFourStepApi,
-  getAreaListsApi,
-  getLabelFieldListApi
+  getAreaListsApi
 } from '../../../api/putIn'
 @Component({
   name: 'resumeFourthPost',
   methods: {
   },
   components: {
-    MyModel
+    SelectPositionType,
+    SelectLabels
   }
 })
 export default class resumeFourthPost extends Vue {
@@ -143,29 +119,18 @@ export default class resumeFourthPost extends Vue {
       fields: [],
       position: '',
       city: '',
+      fieldId: '',
       cityNum: [],
       placeholder: ''
-    }
-    model = {
-      show: false,
-      title: '',
-      type: '',
-      lockScroll: true,
-      showClose: false,
-      showPositionModel: false,
-      selected: [],
-      data: []
     }
     cityList = []
     emolumentMaxList = []
     emolumentMinList = []
-    labelFieldList = []
     mounted () {
       this.userInfo = this.$store.state.userInfo
       this.setEmolumentMin()
       this.getAreaLists().then(() => this.init())
     }
-
     init () {
       return getResumeFourStepApi().then(res => {
         let infos = res.data.data
@@ -176,7 +141,6 @@ export default class resumeFourthPost extends Vue {
         this.form.salaryCeil = infos.salaryCeil
         this.form.fields = infos.fields
         this.form.cityNum = [infos.provinceNum, infos.cityNum]
-        this.getLabelFieldList()
       })
     }
     submit () {
@@ -185,7 +149,7 @@ export default class resumeFourthPost extends Vue {
         salaryFloor: this.form.salaryFloor,
         salaryCeil: this.form.salaryCeil,
         cityNum: this.form.cityNum[this.form.cityNum.length - 1],
-        fieldIds: this.form.fields.map(field => field.fieldId).join(',')
+        fieldIds: this.form.fields.map(field => field.labelId).join(',')
       }
       let title = ''
       if (!params.cityNum) {
@@ -208,19 +172,8 @@ export default class resumeFourthPost extends Vue {
         window.location.replace('/index')
       })
     }
-    openModel () {
-      let fieldIds = this.form.fields.map(field => Number(field.fieldId))
-      this.model.show = !this.model.show
-      this.model.selected = this.form.fields.slice()
-      this.labelFieldList.map(field => (field.active = !!fieldIds.includes(field.labelId)))
-    }
-    closeModel () {
-      this.model.show = !this.model.show
-      this.model.selected = this.form.fields.slice()
-    }
-    confirm () {
-      this.model.show = !this.model.show
-      this.form.fields = this.model.selected
+    handleSelectLabeld (labels) {
+      this.form.fields = labels
     }
     handleBeforeClose () {
 
@@ -288,49 +241,15 @@ export default class resumeFourthPost extends Vue {
       this.emolumentMinList = list
     }
     resultEvent (res) {
-      this.model.showPositionModel = false
       this.form.positionId = res.labelId
       this.form.position = res.name
-    }
-    openPositionModel () {
-      this.model.showPositionModel = true
-    }
-    getLabelFieldList () {
-      return getLabelFieldListApi().then(res => {
-        let labelFieldList = res.data.data
-        let fieldIds = this.form.fields.map(field => Number(field.fieldId))
-        labelFieldList.map(field => (field.active = !!fieldIds.includes(field.labelId)))
-        this.labelFieldList = labelFieldList
-      })
-    }
-    remove (index, item) {
-      this.model.selected.splice(index, 1)
-      this.labelFieldList.map(field => {
-        if (field.labelId === item.fieldId) field.active = false
-      })
-    }
-    onClick (index, item) {
-      let labelFieldList = this.labelFieldList.slice()
-      if (this.model.selected.length > 2 && !item.active) {
-        this.$message({ message: '最多选3个行业领域', type: 'warning' })
-        return
-      }
-      if (item.active) {
-        labelFieldList[index].active = false
-        this.model.selected.map((field, i) => {
-          if (field.fieldId === item.labelId) this.model.selected.splice(i, 1)
-        })
-      } else {
-        labelFieldList[index].active = true
-        item.fieldId = item.labelId
-        this.model.selected.push(item)
-      }
-      this.labelFieldList = labelFieldList
+      this.form.fieldId = ''
+      this.form.fields = []
+      if (this.$refs.labels) this.$refs.labels.handleClear()
     }
     lastStep () {
       this.$parent.step--
     }
-
     focus (dom) {
       document.querySelector(dom).className = 'el-icon-caret-bottom defalut-position icon_active'
     }
@@ -584,137 +503,6 @@ export default class resumeFourthPost extends Vue {
       height: 48px !important;
       line-height: 48px;
       text-align: left;
-    }
-  }
-  .el-dialog__header{
-    display: none;
-  }
-  .el-dialog__body{
-    padding: 24px 0;
-  }
-  .el-dialog__footer{
-    padding: 10px 32px 24px 32px;
-  }
-  .dialog-footer{
-    text-align: right;
-    .btn-cancle{
-      width:88px;
-      height:40px;
-      border-radius:25px;
-      border:1px solid rgba(220,220,220,1);
-      text-align: center;
-      line-height: 40px;
-      display: inline-block;
-      color: #929292;
-      cursor: pointer;
-    }
-    .btn-confirm{
-      width:88px;
-      height:40px;
-      border-radius:25px;
-      border:1px solid rgba(220,220,220,1);
-      text-align: center;
-      line-height: 40px;
-      display: inline-block;
-      margin-left: 16px;
-      width:128px;
-      height:40px;
-      background: $bg-color-4;
-      border-radius:25px;
-      color: white;
-      cursor: pointer;
-    }
-  }
-  .innerHtml{
-    text-align: left;
-    .model-header{
-      height:22px;
-      line-height:22px;
-      margin-top: 20px;
-      padding: 0 32px;
-    }
-    .label{
-      font-size:16px;
-      font-family:PingFangSC;
-      font-weight:700;
-      color:rgba(40,40,40,1);
-    }
-    .tips{
-      font-size:14px;
-      font-weight:400;
-      color:rgba(146,146,146,1);
-    }
-    .seleced-box{
-      margin: 20px 32px 0 32px;
-      border-bottom: 1px solid #E8E9EB;
-    }
-    .item{
-      height:30px;
-      background:rgba(255,255,255,1);
-      border-radius:17px;
-      border:1px solid #8351A7;
-      text-align: center;
-      font-size:14px;
-      font-weight:400;
-      color: $main-color-1;
-      line-height: 30px;
-      text-align: center;
-      box-sizing: border-box;
-      margin-bottom: 16px;
-      cursor: pointer;
-      display: inline-block;
-      margin-right: 8px;
-      position: relative;
-      padding: 0 16px;
-      .el-icon-circle-plus{
-        position: absolute;
-        top: -5px;
-        right: -5px;
-        transform: rotate(45deg);
-        font-size: 16px;
-      }
-    }
-    .scroll-box{
-      margin: 16px 16px 0 32px;
-      height: 226px;
-      overflow: hidden;
-      overflow-y: scroll;
-    }
-    .scroll-box::-webkit-scrollbar {
-     width: 6px;
-    }
-    .scroll-box::-webkit-scrollbar-track {
-     background:white;
-     -webkit-border-radius: 20px;
-     -moz-border-radius: 20px;
-     border-radius:20px;
-    }
-    .scroll-box::-webkit-scrollbar-thumb {
-     background:#EDEDED;
-     -webkit-border-radius: 20px;
-     -moz-border-radius: 20px;
-     border-radius:20px;
-    }
-    .item2{
-      height:30px;
-      border-radius:17px;
-      border:1px solid #BCBCBC;
-      text-align: center;
-      font-size:14px;
-      font-weight:400;
-      color:#929292;
-      line-height: 30px;
-      text-align: center;
-      box-sizing: border-box;
-      margin-bottom: 16px;
-      cursor: pointer;
-      display: inline-block;
-      margin-right: 8px;
-      padding: 0 16px;
-    }
-    .item2_active{
-      border:1px solid #8351A7;
-      color: $main-color-1;
     }
   }
 }

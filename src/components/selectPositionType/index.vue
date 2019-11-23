@@ -189,6 +189,7 @@ export default {
     }
   }
   .lists-content {
+    text-align: left;
     overflow-x: hidden;
     height: 100%;
     padding: 20px 28px;

@@ -1,16 +1,18 @@
 <template>
   <!-- 选择标签 -->
   <div class="select-labels">
-    <slot>
-      <div class="el-input el-input--suffix" @click="handleShow">
-        <div class="el-input__inner">{{value || title}}</div>
-        <span class="el-input__suffix">
-          <span class="el-input__suffix-inner">
-            <i class="el-select__caret el-input__icon el-icon-arrow-down"></i>
+    <div @click="handleShow">
+      <slot>
+        <div class="el-input el-input--suffix">
+          <div class="el-input__inner">{{value || title}}</div>
+          <span class="el-input__suffix">
+            <span class="el-input__suffix-inner">
+              <i class="el-select__caret el-input__icon el-icon-arrow-down"></i>
+            </span>
           </span>
-        </span>
-      </div>
-    </slot>
+        </div>
+      </slot>
+    </div>
     <el-dialog
       width="450px"
       :visible.sync="dialogStatus"
@@ -228,10 +230,12 @@ export default {
   }
 }
 .lables {
+  text-align: left;
   max-height: 300px;
   overflow-y: auto;
 }
 .selected-labels {
+  text-align: left;
   border-bottom: 1px solid $border-color-1;
   padding-bottom: 20px;
 }
