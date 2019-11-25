@@ -5,7 +5,7 @@ import { loginPutInApipc, getUserRoleInfoApi, switchRoleApi } from '@/api/auth'
 import router from '@/router/index.js'
 import { mobileReg } from '@/util/fieldRegular.js'
 import { getMyResumeApi } from '@/api/resume.js'
-
+import resume from './modules/resume'
 import { logoutApi } from '../api/auth'
 
 Vue.use(Vuex)
@@ -167,11 +167,11 @@ export default new Vuex.Store({
         return
       }
       return new Promise((resolve, reject) => {
-				if (data.curInUseRole) {
-					data.identity = data.curInUseRole
-				} else {
-					data.identity = 1
-				}
+        if (data.curInUseRole) {
+          data.identity = data.curInUseRole
+        } else {
+          data.identity = 1
+        }
         loginPutInApipc(data).then(res => {
           let loginData = {
             ...res.data.data,
@@ -204,5 +204,6 @@ export default new Vuex.Store({
     getMyResume (store, options) {
       store.commit('setMyResume', options)
     }
-  }
+  },
+  modules: { resume }
 })
