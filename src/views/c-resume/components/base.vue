@@ -192,15 +192,15 @@ export default {
       if (type === 'edit') {
         Object.assign(this.form, this.info)
         this.form.birth = this.info.birthDesc
-        this.form.startWorkYear = this.info.startWorkYearDesc
+        this.form.startWorkYear = this.info.startWorkYear * 1000
       } else if (type === 'save') {
         this.$refs.form.validate(valid => {
           if (valid) {
             const { birth, startWorkYear } = this.form
             const datas = {
               ...this.form,
-              birth: parseInt(new Date(birth.replace('-', '/')).getTime() / 1000),
-              startWorkYear: startWorkYear === '暂无工作经历' ? 0 : parseInt(new Date(startWorkYear.replace('-', '/')).getTime() / 1000)
+              birth: isNaN(birth) ? parseInt(new Date(birth.replace('-', '/')).getTime() / 1000) : parseInt(birth) / 1000,
+              startWorkYear: startWorkYear === 0 ? 0 : isNaN(startWorkYear) ? parseInt(new Date(startWorkYear.replace('-', '/')).getTime() / 1000) : parseInt(startWorkYear) / 1000
             }
             setResumeBaseInfo(datas).then(async ({ data }) => {
               if (data.httpStatus === 200) {

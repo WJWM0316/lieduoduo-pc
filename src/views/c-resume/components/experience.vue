@@ -166,7 +166,7 @@ export default {
         this.handleShowForm(false)
         // 将数据写入到form表单中
         Object.assign(this.form, {
-          times: [item.startTimeDesc, item.endTimeDesc],
+          times: [item.startTime * 1000, item.endTime * 1000],
           company: item.company,
           positionTypeId: item.positionTypeId,
           positionType: item.positionType,
@@ -180,8 +180,8 @@ export default {
         this.$refs.form.validate(valid => {
           if (valid) {
             const { company, times, duty, positionTypeId, position } = this.form
-            const startTime = parseInt(new Date(times[0].replace('-', '/')).getTime() / 1000)
-            const endTime = times[1] === '至今' ? 0 : parseInt(new Date(times[1].replace('-', '/')).getTime() / 1000)
+            const startTime = isNaN(times[0]) ? parseInt(new Date(times[0].replace('-', '/')).getTime() / 1000) : parseInt(times[0]) / 1000
+            const endTime = times[1] === 0 ? 0 : isNaN(times[1]) ? parseInt(new Date(times[1].replace('-', '/')).getTime() / 1000) : parseInt(times[1]) / 1000
             const labelIds = this.labels.map(val => val.labelId).join(',')
             if (this.isAdd) {
               addCareer({
