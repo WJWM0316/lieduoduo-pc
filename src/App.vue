@@ -43,9 +43,6 @@ export default class APP extends Vue {
 @import './assets/scss/button.scss';
 @import './eleui/element.reset.scss';
 
-// 具体业务相同代码的样式
-@import './assets/scss/company.scss';
-
 #app, .c-app {
   color: #2c3e50;
   background: $bg-color-1;
