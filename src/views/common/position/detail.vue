@@ -30,7 +30,7 @@
             <div class="number"><span class="num">{{remainingSeats}}</span>个<p class="desc">约面席位</p></div>
             <div class="timeBox">
               <div class="time">还剩<span class="little-box">{{remainingTime.day}}</span>天<span class="little-box">{{remainingTime.hour}}</span>:<span class="little-box">{{remainingTime.minute}}</span>:<span class="little-box">{{remainingTime.second}}</span></div>
-              <p class="desc">{{chatDesc}}<el-tooltip class="item" popper-class="tooltip" effect="dark"  placement="bottom-end">
+              <p class="desc">{{chatDesc}}<el-tooltip class="item" popper-class="tooltip" effect="light"  placement="bottom-end">
                 <p slot="content">1.抢占约面席位后将享【急速反馈服务】。<br>
                   2.急速约面服务<br>
                   （1）法定工作日（除节假日前一天）内抢占约面席位，面试官将在抢占成功后的24小时内给与答复。<br>
@@ -127,6 +127,7 @@ import poster from '@/components/common/poster'
 import interviewBtn from '@/components/interview/interviewBtn.vue'
 import guideLogin from '@/components/common/guideLogin'
 import adpostion from '@/components/common/adpostion'
+import { mapState } from 'vuex'
 let that = null
 
 @Component({
@@ -261,6 +262,7 @@ export default class PositionDetail extends Vue {
           center: myLatlng
         }
         var map = new qq.maps.Map(document.getElementById('map'), myOptions)
+        // eslint-disable-next-line no-unused-vars
         var marker = new qq.maps.Marker({
           position: myLatlng,
           animation: qq.maps.MarkerAnimation.DROP,

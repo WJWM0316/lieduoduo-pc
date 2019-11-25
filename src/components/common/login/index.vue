@@ -768,7 +768,7 @@ export default class loginForm extends Component {
       width: 406px;
       height: 50px;
       background: $main-color-1;
-      border-radius: 100px;
+      // border-radius: 100px;
       cursor: pointer;
       margin: 0 auto 58px auto;
       color: #fff;

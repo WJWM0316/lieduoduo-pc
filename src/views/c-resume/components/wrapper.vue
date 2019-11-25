@@ -118,7 +118,7 @@ export default {
     showEditCompoents () {
       // 如果是编辑状态不允许检测简历状态
       if (!this.unshowEdit) return
-      this.validateIsEdit('add')
+      this.validateIsEdit('add', { propClass: this.$parent.propClass })
     },
     // 验证时候有编辑状态的表单 | 简历是否在编辑状态
     validateIsEdit (type = 'add', params = {}) {

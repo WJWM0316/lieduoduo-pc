@@ -18,6 +18,8 @@ export default class APP extends Vue {
       this.getUserRoleInfo()
     }).catch(e => {
       this.$store.commit('SETLOGIN', 0)
+      // 移除数据|退出登陆
+      this.$store.commit('LOGOUT')
     })
   }
   getUserRoleInfo () {
