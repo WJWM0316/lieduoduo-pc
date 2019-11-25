@@ -10,6 +10,8 @@
       <active />
       <!-- <position-list :nameList="positionLabel" ref="positionList"></position-list> -->
       <hot-company />
+      <hot-city />
+      <app-links class="app-links" />
     </div>
     <scroll-to-top></scroll-to-top>
   </div>
@@ -26,6 +28,8 @@ import Active from './components/24Active'
 // 热门公司列表
 import HotCompany from './components/hotCompany'
 import ScrollToTop from 'COMPONENTS/scrollToTop'
+import HotCity from './components/hotCity'
+import AppLinks from 'COMPONENTS/common/appLinks'
 import { getBanners, getIndexData } from 'API/common'
 export default {
   components: {
@@ -34,7 +38,9 @@ export default {
     PositionName,
     IndexBanner,
     Active,
+    HotCity,
     HotCompany,
+    AppLinks,
     ScrollToTop
   },
   data () {
@@ -103,5 +109,8 @@ export default {
     flex: 1;
     margin-left: 20px;
   }
+}
+.app-links {
+  margin-bottom: 40px;
 }
 </style>
