@@ -1,10 +1,19 @@
 
-.el-tooltip__popper.tooltip.is-light {
+.tooltip.is-light.el-tooltip__popper {
 	max-width:298px;
 	background:#fff;
 	box-shadow:0px 0px 30px 0px rgba(22,39,77,0.07);
-	padding: 11px 12px;
-	box-sizing: border-box;
+  padding: 11px 12px;
+  box-sizing: border-box;
+  border-color: #FFFFFF;
+  .popper__arrow::after {
+    border-bottom-color: #FFFFFF;
+  }
+  p {
+    font-size: 12px;
+    line-height:18px;
+    color: $title-color-1;
+  }
 }
 .pagination {
   height: 102px;
