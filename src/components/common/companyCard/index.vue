@@ -1,21 +1,32 @@
-/** company card | 公司卡片展示样式 */
-.company-lists-wrapper {
-  padding-top: 4px;
-  min-height: 200px;
-  & /deep/ .el-loading-mask {
-    background: rgba(255, 255, 255, 0.1);;
+<template>
+<!-- 公司卡片列表 -->
+  <router-link target="_blank"  :to="`/company/details?companyId=${item.id}`" class="company-list-wrapper">
+    <div class="list-header">
+      <div class="company-image">
+        <img v-if="item.logoInfo" :src="item.logoInfo.middleUrl" alt="">
+      </div>
+      <div class="company-info">
+        <p>{{item.companyShortname}}</p>
+        <p>{{item.financingInfo}}<span v-if="item.employeesInfo">·{{item.employeesInfo}}</span><span v-if="item.industry">·{{item.industry}}</span></p>
+      </div>
+    </div>
+    <div class="list-footer">
+      <span><b>{{item.positionNum}}</b> 个热招职位</span>
+      <span>{{item.numOfVisitors}}浏览</span>
+    </div>
+  </router-link>
+</template>
+<script>
+export default {
+  props: {
+    item: {
+      type: Object,
+      default: () => ({})
+    }
   }
 }
-.company-lists {
-  @include flex-v-center;
-  flex-wrap: wrap;
-  .company-list-wrapper{
-    margin-right: 13px;
-  }
-  .company-list-wrapper:nth-child(4n) {
-    margin-right: 0;
-  }
-}
+</script>
+<style lang="scss" scoped>
 .company-list-wrapper {
   width: 290px;
   background: #fff;
@@ -70,3 +81,4 @@
 .company-list-wrapper:hover {
   box-shadow: $shadow-2;
 }
+</style>

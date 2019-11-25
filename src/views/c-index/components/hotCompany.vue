@@ -13,21 +13,9 @@
     <div class="company-lists-wrapper" v-loading="getLoading">
       <!-- 隔离层 防止nth-child 多读取一个div -->
       <div class="company-lists">
-        <router-link target="_blank"  :to="`/company/details?positionId=${item.id}`" class="company-list-wrapper" v-for="(item,index) in listData" :key="index">
-          <div class="list-header">
-            <div class="company-image">
-              <img :src="item.logoInfo.middleUrl" alt="">
-            </div>
-            <div class="company-info">
-              <p>{{item.companyShortname}}</p>
-              <p>{{item.financingInfo}}<span v-if="item.employeesInfo">·{{item.employeesInfo}}</span><span v-if="item.industry">·{{item.industry}}</span></p>
-            </div>
-          </div>
-          <div class="list-footer">
-            <span><b>{{item.positionNum}}</b> 个热招职位</span>
-            <span>{{item.positionNum}}浏览</span>
-          </div>
-        </router-link>
+        <template v-for="item in listData">
+          <company-card :item="item"  :key="item.id"/>
+        </template>
       </div>
     </div>
     <div class="company-more-btn" v-if="!getLoading && listData.length">
@@ -38,8 +26,9 @@
 <script>
 import ScrollPane from 'COMPONENTS/scrollPane'
 import { getHotCompanyTypes, getHotCompanys } from 'API/company'
+import CompanyCard from 'COMPONENTS/common/companyCard'
 export default {
-  components: { ScrollPane },
+  components: { ScrollPane, CompanyCard },
   data () {
     return {
       currentId: 0,
@@ -89,6 +78,25 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.company-lists-wrapper {
+  padding-top: 4px;
+  min-height: 200px;
+  & /deep/ .el-loading-mask {
+    background: rgba(255, 255, 255, 0.1);;
+  }
+}
+.company-lists {
+  @include flex-v-center;
+  flex-wrap: wrap;
+  & /deep/ {
+    .company-list-wrapper{
+      margin-right: 13px;
+    }
+    .company-list-wrapper:nth-child(4n) {
+      margin-right: 0;
+    }
+  }
+}
 .company-wrapper {
   padding-bottom: 54px;
 }
