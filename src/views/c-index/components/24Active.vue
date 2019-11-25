@@ -206,7 +206,7 @@ export default {
       opacity: 0;
       transform: translateY(30px);
       color: #fff;
-      background: $main-color-1;
+      background: $bg-color-4;
     }
     p.animation {
       animation: bubble 5s infinite;

@@ -177,7 +177,7 @@ export default {
       content: "";
       width: 4px;
       height: 20px;
-      background: $main-color-1;
+      background: $bg-color-4;
       border-radius: 0px 50px 50px 0px;
       position: absolute;
       left: 0;

@@ -231,7 +231,7 @@ export default class InterviewBtn extends Component {
       .accept {
         width: 50%;
         height: 100%;
-        background: $main-color-1;
+        background: $bg-color-4;
         color: #fff;
         border: none;
         cursor: pointer;
@@ -240,7 +240,7 @@ export default class InterviewBtn extends Component {
     }
 
     &.canView {
-      background: $main-color-1;
+      background: $bg-color-4;
       color: #fff;
     }
     &.scheduling.specailBtn {
