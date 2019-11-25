@@ -38,11 +38,15 @@ export default class APP extends Vue {
 }
 </script>
 <style lang="scss">
+// common  css
 @import './assets/css/index.css';
 @import './assets/scss/button.scss';
 @import './eleui/element.reset.scss';
+
+// 具体业务相同代码的样式
+@import './assets/scss/company.scss';
+
 #app, .c-app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
   color: #2c3e50;
   background: $bg-color-1;
 }

@@ -1,0 +1,201 @@
+<template>
+  <div class="company-wrapper">
+    <!-- 热门城市 -->
+    <div class="header-wrapper">
+      <scroll-pane class="scroll-pane">
+        <ul>
+          <template v-for="item in typeList">
+            <li class="company-name" :class="{active: currentId === item.id}" @click="handleChange(item)" :key="item.id">{{item.title}}</li>
+          </template>
+        </ul>
+      </scroll-pane>
+    </div>
+    <div class="company-lists-wrapper" v-loading="getLoading">
+      <!-- 隔离层 防止nth-child 多读取一个div -->
+      <div class="company-lists">
+        <router-link target="_blank"  :to="`/position/details?positionId=${item.id}`" class="company-list-wrapper" v-for="(item,index) in listData" :key="index">
+          <div class="list-header">
+            <div class="company-image">
+              <img :src="item.logoInfo.middleUrl" alt="">
+            </div>
+            <div class="company-info">
+              <p>{{item.companyShortname}}</p>
+              <p>{{item.financingInfo}}<span v-if="item.employeesInfo">·{{item.employeesInfo}}</span><span v-if="item.industry">·{{item.industry}}</span></p>
+            </div>
+          </div>
+          <div class="list-footer">
+            <span><b>{{item.positionNum}}</b> 个热招职位</span>
+            <span>{{item.positionNum}}浏览</span>
+          </div>
+        </router-link>
+      </div>
+    </div>
+    <div class="company-more-btn" v-if="!getLoading && listData.length">
+      <div class="c-btn c-big-btn" @click="handleShowMore">查看更多</div>
+    </div>
+  </div>
+</template>
+<script>
+import ScrollPane from 'COMPONENTS/scrollPane'
+import { getHotCompanyTypes, getHotCompanys } from 'API/company'
+export default {
+  components: { ScrollPane },
+  data () {
+    return {
+      currentId: 0,
+      getLoading: true,
+      listData: [],
+      typeList: []
+    }
+  },
+  computed: {
+    isLogin () {
+      return !!this.$store.state.userInfo.id
+    }
+  },
+  created () {
+    this.getTypes().then(() => {
+      this.getCompanyList()
+    })
+  },
+  methods: {
+    // 获取热门公司类型信息
+    async getTypes () {
+      await getHotCompanyTypes().then(({ data }) => {
+        this.typeList = data.data || []
+        this.currentId = this.typeList[0] && this.typeList[0].id
+      })
+    },
+    // 获取职位列表
+    getCompanyList () {
+      this.getLoading = true
+      getHotCompanys({ typeId: this.currentId }).then(({ data }) => {
+        this.getLoading = false
+        this.listData = data.data.slice(0, 12)
+      })
+    },
+    handleChange (item) {
+      this.currentId = item.id
+      this.getCompanyList()
+    },
+    handleShowMore () {
+      if (!this.isLogin) {
+        this.$router.push('/login?type=msgLogin')
+      } else {
+        this.$store.commit('guideQrcodePop', { switch: true, type: 'tocIndex' })
+      }
+    }
+  }
+}
+</script>
+<style lang="scss" scoped>
+.company-wrapper {
+  padding-bottom: 54px;
+}
+.header-wrapper{
+  margin-top: 62px;
+  .scroll-pane {
+    width: 100%;
+    height: 50px;
+  }
+  ul {
+    width: 100%;
+    height: 50px;
+    @include flex-v-center;
+    flex-wrap: nowrap;
+    // justify-items: stretch
+  }
+  li {
+    color: $title-color-2;
+    font-size: 16px;
+    border-bottom: 2px solid transparent;
+    font-weight: 400;
+    cursor: pointer;
+  }
+  li.active, li:hover {
+    color: $main-color-1;
+    border-color: $border-color-2;
+  }
+  li+li {
+    margin-left: 52px;
+  }
+}
+.company-lists-wrapper {
+  padding-top: 4px;
+  min-height: 200px;
+  & /deep/ .el-loading-mask {
+    background: rgba(255, 255, 255, 0.1);;
+  }
+}
+.company-lists {
+  @include flex-v-center;
+  flex-wrap: wrap;
+  .company-list-wrapper{
+    margin-right: 13px;
+  }
+  .company-list-wrapper:nth-child(4n) {
+    margin-right: 0;
+  }
+}
+.company-list-wrapper {
+  width: 290px;
+  background: #fff;
+  padding: 20px;
+  box-shadow: $shadow-1;
+  box-sizing: border-box;
+  margin-bottom: 13px;
+  border-radius:4px;
+  cursor: pointer;
+  .list-header {
+    @include flex-v-center;
+    margin-bottom: 20px;
+    .company-image {
+      @include img-radius(66px, 66px, 8px);
+    }
+    .company-info {
+      flex: 1;
+      text-align: right;
+      font-size: 12px;
+      margin-left: 10px;
+    }
+    p {
+      color: $title-color-1;
+    }
+    p + p {
+      margin-top: 14px;
+      color: $title-color-2;
+      font-size: 12px;
+      max-width: 172px;
+      @include ellipsis;
+    }
+  }
+  .list-footer {
+    border-top: 1px  dashed $border-color-1;
+    @include flex-v-center;
+    padding: 16px 0 0px;
+    box-sizing: border-box;
+    span {
+      color: $title-color-2;
+      font-size: 12px;
+    }
+    span b {
+      font-weight: normal;
+      color: $main-color-1;
+    }
+    span:last-child {
+      margin-left: auto;
+    }
+  }
+
+}
+.company-list-wrapper:hover {
+  box-shadow: $shadow-2;
+}
+.company-more-btn {
+  margin-top: 30px;
+  text-align: center;
+  .c-btn {
+    width: 385px;
+  }
+}
+</style>

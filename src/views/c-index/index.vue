@@ -7,8 +7,9 @@
         <position-name :list="positionData"></position-name>
         <index-banner :items="bannerLists" ref="indexBanner"></index-banner>
       </div>
-      <active></active>
-      <position-list :nameList="positionLabel" ref="positionList"></position-list>
+      <active />
+      <!-- <position-list :nameList="positionLabel" ref="positionList"></position-list> -->
+      <hot-company />
     </div>
     <scroll-to-top></scroll-to-top>
   </div>
@@ -21,7 +22,9 @@ import PositionName from './components/postionName'
 import IndexBanner from './components/indexBanner'
 import Active from './components/24Active'
 // 职位列表
-import PositionList from './components/positionList.vue'
+// import PositionList from './components/positionList.vue'
+// 热门公司列表
+import HotCompany from './components/hotCompany'
 import ScrollToTop from 'COMPONENTS/scrollToTop'
 import { getBanners, getIndexData } from 'API/common'
 export default {
@@ -31,7 +34,7 @@ export default {
     PositionName,
     IndexBanner,
     Active,
-    PositionList,
+    HotCompany,
     ScrollToTop
   },
   data () {
@@ -87,9 +90,6 @@ export default {
         this.positionData = positionType
         this.positionLabel = label || []
         this.total = { coolCompanyNum, goodChanceNum }
-        if (this.positionLabel[0]) {
-          this.$refs.positionList.handleChange(this.positionLabel[0])
-        }
       })
     }
   }

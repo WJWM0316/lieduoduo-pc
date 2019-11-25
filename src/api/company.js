@@ -207,3 +207,19 @@ export const getCompanyApi = (data) => request({
   params: data,
   config: { host: 'qiuzhi' }
 })
+
+/* 获取热门公司类型 */
+export const getHotCompanyTypes = (data) => request({
+  url: '/hotCompany/type/lists',
+  method: 'get',
+  params: data,
+  config: { host: 'qiuzhi' }
+})
+
+/* 获取热门公司 */
+export const getHotCompanys = (data) => request({
+  url: '/hotCompany/lists',
+  method: 'get',
+  params: data,
+  config: { host: 'qiuzhi' }
+})
