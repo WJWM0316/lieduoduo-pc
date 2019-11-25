@@ -40,7 +40,7 @@ export default class login extends Vue {
   }
 }
 </script>
-<style lang="less">
+<style lang="scss">
 #login {
   min-width: 1200px;
   height: 100vh;
