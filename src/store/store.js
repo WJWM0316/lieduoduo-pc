@@ -59,16 +59,13 @@ export default new Vuex.Store({
     },
     // 登录回调
     LOGINCALLBACK: (state, data) => {
-      // Vue.message({
-      //   message: '登录成功',
-      //   type: 'success'
-      // })
       saveAccessToken(data.token, state.loginValidTime)
       saveUserInfo(data, state.loginValidTime)
       state.userInfo = data
       state.token = data.token
       state.hasLogin = 1
       if (data.curInUseRole) state.userIdentity = data.curInUseRole
+			console.log(111111111)
       // 获取用户角色信息
       getUserRoleInfoApi().then(res => {
         state.roleInfos = res.data.data

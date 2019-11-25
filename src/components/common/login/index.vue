@@ -229,8 +229,8 @@ export default class loginForm extends Component {
       uuid: this.codeData.uuid
     }).then(res => {
       if (res.data.data && res.data.data.id) {
+				this.$store.commit('LOGINCALLBACK', res.data.data)
         clearInterval(this.timer)
-        this.$store.commit('LOGINCALLBACK', res.data.data)
       }
     })
   }
