@@ -209,7 +209,7 @@ img {
 		&.isRapidly {
 			background: url(#{$image-cdn-url}/images/24h.png), #03B3BB;
 			background-repeat: no-repeat;
-			background-position: right 124%;
+			background-position: right 100%;
 			.inner {
 				.header-content {
 					.name, .info-item {
@@ -521,7 +521,7 @@ img {
 			line-height:17px;
 		}
 		&:hover {
-			background: #EFE9F4;
+			background: $bg-color-5;
 			.title {
 				color: $lightFont-color-purple;
 			}

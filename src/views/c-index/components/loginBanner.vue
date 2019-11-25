@@ -4,7 +4,6 @@
       <div class="main-center index-login-wrapper">
         <div class="position-number">
           <div class="position-number-wrapper">
-            <div><img src="../../../assets/images/index/login_text.png" alt=""></div>
             <p><span>{{total.coolCompanyNum}}</span>酷公司 <i>|</i> <span>{{total.goodChanceNum}}</span>好机会</p>
           </div>
         </div>
@@ -96,7 +95,7 @@ $index-login-height: 120px;
 .login-bg {
   width: 1200px;
   margin: 0 auto;
-  background-image: url(#{$image-cdn-url}/images/index_banner.gif);
+  background-image: url(#{$image-cdn-url}/images/index_banner.png);
   background-size: cover;
   background-repeat: no-repeat;
   height: $index-login-height;
