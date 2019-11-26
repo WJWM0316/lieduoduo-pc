@@ -170,18 +170,19 @@
                     <span class="realName">{{nowResumeMsg.name}}</span>
                     <div class="lebalList">
                       <div class="lebalItem">
-                        <i class="icon iconfont iconzhiwei" style></i>
+                        <i class="icon iconfont icon-zhiwei" style></i>
                         <span>{{nowResumeMsg.workAgeDesc}}</span>
                       </div>
                       <div class="lebalItem">
-                        <i class="icon iconfont iconnianling"></i>
+                        <i class="icon iconfont icon-nianling"></i>
                         <span>{{nowResumeMsg.age}}岁</span>
                       </div>
                       <div
+                        v-if="nowResumeMsg.degreeDesc"
                         class="lebalItem"
                         :style="nowResumeMsg.jobStatus===''?'margin-right:0px;':''"
                       >
-                        <i class="icon iconfont iconxueli"></i>
+                        <i class="icon iconfont icon-jiaoyu"></i>
                         <span>{{nowResumeMsg.degreeDesc}}</span>
                       </div>
                       <div class="lebalItem">
@@ -194,7 +195,6 @@
                   </div>
                   <div class="description">
                     <span class="msg">{{nowResumeMsg.signature}}</span>
-                    <!-- v-show="nowResumeMsg.personalizedLabels.length>0" -->
                     <div class="iconList">
                       <span
                         class="iconItem"
@@ -303,7 +303,7 @@
               </div>
             </div>
             <!-- 更多介绍 -->
-            <div class="workExperience" v-if="nowResumeMsg.moreIntroduce">
+            <div class="workExperience" v-if="nowResumeMsg.moreIntroduce.introduce && nowResumeMsg.moreIntroduce.imgs">
               <p class="title">更多介绍</p>
               <div class="workList">
                 <pre v-if="nowResumeMsg.moreIntroduce.introduce">{{nowResumeMsg.moreIntroduce.introduce}}</pre>
@@ -699,7 +699,7 @@ export default {
       resonword: '',
       shareResumeImg: '', // 简历二维码
       form: {
-        position_label_id: -1,
+        position_label_id: '',
         start: '',
         end: '',
         page: 1,
@@ -715,7 +715,7 @@ export default {
       interviewId: '',
       reasonlist: [],
       tabform: {
-        position_label_id: -1,
+        position_label_id: '',
         page: 1,
         count: 20,
         time: ''
@@ -793,7 +793,7 @@ export default {
       let data = { level: 3 }
       getguanListtApi(data).then(res => {
         let arr = res.data.data
-        arr.unshift({ name: '全部', id: -1 })
+        arr.unshift({ name: '全部', id: '' })
         arr.push({ name: '无职位约面', id: 0 })
         this.mgoptions = arr
         this.mgoptions.forEach(item => {
@@ -830,6 +830,9 @@ export default {
       })
     },
     getlist () {
+      if (this.form.position_label_id === '') {
+        this.form.position_label_id = undefined
+      }
       getnewHistoryListtApi(this.form).then((res) => {
         this.list = res.data.data
         this.form.total = res.data.meta.total
@@ -848,8 +851,8 @@ export default {
       this.form.position_label_id = e
       this.tabform.position_label_id = e
       if (e === '') {
-        this.form.position_label_id = -1
-        this.tabform.position_label_id = -1
+        this.form.position_label_id = undefined
+        this.tabform.position_label_id = undefined
       }
       if (this.tablist[0].time) {
         this.tabform.page = 1
@@ -876,6 +879,9 @@ export default {
       }
     },
     gettablist () {
+      if (this.tabform.position_label_id === '') {
+        this.tabform.position_label_id = undefined
+      }
       getScheduleListApi(this.tabform).then((res) => {
         this.list = res.data.data
         this.form.total = res.data.meta.total
