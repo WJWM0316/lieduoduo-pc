@@ -43,6 +43,10 @@
   }
   .c-button-radio:hover,.active {
     background: $bg-color-5;
+    color: $main-color-1;
     border-color: $border-color-2;
+  }
+  .active {
+    font-weight: bold;
   }
 }

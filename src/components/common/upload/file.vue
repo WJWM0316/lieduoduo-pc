@@ -146,10 +146,19 @@ export default {
     },
     handleClickInput () {
       if (this.disabled || this.uploadLoading) return
-      /* if(this.showTips) {
-
-      } */
-      this.$refs[this.eventKey].click()
+      if (this.showTips) {
+        this.$alert(`<p class="alert-content">支持pdf、jpg、png、doc、docx格式附件</p>`, `文件大小不超过 ${this.size}M`, {
+          confirmButtonText: '确定',
+          confirmButtonClass: 'alert button',
+          dangerouslyUseHTMLString: true,
+          customClass: 'file-alert',
+          center: true
+        }).then(() => {
+          this.$refs[this.eventKey].click()
+        })
+      } else {
+        this.$refs[this.eventKey].click()
+      }
     }
 
   }
@@ -199,4 +208,17 @@ export default {
     background: $bg-color-10;
   }
 }
+</style>
+<style lang="scss">
+.file-alert .el-message-box__title{
+  font-size: 14px;
+  color: $title-color-1;
+}
+.alert-content {
+  color: $sub-color-1;
+}
+.alert.button {
+  width: 258px;
+}
+
 </style>

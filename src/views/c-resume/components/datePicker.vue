@@ -9,7 +9,7 @@
         @show="handleShowPopover('startTime')"
         trigger="click">
         <div class="popover-date-picker">
-          <ul class="date-years" :ref="refKeys.startTime">
+          <ul class="warpper-scroll date-years" :ref="refKeys.startTime">
             <li :class="{active: startTimeValue.now}" v-if="showTextSelect" @click="handleChangeYear('startTime')">{{textValue}}</li>
             <template v-for="item in years">
               <li :key="item" @click="handleChangeYear('startTime', item)" :class="{active: startTimeValue.year == item}">{{item}}</li>
@@ -309,6 +309,7 @@ export default {
     }
     li.active {
       color: $main-color-1;
+      font-weight: bold;
     }
     li:hover {
       background-color: $bg-color-5
@@ -325,6 +326,9 @@ export default {
       text-align: center;
       padding:10px 0;
       cursor: pointer;
+    }
+    .active {
+      font-weight: bold;
     }
     div:hover,.active {
       color: $main-color-1;
