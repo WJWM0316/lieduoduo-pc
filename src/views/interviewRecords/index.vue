@@ -415,8 +415,8 @@
         <div class="selectaddress" v-if="pop.type === 'address'">
           <div class="addresslist clearfix" :key="i" v-for="(item, i) in addresslist">
             <div class="icon" @click="toggleaddress(item)">
-              <i :class="['iconfont iconxuanzhong position bg']" v-if="item.cur"></i>
-                <i :class="['iconfont iconbeixuanxiang position']" v-else></i>
+              <i :class="['iconfont icon-chenggong position bg']" v-if="item.cur"></i>
+                <i :class="['iconfont icon-beixuanxiang position']" v-else></i>
               </div>
             <div class="center">{{item.address}}</div>
             <div class="edit" @click="editaddress(item)">编辑</div>
@@ -592,8 +592,8 @@
               <div :class="['benke', item.isOnline === 2 ? 'hui' : '']">{{item.educationName}}</div>
             </div>
             <div class="selectcur" v-if="item.isOnline === 1">
-              <i :class="['iconfont iconxuanzhong position bg']" v-if="item.cur"></i>
-                <i :class="['iconfont iconbeixuanxiang position']" v-else></i>
+              <i :class="['iconfont icon-chenggong position bg']" v-if="item.cur"></i>
+                <i :class="['iconfont icon-beixuanxiang position']" v-else></i>
             </div>
             <div class="selectcur" v-else>
               <div class="circel"></div>
@@ -643,8 +643,8 @@
             </div>
             <div class="info" v-else>选择此项，以上申请记录将全部合并处理为不合适</div>
             <div class="selectcur">
-              <i :class="['iconfont iconxuanzhong position bg']" v-if="item.hascur"></i>
-                <i :class="['iconfont iconbeixuanxiang position']" v-else></i>
+              <i :class="['iconfont icon-chenggong position bg']" v-if="item.hascur"></i>
+                <i :class="['iconfont icon-beixuanxiang position']" v-else></i>
             </div>
           </div>
         </div>
@@ -929,7 +929,8 @@ export default {
               }
             })
           } else {
-            recruiterPositonList().then((res) => {
+            let datalist = { is_online: 1 }
+            recruiterPositonList(datalist).then((res) => {
               let arr = res.data.data
               let hasOnline = []
               arr.map((v, k) => {
@@ -1030,7 +1031,8 @@ export default {
                 this.positionOption = hasOnline
               })
             } else {
-              recruiterPositonList().then((res) => {
+              let datalist = { is_online: 1 }
+              recruiterPositonList(datalist).then((res) => {
                 let arr = res.data.data
                 let hasOnline = []
                 arr.map((v, k) => {

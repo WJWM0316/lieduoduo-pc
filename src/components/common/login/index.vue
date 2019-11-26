@@ -314,6 +314,7 @@ export default class loginForm extends Component {
 
   // 短信登录提交   //注册提交
   logintoo () {
+    console.log('233')
     if (this.loading) return
     if (!this.checkMobile()) {
       return

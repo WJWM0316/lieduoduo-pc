@@ -329,3 +329,13 @@ export const emailtoforword = data => request({
     host: 'zhaopin'
   }
 })
+
+// 候选人动态处理多条记录
+export const manyrecordstatus = data => request({
+  url: `/interview/getInterviewStatus`,
+  method: 'get',
+  params: data,
+  config: {
+    host: 'zhaopin'
+  }
+})

@@ -560,8 +560,8 @@
         <div class="selectaddress" v-if="pop.type === 'address'">
           <div class="addresslist clearfix" :key="i" v-for="(item, i) in addresslist">
             <div class="icon" @click="toggleaddress(item)">
-              <i :class="['iconfont iconxuanzhong position bg']" v-if="item.cur"></i>
-                <i :class="['iconfont iconbeixuanxiang position']" v-else></i>
+              <i :class="['iconfont icon-chenggong position bg']" v-if="item.cur"></i>
+                <i :class="['iconfont icon-beixuanxiang position']" v-else></i>
               </div>
             <div class="center">{{item.address}}</div>
             <div class="edit" @click="editaddress(item)">编辑</div>
@@ -735,8 +735,8 @@
               <div :class="['benke', item.isOnline === 2 ? 'hui' : '']">{{item.educationName}}</div>
             </div>
             <div class="selectcur" v-if="item.isOnline === 1">
-              <i :class="['iconfont iconxuanzhong position bg']" v-if="item.cur"></i>
-                <i :class="['iconfont iconbeixuanxiang position']" v-else></i>
+              <i :class="['iconfont icon-chenggong position bg']" v-if="item.cur"></i>
+                <i :class="['iconfont icon-beixuanxiang position']" v-else></i>
             </div>
             <div class="selectcur" v-else>
               <div class="circel"></div>
@@ -785,8 +785,8 @@
             </div>
             <div class="info" v-else>选择此项，以上申请记录将全部合并处理为不合适</div>
             <div class="selectcur">
-              <i :class="['iconfont iconxuanzhong position bg']" v-if="item.hascur"></i>
-                <i :class="['iconfont iconbeixuanxiang position']" v-else></i>
+              <i :class="['iconfont icon-chenggong position bg']" v-if="item.hascur"></i>
+                <i :class="['iconfont icon-beixuanxiang position']" v-else></i>
             </div>
           </div>
         </div>
@@ -836,7 +836,7 @@ import {
   getInterviewComment,
   improperMarkingApi,
   confirmInterviewApi,
-  addressListApi, interviewRetract, addCompanyAdressApi, editCompanyAdressApi, setInterviewInfoApi, setCommentApi, setAttendApi, emailtoforword } from 'API/candidateType'
+  addressListApi, interviewRetract, addCompanyAdressApi, editCompanyAdressApi, setInterviewInfoApi, setCommentApi, setAttendApi, emailtoforword, manyrecordstatus } from 'API/candidateType'
 
 @Component({
   name: 'candidate',
@@ -1449,7 +1449,6 @@ export default class CourseList extends Vue {
     }
     switch (type) {
       case 'recruiter-chat':
-        console.log(this.info.isCompanyTopAdmin)
         if (this.info.isCompanyTopAdmin) {
           topAdminPositonList().then((res) => {
             let arr = res.data.data
@@ -1483,7 +1482,8 @@ export default class CourseList extends Vue {
             }
           })
         } else {
-          recruiterPositonList().then((res) => {
+          let datalist = { is_online: 1 }
+          recruiterPositonList(datalist).then((res) => {
             let arr = res.data.data
             let hasOnline = []
             arr.map((v, k) => {
@@ -1524,8 +1524,9 @@ export default class CourseList extends Vue {
         })
         break
       case 'confirm-interview':
-        if (vo.interviewInfo) {
-          if (vo.interviewInfo.data.data.length > 1) {
+        let status = { vkey: vo.resume.vkey, type: 'resume' }
+        manyrecordstatus(status).then((res) => {
+          if (res.data.data.data.length > 1) {
             this.pop = {
               isShow: true,
               Interview: true,
@@ -1548,12 +1549,7 @@ export default class CourseList extends Vue {
               this.init()
             })
           }
-        } else {
-          confirmInterviewApi({ interviewId: this.interviewId }).then((res) => {
-            this.$message.success('约面成功')
-            this.init()
-          })
-        }
+        })
         break
       case 'arranging-interviews':
         this.pop = {
@@ -1591,7 +1587,8 @@ export default class CourseList extends Vue {
               this.positionOption = hasOnline
             })
           } else {
-            recruiterPositonList().then((res) => {
+            let datalist = { is_online: 1 }
+            recruiterPositonList(datalist).then((res) => {
               let arr = res.data.data
               let hasOnline = []
               arr.map((v, k) => {
@@ -1628,8 +1625,9 @@ export default class CourseList extends Vue {
         })
         break
       case 'inappropriate':
-        if (vo.interviewInfo) {
-          if (vo.interviewInfo.data.data.length > 1) {
+        let status2 = { vkey: vo.resume.vkey, type: 'resume' }
+        manyrecordstatus(status2).then((res) => {
+          if (res.data.data.data.length > 1) {
             this.pop = {
               isShow: true,
               Interview: true,
@@ -1638,7 +1636,7 @@ export default class CourseList extends Vue {
               btntext: '确定',
               type: 'applyrecord'
             }
-            let applylists = vo.interviewInfo.data.data.slice()
+            let applylists = res.data.data.data.slice()
             applylists.push({ positionName: '都不合适我' })
             applylists.map((v, k) => {
               if (v.positionId === 0) {
@@ -1663,22 +1661,7 @@ export default class CourseList extends Vue {
               this.reasonlist = arr
             })
           }
-        } else {
-          this.pop = {
-            isShow: true,
-            Interview: true,
-            InterviewTitle: '选择不合适原因',
-            btntext: '保存',
-            type: 'inappropriate'
-          }
-          getCommentReasonApi().then((res) => {
-            let arr = res.data.data
-            arr.map((v, k) => {
-              v.cur = false
-            })
-            this.reasonlist = arr
-          })
-        }
+        })
         break
       case 'cancel':
         break
