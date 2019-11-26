@@ -231,3 +231,11 @@ export const getSearchCompanys = data => request({
   params: data,
   config: { host: 'qiuzhi' }
 })
+
+/* 获取公司招聘团队 */
+export const getCompanysTeamApi = (data) => request({
+  url: `/company/recruiters/${data.companyId}`,
+  method: 'get',
+  params: data,
+  config: { host: 'qiuzhi' }
+})

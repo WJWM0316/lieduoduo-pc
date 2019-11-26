@@ -64,6 +64,10 @@ export default {
     showUploadDetails: {
       type: Boolean,
       default: true
+    },
+    islogin: {
+      type: Boolean,
+      default: true
     }
   },
   computed: {
@@ -152,8 +156,9 @@ export default {
     },
     handleClickInput () {
       if (this.disabled || this.uploadLoading) return
+      if (!this.islogin) { return }
       if (this.showTips) {
-        this.$alert(`<p class="alert-content">支持pdf、jpg、png、doc、docx格式附件</p>`, `文件大小不超过 ${this.size}M`, {
+        this.$alert(`<p class="alert-content">文件大小不超过 ${this.size}M</p>`, `支持pdf、jpg、png、doc、docx格式附件`, {
           confirmButtonText: '确定',
           confirmButtonClass: 'alert button',
           dangerouslyUseHTMLString: true,
