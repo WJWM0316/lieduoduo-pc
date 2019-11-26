@@ -288,7 +288,7 @@ $image-wrapper: 112px;
   span {
     position: absolute;
     z-index: 3;
-    left: $image-wrapper / 2 - 18px;;
+    left: $image-wrapper / 2 - 14px;
     top: $base-warpper-height / 2 - 18px;
     font-size: 32px;
     opacity: 0;

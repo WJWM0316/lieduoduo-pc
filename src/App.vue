@@ -40,6 +40,7 @@ export default class APP extends Vue {
 <style lang="scss">
 // common  css
 @import './assets/css/index.css';
+@import './assets/scss/common.scss';
 @import './assets/scss/button.scss';
 @import './eleui/element.reset.scss';
 

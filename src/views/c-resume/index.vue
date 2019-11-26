@@ -267,7 +267,7 @@ export default {
     color: $title-color-1;
     span {
       padding: 0 20px 0 26px;
-      color: $title-color-1;
+      color: $title-color-2;
       font-size: 14px;
     }
   }

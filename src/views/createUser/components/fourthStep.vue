@@ -38,9 +38,9 @@
     <select-labels
         ref="labels"
         v-model="form.fieldId"
-        valid-filter-text="请选期望领域"
+        valid-filter-text="请选选择期望职位"
         :limit="3"
-        title="请选期望领域"
+        title="期望领域"
         type="field"
         @on-selected="handleSelectLabeld">
         <div class="formItem">

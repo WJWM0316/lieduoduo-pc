@@ -1,21 +1,23 @@
 <template>
 <!-- 上传附件简历 -->
   <div>
-    <div class="file-wrapper" v-if="value.id || tempFile.id">
-      <span class="file-icon">
-        <i class="iconfont" :class="fileTypeStyle.icon" :style="{'color': fileTypeStyle.color}"></i>
-      </span>
-      <div class="file-content">
-        <span class="file-name">{{tempFile.fileName || value.fileName}}</span>
-        <div class="file-process" v-if="uploadLoading || tempFile.id">
-          <div :style="{width: precent + '%'}" class="file-processing"></div>
-        </div>
-        <div class="file-info" v-else>
-          <span class="file-time">{{value.createdAt | date('YYYY-MM-DD')}} 更新</span>
-          <span class="file-size">{{value.sizeM}}</span>
+    <template v-if="showUploadDetails">
+      <div class="file-wrapper" v-if="value.id || tempFile.id">
+        <span class="file-icon">
+          <i class="iconfont" :class="fileTypeStyle.icon" :style="{'color': fileTypeStyle.color}"></i>
+        </span>
+        <div class="file-content">
+          <span class="file-name">{{tempFile.fileName || value.fileName}}</span>
+          <div class="file-process" v-if="uploadLoading || tempFile.id">
+            <div :style="{width: precent + '%'}" class="file-processing"></div>
+          </div>
+          <div class="file-info" v-else>
+            <span class="file-time">{{value.createdAt | date('YYYY-MM-DD')}} 更新</span>
+            <span class="file-size">{{value.sizeM}}</span>
+          </div>
         </div>
       </div>
-    </div>
+    </template>
     <div @click="handleClickInput" v-loading="uploadLoading">
       <slot><el-button type="primary" :disabled="disabled">文件上传</el-button></slot>
     </div>
@@ -58,7 +60,11 @@ export default {
       default: 0
     },
     showTips: Boolean, // 是否提示上传的文件类型
-    disabled: Boolean
+    disabled: Boolean,
+    showUploadDetails: {
+      type: Boolean,
+      default: true
+    }
   },
   computed: {
     fileTypeStyle () {
@@ -146,10 +152,19 @@ export default {
     },
     handleClickInput () {
       if (this.disabled || this.uploadLoading) return
-      /* if(this.showTips) {
-
-      } */
-      this.$refs[this.eventKey].click()
+      if (this.showTips) {
+        this.$alert(`<p class="alert-content">支持pdf、jpg、png、doc、docx格式附件</p>`, `文件大小不超过 ${this.size}M`, {
+          confirmButtonText: '确定',
+          confirmButtonClass: 'alert button',
+          dangerouslyUseHTMLString: true,
+          customClass: 'file-alert',
+          center: true
+        }).then(() => {
+          this.$refs[this.eventKey].click()
+        })
+      } else {
+        this.$refs[this.eventKey].click()
+      }
     }
 
   }
@@ -199,4 +214,17 @@ export default {
     background: $bg-color-10;
   }
 }
+</style>
+<style lang="scss">
+.file-alert .el-message-box__title{
+  font-size: 14px;
+  color: $title-color-1;
+}
+.alert-content {
+  color: $sub-color-1;
+}
+.alert.button {
+  width: 258px;
+}
+
 </style>

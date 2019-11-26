@@ -157,8 +157,8 @@ export default {
       if (this.multiple) this.multipleLading = true
       this.$emit('before')
       uploadApi(formdata).then(({ data }) => {
-        if (!this.multiple) this.singleLoding = false
-        if (this.multiple) this.multipleLading = false
+        this.singleLoding = false
+        this.multipleLading = false
         if (data.httpStatus === 200) {
           if (this.multiple) {
             const newList = [...this.value, ...data.data]
@@ -181,8 +181,8 @@ export default {
         }
       }).catch(() => {
         this.$emit('fail')
-        if (!this.multiple) this.singleLoding = false
-        if (this.multiple) this.multipleLading = true
+        this.singleLoding = false
+        this.multipleLading = false
       })
     },
     handleRemoveImage (index) {

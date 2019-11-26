@@ -30,7 +30,7 @@
         <el-popover
           placement="right"
           width="150"
-          trigger="hover">
+          trigger="click">
           <div class="share-image">
             <img :src="qrcode" alt="" style="width: 100%">
           </div>
@@ -41,7 +41,7 @@
         <el-popover
           placement="right"
           width="150"
-          trigger="hover">
+          trigger="click">
           <div class="download-popover">
               <p class="download-popover-title">下载简历</p>
               <p class="download-popover-tip">请选择下载格式：</p>

@@ -4,7 +4,7 @@
     <div @click="handleShow">
       <slot>
         <div class="el-input el-input--suffix">
-          <div class="el-input__inner">{{value || title}}</div>
+          <div class="el-input__inner">{{value || '请选择' + title}}</div>
           <span class="el-input__suffix">
             <span class="el-input__suffix-inner">
               <i class="el-select__caret el-input__icon el-icon-arrow-down"></i>
@@ -17,7 +17,7 @@
       width="450px"
       :visible.sync="dialogStatus"
       :show-close="false">
-      <div slot="title">{{title}} <span v-if="!multiple" class="title-tips">(最多选{{limit}}个职业标签)</span></div>
+      <div slot="title">{{'请选择' + title}} <span v-if="!multiple" class="title-tips">(最多选{{limit}}个{{title}})</span></div>
       <div class="">
         <div class="selected-labels">
           <template v-for="(item, index) in selectLabels">
@@ -160,7 +160,7 @@ export default {
       // const limit = parent ? parent.limit || this.limit : this.limit
       // const select = parent ? parent.checked.length : this.selectLabels.length
       if (this.selectLabels.length >= this.limit) {
-        this.$message.warning(`${parent ? parent.title : ''}最多只能选择3个`)
+        this.$message.warning(`${parent ? parent.tipText : this.title}最多只能选择${this.limit}个`)
         return false
       }
       return true

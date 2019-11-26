@@ -216,6 +216,7 @@ export default {
 }
 .wrapper-button {
   text-align: right;
+  padding-right: 12px;
   .el-button {
     width: 88px;
   }

@@ -25,7 +25,7 @@
               <select-labels
                 :multiple="true"
                 v-model="form.position"
-                title="请选择职业标签"
+                title="职业标签"
                 type="skills"
                 :filter="expectId"
                 :multiple-config.sync="positionLabelsConfig" />
@@ -36,7 +36,7 @@
             <el-form-item>
               <select-labels
                 v-model="form.life"
-                title="请选择生活标签"
+                title="生活标签"
                 :multiple="true"
                 :multiple-config.sync="listLabelsConfig"
                 type="life" />
@@ -75,8 +75,8 @@ export default {
   },
   data () {
     return {
-      positionLabelsConfig: [{ title: '职业技能', limit: 3, checked: [] }, { title: '职业素养', limit: 3, checked: [] }],
-      listLabelsConfig: [{ title: '性格', limit: 3, checked: [] }, { title: '爱好', limit: 3, checked: [] }],
+      positionLabelsConfig: [{ title: '职业技能', tipText: '职业标签', limit: 3, checked: [] }, { title: '职业素养', tipText: '职业标签', limit: 3, checked: [] }],
+      listLabelsConfig: [{ title: '性格', tipText: '生活标签', limit: 3, checked: [] }, { title: '爱好', tipText: '生活标签', limit: 3, checked: [] }],
       form: {
         signature: '',
         position: '',

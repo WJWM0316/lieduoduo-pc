@@ -74,7 +74,7 @@
                 valid-filter-text="请选择职位类别"
                 :limit="3"
                 :filter="form.positionTopid"
-                title="请选择技能标签"
+                title="技能标签"
                 type="position"
                 @on-selected="handleSelectLabeld" />
             </el-form-item>
