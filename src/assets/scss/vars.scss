@@ -1,19 +1,19 @@
 
 
 // 主样式
-$main-color-1: #00C4CD;
-$main-color-2: #E5F9FA;
+$main-color-1: #03B3BB;
+$main-color-2: #35E5ED;
 // $main-color-3: #BC94D7;
 
 // 辅助颜色
-$sub-color-1: #FFDC29;
+$sub-color-1: #FF9E40;
 // $sub-color-1: $main-color-1;
 
 // 按钮禁止点击
 $btn-forbid: #E6E6E6;
 
 // 警告颜色
-$error-color-1: #FF7F4C;
+$error-color-1: #FF9E40;
 
 // element-ui
 $--color-primary: $main-color-1;
@@ -24,19 +24,19 @@ $--button-small-height: 32px;
 
 
 // 高亮字体颜色
-$lightFont-color-orange: #FF7F4C;
+$lightFont-color-orange: #FF9E40;
 $lightFont-color-purple: $main-color-1;
 
 // 图标颜色
 $iconFont-gray: #CDCBCF;
 
 // 背景颜色
-$bg-color-1: #FBFBFF;
+$bg-color-1: #F8FAFA;
 $bg-color-2: #212628;
-$bg-color-3: #4A4534;
-$bg-color-4: $main-color-1;  // (主题色)
+$bg-color-3: #2A3436;
+$bg-color-4: #00C4CD;  // (主题色)
 // $bg-color-5: #EFE9F4;
-$bg-color-5: $main-color-2;  // (主题色)
+$bg-color-5: #E5F9FA;  // (主题色)
 $bg-color-6: #F5F4F7;
 $bg-color-8: #F8F8F8;
 $bg-color-9: $sub-color-1;
@@ -46,12 +46,12 @@ $bg-color-10: #FFDC2A;
 // 线条颜色
 // $border-color-1: #E8E9EB;
 $border-color-1: #DDE1E0;
-$border-color-2: $main-color-1; // (主题色)
+$border-color-2: #00C4CD; // (主题色)
 $border-color-3: #F1F2F2;
 $barder-color-4: #CDCBCF;
 $border-color-5: #BCBCBC;
 $border-color-6: #DCDCDC;
-
+$border-color-7: #66666E;
 // scroll bar 滚动条配置
 $scroll-bar-color: #EBEAEB;
 
@@ -63,7 +63,6 @@ $font-color-5: #5C565D;
 $font-color-6: #66666E;
 $font-color-9: #92929B;
 $font-color-10: #BCBEC0;
-$font-color-11: #ABABAB;
 $font-color-12: #CDCBCF;
 //
 $font-color-temp1: #FF9E40;
@@ -78,7 +77,7 @@ $title-color-3: $font-color-10;
 
 // 导航颜色
 $nav-color-hover: $main-color-1;
-$nav-color-default: $font-color-11;
+$nav-color-default: $font-color-10;
 $nav-color-bg-color: $bg-color-2;
 
 // 阴影

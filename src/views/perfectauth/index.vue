@@ -7,7 +7,7 @@
       </div>
     </div>
     <div class="info">
-      <template v-if="0">
+      <template v-if="!haveIdentity">
       <div class="authtitle">
         完善身份信息
       </div>
@@ -40,7 +40,7 @@
             <el-input v-model="ruleForm.real_name" placeholder="请填写你的真实姓名"></el-input>
           </el-form-item>
            <el-form-item label="身份证号" prop="identity_num">
-            <el-input v-model="ruleForm.identity_num" placeholder="请填写18位身份证号码"></el-input>
+            <el-input :maxlength="18" v-model="ruleForm.identity_num" placeholder="请填写18位身份证号码"></el-input>
           </el-form-item>
         </el-form>
         </div>
@@ -49,19 +49,17 @@
         <template v-else>
           <div class="status">
             <div class="topicon">
-              <img v-if="1" src="@/assets/images/adopt.png" />
+              <img v-if="companyInfo.status === 1 || companyInfo.status === 0" src="@/assets/images/adopt.png" />
               <img v-else src="@/assets/images/notadopt.png" />
             </div>
-            <div class="status-text">实名认证审核中</div>
-            <!-- <div class="status-text">实名认证审核不通过</div> -->
-            <div class="status-desc">该申请将在1个工作日内审核，审核通过后即可开始招聘</div>
-            <!-- <div class="status-desc">请重新提交资料，完成个人信息认证</div> -->
-            <div class="nopass">
+            <div class="status-text" v-if="companyInfo.status === 0">实名认证审核中</div>
+            <div class="status-text" v-if="companyInfo.status === 2">实名认证审核不通过</div>
+            <div class="status-desc" v-if="companyInfo.status === 0">该申请将在1个工作日内审核，审核通过后即可开始招聘</div>
+            <div class="status-desc" v-if="companyInfo.status === 2">请重新提交资料，完成个人信息认证</div>
+            <div class="nopass" v-if="companyInfo.status === 2">
               <div class="title">实名认证审核未通过的原因如下</div>
               <div class="reson">
-                <span>您提供的公司资质资料与猎多多不符；</span>
-                <span>涉嫌使用他人证件提交认证，与猎多多的规则不符；</span>
-                <span>身份证件整体模糊</span>
+                <span>{{companyInfo.reviewNote}}</span>
               </div>
             </div>
             <div class="authinfo">
@@ -71,11 +69,11 @@
               </div>
               <div class="item">
                 <div class="title">真实姓名</div>
-                <div class="text">张思言</div>
+                <div class="text">{{info.realName}}</div>
               </div>
               <div class="item">
                 <div class="title">身份证号</div>
-                <div class="text">3*******************3</div>
+                <div class="text">{{info.identityNum.substr(0, 1) + '****************' + info.identityNum.substring(17, 18)}}</div>
               </div>
               <div class="item">
                 <div class="title">证件照片</div>
@@ -91,6 +89,7 @@
 <script>
 import { realNameReg, idCardReg } from '@/util/fieldRegular.js'
 import Picture from 'COMPONENTS/common/upload/picture'
+import { getCompanyIdentityInfosApi, identityCompanyApi } from 'API/register'
 export default {
   components: {
     Picture
@@ -121,6 +120,9 @@ export default {
         real_name: '',
         identity_num: ''
       },
+      haveIdentity: false,
+      companyInfo: '',
+      info: '',
       frontLoading: false,
       rules: {
         real_name: [
@@ -140,7 +142,10 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          console.log(this.ruleForm)
+          identityCompanyApi(this.ruleForm).then((res) => {
+            this.getCompanyIdentityInfos()
+            this.$message('完善信息成功')
+          })
         } else {
           return false
         }
@@ -149,7 +154,17 @@ export default {
     handleChangefront (data) {
       this.ruleForm.passport_front_url = data[0].smallUrl
       this.ruleForm.passport_front = data[0].id
+    },
+    getCompanyIdentityInfos () {
+      getCompanyIdentityInfosApi().then(res => {
+        this.haveIdentity = res.data.data.haveIdentity
+        this.companyInfo = res.data.data.companyInfo
+        this.info = res.data.data
+      })
     }
+  },
+  mounted () {
+    this.getCompanyIdentityInfos()
   }
 }
 </script>
@@ -159,6 +174,7 @@ export default {
   height:800px;
   padding: 0 !important;
   background:#fff;
+  display: flex;
   .account_tab{
     width:190px;
     height:800px;

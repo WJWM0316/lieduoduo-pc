@@ -40,18 +40,19 @@
               </div>
             </div>
           </router-link>
-          <div class="pagination" v-if="total > 0 && total > params.count">
-            <el-pagination
-              background
-              @current-change="(val) => handleSearch(val, 'page')"
-              :current-page.sync ="params.page"
-              :page-size="params.count"
-              layout="prev, pager, next"
-              :total="total">
-            </el-pagination>
-          </div>
+        </div>
+        <div class="pagination" v-if="total > 0 && total > params.count">
+          <el-pagination
+            background
+            @current-change="(val) => handleSearch(val, 'page')"
+            :current-page.sync ="params.page"
+            :page-size="params.count"
+            layout="prev, pager, next"
+            :total="total">
+          </el-pagination>
         </div>
       </div>
+
       <div>
         <guide-login class="guide-login" v-if="!isLogin" ref="guideLogin"></guide-login>
         <adpostion position="searchResult"></adpostion>
@@ -325,7 +326,7 @@ export default {
     margin-top: -18px;
     height: 100%;
     right: 0;
-    background: $bg-color-1;
+    // background: $bg-color-5;
     z-index: 2;
     .el-button {
       width: 146px;
@@ -335,7 +336,7 @@ export default {
   }
 }
 .position-list:hover {
-  background: $bg-color-1;
+  background: $bg-color-5;
   .contact-recruiter {
     display: block;
   }
@@ -344,7 +345,7 @@ export default {
   }
 }
 .pagination {
-  background: #fff;
+  background: $bg-color-1;
   padding: 30px 0;
   text-align: center;
 }

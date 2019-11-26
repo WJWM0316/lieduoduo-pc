@@ -10,7 +10,7 @@
         @success="imageUploadSuccess"
         @fail="imageUploadFail"></myCropper>
       <img v-if="imageUrl" :src="imageUrl" class="avatar">
-      <img v-else  class="iconfont icon-xiangji avatar-uploader-icon" />
+      <span v-else  class="iconfont icon-xiangji avatar-uploader-icon" />
     </div>
     <div class="formItem">
       <input placeholder="请输入真实姓名" v-model="formData.name" class="default" maxlength="10" />

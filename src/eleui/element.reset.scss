@@ -18,8 +18,9 @@
 .el-pagination.is-background {
   font-weight: normal;
 }
-.el-pagination.is-background .el-pager li.active + li {
-  border-left: 1px solid gainsboro;
+.el-pagination.is-background .el-pager li.active + li, .el-pagination.is-background .el-pager li {
+  // border-left: 1px solid gainsboro;
+  border: none;
 }
 
 /** 设置input */
@@ -38,6 +39,7 @@
 .el-dialog {
   .el-dialog__header {
     font-size: 18px;
+    text-align: left;
     color: $title-color-1;
     .title-tips {
       font-size: 14px;

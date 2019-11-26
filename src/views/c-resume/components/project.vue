@@ -144,7 +144,7 @@ export default {
         Object.assign(this.form, {
           name: item.name,
           role: item.role,
-          times: [item.startTimeDesc, item.endTimeDesc],
+          times: [item.startTime * 1000, item.endTime * 1000],
           description: item.description,
           link: item.link
         })
@@ -154,8 +154,8 @@ export default {
         this.$refs.form.validate(valid => {
           if (valid) {
             const { name, role, times, description, link } = this.form
-            const startTime = parseInt(new Date(times[0].replace('-', '/')).getTime() / 1000)
-            const endTime = times[1] === '至今' ? 0 : parseInt(new Date(times[1].replace('-', '/')).getTime() / 1000)
+            const startTime = isNaN(times[0]) ? parseInt(new Date(times[0].replace('-', '/')).getTime() / 1000) : parseInt(times[0]) / 1000
+            const endTime = times[1] === 0 ? 0 : isNaN(times[1]) ? parseInt(new Date(times[1].replace('-', '/')).getTime() / 1000) : parseInt(times[1]) / 1000
             if (this.isAdd) {
               addProject({ name, role, description, link, startTime, endTime }).then(async ({ data }) => {
                 if (data.httpStatus === 200) {

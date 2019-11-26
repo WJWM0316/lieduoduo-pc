@@ -217,7 +217,7 @@ $header-height-1: $page-header-height;
   margin-right: 70px;
   color: $nav-color-default;
   span:first-child {
-    color: $sub-color-1;
+    color: $nav-color-hover;
     padding-right: 16px;
   }
   .iconfont {
@@ -264,7 +264,7 @@ $header-height-1: $page-header-height;
     cursor: pointer;
   }
   .resume.router-link-active {
-    color: $sub-color-1;
+    color: $nav-color-hover;
   }
 }
 .system {
@@ -275,7 +275,7 @@ $header-height-1: $page-header-height;
     padding-left: 24px;
   }
   span:hover,.active {
-    color: $sub-color-1;
+    color: $nav-color-hover;
   }
 }
 .header-info {
@@ -288,7 +288,7 @@ $header-height-1: $page-header-height;
     padding-right: 3px;
   }
   span:hover{
-    color: $sub-color-1;
+    color: $nav-color-hover;
   }
   .user-name {
     color: $nav-color-default;

@@ -127,8 +127,8 @@ export default class InterviewBtn extends Component {
   // 求职者开撩
   jobHunterChat () {
     this.btnLoad = true
-    let isSpecail = this.infos.isRapidly === 1
-                    && !this.interviewInfos.applied &&
+    let isSpecail = this.infos.isRapidly === 1 &&
+                    !this.interviewInfos.applied &&
                     this.infos.rapidlyInfo.applyNum + this.infos.rapidlyInfo.natureApplyNum < this.infos.rapidlyInfo.seatsNum
     let parmas = { recruiterUid: this.infos.recruiterInfo.uid, positionId: this.infos.id }
     if (isSpecail) parmas.interview_type = 2
@@ -146,7 +146,6 @@ export default class InterviewBtn extends Component {
       } else {
         if (isSpecail) {
           this.$message.success('面试官已收到你的申请，将于24h内反馈')
-          
         } else {
           this.$message.success('开撩成功')
         }
@@ -232,7 +231,7 @@ export default class InterviewBtn extends Component {
       .accept {
         width: 50%;
         height: 100%;
-        background: $main-color-1;
+        background: $bg-color-4;
         color: #fff;
         border: none;
         cursor: pointer;
@@ -241,7 +240,7 @@ export default class InterviewBtn extends Component {
     }
 
     &.canView {
-      background: $main-color-1;
+      background: $bg-color-4;
       color: #fff;
     }
     &.scheduling.specailBtn {
@@ -250,7 +249,7 @@ export default class InterviewBtn extends Component {
     }
     &.canView.specailBtn {
       background: $sub-color-1;
-      color: $main-color-1;
+      color: #fff;
     }
   }
 }

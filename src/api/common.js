@@ -1,13 +1,21 @@
 /**
  * 公共模块API
  */
-import {
-  request
-} from './index.js'
+import { request } from './index.js'
 
 // 获取banner 图
 export const getBanners = data => request({
   url: '/banner',
+  method: 'get',
+  params: data,
+  config: {
+    host: 'qiuzhi'
+  }
+})
+
+// 获取友情链接
+export const getLinks = data => request({
+  url: '/link/lists',
   method: 'get',
   params: data,
   config: {

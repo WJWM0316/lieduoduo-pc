@@ -93,7 +93,7 @@ export default {
       })
     },
     handleClose () {
-      this.$confirm('退出编辑后，更新的内容不会自动保存?', '有内容没有保存?确定退出编辑吗?', {
+      this.$confirm('退出编辑后，更新的内容不会自动保存', '有内容没有保存，确定退出编辑吗?', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -118,12 +118,12 @@ export default {
     showEditCompoents () {
       // 如果是编辑状态不允许检测简历状态
       if (!this.unshowEdit) return
-      this.validateIsEdit('add')
+      this.validateIsEdit('add', { propClass: this.$parent.propClass })
     },
     // 验证时候有编辑状态的表单 | 简历是否在编辑状态
     validateIsEdit (type = 'add', params = {}) {
       if (this.setEditStatus) {
-        this.$confirm('简历正在编辑状态，是否关闭其他编辑项？', '提示', {
+        this.$confirm('退出编辑后，更新的内容不会自动保存', '有内容没有保存，确定退出编辑吗?', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'

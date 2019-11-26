@@ -47,7 +47,7 @@
                   :style="{width: (item.applyNum + item.natureApplyNum) / item.seatsNum * 100 + '%'}"></span>
               </span>
             </div>
-            <el-button type="primary" size="medium" style="width: 71px" round>马上抢</el-button>
+            <el-button type="warning"  size="medium" style="width: 71px" round>马上抢</el-button>
           </div>
         </router-link>
       </template>
@@ -206,7 +206,7 @@ export default {
       opacity: 0;
       transform: translateY(30px);
       color: #fff;
-      background: linear-gradient(to left, $main-color-2, $main-color-1);
+      background: $bg-color-4;
     }
     p.animation {
       animation: bubble 5s infinite;
@@ -316,12 +316,12 @@ export default {
   .list-footer {
     @include flex-v-center;
     box-sizing: border-box;
-    background: $bg-color-9;
+    background: $bg-color-4;
     padding: 10px 20px;
     height: 54px;
   }
   .count-down {
-    color: $font-color-2;
+    color: #fff;
     font-size: 14px;
     span {
       vertical-align: middle;
@@ -332,7 +332,7 @@ export default {
   }
   .list-day, .list-hour, .list-mins, .list-second {
     width: 24px;
-    background: $font-color-2;
+    background: #fff;
     color: $sub-color-1;
     text-align: center;
     border-radius:4px;
@@ -348,9 +348,9 @@ export default {
     p {
       font-size: 12px;
       font-weight: 300;
-      color: $font-color-2;
+      color: #fff;
       b {
-        color: $main-color-1;
+        color: #fff;
         font-weight: 700;
       }
     }
@@ -360,7 +360,7 @@ export default {
     }
   }
   .position-process {
-    background: #fff;
+    background: rgba(#fff, 0.6);
     width:53px;
     position: relative;
     margin-left: 26px;
@@ -373,7 +373,7 @@ export default {
       position: absolute;
       top: 0;
       left: -26px;
-      background: $bg-color-4;
+      background: #fff;
       border-radius:4px 0 0 4px;
     }
     &.noApply {
@@ -383,7 +383,7 @@ export default {
     }
   }
   .position-process-width {
-    background: $bg-color-4;
+    background: #fff;
     position: absolute;
     left: 0;
     top: 0;

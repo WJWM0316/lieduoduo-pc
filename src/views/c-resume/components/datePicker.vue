@@ -22,7 +22,7 @@
           </div>
         </div>
         <div class="el-input el-input--suffix" slot="reference">
-          <div class="el-input__inner"><span v-if="!startTime">{{placeholder}}</span>{{startTime}}</div>
+          <div class="el-input__inner"><span v-if="!inputStartTimeValue">{{placeholder}}</span>{{inputStartTimeValue}}</div>
           <span class="el-input__suffix">
             <span class="el-input__suffix-inner"><i class="el-select__caret el-input__icon el-icon-arrow-up" :class="{'is-reverse':startTimePopStatus}"></i></span>
           </span>
@@ -53,7 +53,7 @@
             </div>
           </div>
           <div class="el-input el-input--suffix" :class="{'is-disabled': !this.startTime}" slot="reference">
-            <div class="el-input__inner"><span v-if="!endTime">{{endPlaceholder}}</span>{{endTime}}</div>
+            <div class="el-input__inner"><span v-if="!inputEndTimeValue">{{endPlaceholder}}</span>{{inputEndTimeValue}}</div>
             <span class="el-input__suffix">
               <span class="el-input__suffix-inner"><i class="el-select__caret el-input__icon el-icon-arrow-up" :class="{'is-reverse':endTimePopStatus}"></i></span>
             </span>
@@ -67,11 +67,27 @@
 /**
  * 仅支持 YYYY-MM 格式
  */
+const formatData = (str, textValue) => {
+  if (typeof str === 'string') {
+    str = String(str).replace('-', '/')
+  }
+  // eslint-disable-next-line eqeqeq
+  if (new Date(str) == 'Invalid Date') {
+    return ''
+  // eslint-disable-next-line eqeqeq
+  } else if (str == 0) {
+    return textValue
+  } else {
+    let times = new Date(str)
+    let month = times.getMonth() + 1
+    return `${times.getFullYear()}-${month > 9 ? month : '0' + month}`
+  }
+}
 export default {
   props: {
     value: {
       required: true,
-      type: [Array, String],
+      type: [Array, String, Number],
       default: () => ([])
     },
     separator: {
@@ -105,14 +121,23 @@ export default {
     }
   },
   computed: {
+    inputStartTimeValue () {
+      if (this.single) {
+        return formatData(this.value, this.textValue)
+      }
+      return formatData(this.value[0], this.textValue)
+    },
+    inputEndTimeValue () {
+      return formatData(this.value[1], this.textValue)
+    },
     startTime () {
       if (this.single) {
         return this.value
       }
-      return this.value[0] || ''
+      return this.value[0]
     },
     endTime () {
-      return this.value[1] || ''
+      return this.value[1]
     }
   },
   data () {
@@ -182,12 +207,12 @@ export default {
     },
     getNowYears (type) {
       if (this.single) {
-        return this.startTimeValue.now ? this.textValue : `${this.startTimeValue.year}-${this.startTimeValue.month}`
+        return this.startTimeValue.now ? 0 : `${this.startTimeValue.year}-${this.startTimeValue.month}`
       }
       if (type === 'startTime') {
-        return [this.startTimeValue.now ? this.textValue : `${this.startTimeValue.year}-${this.startTimeValue.month}`, this.endTime]
+        return [this.startTimeValue.now ? 0 : `${this.startTimeValue.year}-${this.startTimeValue.month}`, this.endTime]
       } else {
-        return [this.startTime, this.endTimeValue.now ? this.textValue : `${this.endTimeValue.year}-${this.endTimeValue.month}`]
+        return [this.startTime, this.endTimeValue.now ? 0 : `${this.endTimeValue.year}-${this.endTimeValue.month}`]
       }
     },
     handleShowPopover (type) {
@@ -211,17 +236,20 @@ export default {
       })
     },
     compilerTime (str) {
-      str = str.replace('-', '/')
+      if (typeof str === 'string') {
+        str = str.replace('-', '/')
+      }
       // eslint-disable-next-line eqeqeq
       if (new Date(str) == 'Invalid Date') {
-        if (str === this.textValue) {
-          return { now: true, year: null, month: '' }
-        }
+        return { now: false, year: null, month: '' }
+      // eslint-disable-next-line eqeqeq
+      } else if (str == 0) {
+        return { now: true, year: null, month: '' }
       } else {
-        let times = str.split('/')
-        return { now: false, year: times[0], month: times[1] }
+        let times = new Date(str)
+        let month = times.getMonth() + 1
+        return { now: false, year: times.getFullYear(), month: month > 9 ? month : '0' + month }
       }
-      return { now: false, year: null, month: '' }
     },
     // 获取最近100年的
     getRecentlyYears () {

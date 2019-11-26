@@ -120,7 +120,7 @@ export default {
           school: item.school,
           degree: item.degree,
           major: item.major,
-          times: [item.startTimeDesc, item.endTimeDesc],
+          times: [item.startTime * 1000, item.endTime * 1000],
           experience: item.experience
         })
         this.currentId = item.id
@@ -129,8 +129,8 @@ export default {
         this.$refs.form.validate(valid => {
           if (valid) {
             const { school, degree, major, times, experience } = this.form
-            const startTime = parseInt(new Date(times[0].replace('-', '/')).getTime() / 1000)
-            const endTime = times[1] === '至今' ? 0 : parseInt(new Date(times[1].replace('-', '/')).getTime() / 1000)
+            const startTime = isNaN(times[0]) ? parseInt(new Date(times[0].replace('-', '/')).getTime() / 1000) : parseInt(times[0]) / 1000
+            const endTime = times[1] === 0 ? 0 : isNaN(times[1]) ? parseInt(new Date(times[1].replace('-', '/')).getTime() / 1000) : parseInt(times[1]) / 1000
             if (this.isAdd) {
               addEducation({ school, degree, major, experience, startTime, endTime }).then(async ({ data }) => {
                 if (data.httpStatus === 200) {

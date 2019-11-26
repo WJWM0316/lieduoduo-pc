@@ -18,6 +18,8 @@ export default class APP extends Vue {
       this.getUserRoleInfo()
     }).catch(e => {
       this.$store.commit('SETLOGIN', 0)
+      // 移除数据|退出登陆
+      this.$store.commit('LOGOUT')
     })
   }
   getUserRoleInfo () {
@@ -36,11 +38,12 @@ export default class APP extends Vue {
 }
 </script>
 <style lang="scss">
+// common  css
 @import './assets/css/index.css';
 @import './assets/scss/button.scss';
 @import './eleui/element.reset.scss';
+
 #app, .c-app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
   color: #2c3e50;
   background: $bg-color-1;
 }

@@ -2,12 +2,10 @@
   <div class="index-login">
     <div class="login-bg">
       <div class="main-center index-login-wrapper">
-        <div class="position-number">
-          <div class="position-number-wrapper">
-            <div><img src="../../../assets/images/index/login_text.png" alt=""></div>
-            <p><span>{{total.coolCompanyNum}}</span>酷公司 <i>|</i> <span>{{total.goodChanceNum}}</span>好机会</p>
-          </div>
-        </div>
+        <p class="position-number">
+          <span class="banner-text">高薪工作，就在猎多多</span>
+          <span class="banner-number"><span>{{total.coolCompanyNum}} 酷公司</span><span>{{total.goodChanceNum}} 好机会</span></span>
+        </p>
         <div class="login-wrapper">
           <el-input class="login-phone-input el-input-radius2px" maxlength="11" placeholder="请输入手机号码" v-model="loginForm.mobile" size="medium" />
           <el-input  class="login-code-input el-input-radius2px" placeholder="验证码" v-model="loginForm.code" size="medium">
@@ -96,7 +94,7 @@ $index-login-height: 120px;
 .login-bg {
   width: 1200px;
   margin: 0 auto;
-  background-image: url(#{$image-cdn-url}/images/index_banner.gif);
+  background-image: url(#{$image-cdn-url}/images/index_banner.png);
   background-size: cover;
   background-repeat: no-repeat;
   height: $index-login-height;
@@ -107,31 +105,28 @@ $index-login-height: 120px;
   background: $bg-color-4;
 }
 .index-login-wrapper {
-  @include flex-v-center;
   height: 100%;
+  text-align: right;
 }
 .position-number {
-  flex: 1;
-  text-align: center;
-  .position-number-wrapper {
-    margin-left: 350px;
-    width: 280px;
-    text-align: left;
+  span {
     display: inline-block;
-    img {
-      max-width: 100%;
-    }
-  }
-  p {
+    vertical-align: middle;
     color: #fff;
-    font-size: 14px;
-    margin-top: 6px;
-    span {
-      color: $sub-color-1;
-      padding-right: 6px;
-    }
-    i {
-      padding: 0 6px;
+  }
+  .banner-text,.banner-number {
+    text-align: center;
+    height: 34px;
+    line-height: 34px;
+    margin: 20px 0 12px;
+  }
+  .banner-text {
+    width: 196px;
+  }
+  .banner-number {
+    width: 258px;
+    span + span {
+      padding-left: 12px;
     }
   }
 }
@@ -142,7 +137,7 @@ $index-login-height: 120px;
   width:183px;
 }
 .login-code-input {
-  width:143px;
+  width:152px;
   margin: 0 15px 0 6px;
   .code-span {
     padding:0 3px 0 3px;
@@ -153,7 +148,7 @@ $index-login-height: 120px;
   }
 }
 .login-btn {
-  width:85px;
+  width:100px;
   cursor: pointer;
   text-align: center;
   height: 36px;
@@ -164,7 +159,7 @@ $index-login-height: 120px;
   font-size:14px;
 }
 .login-wrapper {
-  width: 460px;
+  width: 100%;
   @include flex-v-center;
   justify-content: flex-end;
 }

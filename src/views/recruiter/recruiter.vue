@@ -169,6 +169,7 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import { getMyInfoApi } from '../../api/auth'
 import MessageDiggle from '../registerCompany/components/message.vue'
+import { getCompanyIdentityInfosApi } from 'API/register'
 import {
   getMyListApi,
   closePositionApi,
@@ -322,11 +323,17 @@ export default class CourseList extends Vue {
         }
         break
       case 'addJob':
-        this.msg.messageshow = true
-        this.$router.push({
-          name: 'postJob',
-          query: {
-            type: 'add'
+        getCompanyIdentityInfosApi().then(res => {
+          let haveIdentity = res.data.data.haveIdentity
+          if (!haveIdentity) {
+            this.msg.messageshow = true
+          } else {
+            this.$router.push({
+              name: 'postJob',
+              query: {
+                type: 'add'
+              }
+            })
           }
         })
         break
