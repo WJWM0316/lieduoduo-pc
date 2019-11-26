@@ -157,6 +157,9 @@ export default {
     },
     getCompanyIdentityInfos () {
       getCompanyIdentityInfosApi().then(res => {
+        if (res.data.data.companyInfo.status === 1) {
+          this.$router.push({ path: '/candidateType' })
+        }
         this.haveIdentity = res.data.data.haveIdentity
         this.companyInfo = res.data.data.companyInfo
         this.info = res.data.data

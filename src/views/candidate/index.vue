@@ -1029,6 +1029,7 @@ export default class CourseList extends Vue {
       this.form.created_start_time = undefined
       this.form.created_end_time = undefined
     }
+    this.form.page = 1
     this.getList()
   }
 
@@ -1137,10 +1138,12 @@ export default class CourseList extends Vue {
   screenOp (status) {
     switch (status) {
       case 'cancel':
+        this.form.page = 1
         this.setDefaultScreen()
         this.isShowScreen = false
         break
       case 'confirm':
+        this.form.page = 1
         this.getList()
         this.isShowScreen = false
         break
@@ -1269,6 +1272,7 @@ export default class CourseList extends Vue {
   // 职业类型列表
   getPositionList (listType) {
     this.form.status = listType
+    this.form.page = 1
     this.getList(this.navType)
   }
 

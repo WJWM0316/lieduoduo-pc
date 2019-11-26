@@ -36,7 +36,7 @@
                 <div class="triangle_border_top"></div>
                 <div class="screen_tit">{{getPopName()}}</div>
                 <div class="lable_list" >
-                  <span v-for="(item,index) in positionTypeList" v-show="item.name !== '我的主页'" :key="index" @click="labelClick(index)" :class="{'cur':item.active}" > {{item.name}}</span>
+                  <span v-for="(item,index) in positionTypeList" :key="index" @click="labelClick(index)" :class="{'cur':item.active}" > {{item.name}}</span>
                 </div>
 
                 <div class="screen_btns">
@@ -87,7 +87,7 @@
               <div class="leftMsg">
                 <div class="userBaseInfo">
                   <img class="gender" src="../../assets/images/girl.png" v-if="item.gender===2" />
-                  <img class="gender" src="../../assets/images/boy.png" v-else />image
+                  <img class="gender" src="../../assets/images/boy.png" v-else />
                   <img class="userIcon" :src="item.avatar.middleUrl" />
                   <div class="infoRight">
                     <div class="infoName textEllipsis">
@@ -138,16 +138,12 @@
               <div class="btn" @click.stop="setJob(item.uid, 'check-invitation', item, 1)" v-if="item.interviewInfo.data.haveInterview && item.interviewInfo.data.interviewStatus === 12">查看邀约</div>
               <div class="btn" @click.stop="setJob(item.uid, 'arranging-interviews', item, 1)" v-if="item.interviewInfo.data.haveInterview && item.interviewInfo.data.interviewStatus === 21">安排面试</div>
               <div class="btn" @click.stop="setJob(item.uid, 'arranging-interviews', item, 1)" v-if="item.interviewInfo.data.haveInterview && item.interviewInfo.data.interviewStatus === 31">
-                <!-- <span v-if="item.interviewInfo.data.data[0].type === 1">查看面试</span>
-                <span v-if="item.interviewInfo.data.data[0].type === 2">修改面试</span> -->
                  <span>查看面试</span>
                 </div>
               <div class="btn" @click.stop="setJob(item.uid, 'arranging-interviews', item, 1)" v-if="item.interviewInfo.data.haveInterview && item.interviewInfo.data.interviewStatus === 32">
-                <!-- <span v-if="item.interviewInfo.data.data[0].type === 1">查看面试</span>
-                <span v-if="item.interviewInfo.data.data[0].type === 2">修改面试</span> -->
                 <span>修改面试</span>
                 </div>
-              <div class="btn" :style="'background:#F8F8F8'" @click.stop="setJob(item.uid, 'interview-retract', item, 1)" v-if="!item.interviewInfo.data.haveInterview && item.interviewInfo.data.hasUnsuitRecord">撤回</div>
+              <!-- <div class="btn" :style="'background:#F8F8F8'" @click.stop="setJob(item.uid, 'interview-retract', item, 1)" v-if="!item.interviewInfo.data.haveInterview && item.interviewInfo.data.hasUnsuitRecord">撤回</div> -->
               <div class="btn" @click.stop="setJob(item.uid, 'check-invitation', item, 1)" v-if="item.interviewInfo.data.haveInterview && item.interviewInfo.data.interviewStatus >= 41">面试详情</div>
             </div>
           </div>
