@@ -730,7 +730,7 @@
               <div :class="['money', item.isOnline === 2 ? 'hui' : '']">{{item.emolumentMin}}K~{{item.emolumentMax}}K</div>
             </div>
             <div class="info">
-              <div :class="['address', item.isOnline === 2 ? 'hui' : '']">{{item.city}}</div>
+              <div :class="['address', item.isOnline === 2 ? 'hui' : '']">{{item.city}}{{item.district}}</div>
               <div :class="['year', item.isOnline === 2 ? 'hui' : '']">{{item.workExperienceName}}</div>
               <div :class="['benke', item.isOnline === 2 ? 'hui' : '']">{{item.educationName}}</div>
             </div>
@@ -779,7 +779,7 @@
               <div class="money" v-show="item.positionId !== 0 && item.positionName !== '都不合适我'">{{item.emolumentMin}}K~{{item.emolumentMax}}K</div>
             </div>
             <div class="info" v-if="item.positionName !== '都不合适我'">
-              <div :class="['address', item.isOnline === 2 ? 'hui' : '']">{{item.city}}</div>
+              <div :class="['address', item.isOnline === 2 ? 'hui' : '']">{{item.city}}{{item.district}}</div>
               <div :class="['year', item.isOnline === 2 ? 'hui' : '']">{{item.workExperienceName}}</div>
               <div :class="['benke', item.isOnline === 2 ? 'hui' : '']">{{item.educationName}}</div>
             </div>
@@ -913,7 +913,7 @@ export default class CourseList extends Vue {
     page: 1,
     count: 20,
     status: 0,
-    position_type: '', // 状态
+    position_type_id: '', // 状态
     created_start_time: null,
     created_end_time: null
   };
@@ -1228,8 +1228,8 @@ export default class CourseList extends Vue {
   getInviteList () {
     // let otherActive = this.getOtherActive()
     console.log(this.selectedScreen, '1')
-    this.form.position_type = this.selectedScreen.join()
-    // this.form.position_type = otherActive ? '0' : this.selectedScreen.join()
+    this.form.position_type_id = this.selectedScreen.join()
+    // this.form.position_type_id = otherActive ? '0' : this.selectedScreen.join()
     getInviteListApi(this.form)
       .then(res => {
         let msg = res.data.data
@@ -1249,8 +1249,8 @@ export default class CourseList extends Vue {
   getApplyList () {
     // let otherActive = this.getOtherActive()
     console.log(this.selectedScreen, '2')
-    // this.form.position_type = otherActive ? '0' : this.selectedScreen.join()
-    this.form.position_type = this.selectedScreen.join()
+    // this.form.position_type_id = otherActive ? '0' : this.selectedScreen.join()
+    this.form.position_type_id = this.selectedScreen.join()
     getApplyListApi(this.form)
       .then(res => {
         let msg = res.data.data
