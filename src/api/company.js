@@ -223,3 +223,11 @@ export const getHotCompanys = (data) => request({
   params: data,
   config: { host: 'qiuzhi' }
 })
+
+/* 公司搜索 */
+export const getSearchCompanys = data => request({
+  url: '/companies/sch',
+  method: 'get',
+  params: data,
+  config: { host: 'qiuzhi' }
+})

@@ -1,46 +1,24 @@
 <template>
   <div class="position-wrapper">
-    <search @on-search="(val) => handleSearch(val, 'append')" />
+    <search @on-search="(val) => handleSearch(val, 'append')" :type-name.sync="currentType" />
     <div class="main-center">
       <div class="lists-wrapper" v-loading="getLoading">
-        <no-found v-if="!getLoading && !listData.length" :max-width="400"></no-found>
-        <div class="position-lists" v-else>
-          <router-link
-            target="_blank"
-            :to="`/position/details?positionId=${item.id}`"
-            class="position-list"
-            v-for="item in listData" :key="item.id">
-            <div class="position-info">
-              <p>
-                <!-- 急聘 -->
-                <span class="position-active" v-if="item.isUrgency === 1"></span>
-                <span class="position-name">{{item.positionName}}</span>
-                <!-- 24反馈 -->
-                <span class="position-24hour" v-if="item.isRapidly === 1"></span>
-                <span class="position-pay">{{item.emolumentMin}}-{{item.emolumentMax}}K<template v-if="item.annualSalary > 12">·{{item.annualSalaryDesc}}</template></span>
-              </p>
-              <p class="position-require">
-                <span><i class="iconfont icon-dizhi"></i>{{item.city}}{{item.district}}</span>
-                <span><i class="iconfont icon-zhiwei"></i>{{item.workExperienceName}}</span>
-                <span><i class="iconfont icon-jiaoyu"></i>{{item.educationName}}</span>
-              </p>
-            </div>
-            <div class="company-info">
-              <p class="company-name">{{item.companyInfo.companyShortname}}</p>
-              <p class="company-details"><span>{{item.companyInfo.financingInfo}}</span>|<span>{{item.companyInfo.employeesInfo}}</span>|<span>{{item.companyInfo.industry}}</span></p>
-            </div>
-            <div class="recruiter-info">
-              <div class="recruiter-base-info">
-                <span class="recruiter-profile"><img :src="item.recruiterInfo&&item.recruiterInfo.avatar.smallUrl" alt=""></span>
-                <span class="recruiter-name">{{item.recruiterInfo && item.recruiterInfo.name}}</span><span>|</span><span class="recruiter-position">{{item.recruiterInfo && item.recruiterInfo.position}}</span>
-                <p class="">{{item.numOfVisitors}}人已看过</p>
-              </div>
-              <div class="contact-recruiter">
-                <el-button type="primary" size="small">开约</el-button>
-              </div>
-            </div>
-          </router-link>
-        </div>
+        <template v-if="currentType === 'position'">
+          <no-found v-if="!getLoading && !listData.length" :max-width="400"></no-found>
+          <div class="position-lists" v-else>
+            <template v-for="item in listData">
+              <position-item :key="item.id" :item="item" />
+            </template>
+          </div>
+        </template>
+        <template v-else>
+          <no-found v-if="!getLoading && !companyListData.length" :max-width="400"></no-found>
+          <div class="position-lists" v-else>
+            <template v-for="item in companyListData">
+              <company-item :key="item.id" :item="item" />
+            </template>
+          </div>
+        </template>
         <div class="pagination" v-if="total > 0 && total > params.count">
           <el-pagination
             background
@@ -52,7 +30,6 @@
           </el-pagination>
         </div>
       </div>
-
       <div>
         <guide-login class="guide-login" v-if="!isLogin" ref="guideLogin"></guide-login>
         <adpostion position="searchResult"></adpostion>
@@ -65,16 +42,21 @@
 import ScrollToTop from 'COMPONENTS/scrollToTop'
 import Search from './components/search'
 import { getPositionSearch, getPositionSearchType, getRecommendPosition } from 'API/position'
+import { getSearchCompanys } from 'API/company'
 import NoFound from 'COMPONENTS/noFound'
 import adpostion from 'COMPONENTS/common/adpostion'
 import GuideLogin from 'COMPONENTS/common/guideLogin'
+import PositionItem from 'COMPONENTS/common/positionItem'
+import CompanyItem from 'COMPONENTS/common/companyCard/item'
 export default {
   components: {
     Search,
     ScrollToTop,
     GuideLogin,
     NoFound,
-    adpostion
+    adpostion,
+    PositionItem,
+    CompanyItem
   },
   data () {
     return {
@@ -84,7 +66,9 @@ export default {
         keyword: '',
         cityNums: 0
       },
-      listData: [],
+      listData: [], // 职位列表数据
+      companyListData: [],
+      currentType: 'position', // 公司列表数据
       total: 0, // 职位总数
       getLoading: true,
       isGetSearchType: false,
@@ -98,7 +82,13 @@ export default {
       if (query[item]) this.params[item] = isNaN(query[item]) ? query[item] : Number(query[item])
     }
     this.params.cityNums = query['cityNums'] || this.cityid
-    this.getPositionList()
+  },
+  mounted () {
+    if (this.currentType === 'position') {
+      this.getPositionList()
+    } else {
+      this.getCompanysList()
+    }
   },
   computed: {
     cityid () {
@@ -136,6 +126,18 @@ export default {
         if (this.$refs.scrollToTop) this.$refs.scrollToTop.toTop()
       })
     },
+    getCompanysList () {
+      this.getLoading = true
+      if (!this.isGetSearchType) {
+        this.getSearchType()
+      }
+      getSearchCompanys(this.params).then(({ data }) => {
+        this.getLoading = false
+        this.companyListData = data.data || []
+        this.total = data.meta.total
+        if (this.$refs.scrollToTop) this.$refs.scrollToTop.toTop()
+      })
+    },
     handleSearch (value, type) {
       if (type !== 'page') this.params.page = 1
       if (type === 'page' && !this.isLogin) {
@@ -155,10 +157,16 @@ export default {
         path: '/position',
         query: {
           ...this.params,
+          typeName: this.currentType,
           q: Date.now()
         }
       })
-      this.getPositionList()
+      this.total = 0
+      if (this.currentType === 'position') {
+        this.getPositionList()
+      } else {
+        this.getCompanysList()
+      }
     },
     getSearchType () {
       getPositionSearchType().then(({ data }) => {
@@ -190,160 +198,13 @@ export default {
 }
 .position-lists {
   box-shadow: $shadow-1;
-  .position-list:first-child::after {
-    border-top: none;
-  }
-}
-.position-list {
-  cursor: pointer;
-  @include flex-v-center;
-  width: 100%;
-  position: relative;
-  background: #fff;
-  box-sizing: border-box;
-  padding: 28px 36px;
-  &::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    margin: 0 36px;
-    border-top: 1px dashed $border-color-1;
+  & /deep/ {
+    .position-list:first-child::after, .company-list:first-child::after {
+      border-top: none;
+    }
   }
 }
 
-.position-info{
-  width: 346px;
-  padding-right: 36px;
-  p {
-    font-size: 16px;
-  }
-  span {
-    vertical-align: middle;
-    display: inline-block;
-  }
-  .position-name {
-    @include ellipsis;
-    max-width: 160px;
-    padding-right: 14px;
-    color: $title-color-1;
-    font-weight: bold;
-  }
-  .position-pay {
-    color: $error-color-1;
-    font-weight: bold;
-  }
-  .position-active {
-    background: url('../../assets/images/tag_list_job.png') no-repeat;
-    width: 40px;
-    height: 38px;
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-  .position-24hour {
-    width: 45px;
-    height: 18px;
-    margin-right: 14px;
-    background: url('../../assets/images/tag_list_24hour.png') no-repeat;
-  }
-  .position-active, .position-24hour {
-    background-size: cover;
-  }
-  .position-require {
-    margin-top: 10px;
-    font-size: 12px;
-    color: $title-color-2;
-    span + span {
-      margin-left: 22px;
-    }
-    span, i {
-      display: inline-block;
-      vertical-align: middle;
-    }
-    .iconfont {
-      font-size: 14px;
-      padding-right: 6px;
-      color: $font-color-12;
-    }
-  }
-}
-.company-info {
-  min-width: 240px;
-  font-size: 16px;
-  .company-name {
-    color: $title-color-1;
-    margin-bottom: 10px;
-    max-width: 200px;
-    @include ellipsis;
-  }
-  p span {
-    padding-right: 8px;
-  }
-  .company-details {
-    font-size: 12px;
-    color: $title-color-2;
-  }
-  span + span {
-    padding-left: 8px;
-  }
-}
-.recruiter-info {
-  margin-left: auto;
-  text-align: right;
-  position: relative;
-  span {
-    vertical-align: middle;
-    display: inline-block;
-    font-size: 14px;
-    color: $title-color-1;
-  }
-  .recruiter-name {
-    max-width: 56px;
-    margin: 0 6px;
-  }
-  .recruiter-name,  .recruiter-position {
-    @include ellipsis;
-  }
-  .recruiter-position {
-    margin-left: 6px;
-    max-width: 85px;
-
-  }
-  .recruiter-profile {
-    @include img-radius(22px, 22px)
-  }
-  p {
-    font-size: 12px;
-    color: $title-color-2;
-    margin-top: 10px;
-  }
-  .contact-recruiter {
-    display: none;
-    position: absolute;
-    top: 50%;
-    margin-top: -18px;
-    height: 100%;
-    right: 0;
-    // background: $bg-color-5;
-    z-index: 2;
-    .el-button {
-      width: 146px;
-      border-radius: 2px;
-      vertical-align: middle;
-    }
-  }
-}
-.position-list:hover {
-  background: $bg-color-5;
-  .contact-recruiter {
-    display: block;
-  }
-  .recruiter-base-info{
-    opacity: 0;
-  }
-}
 .pagination {
   background: $bg-color-1;
   padding: 30px 0;
