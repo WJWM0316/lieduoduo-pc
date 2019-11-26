@@ -206,6 +206,8 @@ $drop-height: 46px;
 }
 .drop-down-header {
   cursor: pointer;
+  height: 20px;
+  line-height: 20px;
   .iconfont {
     transition: transform 400ms;
     color: $title-color-2;

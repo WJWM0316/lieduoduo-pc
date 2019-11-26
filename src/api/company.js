@@ -239,3 +239,11 @@ export const getCompanysTeamApi = (data) => request({
   params: data,
   config: { host: 'qiuzhi' }
 })
+
+/* 酷公司logo列表 */
+export const getLogoListsListsApi = (data) => request({
+  url: '/surfaceRapidlyCompany/logoLists',
+  method: 'get',
+  params: data,
+  config: { host: 'qiuzhi' }
+})
