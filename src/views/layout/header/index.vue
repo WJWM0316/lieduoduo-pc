@@ -99,7 +99,7 @@ export default {
       addressId: 0,
       navList: [
         { name: '首页', url: '/index', type: 'link' },
-        { name: '公司', url: '/company', type: 'link' },
+        { name: '公司', url: '/company/details', type: 'link' },
         { name: 'APP', url: app_qrcode, type: 'hover' },
         { name: '小程序', url: mp_qrcode, type: 'hover' },
         { name: '公众号', url: wx_qrcode, type: 'hover' }

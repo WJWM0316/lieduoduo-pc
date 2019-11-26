@@ -30,10 +30,12 @@
           <div class="header-right-position">
             <p class="header-right-number">{{ companyInformation.numOfVisitors }}</p>
             <p class="header-right-text">浏览</p>
-            <p class="header-right-resume" @click="resumeTo('annex')">
-              <i class="iconfont icon-ziwomiaoshu-"/>&nbsp;
-              {{ annex }}附件简历
-            </p>
+            <file :Resume = myResume :showUploadDetails=false :showTips=true :islogin = islogin>
+              <p class="header-right-resume" @click="resumeTo('annex')">
+                <i class="iconfont" :class="{ 'icon-weibiaoti-': annex === '上传', 'icon-zhongxinshangchuan-':  annex === '更新'}"/>&nbsp;
+                {{ annex }}附件简历
+              </p>
+            </file>
           </div>
         </div>
       </div>
@@ -88,13 +90,14 @@
                       <span>{{ item.address }}</span>
                     </p>
                   </template>
-                  <div id="map" v-if="activeName === index+''"></div>
+
+                  <div id="map" v-if="activeName === index+'' && !dialogVisible" @click="addressAlert"></div>
                 </el-collapse-item>
               </el-collapse>
             </div>
           </div>
           <div class="introduction-right">
-            <guideLogin v-if="this.$store.state.userInfo.id === undefined" class="guideLogin"></guideLogin>
+            <guideLogin v-if="this.userInfo.length !== undefined" class="guideLogin"></guideLogin>
             <div class="surroundings">
               <p class="surroundings-title">
                 公司环境
@@ -109,16 +112,33 @@
             <div class="recruitmentTeam">
               <p class="recruitmentTeam-title">招聘团队</p>
               <div class="recruitmentTeam-mian">
-                <div class="recruitmentTeam-box">
-                  <img/>
-                  <p>{{  }}</p>
-                  <p></p>
+                <div class="recruitmentTeam-box" v-for="(item, index) in getCompanysTeamText" :key="index">
+                  <img :src="item.avatar.smallUrl"/>
+                  <div class="recruitmentTeam-text">
+                    <p class="recruitmentTeam-text-top">{{ item.name }} | {{ item.position }}</p>
+                    <p class="recruitmentTeam-text-buttom">{{item.positionName === 0 ? '正在招聘0个职位' : '正在招聘' + '&quot;' + item.positionName + '&quot;' + '等' + item.positionNum+ '个职位'}}</p>
+                  </div>
                 </div>
+                <el-button @click="activationType" class="recruitmentTeam-buttom" plain>
+                  查看所有Boss的在招职位 <i class="iconfont icon-right"></i>
+                </el-button>
               </div>
             </div>
           </div>
+          <appLinks class="appLinks"></appLinks>
         </div>
+
       </div>
+      <el-dialog :visible.sync="dialogVisible" width = "662px" :modal-append-to-body = true :append-to-body = true>
+        <template slot="title">
+          <p class="address-text">
+            <i class="iconfont icon-dizhi"></i>
+            <span>{{ companyInformation.address[activeName].address }}</span>
+          </p>
+
+        </template>
+        <div id="map" style="width: 662px; height: 450px; margin-left: -20px;" v-if="dialogVisible"></div>
+      </el-dialog>
     </template>
 
     <template v-if="!activation">
@@ -133,19 +153,29 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import guideLogin from '@/components/common/guideLogin'
 import { TMap } from '@/util/TMap.js'
-
-import getRecruitersListApi from '@/api/register.js'
+import appLinks from '@/components/common/appLinks'
+import file from '@/components/common/upload/file'
 
 import {
   getCompanyHotApi,
-  getCompanyApi
+  getCompanyApi,
+  getCompanysTeamApi
 } from '@/api/company.js'
 
 @Component({
   name: 'company-detail',
   components: {
     // mapSearch
-    guideLogin
+    guideLogin,
+    appLinks,
+    file
+  },
+  computed: {
+    ...mapState({
+      myResume: state => state.resume.myResume,
+      isFourResume: state => state.resume.isFourResume,
+      userInfo: state => state.userInfo
+    })
   }
 })
 export default class companyDetail extends Vue {
@@ -154,16 +184,21 @@ export default class companyDetail extends Vue {
   HotPositionList = {} // 热门职位列表
   companyInformation = {}
   activation = true
-  myResume = this.$store.state.resume.myResume
-  isFourResume = this.$store.state.resume.isFourResume
+  // myResume = this.$store.state.resume.myResume
+  // isFourResume = this.$store.state.resume.isFourResume
   online = '填写' // 在线简历显示文案
   annex = '上传' // 附件简历显示文案
   viewAllText = false // 公司介绍文案隐藏
+  dialogVisible = false // 地图弹窗
+  getCompanysTeamText = {} // 招聘团队
+  islogin = false // 是否登陆弹窗
 
+  // 地图
   mapType () {
     this.$nextTick(function () {
-      const activeName = parseInt(this.activeName)
-      this.getMapLocation(this.companyInformation.address[activeName].lat, this.companyInformation.address[activeName].lng)
+      console.log(this.activeName, 1)
+      if (this.activeName === '') { return }
+      this.getMapLocation(this.companyInformation.address[this.activeName].lat, this.companyInformation.address[this.activeName].lng)
     })
   }
 
@@ -192,14 +227,17 @@ export default class companyDetail extends Vue {
     })
   }
   // 获取招聘团队
-  getRecruitersList () {
-    let param = {
+  getCompanysTeam () {
+    let data = {
+      companyId: 1346,
       page: 1,
       count: 3
     }
-    getRecruitersListApi(this.$router.companyId, param).then(res => {
-      console.log(res)
-    })
+    console.log(data)
+    getCompanysTeamApi(data)
+      .then(res => {
+        this.getCompanysTeamText = res.data.data
+      })
   }
 
   // 获取公司热门职位
@@ -216,17 +254,19 @@ export default class companyDetail extends Vue {
   }
 
   resumeTo (type) {
+    console.log(this.userInfo)
     // 是否已经登陆
-    if (this.$store.state.userInfo.id === undefined && type !== 'x') {
+    if (this.userInfo.length === undefined && type !== 'x') {
       return this.$router.push({
         name: 'login',
         query: {
           type: 'msgLogin'
         }
       })
-    } else if (this.$store.state.userInfo.id !== undefined) {
+    } else if (this.userInfo.length !== undefined) {
       this.online = this.myResume.resumeCompletePercentage >= 0.9 ? '更新' : '完善'
-      if (!this.myResume.resumeAttach) {
+      console.log(this.myResume.resumeAttach.length)
+      if (this.myResume.resumeAttach.length !== 0) {
         this.annex = '更新'
       }
     }
@@ -237,6 +277,7 @@ export default class companyDetail extends Vue {
       return this.$router.push({ name: 'cresume' })
     } else if (type === 'annex') {
       // 这里执行 上传/更新附件简历弹窗
+      this.islogin = true
     }
   }
 
@@ -265,35 +306,40 @@ export default class companyDetail extends Vue {
       })
     })
   }
-  photoAnimation () {
-    let translateWidths = 0
-    let timers = function () {
-
-    }
-    let timer = function () {
-      translateWidths = translateWidths + 298
-      if (translateWidths / 298 > this.companyInformation.albumInfo.middleUrl.length) {
-        translateWidths = 0
-      }
-      setInterval(() => {
-        timer()
-        console.log(1)
-        this.$nextTick(function () {
-          this.$refs.photo.style.transform = `translate3d(-${translateWidths}px, 0, 0)`
-        })
-      }, 1000)
-    }
+  addressAlert () {
+    this.dialogVisible = true
+    this.mapType()
   }
+  // photoAnimation () {
+  //   let translateWidths = 0
+  //   let timers = function () {
+
+  //   }
+  //   let timer = function () {
+  //     translateWidths = translateWidths + 298
+  //     if (translateWidths / 298 > this.companyInformation.albumInfo.middleUrl.length) {
+  //       translateWidths = 0
+  //     }
+  //     setInterval(() => {
+  //       timer()
+  //       console.log(1)
+  //       this.$nextTick(function () {
+  //         this.$refs.photo.style.transform = `translate3d(-${translateWidths}px, 0, 0)`
+  //       })
+  //     }, 1000)
+  //   }
+  // }
   created () {
+    this.getCompanysTeam()
     this.getCompanyHot()
     this.getCompany()
+    console.log(this.annex)
     this.resumeTo('x')
-    this.getRecruitersList()
-    // this.mapType()
+    console.log(this.annex)
   }
   beforeUpdate () {
     this.mapType()
-    this.photoAnimation()
+    // this.photoAnimation()
   }
 }
 </script>
@@ -428,6 +474,7 @@ $sizing: border-box;
           color: $font-color-temp1;
           font-size: 14px;
           font-weight: 400;
+          cursor: pointer;
           i{
             font-size: 14px;
           }
@@ -494,6 +541,14 @@ $sizing: border-box;
           margin: 0 auto;
           padding: 40px 0;
           display: flex;
+          flex-wrap: wrap;
+          .appLinks{
+            box-sizing: border-box;
+            padding: 90px 0 40px 0;
+            & /deep/ .show-more-btn{
+              background: #FFFFFF;
+            }
+          }
 
           .introduction-left{
             border-right: 1px solid $border-color-1;
@@ -612,7 +667,43 @@ $sizing: border-box;
               .recruitmentTeam-title{
                 @extend %introductionTitle;
               }
+              .recruitmentTeam-box{
+                height: 99px;
+                display: flex;
+                @include flex-v-center;
+                img{
+                  width: 66px;
+                  height: 66px;
+                  border-radius: 50%;
+                }
+                .recruitmentTeam-text{
+                  height: 44px;
+                  margin-left: 14px;
+                  font-weight: 400;
+                  font-size: 14px;
+                  line-height: 20px;
 
+                  .recruitmentTeam-text-top{
+                    color: $font-color-3;
+                  }
+                  .recruitmentTeam-text-buttom{
+                    margin-top: 4px;
+                    color: $font-color-6;
+                  }
+                }
+              }
+              .recruitmentTeam-buttom{
+                margin-top: 10px;
+                width: 280px;
+                height: 37px;
+                border: 1px solid $border-color-1;
+                color: $border-color-5;
+                border-radius:2px;
+                font-size: 14px;
+                i{
+                  font-size: 14px;
+                }
+              }
             }
           }
         }
