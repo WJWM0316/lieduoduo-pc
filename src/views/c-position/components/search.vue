@@ -31,12 +31,12 @@
               <div
                 class="search-tap"
                 @click="handleSelectTaps(item)"
-                :class="{'active': currentType === item.type}"
+                :class="{'active': typeName === item.type}"
                 :key="item.type">{{item.label}}</div>
             </template>
           </div>
           <drop-down
-            v-if="currentType === 'position'"
+            v-if="typeName === 'position'"
             v-model="params.emolumentIds"
             :items="emolumentList"
             :showArrow="true"
@@ -102,6 +102,12 @@ import { getSearchCollect } from 'API/common'
 import { getMatchesPosition } from 'API/search'
 import DropDown from 'COMPONENTS/dropDown'
 export default {
+  props: {
+    typeName: {
+      type: String,
+      default: 'position'
+    }
+  },
   data () {
     return {
       headerFixed: false,
@@ -120,14 +126,16 @@ export default {
       financingList: [], // 融资范围
       industryList: [], // 行业列表
       areaList: [], // 热门城市地址
-      types: [{ type: 'position', label: '职位' }, { type: 'company', label: '公司' }],
-      currentType: 'position'
+      types: [{ type: 'position', label: '职位' }, { type: 'company', label: '公司' }]
     }
   },
   components: { DropDown },
   created () {
     this.getCollectList()
     const { query } = this.$route
+    if (query.typeName) {
+      this.$emit('update:typeName', query.typeName || 'position')
+    }
     if (query.keyword) this.params.keyword = query.keyword
   },
   computed: {
@@ -194,11 +202,13 @@ export default {
     // 清空筛选
     handleRemove () {
       Object.assign(this.params, {
+        cityNums: 0,
         emolumentIds: '', // 薪资
         financingIds: [], // 融资
         employeeIds: [], // 人员规模
         industryIds: [] // 行业领域
       })
+      this.address = '全国'
       this.financingList.forEach(val => { if (val.checked) val.checked = false })
       this.industryList.forEach(val => { if (val.checked) val.checked = false })
       this.employeeList.forEach(val => { if (val.checked) val.checked = false })
@@ -206,7 +216,8 @@ export default {
     },
     // 切换taps
     handleSelectTaps (item) {
-      this.currentType = item.type
+      this.$emit('update:typeName', item.type)
+      this.handleRemove()
     }
   },
   destroyed () {

@@ -90,7 +90,6 @@
                       <span>{{ item.address }}</span>
                     </p>
                   </template>
-
                   <div id="map" v-if="activeName === index+'' && !dialogVisible" @click="addressAlert"></div>
                 </el-collapse-item>
               </el-collapse>
@@ -105,7 +104,7 @@
               <div class="surroundings-container">
                 <div class="photo" ref="photo">
                   <img :src="item.middleUrl" v-for="(item, index) in companyInformation.albumInfo" :key="index"/>
-                  <img :src="companyInformation.albumInfo[0].middleUrl" />
+                  <!-- <img :src="companyInformation.albumInfo[0].middleUrl" /> -->
                 </div>
               </div>
             </div>
@@ -133,9 +132,8 @@
         <template slot="title">
           <p class="address-text">
             <i class="iconfont icon-dizhi"></i>
-            <span>{{ companyInformation.address[activeName].address }}</span>
+            <span v-if="companyInformation.address && activeName">{{ companyInformation.address[activeName].address }}</span>
           </p>
-
         </template>
         <div id="map" style="width: 662px; height: 450px; margin-left: -20px;" v-if="dialogVisible"></div>
       </el-dialog>
@@ -195,9 +193,8 @@ export default class companyDetail extends Vue {
 
   // 地图
   mapType () {
-    this.$nextTick(function () {
-      console.log(this.activeName, 1)
-      if (this.activeName === '') { return }
+    if (this.activeName === '') return
+    this.$nextTick(() => {
       this.getMapLocation(this.companyInformation.address[this.activeName].lat, this.companyInformation.address[this.activeName].lng)
     })
   }
@@ -211,13 +208,13 @@ export default class companyDetail extends Vue {
   }
 
   // 获取公司信息
-  getCompany () {
+  async getCompany () {
     let data = {
       // id: this.$router.query.companyId,
       id: 1346,
       sCode: ''
     }
-    getCompanyApi(data).then(res => {
+    await getCompanyApi(data).then(res => {
       this.companyInformation = res.data.data
       this.companyInformation.intro = this.companyInformation.intro.replace('。', '。<br/> <br/>')
       // 遍历地址，没有http协议则加上
@@ -233,7 +230,6 @@ export default class companyDetail extends Vue {
       page: 1,
       count: 3
     }
-    console.log(data)
     getCompanysTeamApi(data)
       .then(res => {
         this.getCompanysTeamText = res.data.data
@@ -254,7 +250,6 @@ export default class companyDetail extends Vue {
   }
 
   resumeTo (type) {
-    console.log(this.userInfo)
     // 是否已经登陆
     if (this.userInfo.length === undefined && type !== 'x') {
       return this.$router.push({
@@ -265,7 +260,6 @@ export default class companyDetail extends Vue {
       })
     } else if (this.userInfo.length !== undefined) {
       this.online = this.myResume.resumeCompletePercentage >= 0.9 ? '更新' : '完善'
-      console.log(this.myResume.resumeAttach.length)
       if (this.myResume.resumeAttach.length !== 0) {
         this.annex = '更新'
       }
@@ -332,14 +326,10 @@ export default class companyDetail extends Vue {
   created () {
     this.getCompanysTeam()
     this.getCompanyHot()
-    this.getCompany()
-    console.log(this.annex)
+    this.getCompany().then(() => {
+      this.mapType()
+    })
     this.resumeTo('x')
-    console.log(this.annex)
-  }
-  beforeUpdate () {
-    this.mapType()
-    // this.photoAnimation()
   }
 }
 </script>

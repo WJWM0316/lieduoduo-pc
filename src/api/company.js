@@ -224,6 +224,14 @@ export const getHotCompanys = (data) => request({
   config: { host: 'qiuzhi' }
 })
 
+/* 公司搜索 */
+export const getSearchCompanys = data => request({
+  url: '/companies/sch',
+  method: 'get',
+  params: data,
+  config: { host: 'qiuzhi' }
+})
+
 /* 获取公司招聘团队 */
 export const getCompanysTeamApi = (data) => request({
   url: `/company/recruiters/${data.companyId}`,
