@@ -55,8 +55,8 @@ import {
   // Step,
   // Carousel,
   // CarouselItem,
-  // Collapse,
-  // CollapseItem,
+  Collapse,
+  CollapseItem,
   Cascader,
   ColorPicker,
   // Transfer,
@@ -134,8 +134,8 @@ Vue.use(Progress)
 // Vue.use(Step);
 // Vue.use(Carousel);
 // Vue.use(CarouselItem);
-// Vue.use(Collapse);
-// Vue.use(CollapseItem);
+Vue.use(Collapse)
+Vue.use(CollapseItem)
 Vue.use(Cascader)
 Vue.use(ColorPicker)
 // Vue.use(Transfer);
@@ -148,7 +148,7 @@ Vue.use(Timeline)
 Vue.use(TimelineItem)
 // Vue.use(Link);
 // Vue.use(Divider);
-Vue.use(Image);
+Vue.use(Image)
 Vue.use(Calendar)
 // Vue.use(Backtop);
 // Vue.use(PageHeader);

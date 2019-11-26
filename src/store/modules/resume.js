@@ -5,13 +5,15 @@ export default {
     myResume: {}, // 我的简历信息
     eidtStatus: false, // 是否是编辑状态
     calculateClick: 0, // 记录点击编辑图标的次数，数值更新触发滚动条滚动
-    propClass: ''
+    propClass: '',
+    isFourResume: {}
   },
   getters: {},
   mutations: {
     // 设置我的简历信息
     setMyResume (state, data) {
-      state.myResume = data
+      state.myResume = data.data
+      state.isFourResume = data.code
     },
     // 设置简历表单状态
     setEditStatus (state, { status, propClass }) {
@@ -38,7 +40,7 @@ export default {
       // eslint-disable-next-line promise/param-names
       return new Promise((reslove) => {
         getMyResumeApi().then(({ data }) => {
-          const res = data.data || {}
+          const res = data || {}
           store.commit('setMyResume', res)
           reslove(res)
         })
