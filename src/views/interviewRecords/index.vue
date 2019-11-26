@@ -365,7 +365,7 @@
       </div>
       <!-- 没有发布职位 -->
       <div class="noJobBox" v-if="pop.type === 'noJob'">
-        <div class="close"><i @click="pop.isShow = false" class="iconfont icondanchuang-guanbi"></i></div>
+        <div class="close"><i @click="pop.isShow = false" class="iconfont icon-danchuang-guanbi"></i></div>
         <div class="nullimg"><img src="@/assets/images/nullCandidate.png" /></div>
         <div class="noJobText">
           <p>邀请候选人面试</p>
@@ -374,7 +374,7 @@
         <div class="noJobBtn" @click.stop="toAddJob">去发布/开放职位</div>
       </div>
       <div class="noJobBox" v-if="pop.Interview">
-        <div class="close"><i @click="cancelshow()" class="iconfont icondanchuang-guanbi"></i></div>
+        <div class="close"><i @click="cancelshow()" class="iconfont icon-danchuang-guanbi"></i></div>
          <div class="content-info">
           <div class="title">{{InterviewTitle}}</div>
           <!-- 面试安排 -->

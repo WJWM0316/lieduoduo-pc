@@ -65,7 +65,7 @@
             <div class="authinfo">
               <div class="item">
                 <div class="title reset">认证信息</div>
-                <div class="text active">申请信息有误？去更改</div>
+                <div class="text active" @click="change()">申请信息有误？去更改</div>
               </div>
               <div class="item">
                 <div class="title">真实姓名</div>
@@ -157,13 +157,17 @@ export default {
     },
     getCompanyIdentityInfos () {
       getCompanyIdentityInfosApi().then(res => {
-        if (res.data.data.companyInfo.status === 1) {
+        if (res.data.data.status === 1) {
           this.$router.push({ path: '/candidateType' })
         }
         this.haveIdentity = res.data.data.haveIdentity
-        this.companyInfo = res.data.data.companyInfo
+        this.companyInfo = res.data.data
         this.info = res.data.data
       })
+    },
+    change () {
+      this.haveIdentity = false
+      // this.companyInfo.status = 0
     }
   },
   mounted () {

@@ -48,7 +48,7 @@
           </div>
       </div>
       <div id="box" class="main_cont" v-if="candidateList.length>0">
-        <div class="candidate_blo" v-for="(item,index) in candidateList" :key="index" @click="getResume(item.uid, index)" >
+        <div class="candidate_blo" v-for="(item,index) in candidateList" :key="index" @click="getResume(item.uid, index)">
           <div class="bloTop">
             <div class="timer">{{item.viewAt}}</div>
             <div class="topText" v-if="navType === 'searchBrowseMyself'">看过我的{{item.positionInfo && item.positionInfo.positionName ?'职位':'主页'}}</div>
@@ -442,7 +442,7 @@
       </div>
       <!-- 没有发布职位 -->
       <div class="noJobBox" v-if="pop.type === 'noJob'">
-        <div class="close"><i @click="pop.isShow = false" class="iconfont icondanchuang-guanbi"></i></div>
+        <div class="close"><i @click="pop.isShow = false" class="iconfont icon-danchuang-guanbi"></i></div>
         <div class="nullimg"><img src="@/assets/images/nullCandidate.png" /></div>
         <div class="noJobText">
           <p>邀请候选人面试</p>
@@ -452,7 +452,7 @@
       </div>
       <!-- 面试安排 -->
       <div class="noJobBox" v-if="pop.Interview">
-        <div class="close"><i @click="cancelshow()" class="iconfont icondanchuang-guanbi"></i></div>
+        <div class="close"><i @click="cancelshow()" class="iconfont icon-danchuang-guanbi"></i></div>
         <div class="content-info">
         <div class="title">{{pop.InterviewTitle}}</div>
         <!-- 面试安排 -->
@@ -1075,6 +1075,7 @@ export default class CourseList extends Vue {
           let retract = { jobhunterUid: this.jobuid, interviewId: this.interviewId }
           interviewRetract(retract).then((res) => {
             this.$message.success('撤回成功')
+            this.getResume(this.jobuid)
             this.init()
           })
           break
@@ -1367,7 +1368,8 @@ export default class CourseList extends Vue {
           this.init()
           this.pop.isShow = false
         }).catch(err => {
-          this.$message.error(err.data.msg)
+          console.log(err)
+          // this.$message.error(err.data.msg)
         })
       }
       // 查看原因
