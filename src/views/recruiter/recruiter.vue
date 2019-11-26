@@ -326,7 +326,11 @@ export default class CourseList extends Vue {
         getCompanyIdentityInfosApi().then(res => {
           let haveIdentity = res.data.data.haveIdentity
           if (!haveIdentity) {
-            this.msg.messageshow = true
+            this.msg = {
+              messageshow: true,
+              msgtitle: '身份认证',
+              msgdesc: '您尚未认证身份，成功认证后即可发布职位。'
+            }
           } else {
             this.$router.push({
               name: 'postJob',

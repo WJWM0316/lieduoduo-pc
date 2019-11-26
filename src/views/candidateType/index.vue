@@ -36,7 +36,7 @@
                 <div class="triangle_border_top"></div>
                 <div class="screen_tit">{{getPopName()}}</div>
                 <div class="lable_list" >
-                  <span v-for="(item,index) in positionTypeList" v-show="item.name !== '我的主页'" :key="index" @click="labelClick(index)" :class="{'cur':item.active}" > {{item.name}}</span>
+                  <span v-for="(item,index) in positionTypeList" :key="index" @click="labelClick(index)" :class="{'cur':item.active}" > {{item.name}}</span>
                 </div>
 
                 <div class="screen_btns">
@@ -48,7 +48,7 @@
           </div>
       </div>
       <div id="box" class="main_cont" v-if="candidateList.length>0">
-        <div class="candidate_blo" v-for="(item,index) in candidateList" :key="index" @click="getResume(item.uid, index)" >
+        <div class="candidate_blo" v-for="(item,index) in candidateList" :key="index" @click="getResume(item.uid, index)">
           <div class="bloTop">
             <div class="timer">{{item.viewAt}}</div>
             <div class="topText" v-if="navType === 'searchBrowseMyself'">看过我的{{item.positionInfo && item.positionInfo.positionName ?'职位':'主页'}}</div>
@@ -87,7 +87,7 @@
               <div class="leftMsg">
                 <div class="userBaseInfo">
                   <img class="gender" src="../../assets/images/girl.png" v-if="item.gender===2" />
-                  <img class="gender" src="../../assets/images/boy.png" v-else />image
+                  <img class="gender" src="../../assets/images/boy.png" v-else />
                   <img class="userIcon" :src="item.avatar.middleUrl" />
                   <div class="infoRight">
                     <div class="infoName textEllipsis">
@@ -138,16 +138,12 @@
               <div class="btn" @click.stop="setJob(item.uid, 'check-invitation', item, 1)" v-if="item.interviewInfo.data.haveInterview && item.interviewInfo.data.interviewStatus === 12">查看邀约</div>
               <div class="btn" @click.stop="setJob(item.uid, 'arranging-interviews', item, 1)" v-if="item.interviewInfo.data.haveInterview && item.interviewInfo.data.interviewStatus === 21">安排面试</div>
               <div class="btn" @click.stop="setJob(item.uid, 'arranging-interviews', item, 1)" v-if="item.interviewInfo.data.haveInterview && item.interviewInfo.data.interviewStatus === 31">
-                <!-- <span v-if="item.interviewInfo.data.data[0].type === 1">查看面试</span>
-                <span v-if="item.interviewInfo.data.data[0].type === 2">修改面试</span> -->
                  <span>查看面试</span>
                 </div>
               <div class="btn" @click.stop="setJob(item.uid, 'arranging-interviews', item, 1)" v-if="item.interviewInfo.data.haveInterview && item.interviewInfo.data.interviewStatus === 32">
-                <!-- <span v-if="item.interviewInfo.data.data[0].type === 1">查看面试</span>
-                <span v-if="item.interviewInfo.data.data[0].type === 2">修改面试</span> -->
                 <span>修改面试</span>
                 </div>
-              <div class="btn" :style="'background:#F8F8F8'" @click.stop="setJob(item.uid, 'interview-retract', item, 1)" v-if="!item.interviewInfo.data.haveInterview && item.interviewInfo.data.hasUnsuitRecord">撤回</div>
+              <!-- <div class="btn" :style="'background:#F8F8F8'" @click.stop="setJob(item.uid, 'interview-retract', item, 1)" v-if="!item.interviewInfo.data.haveInterview && item.interviewInfo.data.hasUnsuitRecord">撤回</div> -->
               <div class="btn" @click.stop="setJob(item.uid, 'check-invitation', item, 1)" v-if="item.interviewInfo.data.haveInterview && item.interviewInfo.data.interviewStatus >= 41">面试详情</div>
             </div>
           </div>
@@ -234,6 +230,7 @@
                         <span>{{nowResumeMsg.age}}岁</span>
                       </div>
                       <div
+                        v-if="nowResumeMsg.degreeDesc"
                         class="lebalItem"
                         :style="nowResumeMsg.jobStatus===''?'margin-right:0px;':''"
                       >
@@ -356,7 +353,7 @@
               </div>
             </div>
             <!-- 更多介绍 -->
-            <div class="workExperience" v-if="nowResumeMsg.moreIntroduce">
+            <div class="workExperience" v-if="nowResumeMsg.moreIntroduce.introduce && nowResumeMsg.moreIntroduce.imgs">
               <p class="title">更多介绍</p>
               <div class="workList">
                 <pre v-if="nowResumeMsg.moreIntroduce.introduce">{{nowResumeMsg.moreIntroduce.introduce}}</pre>
@@ -445,7 +442,7 @@
       </div>
       <!-- 没有发布职位 -->
       <div class="noJobBox" v-if="pop.type === 'noJob'">
-        <div class="close"><i @click="pop.isShow = false" class="iconfont icondanchuang-guanbi"></i></div>
+        <div class="close"><i @click="pop.isShow = false" class="iconfont icon-danchuang-guanbi"></i></div>
         <div class="nullimg"><img src="@/assets/images/nullCandidate.png" /></div>
         <div class="noJobText">
           <p>邀请候选人面试</p>
@@ -455,7 +452,7 @@
       </div>
       <!-- 面试安排 -->
       <div class="noJobBox" v-if="pop.Interview">
-        <div class="close"><i @click="cancelshow()" class="iconfont icondanchuang-guanbi"></i></div>
+        <div class="close"><i @click="cancelshow()" class="iconfont icon-danchuang-guanbi"></i></div>
         <div class="content-info">
         <div class="title">{{pop.InterviewTitle}}</div>
         <!-- 面试安排 -->
@@ -1078,6 +1075,7 @@ export default class CourseList extends Vue {
           let retract = { jobhunterUid: this.jobuid, interviewId: this.interviewId }
           interviewRetract(retract).then((res) => {
             this.$message.success('撤回成功')
+            this.getResume(this.jobuid)
             this.init()
           })
           break
@@ -1370,7 +1368,8 @@ export default class CourseList extends Vue {
           this.init()
           this.pop.isShow = false
         }).catch(err => {
-          this.$message.error(err.data.msg)
+          console.log(err)
+          // this.$message.error(err.data.msg)
         })
       }
       // 查看原因

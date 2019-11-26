@@ -292,6 +292,7 @@
                         <span>{{nowResumeMsg.age}}岁</span>
                       </div>
                       <div
+                        v-if="nowResumeMsg.degreeDesc"
                         class="lebalItem"
                         :style="nowResumeMsg.jobStatus===''?'margin-right:0px;':''"
                       >
@@ -417,7 +418,7 @@
               </div>
             </div>
             <!-- 更多介绍 -->
-            <div class="workExperience" v-if="nowResumeMsg.moreIntroduce">
+            <div class="workExperience" v-if="nowResumeMsg.moreIntroduce.introduce && nowResumeMsg.moreIntroduce.imgs">
               <p class="title">更多介绍</p>
               <div class="workList">
                 <pre v-if="nowResumeMsg.moreIntroduce.introduce">{{nowResumeMsg.moreIntroduce.introduce}}</pre>
@@ -507,7 +508,7 @@
       </div>
           <!-- 没有发布职位 -->
       <div class="noJobBox" v-if="pop.type === 'noJob'">
-        <div class="close"><i @click="pop.isShow = false" class="iconfont icondanchuang-guanbi"></i></div>
+        <div class="close"><i @click="pop.isShow = false" class="iconfont icon-danchuang-guanbi"></i></div>
         <div class="nullimg"><img src="@/assets/images/nullCandidate.png" /></div>
         <div class="noJobText">
           <p>邀请候选人面试</p>
@@ -517,7 +518,7 @@
       </div>
       <!-- 面试安排 -->
       <div class="noJobBox" v-if="pop.Interview">
-        <div class="close"><i @click="cancelshow()" class="iconfont icondanchuang-guanbi"></i></div>
+        <div class="close"><i @click="cancelshow()" class="iconfont icon-danchuang-guanbi"></i></div>
         <div class="content-info">
         <div class="title">{{pop.InterviewTitle}}</div>
         <!-- 面试安排 -->
@@ -1029,6 +1030,7 @@ export default class CourseList extends Vue {
       this.form.created_start_time = undefined
       this.form.created_end_time = undefined
     }
+    this.form.page = 1
     this.getList()
   }
 
@@ -1137,10 +1139,12 @@ export default class CourseList extends Vue {
   screenOp (status) {
     switch (status) {
       case 'cancel':
+        this.form.page = 1
         this.setDefaultScreen()
         this.isShowScreen = false
         break
       case 'confirm':
+        this.form.page = 1
         this.getList()
         this.isShowScreen = false
         break
@@ -1269,6 +1273,7 @@ export default class CourseList extends Vue {
   // 职业类型列表
   getPositionList (listType) {
     this.form.status = listType
+    this.form.page = 1
     this.getList(this.navType)
   }
 
@@ -1607,6 +1612,7 @@ export default class CourseList extends Vue {
         let retract = { jobhunterUid: this.jobuid, interviewId: this.interviewId }
         interviewRetract(retract).then((res) => {
           this.$message.success('撤回成功')
+          this.getResume(this.jobuid)
           this.init()
         })
         break

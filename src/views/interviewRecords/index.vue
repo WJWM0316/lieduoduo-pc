@@ -21,7 +21,7 @@
           <el-date-picker
           v-model="form.time"
           @change="pickchange()"
-          type="datetimerange"
+          type="daterange"
           :picker-options="pickerOptions"
           range-separator="至"
           start-placeholder="开始日期"
@@ -36,7 +36,8 @@
         <div class="candidate_blo" :key="j" v-for="(vo, j) in list" @click="getResume(vo.jobhunterUid, j)">
           <div class="bloTop">
             <div class="timer1">面试职位</div>
-            <div class="timer2" v-if="vo.positionId !== 0">【{{vo.address.city}}&nbsp;|&nbsp;{{vo.positionName}}&nbsp;|&nbsp;{{vo.positionEmolumentMin}}k-{{vo.positionEmolumentMax}}K】</div>
+            <div class="timer2" v-if="vo.positionId !== 0">【{{vo.address.city}}{{vo.address.area}}&nbsp;|&nbsp;{{vo.positionName}}&nbsp;|&nbsp;{{vo.positionEmolumentMin}}k-{{vo.positionEmolumentMax}}K】</div>
+            <div class="timer2" v-else>暂无面试职位</div>
             <div class="timer3" v-if="vo.channelName">候选人来自</div>
             <div class="timer4" v-if="vo.channelName">{{vo.origin}}</div>
 
@@ -45,7 +46,7 @@
           <div :class="['countdown', vo.status >= 51 ? 'bg' : '']">
             <i class="iconfont iconshijian time"></i>
             <span v-if="tablist[0].cur">{{vo.arrangementInfo.appointment}}</span>
-            <span v-else>{{vo.arrangementInfo.appointment.substring(6)}}</span>
+            <span v-else>{{vo.arrangementInfo.appointment.substring(5)}}</span>
           </div>
           </div>
           <div class="bloCont">
@@ -92,6 +93,12 @@
             </div>
 
             <div class="userOp">
+              <div class="like_user" @click.stop="setJob(vo.jobhunterUid, 'check-invitation', vo, 1)" v-show="vo.status === 57 || vo.status === 58">
+                  去评价
+                </div>
+                <div class="like_user" @click.stop="" v-show="vo.status === 60 || vo.status === 61">
+                  <span :style="'color: #929292'">已评价</span>
+                </div>
               <div class="btn" @click.stop="setJob(vo.jobhunterUid, 'check-invitation', vo, 1)">查看面试详情</div>
             </div>
           </div>
@@ -163,18 +170,19 @@
                     <span class="realName">{{nowResumeMsg.name}}</span>
                     <div class="lebalList">
                       <div class="lebalItem">
-                        <i class="icon iconfont iconzhiwei" style></i>
+                        <i class="icon iconfont icon-zhiwei" style></i>
                         <span>{{nowResumeMsg.workAgeDesc}}</span>
                       </div>
                       <div class="lebalItem">
-                        <i class="icon iconfont iconnianling"></i>
+                        <i class="icon iconfont icon-nianling"></i>
                         <span>{{nowResumeMsg.age}}岁</span>
                       </div>
                       <div
+                        v-if="nowResumeMsg.degreeDesc"
                         class="lebalItem"
                         :style="nowResumeMsg.jobStatus===''?'margin-right:0px;':''"
                       >
-                        <i class="icon iconfont iconxueli"></i>
+                        <i class="icon iconfont icon-jiaoyu"></i>
                         <span>{{nowResumeMsg.degreeDesc}}</span>
                       </div>
                       <div class="lebalItem">
@@ -187,7 +195,6 @@
                   </div>
                   <div class="description">
                     <span class="msg">{{nowResumeMsg.signature}}</span>
-                    <!-- v-show="nowResumeMsg.personalizedLabels.length>0" -->
                     <div class="iconList">
                       <span
                         class="iconItem"
@@ -296,7 +303,7 @@
               </div>
             </div>
             <!-- 更多介绍 -->
-            <div class="workExperience" v-if="nowResumeMsg.moreIntroduce">
+            <div class="workExperience" v-if="nowResumeMsg.moreIntroduce.introduce && nowResumeMsg.moreIntroduce.imgs">
               <p class="title">更多介绍</p>
               <div class="workList">
                 <pre v-if="nowResumeMsg.moreIntroduce.introduce">{{nowResumeMsg.moreIntroduce.introduce}}</pre>
@@ -319,13 +326,9 @@
               <div class="btn1" @click.stop="setJob(nowResumeMsg.uid, 'check-invitation', nowResumeMsg, 2)" v-if="nowResumeMsg.interviewInfo.data.haveInterview && nowResumeMsg.interviewInfo.data.interviewStatus === 12">查看邀约</div>
               <div class="btn1" @click.stop="setJob(nowResumeMsg.uid, 'arranging-interviews', nowResumeMsg, 2)" v-if="nowResumeMsg.interviewInfo.data.haveInterview && nowResumeMsg.interviewInfo.data.interviewStatus === 21">安排面试</div>
               <div class="btn1" @click.stop="setJob(nowResumeMsg.uid, 'arranging-interviews', nowResumeMsg, 2)" v-if="nowResumeMsg.interviewInfo.data.haveInterview && nowResumeMsg.interviewInfo.data.interviewStatus === 31">
-                <!-- <span v-if="nowResumeMsg.interviewInfo.data.data[0].type === 1">查看面试</span>
-                <span v-if="nowResumeMsg.interviewInfo.data.data[0].type === 2">修改面试</span> -->
                 <span>查看面试</span>
                 </div>
               <div class="btn1" @click.stop="setJob(nowResumeMsg.uid, 'arranging-interviews', nowResumeMsg, 2)" v-if="nowResumeMsg.interviewInfo.data.haveInterview && nowResumeMsg.interviewInfo.data.interviewStatus === 32">
-                <!-- <span v-if="nowResumeMsg.interviewInfo.data.data[0].type === 1">查看面试</span>
-                <span v-if="nowResumeMsg.interviewInfo.data.data[0].type === 2">修改面试</span> -->
                 <span>修改面试</span>
               </div>
               <div class="btn1" @click.stop="setJob(nowResumeMsg.uid, 'interview-retract', nowResumeMsg, 2)" v-if="!nowResumeMsg.interviewInfo.data.haveInterview && nowResumeMsg.interviewInfo.data.hasUnsuitRecord">撤回</div>
@@ -362,7 +365,7 @@
       </div>
       <!-- 没有发布职位 -->
       <div class="noJobBox" v-if="pop.type === 'noJob'">
-        <div class="close"><i @click="pop.isShow = false" class="iconfont icondanchuang-guanbi"></i></div>
+        <div class="close"><i @click="pop.isShow = false" class="iconfont icon-danchuang-guanbi"></i></div>
         <div class="nullimg"><img src="@/assets/images/nullCandidate.png" /></div>
         <div class="noJobText">
           <p>邀请候选人面试</p>
@@ -371,7 +374,7 @@
         <div class="noJobBtn" @click.stop="toAddJob">去发布/开放职位</div>
       </div>
       <div class="noJobBox" v-if="pop.Interview">
-        <div class="close"><i @click="cancelshow()" class="iconfont icondanchuang-guanbi"></i></div>
+        <div class="close"><i @click="cancelshow()" class="iconfont icon-danchuang-guanbi"></i></div>
          <div class="content-info">
           <div class="title">{{InterviewTitle}}</div>
           <!-- 面试安排 -->
@@ -791,6 +794,7 @@ export default {
       getguanListtApi(data).then(res => {
         let arr = res.data.data
         arr.unshift({ name: '全部', id: '' })
+        arr.push({ name: '无职位约面', id: 0 })
         this.mgoptions = arr
         this.mgoptions.forEach(item => {
           item.children.forEach(item1 => {
@@ -826,6 +830,9 @@ export default {
       })
     },
     getlist () {
+      if (this.form.position_label_id === '') {
+        this.form.position_label_id = undefined
+      }
       getnewHistoryListtApi(this.form).then((res) => {
         this.list = res.data.data
         this.form.total = res.data.meta.total
@@ -843,6 +850,10 @@ export default {
     type (e) {
       this.form.position_label_id = e
       this.tabform.position_label_id = e
+      if (e === '') {
+        this.form.position_label_id = undefined
+        this.tabform.position_label_id = undefined
+      }
       if (this.tablist[0].time) {
         this.tabform.page = 1
       } else {
@@ -868,6 +879,9 @@ export default {
       }
     },
     gettablist () {
+      if (this.tabform.position_label_id === '') {
+        this.tabform.position_label_id = undefined
+      }
       getScheduleListApi(this.tabform).then((res) => {
         this.list = res.data.data
         this.form.total = res.data.meta.total
@@ -1845,6 +1859,7 @@ export default {
             color: #652791;
             cursor: pointer;
             font-size: 14px;
+            margin-right: 75px;
             img {
               margin-right: 7px;
               position: relative;

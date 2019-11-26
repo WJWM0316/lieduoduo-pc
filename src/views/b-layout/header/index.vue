@@ -27,7 +27,7 @@
           </div>
         </div>
         <el-dropdown-menu slot="dropdown">
-           <el-dropdown-item command="perfectauth">
+           <el-dropdown-item command="perfectauth" v-if="!haveIdentity">
              身份认证
              <div class="reddot"></div>
              </el-dropdown-item>
@@ -40,6 +40,7 @@
 </template>
 <script>
 import { mp_qrcode, wx_qrcode } from 'IMAGES/image'
+import { getCompanyIdentityInfosApi } from 'API/register'
 import { mapState } from 'vuex'
 export default {
   data () {
@@ -55,7 +56,8 @@ export default {
           desc: '微信扫码打开小程序',
           img: mp_qrcode
         }
-      ]
+      ],
+      haveIdentity: false
     }
   },
   computed: {
@@ -75,7 +77,16 @@ export default {
         case 'perfectauth':
           this.$router.push({ name: 'perfectauth' })
       }
+    },
+    getCompanyIdentityInfos () {
+      getCompanyIdentityInfosApi().then(res => {
+        console.log(res.data.data.haveIdentity)
+        this.haveIdentity = res.data.data.haveIdentity
+      })
     }
+  },
+  mounted () {
+    this.getCompanyIdentityInfos()
   }
 }
 </script>

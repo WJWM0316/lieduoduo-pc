@@ -16,7 +16,7 @@
       </div>
       <div class="pop_right">
         <div class="search-box">
-          <input type="text" v-model="keyword" />
+          <input type="text" @input="handleSearch" v-model="keyword" />
           <i class="el-icon-search" @click="handleSearch"></i>
         </div>
         <i class="el-icon-close" @click="close"></i>
