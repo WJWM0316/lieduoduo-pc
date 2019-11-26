@@ -26,7 +26,17 @@
           <el-button class="el-button-h46 " type="primary" @click="handleSelect">搜索</el-button>
         </div>
         <div class="search-filter">
+          <div class="search-taps">
+            <template v-for="item in types">
+              <div
+                class="search-tap"
+                @click="handleSelectTaps(item)"
+                :class="{'active': currentType === item.type}"
+                :key="item.type">{{item.label}}</div>
+            </template>
+          </div>
           <drop-down
+            v-if="currentType === 'position'"
             v-model="params.emolumentIds"
             :items="emolumentList"
             :showArrow="true"
@@ -109,7 +119,9 @@ export default {
       experienceList: [], // 学历要求
       financingList: [], // 融资范围
       industryList: [], // 行业列表
-      areaList: [] // 热门城市地址
+      areaList: [], // 热门城市地址
+      types: [{ type: 'position', label: '职位' }, { type: 'company', label: '公司' }],
+      currentType: 'position'
     }
   },
   components: { DropDown },
@@ -191,6 +203,10 @@ export default {
       this.industryList.forEach(val => { if (val.checked) val.checked = false })
       this.employeeList.forEach(val => { if (val.checked) val.checked = false })
       this.handleSelect()
+    },
+    // 切换taps
+    handleSelectTaps (item) {
+      this.currentType = item.type
     }
   },
   destroyed () {
@@ -260,7 +276,47 @@ export default {
 }
 .search-filter {
   @include flex-v-center;
-  padding: 0px 0 20px;;
+  padding: 0px 0 20px;
+  .search-taps {
+    .search-tap.active {
+      color: $main-color-1;
+      font-weight: bold;
+    }
+    .search-tap:hover {
+      color: $main-color-1;
+    }
+    .search-tap {
+      display: inline-block;
+      position: relative;
+      vertical-align: middle;
+      cursor: pointer;
+      padding: 0 9px;
+      font-size: 16px;
+      color: $title-color-1;
+    }
+    .search-tap + .search-tap {
+      margin-left: 18px;
+    }
+    .active::before, .active::after {
+      content: "";
+      position: absolute;
+      background: $bg-color-4;
+    }
+    .active::after {
+      width: 100%;
+      left: 0;
+      bottom: -20px;
+      border-radius:2px 2px 0px 0px;
+      height: 5px;
+    }
+    .search-tap::before {
+      width: 7px;
+      bottom: -18px;
+      height: 7px;
+      left: calc(50% - 4px);
+      transform: rotate(45deg);
+    }
+  }
   &>div {
     min-width: 168px;
     margin-right: 40px;
@@ -293,7 +349,6 @@ export default {
   background: #fff;
   position: fixed;
   width: 100%;
-  height: 130px;
   box-shadow: $shadow-2;
   z-index: 99;
   .main-center {
