@@ -156,7 +156,8 @@ export default new Vuex.Store({
               return
             }
             if (state.userIdentity === 2 && !result.isRecruiter) {
-              store.commit('setCreateRecruiter', true)
+              // store.commit('setCreateRecruiter', true)
+              router.replace({ name: 'register' })
               return
             }
             // 如果是求职者

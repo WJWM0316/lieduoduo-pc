@@ -10,8 +10,8 @@
           <el-form-item label="真实姓名" prop="real_name">
             <el-input :value="ruleForm.real_name" placeholder="请填写真实姓名" @input="bindInput($event, 'real_name')"></el-input>
           </el-form-item>
-          <el-form-item label="公司全称" prop="company_name" @click="selectcompany()">
-            <el-input :value="ruleForm.company_name" placeholder="请填写公司全称" @input="bindInput($event, 'company_name')"></el-input>
+          <el-form-item label="公司全称" prop="company_name">
+            <el-input :value="ruleForm.company_name" placeholder="请填写公司全称" @blur="selectcompany()" @input="bindInput($event, 'company_name')"></el-input>
             <option-list :option="companylist" :visible="companyshow" @selectchange="changecompany"></option-list>
           </el-form-item>
           <el-form-item label="职位所属类型" prop="position_name">
@@ -243,7 +243,7 @@
             <div class="status-line"></div>
             <div class="error-box" v-if="companyInfo.status === 2">
             <div class="error-head">
-            <div class="title">实名认证审核未通过的原因如下</div> 
+            <div class="title">实名认证审核未通过的原因如下</div>
               <div class="chongxin" @click="gotowhere('resetedit')">重新提交认证信息</div>
               </div>
             <div class="error-item">{{companyInfo.reviewNote}}</div>
@@ -615,7 +615,8 @@ export default {
       this.checkupdata()
     },
     selectcompany () {
-      this.companyshow = !this.companyshow
+      console.log(1)
+      this.companyshow = false
     },
     // 选择职位
     selectposition () {
@@ -755,6 +756,7 @@ export default {
               page: 'perfect'
             }
           })
+          this.getCompanyIdentityInfos()
           break
         case 'toUpload':
           if (this.isauthcheck) {
@@ -856,7 +858,6 @@ export default {
                 return
               }
               this.$message.error(err.data.msg)
-            // app.wxToast({ title: err.msg })
             }
           })
         })
@@ -877,6 +878,7 @@ export default {
             from: 'company'
           }
         })
+        // this.getCompanyIdentityInfos()
       })
       // 公司存在 直接走加入流程
         .catch(err => {
@@ -992,7 +994,6 @@ export default {
     },
     joinCompany () {
       let formData = this.ruleForm
-      console.log(formData, 'formData')
       let params = {
         real_name: formData.real_name,
         user_email: formData.user_email.trim(),
@@ -1002,7 +1003,6 @@ export default {
         company_id: formData.id
       }
       hasApplayRecordApi().then(res => {
-        console.log(formData, 'formDatass')
         // 当前公司已经申请过
         if (res.data.id) {
           this.editJoinCompany()
@@ -1024,6 +1024,7 @@ export default {
                   from: 'join'
                 }
               })
+              this.getCompanyIdentityInfos()
             }
           })
             .catch(err => {
@@ -1151,7 +1152,6 @@ export default {
           v.id = v.labelId
         })
         this.industrylist = arr
-        console.log(this.industrylist)
       })
     }
   },
