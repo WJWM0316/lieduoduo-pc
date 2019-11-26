@@ -11,7 +11,7 @@
             <el-input :value="ruleForm.real_name" placeholder="请填写真实姓名" @input="bindInput($event, 'real_name')"></el-input>
           </el-form-item>
           <el-form-item label="公司全称" prop="company_name">
-            <el-input :value="ruleForm.company_name" placeholder="请填写公司全称" @blur="selectcompany()" @input="bindInput($event, 'company_name')"></el-input>
+            <el-input :value="ruleForm.company_name" placeholder="请填写公司全称" @input="bindInput($event, 'company_name')"></el-input>
             <option-list :option="companylist" :visible="companyshow" @selectchange="changecompany"></option-list>
           </el-form-item>
           <el-form-item label="职位所属类型" prop="position_name">
@@ -64,7 +64,7 @@
         <div class="box-title">完善公司信息</div>
         <el-form :model="authForm" :rules="authrules" ref="ruleauthForm" label-width="100px" class="demo-ruleForm">
           <el-form-item label="公司全称" prop="company_name">
-            <el-input :value="authForm.company_name " placeholder="请填写公司全称" @input="authbindInput($event, 'company_name')"></el-input>
+            <el-input :value="authForm.company_name" :disabled="true" placeholder="请填写公司全称" @input="authbindInput($event, 'company_name')"></el-input>
           </el-form-item>
           <el-form-item>
             <div class="company-logo">
@@ -756,7 +756,7 @@ export default {
               page: 'perfect'
             }
           })
-          this.getCompanyIdentityInfos()
+          // this.getCompanyIdentityInfos()
           break
         case 'toUpload':
           if (this.isauthcheck) {
@@ -769,7 +769,9 @@ export default {
           break
         case 'resetedit':
           this.$router.push({
-            query: {}
+            query: {
+              action: 'edit'
+            }
           })
           break
         case 'toback':
@@ -872,6 +874,8 @@ export default {
         company_name: formData.company_name
       }
       createCompanyApi(params).then(res => {
+        this.authForm.id = res.data.data.id
+        this.authForm.company_name = res.data.data.companyName
         this.$router.push({
           query: {
             page: 'submit',
@@ -973,6 +977,7 @@ export default {
                     from: 'join'
                   }
                 })
+                this.getCompanyIdentityInfos()
               }
             })
               .catch(err => {
@@ -1080,7 +1085,15 @@ export default {
         this.authForm.on_job = storage.on_job || companyInfo.onJobInfo
         this.companyInfo = companyInfo
         if (this.companyInfo.status === 3) {
-          this.$router.push({ name: 'register', query: { page: 'perfect' } })
+          this.$router.push({ name: 'register', query: { page: 'submit' } })
+        }
+        if (this.companyInfo.status === 0) {
+          this.$router.push({
+            query: {
+              page: 'status',
+              from: 'company'
+            }
+          })
         }
         // 重新编辑 加公司id
         if (Reflect.has(this.$route.query, 'action')) {
@@ -1095,7 +1108,9 @@ export default {
     },
     submit2 () {
       let formData = this.authForm
-      console.log(formData)
+      if (formData.logourl === '') {
+        formData.logo = 0
+      }
       let params = {
         company_name: formData.company_name,
         industry_id: formData.industry_id,
@@ -1115,7 +1130,8 @@ export default {
             from: 'company'
           }
         })
-        this.companyInfo.status = 0
+        this.getCompanyIdentityInfos()
+        // this.companyInfo.status = 0
       })
         .catch(err => {
           if (err.data.code === 307) {

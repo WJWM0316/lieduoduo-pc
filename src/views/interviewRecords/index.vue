@@ -587,7 +587,7 @@
               <div :class="['money', item.isOnline === 2 ? 'hui' : '']">{{item.emolumentMin}}K~{{item.emolumentMax}}K</div>
             </div>
             <div class="info">
-              <div :class="['address', item.isOnline === 2 ? 'hui' : '']">{{item.city}}</div>
+              <div :class="['address', item.isOnline === 2 ? 'hui' : '']">{{item.city}}{{item.district}}</div>
               <div :class="['year', item.isOnline === 2 ? 'hui' : '']">{{item.workExperienceName}}</div>
               <div :class="['benke', item.isOnline === 2 ? 'hui' : '']">{{item.educationName}}</div>
             </div>
@@ -637,7 +637,7 @@
               <div class="money" v-show="item.positionId !== 0 && item.positionName !== '都不合适我'">{{item.emolumentMin}}K~{{item.emolumentMax}}K</div>
             </div>
             <div class="info" v-if="item.positionName !== '都不合适我'">
-              <div :class="['address', item.isOnline === 2 ? 'hui' : '']">{{item.city}}</div>
+              <div :class="['address', item.isOnline === 2 ? 'hui' : '']">{{item.city}}{{item.district}}</div>
               <div :class="['year', item.isOnline === 2 ? 'hui' : '']">{{item.workExperienceName}}</div>
               <div :class="['benke', item.isOnline === 2 ? 'hui' : '']">{{item.educationName}}</div>
             </div>
