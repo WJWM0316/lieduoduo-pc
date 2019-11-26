@@ -78,7 +78,7 @@
 import Wrapper from './wrapper'
 import DatePicker from './datePicker'
 import { addProject, setProject, getAllProject, deleteProject } from 'API/resume'
-import { projectNameReg, roleNameReg, urlReg } from 'UTIL/fieldRegular'
+import { projectNameReg, roleNameReg, urlReg } from '@/util/fieldRegular.js'
 export default {
   components: { Wrapper, DatePicker },
   props: {

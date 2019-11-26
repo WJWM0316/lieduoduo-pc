@@ -102,7 +102,7 @@ import SelectLabels from 'COMPONENTS/selectLabels'
 import SelectPositionType from 'COMPONENTS/selectPositionType'
 import { addCareer, setCareer, getAllCareer, deleteCareer } from 'API/resume'
 import DatePicker from './datePicker'
-import { companyNameReg, positionReg } from 'UTIL/fieldRegular'
+import { companyNameReg, positionReg } from '@/util/fieldRegular.js'
 export default {
   components: { Wrapper, SelectLabels, SelectPositionType, DatePicker },
   props: {

@@ -3,7 +3,7 @@
     <header class="header">
       <div class="inner">
         <div class="header-left">
-          <div class="header-left-top">
+          <div class="header-left-top" v-if="companyInformation.logoInfo">
             <img class="company-logo" :src = companyInformation.logoInfo.middleUrl />
             <div class="header-left-text">
               <p class="header-companyShortname">{{companyInformation.companyShortname}}</p>
@@ -22,45 +22,119 @@
           <div class="header-right-position">
             <p class="header-right-number">{{companyInformation.positionNum}}</p>
             <p class="header-right-text">在招职位</p>
-            <p class="header-right-resume">
+            <p class="header-right-resume" @click="resumeTo('online')">
               <i class="iconfont icon-ziwomiaoshu-"/>&nbsp;
-              {{}}在线简历
+              {{ online }}在线简历
             </p>
           </div>
           <div class="header-right-position">
-            <p class="header-right-number">1000</p>
+            <p class="header-right-number">{{ companyInformation.numOfVisitors }}</p>
             <p class="header-right-text">浏览</p>
-            <p class="header-right-resume">
+            <p class="header-right-resume" @click="resumeTo('annex')">
               <i class="iconfont icon-ziwomiaoshu-"/>&nbsp;
-              {{}}附件简历
+              {{ annex }}附件简历
             </p>
           </div>
         </div>
       </div>
     </header>
-    <div class="hotPosition">
-      <div class="hotPosition-inner">
-        <p class="hotPosition-title">热招职位：</p>
-        <div class="hotPosition-buttom">
-          <div class="hotPosition-box" v-for="(item, index) in HotPositionList" :key="index">
-            <span class="hot-positionName">{{item.positionName}}</span>
-            <span
-              class="hot-annualSalaryDesc"
-            >{{item.emolumentMin}}k-{{item.emolumentMax}}k·{{item.annualSalaryDesc}}</span>
-            <p class="hot-text">
-              {{item.province}}{{item.city}}{{item.district}} | {{item.workExperienceName}} |
-              {{item.educationName}}
-            </p>
+
+    <template v-if="activation">
+      <div class="hotPosition">
+        <div class="hotPosition-inner">
+          <p class="hotPosition-title">热招职位：</p>
+          <div class="hotPosition-buttom">
+            <div class="hotPosition-box" v-for="(item, index) in HotPositionList" :key="index" @click="toJobDetails(item,index)">
+              <span class="hot-positionName">{{item.positionName}}</span>
+              <span
+                class="hot-annualSalaryDesc"
+              >{{item.emolumentMin}}k-{{item.emolumentMax}}k·{{item.annualSalaryDesc}}</span>
+              <p class="hot-text">
+                {{item.province}}{{item.city}}{{item.district}} | {{item.workExperienceName}} |
+                {{item.educationName}}
+              </p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+      <div class="introduction-mian">
+        <div class="introduction-inner">
+          <div class="introduction-left">
+            <div class="introduction-presentation">
+              <p class="introduction-title">公司介绍</p>
+              <p class="introduction-text" :class="{ introduction_viewAll: viewAllText }" v-html="companyInformation.intro"></p>
+              <el-button type="text" class="introduction-left-buttom" @click="viewAll">{{ this.viewAllText ? '收起' :'查看全部'}}</el-button>
+            </div>
+            <div class="product" v-if="companyInformation.product">
+              <p class="product-title">公司产品</p>
+              <div class="product-box"  v-for="(item, index) in companyInformation.product" :key="index">
+                <img :src="item.logoInfo.middleUrl" class="product-img"/>
+                <div class="product-text">
+                  <p class="product-text-top">{{ item.productName }} | {{ item.slogan }}</p>
+                  <p class="product-text-middle">{{ item.lightspot }}</p>
+                  <p>
+                    <a class="product-text-buttom" :href="item.siteUrl" target="_blank">{{ item.siteUrl }}</a>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="address">
+              <p class="address-title">公司地址</p>
+              <el-collapse v-model="activeName" accordion @change="mapType">
+                <el-collapse-item v-for="(item, index) in companyInformation.address" :key="index" :title="item.address" :name="index+''">
+                  <template slot="title">
+                    <p class="address-text">
+                      <i class="iconfont icon-dizhi"></i>
+                      <span>{{ item.address }}</span>
+                    </p>
+                  </template>
+                  <div id="map" v-if="activeName === index+''"></div>
+                </el-collapse-item>
+              </el-collapse>
+            </div>
+          </div>
+          <div class="introduction-right">
+            <guideLogin v-if="this.$store.state.userInfo.id === undefined" class="guideLogin"></guideLogin>
+            <div class="surroundings">
+              <p class="surroundings-title">
+                公司环境
+              </p>
+              <div class="surroundings-container">
+                <div class="photo" ref="photo">
+                  <img :src="item.middleUrl" v-for="(item, index) in companyInformation.albumInfo" :key="index"/>
+                  <img :src="companyInformation.albumInfo[0].middleUrl" />
+                </div>
+              </div>
+            </div>
+            <div class="recruitmentTeam">
+              <p class="recruitmentTeam-title">招聘团队</p>
+              <div class="recruitmentTeam-mian">
+                <div class="recruitmentTeam-box">
+                  <img/>
+                  <p>{{  }}</p>
+                  <p></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <template v-if="!activation">
+      <div></div>
+    </template>
+    <!-- <mapSearch :componyId = jia></mapSearch> -->
   </div>
 </template>
 
 <script>
 import Vue from 'vue'
 import Component from 'vue-class-component'
+import guideLogin from '@/components/common/guideLogin'
+import { TMap } from '@/util/TMap.js'
+
+import getRecruitersListApi from '@/api/register.js'
 
 import {
   getCompanyHotApi,
@@ -68,13 +142,34 @@ import {
 } from '@/api/company.js'
 
 @Component({
-  name: 'company-detail'
+  name: 'company-detail',
+  components: {
+    // mapSearch
+    guideLogin
+  }
 })
 export default class companyDetail extends Vue {
-  infos = {};
-  HotPositionList = {}; // 热门职位列表
-  companyInformation = {};
-  activation = true;
+  activeName = '0' // mapType
+  infos = {}
+  HotPositionList = {} // 热门职位列表
+  companyInformation = {}
+  activation = true
+  myResume = this.$store.state.resume.myResume
+  isFourResume = this.$store.state.resume.isFourResume
+  online = '填写' // 在线简历显示文案
+  annex = '上传' // 附件简历显示文案
+  viewAllText = false // 公司介绍文案隐藏
+
+  mapType () {
+    this.$nextTick(function () {
+      const activeName = parseInt(this.activeName)
+      this.getMapLocation(this.companyInformation.address[activeName].lat, this.companyInformation.address[activeName].lng)
+    })
+  }
+
+  viewAll () {
+    this.viewAllText = !this.viewAllText
+  }
 
   activationType () {
     this.activation = !this.activation
@@ -89,7 +184,21 @@ export default class companyDetail extends Vue {
     }
     getCompanyApi(data).then(res => {
       this.companyInformation = res.data.data
-      console.log(res.data.data.numOfVisitors)
+      this.companyInformation.intro = this.companyInformation.intro.replace('。', '。<br/> <br/>')
+      // 遍历地址，没有http协议则加上
+      this.companyInformation.product.forEach(function (item, index) {
+        item.siteUrl = item.siteUrl.indexOf('http') !== -1 ? item.siteUrl : 'http://' + item.siteUrl
+      })
+    })
+  }
+  // 获取招聘团队
+  getRecruitersList () {
+    let param = {
+      page: 1,
+      count: 3
+    }
+    getRecruitersListApi(this.$router.companyId, param).then(res => {
+      console.log(res)
     })
   }
 
@@ -105,21 +214,88 @@ export default class companyDetail extends Vue {
       this.HotPositionList = res.data.data
     })
   }
+
+  resumeTo (type) {
+    // 是否已经登陆
+    if (this.$store.state.userInfo.id === undefined && type !== 'x') {
+      return this.$router.push({
+        name: 'login',
+        query: {
+          type: 'msgLogin'
+        }
+      })
+    } else if (this.$store.state.userInfo.id !== undefined) {
+      this.online = this.myResume.resumeCompletePercentage >= 0.9 ? '更新' : '完善'
+      if (!this.myResume.resumeAttach) {
+        this.annex = '更新'
+      }
+    }
+
+    if (type === 'online') {
+      if (this.isFourResume === 701) { return this.$router.push({ name: 'createUser' }) }
+      // 跳我的简历
+      return this.$router.push({ name: 'cresume' })
+    } else if (type === 'annex') {
+      // 这里执行 上传/更新附件简历弹窗
+    }
+  }
+
+  toJobDetails (item, index) {
+    this.$router.push({
+      name: 'positionDetail',
+      query: {
+        positionId: item.id
+      }
+    })
+  }
+  getMapLocation (lat, lng) {
+    TMap('TMZBZ-S72K6-66ISB-ES3XG-CVJC6-HKFZG').then(qq => {
+      this.$nextTick(() => {
+        var myLatlng = new qq.maps.LatLng(lat, lng)
+        var myOptions = {
+          zoom: 15,
+          center: myLatlng
+        }
+        var map = new qq.maps.Map(document.getElementById('map'), myOptions)
+        var marker = new qq.maps.Marker({
+          position: myLatlng,
+          animation: qq.maps.MarkerAnimation.DROP,
+          map: map
+        })
+      })
+    })
+  }
+  photoAnimation () {
+    let translateWidths = 0
+    let timers = function () {
+
+    }
+    let timer = function () {
+      translateWidths = translateWidths + 298
+      if (translateWidths / 298 > this.companyInformation.albumInfo.middleUrl.length) {
+        translateWidths = 0
+      }
+      setInterval(() => {
+        timer()
+        console.log(1)
+        this.$nextTick(function () {
+          this.$refs.photo.style.transform = `translate3d(-${translateWidths}px, 0, 0)`
+        })
+      }, 1000)
+    }
+  }
   created () {
     this.getCompanyHot()
     this.getCompany()
+    this.resumeTo('x')
+    this.getRecruitersList()
+    // this.mapType()
+  }
+  beforeUpdate () {
+    this.mapType()
+    this.photoAnimation()
   }
 }
-
-// emolumentMin: res.data.data.emolumentMin, // 最低薪水
-// emolumentMax: res.data.data.emolumentMax,
-// positionName: res.data.data.positionName,
-// annualSalaryDesc: res.data.data.annualSalaryDesc, // 12薪
-// workExperienceName: res.data.data.workExperienceName, // 工作经验
-// province: res.data.data.province, // 省
-// city: res.data.data.city,
-// district: res.data.data.district,
-// educationName: res.data.data.educationName // 学历
 </script>
 
 <style lang="scss" scoped>
@@ -127,6 +303,25 @@ export default class companyDetail extends Vue {
 %wrap-width {
   width: 100%;
   box-sizing: border-box;
+}
+
+%introductionTitle{
+  font-size: 16px;
+  font-weight: 500;
+  color: $font-color-2;
+  margin-bottom: 32px;
+  position: relative;
+
+  &::after{
+    display: inline-block;
+    content: '';
+    width: 22px;
+    height: 2px;
+    background: $main-color-1;
+    position: absolute;
+    left: 0;
+    top: 30px;
+  }
 }
 
 $sizing: border-box;
@@ -241,9 +436,9 @@ $sizing: border-box;
     }
   }
 }
-
 .hotPosition {
   @extend %wrap-width;
+  background: #F8FAFA;
 
   .hotPosition-inner {
     width: $page-width;
@@ -266,6 +461,7 @@ $sizing: border-box;
         background: #FFFFFF;
         box-sizing: $sizing;
         border-radius:4px;
+        cursor: pointer;
 
         .hot-positionName{
           font-size: 16px;
@@ -289,4 +485,136 @@ $sizing: border-box;
     }
   }
 }
+.introduction-mian{
+        @extend %wrap-width;
+        background: #FFFFFF;
+
+        .introduction-inner{
+          width: $page-width;
+          margin: 0 auto;
+          padding: 40px 0;
+          display: flex;
+
+          .introduction-left{
+            border-right: 1px solid $border-color-1;
+            width: 850px;
+
+            .introduction-presentation{
+              margin-bottom: 60px;
+              width: 750px;
+              position: relative;
+
+              .introduction-title{
+                @extend %introductionTitle;
+              }
+              .introduction-text{
+                font-size: 14px;
+                color: $font-color-3;
+                font-weight: 400;
+                line-height: 26px;
+                height: 158px;
+                overflow: hidden;
+              }
+              .introduction-left-buttom{
+                position: absolute;
+                right: 15px;
+              }
+              .introduction_viewAll{
+                height: auto;
+              }
+            }
+            .product{
+              margin-bottom: 60px;
+
+              .product-title{
+                @extend %introductionTitle;
+              }
+
+              .product-box{
+                display: flex;
+                margin-bottom: 24px;
+
+                .product-img{
+                width: 77px;
+                height: 77px;
+                border-radius: 8px;
+                }
+                .product-text{
+                  margin: 6px 0 0 20px;
+                  height: 66px;
+                  @include flex-justify-between;
+                  @include flex-direction-column;
+                  font-weight: 400;
+
+                  .product-text-top{
+                    font-size: 14px;
+                    color: $font-color-3;
+                  }
+                  .product-text-middle{
+                    font-size: 12px;
+                    color: $font-color-6;
+                  }
+                  .product-text-buttom{
+                    color: $font-color-2;
+                    font-size: 12px;
+                  }
+                }
+              }
+            }
+
+            .address{
+              width: 750px;
+              .address-title{
+                @extend %introductionTitle;
+              }
+              .address-text{
+                font-size: 14px;
+                color: $font-color-2;
+                font-weight:400;
+                i{
+                  font-size: 15px;
+                  color: $font-color-10;
+                  display: inline-block;
+                  margin: 0 7px 0 15px;
+                }
+              }
+              #map{
+                height: 147px;
+              }
+            }
+          }
+          .introduction-right{
+            padding-left: 50px;
+            .guideLogin{
+              margin-bottom: 50px;
+            }
+            .surroundings{
+              .surroundings-title{
+                @extend %introductionTitle;
+              }
+              .surroundings-container{
+                width: 298px;
+                height: 160px;
+                overflow: hidden;
+                .photo{
+                  @include clearfix;
+                  img{
+                    width: 298px;
+                    height: 147px;
+                    display: block;
+                    float: left;
+                  }
+                }
+              }
+            }
+            .recruitmentTeam{
+              margin-top: 50px;
+              .recruitmentTeam-title{
+                @extend %introductionTitle;
+              }
+
+            }
+          }
+        }
+      }
 </style>
