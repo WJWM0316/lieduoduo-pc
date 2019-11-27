@@ -1,6 +1,6 @@
 <template>
   <div class="index-wrapper">
-    <login-banner v-if="!isLogin" :banner="loginBannerList" :total="total"></login-banner>
+    <login-banner :banner="loginBannerList" :total="total"></login-banner>
     <search-wrapper></search-wrapper>
     <div class="position-wrapper main-center">
       <div class="index-part-1">
@@ -60,9 +60,6 @@ export default {
     this.getPageData()
   },
   computed: {
-    isLogin () {
-      return !!this.$store.state.userInfo.id
-    },
     isJobhunter () {
       return !!this.$store.state.roleInfos.isJobhunter
     }

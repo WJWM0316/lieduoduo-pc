@@ -89,7 +89,7 @@
 <script>
 import { realNameReg, idCardReg } from '@/util/fieldRegular.js'
 import Picture from 'COMPONENTS/common/upload/picture'
-import { getCompanyIdentityInfosApi, identityCompanyApi } from 'API/register'
+import { getCompanyIdentityInfosApi, identityCompanyApi, editCompanyIdentityInfosApi } from 'API/register'
 export default {
   components: {
     Picture
@@ -142,10 +142,17 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          identityCompanyApi(this.ruleForm).then((res) => {
-            this.getCompanyIdentityInfos()
-            this.$message('完善信息成功')
-          })
+          if (this.companyInfo.status === 2 || this.companyInfo.status === 0) {
+            editCompanyIdentityInfosApi(this.ruleForm).then((res) => {
+              this.getCompanyIdentityInfos()
+              this.$message.success('编辑成功')
+            })
+          } else {
+            identityCompanyApi(this.ruleForm).then((res) => {
+              this.getCompanyIdentityInfos()
+              this.$message.success('完善信息成功')
+            })
+          }
         } else {
           return false
         }

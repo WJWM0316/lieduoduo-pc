@@ -1095,6 +1095,7 @@ export default class CourseList extends Vue {
           break
         case 'inappropriate':
           if (vo.interviewInfo.data.data.length > 1) {
+            console.log(1)
             this.pop = {
               isShow: true,
               Interview: true,
@@ -1113,6 +1114,7 @@ export default class CourseList extends Vue {
             })
             this.applyrecordList = applylists
           } else {
+            console.log(2)
             this.pop = {
               isShow: true,
               Interview: true,

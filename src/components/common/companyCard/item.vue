@@ -1,7 +1,7 @@
 <template>
   <router-link
     target="_blank"
-    :to="`/company/details?companyId=${item.vkey}`"
+    :to="`/company/details?vkey=${item.vkey}`"
     class="company-list">
     <div class="company-image">
       <img v-if="item.logoInfo" :src="item.logoInfo.middleUrl" />

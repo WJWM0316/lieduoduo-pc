@@ -24,12 +24,12 @@
           </div>
         </div>
         <div class="position-right">
-          <guide-login class="guide-login"></guide-login>
+          <guide-login class="guidelogin"></guide-login>
           <template>
-            <adpostion position="searchResult"></adpostion>
+            <adpostion class="adpostion" position="searchResult"></adpostion>
           </template>
           <template>
-            <adpostion position="positionDetail"></adpostion>
+            <adpostion class="adpostion" position="positionDetail"></adpostion>
           </template>
         </div>
       </div>
@@ -167,8 +167,11 @@ export default {
       width: 882px;
       background: #ffffff;
     }
-    .guide-login{
-      margin-left: 20px;
+  }
+  .position-right{
+    padding-left: 20px;
+    .guidelogin{
+      margin-bottom: 20px;
     }
   }
 }

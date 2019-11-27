@@ -240,8 +240,8 @@ export default {
   border: 1px solid $border-color-2;
   height: 46px;
   .el-autocomplete,& /deep/ .el-input__inner{
-    height: 46px;
     padding-left: 10px;
+    height: 40px;
   }
   .search-location {
     width: 100px;

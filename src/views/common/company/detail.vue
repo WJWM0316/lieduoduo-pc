@@ -221,7 +221,7 @@ export default class companyDetail extends Vue {
   // 获取招聘团队
   getCompanysTeam () {
     let data = {
-      companyId: this.$route.query.vkey,
+      vkey: this.$route.query.vkey,
       page: 1,
       count: 3
     }
@@ -234,7 +234,7 @@ export default class companyDetail extends Vue {
   // 获取公司热门职位
   getCompanyHot () {
     let data = {
-      companyId: this.$route.query.vkey,
+      vkey: this.$route.query.vkey,
       page: 1,
       count: 3
     }

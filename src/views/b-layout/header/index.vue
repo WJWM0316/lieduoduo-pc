@@ -27,7 +27,7 @@
           </div>
         </div>
         <el-dropdown-menu slot="dropdown">
-           <el-dropdown-item command="perfectauth" v-if="!haveIdentity">
+           <el-dropdown-item command="perfectauth" v-if="haveIdentity">
              身份认证
              <div class="reddot"></div>
              </el-dropdown-item>
@@ -40,7 +40,6 @@
 </template>
 <script>
 import { mp_qrcode, wx_qrcode } from 'IMAGES/image'
-import { getCompanyIdentityInfosApi } from 'API/register'
 import { mapState } from 'vuex'
 export default {
   data () {
@@ -79,10 +78,11 @@ export default {
       }
     },
     getCompanyIdentityInfos () {
-      getCompanyIdentityInfosApi().then(res => {
-        console.log(res.data.data.haveIdentity)
-        this.haveIdentity = res.data.data.haveIdentity
-      })
+      if (this.$store.state.roleInfos.isRecruiter) {
+        this.haveIdentity = false
+      } else {
+        this.haveIdentity = true
+      }
     }
   },
   mounted () {
