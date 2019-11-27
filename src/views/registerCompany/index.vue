@@ -674,16 +674,15 @@ export default {
       this.bindButtonStatus()
       if (key === 'company_name') {
         this.debounce(() => {
-          this.getCompanyNameList()
+          if (this.ruleForm.company_name) {
+            this.getCompanyNameList()
+          }
         }, 1000)
       }
     },
     // 点击其他区域关闭弹窗
     closeMsg (event) {
       this.companyshow = false
-      console.log(event.target)
-      // if (event.target.className === 'pop') {
-      // }
     },
     authbindInput (value, key) {
       this.authForm[key] = value
@@ -759,7 +758,7 @@ export default {
           break
         case 'perfect':
           this.authForm = Object.assign(
-            {}, {id: this.ruleForm.id, company_name: this.ruleForm.company_name}
+            {}, { id: this.ruleForm.id, company_name: this.ruleForm.company_name }
           )
 
           this.$router.push({
@@ -850,7 +849,6 @@ export default {
       // 创建公司后 重新编辑走加入公司逻辑  如果之前有一条加入记录 取之前的加入记录id
         .catch(err => {
           if (err.data.code === 307) {
-            this.$message.error(err.data.msg)
             this.$router.push({
               query: {
                 page: 'status',
@@ -869,9 +867,7 @@ export default {
               if (err.data.code === 990) {
                 this.ruleForm.id = err.data.data.companyId
                 this.joinCompany()
-                return
               }
-              this.$message.error(err.data.msg)
             }
           })
         })
@@ -899,7 +895,6 @@ export default {
       // 公司存在 直接走加入流程
         .catch(err => {
           if (err.data.code === 307) {
-            this.$message.error(err.data.msg)
             this.$router.push({
               query: {
                 page: 'status',
@@ -957,7 +952,6 @@ export default {
                 })
                   .catch(err => {
                     if (err.data.code === 307) {
-                      this.$message.error(err.data.msg)
                       this.$router.push({
                         query: {
                           page: 'status',
@@ -994,7 +988,6 @@ export default {
             })
               .catch(err => {
                 if (err.data.code === 307) {
-                  this.$message.error(err.data.msg)
                   this.$router.push({
                     query: {
                       page: 'status',
@@ -1046,7 +1039,6 @@ export default {
           })
             .catch(err => {
               if (err.data.code === 307) {
-                this.$message.error(err.msg)
                 this.$router.push({
                   query: {
                     page: 'status',
@@ -1061,14 +1053,11 @@ export default {
     submit () {
       if (Reflect.has(this.$route.query, 'action')) {
         if (this.applyJoin) {
-          console.log(1)
           this.editJoinCompany()
         } else {
-          console.log(2)
           this.editCreateCompany()
         }
       } else {
-        console.log(3)
         this.createCompany()
       }
     },
@@ -1114,15 +1103,15 @@ export default {
             })
           } else {
             // 还没有创建公司信息
-            if(!Reflect.has(companyInfo, 'id')) {
+            if (!Reflect.has(companyInfo, 'id')) {
               this.$router.push({
                 query: {}
               })
             } else {
-              if(companyInfo.status === 1) {
+              if (companyInfo.status === 1) {
                 // wx.reLaunch({url: `${RECRUITER}index/index`})
               } else {
-                if(companyInfo.status === 3) {
+                if (companyInfo.status === 3) {
                   this.$router.push({ query: { page: 'submit' } })
                 } else {
                   this.$router.push({
@@ -1145,12 +1134,10 @@ export default {
       })
     },
     submit2 () {
-
       let formData = this.authForm
       if (formData.logourl === '') {
         formData.logo = 0
       }
-      console.log(formData)
       let params = {
         company_name: formData.company_name,
         industry_id: formData.industry_id,
@@ -1171,7 +1158,6 @@ export default {
             from: 'company'
           }
         })
-        // this.companyInfo.status = 0
       })
         .catch(err => {
           if (err.data.code === 307) {
@@ -1191,9 +1177,7 @@ export default {
                 from: 'company'
               }
             })
-            return
           }
-          this.$message.error(err.msg)
         })
     },
     // 开始招聘

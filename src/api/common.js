@@ -83,3 +83,20 @@ export const recruiterDetail = data => request({
     host: 'zhaopin'
   }
 })
+
+export const createonlinepdf = data => request({
+  url: `/jobhunter/auto_resume/pdf/${data.jobhunterVkey}`,
+  method: 'get',
+  params: data,
+  config: {
+    host: 'zhaopin'
+  }
+})
+export const createonlineword = data => request({
+  url: `/jobhunter/auto_resume/word/${data.jobhunterVkey}`,
+  method: 'get',
+  params: data,
+  config: {
+    host: 'zhaopin'
+  }
+})
