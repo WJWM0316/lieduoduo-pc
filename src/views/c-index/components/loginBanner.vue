@@ -1,6 +1,6 @@
 <template>
-  <div class="index-login">
-    <div class="login-bg">
+  <div class="index-login" :class="{'is-index-login': isLogin}">
+    <div class="login-bg" v-if="!isLogin">
       <div class="main-center index-login-wrapper">
         <p class="position-number">
           <span class="banner-text">高薪工作，就在猎多多</span>
@@ -15,6 +15,7 @@
         </div>
       </div>
     </div>
+    <div class="is-login-bg" :style="{'backgroundImage': `url(${banner[0] && banner[0].bigImgUrl})`, color: '#fff'}" v-else />
   </div>
 </template>
 <script>
@@ -39,6 +40,11 @@ export default {
         mobile: '',
         code: ''
       }
+    }
+  },
+  computed: {
+    isLogin () {
+      return !!this.$store.state.userInfo.id
     }
   },
   methods: {
@@ -91,18 +97,29 @@ export default {
 </script>
 <style lang="scss" scoped>
 $index-login-height: 120px;
-.login-bg {
-  width: 1200px;
+.login-bg, .is-login-bg {
   margin: 0 auto;
-  background-image: url(#{$image-cdn-url}/images/index_banner.png);
   background-size: cover;
   background-repeat: no-repeat;
+}
+.login-bg {
+  background-image: url(#{$image-cdn-url}/images/index_banner.png);
   height: $index-login-height;
 }
+.is-login-bg {
+  height: 70px;
+  max-width: 1400px;
+  width: 100%;
+  background-position: center center;
+}
 .index-login {
+  width: 1200px;
   height: $index-login-height;
   width: 100%;
   background: $bg-color-4;
+}
+.index-login.is-index-login {
+  height: 70px;
 }
 .index-login-wrapper {
   height: 100%;

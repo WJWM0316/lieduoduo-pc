@@ -24,7 +24,7 @@
             <router-link :to="`/position?keyword=${item.word}&typeName=position`" :key="index">{{item.word}}</router-link>
           </template>
           <template v-else>
-            <router-link :to="`/company/details?companyId=${item.extras.vkey}`" :key="index">{{item.word}}</router-link>
+            <router-link :to="`/company/details?vkey=${item.extras.vkey}`" :key="index">{{item.word}}</router-link>
           </template>
         </template>
       </p>
@@ -47,9 +47,9 @@ export default {
   },
   computed: {
     scrollTop () {
-      // 如果是登陆状态是 50 非登陆状态 是 170
+      // 如果是登陆状态是 120 非登陆状态 是 170
       const { userInfo } = this.$store.state
-      return userInfo && userInfo.id ? 50 : 170
+      return userInfo && userInfo.id ? 120 : 170
     }
   },
   mounted () {
