@@ -680,6 +680,7 @@ export default {
     },
     // 点击其他区域关闭弹窗
     closeMsg (event) {
+      this.companyshow = false
       console.log(event.target)
       // if (event.target.className === 'pop') {
       // }
@@ -757,6 +758,10 @@ export default {
           }
           break
         case 'perfect':
+          this.authForm = Object.assign(
+            {}, {id: this.ruleForm.id, company_name: this.ruleForm.company_name}
+          )
+
           this.$router.push({
             query: {
               page: 'perfect'
@@ -922,11 +927,11 @@ export default {
       }
       // 判断公司是否存在
       justifyCompanyExistApi({ name: formData.company_name }).then(res0 => {
-        if (res0.data.exist) {
+        if (res0.data.data.exist) {
           // 有可能编辑时  加入另一家公司
-          params = Object.assign(params, { company_id: res0.data.id })
+          params = Object.assign(params, { company_id: res0.data.data.id })
           // 被拒绝并且是新公司
-          if (formData.id !== res0.data.id) {
+          if (formData.id !== res0.data.data.id) {
             // 查看当前公司是否有申请记录
             hasApplayRecordApi().then(res1 => {
               // 当前公司已经申请过
@@ -962,7 +967,7 @@ export default {
                     }
                   })
               } else {
-                this.ruleForm.id = res0.data.id
+                this.ruleForm.id = res0.data.data.id
                 this.joinCompany()
               }
             })
@@ -1072,15 +1077,16 @@ export default {
       let applyJoin = this.applyJoin
       getCompanyIdentityInfosApi().then(res => {
         let companyInfo = res.data.data.companyInfo
-        applyJoin = res.data.applyJoin
+        applyJoin = res.data.data.applyJoin
         // 重新创建一条记录
 
         this.ruleForm.real_name = storage.real_name || companyInfo.realName
         this.ruleForm.user_email = storage.user_email || companyInfo.userEmail
         this.ruleForm.user_position = storage.user_position || companyInfo.userPosition
         this.ruleForm.company_name = storage.company_name || companyInfo.companyName
-        this.ruleForm.id = companyInfo.id
-
+        this.ruleForm = Object.assign(this.ruleForm, {
+          id: companyInfo.id
+        })
         this.authForm.company_name = companyInfo.companyName
         this.authForm.company_shortname = storage.company_shortname || companyInfo.companyShortname
         this.authForm.industry_id = storage.industry_id || companyInfo.industryId
@@ -1095,21 +1101,42 @@ export default {
         this.authForm.business_license = storage.business_license || companyInfo.businessLicenseInfo
         this.authForm.on_job = storage.on_job || companyInfo.onJobInfo
         this.companyInfo = companyInfo
-        if (this.companyInfo.status === 3) {
-          this.$router.push({ name: 'register', query: { page: 'submit' } })
-        }
-        if (this.companyInfo.status === 0) {
-          this.$router.push({
-            query: {
-              page: 'status',
-              from: 'company'
+
+        let callback = (msg) => {
+          let companyInfo = msg.data.companyInfo
+          let identityInfo = msg.data
+          if (Reflect.has(msg.data, 'applyJoin') && msg.data.applyJoin) {
+            this.$router.push({
+              query: {
+                page: 'status',
+                from: 'join'
+              }
+            })
+          } else {
+            // 还没有创建公司信息
+            if(!Reflect.has(companyInfo, 'id')) {
+              this.$router.push({
+                query: {}
+              })
+            } else {
+              if(companyInfo.status === 1) {
+                // wx.reLaunch({url: `${RECRUITER}index/index`})
+              } else {
+                if(companyInfo.status === 3) {
+                  this.$router.push({ query: { page: 'submit' } })
+                } else {
+                  this.$router.push({
+                    query: {
+                      page: 'status',
+                      from: 'company'
+                    }
+                  })
+                }
+              }
             }
-          })
+          }
         }
-        // 重新编辑 加公司id
-        if (Reflect.has(this.$route.query, 'action')) {
-          this.ruleForm.id = companyInfo.id
-        }
+        callback(res.data)
 
         if (applyJoin) {
           this.ruleForm.applyId = companyInfo.applyId
@@ -1118,10 +1145,12 @@ export default {
       })
     },
     submit2 () {
+
       let formData = this.authForm
       if (formData.logourl === '') {
         formData.logo = 0
       }
+      console.log(formData)
       let params = {
         company_name: formData.company_name,
         industry_id: formData.industry_id,

@@ -18,3 +18,11 @@ export const getHotKeyword = data => request({
   params: data,
   config: { host: 'qiuzhi' }
 })
+
+// 公司搜索
+export const getCompanyListsApi = data => request({
+  url: '/companies/sch',
+  method: 'get',
+  params: data,
+  config: { host: 'qiuzhi' }
+})

@@ -255,3 +255,18 @@ export const getCompanysPositionListApi = (data) => request({
   params: data,
   config: { host: 'qiuzhi' }
 })
+/* 酷公司logo列表 */
+export const getLogoListsListsApi = (data) => request({
+  url: '/surfaceRapidlyCompany/logoLists',
+  method: 'get',
+  params: data,
+  config: { host: 'qiuzhi' }
+})
+
+/* 获取公司信息 */
+export const getVkeyCompanyApi = (data) => request({
+  url: `/company/detail/${data.vkey}`,
+  method: 'get',
+  params: data,
+  config: { host: 'qiuzhi' }
+})

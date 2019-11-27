@@ -14,7 +14,7 @@
         <div class="list">
           <positionItem v-for="(item, index) in PositionList" :key="index" :item = item></positionItem>
         </div>
-        <div class="pagination" v-if="total > 0 && total > params.count">
+        <!-- <div class="pagination" v-if="total > 0 && total > params.count">
           <el-pagination
             background
             @current-change="(val) => handleSearch(val, 'page')"
@@ -23,7 +23,7 @@
             layout="prev, pager, next"
             :total="total">
           </el-pagination>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -43,7 +43,8 @@ export default {
       type: {}, // type类型
       typeActivation: 0,
       PositionList: {},
-      typeActivationItem: {} // 当前激活按钮数据
+      typeActivationItem: {}, // 当前激活按钮数据
+      page: 1
     }
   },
   components: {
@@ -54,7 +55,7 @@ export default {
     // 获得职位详情
     async getCompanysPosition () {
       let data = {
-        companyId: 1346
+        companyId: this.$route.query.companyId
       }
       await getCompanysPositionApi(data)
         .then(res => {
@@ -62,16 +63,11 @@ export default {
         })
     },
     TypeClick (item, index) {
-      if (item === '') {
-        var data = {
-          companyId: 1346,
-          name: ''
-        }
-      } else {
-        var data = {
-          companyId: 1346,
-          type: item.id
-        }
+      this.typeActivationItem = item.id
+
+      var data = {
+        company_id: this.$route.query.companyId,
+        type: item.id
       }
       this.typeActivation = index
       this.getCompanysPositionList(data)

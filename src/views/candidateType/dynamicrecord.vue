@@ -1,5 +1,5 @@
 <template>
-    <div class="popforward" v-show="visible">
+    <div class="popforward" v-show="visible" @click="closeMsg($event)">
       <div class="noJobBox">
         <div class="close"><i @click="quxiao()" class="iconfont icon-danchuang-guanbi"></i></div>
         <div class="content">
@@ -149,9 +149,7 @@ export default {
       document.body.removeChild(el)
     },
     closeMsg (event) {
-      if (event.target.className === 'popforward') {
-        this.visible = false
-      }
+      this.historyemailshow = false
     }
   }
 }

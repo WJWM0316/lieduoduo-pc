@@ -154,7 +154,7 @@ import companyRecruitment from './components/Recruitment'
 
 import {
   getCompanyHotApi,
-  getCompanyApi,
+  getVkeyCompanyApi,
   getCompanysTeamApi
 } from '@/api/company.js'
 
@@ -207,11 +207,10 @@ export default class companyDetail extends Vue {
   // 获取公司信息
   async getCompany () {
     let data = {
-      // id: this.$router.query.companyId,
-      id: 1346,
+      id: this.$route.query.companyId,
       sCode: ''
     }
-    await getCompanyApi(data).then(res => {
+    await getVkeyCompanyApi(data).then(res => {
       this.companyInformation = res.data.data
       this.companyInformation.intro = this.companyInformation.intro.replace('。', '。<br/> <br/>')
       // 遍历地址，没有http协议则加上
@@ -223,7 +222,7 @@ export default class companyDetail extends Vue {
   // 获取招聘团队
   getCompanysTeam () {
     let data = {
-      companyId: 1346,
+      companyId: this.$route.query.companyId,
       page: 1,
       count: 3
     }
@@ -236,8 +235,7 @@ export default class companyDetail extends Vue {
   // 获取公司热门职位
   getCompanyHot () {
     let data = {
-      // companyId: this.$router.query.companyId,
-      companyId: 1346,
+      companyId: this.$route.query.companyId,
       page: 1,
       count: 3
     }
