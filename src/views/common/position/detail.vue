@@ -1,5 +1,5 @@
 <template>
-  <div class="positionDetail" v-if="infos.id">
+  <div class="positionDetail">
     <header ref="header" class="header" :class="{'isRapidly' : infos.isRapidly === 1, 'headerFloat' : headerFloat}">
       <div class="inner">
         <div class="header-content">
