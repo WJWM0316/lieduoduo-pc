@@ -54,7 +54,12 @@
       ></el-date-picker>
       <i class="el-icon-caret-bottom defalut-position" id="startWorkYearDom"></i>
     </div>
-    <div class="submit" @click="submit(1)">继续</div>
+    <div class="btn-box" @click="submit(1)">
+      <div class="over-lay">
+        <div class="btn-confirm full">继续</div>
+      </div>
+      <div class="mask"></div>
+    </div>
   </div>
 </div>
 
@@ -188,7 +193,7 @@ export default class CourseList extends Vue {
   height:471px;
   background:rgba(255,255,255,1);
   box-shadow:0px 3px 20px 2px rgba(0,0,0,0.09);
-  border-radius:8px;
+  border-radius: 8px;
   border:1px solid rgba(255,255,255,1);
   margin: 0 auto;
   padding: 95px 40px 0 40px;
@@ -236,9 +241,8 @@ export default class CourseList extends Vue {
   .formItem {
     width:370px;
     height:46px;
-    background:rgba(251,249,252,0.8);
-    border-radius:23px;
-    border:1px solid rgba(242,237,245,1);
+    background:$bg-color-1;
+    border-radius: 4px;
     box-sizing: border-box;
     margin-bottom: 20px;
     position: relative;
@@ -273,9 +277,8 @@ export default class CourseList extends Vue {
       .el-radio {
         width:180px;
         height:46px;
-        background:rgba(251,249,252,0.8);
-        border-radius:23px;
-        border:1px solid rgba(242,237,245,1);
+        background:$bg-color-1;
+        border-radius:4px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -293,9 +296,8 @@ export default class CourseList extends Vue {
     display: flex;
     color: #666666;
     margin-bottom: 20px;
-    background:rgba(251,249,252,0.8);
-    border-radius:23px;
-    border:1px solid rgba(242,237,245,1);
+    background:$bg-color-1;
+    border-radius: 4px;
     display: inline-block;
     overflow: hidden;
     box-sizing: border-box;
@@ -321,20 +323,6 @@ export default class CourseList extends Vue {
       bottom: 0;
       opacity: 0;
     }
-  }
-  .submit {
-    width:260px;
-    height:50px;
-    line-height:50px;
-    background: $bg-color-4;
-    border-radius:25px;
-    margin: 0 auto;
-    line-height: 50px;
-    text-align: center;
-    margin-top: 30px;
-    font-size:16px;
-    font-weight:600;
-    color:rgba(255,255,255,1);
   }
 }
 .el-dropdown-menu {

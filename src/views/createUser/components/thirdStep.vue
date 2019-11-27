@@ -235,15 +235,14 @@ export default class resumeThirdPost extends Vue {
     box-sizing: border-box;
     background:rgba(255,255,255,1);
     box-shadow:0px 3px 20px 2px rgba(0,0,0,0.09);
-    border-radius:16px;
+    border-radius: 8px;
     border:1px solid rgba(255,255,255,1);
     margin: 0 auto;
     position: relative;
     .formItem {
       height:46px;
-      background:rgba(251,249,252,0.8);
-      border-radius:23px;
-      border:1px solid rgba(242,237,245,1);
+      background:$bg-color-1;
+      border-radius: 4px;
       margin-bottom: 20px;
       position: relative;
       .el-input__inner {
@@ -307,9 +306,8 @@ export default class resumeThirdPost extends Vue {
       .start-time{
         width:176px;
         height:46px;
-        background:rgba(251,249,252,0.8);
-        border-radius:23px;
-        border:1px solid rgba(242,237,245,1);
+        background:$bg-color-1;
+        border-radius: 4px;
         display: inline-block;
         overflow: hidden;
         box-sizing: border-box;
@@ -320,9 +318,8 @@ export default class resumeThirdPost extends Vue {
       .end-time{
         width:176px;
         height:46px;
-        background:rgba(251,249,252,0.8);
-        border-radius:23px;
-        border:1px solid rgba(242,237,245,1);
+        background:$bg-color-1;
+        border-radius: 4px;
         display: inline-block;
         overflow: hidden;
         box-sizing: border-box;
@@ -337,50 +334,6 @@ export default class resumeThirdPost extends Vue {
         right: 0;
         bottom: 0;
         opacity: 0;
-      }
-    }
-    .btn-box{
-      height:50px;
-      line-height: 50px;
-      font-size:16px;
-      font-weight:700;
-      cursor: pointer;
-      position: relative;
-      margin-top: 48px;
-      .btn-pre{
-        width:126px;
-        height:50px;
-        background:rgba(255,255,255,1);
-        border-radius:100px 0px 0px 100px;
-        border:1px solid $border-color-2;
-        box-sizing: border-box;
-        display: inline-block;
-        color: $main-color-1;
-        vertical-align: middle;
-      }
-      .btn-confirm{
-        width:240px;
-        height:50px;
-        background: $bg-color-4;
-        border-radius:0px 25px 25px 0px;
-        box-sizing: border-box;
-        display: inline-block;
-        color: white;
-        vertical-align: middle;
-      }
-      .over-lay{
-        position: relative;
-        z-index: 2;
-      }
-      .mask{
-        width:360px;
-        height:50px;
-        border-radius:25px;
-        border:1px solid $border-color-2;
-        position: absolute;
-        top: 4px;
-        z-index: 1;
-        left: 8px;
       }
     }
     input::-webkit-input-placeholder {
