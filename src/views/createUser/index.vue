@@ -5,10 +5,10 @@
      <div class="middle">
        <div class="contain">
         <h3 class="title"><span>3分钟</span>创建微简历，<span>1000+名企</span>高薪职位任你选</h3>
-        <img class="slogon-box" v-if="step === 1" :src="cdnPath + 'img_sentence_01@2x.png'"/>
-        <img class="slogon-box" v-if="step === 2" :src="cdnPath + 'img_sentence_02@2x.png'"/>
-        <img class="slogon-box" v-if="step === 3" :src="cdnPath + 'img_sentence_03@2x.png'"/>
-        <img class="slogon-box" v-if="step === 4" :src="cdnPath + 'img_sentence_04@2x.png'"/>
+        <img class="slogon-box" v-if="step === 1" :src="cdnPath + 'img_sentence_01.png'"/>
+        <img class="slogon-box" v-if="step === 2" :src="cdnPath + 'img_sentence_02.png'"/>
+        <img class="slogon-box" v-if="step === 3" :src="cdnPath + 'img_sentence_03.png'"/>
+        <img class="slogon-box" v-if="step === 4" :src="cdnPath + 'img_sentence_04.png'"/>
         <first-step  v-if="step === 1"></first-step>
         <second-step v-if="step === 2"></second-step>
         <third-step v-if="step === 3"></third-step>
@@ -133,5 +133,4 @@ export default class createUser extends Vue {
     }
   }
 }
-
 </style>

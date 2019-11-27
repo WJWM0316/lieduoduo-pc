@@ -19,7 +19,7 @@ const applicant = [
     children: [
       {
         path: '',
-        name: 'position',
+        name: 'position', // 公司 职位搜索
         component: resolve => require(['../views/c-position'], resolve)
       },
       {

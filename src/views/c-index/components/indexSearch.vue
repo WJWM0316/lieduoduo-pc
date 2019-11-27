@@ -20,7 +20,12 @@
       <p class="hot-word">
         <span>热门搜索：</span>
         <template v-for="(item, index) in hotkeyWord">
-          <router-link :to="`/position?keyword=${item.word}`" :key="index">{{item.word}}</router-link>
+          <template v-if="item.type === 1">
+            <router-link :to="`/position?keyword=${item.word}&typeName=position`" :key="index">{{item.word}}</router-link>
+          </template>
+          <template v-else>
+            <router-link :to="`/company/details?companyId=${item.extras.vkey}`" :key="index">{{item.word}}</router-link>
+          </template>
         </template>
       </p>
     </div>
@@ -76,7 +81,7 @@ export default {
       })
     },
     getWords () {
-      getHotKeyword().then(({ data }) => {
+      getHotKeyword({ type: '1,2' }).then(({ data }) => {
         this.hotkeyWord = data.data.items || []
       })
     },

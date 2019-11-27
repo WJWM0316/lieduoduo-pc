@@ -1,7 +1,7 @@
 <template>
   <header id="resumeHeader" >
     <section class="inner">
-      <img class="left_logo" :src="cdnPath + 'logo_lieduodou@2x.png'" />
+      <img class="left_logo" :src="cdnPath + 'logo_lieduodou.png'" />
       <el-dropdown trigger="click"  @command="handleClick" >
         <div class="headerBtn">
           <div class="right">

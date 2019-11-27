@@ -113,7 +113,8 @@ export default {
   computed: {
     ...mapState({
       roleInfos: state => state.roleInfos,
-      cityList: state => state.areaList
+      cityList: state => state.areaList,
+      cityId: state => state.cityId
     }),
     headerInfo () {
       // 有加载简历就用简历里面的 没有就用登陆携带回来的信息
@@ -176,6 +177,13 @@ export default {
         const areas = [{ 'areaId': 0, 'name': '全国', 'provinceId': 0, 'provinceName': '全国' }, ...data.data]
         this.$store.commit('setAreas', areas)
       })
+    }
+  },
+  watch: {
+    cityId (value) {
+      if (!isNaN(value)) {
+        this.addressId = value
+      }
     }
   }
 }
