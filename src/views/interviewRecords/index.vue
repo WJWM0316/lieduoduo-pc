@@ -119,12 +119,12 @@
         <span class="total">共{{ Math.ceil(form.totalPage) }}页, {{form.total}}条记录</span>
       </el-pagination>
 
-        <!-- <div class="null-product" v-show="list.length === 0">
+        <div class="null-product" v-show="list.length === 0">
           <div class="null-img">
-            <img src="@/assets/fly.png" />
+            <img src="@/assets/images/fly.png" />
           </div>
-          <div class="null-text">还没有面试安排哦，主动分享职位获取更多候选人吧</div>
-        </div> -->
+          <div class="null-text">与其等待，不如主动出击~</div>
+        </div>
 
       </div>
       <div class="pop" v-if="pop.isShow" @click="closeMsg($event)">
@@ -331,7 +331,7 @@
               <div class="btn1" @click.stop="setJob(nowResumeMsg.uid, 'arranging-interviews', nowResumeMsg, 2)" v-if="nowResumeMsg.interviewInfo.data.haveInterview && nowResumeMsg.interviewInfo.data.interviewStatus === 32">
                 <span>修改面试</span>
               </div>
-              <div class="btn1" @click.stop="setJob(nowResumeMsg.uid, 'interview-retract', nowResumeMsg, 2)" v-if="!nowResumeMsg.interviewInfo.data.haveInterview && nowResumeMsg.interviewInfo.data.hasUnsuitRecord">撤回</div>
+              <div class="btn1" @click.stop="setJob(nowResumeMsg.uid, 'interview-retract', nowResumeMsg, 2)" v-if="!nowResumeMsg.interviewInfo.data.haveInterview && nowResumeMsg.interviewInfo.data.hasUnsuitRecord && nowResumeMsg.interviewInfo.data.lastInterviewStatus !== 61">撤回</div>
               <div class="btn1" @click.stop="setJob(nowResumeMsg.uid, 'check-invitation', nowResumeMsg, 2)" v-if="nowResumeMsg.interviewInfo.data.haveInterview && nowResumeMsg.interviewInfo.data.interviewStatus >= 41">面试详情</div>
 
               <div class="btn2" @click.stop="setJob(nowResumeMsg.uid, 'inappropriate', nowResumeMsg, 2)" v-if="nowResumeMsg.interviewInfo.data.haveInterview && !nowResumeMsg.interviewInfo.data.hasUnsuitRecord">不合适</div>
@@ -654,7 +654,7 @@
 
           <div class="handler" v-show="pop.type !== 'preview'">
           <div class="save" @click="surehandler()" v-show="pop.type !== 'address'">{{pop.btntext}}</div>
-          <div class="save" @click="sendhandler()" v-show="pop.type === 'address'">发送</div>
+          <div class="save" @click="sendhandler()" v-show="pop.type === 'address'">保存</div>
           <div class="cancel" v-show="pop.type !== 'watchreson'" @click="backhandler()">取消</div>
         </div>
 
@@ -1525,6 +1525,7 @@ export default {
     haslike () {
       setCommentApi({ interviewId: this.jobhunterInfo.interviewId }).then((res) => {
         this.viewdetail(this.jobhunterInfo)
+        this.getScheduleList()
       })
     },
     getTime (e) {

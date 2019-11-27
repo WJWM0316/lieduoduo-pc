@@ -2,7 +2,7 @@
 <div class="register-all">
   <div id="register" class="register">
       <div class="b-title">猎多多</div>
-      <div class="l-title">精英人才招聘神器</div>
+      <div class="l-title">高端人才招聘平台</div>
       <!-- 创建公司模块 -->
       <div class="registerBox" v-show="!$route.query.page" @click="closeMsg($event)">
         <div class="box-title">填写个人信息</div>
