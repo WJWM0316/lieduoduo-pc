@@ -9,7 +9,7 @@
               <p class="header-companyShortname">{{companyInformation.companyShortname}}</p>
               <p class="header-financingInfo">{{companyInformation.financingInfo}}·{{companyInformation.employeesInfo}}·{{companyInformation.industry}}</p>
               <ul>
-                <li class="label" v-for="(item, index) in companyInformation.teamLabel" :key="index">{{item.title}}</li>
+                <li class="label" v-for="(item, index) in companyInformation.teamLabel.slice(0,7)" :key="index">{{item.title}}</li>
               </ul>
             </div>
           </div>
@@ -64,7 +64,7 @@
           <div class="introduction-left">
             <div class="introduction-presentation">
               <p class="introduction-title">公司介绍</p>
-              <p class="introduction-text" :class="{ introduction_viewAll: viewAllText }" v-html="companyInformation.intro"></p>
+              <p class="introduction-text" ref="introduction_text" :class="{ introduction_viewAll: viewAllText }" v-html="companyInformation.intro"></p>
               <el-button type="text" class="introduction-left-buttom" @click="viewAll">{{ this.viewAllText ? '收起' :'查看全部'}}</el-button>
             </div>
             <div class="product" v-if="companyInformation.product">
@@ -80,7 +80,7 @@
                 </div>
               </div>
             </div>
-            <div class="address">
+            <div class="address" v-if="companyInformation.address.length">
               <p class="address-title">公司地址</p>
               <el-collapse v-model="activeName" accordion @change="mapType">
                 <el-collapse-item v-for="(item, index) in companyInformation.address" :key="index" :title="item.address" :name="index+''">
@@ -139,7 +139,7 @@
       </el-dialog>
     </template>
 
-      <companyRecruitment v-if="!activation"></companyRecruitment>
+      <companyRecruitment :haslogin = haslogin v-if="!activation"></companyRecruitment>
   </div>
 </template>
 
@@ -186,11 +186,22 @@ export default class companyDetail extends Vue {
   dialogVisible = false // 地图弹窗
   getCompanysTeamText = {} // 招聘团队
   islogin = false // 子组件是否登陆弹窗
-  haslogin = false
+  haslogin = false // 是否已经登录
+  isIntroduction_text = true // 显示文案切换按钮
+
+  // 监听滚动
+  handleScroll () {
+    let scrollY = window.scrollY
+    if (scrollY > 300) {
+      console.log(300)
+    } else {
+      console.log(0)
+    }
+  }
 
   // 地图
   mapType () {
-    if (this.activeName === '') return
+    if (this.companyInformation.address.length === 0) return
     this.$nextTick(() => {
       this.getMapLocation(this.companyInformation.address[this.activeName].lat, this.companyInformation.address[this.activeName].lng)
     })
@@ -317,6 +328,10 @@ export default class companyDetail extends Vue {
   //     }, 1000)
   //   }
   // }
+
+  introductionFun () {
+    this.isIntroduction_text = !(this.$refs.introduction_text.width < 150)
+  }
   hasLogin () {
     this.haslogin = (JSON.stringify(this.userInfo) !== '{}')
   }
@@ -326,11 +341,16 @@ export default class companyDetail extends Vue {
     this.resumeTo('x')
   }
   created () {
+    window.addEventListener('scroll', this.handleScroll)
+    this.introductionFun() // 文字高度
     this.getCompanysTeam()
     this.getCompanyHot()
     this.getCompany().then(() => {
       this.mapType()
     })
+  }
+  destroyed () {
+    window.removeEventListener('scroll', this.handleScroll)
   }
 }
 </script>
@@ -532,8 +552,8 @@ $sizing: border-box;
           width: $page-width;
           margin: 0 auto;
           padding: 40px 0;
-          display: flex;
-          flex-wrap: wrap;
+          // display: flex;
+          // flex-wrap: wrap;
           .appLinks{
             box-sizing: border-box;
             padding: 90px 0 40px 0;
@@ -545,10 +565,10 @@ $sizing: border-box;
           .introduction-left{
             border-right: 1px solid $border-color-1;
             width: 850px;
+            padding-right: 100px;
 
             .introduction-presentation{
               margin-bottom: 60px;
-              width: 750px;
               position: relative;
 
               .introduction-title{
@@ -600,6 +620,9 @@ $sizing: border-box;
                   .product-text-middle{
                     font-size: 12px;
                     color: $font-color-6;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
                   }
                   .product-text-buttom{
                     color: $font-color-2;
@@ -632,6 +655,7 @@ $sizing: border-box;
           }
           .introduction-right{
             padding-left: 50px;
+            width: 298px;
             .guideLogin{
               margin-bottom: 50px;
             }
@@ -681,6 +705,9 @@ $sizing: border-box;
                   .recruitmentTeam-text-buttom{
                     margin-top: 4px;
                     color: $font-color-6;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
                   }
                 }
               }
@@ -700,4 +727,15 @@ $sizing: border-box;
           }
         }
       }
+.address-text{
+  font-size: 14px;
+  color: $font-color-2;
+  font-weight:400;
+  i{
+    font-size: 15px;
+    color: $font-color-10;
+    display: inline-block;
+    margin: 0 7px 0 15px;
+  }
+}
 </style>
