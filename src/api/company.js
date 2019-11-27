@@ -239,3 +239,19 @@ export const getCompanysTeamApi = (data) => request({
   params: data,
   config: { host: 'qiuzhi' }
 })
+
+/* 获取公司职位类型 */
+export const getCompanysPositionApi = (data) => request({
+  url: `/company/onlinePositionType/${data.companyId}`,
+  method: 'get',
+  params: data,
+  config: { host: 'qiuzhi' }
+})
+
+/* 获取公司职位类型列表 */
+export const getCompanysPositionListApi = (data) => request({
+  url: `/position/list/`,
+  method: 'get',
+  params: data,
+  config: { host: 'qiuzhi' }
+})
