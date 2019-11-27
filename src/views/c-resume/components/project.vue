@@ -15,7 +15,7 @@
           </p>
           <div class="resume-list-desc">{{row.description}}</div>
           <div class="resume-list-link" v-if="row.link">
-            链接: <span>{{row.link}}</span>
+            链接: <span target="_black" @click.prevent="openNewWindow(row.link)">{{row.link}}</span>
           </div>
         </template>
       </template>
@@ -221,6 +221,10 @@ export default {
         }
       }
       this.$refs.wrapper.showEditCompoents()
+    },
+    openNewWindow (link) {
+      let protocol = link.indexOf('http') >= 0 ? '' : 'http://'
+      window.open(protocol + link, '_blank')
     }
   }
 }
@@ -231,6 +235,10 @@ export default {
   color: $title-color-2;
   span {
     color: $main-color-1;
+    cursor: pointer;
+  }
+  span:hover {
+    text-decoration: underline;
   }
 }
 </style>

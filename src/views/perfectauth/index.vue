@@ -57,7 +57,10 @@
             <div class="status-desc" v-if="companyInfo.status === 0">该申请将在1个工作日内审核，审核通过后即可开始招聘</div>
             <div class="status-desc" v-if="companyInfo.status === 2">请重新提交资料，完成个人信息认证</div>
             <div class="nopass" v-if="companyInfo.status === 2">
-              <div class="title">实名认证审核未通过的原因如下</div>
+              <div class="title">
+                <span>实名认证审核未通过的原因如下</span>
+                <span @click="change()" class="cxtitle">重新提交认证信息</span>
+                </div>
               <div class="reson">
                 <span>{{companyInfo.reviewNote}}</span>
               </div>
@@ -351,9 +354,17 @@ export default {
           margin-bottom: 10px;
           font-size: 16px;
         }
+        .cxtitle{
+          font-weight: normal;
+          font-size: 14px;
+          color: #652791;
+          cursor: pointer;
+          float: right;
+          padding-left: 21px;
+        }
         .reson{
           width:392px;
-          height:86px;
+          max-height:86px;
           background:rgba(255,252,240,1);
           border-radius:4px;
           color: #FF7F4C;

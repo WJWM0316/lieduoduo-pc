@@ -176,7 +176,7 @@ import {
   },
   watch: {
     activeName (val) {
-      console.log(val, 111)
+      console.log(val, typeof val, 111)
     }
   }
 })
@@ -208,8 +208,7 @@ export default class companyDetail extends Vue {
 
   // 地图
   mapType () {
-    if (!this.companyInformation.address.length) return
-    if (!this.activeName) return
+    if (!this.companyInformation.address.length || (!this.activeName && this.activeName !== 0)) return
     this.$nextTick(() => {
       this.getMapLocation(this.companyInformation.address[this.activeName].lat, this.companyInformation.address[this.activeName].lng)
     })

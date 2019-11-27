@@ -200,7 +200,7 @@
                 <!-- <a :href="nowResumeMsg.resumeAttach.url" :download="nowResumeMsg.resumeAttach.fileName">下载</a> -->
               </div>
             </div>
-            <div class="haslogin">
+            <div class="haslogin" v-if="!isshow">
               <div class="login-btn" @click="login">登录</div>
               <div class="login-desc">*登录后即可下载/打印简历</div>
             </div>
@@ -277,24 +277,29 @@ export default class CourseList extends Vue {
     login () {
       this.$router.push({ name: 'login' })
     }
+    downloadDoc (content, filename) {
+      var eleLink = document.createElement('a')
+      eleLink.download = filename
+      eleLink.style.display = 'none'
+      var blob = new Blob([content])
+      eleLink.href = URL.createObjectURL(blob)
+      document.body.appendChild(eleLink)
+      eleLink.click()
+      document.body.removeChild(eleLink)
+    }
     onloadfile (type) {
-      console.log(this.$route.query.vkey)
-      let params = { jobhunterVkey: this.$route.query.vkey }
+      let params = { jobhunterVkey: this.nowResumeMsg.vkey }
       if (type === 'pdf') {
         createonlinepdf(params).then((res) => {
-          console.log(res)
+          // console.log(res)
+          this.downloadDoc(res.data, this.nowResumeMsg.name + '.pdf')
         })
       }
       if (type === 'doc') {
         createonlineword(params).then((res) => {
-          console.log(res)
+          this.downloadDoc(res.data.data, this.nowResumeMsg.name + '.doc')
         })
       }
-      // var el = document.createElement('a')
-      // el.download = '你的文件名'
-      // el.href = 'https://attach.lieduoduo.ziwork.com/doc/2019/0525/11/5ce8b4f611850.docx'
-      // el.click()
-      // console.log(type)
     }
     // 获取简历二维码
     getShareResume (resumeId) {
