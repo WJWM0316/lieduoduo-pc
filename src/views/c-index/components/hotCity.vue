@@ -5,7 +5,7 @@
       <span class="iconfont icon-bottom"></span> <span class="city-title">热招城市</span> <span class="iconfont icon-bottom"></span>
     </div>
     <div class="hot-city-wrapper">
-      <div class="city-list" v-for="item in cityList" :key="item.chinese">
+      <div class="city-list" v-for="item in cityList" :key="item.chinese" @click="handleToSearchPage(item)">
         <img :src="item.url" alt="">
         <div>
           <p>{{item.city}}</p>
@@ -20,13 +20,28 @@ export default {
   data () {
     return {
       cityList: [
-        { url: `${process.env.VUE_APP_CDN_PATH}/images/beijing.png`, city: '北京', chinese: 'BeiJing' },
-        { url: `${process.env.VUE_APP_CDN_PATH}/images/guangzhou.png`, city: '广州', chinese: 'Guangzhou' },
-        { url: `${process.env.VUE_APP_CDN_PATH}/images/shenzhen.png`, city: '深圳', chinese: 'Shenzhen' },
-        { url: `${process.env.VUE_APP_CDN_PATH}/images/shanghai.png`, city: '上海', chinese: 'Shanghai' },
-        { url: `${process.env.VUE_APP_CDN_PATH}/images/chengdu.png`, city: '成都', chinese: 'Chengdu' },
-        { url: `${process.env.VUE_APP_CDN_PATH}/images/hangzhou.png`, city: '杭州', chinese: 'Hangzhou' }
+        { url: `${process.env.VUE_APP_CDN_PATH}/images/beijing.png`, city: '北京', chinese: 'BeiJing', cityNums: 110100 },
+        { url: `${process.env.VUE_APP_CDN_PATH}/images/guangzhou.png`, city: '广州', chinese: 'Guangzhou', cityNums: 440100 },
+        { url: `${process.env.VUE_APP_CDN_PATH}/images/shenzhen.png`, city: '深圳', chinese: 'Shenzhen', cityNums: 440300 },
+        { url: `${process.env.VUE_APP_CDN_PATH}/images/shanghai.png`, city: '上海', chinese: 'Shanghai', cityNums: 310100 },
+        { url: `${process.env.VUE_APP_CDN_PATH}/images/chengdu.png`, city: '成都', chinese: 'Chengdu', cityNums: 510100 },
+        { url: `${process.env.VUE_APP_CDN_PATH}/images/hangzhou.png`, city: '杭州', chinese: 'Hangzhou', cityNums: 330100 }
       ]
+    }
+  },
+  methods: {
+    handleToSearchPage (item) {
+      // 写入vuex
+      this.$store.commit('setCityId', item.cityNums)
+      window.setTimeout(() => {
+        this.$router.push({
+          name: 'position',
+          query: {
+            typeName: 'position',
+            cityNums: item.cityNums
+          }
+        })
+      }, 20)
     }
   }
 }

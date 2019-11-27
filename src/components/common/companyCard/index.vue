@@ -1,6 +1,6 @@
 <template>
 <!-- 公司卡片列表 -->
-  <router-link target="_blank"  :to="`/company/details?companyId=${item.id}`" class="company-list-wrapper">
+  <router-link target="_blank"  :to="`/company/details?companyId=${item.vkey}`" class="company-list-wrapper">
     <div class="list-header">
       <div class="company-image">
         <img v-if="item.logoInfo" :src="item.logoInfo.middleUrl" alt="">

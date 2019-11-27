@@ -17,7 +17,7 @@
       width="450px"
       :visible.sync="dialogStatus"
       :show-close="false">
-      <div slot="title">{{'请选择' + title}} <span v-if="!multiple" class="title-tips">(最多选{{limit}}个{{title}})</span></div>
+      <div slot="title">{{'请选择' + title}} <span class="title-tips">(最多选{{limit}}个{{title}})</span></div>
       <div class="">
         <div class="selected-labels">
           <template v-for="(item, index) in selectLabels">
@@ -27,7 +27,7 @@
         <div class="lables">
           <template v-if="multiple">
             <div v-for="(item, index) in multipleConfig" :key="index">
-              <p class="labels-title">{{item.title}} <span class="check-span">{{item.checked.length}}</span><span>/{{item.limit || limit}}</span></p>
+              <p class="labels-title">{{item.title}} </p>
               <template v-for="child in item.labels">
                 <span class="label-item" :class="{'active': child.check}" @click="handleSelect(child, item, index)" :key="child.labelId">{{child.name}}</span>
               </template>
@@ -203,7 +203,7 @@ export default {
       this.$emit('input', this.selectLabels.map(val => val.name).join('、'))
       this.dialogStatus = false
     },
-    // 清楚数据
+    // 清空数据
     handleClear () {
       this.labels = []
       this.selectLabels = []

@@ -26,7 +26,8 @@ export default {
     // 覆盖简历信息
     overwriteResume (state, data) {
       // 更新简历日期
-      state.myResume.resumeUpdateTime = moment().format('YYYY-MM-DD h:mm:ss')
+      state.myResume.resumeUpdateTime = moment().format('YYYY-MM-DD HH:mm:ss')
+      console.log(state.myResume.resumeUpdateTime)
       Object.assign(state.myResume, data)
     },
     // 清空简历信息
