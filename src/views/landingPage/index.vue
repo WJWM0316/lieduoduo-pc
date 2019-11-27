@@ -7,9 +7,9 @@
             <i class="iconfont icon-right"></i>
             <span>返回PC端</span>
           </div>
-          <div class="welcome">
+          <div class="welcome" v-if="nowResumeMsg.sendInfo">
             <div class="welimg"><img :src="nowResumeMsg.sendInfo.avatarInfo.smallUrl" alt v-if="nowResumeMsg.sendInfo" /></div>
-            <span>{{nowResumeMsg.sendInfo.realname}} 将这封简历共享给你</span>
+            <span>{{nowResumeMsg.sendInfo.realname}} 将这封简历共享给你{{isshow}}</span>
           </div>
         </div>
         <div class="resumeLyout">
@@ -180,33 +180,31 @@
             <div class="download">
               <div class="title">下载简历</div>
               <div class="select">请选择下载格式：</div>
-              <div class="pdf" v-if="nowResumeMsg.resumeAttach">
+              <div class="pdf">
                 <div class="pdf_l">
-                  <i class="iconfont icon-word" style="color: #2878ff" v-if="nowResumeMsg.resumeAttach.attachType === 'doc'"></i>
+                  <i class="iconfont icon-pdf" v-if="!isshow" style="color: #926666"></i>
                   <i class="iconfont icon-pdf" v-else style="color: #FA3939"></i>
                 </div>
-                <div class="pdf-c">李永江李永江_测试工程师_猎多多.PDF</div>
-                <div class="pdf-r"><a :href="nowResumeMsg.resumeAttach.url" :download="nowResumeMsg.resumeAttach.fileName">下载</a></div>
+                <div class="pdf-c">{{nowResumeMsg.name}}.PDF</div>
+                <div class="pdf-r" v-if="!isshow"><a>下载</a></div>
+                <div class="pdf-r" @click="onloadfile('pdf')" v-else><a style="color:#652791">下载</a></div>
               </div>
-              <div class="pdf" v-if="nowResumeMsg.resumeAttach">
+              <div class="pdf">
                 <div class="pdf_l">
-                  <i class="iconfont icon-word" style="color: #2878ff" v-if="nowResumeMsg.resumeAttach.attachType === 'doc'"></i>
-                  <i class="iconfont icon-pdf" v-else style="color: #FA3939"></i>
+                  <i class="iconfont icon-word" v-if="!isshow" style="color: #667c96"></i>
+                  <i class="iconfont icon-word" v-else style="color: #4a90e2"></i>
                 </div>
-                <div class="pdf-c">李永江李永江_测试工程师_猎多多.PDF</div>
-                <div class="pdf-r"><a :href="nowResumeMsg.resumeAttach.url" :download="nowResumeMsg.resumeAttach.fileName">下载</a></div>
-              </div>
-              <div class="title">打印简历</div>
-              <div class="pdf" v-if="nowResumeMsg.resumeAttach">
-                <div class="pdf_l">
-                  <i class="iconfont icon-word" style="color: #2878ff" v-if="nowResumeMsg.resumeAttach.attachType === 'doc'"></i>
-                  <i class="iconfont icon-pdf" v-else style="color: #FA3939"></i>
-                </div>
-                <div class="pdf-c">李永江李永江_测试工程师_猎多多.PDF</div>
-                <div class="pdf-r"><a :href="nowResumeMsg.resumeAttach.url" :download="nowResumeMsg.resumeAttach.fileName">下载</a></div>
+                <div class="pdf-c">{{nowResumeMsg.name}}.DOC</div>
+                <div class="pdf-r" v-if="!isshow"><a>下载</a></div>
+                <div class="pdf-r" @click="onloadfile('doc')" v-else><a style="color:#652791">下载</a></div>
+                <!-- <a :href="nowResumeMsg.resumeAttach.url" :download="nowResumeMsg.resumeAttach.fileName">下载</a> -->
               </div>
             </div>
-            <div class="msgCode"  v-if="shareResumeImg">
+            <div class="haslogin">
+              <div class="login-btn" @click="login">登录</div>
+              <div class="login-desc">*登录后即可下载/打印简历</div>
+            </div>
+            <div class="msgCode" v-if="shareResumeImg && isshow">
               <img :src="shareResumeImg" />
               <span>扫码分享</span>
             </div>
@@ -239,6 +237,7 @@ import Component from 'vue-class-component'
 import { getshareResumeVkeyApi } from 'API/userJobhunter'
 import { shareResumeApi } from 'API/forward'
 import { getAccessToken } from 'API/cacheService'
+import { createonlinepdf, createonlineword } from 'API/common'
 
   @Component({
     name: 'landingpage',
@@ -266,13 +265,36 @@ export default class CourseList extends Vue {
     // 获取简历
     getResume (resumeId) {
       getshareResumeVkeyApi({ vkey: resumeId }).then(res => {
-        console.log(res)
         this.nowResumeMsg = res.data.data
-        this.getShareResume(resumeId)
+        if (getAccessToken()) {
+          this.getShareResume(resumeId)
+        }
       })
     }
     toback () {
       this.$router.push({ name: 'index' })
+    }
+    login () {
+      this.$router.push({ name: 'login' })
+    }
+    onloadfile (type) {
+      console.log(this.$route.query.vkey)
+      let params = { jobhunterVkey: this.$route.query.vkey }
+      if (type === 'pdf') {
+        createonlinepdf(params).then((res) => {
+          console.log(res)
+        })
+      }
+      if (type === 'doc') {
+        createonlineword(params).then((res) => {
+          console.log(res)
+        })
+      }
+      // var el = document.createElement('a')
+      // el.download = '你的文件名'
+      // el.href = 'https://attach.lieduoduo.ziwork.com/doc/2019/0525/11/5ce8b4f611850.docx'
+      // el.click()
+      // console.log(type)
     }
     // 获取简历二维码
     getShareResume (resumeId) {

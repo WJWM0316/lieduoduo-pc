@@ -67,6 +67,10 @@ export const request = ({ url, method, params = {}, config = {} }) => {
         router.push({ name: 'login', query: { type: 'msgLogin', needBack: true } })
         removeAccessToken()
       }
+      // 登陆过期或者未登录
+      if (err.response.data.code === 801) {
+        router.push({ name: 'register' })
+      }
       reject(err.response)
       loadingBack()
     })

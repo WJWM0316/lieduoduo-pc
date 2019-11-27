@@ -602,6 +602,9 @@
           font-size: 12px;
           color: #929292;
           cursor: pointer;
+          &:hover{
+            color: #652791;
+          }
           i{
             display: block;
             transform: rotate(180deg);
@@ -671,15 +674,16 @@
                 color: #6D696E;
                 width:144px;
                 height:34px;
-                line-height: 17px;
+                line-height: 34px;
                 margin-left: 8px;
               }
               .pdf-r{
                 float: left;
                 margin-left: 22px;
+                cursor: pointer;
                 a{
                   font-size: 14px;
-                  color: #652791;
+                  color: #929292;
                 }
               }
             }
@@ -716,6 +720,32 @@
                 left: 31px;
                 top: -6px;
               }
+            }
+          }
+          .haslogin{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-top: 40px;
+            .login-btn{
+              width:252px;
+              height:40px;
+              text-align: center;
+              line-height: 40px;
+              font-size: 14px;
+              color: #fff;
+              background:rgba(101,39,145,1);
+              border-radius:4px;
+              cursor: pointer;
+            }
+            .login-desc{
+              width:145px;
+              height:18px;
+              font-size:12px;
+              color:rgba(101,39,145,1);
+              line-height:18px;
+              margin-top: 10px;
             }
           }
           .ContactInformation {
