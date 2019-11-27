@@ -63,8 +63,6 @@
   </div>
 </template>
 <script>
-import { getSearchCollect } from 'API/common'
-import { getMatchesPosition } from 'API/search'
 import DropDown from 'COMPONENTS/dropDown'
 export default {
   props: {
@@ -80,7 +78,7 @@ export default {
   watch: {
     '$route': {
       handler() {
-        let {areaList, industryList, employeeList, financingList} = this.infos
+        let { areaList, industryList, employeeList, financingList } = this.infos
         this.params.areaList = areaList.filter(v => v.checked && v.areaId)
         this.params.industryList = industryList.filter(v => v.checked && v.labelId)
         this.params.employeeList = employeeList.filter(v => v.checked && v.value)
@@ -105,20 +103,6 @@ export default {
     window.addEventListener('scroll', this.handleScroll)
   },
   methods: {
-    querySearch (str, cb) {
-      if (!str.length) {
-        // eslint-disable-next-line standard/no-callback-literal
-        cb([])
-        return
-      }
-      clearTimeout(this.timeout)
-      this.timeout = setTimeout(() => {
-        getMatchesPosition({ position: str }).then(({ data }) => {
-          const reslutes = data.data || []
-          cb(reslutes.map((val, index) => ({ value: val, id: index })))
-        })
-      }, 50)
-    },
     handleScroll () {
       // 得到页面滚动的距离
       let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
@@ -133,30 +117,18 @@ export default {
       for (let item in this.infos) {
         params[item] = Array.isArray(this.infos[item]) ? this.infos[item].filter(v => v.checked) : this.infos[item]
       }
+      this.params = params
       this.$emit('on-search', params)
-    },
-    // 地址选择
-    handleSelectLocaltion (address) {
-      this.address = address.name
-      this.handleSelect()
-    },
-    // 职位选择
-    handleSelectPosition (item) {
-      this.params.keyword = item.value
-      this.handleSelect()
     },
     // 清空筛选
     handleRemove () {
-      Object.assign(this.params, {
-        emolumentIds: '', // 薪资
-        financingIds: [], // 融资
-        employeeIds: [], // 人员规模
-        industryIds: [] // 行业领域
-      })
-      this.financingList.forEach(val => { if (val.checked) val.checked = false })
-      this.industryList.forEach(val => { if (val.checked) val.checked = false })
-      this.employeeList.forEach(val => { if (val.checked) val.checked = false })
-      this.handleSelect()
+      this.params = {
+        areaList: [],
+        industryList: [],
+        employeeList: [],
+        financingList: []
+      }
+      this.$emit('on-reset')
     }
   },
   destroyed () {
