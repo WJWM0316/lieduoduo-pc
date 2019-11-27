@@ -199,8 +199,8 @@ export default {
             const { birth, startWorkYear } = this.form
             const datas = {
               ...this.form,
-              birth: isNaN(birth) ? parseInt(new Date(birth.replace('-', '/')).getTime() / 1000) : parseInt(birth) / 1000,
-              startWorkYear: startWorkYear === 0 ? 0 : isNaN(startWorkYear) ? parseInt(new Date(startWorkYear.replace('-', '/')).getTime() / 1000) : parseInt(startWorkYear) / 1000
+              birth: isNaN(birth) ? parseInt(new Date(birth).getTime() / 1000) : parseInt(birth) / 1000,
+              startWorkYear: startWorkYear === 0 ? 0 : isNaN(startWorkYear) ? parseInt(new Date(startWorkYear).getTime() / 1000) : parseInt(startWorkYear) / 1000
             }
             setResumeBaseInfo(datas).then(async ({ data }) => {
               if (data.httpStatus === 200) {

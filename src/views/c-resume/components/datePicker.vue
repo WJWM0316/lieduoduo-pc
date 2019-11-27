@@ -68,9 +68,6 @@
  * 仅支持 YYYY-MM 格式
  */
 const formatData = (str, textValue) => {
-  if (typeof str === 'string') {
-    str = String(str).replace('-', '/')
-  }
   // eslint-disable-next-line eqeqeq
   if (new Date(str) == 'Invalid Date') {
     return ''
@@ -236,9 +233,6 @@ export default {
       })
     },
     compilerTime (str) {
-      if (typeof str === 'string') {
-        str = str.replace('-', '/')
-      }
       // eslint-disable-next-line eqeqeq
       if (new Date(str) == 'Invalid Date') {
         return { now: false, year: null, month: '' }
