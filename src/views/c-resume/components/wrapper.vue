@@ -75,7 +75,7 @@ export default {
   },
   methods: {
     handleDelete (item, index) {
-      this.$confirm('确定删除本条信息?', '提示', {
+      this.$confirm('删除后，内容将不可恢复，确定删除吗？', '温馨提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'

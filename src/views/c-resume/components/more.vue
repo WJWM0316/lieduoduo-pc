@@ -17,7 +17,7 @@
         <p class="form-header-title">{{isAdd ? '添加': '编辑'}}更多介绍</p>
         <el-form :model="form">
           <div class="form-item" style="width: 100%; padding-left: 0px">
-            <p class="form-title">文字集（选填）</p>
+            <p class="form-title">添加文字介绍（选填）</p>
             <el-form-item>
               <el-input
                 type="textarea"
@@ -30,8 +30,8 @@
             </el-form-item>
           </div>
           <div class="form-item" style="width: 100%; padding-left: 0px">
-            <p class="form-title">图片集（选填）</p>
-            <p class="form-titl-tips">可以上传你的作品、相关证明</p>
+            <p class="form-title">添加图片（选填）</p>
+            <p class="form-titl-tips">可上传能体现你专业能力的作品、证书等图片（文件格式需为png/jpg/jepg）</p>
             <el-form-item>
               <Picture
                 :value.sync="form.imgs"
@@ -85,7 +85,7 @@ export default {
       } else if (type === 'save') {
         const { imgs, introduce } = this.form
         if (!imgs.length && !introduce) {
-          this.$alert('文字和图片至少一个不为空哦', '提示', {
+          this.$alert('文字和图片至少一个不为空哦', '温馨提示', {
             confirmButtonText: '好的',
             type: 'warning'
           })
