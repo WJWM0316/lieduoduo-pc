@@ -86,6 +86,7 @@
                 type="textarea"
                 placeholder="在任职期间，工作职责主要是****，经手过****项目，取得了*****的成绩。"
                 v-model="form.duty"
+                :autosize="{ minRows: 3, maxRows: 7}"
                 :rows="7"
                 maxlength="1000"
                 show-word-limit/>
@@ -180,8 +181,8 @@ export default {
         this.$refs.form.validate(valid => {
           if (valid) {
             const { company, times, duty, positionTypeId, position } = this.form
-            const startTime = isNaN(times[0]) ? parseInt(new Date(times[0].replace('-', '/')).getTime() / 1000) : parseInt(times[0]) / 1000
-            const endTime = times[1] === 0 ? 0 : isNaN(times[1]) ? parseInt(new Date(times[1].replace('-', '/')).getTime() / 1000) : parseInt(times[1]) / 1000
+            const startTime = isNaN(times[0]) ? parseInt(new Date(times[0]).getTime() / 1000) : parseInt(times[0]) / 1000
+            const endTime = times[1] === 0 ? 0 : isNaN(times[1]) ? parseInt(new Date(times[1]).getTime() / 1000) : parseInt(times[1]) / 1000
             const labelIds = this.labels.map(val => val.labelId).join(',')
             if (this.isAdd) {
               addCareer({

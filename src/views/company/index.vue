@@ -70,10 +70,7 @@ export default {
   computed: {
     ...mapState({
       hasLogin: state => state.hasLogin
-    }),
-    ...mapGetters([
-      'filterSearchCollect'
-    ])
+    })
   },
   methods: {
     ...mapActions([
@@ -221,7 +218,7 @@ export default {
   }
   .search-lists {
     width: 1200px;
-    margin: 0 auto 13px auto;
+    margin: 0 auto 12px auto;
     @include flex-v-center;
     flex-wrap: wrap;
     & /deep/ {

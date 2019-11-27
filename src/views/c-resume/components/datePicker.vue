@@ -22,7 +22,7 @@
           </div>
         </div>
         <div class="el-input el-input--suffix" slot="reference">
-          <div class="el-input__inner"><span v-if="!inputStartTimeValue">{{placeholder}}</span>{{inputStartTimeValue}}</div>
+          <div class="el-input__inner"><span v-if="!inputStartTimeValue" class="input-placeholder-span">{{placeholder}}</span>{{inputStartTimeValue}}</div>
           <span class="el-input__suffix">
             <span class="el-input__suffix-inner"><i class="el-select__caret el-input__icon el-icon-arrow-up" :class="{'is-reverse':startTimePopStatus}"></i></span>
           </span>
@@ -53,7 +53,7 @@
             </div>
           </div>
           <div class="el-input el-input--suffix" :class="{'is-disabled': !this.startTime}" slot="reference">
-            <div class="el-input__inner"><span v-if="!inputEndTimeValue">{{endPlaceholder}}</span>{{inputEndTimeValue}}</div>
+            <div class="el-input__inner"><span v-if="!inputEndTimeValue"  class="input-placeholder-span">{{endPlaceholder}}</span>{{inputEndTimeValue}}</div>
             <span class="el-input__suffix">
               <span class="el-input__suffix-inner"><i class="el-select__caret el-input__icon el-icon-arrow-up" :class="{'is-reverse':endTimePopStatus}"></i></span>
             </span>
@@ -68,9 +68,6 @@
  * 仅支持 YYYY-MM 格式
  */
 const formatData = (str, textValue) => {
-  if (typeof str === 'string') {
-    str = String(str).replace('-', '/')
-  }
   // eslint-disable-next-line eqeqeq
   if (new Date(str) == 'Invalid Date') {
     return ''
@@ -236,9 +233,6 @@ export default {
       })
     },
     compilerTime (str) {
-      if (typeof str === 'string') {
-        str = str.replace('-', '/')
-      }
       // eslint-disable-next-line eqeqeq
       if (new Date(str) == 'Invalid Date') {
         return { now: false, year: null, month: '' }

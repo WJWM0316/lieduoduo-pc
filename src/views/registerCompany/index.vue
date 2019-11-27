@@ -420,13 +420,13 @@ export default {
     Picture,
     MessageDiggle
   },
-  watch: {
-    '$route': {
-      handler (value) {
-        console.log(value)
-      }
-    }
-  },
+  // watch: {
+  //   '$route': {
+  //     handler (value) {
+  //       console.log(value)
+  //     }
+  //   }
+  // },
   data () {
     var validateRealname = (rule, value, callback) => {
       if (value === '') {
@@ -629,7 +629,7 @@ export default {
       this.authForm.industry_name = data.value
       this.authForm.industry_id = data.id
       this.industryshow = false
-      // this.bindauthButtonStatus()
+      this.bindauthButtonStatus()
     },
     // 选择融资
     selectfinancing () {
@@ -639,7 +639,7 @@ export default {
       this.authForm.financing_name = data.value
       this.authForm.financing = data.id
       this.financingshow = false
-      // this.bindauthButtonStatus()
+      this.bindauthButtonStatus()
     },
     // 选择人员规模
     selectemployees () {
@@ -649,7 +649,7 @@ export default {
       this.authForm.employees_name = data.value
       this.authForm.employees = data.id
       this.employeesshow = false
-      // this.bindauthButtonStatus()
+      this.bindauthButtonStatus()
     },
     // 通知管理员
     noticeadmin () {
@@ -685,7 +685,6 @@ export default {
     },
     authbindInput (value, key) {
       this.authForm[key] = value
-      console.log('3873838', value, key, this.authForm[key])
       this.bindauthButtonStatus()
     },
     getCompanyNameList () {
@@ -757,10 +756,8 @@ export default {
           }
           break
         case 'perfect':
-          this.authForm = Object.assign(
-            {}, { id: this.ruleForm.id, company_name: this.ruleForm.company_name }
-          )
-
+          this.authForm.id = this.ruleForm.id
+          this.authForm.company_name = this.ruleForm.company_name
           this.$router.push({
             query: {
               page: 'perfect'
@@ -837,14 +834,14 @@ export default {
         company_name: formData.company_name
       }
       editCompanyFirstStepApi(params).then(() => {
-        this.getCompanyIdentityInfos()
-        // this.$router.push({
-        //   query: {
-        //     page: 'submit',
-        //     from: 'company',
-        //     action: 'edit'
-        //   }
-        // })
+        this.$router.push({
+          query: {
+            page: 'submit',
+            from: 'company',
+            action: 'edit'
+          }
+        })
+        // this.getCompanyIdentityInfos()
       })
       // 创建公司后 重新编辑走加入公司逻辑  如果之前有一条加入记录 取之前的加入记录id
         .catch(err => {
@@ -882,8 +879,8 @@ export default {
         company_name: formData.company_name
       }
       createCompanyApi(params).then(res => {
-        this.authForm.id = res.data.data.id
-        this.authForm.company_name = res.data.data.companyName
+        this.ruleForm.id = res.data.data.id
+        this.ruleForm.company_name = res.data.data.companyName
         this.$router.push({
           query: {
             page: 'submit',
@@ -1014,7 +1011,7 @@ export default {
       }
       hasApplayRecordApi().then(res => {
         // 当前公司已经申请过
-        if (res.data.id) {
+        if (res.data.data.id) {
           this.editJoinCompany()
         } else {
           return applyCompanyApi(params).then(res => {
@@ -1076,6 +1073,8 @@ export default {
         this.ruleForm = Object.assign(this.ruleForm, {
           id: companyInfo.id
         })
+        this.ruleForm.position_name = storage.position_name || companyInfo.positionTypeName
+        this.ruleForm.position_type_id = storage.position_type_id || companyInfo.positionTypeId
         this.authForm.company_name = companyInfo.companyName
         this.authForm.company_shortname = storage.company_shortname || companyInfo.companyShortname
         this.authForm.industry_id = storage.industry_id || companyInfo.industryId
@@ -1089,11 +1088,18 @@ export default {
         this.authForm.id = companyInfo.id
         this.authForm.business_license = storage.business_license || companyInfo.businessLicenseInfo
         this.authForm.on_job = storage.on_job || companyInfo.onJobInfo
+        this.authForm.industry_name = storage.industry_id_name || companyInfo.industry
+        this.authForm.financing_name = storage.financingName || companyInfo.financingInfo
+        this.authForm.employees_name = storage.employeesName || companyInfo.employeesInfo
+        this.authForm.business_license_url = companyInfo.businessLicenseInfo.smallUrl || ''
+        this.authForm.on_job_url = companyInfo.onJobInfo.smallUrl || ''
         this.companyInfo = companyInfo
+        this.bindauthButtonStatus()
+        this.checkupdata()
+        this.bindButtonStatus()
 
         let callback = (msg) => {
           let companyInfo = msg.data.companyInfo
-          let identityInfo = msg.data
           if (Reflect.has(msg.data, 'applyJoin') && msg.data.applyJoin) {
             this.$router.push({
               query: {

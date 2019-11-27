@@ -48,7 +48,7 @@ export default {
       })
     },
     handleRemoveAttach () {
-      this.$confirm('确定删除该附件简历吗？删除后面试官将无法接收你的附件简历', '提示', {
+      this.$confirm('确定删除该附件简历吗？删除后面试官将无法接收你的附件简历', '温馨提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'

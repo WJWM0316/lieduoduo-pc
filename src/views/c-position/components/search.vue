@@ -316,13 +316,13 @@ export default {
     .active::after {
       width: 100%;
       left: 0;
-      bottom: -20px;
+      bottom: -21px;
       border-radius:2px 2px 0px 0px;
       height: 5px;
     }
     .search-tap::before {
       width: 7px;
-      bottom: -18px;
+      bottom: -19px;
       height: 7px;
       left: calc(50% - 4px);
       transform: rotate(45deg);

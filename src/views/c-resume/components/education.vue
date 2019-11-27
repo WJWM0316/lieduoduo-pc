@@ -65,6 +65,7 @@
                 placeholder="在校期间，参与了****的项目或活动，担任****的角色，取得了****的成绩，在其中我主要贡献了*****。"
                 v-model="form.experience"
                 :rows="7"
+                :autosize="{ minRows: 3, maxRows: 7}"
                 maxlength="1000"
                 show-word-limit />
             </el-form-item>
@@ -129,8 +130,8 @@ export default {
         this.$refs.form.validate(valid => {
           if (valid) {
             const { school, degree, major, times, experience } = this.form
-            const startTime = isNaN(times[0]) ? parseInt(new Date(times[0].replace('-', '/')).getTime() / 1000) : parseInt(times[0]) / 1000
-            const endTime = times[1] === 0 ? 0 : isNaN(times[1]) ? parseInt(new Date(times[1].replace('-', '/')).getTime() / 1000) : parseInt(times[1]) / 1000
+            const startTime = isNaN(times[0]) ? parseInt(new Date(times[0]).getTime() / 1000) : parseInt(times[0]) / 1000
+            const endTime = times[1] === 0 ? 0 : isNaN(times[1]) ? parseInt(new Date(times[1]).getTime() / 1000) : parseInt(times[1]) / 1000
             if (this.isAdd) {
               addEducation({ school, degree, major, experience, startTime, endTime }).then(async ({ data }) => {
                 if (data.httpStatus === 200) {

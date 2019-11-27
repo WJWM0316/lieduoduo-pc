@@ -34,6 +34,14 @@
   border-color: $border-color-2;
 }
 
+/** 下拉框 */
+.el-select-dropdown__item.hover, 
+.el-select-dropdown__item:hover, 
+.el-cascader-node:hover,
+.el-autocomplete-suggestion li:hover {
+  background: $bg-color-5 !important;
+}
+
 
 /** dialog */
 .el-dialog {

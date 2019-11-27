@@ -74,7 +74,7 @@
                 type="month"
                 placeholder="选择月">
               </el-date-picker> -->
-              <date-picker v-model="form.birth" :skip="15" :year-limit="50" placeholder="选择月" />
+              <date-picker v-model="form.birth" :skip="15" :year-limit="50" placeholder="请选择年月" />
              </el-form-item>
           </div>
           <div class="form-item">
@@ -199,8 +199,8 @@ export default {
             const { birth, startWorkYear } = this.form
             const datas = {
               ...this.form,
-              birth: isNaN(birth) ? parseInt(new Date(birth.replace('-', '/')).getTime() / 1000) : parseInt(birth) / 1000,
-              startWorkYear: startWorkYear === 0 ? 0 : isNaN(startWorkYear) ? parseInt(new Date(startWorkYear.replace('-', '/')).getTime() / 1000) : parseInt(startWorkYear) / 1000
+              birth: isNaN(birth) ? parseInt(new Date(birth).getTime() / 1000) : parseInt(birth) / 1000,
+              startWorkYear: startWorkYear === 0 ? 0 : isNaN(startWorkYear) ? parseInt(new Date(startWorkYear).getTime() / 1000) : parseInt(startWorkYear) / 1000
             }
             setResumeBaseInfo(datas).then(async ({ data }) => {
               if (data.httpStatus === 200) {

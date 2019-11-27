@@ -1,9 +1,9 @@
 <template>
-  <footer id="page-footer" class="page-footer" :class="{'isFixed': shouldFixed(), 'blackBg' : blackBg()}">
+  <footer id="page-footer" class="page-footer" :class="{'isFixed': shouldFixed()}">
     <section>
         <div class="footer_left">
           <div class="footer-header-title">
-             <img class="ft_logo" :src="blackBg() ? cdnPath + 'logo_white.png' : cdnPath + 'logo.png'" />
+             <img class="ft_logo" :src="cdnPath + 'logo.png'" />
           </div>
           <p class="tips">BOSS直聘战略投资  高端人才招聘平台</p>
           <p class="gray"><a href="http://www.beian.miit.gov.cn" target="_blank">Copyright ©老虎科技 粤ICP备16060093号-4</a></p>
@@ -82,6 +82,9 @@ export default PageFooter
       a {
         color: $title-color-2;
       }
+      a:hover {
+        color: $main-color-1;
+      }
     }
     .center_p {
       margin-bottom: 6px;
@@ -144,31 +147,6 @@ export default PageFooter
   .gray, .gray a {
     font-size: 14px;
     color: $font-color-10;
-  }
-  &.blackBg {
-    background: $font-color-3;
-    .footer_left {
-      .tips {
-        color: #fff;
-      }
-      .gray {
-        color: #A29CA6;
-      }
-    }
-    .footer_center {
-      .relation {
-        color: #fff;
-      }
-      .center-bottom {
-        color: #fff;
-        a {
-          color: #fff;
-        }
-      }
-    }
-    .footer_right p.black{
-      color: #fff;
-    }
   }
   &.isFixed {
     position: fixed;

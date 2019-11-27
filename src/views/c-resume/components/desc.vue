@@ -49,6 +49,7 @@
                 type="textarea"
                 placeholder="说明为什么非你不可"
                 v-model="form.signature"
+                :autosize="{ minRows: 3, maxRows: 7}"
                 :rows="7"
                 maxlength="150"
                 show-word-limit />
@@ -118,9 +119,14 @@ export default {
           if (valid) {
             const { life, position } = this.info
             // 取出集合的数据
-            let positionLabels = this.positionLabelsConfig.map(val => val.checked).flat()
-            let lifeLabels = this.listLabelsConfig.map(val => val.checked).flat()
-            // console.log(positionLabels, lifeLabels)
+            let positionLabels = []
+            this.positionLabelsConfig.forEach(val => {
+              positionLabels = positionLabels.concat(val.checked)
+            })
+            let lifeLabels = []
+            this.listLabelsConfig.forEach(val => {
+              lifeLabels = lifeLabels.concat(val.checked)
+            })
             let labels = []
             labels = positionLabels.length ? labels.concat(positionLabels) : labels.concat(position)
             labels = lifeLabels.length ? labels.concat(lifeLabels) : labels.concat(life)
