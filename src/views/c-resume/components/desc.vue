@@ -49,6 +49,7 @@
                 type="textarea"
                 placeholder="说明为什么非你不可"
                 v-model="form.signature"
+                :autosize="{ minRows: 3, maxRows: 7}"
                 :rows="7"
                 maxlength="150"
                 show-word-limit />

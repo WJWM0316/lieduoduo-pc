@@ -108,9 +108,6 @@ export default {
       areas: []
     }
   },
-  mounted () {
-    this.getAllExpects()
-  },
   methods: {
     handleCommand ({ type, cb, item, index }) {
       if (type === 'edit') {

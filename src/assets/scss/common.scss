@@ -5,6 +5,13 @@
   background-clip: padding-box;
 }
 .warpper-scroll::-webkit-scrollbar-thumb {
-background-color: $scroll-bar-color;
-border-radius: 4px;
+  background-color: $scroll-bar-color;
+  border-radius: 4px;
 }
+
+/** 模拟表单的占位符样式 */
+.input-placeholder-span {
+  color: $title-color-3 !important;
+  font-size: 14px;
+}
+

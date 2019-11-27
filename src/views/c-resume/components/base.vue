@@ -74,7 +74,7 @@
                 type="month"
                 placeholder="选择月">
               </el-date-picker> -->
-              <date-picker v-model="form.birth" :skip="15" :year-limit="50" placeholder="选择月" />
+              <date-picker v-model="form.birth" :skip="15" :year-limit="50" placeholder="请选择年月" />
              </el-form-item>
           </div>
           <div class="form-item">

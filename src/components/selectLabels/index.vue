@@ -4,7 +4,7 @@
     <div @click="handleShow">
       <slot>
         <div class="el-input el-input--suffix">
-          <div class="el-input__inner">{{value || '请选择' + title}}</div>
+          <div class="el-input__inner"><span v-if="!value"  class="input-placeholder-span">{{'请选择' + title}}</span>{{value}}</div>
           <span class="el-input__suffix">
             <span class="el-input__suffix-inner">
               <i class="el-select__caret el-input__icon el-icon-arrow-down"></i>

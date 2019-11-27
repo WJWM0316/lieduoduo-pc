@@ -65,6 +65,7 @@
                 placeholder="这个项目的目的是***，取得成就是***，我在其中发挥了***的作用"
                 v-model="form.description"
                 :rows="7"
+                :autosize="{ minRows: 3, maxRows: 7}"
                 maxlength="1000"
                 show-word-limit />
             </el-form-item>

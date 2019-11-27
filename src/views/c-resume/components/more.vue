@@ -23,6 +23,7 @@
                 type="textarea"
                 placeholder="可以描述你的技能、获奖证书，等等。"
                 v-model="form.introduce"
+                :autosize="{ minRows: 3, maxRows: 7}"
                 :rows="5"
                 maxlength="250"
                 show-word-limit />

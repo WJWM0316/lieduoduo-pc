@@ -3,7 +3,7 @@
     <div @click="handleShowDialog">
       <slot>
         <div class="el-input" >
-          <div class="el-input__inner">{{label || title}}</div>
+          <div class="el-input__inner"><span v-if="!label"  class="input-placeholder-span">{{title}}</span>{{label}}</div>
         </div>
       </slot>
     </div>

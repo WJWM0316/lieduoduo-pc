@@ -65,6 +65,7 @@
                 placeholder="在校期间，参与了****的项目或活动，担任****的角色，取得了****的成绩，在其中我主要贡献了*****。"
                 v-model="form.experience"
                 :rows="7"
+                :autosize="{ minRows: 3, maxRows: 7}"
                 maxlength="1000"
                 show-word-limit />
             </el-form-item>
