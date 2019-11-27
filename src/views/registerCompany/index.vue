@@ -580,13 +580,13 @@ export default {
           { validator: validateCompanyshortname, required: true, trigger: 'blur' }
         ],
         industry_name: [
-          { required: true, message: '请选择所属行业', trigger: 'change' }
+          { required: true, message: '请选择所属行业', trigger: 'blur' }
         ],
         financing_name: [
-          { required: true, message: '请选择融资情况', trigger: 'change' }
+          { required: true, message: '请选择融资情况', trigger: 'blur' }
         ],
         employees_name: [
-          { required: true, message: '请选择人员规模', trigger: 'change' }
+          { required: true, message: '请选择人员规模', trigger: 'blur' }
         ]
       },
       ischeck: false,
@@ -615,7 +615,6 @@ export default {
       this.checkupdata()
     },
     selectcompany () {
-      console.log(1)
       this.companyshow = false
     },
     // 选择职位
@@ -630,7 +629,7 @@ export default {
       this.authForm.industry_name = data.value
       this.authForm.industry_id = data.id
       this.industryshow = false
-      this.bindauthButtonStatus()
+      // this.bindauthButtonStatus()
     },
     // 选择融资
     selectfinancing () {
@@ -640,7 +639,7 @@ export default {
       this.authForm.financing_name = data.value
       this.authForm.financing = data.id
       this.financingshow = false
-      this.bindauthButtonStatus()
+      // this.bindauthButtonStatus()
     },
     // 选择人员规模
     selectemployees () {
@@ -650,7 +649,7 @@ export default {
       this.authForm.employees_name = data.value
       this.authForm.employees = data.id
       this.employeesshow = false
-      this.bindauthButtonStatus()
+      // this.bindauthButtonStatus()
     },
     // 通知管理员
     noticeadmin () {
@@ -686,6 +685,7 @@ export default {
     },
     authbindInput (value, key) {
       this.authForm[key] = value
+      console.log('3873838', value, key, this.authForm[key])
       this.bindauthButtonStatus()
     },
     getCompanyNameList () {
