@@ -15,7 +15,7 @@
 							<p class="num">{{item.positionNum}}个</p>
 							<p class="hot">热招职位</p>
 						</div>
-						<router-link :to="{name: 'companyDetail', query: { companyId: item.id }}" class="enter" target="_blank">进入公司主页</router-link>
+						<router-link :to="{name: 'companyDetail', query: { companyId: item.vkey }}" class="enter" target="_blank">进入公司主页</router-link>
 					</div>
 				</li>
 			</ul>

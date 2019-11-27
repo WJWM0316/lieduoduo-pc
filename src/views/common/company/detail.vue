@@ -9,7 +9,7 @@
               <p class="header-companyShortname">{{companyInformation.companyShortname}}</p>
               <p class="header-financingInfo">{{companyInformation.financingInfo}}·{{companyInformation.employeesInfo}}·{{companyInformation.industry}}</p>
               <ul>
-                <li class="label" v-for="(item, index) in companyInformation.album" :key="index">{{item.id}}</li>
+                <li class="label" v-for="(item, index) in companyInformation.teamLabel" :key="index">{{item.title}}</li>
               </ul>
             </div>
           </div>
@@ -96,7 +96,7 @@
             </div>
           </div>
           <div class="introduction-right">
-            <guideLogin v-if="this.userInfo.length !== undefined" class="guideLogin"></guideLogin>
+            <guideLogin v-if="!this.haslogin" class="guideLogin"></guideLogin>
             <div class="surroundings">
               <p class="surroundings-title">
                 公司环境
@@ -139,10 +139,7 @@
       </el-dialog>
     </template>
 
-    <template v-if="!activation">
-      <div></div>
-    </template>
-    <!-- <mapSearch :componyId = jia></mapSearch> -->
+      <companyRecruitment v-if="!activation"></companyRecruitment>
   </div>
 </template>
 
@@ -153,20 +150,21 @@ import guideLogin from '@/components/common/guideLogin'
 import { TMap } from '@/util/TMap.js'
 import appLinks from '@/components/common/appLinks'
 import file from '@/components/common/upload/file'
+import companyRecruitment from './components/Recruitment'
 
 import {
   getCompanyHotApi,
-  getCompanyApi,
+  getVkeyCompanyApi,
   getCompanysTeamApi
 } from '@/api/company.js'
 
 @Component({
   name: 'company-detail',
   components: {
-    // mapSearch
     guideLogin,
     appLinks,
-    file
+    file,
+    companyRecruitment
   },
   computed: {
     ...mapState({
@@ -182,14 +180,13 @@ export default class companyDetail extends Vue {
   HotPositionList = {} // 热门职位列表
   companyInformation = {}
   activation = true
-  // myResume = this.$store.state.resume.myResume
-  // isFourResume = this.$store.state.resume.isFourResume
   online = '填写' // 在线简历显示文案
   annex = '上传' // 附件简历显示文案
   viewAllText = false // 公司介绍文案隐藏
   dialogVisible = false // 地图弹窗
   getCompanysTeamText = {} // 招聘团队
-  islogin = false // 是否登陆弹窗
+  islogin = false // 子组件是否登陆弹窗
+  haslogin = false
 
   // 地图
   mapType () {
@@ -210,11 +207,10 @@ export default class companyDetail extends Vue {
   // 获取公司信息
   async getCompany () {
     let data = {
-      // id: this.$router.query.companyId,
-      id: 1346,
+      id: this.$route.query.companyId,
       sCode: ''
     }
-    await getCompanyApi(data).then(res => {
+    await getVkeyCompanyApi(data).then(res => {
       this.companyInformation = res.data.data
       this.companyInformation.intro = this.companyInformation.intro.replace('。', '。<br/> <br/>')
       // 遍历地址，没有http协议则加上
@@ -226,7 +222,7 @@ export default class companyDetail extends Vue {
   // 获取招聘团队
   getCompanysTeam () {
     let data = {
-      companyId: 1346,
+      companyId: this.$route.query.companyId,
       page: 1,
       count: 3
     }
@@ -239,8 +235,7 @@ export default class companyDetail extends Vue {
   // 获取公司热门职位
   getCompanyHot () {
     let data = {
-      // companyId: this.$router.query.companyId,
-      companyId: 1346,
+      companyId: this.$route.query.companyId,
       page: 1,
       count: 3
     }
@@ -251,16 +246,16 @@ export default class companyDetail extends Vue {
 
   resumeTo (type) {
     // 是否已经登陆
-    if (this.userInfo.length === undefined && type !== 'x') {
+    if (!this.haslogin && type !== 'x') {
       return this.$router.push({
         name: 'login',
         query: {
           type: 'msgLogin'
         }
       })
-    } else if (this.userInfo.length !== undefined) {
+    } else if (this.haslogin) {
       this.online = this.myResume.resumeCompletePercentage >= 0.9 ? '更新' : '完善'
-      if (this.myResume.resumeAttach.length !== 0) {
+      if (JSON.stringify(this.myResume.resumeAttach) !== '{}') {
         this.annex = '更新'
       }
     }
@@ -323,13 +318,20 @@ export default class companyDetail extends Vue {
   //     }, 1000)
   //   }
   // }
+  hasLogin () {
+    this.haslogin = (JSON.stringify(this.userInfo) !== '{}')
+  }
+
+  beforeMount () {
+    this.hasLogin()
+    this.resumeTo('x')
+  }
   created () {
     this.getCompanysTeam()
     this.getCompanyHot()
     this.getCompany().then(() => {
       this.mapType()
     })
-    this.resumeTo('x')
   }
 }
 </script>
@@ -405,7 +407,8 @@ $sizing: border-box;
           }
           .label{
             display: inline-block;
-            width: 80px;
+            padding: 0 15px;
+            min-width: 80px;
             height: 24px;
             box-sizing: $sizing;
             border: 1px solid $font-color-temp4;

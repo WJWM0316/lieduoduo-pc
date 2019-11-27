@@ -170,8 +170,8 @@ export default {
 		display: flex;
 		align-items: flex-start;
 		&:last-child{
-			margin-bottom: 0px;
-		};
-	}
+      margin-bottom: 0px;
+    }
+  }
 }
 </style>

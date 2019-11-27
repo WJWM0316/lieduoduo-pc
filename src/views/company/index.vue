@@ -1,17 +1,17 @@
 <template>
   <div id="company">
-    <Search @on-search="(val) => handleSearch(val, 'append')" :height="height" :infos="infos" v-if="infos.show" />
+    <Search @on-search="(val) => handleSearch(val, 'append')" :height="height" :infos="infos" v-if="infos.industryList.length" />
     <div class="banner">
       <div class="banner-title">精选酷公司</div>
       <Swiper :list="companyLogoLists" v-if="companyLogoLists.length" />
     </div>
-    <SearchBank @change="getSearchParams" :infos="infos" v-if="infos.show" />
+    <SearchBank @change="getSearchParams" :infos="infos" v-if="infos.industryList.length" />
     <div class="search-lists" ref="search-lists">
       <template v-for="item in companyLists">
         <company-card :item="item"  :key="item.id"/>
       </template>
     </div>
-    <div class="pagination" v-if="total > 1">
+    <div class="pagination" v-if="total > 20">
       <el-pagination
         background
         @current-change="(val) => changePage(val, 'page')"
@@ -21,7 +21,8 @@
         :total="total">
       </el-pagination>
     </div>
-    <div v-else><no-found :max-width="300"/></div>
+    <div v-if="!total"><no-found :max-width="300"/></div>
+    <!-- <guideLogin></guideLogin> -->
   </div>
 </template>
 <script>
@@ -33,7 +34,8 @@ import NoFound from 'COMPONENTS/noFound'
 import { getLogoListsListsApi } from 'API/company'
 import { getCompanyListsApi } from 'API/search'
 import { getSearchCollect } from 'API/common'
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions, mapState } from 'vuex'
+import guideLogin from '@/components/common/guideLogin'
 
 export default {
   components: {
@@ -41,9 +43,10 @@ export default {
     SearchBank,
     CompanyCard,
     Search,
-    NoFound
+    NoFound,
+    guideLogin
   },
-  data() {
+  data () {
     return {
       companyLogoLists: [],
       companyLists: [],
@@ -60,14 +63,16 @@ export default {
         areaList: [],
         industryList: [],
         employeeList: [],
-        financingList: [],
-        show: false
+        financingList: []
       }
     }
   },
   computed: {
+    ...mapState({
+      hasLogin: state => state.hasLogin
+    }),
     ...mapGetters([
-      'searchCollect'
+      'filterSearchCollect'
     ])
   },
   methods: {
@@ -124,7 +129,7 @@ export default {
 
         if (query.cityNums) {
           let cityNumsArr = query.cityNums.split(',')
-          area.map((v,i, arr) => {
+          area.map((v, i, arr) => {
             v.checked = false
             if (cityNumsArr.includes(String(v.areaId))) {
               v.checked = true
@@ -135,7 +140,7 @@ export default {
 
         if (query.industryIds) {
           let industryIdsArr = query.industryIds.split(',')
-          industry.map((v,i, arr) => {
+          industry.map((v, i, arr) => {
             v.checked = false
             if (industryIdsArr.includes(String(v.labelId))) {
               v.checked = true
@@ -146,22 +151,22 @@ export default {
         
         if (query.financingIds) {
           let financingIdsArr = query.financingIds.split(',')
-          financing.map((v,i, arr) => {
+          financing.map((v, i, arr) => {
             v.checked = false
             if (financingIdsArr.includes(String(v.value))) {
               v.checked = true
-              this.search.employeeList.push(v)
+              this.search.financingList.push(v)
             }
           })
         }
 
         if (query.employeeIds) {
           let employeeIdsArr = query.employeeIds.split(',')
-          financing.map((v,i, arr) => {
+          employee.map((v, i, arr) => {
             v.checked = false
             if (employeeIdsArr.includes(String(v.value))) {
               v.checked = true
-              this.search.financingList.push(v)
+              this.search.employeeList.push(v)
             }
           })
         }
@@ -170,13 +175,13 @@ export default {
         this.infos.financingList = financing
         this.infos.industryList = industry
         this.infos.areaList = area
-        this.infos.show = true
         this.getLists()
       })
     },
     changePage (page) {
       this.page = page
       this.getLists()
+      this.getSearchCollectApi()
     }
   },
   created () {
@@ -217,7 +222,7 @@ export default {
   }
   .search-lists {
     width: 1200px;
-    margin: 0 auto;
+    margin: 0 auto 13px auto;
     @include flex-v-center;
     flex-wrap: wrap;
     & /deep/ {
