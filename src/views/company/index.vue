@@ -72,7 +72,7 @@ export default {
       hasLogin: state => state.hasLogin
     }),
     ...mapGetters([
-      'searchCollect'
+      'filterSearchCollect'
     ])
   },
   methods: {
@@ -181,7 +181,7 @@ export default {
     changePage (page) {
       this.page = page
       this.getLists()
-      // this.getSearchCollectApi()
+      this.getSearchCollectApi()
     }
   },
   created () {
@@ -191,7 +191,7 @@ export default {
     }
     this.getLogoListsLists()
     this.getCollectList()
-    this.getSearchCollectApi()
+    // this.getSearchCollectApi()
   },
   mounted () {
     this.$nextTick(function () {

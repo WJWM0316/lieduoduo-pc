@@ -5,7 +5,12 @@ const UPDATE_SEARCH_COLLECT = 'UPDATE_SEARCH_COLLECT'
 const UrlParams = new URLSearchParams(window.location.search)
 
 const state = {
-  searchCollect: null
+  searchCollect: {
+    area: [],
+    industry: [],
+    employee: [],
+    financing: []
+  }
 }
 
 const mutations = {
