@@ -2,8 +2,8 @@
   <div class="interviewrecords">
         <div id="box" class="main_cont">
           <div class="screen">
-            <div class="title">面试管理</div>
-        <div class="select">
+        <div class="title">面试管理</div>
+        <div class="select" v-if="tablist[0].cur">
           <el-select
             v-model="form.position_label_id"
             placeholder="职位类别"
@@ -17,7 +17,7 @@
             ></el-option>
           </el-select>
           </div>
-          <div class="time">
+          <div :class="['time', !tablist[0].cur ? 'mar' : '']">
           <el-date-picker
           v-model="time"
           @change="pickchange()"
@@ -1587,6 +1587,9 @@ export default {
     .time{
       float: right;
       margin-top: 36px;
+    }
+    .mar{
+      margin-right: 20px;
     }
     .select{
       float: right;

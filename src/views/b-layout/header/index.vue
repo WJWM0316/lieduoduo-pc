@@ -27,7 +27,7 @@
           </div>
         </div>
         <el-dropdown-menu slot="dropdown">
-           <el-dropdown-item command="perfectauth" v-if="!haveIdentity">
+           <el-dropdown-item command="perfectauth" v-if="haveIdentity">
              身份认证
              <div class="reddot"></div>
              </el-dropdown-item>
@@ -78,7 +78,11 @@ export default {
       }
     },
     getCompanyIdentityInfos () {
-      this.haveIdentity = this.$store.state.roleInfos.isRecruiter
+      if (this.$store.state.roleInfos.isRecruiter) {
+        this.haveIdentity = false
+      } else {
+        this.haveIdentity = true
+      }
     }
   },
   mounted () {
