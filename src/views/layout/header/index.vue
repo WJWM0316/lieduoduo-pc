@@ -134,7 +134,7 @@ export default {
       switch (e) {
         case 'logout':
           this.$store.dispatch('logoutApi').then(() => {
-            this.state.$commit('removeResume')
+            this.$store.commit('removeResume')
           })
 
           break
