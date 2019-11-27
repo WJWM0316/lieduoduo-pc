@@ -36,6 +36,24 @@ let result = {
 	areaList: []
 }
 export default {
+	watch: {
+    'infos': {
+      handler(infos) {
+        this.infos = infos
+      },
+      immediate: true
+    }
+  },
+  // data () {
+  //   return {
+  //     infos: {
+  //     	employeeList: [],
+		// 		financingList: [],
+		// 		industryList: [],
+		// 		areaList: []
+  //     }
+  //   }
+  // },
 	props: {
 		infos: {
 			type: Object,
