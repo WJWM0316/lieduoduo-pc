@@ -21,10 +21,10 @@ let routes = [
   ...company
 ]
 Vue.use(Router)
-// const originalPush = Router.prototype.push
-// Router.prototype.push = function push (location) {
-//   return originalPush.call(this, location).catch(err => err)
-// }
+const originalPush = Router.prototype.push
+Router.prototype.push = function push (location) {
+  return originalPush.call(this, location).catch(err => err)
+}
 
 const router = new Router({
   mode: 'history',
@@ -47,7 +47,7 @@ let getUserRoleInfo = () => {
     store.commit('setRoleInfos', res.data.data)
   })
 }
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, from, next) => {	
   store.dispatch('setPageName', { name: to.name })
   if (from.name !== to.name) {
     window.scrollTo(0, 0)

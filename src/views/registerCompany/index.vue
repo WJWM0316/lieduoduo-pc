@@ -420,13 +420,13 @@ export default {
     Picture,
     MessageDiggle
   },
-  // watch: {
-  //   '$route': {
-  //     handler (value) {
-  //       console.log(value)
-  //     }
-  //   }
-  // },
+  watch: {
+    '$route': {
+      handler (value) {
+        console.log(value)
+      }
+    }
+  },
   data () {
     var validateRealname = (rule, value, callback) => {
       if (value === '') {

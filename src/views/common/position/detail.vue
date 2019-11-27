@@ -1,5 +1,5 @@
 <template>
-  <div class="positionDetail">
+  <div class="positionDetail" v-if="infos.id">
     <header ref="header" class="header" :class="{'isRapidly' : infos.isRapidly === 1, 'headerFloat' : headerFloat}">
       <div class="inner">
         <div class="header-content">
@@ -80,15 +80,15 @@
               <span class="label-item" v-for="n in infos.skillsLabel" :key="n.labelId">{{n.name}}</span>
             </div>
           </section>
-          <section class="part">
+          <section class="part" v-if="infos.describe">
             <div class="title">职位描述</div>
             <pre class="richText">{{infos.describe}}</pre>
           </section>
-          <section class="part">
+          <section class="part" v-if="infos.companyInfo.intro">
             <div class="title">公司介绍</div>
             <pre class="richText">{{infos.companyInfo.intro}}</pre>
           </section>
-          <section class="part">
+          <section class="part" v-if="infos.address">
             <div class="title">工作地址</div>
             <div class="map">
               <div class="address"><i class="icon iconfont"></i>{{infos.address}}</div>
@@ -190,7 +190,7 @@ export default class PositionDetail extends Vue {
     let that = this
     getPositionApi({ id: this.id }).then(res => {
       this.infos = res.data.data
-      if (that.infos.rapidlyInfo.endTime) {
+      if (that.infos.rapidlyInfo && that.infos.rapidlyInfo.endTime) {
         let time = that.infos.rapidlyInfo.endTime.replace(/-/g, '/')
         this.remainingTime = timePocessor.restTime(time)
         timePocessor.countDown(this.remainingTime).then(res => {

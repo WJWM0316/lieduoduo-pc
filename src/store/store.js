@@ -114,8 +114,9 @@ export default new Vuex.Store({
             router.replace({ path: '/candidate' })
           })
         } else {
-          // 打开引导弹窗
-          state.guideQrcodePop = { switch: true, type: 'tobIndex' }
+          switchRoleApi().then(res => {
+            router.replace({ path: '/register' })
+          })
         }
       } else {
         switchRoleApi().then(res => {
