@@ -243,7 +243,7 @@
             <div class="status-line"></div>
             <div class="error-box" v-if="companyInfo.status === 2">
             <div class="error-head">
-            <div class="title">实名认证审核未通过的原因如下</div> 
+            <div class="title">实名认证审核未通过的原因如下</div>
               <div class="chongxin" @click="gotowhere('resetedit')">重新提交认证信息</div>
               </div>
             <div class="error-item">{{companyInfo.reviewNote}}</div>
@@ -767,7 +767,9 @@ export default {
           break
         case 'resetedit':
           this.$router.push({
-            query: {}
+            query: {
+              action: 'edit'
+            }
           })
           break
         case 'toback':
@@ -907,25 +909,26 @@ export default {
         company_name: formData.company_name,
         company_id: formData.id
       }
+      console.log(111111111, params)
       // 判断公司是否存在
       justifyCompanyExistApi({ name: formData.company_name }).then(res0 => {
-        if (res0.data.exist) {
+        if (res0.data.data.exist) {
           // 有可能编辑时  加入另一家公司
-          params = Object.assign(params, { company_id: res0.data.id })
+          params = Object.assign(params, { company_id: res0.data.data.id })
           // 被拒绝并且是新公司
-          if (formData.id !== res0.data.id) {
+          if (formData.id !== res0.data.data.id) {
             // 查看当前公司是否有申请记录
             hasApplayRecordApi().then(res1 => {
               // 当前公司已经申请过
-              if (res1.data.id) {
+              if (res1.data.data.id) {
                 editApplyCompanyApi(params).then(res => {
-                  if (res.data.emailStatus) {
+                  if (res.data.data.emailStatus) {
                     this.$router.push({
                       query: {
                         page: 'submit',
                         from: 'join',
-                        suffix: res.data.suffix,
-                        companyId: res.data.companyId
+                        suffix: res.data.data.suffix,
+                        companyId: res.data.data.companyId
                       }
                     })
                   } else {
@@ -949,19 +952,19 @@ export default {
                     }
                   })
               } else {
-                this.ruleForm.id = res0.data.id
+                this.ruleForm.id = res0.data.data.id
                 this.joinCompany()
               }
             })
           } else {
             editApplyCompanyApi(params).then(res => {
-              if (res.data.emailStatus) {
+              if (res.data.data.emailStatus) {
                 this.$router.push({
                   query: {
                     page: 'submit',
                     from: 'join',
-                    suffix: res.data.suffix,
-                    companyId: res.data.companyId
+                    suffix: res.data.data.suffix,
+                    companyId: res.data.data.companyId
                   }
                 })
               } else {
@@ -1004,25 +1007,27 @@ export default {
       hasApplayRecordApi().then(res => {
         console.log(formData, 'formDatass')
         // 当前公司已经申请过
-        if (res.data.id) {
+        if (res.data.data.id) {
           this.editJoinCompany()
         } else {
           return applyCompanyApi(params).then(res => {
-            if (res.data.emailStatus) {
+            if (res.data.data.emailStatus) {
               this.$router.push({
                 query: {
                   page: 'submit',
                   from: 'join',
-                  suffix: res.data.suffix,
-                  companyId: res.data.companyId
+                  suffix: res.data.data.suffix,
+                  companyId: res.data.data.companyId
                 }
               })
             } else {
-              this.$router.push({
-                query: {
-                  page: 'status',
-                  from: 'join'
-                }
+              this.getCompanyIdentityInfos().then(() => {
+                this.$router.push({
+                  query: {
+                    page: 'status',
+                    from: 'join'
+                  }
+                })
               })
             }
           })
@@ -1041,7 +1046,9 @@ export default {
       })
     },
     submit () {
+      console.log(this)
       if (Reflect.has(this.$route.query, 'action')) {
+        console.log(this.applyJoin)
         if (this.applyJoin) {
           this.editJoinCompany()
         } else {
@@ -1053,10 +1060,9 @@ export default {
     },
     getCompanyIdentityInfos () {
       let storage = this.ruleForm
-      let applyJoin = this.applyJoin
-      getCompanyIdentityInfosApi().then(res => {
+      return getCompanyIdentityInfosApi().then(res => {
         let companyInfo = res.data.data.companyInfo
-        applyJoin = res.data.applyJoin
+        let applyJoin = res.data.data.applyJoin
         // 重新创建一条记录
 
         this.ruleForm.real_name = storage.real_name || companyInfo.realName
@@ -1094,7 +1100,6 @@ export default {
     },
     submit2 () {
       let formData = this.authForm
-      console.log(formData)
       let params = {
         company_name: formData.company_name,
         industry_id: formData.industry_id,
