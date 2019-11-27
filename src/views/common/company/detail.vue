@@ -1,5 +1,5 @@
 <template>
-  <div class="companyDetail">
+  <div class="companyDetail" v-if="companyInformation.id">
     <header class="header">
       <div class="inner">
         <div class="header-left">
@@ -80,7 +80,7 @@
                 </div>
               </div>
             </div>
-            <div class="address">
+            <div class="address" v-if="companyInformation.address.length">
               <p class="address-title">公司地址</p>
               <el-collapse v-model="activeName" accordion @change="mapType">
                 <el-collapse-item v-for="(item, index) in companyInformation.address" :key="index" :title="item.address" :name="index+''">
@@ -101,7 +101,7 @@
               <p class="surroundings-title">
                 公司环境
               </p>
-              <div class="surroundings-container">
+              <div class="surroundings-container" v-if="companyInformation.albumInfo.length">
                 <div class="photo" ref="photo">
                   <img :src="item.middleUrl" v-for="(item, index) in companyInformation.albumInfo" :key="index"/>
                   <!-- <img :src="companyInformation.albumInfo[0].middleUrl" /> -->
@@ -128,11 +128,11 @@
         </div>
 
       </div>
-      <el-dialog :visible.sync="dialogVisible" width = "662px" :modal-append-to-body = true :append-to-body = true>
+      <el-dialog :visible.sync="dialogVisible" width = "662px" modal-append-to-body append-to-body>
         <template slot="title">
           <p class="address-text">
             <i class="iconfont icon-dizhi"></i>
-            <span v-if="companyInformation.address && activeName">{{ companyInformation.address[activeName].address }}</span>
+            <span v-if="companyInformation.address.length && activeName">{{ companyInformation.address[activeName].address }}</span>
           </p>
         </template>
         <div id="map" style="width: 662px; height: 450px; margin-left: -20px;" v-if="dialogVisible"></div>
@@ -172,10 +172,15 @@ import {
       isFourResume: state => state.resume.isFourResume,
       userInfo: state => state.userInfo
     })
-  }
+  },
+	watch: {
+		activeName (val) {
+			console.log(val, 111)
+		}
+	}
 })
 export default class companyDetail extends Vue {
-  activeName = '0' // mapType
+  activeName = 0 // mapType
   infos = {}
   HotPositionList = {} // 热门职位列表
   companyInformation = {}
@@ -190,7 +195,7 @@ export default class companyDetail extends Vue {
 
   // 地图
   mapType () {
-    if (this.activeName === '') return
+		if (!this.companyInformation.address.length) return
     this.$nextTick(() => {
       this.getMapLocation(this.companyInformation.address[this.activeName].lat, this.companyInformation.address[this.activeName].lng)
     })
@@ -211,7 +216,6 @@ export default class companyDetail extends Vue {
     }
     await getVkeyCompanyApi(data).then(res => {
       this.companyInformation = res.data.data
-      this.companyInformation.intro = this.companyInformation.intro.replace('。', '。<br/> <br/>')
       // 遍历地址，没有http协议则加上
       this.companyInformation.product.forEach(function (item, index) {
         item.siteUrl = item.siteUrl.indexOf('http') !== -1 ? item.siteUrl : 'http://' + item.siteUrl
