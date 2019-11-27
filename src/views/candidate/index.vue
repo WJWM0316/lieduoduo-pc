@@ -137,17 +137,17 @@
                     </ul>
                   </div>
                 </div>
-                <div class="intention" v-if="item.resume.expects && item.resume.expects.length>0">
+                <div class="intention" v-if="item.resume.expect">
                   求职意向：
                   <span
                     class="intentionText intentionTextWidth textEllipsis"
-                  >{{item.resume.expects[0].city}}</span>&nbsp;·&nbsp;
+                  >{{item.resume.expect.city}}</span>&nbsp;·&nbsp;
                   <span
                     class="intentionText intentionTextWidth2 textEllipsis"
-                  >{{item.resume.expects[0].position}}</span>&nbsp;·&nbsp;
+                  >{{item.resume.expect.position}}</span>&nbsp;·&nbsp;
                   <span
                     class="intentionText2"
-                  >{{item.resume.expects[0].salaryFloor}}k~{{item.resume.expects[0].salaryCeil}}k</span>
+                  >{{item.resume.expect.salaryFloor}}k~{{item.resume.expect.salaryCeil}}k</span>
                 </div>
                 <div class="intention" v-else>求职意向：暂无求职意向</div>
               </div>
