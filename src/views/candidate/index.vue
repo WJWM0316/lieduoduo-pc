@@ -1631,7 +1631,8 @@ export default class CourseList extends Vue {
         })
         break
       case 'inappropriate':
-        let status2 = { vkey: vo.resume.vkey, type: 'resume' }
+        console.log(vo)
+        let status2 = { vkey: vo.resume ? vo.resume.vkey : vo.vkey, type: 'resume' }
         manyrecordstatus(status2).then((res) => {
           if (res.data.data.data.length > 1) {
             this.pop = {

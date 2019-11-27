@@ -30,17 +30,18 @@ module.exports = {
       }
     },
     plugins: [
-			new webpack.ProvidePlugin({
-				mapActions: ['vuex', 'mapActions'],
-				mapMutations: ['vuex', 'mapMutations'],
-				mapGetters: ['vuex', 'mapGetters'],
-				mapState: ['vuex', 'mapState']
-			}),
-			new CompressionPlugin({
-				test: /\.js$|\.css$|\.html/,
-				threshold: 10240,
-				deleteOriginalAssets: false
-			})
+      new CompressionPlugin({
+        test: /\.js$|\.css$|\.html/,
+        threshold: 10240,
+        deleteOriginalAssets: false
+      }),
+      new webpack.ProvidePlugin({
+	      mapActions: ['vuex', 'mapActions'],
+	      mapMutations: ['vuex', 'mapMutations'],
+	      mapGetters: ['vuex', 'mapGetters'],
+	      mapState: ['vuex', 'mapState']
+	    })
+    ]
   },
   chainWebpack: config => {
     // 不需要预加载

@@ -19,7 +19,7 @@
           </div>
           <div class="time">
           <el-date-picker
-          v-model="form.time"
+          v-model="time"
           @change="pickchange()"
           type="daterange"
           :picker-options="pickerOptions"
@@ -703,9 +703,9 @@ export default {
         start: '',
         end: '',
         page: 1,
-        count: 20,
-        time: []
+        count: 20
       },
+      time: [],
       info: '',
       extra: '',
       positionLists: [],
@@ -756,8 +756,8 @@ export default {
               let end_time = new Date()
               start_time.setTime(start_time.getTime() - 24 * 60 * 60 * 1000)
               end_time.setTime(end_time.getTime() - 2 * 24 * 60 * 60 * 1000)
-              this.form.time = [end_time, start_time]
-              picker.$emit('pick', this.form.time)
+              this.time = [end_time, start_time]
+              picker.$emit('pick', this.time)
             }
           },
           {
@@ -767,8 +767,8 @@ export default {
               let end_time = new Date()
               start_time.setTime(start_time.getTime() - 24 * 60 * 60 * 1000)
               end_time.setTime(end_time.getTime() - 7 * 24 * 60 * 60 * 1000)
-              this.form.time = [end_time, start_time]
-              picker.$emit('pick', this.form.time)
+              this.time = [end_time, start_time]
+              picker.$emit('pick', this.time)
             }
           },
           {
@@ -778,8 +778,8 @@ export default {
               let end_time = new Date()
               start_time.setTime(start_time.getTime() - 24 * 60 * 60 * 1000)
               end_time.setTime(end_time.getTime() - 30 * 24 * 60 * 60 * 1000)
-              this.form.time = [end_time, start_time]
-              picker.$emit('pick', this.form.time)
+              this.time = [end_time, start_time]
+              picker.$emit('pick', this.time)
             }
           }
         ]
@@ -866,7 +866,7 @@ export default {
       this.tabform.time = data.time
       this.form.start = data.time
       this.form.end = data.time
-      this.form.time = ''
+      this.time = ''
       this.tablist.map((v, k) => {
         v.cur = data === v
       })
@@ -889,8 +889,8 @@ export default {
       })
     },
     pickchange () {
-      this.form.start = Date.parse(this.form.time[0]) / 1000
-      this.form.end = Date.parse(this.form.time[1]) / 1000
+      this.form.start = Date.parse(this.time[0]) / 1000
+      this.form.end = Date.parse(this.time[1]) / 1000
       this.tablist.map((v, k) => {
         v.cur = false
       })
