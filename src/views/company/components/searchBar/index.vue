@@ -11,7 +11,7 @@
             value: 'areaId',
             label: 'name'
           }"
-          @on-select="handleSelect">
+          @on-select="handleSelect($event, 'areaList')">
           <span class="filter-name">公司地点 <span>{{params.areaList.length ? '('+ params.areaList.length +')' : '' }}</span></span>
         </drop-down>
         <drop-down
@@ -25,7 +25,7 @@
             value: 'value',
             label: 'text'
           }"
-          @on-select="handleSelect">
+          @on-select="handleSelect($event, 'financingList')">
           <span class="filter-name">融资规模 <span v-if="params.financingList.length">({{params.financingList.length}})</span></span>
         </drop-down>
         <drop-down
@@ -39,7 +39,7 @@
             value: 'value',
             label: 'text'
           }"
-          @on-select="handleSelect">
+          @on-select="handleSelect($event, 'employeeList')">
           <span class="filter-name">人员规模 <span v-if="params.employeeList.length">({{params.employeeList.length}})</span></span>
         </drop-down>
         <drop-down
@@ -54,7 +54,7 @@
             value: 'labelId',
             label: 'name'
           }"
-          @on-select="handleSelect">
+          @on-select="handleSelect($event, 'industryList')">
           <span class="filter-name">行业领域 <span v-if="params.industryList.length">({{params.industryList.length}})</span></span>
         </drop-down>
         <span class="filter-remove" @click="handleRemove">清空筛选条件</span>
@@ -125,8 +125,11 @@ export default {
       // 判断页面滚动的距离是否大于吸顶元素的位置
       this.headerFixed = scrollTop > this.height
     },
-    handleSelect () {
+    handleSelect (data, key) {
       const params = {}
+      if (key === 'areaList') {
+        this.infos.areaList.map(v => v.checked = v.areaId === data.areaId ? true : false)
+      }
       for (let item in this.infos) {
         params[item] = Array.isArray(this.infos[item]) ? this.infos[item].filter(v => v.checked) : this.infos[item]
       }
