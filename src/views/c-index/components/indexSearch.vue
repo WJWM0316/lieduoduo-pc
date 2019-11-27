@@ -24,7 +24,7 @@
             <router-link :to="`/position?keyword=${item.word}&typeName=position`" :key="index">{{item.word}}</router-link>
           </template>
           <template v-else>
-            <router-link :to="`/company/details?companyId=${item.extras.vkey}`" :key="index">{{item.word}}</router-link>
+            <router-link :to="`/company/details?vkey=${item.extras.vkey}`" :key="index">{{item.word}}</router-link>
           </template>
         </template>
       </p>
