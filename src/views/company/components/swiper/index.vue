@@ -3,7 +3,7 @@
 		<span class="btn prev" :class="{'btn-disabled': !btnPrevCanclick, 'btn-abled': btnPrevCanclick}"><i class="iconfont icon icon-right"></i></span>
 		<div class="scroll">
 			<ul id="swiper1">
-				<li v-for="(item, i) in list" :key="i" class="item" :class="{'active': !(i + index)}" :style="{ 'marginLeft': offset + 'px', 'marginRight': offset + 'px', 'marginTop': '8px', 'marginBottom': '8px'}">
+				<li v-for="(item, i) in list" :key="i" class="item" :style="{ 'marginLeft': offset + 'px', 'marginRight': offset + 'px', 'marginTop': '8px', 'marginBottom': '8px'}">
 					<div class="frontend">
 						<div class="company-logo" v-if="item.logoInfo">
 							<img :src="item.logoInfo.smallUrl" alt="loading" class="logo">
@@ -116,7 +116,7 @@ export default {
 		left: 0;
 		top: 0;
 		display: flex;
-		transition: all ease .15s;
+		transition: all ease .4s;
 		height: 208px;
 	}
 	.item{
@@ -126,7 +126,6 @@ export default {
 		display: inline-block;
 		box-sizing: border-box;
 		padding: 12px;
-		cursor: pointer;
 		position: relative;
 		height: 192px;
 		&:hover {
@@ -175,7 +174,7 @@ export default {
 		background:rgba(255,255,255,0.96);
 		border-radius:4px;
 		opacity: 0;
-		transition: all ease .15s;
+		transition: all ease .4s;
 		box-sizing: border-box;
 		padding: 20px;
 		width: 160px;
@@ -208,7 +207,7 @@ export default {
 		text-align: center;
 		line-height: 20px;
 		border-radius:4px;
-		transition: all ease .15s;
+		transition: all ease .4s;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
@@ -232,12 +231,13 @@ export default {
 		height:32px;
 		line-height: 32px;
 		border-radius:4px;
-		transition: all ease .15s;
+		transition: all ease .4s;
 		display: block;
 		background:$bg-color-4;
 		color: white;
 		width: 100%;
 		margin-bottom: 22px;
+		cursor: pointer;
 	}
 	.btn {
 		width: 40px;
@@ -273,7 +273,7 @@ export default {
 	.iconfont{
 		font-size: 30px;
 		color: rgba(255,255,255,.5);
-		transition: all ease .15s;
+		transition: all ease .4s;
 	}
 }
 </style>

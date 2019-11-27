@@ -181,7 +181,6 @@ export default {
     changePage (page) {
       this.page = page
       this.getLists()
-      this.getSearchCollectApi()
     }
   },
   created () {
