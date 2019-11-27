@@ -658,16 +658,18 @@
           <div class="selectitem" v-for="(item, i) in applyrecordList" :key="i" @click="selectapply(item, i)">
             <div class="position">
               <div class="close" v-show="item.positionStatus === 0">关闭</div>
-              <div :class="['name', item.positionStatus === 0 ? 'hui' : '']">{{item.positionName}}</div>
+              <div class="close" v-show="item.positionStatus === 3">审核中</div>
+              <div class="close" v-show="item.positionStatus === 4">审核失败</div>
+              <div :class="['name', item.positionStatus === 0 || item.positionStatus === 3 || item.positionStatus === 4 ? 'hui' : '']">{{item.positionName}}</div>
               <div class="money" v-show="item.positionId !== 0 && item.positionName !== '都不合适'">{{item.emolumentMin}}K~{{item.emolumentMax}}K</div>
             </div>
             <div class="info" v-if="item.positionName !== '都不合适'">
-              <div :class="['address', item.positionStatus === 0 ? 'hui' : '']">{{item.city}}{{item.district}}</div>
-              <div :class="['year', item.positionStatus === 0 ? 'hui' : '']">{{item.workExperienceName}}</div>
-              <div :class="['benke', item.positionStatus === 0 ? 'hui' : '']">{{item.educationName}}</div>
+              <div :class="['address', item.positionStatus === 0 || item.positionStatus === 3 || item.positionStatus === 4 ? 'hui' : '']">{{item.city}}{{item.district}}</div>
+              <div :class="['year', item.positionStatus === 0 || item.positionStatus === 3 || item.positionStatus === 4 ? 'hui' : '']">{{item.workExperienceName}}</div>
+              <div :class="['benke', item.positionStatus === 0 || item.positionStatus === 3 || item.positionStatus === 4 ? 'hui' : '']">{{item.educationName}}</div>
             </div>
             <div class="info" v-else>选择此项，以上申请记录将全部合并处理为不合适</div>
-            <div class="selectcur">
+            <div class="selectcur" @click="tishishow = true">
               <i :class="['iconfont icon-chenggong position bg']" v-if="item.hascur"></i>
                 <i :class="['iconfont icon-beixuanxiang position']" v-else></i>
             </div>

@@ -516,6 +516,10 @@
       </div>
       <!-- 面试安排 -->
       <div class="noJobBox" v-if="pop.Interview">
+        <div class="tishi" v-if="tishishow">
+          <div class="tishiimg"><img src="@/assets/images/exclamation-circle.png" alt=""></div>
+          <div class="tishitext">该职位未开放，不可选择约面</div>
+        </div>
         <div class="close"><i @click="cancelshow()" class="iconfont icon-danchuang-guanbi"></i></div>
         <div class="content-info">
         <div class="title">{{pop.InterviewTitle}}</div>
@@ -771,21 +775,36 @@
           </div>
           <div class="selectposition" v-show="pop.type === 'applyrecord'">
             <div class="applytext">{{pop.recordtext}}</div>
-          <div class="selectitem" v-for="(item, i) in applyrecordList" :key="i" @click="selectapply(item, i)">
+            <div class="selectitem" v-for="(item, i) in applyrecordList" :key="i" @click="selectapply(item, i)">
             <div class="position">
-              <div class="close" v-show="item.isOnline === 2">关闭</div>
-              <div :class="['name', item.isOnline === 2 ? 'hui' : '']">{{item.positionName}}</div>
+              <div class="close" v-show="item.positionStatus === 0">关闭</div>
+              <div class="close" v-show="item.positionStatus === 3">审核中</div>
+              <div class="close" v-show="item.positionStatus === 4">审核失败</div>
+              <div :class="['name', item.positionStatus === 0 || item.positionStatus === 3 || item.positionStatus === 4 ? 'hui' : '']">{{item.positionName}}</div>
               <div class="money" v-show="item.positionId !== 0 && item.positionName !== '都不合适'">{{item.emolumentMin}}K~{{item.emolumentMax}}K</div>
             </div>
             <div class="info" v-if="item.positionName !== '都不合适'">
-              <div :class="['address', item.isOnline === 2 ? 'hui' : '']">{{item.city}}{{item.district}}</div>
-              <div :class="['year', item.isOnline === 2 ? 'hui' : '']">{{item.workExperienceName}}</div>
-              <div :class="['benke', item.isOnline === 2 ? 'hui' : '']">{{item.educationName}}</div>
+              <div :class="['address', item.positionStatus === 0 || item.positionStatus === 3 || item.positionStatus === 4 ? 'hui' : '']">{{item.city}}{{item.district}}</div>
+              <div :class="['year', item.positionStatus === 0 || item.positionStatus === 3 || item.positionStatus === 4 ? 'hui' : '']">{{item.workExperienceName}}</div>
+              <div :class="['benke', item.positionStatus === 0 || item.positionStatus === 3 || item.positionStatus === 4 ? 'hui' : '']">{{item.educationName}}</div>
             </div>
             <div class="info" v-else>选择此项，以上申请记录将全部合并处理为不合适</div>
-            <div class="selectcur">
+            <div class="selectcur" v-if="item.positionStatus === 1 || item.positionStatus === 0">
               <i :class="['iconfont icon-chenggong position bg']" v-if="item.hascur"></i>
                 <i :class="['iconfont icon-beixuanxiang position']" v-else></i>
+            </div>
+            <div class="selectcur" @click="setHint" v-else>
+              <div class="circel"></div>
+            </div>
+            <div class="confirmbox" v-show="item.boxshow">
+              <div class="b-head">
+                <div class="b-img"><img src="@/assets/images/exclamation-circle.png" alt=""></div>
+                <div class="b-text">你确定开放职位进行约面吗？</div>
+              </div>
+              <div class="b-btn">
+                <div class="think-sure" @click="sureyuemian(item)">确定</div>
+                <div class="think" @click.stop="resetboxcur(item, i)">再想想</div>
+              </div>
             </div>
           </div>
         </div>
@@ -812,7 +831,7 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import { getMyInfoApi } from 'API/auth'
-import { getPositionTypeApi } from 'API/position'
+import { getPositionTypeApi, openPositionApi } from 'API/position'
 import { getMyNavDataApi } from 'API/browse'
 import { getResumeIdApi } from 'API/userJobhunter'
 import { shareResumeApi } from 'API/forward'
@@ -861,6 +880,8 @@ export default class CourseList extends Vue {
   showResume = false
   hasonload = false
   toworddiggle = false
+  tishishow = false
+  boxshow = false
   pop = {
     isShow: false,
     Interview: false,
@@ -1132,6 +1153,14 @@ export default class CourseList extends Vue {
   getPopName () {
     // return this.navType === 'invite' ? '看过我的职位类型' : this.navType === 'searchCollect' ? '简历职位类型' : '感兴趣职位类型'
     return '职位类别筛选'
+  }
+
+  setHint () {
+    this.tishishow = true
+    clearTimeout(this.hintSetTime)
+    this.hintSetTime = setTimeout(() => {
+      this.tishishow = false
+    }, 1500)
   }
 
   screenOp (status) {
@@ -1539,7 +1568,9 @@ export default class CourseList extends Vue {
               type: 'applyrecord'
             }
             let applylists = res.data.data.data
-            console.log(applylists)
+            applylists.map((v, k) => {
+              v.boxshow = false
+            })
             this.applyrecordList = applylists
           } else {
             confirmInterviewApi({ interviewId: this.interviewId }).then((res) => {
@@ -1642,6 +1673,7 @@ export default class CourseList extends Vue {
                 v.positionName = '直接与我约面'
               }
               v.hascur = false
+              v.boxshow = false
             })
             this.applyrecordList = applylists
           } else {
@@ -1926,8 +1958,32 @@ export default class CourseList extends Vue {
     let applyrecordList = this.applyrecordList.slice()
     applyrecordList.map((v, k) => {
       v.hascur = k === index
+      v.boxshow = false
     })
+    if (item.positionStatus === 0) {
+      item.boxshow = true
+    } else {
+      item.boxshow = false
+    }
     this.applyrecordList = applyrecordList
+  }
+  resetboxcur (item, index) {
+    this.applyrecordList[index].boxshow = false
+  }
+  sureyuemian (data) {
+    openPositionApi({ id: data.positionId })
+      .then(() => {
+        confirmInterviewApi({ interviewId: data.interviewId }).then((res) => {
+          this.$message.success('约面成功')
+          this.pop = {
+            isShow: false
+          }
+          this.init()
+        })
+      })
+      .catch(e => {
+        this.$message.error(e.data.msg)
+      })
   }
   // 选择不合适原因
   togglereson (data) {
