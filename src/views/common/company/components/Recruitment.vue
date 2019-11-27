@@ -71,11 +71,9 @@ export default {
     NoFound,
     GuideLogin
   },
-
   methods: {
     handleSearch () {
       let data = {
-        // companyId: this.$route.query.vkey
         vkey: this.$route.query.vkey,
         type: this.typeActivationItem.id,
         page: this.page
@@ -101,7 +99,7 @@ export default {
       this.page = 1 // 点击还原页码
 
       var data = {
-        vkey: this.$route.query.vkey,
+        company_vkey: this.$route.query.vkey,
         type: item.id
       }
       this.typeActivation = index
@@ -116,15 +114,16 @@ export default {
         })
     }
   },
-
   mounted () {
     this.$nextTick(() => {
       this.getCompanysPosition()
-      this.getCompanysPositionList({ vkey: this.$route.query.vkey, id: '' })
+      let data = {
+        company_vkey: this.$route.query.vkey, id: ''
+      }
+      this.getCompanysPositionList(data)
     })
   }
 }
-
 </script>
 
 <style lang="scss" scoped>

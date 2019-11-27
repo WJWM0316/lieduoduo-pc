@@ -1,15 +1,15 @@
 <template>
-  <div class="companyDetail">
-    <header class="header">
-      <div class="inner">
+  <div class="companyDetail" v-if="companyInformation.id">
+    <header class="header" :class="{ headerScrollY: isHeader }">
+      <div class="inner inner_ScrollY">
         <div class="header-left">
           <div class="header-left-top" v-if="companyInformation.logoInfo">
-            <img class="company-logo" :src = companyInformation.logoInfo.middleUrl />
-            <div class="header-left-text">
+            <img class="company-logo logo_ScrollY" :src = companyInformation.logoInfo.middleUrl />
+            <div class="header-left-text text_ScrollY">
               <p class="header-companyShortname">{{companyInformation.companyShortname}}</p>
               <p class="header-financingInfo">{{companyInformation.financingInfo}}·{{companyInformation.employeesInfo}}·{{companyInformation.industry}}</p>
-              <ul>
-                <li class="label" v-for="(item, index) in companyInformation.teamLabel.slice(0,7)" :key="index">{{item.title}}</li>
+              <ul v-if="!isHeader">
+                <li class="label" v-for="(item, index) in companyInformation.teamLabel" :key="index" v-if="index < 6">{{item.title}}</li>
               </ul>
             </div>
           </div>
@@ -18,18 +18,18 @@
             <div class="header-left-Introduction" :class="{ activation: !activation }" @click="activationType">招聘职位&nbsp;&nbsp;({{ companyInformation.positionNum }})</div>
           </div>
         </div>
-        <div class="header-right">
+        <div class="header-right right_ScrollY">
           <div class="header-right-position">
-            <p class="header-right-number">{{companyInformation.positionNum}}</p>
-            <p class="header-right-text">在招职位</p>
+            <p class="header-right-number"  v-if="!isHeader">{{companyInformation.positionNum}}</p>
+            <p class="header-right-text"  v-if="!isHeader">在招职位</p>
             <p class="header-right-resume" @click="resumeTo('online')">
               <i class="iconfont icon-ziwomiaoshu-"/>&nbsp;
               {{ online }}在线简历
             </p>
           </div>
           <div class="header-right-position">
-            <p class="header-right-number">{{ companyInformation.numOfVisitors }}</p>
-            <p class="header-right-text">浏览</p>
+            <p class="header-right-number" v-if="!isHeader">{{ companyInformation.numOfVisitors }}</p>
+            <p class="header-right-text" v-if="!isHeader">浏览</p>
             <file :Resume = myResume :showUploadDetails=false :showTips=true :islogin = islogin>
               <p class="header-right-resume" @click="resumeTo('annex')">
                 <i class="iconfont" :class="{ 'icon-weibiaoti-': annex === '上传', 'icon-zhongxinshangchuan-':  annex === '更新'}"/>&nbsp;
@@ -40,6 +40,7 @@
         </div>
       </div>
     </header>
+    <div :class="{ headerScrollY_box: isHeader }"></div>
 
     <template v-if="activation">
       <div class="hotPosition">
@@ -64,7 +65,7 @@
           <div class="introduction-left">
             <div class="introduction-presentation">
               <p class="introduction-title">公司介绍</p>
-              <p class="introduction-text" ref="introduction_text" :class="{ introduction_viewAll: viewAllText }" v-html="companyInformation.intro"></p>
+              <p class="introduction-text" :class="{ introduction_viewAll: viewAllText }" v-html="companyInformation.intro"></p>
               <el-button type="text" class="introduction-left-buttom" @click="viewAll">{{ this.viewAllText ? '收起' :'查看全部'}}</el-button>
             </div>
             <div class="product" v-if="companyInformation.product">
@@ -83,14 +84,14 @@
             <div class="address" v-if="companyInformation.address.length">
               <p class="address-title">公司地址</p>
               <el-collapse v-model="activeName" accordion @change="mapType">
-                <el-collapse-item v-for="(item, index) in companyInformation.address" :key="index" :title="item.address" :name="index+''">
+                <el-collapse-item v-for="(item, index) in companyInformation.address" :key="index" :title="item.address" :name="index">
                   <template slot="title">
                     <p class="address-text">
                       <i class="iconfont icon-dizhi"></i>
                       <span>{{ item.address }}</span>
                     </p>
                   </template>
-                  <div id="map" v-if="activeName === index+'' && !dialogVisible" @click="addressAlert"></div>
+                  <div id="map" v-if="activeName === index && !dialogVisible" @click="addressAlert"></div>
                 </el-collapse-item>
               </el-collapse>
             </div>
@@ -101,7 +102,7 @@
               <p class="surroundings-title">
                 公司环境
               </p>
-              <div class="surroundings-container">
+              <div class="surroundings-container" v-if="companyInformation.albumInfo.length">
                 <div class="photo" ref="photo">
                   <img :src="item.middleUrl" v-for="(item, index) in companyInformation.albumInfo" :key="index"/>
                   <!-- <img :src="companyInformation.albumInfo[0].middleUrl" /> -->
@@ -128,14 +129,14 @@
         </div>
 
       </div>
-      <el-dialog :visible.sync="dialogVisible" width = "662px" :modal-append-to-body = true :append-to-body = true>
+      <el-dialog :visible.sync="dialogVisible" width = "662px" modal-append-to-body append-to-body>
         <template slot="title">
           <p class="address-text">
             <i class="iconfont icon-dizhi"></i>
-            <span v-if="companyInformation.address && activeName">{{ companyInformation.address[activeName].address }}</span>
+            <span v-if="companyInformation.address.length && activeName">{{ companyInformation.address[activeName].address }}</span>
           </p>
         </template>
-        <div id="map" style="width: 662px; height: 450px; margin-left: -20px;" v-if="dialogVisible"></div>
+        <div id="map" v-if="dialogVisible" style="width: 662px; height: 450px; margin-left: -20px;"></div>
       </el-dialog>
     </template>
 
@@ -172,10 +173,15 @@ import {
       isFourResume: state => state.resume.isFourResume,
       userInfo: state => state.userInfo
     })
+  },
+  watch: {
+    activeName (val) {
+      console.log(val, 111)
+    }
   }
 })
 export default class companyDetail extends Vue {
-  activeName = '0' // mapType
+  activeName = 0 // mapType
   infos = {}
   HotPositionList = {} // 热门职位列表
   companyInformation = {}
@@ -188,20 +194,22 @@ export default class companyDetail extends Vue {
   islogin = false // 子组件是否登陆弹窗
   haslogin = false // 是否已经登录
   isIntroduction_text = true // 显示文案切换按钮
+  isHeader = false // 是否显示顶部悬浮栏
 
   // 监听滚动
   handleScroll () {
     let scrollY = window.scrollY
-    if (scrollY > 300) {
-      console.log(300)
+    if (scrollY > 260) {
+      this.isHeader = true
     } else {
-      console.log(0)
+      this.isHeader = false
     }
   }
 
   // 地图
   mapType () {
-    if (this.companyInformation.address.length === 0) return
+    if (!this.companyInformation.address.length) return
+    if (!this.activeName) return
     this.$nextTick(() => {
       this.getMapLocation(this.companyInformation.address[this.activeName].lat, this.companyInformation.address[this.activeName].lng)
     })
@@ -222,7 +230,6 @@ export default class companyDetail extends Vue {
     }
     await getVkeyCompanyApi(data).then(res => {
       this.companyInformation = res.data.data
-      this.companyInformation.intro = this.companyInformation.intro.replace('。', '。<br/> <br/>')
       // 遍历地址，没有http协议则加上
       this.companyInformation.product.forEach(function (item, index) {
         item.siteUrl = item.siteUrl.indexOf('http') !== -1 ? item.siteUrl : 'http://' + item.siteUrl
@@ -329,9 +336,9 @@ export default class companyDetail extends Vue {
   //   }
   // }
 
-  introductionFun () {
-    this.isIntroduction_text = !(this.$refs.introduction_text.width < 150)
-  }
+  // introductionFun () {
+
+  // }
   hasLogin () {
     this.haslogin = (JSON.stringify(this.userInfo) !== '{}')
   }
@@ -342,12 +349,15 @@ export default class companyDetail extends Vue {
   }
   created () {
     window.addEventListener('scroll', this.handleScroll)
-    this.introductionFun() // 文字高度
     this.getCompanysTeam()
     this.getCompanyHot()
     this.getCompany().then(() => {
       this.mapType()
     })
+  }
+  updated () {
+    // console.log(document.getElementsByClassName('introduction-text')[0].style.color)
+    // this.introductionFun() // 文字高度s
   }
   destroyed () {
     window.removeEventListener('scroll', this.handleScroll)
@@ -495,6 +505,38 @@ $sizing: border-box;
     }
   }
 }
+.headerScrollY{
+  height: 135px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1111;
+  .inner_ScrollY{
+    height: 135px;
+    padding-top: 21px;
+    .logo_ScrollY{
+      width: 60px !important;
+      height: 60px !important;
+    }
+    .text_ScrollY{
+      height: 52px !important;
+      .companyShortname{
+        font-size: 28px;
+      }
+    }
+    .right_ScrollY{
+      padding-top: 20px;
+    }
+  }
+}
+@keyframes mymove
+{
+from {top:-135px;}
+to {top:0px;}
+}
+.headerScrollY_box{
+  height: 210px;
+}
 .hotPosition {
   @extend %wrap-width;
   background: #F8FAFA;
@@ -552,8 +594,8 @@ $sizing: border-box;
           width: $page-width;
           margin: 0 auto;
           padding: 40px 0;
-          // display: flex;
-          // flex-wrap: wrap;
+          display: flex;
+          flex-wrap: wrap;
           .appLinks{
             box-sizing: border-box;
             padding: 90px 0 40px 0;
@@ -566,6 +608,7 @@ $sizing: border-box;
             border-right: 1px solid $border-color-1;
             width: 850px;
             padding-right: 100px;
+            box-sizing: $sizing;
 
             .introduction-presentation{
               margin-bottom: 60px;
@@ -656,6 +699,7 @@ $sizing: border-box;
           .introduction-right{
             padding-left: 50px;
             width: 298px;
+            display: inline-block;
             .guideLogin{
               margin-bottom: 50px;
             }
