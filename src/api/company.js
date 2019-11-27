@@ -234,7 +234,7 @@ export const getSearchCompanys = data => request({
 
 /* 获取公司招聘团队 */
 export const getCompanysTeamApi = (data) => request({
-  url: `/company/recruiters/${data.companyId}`,
+  url: `/company/web/recruiters/${data.vkey}`,
   method: 'get',
   params: data,
   config: { host: 'qiuzhi' }
@@ -242,7 +242,7 @@ export const getCompanysTeamApi = (data) => request({
 
 /* 获取公司职位类型 */
 export const getCompanysPositionApi = (data) => request({
-  url: `/company/onlinePositionType/${data.companyId}`,
+  url: `/company/web/onlinePositionType/${data.companyId}`,
   method: 'get',
   params: data,
   config: { host: 'qiuzhi' }
