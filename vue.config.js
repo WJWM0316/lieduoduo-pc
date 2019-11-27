@@ -4,19 +4,6 @@ const CompressionPlugin = require('compression-webpack-plugin')
 
 const scssPath = process.env.VUE_APP_ENV === 'development' ? '_dev' : '_prod'
 let resolve = dir => { return path.join(__dirname, dir) }
-let plugins = [
-  new webpack.ProvidePlugin({
-    mapActions: ['vuex', 'mapActions'],
-    mapMutations: ['vuex', 'mapMutations'],
-    mapGetters: ['vuex', 'mapGetters'],
-    mapState: ['vuex', 'mapState']
-  }),
-  new CompressionPlugin({
-    test: /\.js$|\.css$|\.html/,
-    threshold: 10240,
-    deleteOriginalAssets: false
-  })
-]
 
 module.exports = {
   lintOnSave: true,
@@ -42,7 +29,18 @@ module.exports = {
         'COMPONENTS': resolve('src/components')
       }
     },
-    plugins: plugins
+    plugins: [
+			new webpack.ProvidePlugin({
+				mapActions: ['vuex', 'mapActions'],
+				mapMutations: ['vuex', 'mapMutations'],
+				mapGetters: ['vuex', 'mapGetters'],
+				mapState: ['vuex', 'mapState']
+			}),
+			new CompressionPlugin({
+				test: /\.js$|\.css$|\.html/,
+				threshold: 10240,
+				deleteOriginalAssets: false
+			})
   },
   chainWebpack: config => {
     // 不需要预加载
