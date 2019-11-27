@@ -107,21 +107,32 @@ export default new Vuex.Store({
       state.guideQrcodePop = data
     },
     switchIdentity (state, data) {
+			// 当前用户在C端，切换B端
       if (state.userIdentity === 1) {
         if (state.roleInfos.isRecruiter) {
           switchRoleApi().then(res => {
-            state.userIdentity = state.userIdentity === 1 ? 2 : 1
+            state.userIdentity = state.userIdentity === 2
             router.replace({ path: '/candidate' })
           })
         } else {
-          // 打开引导弹窗
-          state.guideQrcodePop = { switch: true, type: 'tobIndex' }
+          switchRoleApi().then(res => {
+						state.userIdentity = state.userIdentity === 2
+            router.replace({ path: '/register' })
+          })
         }
       } else {
-        switchRoleApi().then(res => {
-          state.userIdentity = state.userIdentity === 1 ? 2 : 1
-          router.replace({ path: '/index' })
-        })
+				// 当前用户在B端，切换C端
+				if (state.roleInfos.isJobhunter) {
+					switchRoleApi().then(res => {
+					  state.userIdentity = state.userIdentity === 1
+					  router.replace({ path: '/index' })
+					})
+				} else {
+					switchRoleApi().then(res => {
+					  state.userIdentity = state.userIdentity === 1
+					  router.replace({ path: '/createUser' })
+					})
+				}       
       }
     }
   },

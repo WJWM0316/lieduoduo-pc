@@ -216,9 +216,8 @@
             </div>
           </div>
         </div>
-
         <div class="bottom_hint">
-          注册后可查看更多职位信息 <i class="iconfont icon-zizhurenzheng" />
+          注册后可查看更多职位信息 <i class="iconfont icon-youyi" />
         </div>
       </div>
     </div>
@@ -231,6 +230,7 @@
       <div class="bloText2">请长按识别二维码，添加微信号</div>
     </div>
   </div>
+  <page-footer />
 </div>
 
 </template>
@@ -239,7 +239,7 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import { loginPutInApi, getCodeApi, getCaptchaApi } from '../../../api/auth'
 import { schJobApi, getPositionTypesApi, getAdvListApi, getUserRoleInfo } from '../../../api/putIn'
-
+import PageFooter from '@/views/layout/footer'
 import { saveAccessToken } from '@/api/cacheService'
 
   @Component({
@@ -255,7 +255,7 @@ import { saveAccessToken } from '@/api/cacheService'
         immediate: true
       }
     },
-    components: {}
+    components: { PageFooter }
   })
 export default class CourseList extends Vue {
     isFocus = false
@@ -675,15 +675,13 @@ export default class CourseList extends Vue {
       display: flex;
       justify-content: center;
       align-items: center;
-
       font-size:16px;
       font-weight:400;
       color: $main-color-1;
       line-height:22px;
-      img {
-        display: block;
-        width: 14px;
-        height: auto;
+      i {
+        font-size: 14px;
+        padding-left: 12px;
       }
     }
     .icon-close {
@@ -798,7 +796,7 @@ export default class CourseList extends Vue {
   .companyBabels {
     height:178px;
     width: 100%;
-    background:rgba(251,251,255,1);
+    background: $bg-color-1;
     section {
       width: 1000px;
       margin: 0 auto;

@@ -1,5 +1,5 @@
 <template>
-  <div class="wrap" v-if="infos.vkey && hasStatus">
+  <div class="wrap" v-if="hasStatus">
     <!-- 求职者还没有发起开撩动作 职位详情 start-->
     <section class="position" v-if="type === 'position'">
       <template v-if="type === 'position' && (!interviewInfos.haveInterview || interviewInfos.interviewStatus === 51 || interviewInfos.interviewStatus === 54 || interviewInfos.interviewStatus === 52 || interviewInfos.interviewStatus === 55 || interviewInfos.interviewStatus === 58)">
@@ -81,12 +81,7 @@ import { getInterviewStatusApi, applyInterviewApi, confirmInterviewApi, refuseIn
   },
   computed: mapState({
     hasLogin: state => state.hasLogin
-  }),
-  watch: {
-    infos () {
-      this.getInterviewStatus()
-    }
-  }
+  })
 })
 export default class InterviewBtn extends Component {
   btnLoad = false
@@ -201,6 +196,7 @@ export default class InterviewBtn extends Component {
     }
   }
   created () {
+		this.getInterviewStatus()
   }
 }
 </script>
