@@ -21,7 +21,7 @@
             <el-form-item>
               <el-input
                 type="textarea"
-                placeholder="可以描述你的技能、获奖证书，等等。"
+                placeholder="可以描述你的特长、技能、职业成就等任何能展示你职业风采的信息。"
                 v-model="form.introduce"
                 :autosize="{ minRows: 3, maxRows: 7}"
                 :rows="5"
