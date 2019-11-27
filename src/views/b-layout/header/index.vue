@@ -40,7 +40,6 @@
 </template>
 <script>
 import { mp_qrcode, wx_qrcode } from 'IMAGES/image'
-import { getCompanyIdentityInfosApi } from 'API/register'
 import { mapState } from 'vuex'
 export default {
   data () {
@@ -79,10 +78,7 @@ export default {
       }
     },
     getCompanyIdentityInfos () {
-      getCompanyIdentityInfosApi().then(res => {
-        console.log(res.data.data.haveIdentity)
-        this.haveIdentity = res.data.data.haveIdentity
-      })
+      this.haveIdentity = this.$store.state.roleInfos.isRecruiter
     }
   },
   mounted () {
