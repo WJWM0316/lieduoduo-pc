@@ -194,7 +194,7 @@ export const getCityApi = (data) => request({
 
 /* 获取公司的热招职位 */
 export const getCompanyHotApi = (data) => request({
-  url: `/company/hot_positions/${data.companyId}`,
+  url: `/company/web/hot_positions/${data.vkey}`,
   method: 'get',
   params: data,
   config: { host: 'qiuzhi' }
@@ -242,7 +242,7 @@ export const getCompanysTeamApi = (data) => request({
 
 /* 获取公司职位类型 */
 export const getCompanysPositionApi = (data) => request({
-  url: `/company/web/onlinePositionType/${data.companyId}`,
+  url: `/company/web/onlinePositionType/${data.vkey}`,
   method: 'get',
   params: data,
   config: { host: 'qiuzhi' }
