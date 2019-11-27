@@ -160,6 +160,10 @@ export default {
 		line-height:20px;
 		margin-bottom: 14px;
 		cursor: pointer;
+		&:hover {
+			font-weight:500;
+			color:$main-color-1;
+		}
 	}
 	.active{
 		font-weight:500;

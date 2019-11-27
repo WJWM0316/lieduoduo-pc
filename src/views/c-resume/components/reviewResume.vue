@@ -49,7 +49,7 @@
                 <span>
                   <i class="iconfont" :class="item.icon" :style="{color: item.color}"></i>
                 </span>
-                <span class="download-type">{{item.type.toLocaleUpperCase()}}</span>
+                <span class="download-type">{{item.title}}</span>
                 <span><i class="iconfont icon-xiazai"></i></span>
               </div>
           </div>

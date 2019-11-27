@@ -94,7 +94,7 @@ export default {
     left: 0;
   }
   .position-24hour {
-    width: 45px;
+    width: 47px;
     height: 18px;
     margin-right: 14px;
     background: url('../../../assets/images/tag_list_24hour.png') no-repeat;
