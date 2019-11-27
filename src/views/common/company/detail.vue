@@ -83,14 +83,14 @@
             <div class="address" v-if="companyInformation.address.length">
               <p class="address-title">公司地址</p>
               <el-collapse v-model="activeName" accordion @change="mapType">
-                <el-collapse-item v-for="(item, index) in companyInformation.address" :key="index" :title="item.address" :name="index+''">
+                <el-collapse-item v-for="(item, index) in companyInformation.address" :key="index" :title="item.address" :name="index">
                   <template slot="title">
                     <p class="address-text">
                       <i class="iconfont icon-dizhi"></i>
                       <span>{{ item.address }}</span>
                     </p>
                   </template>
-                  <div id="map" v-if="activeName === index+'' && !dialogVisible" @click="addressAlert"></div>
+                  <div id="map" v-if="activeName === index && !dialogVisible" @click="addressAlert"></div>
                 </el-collapse-item>
               </el-collapse>
             </div>
@@ -175,7 +175,7 @@ import {
   },
 	watch: {
 		activeName (val) {
-			console.log(val, 111)
+			console.log(val, typeof val, 111)
 		}
 	}
 })
@@ -195,7 +195,7 @@ export default class companyDetail extends Vue {
 
   // 地图
   mapType () {
-		if (!this.companyInformation.address.length) return
+		if (!this.companyInformation.address.length || (!this.activeName && this.activeName !== 0)) return
     this.$nextTick(() => {
       this.getMapLocation(this.companyInformation.address[this.activeName].lat, this.companyInformation.address[this.activeName].lng)
     })
