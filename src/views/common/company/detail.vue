@@ -207,8 +207,7 @@ export default class companyDetail extends Vue {
   // 获取公司信息
   async getCompany () {
     let data = {
-      id: this.$route.query.companyId,
-      sCode: ''
+      vkey: this.$route.query.vkey
     }
     await getVkeyCompanyApi(data).then(res => {
       this.companyInformation = res.data.data
@@ -222,7 +221,7 @@ export default class companyDetail extends Vue {
   // 获取招聘团队
   getCompanysTeam () {
     let data = {
-      companyId: this.$route.query.companyId,
+      companyId: this.$route.query.vkey,
       page: 1,
       count: 3
     }
@@ -235,7 +234,7 @@ export default class companyDetail extends Vue {
   // 获取公司热门职位
   getCompanyHot () {
     let data = {
-      companyId: this.$route.query.companyId,
+      companyId: this.$route.query.vkey,
       page: 1,
       count: 3
     }
