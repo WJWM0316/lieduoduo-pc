@@ -1684,6 +1684,7 @@ export default {
           // border:1px solid #ccc;
           border-radius: 4px;
           margin-top: 7px;
+          position: relative;
           // width: 108px;
           color:rgba(40,40,40,1);
           background:rgba(255,220,41,1);
