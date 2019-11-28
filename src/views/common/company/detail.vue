@@ -106,7 +106,6 @@
               <div class="surroundings-container">
                 <div class="photo" ref="photo">
                   <img :src="item.middleUrl" v-for="(item, index) in companyInformation.albumInfo" :key="index"/>
-                  <!-- <img :src="companyInformation.albumInfo[0].middleUrl" /> -->
                 </div>
               </div>
             </div>

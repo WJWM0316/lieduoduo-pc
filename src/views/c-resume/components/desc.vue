@@ -27,6 +27,7 @@
                 v-model="form.position"
                 title="职业标签"
                 type="skills"
+                :default-value="info.positionIds"
                 :filter="expectId"
                 :multiple-config.sync="positionLabelsConfig" />
             </el-form-item>
@@ -38,6 +39,7 @@
                 v-model="form.life"
                 title="生活标签"
                 :multiple="true"
+                :default-value="info.lifeIds"
                 :multiple-config.sync="listLabelsConfig"
                 type="life" />
             </el-form-item>
@@ -91,10 +93,14 @@ export default {
   computed: {
     info () {
       const { signature, personalizedLabels } = this.resume
+      const labelLabes = personalizedLabels ? personalizedLabels.filter(val => val.type === 'label_life') : []
+      const positionLabels = personalizedLabels ? personalizedLabels.filter(val => val.type === 'label_professional_literacy' || val.type === 'label_professional_skills') : []
       return {
         signature,
-        life: personalizedLabels.filter(val => val.type === 'label_life'),
-        position: personalizedLabels.filter(val => val.type === 'label_professional_literacy' || val.type === 'label_professional_skills')
+        lifeIds: labelLabes.map(val => val.labelId),
+        positionIds: positionLabels.map(val => val.labelId),
+        life: labelLabes,
+        position: positionLabels
       }
     },
     isEmpty () {
@@ -161,7 +167,11 @@ export default {
       }
     },
     handleAdd () {
+      this.jsonFormString = JSON.stringify(this.form)
       this.$refs.wrapper.showEditCompoents()
+    },
+    validFormData () {
+      return this.jsonFormString === JSON.stringify(this.form)
     }
   }
 }

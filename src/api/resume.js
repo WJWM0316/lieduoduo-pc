@@ -51,7 +51,7 @@ export const setResumeDesc = (data) => {
 }
 
 // 标签获取
-export const getLables = (data) => {
+export const getLabels = (data) => {
   const { type, params } = data
   const typeApi = {
     skills: '/label/professionalSkills',

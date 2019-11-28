@@ -3,7 +3,7 @@
         <div id="box" class="main_cont">
           <div class="screen">
         <div class="title">面试管理</div>
-        <div class="select" v-if="tablist[0].cur">
+        <div class="select" v-if="tablist.length > 0 && tablist[0].cur">
           <el-select
             v-model="form.position_label_id"
             placeholder="职位类别"
@@ -17,7 +17,7 @@
             ></el-option>
           </el-select>
           </div>
-          <div :class="['time', !tablist[0].cur ? 'mar' : '']">
+          <div class="time" v-if="tablist.length > 0 && tablist[0].cur">
           <el-date-picker
           v-model="time"
           @change="pickchange()"
@@ -796,14 +796,14 @@ export default {
         arr.unshift({ name: '全部', id: '' })
         arr.push({ name: '无职位约面', id: 0 })
         this.mgoptions = arr
-        this.mgoptions.forEach(item => {
-          item.children.forEach(item1 => {
-            item1.children.forEach(item2 => {
-              let result = JSON.stringify(item2.children)
-              if (result === '[]') delete item2.children
-            })
-          })
-        })
+        // this.mgoptions.forEach(item => {
+        //   item.children.forEach(item1 => {
+        //     item1.children.forEach(item2 => {
+        //       let result = JSON.stringify(item2.children)
+        //       if (result === '[]') delete item2.children
+        //     })
+        //   })
+        // })
       })
     },
     // 今天和明天列表
@@ -821,6 +821,7 @@ export default {
           arr[0].cur = true
         }
         this.tablist = arr
+        console.log(this.tablist)
         if (arr[1] && arr[1].time) {
           this.tabform.time = arr[1].time
           this.gettablist()

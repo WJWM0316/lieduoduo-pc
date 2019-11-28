@@ -452,6 +452,10 @@
       </div>
       <!-- 面试安排 -->
       <div class="noJobBox" v-if="pop.Interview">
+        <div class="tishi" v-if="tishishow">
+          <div class="tishiimg"><img src="@/assets/images/exclamation-circle.png" alt=""></div>
+          <div class="tishitext">该职位未开放，不可选择约面</div>
+        </div>
         <div class="close"><i @click="cancelshow()" class="iconfont icon-danchuang-guanbi"></i></div>
         <div class="content-info">
         <div class="title">{{pop.InterviewTitle}}</div>
@@ -653,9 +657,9 @@
             </div>
           </div>
           <div style="padding-right:4px">
-          <div class="selectposition" v-show="pop.type === 'applyrecord'">
+        <div class="selectposition" v-show="pop.type === 'applyrecord'">
             <div class="applytext">{{pop.recordtext}}</div>
-          <div class="selectitem" v-for="(item, i) in applyrecordList" :key="i" @click="selectapply(item, i)">
+            <div class="selectitem" v-for="(item, i) in applyrecordList" :key="i" @click="selectapply(item, i)">
             <div class="position">
               <div class="close" v-show="item.positionStatus === 0">关闭</div>
               <div class="close" v-show="item.positionStatus === 3">审核中</div>
@@ -669,9 +673,22 @@
               <div :class="['benke', item.positionStatus === 0 || item.positionStatus === 3 || item.positionStatus === 4 ? 'hui' : '']">{{item.educationName}}</div>
             </div>
             <div class="info" v-else>选择此项，以上申请记录将全部合并处理为不合适</div>
-            <div class="selectcur" @click="tishishow = true">
+            <div class="selectcur" v-if="item.positionStatus === 1 || item.positionStatus === 0 || item.positionStatus === 2 || item.positionName === '都不合适'">
               <i :class="['iconfont icon-chenggong position bg']" v-if="item.hascur"></i>
                 <i :class="['iconfont icon-beixuanxiang position']" v-else></i>
+            </div>
+            <div class="selectcur" @click="setHint" v-else>
+              <div class="circel"></div>
+            </div>
+            <div class="confirmbox" v-show="item.boxshow">
+              <div class="b-head">
+                <div class="b-img"><img src="@/assets/images/exclamation-circle.png" alt=""></div>
+                <div class="b-text">你确定开放职位进行约面吗？</div>
+              </div>
+              <div class="b-btn">
+                <div class="think-sure" @click="sureyuemian(item)">确定</div>
+                <div class="think" @click.stop="resetboxcur(item, i)">再想想</div>
+              </div>
             </div>
           </div>
         </div>
@@ -699,7 +716,7 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import { recruiterDetail } from 'API/common'
-import { getPositionTypeApi } from 'API/position'
+import { getPositionTypeApi, openPositionApi } from 'API/position'
 import { getSearchMyCollectApi, getSearchCollectApi, putCollectUserApi, cancelCollectUserApi } from 'API/collect'
 import { getSearchBrowseMyselfApi, getMyNavDataApi, getJobHunterPositionTypeApi } from 'API/browse'
 import { getResumeIdApi } from 'API/userJobhunter'
@@ -747,6 +764,7 @@ export default class CourseList extends Vue {
     showResume = false
     hasonload = false
     toworddiggle = false
+    tishishow = false
     pop = {
       isShow: false,
       Interview: false,
@@ -1002,6 +1020,9 @@ export default class CourseList extends Vue {
                 type: 'applyrecord'
               }
               let applylists = res.data.data.data
+              applylists.map((v, k) => {
+                v.boxshow = false
+              })
               this.applyrecordList = applylists
             } else {
               confirmInterviewApi({ interviewId: this.interviewId }).then((res) => {
@@ -1139,6 +1160,14 @@ export default class CourseList extends Vue {
       }
     }
 
+    setHint () {
+      this.tishishow = true
+      clearTimeout(this.hintSetTime)
+      this.hintSetTime = setTimeout(() => {
+        this.tishishow = false
+      }, 1500)
+    }
+
     backhandler () {
       if (this.pop.type === 'address') {
         this.pop = {
@@ -1232,23 +1261,29 @@ export default class CourseList extends Vue {
       // 点击处理多条记录
       if (this.pop.type === 'applyrecord') {
         let arr = []
+        let canclick = false
         this.applyrecordList.map((v, k) => {
           if (v.hascur) {
             arr.push(v)
             this.interviewId = v.interviewId
           }
+          if (v.boxshow) {
+            canclick = true
+          }
         })
         if (this.pop.recordtext === '确认选择后，候选人多条申请将合并为一条面试记录；面试最终确认前，可随时沟通更新面试职位；') {
-          if (arr.length === 0) {
-            this.$message.warning('请选择一条面试')
-          } else {
-            confirmInterviewApi({ interviewId: this.interviewId }).then((res) => {
-              this.$message.success('约面成功')
-              this.pop = {
-                isShow: false
-              }
-              this.init()
-            })
+          if (!canclick) {
+            if (arr.length === 0) {
+              this.$message.warning('请选择一条面试')
+            } else {
+              confirmInterviewApi({ interviewId: this.interviewId }).then((res) => {
+                this.$message.success('约面成功')
+                this.pop = {
+                  isShow: false
+                }
+                this.init()
+              })
+            }
           }
         } else {
           if (arr.length === 0) {
@@ -1390,8 +1425,33 @@ export default class CourseList extends Vue {
       let applyrecordList = this.applyrecordList.slice()
       applyrecordList.map((v, k) => {
         v.hascur = k === index
+        v.boxshow = false
       })
+      if (item.positionStatus === 0) {
+        item.boxshow = true
+      } else {
+        item.boxshow = false
+      }
       this.applyrecordList = applyrecordList
+    }
+    resetboxcur (item, index) {
+      this.applyrecordList[index].boxshow = false
+      this.applyrecordList[index].hascur = false
+    }
+    sureyuemian (data) {
+      openPositionApi({ id: data.positionId })
+        .then(() => {
+          confirmInterviewApi({ interviewId: data.interviewId }).then((res) => {
+            this.$message.success('约面成功')
+            this.pop = {
+              isShow: false
+            }
+            this.init()
+          })
+        })
+        .catch(e => {
+          this.$message.error(e.data.msg)
+        })
     }
     // 选择不合适原因
     togglereson (data) {

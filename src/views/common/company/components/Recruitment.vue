@@ -54,22 +54,18 @@ export default {
       page: 1
     }
   },
-  props: {
-    haslogin: {
-      type: Boolean,
-      default: true
-    }
-  },
   components: {
     positionItem,
     adpostion,
     NoFound,
     GuideLogin
   },
+
   methods: {
     handleSearch () {
       let data = {
-        vkey: this.$route.query.vkey,
+        // companyId: this.$route.query.vkey
+        companyId: 1346,
         type: this.typeActivationItem.id,
         page: this.page
       }
@@ -78,7 +74,8 @@ export default {
     // 获得职位详情
     async getCompanysPosition () {
       let data = {
-        vkey: this.$route.query.vkey
+        // companyId: this.$route.query.vkey
+        companyId: 1346
       }
       await getCompanysPositionApi(data)
         .then(res => {
@@ -94,7 +91,8 @@ export default {
       this.page = 1 // 点击还原页码
 
       var data = {
-        company_vkey: this.$route.query.vkey,
+        // company_id: this.$route.query.vkey,
+        company_id: 1346,
         type: item.id
       }
       this.typeActivation = index
@@ -109,16 +107,15 @@ export default {
         })
     }
   },
+
   mounted () {
     this.$nextTick(() => {
       this.getCompanysPosition()
-      let data = {
-        company_vkey: this.$route.query.vkey, id: ''
-      }
-      this.getCompanysPositionList(data)
+      this.getCompanysPositionList({ company_id: 1346, id: '' })
     })
   }
 }
+
 </script>
 
 <style lang="scss" scoped>

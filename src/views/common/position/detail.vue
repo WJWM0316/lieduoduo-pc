@@ -114,6 +114,9 @@
         </aside>
       </div>
     </div>
+    <div class="main-center app-links">
+      <app-links />
+    </div>
   </div>
 </template>
 <script>
@@ -128,6 +131,7 @@ import interviewBtn from '@/components/interview/interviewBtn.vue'
 import guideLogin from '@/components/common/guideLogin'
 import adpostion from '@/components/common/adpostion'
 import { mapState } from 'vuex'
+import AppLinks from 'COMPONENTS/common/appLinks'
 let that = null
 
 @Component({
@@ -136,7 +140,8 @@ let that = null
     poster,
     guideLogin,
     adpostion,
-    interviewBtn
+    interviewBtn,
+    AppLinks
   },
   computed: {
     ...mapState({

@@ -396,6 +396,7 @@
 <script>
 import { realNameReg, companyNameReg, emailReg, abbreviationReg } from '@/util/fieldRegular.js'
 // import { SubmitpersonalApi, getCompanyNameListApi, applycompanyApi } from 'API/register'
+import { getUserRoleInfoApi } from '@/api/auth'
 import OptionList from '../registerCompany/components/option.vue'
 import MessageDiggle from '../registerCompany/components/message.vue'
 import Picture from 'COMPONENTS/common/upload/picture'
@@ -657,8 +658,6 @@ export default {
         notifyadminApi().then((res) => {
           this.$message.success('成功通知管理员，请耐心等待')
           this.getCompanyIdentityInfos()
-        }).catch(e => {
-          this.$message.error(e.data.msg || '')
         })
       }
     },
@@ -758,11 +757,25 @@ export default {
         case 'perfect':
           this.authForm.id = this.ruleForm.id
           this.authForm.company_name = this.ruleForm.company_name
-          this.$router.push({
-            query: {
-              page: 'perfect'
-            }
-          })
+          let query = { page: 'perfect' }
+          if (!Reflect.has(this.$route.query, 'action')) {
+            this.authForm.company_shortname = ''
+            this.authForm.industry_id = ''
+            this.authForm.industry_name = ''
+            this.authForm.financing = ''
+            this.authForm.financing_name = ''
+            this.authForm.logo = ''
+            this.authForm.logourl = ''
+            this.authForm.employees = ''
+            this.authForm.employees_name = ''
+            this.authForm.business_license = ''
+            this.authForm.business_license_url = ''
+            this.authForm.on_job = ''
+            this.authForm.on_job_url = ''
+            this.authForm.intro = ''
+          }
+          this.bindauthButtonStatus()
+          this.$router.push({ query })
           // this.getCompanyIdentityInfos()
           break
         case 'toUpload':
@@ -1188,7 +1201,12 @@ export default {
     },
     // 开始招聘
     startrecruit () {
-      this.$router.push({ name: 'candidatetype' })
+      getUserRoleInfoApi().then(({ data }) => {
+        const result = data.data || {}
+        this.$store.commit('setRoleInfos', result)
+        console.log(data)
+      })
+      // this.$router.push({ name: 'candidatetype' })
     },
     getlabellist () {
       getLabelFieldListApi().then((res) => {
