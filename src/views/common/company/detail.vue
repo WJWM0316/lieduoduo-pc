@@ -65,8 +65,8 @@
           <div class="introduction-left">
             <div class="introduction-presentation">
               <p class="introduction-title">公司介绍</p>
-              <p class="introduction-text" :class="{ introduction_viewAll: viewAllText }" v-html="companyInformation.intro"></p>
-              <el-button type="text" ref="text" class="introduction-left-buttom" @click="viewAll">{{ this.viewAllText ? '收起' :'查看全部'}}</el-button>
+              <p class="introduction-text" ref="text" :class="{ introduction_viewAll: viewAllText }" v-html="companyInformation.intro"></p>
+              <el-button v-if="isIntroductionButtom" type="text" class="introduction-left-buttom" @click="viewAll">{{ this.viewAllText ? '收起' :'查看全部'}}</el-button>
             </div>
             <div class="product" v-if="companyInformation.product">
               <p class="product-title">公司产品</p>
@@ -196,6 +196,7 @@ export default class companyDetail extends Vue {
   islogin = false // 子组件是否登陆弹窗
   isIntroduction_text = true // 显示文案切换按钮
   isHeader = false // 是否显示顶部悬浮栏
+  isIntroductionButtom = false // 是否显示展开全部 按钮
 
   // 监听滚动
   handleScroll () {
@@ -371,8 +372,13 @@ export default class companyDetail extends Vue {
   }
   updated () {
     this.resumeTo('x')
-    // console.log(document.getElementsByClassName('introduction-text')[0].style.color)
-    // this.introductionFun() // 文字高度s
+    this.$nextTick(() => {
+      if(this.$refs.text.clientHeight > 157) {
+        this.isIntroductionButtom = true
+      } else {
+        this.isIntroductionButtom = false
+      }
+    })
   }
   destroyed () {
     window.removeEventListener('scroll', this.handleScroll)
@@ -641,15 +647,15 @@ to {top:0px;}
           color: $font-color-3;
           font-weight: 400;
           line-height: 26px;
-          height: 158px;
           overflow: hidden;
+          max-height: 158px;
         }
         .introduction-left-buttom{
           position: absolute;
           right: 15px;
         }
         .introduction_viewAll{
-          height: auto;
+          max-height: none;
         }
       }
       .product{
