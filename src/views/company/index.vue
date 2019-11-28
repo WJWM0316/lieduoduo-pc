@@ -38,10 +38,10 @@
         <company-card :item="item"  :key="item.id"/>
       </template>
     </div>
-    <div class="pagination" v-if="total > 20">
+    <div class="pagination-company" v-if="total > 20">
       <el-pagination
         background
-        @current-change="(val) => changePage(val, 'page')"
+        @current-change="changePage"
         :current-page.sync ="page"
         :page-size="20"
         layout="prev, pager, next"
@@ -59,7 +59,7 @@ import Search from './components/searchBar/index.vue'
 import NoFound from 'COMPONENTS/noFound'
 import { getLogoListsListsApi } from 'API/company'
 import { getCompanyListsApi } from 'API/search'
-import { getSearchCollect } from 'API/common'
+// import { getSearchCollect } from 'API/common'
 import loginPop from '@/components/common/loginPop'
 
 export default {
@@ -120,25 +120,27 @@ export default {
       if (financingIds) {
         query = Object.assign(query, { financingIds })
       }
-      getCompanyListsApi({ ...query, count: 20 }).then(({data}) => {
+      getCompanyListsApi({ ...query, count: 20 }).then(({ data }) => {
         this.companyLists = data.data
         this.total = data.meta.total
-        this.page = Number(data.meta.currentPage)
         this.$router.push({ query })
       })
     },
     changePage (page) {
+      let query = this.$route
       if (this.isLogin) {
         this.page = page
         this.getLists()
       } else {
         this.$refs.loginPop.showLoginPop = true
+        this.page = query.page || 1
       }
     },
     reset () {
       for (let key in this.searchCollect) {
         this.updateSearchCollectMutipleApi({ arr: [], key })
       }
+      // 不用promise的情况 确保再同步方法之后执行
       setTimeout(() => {
         this.page = 1
         this.getLists()
@@ -165,8 +167,10 @@ export default {
 </script>
 <style lang="scss" scoped>
 #company{
-  .pagination{
+  .pagination-company{
     background: transparent;
+    text-align: center;
+    padding-bottom: 60px;
   }
   .banner {
     height:376px;
@@ -185,7 +189,7 @@ export default {
   }
   .search-lists {
     width: 1200px;
-    margin: 0 auto 12px auto;
+    margin: 0 auto 37px auto;
     @include flex-v-center;
     flex-wrap: wrap;
     & /deep/ {
