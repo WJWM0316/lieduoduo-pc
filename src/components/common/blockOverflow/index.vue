@@ -43,6 +43,9 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.block-overflow {
+  position: relative;
+}
 .introduction-text{
   font-size: 14px;
   color: $font-color-3;
@@ -50,7 +53,9 @@ export default {
   line-height: 26px;
   overflow: hidden;
   max-height: 158px;
-  position: relative;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  word-break: break-all;
 }
 .introduction-left-buttom{
   position: absolute;

@@ -250,6 +250,7 @@ img {
 							font-weight:400;
 							color:#fff;
 							line-height:20px;
+							position: relative;
 							.num {
 								font-size:24px;
 								font-weight:700;
@@ -261,9 +262,17 @@ img {
 								font-size:12px;
 							}
 						}
+						.number::after {
+							position: absolute;
+							content: "";
+							height: 24px;
+							border-left: 1px dashed rgba(#fff, .5);
+							width: 1px;
+							right: -12px;
+							top: 12px;
+						}
 						.timeBox {
 							float: right;
-							display: inline-block;
 							font-size:14px;
 							font-weight:400;
 							color:#fff;
@@ -278,7 +287,7 @@ img {
 								font-size:16px;
 								color: $lightFont-color-orange;
 								display: inline-block;
-								margin: 0 6px;
+								margin: 0 5px;
 								&:last-child {
 									margin-right: 0;
 								}

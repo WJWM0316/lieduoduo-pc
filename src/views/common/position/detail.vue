@@ -86,7 +86,7 @@
           </section>
           <section class="part" v-if="infos.companyInfo.intro">
             <div class="title">公司介绍</div>
-            <pre class="richText">{{infos.companyInfo.intro}}</pre>
+            <block-overflow class="richText" ref="blockOverflow" :text="infos.companyInfo.intro" />
           </section>
           <section class="part" v-if="infos.address">
             <div class="title">工作地址</div>
@@ -132,6 +132,7 @@ import guideLogin from '@/components/common/guideLogin'
 import adpostion from '@/components/common/adpostion'
 import { mapState } from 'vuex'
 import AppLinks from 'COMPONENTS/common/appLinks'
+import BlockOverflow from 'COMPONENTS/common/blockOverflow'
 let that = null
 
 @Component({
@@ -141,7 +142,8 @@ let that = null
     guideLogin,
     adpostion,
     interviewBtn,
-    AppLinks
+    AppLinks,
+    BlockOverflow
   },
   computed: {
     ...mapState({
@@ -202,6 +204,9 @@ export default class PositionDetail extends Vue {
           this.remainingTime = res
         })
       }
+      this.$nextTick(() => {
+        this.$refs.blockOverflow.updateTextHigh()
+      })
       this.getMapLocation(that.infos.lat, that.infos.lng)
     })
   }
