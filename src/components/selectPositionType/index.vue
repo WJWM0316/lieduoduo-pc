@@ -24,7 +24,7 @@
             style="width: 320px;"
             size="medium"
             v-model="keyword"
-            @keyup.native.enter="handleSearch">
+            @keyup.native="handleSearch">
             <template slot="suffix">
               <i class="el-input__icon el-icon-search" @click="handleSearch"></i>
             </template>
@@ -96,22 +96,46 @@ export default {
     reviewData (id) {
       if (id) {
         // 递归找到对应item
-        /* function func(data, results = {}) {
-          data.forEach(data => {
-            if(data.labelId === id)
-          })
-        } */
+        let result = {}
+        try {
+          // eslint-disable-next-line no-inner-declarations
+          function func (data) {
+            data.forEach(item => {
+              if (item.labelId === id) {
+                result = item
+                throw new Error('find finish')
+              } else {
+                if (item.children && item.children.length) func(item.children)
+              }
+            })
+          }
+          func(this.listData)
+        } catch (e) {
+        }
+        if (result.topPid) {
+          const { topPid, pid } = result
+          this.parentListId = topPid
+          this.parentSelectData = this.listData.find(val => val.labelId === topPid).children
+          const selectData = this.parentSelectData.find(val => val.labelId === pid)
+          this.$set(selectData, 'open', true)
+          this.selectedData = selectData.children
+        }
       } else {
         this.handleAsideCheck(this.listData[0])
       }
     },
     handleSearch () {
-      searchPositionApi({ name: this.keyword }).then(({ data }) => {
-        this.selectedData = []
-        this.parentListId = null
-        this.parentSelectData = []
-        this.searchData = data.data || []
-      })
+      if (this.keyword === '') return
+      window.clearTimeout(this.getPositionTimer)
+      this.getPositionTimer = window.setTimeout(() => {
+        if (this.keyword === '') return
+        searchPositionApi({ name: this.keyword }).then(({ data }) => {
+          this.selectedData = []
+          this.parentListId = null
+          this.parentSelectData = []
+          this.searchData = data.data || []
+        })
+      }, 200)
     },
     // 左侧内容选择
     handleAsideCheck (item) {
@@ -138,6 +162,9 @@ export default {
       this.$emit('on-selected', item)
       this.showDialog = false
     }
+  },
+  destroyed () {
+    window.clearTimeout(this.getPositionTimer)
   }
 }
 </script>

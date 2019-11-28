@@ -97,12 +97,21 @@ export default {
 </script>
 <style lang="scss" scoped>
 $index-login-height: 120px;
+.index-login {
+  height: $index-login-height;
+  width: 100%;
+  background: $bg-color-4;
+}
+.index-login.is-index-login {
+  height: 70px;
+}
 .login-bg, .is-login-bg {
   margin: 0 auto;
   background-size: cover;
   background-repeat: no-repeat;
 }
 .login-bg {
+  width: $page-width;
   background-image: url(#{$image-cdn-url}/images/index_banner.png);
   height: $index-login-height;
 }
@@ -111,15 +120,6 @@ $index-login-height: 120px;
   max-width: 1400px;
   width: 100%;
   background-position: center center;
-}
-.index-login {
-  width: 1200px;
-  height: $index-login-height;
-  width: 100%;
-  background: $bg-color-4;
-}
-.index-login.is-index-login {
-  height: 70px;
 }
 .index-login-wrapper {
   height: 100%;

@@ -168,7 +168,7 @@
       <div class="cont_none" v-if="candidateList.length === 0">
         <div class="null-product">
             <div class="null-img">
-              <img src="@/assets/fly.png" />
+              <img src="@/assets/images/fly.png" />
             </div>
             <div v-show="navType === 'searchBrowseMyself'" class="null-text">还没有人看过你哟~主动分享职位获取更多候选人吧</div>
             <div v-show="navType === 'searchCollect'" class="null-text">还没有人对你感兴趣哟~主动分享职位获取更多候选人吧</div>
@@ -406,7 +406,7 @@
               <div class="btn1" @click.stop="setJob(nowResumeMsg.uid, 'arranging-interviews', nowResumeMsg, 2)" v-if="nowResumeMsg.interviewInfo.data.haveInterview && nowResumeMsg.interviewInfo.data.interviewStatus === 32">
                 <span>修改面试</span>
               </div>
-              <div class="btn1" @click.stop="setJob(nowResumeMsg.uid, 'interview-retract', nowResumeMsg, 2)" v-if="!nowResumeMsg.interviewInfo.data.haveInterview && nowResumeMsg.interviewInfo.data.hasUnsuitRecord">撤回</div>
+              <div class="btn1" @click.stop="setJob(nowResumeMsg.uid, 'interview-retract', nowResumeMsg, 2)" v-if="!nowResumeMsg.interviewInfo.data.haveInterview && nowResumeMsg.interviewInfo.data.hasUnsuitRecord && nowResumeMsg.interviewInfo.data.lastInterviewStatus !== 61">撤回</div>
               <div class="btn1" @click.stop="setJob(nowResumeMsg.uid, 'check-invitation', nowResumeMsg, 2)" v-if="nowResumeMsg.interviewInfo.data.haveInterview && nowResumeMsg.interviewInfo.data.interviewStatus >= 41">面试详情</div>
 
               <div class="btn2" @click.stop="setJob(nowResumeMsg.uid, 'inappropriate', nowResumeMsg, 2)" v-if="nowResumeMsg.interviewInfo.data.haveInterview && !nowResumeMsg.interviewInfo.data.hasUnsuitRecord">不合适</div>
@@ -452,6 +452,10 @@
       </div>
       <!-- 面试安排 -->
       <div class="noJobBox" v-if="pop.Interview">
+        <div class="tishi" v-if="tishishow">
+          <div class="tishiimg"><img src="@/assets/images/exclamation-circle.png" alt=""></div>
+          <div class="tishitext">该职位未开放，不可选择约面</div>
+        </div>
         <div class="close"><i @click="cancelshow()" class="iconfont icon-danchuang-guanbi"></i></div>
         <div class="content-info">
         <div class="title">{{pop.InterviewTitle}}</div>
@@ -653,23 +657,38 @@
             </div>
           </div>
           <div style="padding-right:4px">
-          <div class="selectposition" v-show="pop.type === 'applyrecord'">
+        <div class="selectposition" v-show="pop.type === 'applyrecord'">
             <div class="applytext">{{pop.recordtext}}</div>
-          <div class="selectitem" v-for="(item, i) in applyrecordList" :key="i" @click="selectapply(item, i)">
+            <div class="selectitem" v-for="(item, i) in applyrecordList" :key="i" @click="selectapply(item, i)">
             <div class="position">
-              <div class="close" v-show="item.isOnline === 2">关闭</div>
-              <div :class="['name', item.isOnline === 2 ? 'hui' : '']">{{item.positionName}}</div>
-              <div class="money" v-show="item.positionId !== 0 && item.positionName !== '都不合适我'">{{item.emolumentMin}}K~{{item.emolumentMax}}K</div>
+              <div class="close" v-show="item.positionStatus === 0">关闭</div>
+              <div class="close" v-show="item.positionStatus === 3">审核中</div>
+              <div class="close" v-show="item.positionStatus === 4">审核失败</div>
+              <div :class="['name', item.positionStatus === 0 || item.positionStatus === 3 || item.positionStatus === 4 ? 'hui' : '']">{{item.positionName}}</div>
+              <div class="money" v-show="item.positionId !== 0 && item.positionName !== '都不合适'">{{item.emolumentMin}}K~{{item.emolumentMax}}K</div>
             </div>
-            <div class="info" v-if="item.positionName !== '都不合适我'">
-              <div :class="['address', item.isOnline === 2 ? 'hui' : '']">{{item.city}}{{item.district}}</div>
-              <div :class="['year', item.isOnline === 2 ? 'hui' : '']">{{item.workExperienceName}}</div>
-              <div :class="['benke', item.isOnline === 2 ? 'hui' : '']">{{item.educationName}}</div>
+            <div class="info" v-if="item.positionName !== '都不合适'">
+              <div :class="['address', item.positionStatus === 0 || item.positionStatus === 3 || item.positionStatus === 4 ? 'hui' : '']">{{item.city}}{{item.district}}</div>
+              <div :class="['year', item.positionStatus === 0 || item.positionStatus === 3 || item.positionStatus === 4 ? 'hui' : '']">{{item.workExperienceName}}</div>
+              <div :class="['benke', item.positionStatus === 0 || item.positionStatus === 3 || item.positionStatus === 4 ? 'hui' : '']">{{item.educationName}}</div>
             </div>
             <div class="info" v-else>选择此项，以上申请记录将全部合并处理为不合适</div>
-            <div class="selectcur">
+            <div class="selectcur" v-if="item.positionStatus === 1 || item.positionStatus === 0">
               <i :class="['iconfont icon-chenggong position bg']" v-if="item.hascur"></i>
                 <i :class="['iconfont icon-beixuanxiang position']" v-else></i>
+            </div>
+            <div class="selectcur" @click="setHint" v-else>
+              <div class="circel"></div>
+            </div>
+            <div class="confirmbox" v-show="item.boxshow">
+              <div class="b-head">
+                <div class="b-img"><img src="@/assets/images/exclamation-circle.png" alt=""></div>
+                <div class="b-text">你确定开放职位进行约面吗？</div>
+              </div>
+              <div class="b-btn">
+                <div class="think-sure" @click="sureyuemian(item)">确定</div>
+                <div class="think" @click.stop="resetboxcur(item, i)">再想想</div>
+              </div>
             </div>
           </div>
         </div>
@@ -677,7 +696,7 @@
 
         <div class="handler" v-show="pop.type !== 'preview'">
           <div class="save" @click="surehandler()" v-show="pop.type !== 'address'">{{pop.btntext}}</div>
-          <div class="save" @click="sendhandler()" v-show="pop.type === 'address'">发送</div>
+          <div class="save" @click="sendhandler()" v-show="pop.type === 'address'">保存</div>
           <div class="cancel" v-show="pop.type !== 'watchreson'" @click="backhandler()">取消</div>
         </div>
         </div>
@@ -697,7 +716,7 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import { recruiterDetail } from 'API/common'
-import { getPositionTypeApi } from 'API/position'
+import { getPositionTypeApi, openPositionApi } from 'API/position'
 import { getSearchMyCollectApi, getSearchCollectApi, putCollectUserApi, cancelCollectUserApi } from 'API/collect'
 import { getSearchBrowseMyselfApi, getMyNavDataApi, getJobHunterPositionTypeApi } from 'API/browse'
 import { getResumeIdApi } from 'API/userJobhunter'
@@ -713,7 +732,7 @@ import {
   getInterviewComment,
   improperMarkingApi,
   confirmInterviewApi,
-  addressListApi, interviewRetract, addCompanyAdressApi, editCompanyAdressApi, setInterviewInfoApi, emailtoforword } from 'API/candidateType'
+  addressListApi, interviewRetract, addCompanyAdressApi, editCompanyAdressApi, setInterviewInfoApi, emailtoforword, manyrecordstatus } from 'API/candidateType'
 
 import { applyInterviewApi } from 'API/interview'
 
@@ -745,6 +764,7 @@ export default class CourseList extends Vue {
     showResume = false
     hasonload = false
     toworddiggle = false
+    tishishow = false
     pop = {
       isShow: false,
       Interview: false,
@@ -988,22 +1008,20 @@ export default class CourseList extends Vue {
           })
           break
         case 'confirm-interview':
-          if (vo.interviewInfo) {
-            if (vo.interviewInfo.data.data.length > 1) {
+          let status = { vkey: vo.resume ? vo.resume.vkey : vo.vkey, type: 'resume' }
+          manyrecordstatus(status).then((res) => {
+            if (res.data.data.data.length > 1) {
               this.pop = {
                 isShow: true,
                 Interview: true,
-                InterviewTitle: '处理候选人多条申请记录',
+                InterviewTitle: '以下是候选人多条申请记录，请选择处理',
                 recordtext: '确认选择后，候选人多条申请将合并为一条面试记录；面试最终确认前，可随时沟通更新面试职位；',
                 btntext: '确定',
                 type: 'applyrecord'
               }
-              let applylists = vo.interviewInfo.data.data
+              let applylists = res.data.data.data
               applylists.map((v, k) => {
-                if (v.positionId === 0) {
-                  v.positionName = '直接与我约面'
-                }
-                v.hascur = false
+                v.boxshow = false
               })
               this.applyrecordList = applylists
             } else {
@@ -1012,12 +1030,7 @@ export default class CourseList extends Vue {
                 this.init()
               })
             }
-          } else {
-            confirmInterviewApi({ interviewId: this.interviewId }).then((res) => {
-              this.$message.success('约面成功')
-              this.init()
-            })
-          }
+          })
           break
         case 'arranging-interviews':
           this.pop = {
@@ -1094,42 +1107,43 @@ export default class CourseList extends Vue {
           })
           break
         case 'inappropriate':
-          if (vo.interviewInfo.data.data.length > 1) {
-            console.log(1)
-            this.pop = {
-              isShow: true,
-              Interview: true,
-              InterviewTitle: '处理候选人多条申请记录',
-              recordtext: '选择一个职位进行约面或全部处理为不合适，面试试最终确认前，可随时沟通更新面试职位；',
-              btntext: '确定',
-              type: 'applyrecord'
-            }
-            let applylists = vo.interviewInfo.data.data.slice()
-            applylists.push({ positionName: '都不合适我' })
-            applylists.map((v, k) => {
-              if (v.positionId === 0) {
-                v.positionName = '直接与我约面'
+          let status2 = { vkey: vo.resume ? vo.resume.vkey : vo.vkey, type: 'resume' }
+          manyrecordstatus(status2).then((res) => {
+            if (res.data.data.data.length > 1) {
+              this.pop = {
+                isShow: true,
+                Interview: true,
+                InterviewTitle: '以下是候选人多条申请记录，请选择处理',
+                recordtext: '该候选人有多个未处理申请，您可以从中选择1个进行约面，或选择全部都处理为不合适',
+                btntext: '确定',
+                type: 'applyrecord'
               }
-              v.hascur = false
-            })
-            this.applyrecordList = applylists
-          } else {
-            console.log(2)
-            this.pop = {
-              isShow: true,
-              Interview: true,
-              InterviewTitle: '选择不合适原因',
-              btntext: '保存',
-              type: 'inappropriate'
-            }
-            getCommentReasonApi().then((res) => {
-              let arr = res.data.data
-              arr.map((v, k) => {
-                v.cur = false
+              let applylists = res.data.data.data.slice()
+              applylists.push({ positionName: '都不合适' })
+              applylists.map((v, k) => {
+                if (v.positionId === 0) {
+                  v.positionName = '直接与我约面'
+                }
+                v.hascur = false
               })
-              this.reasonlist = arr
-            })
-          }
+              this.applyrecordList = applylists
+            } else {
+              this.pop = {
+                isShow: true,
+                Interview: true,
+                InterviewTitle: '选择不合适原因',
+                btntext: '保存',
+                type: 'inappropriate'
+              }
+              getCommentReasonApi().then((res) => {
+                let arr = res.data.data
+                arr.map((v, k) => {
+                  v.cur = false
+                })
+                this.reasonlist = arr
+              })
+            }
+          })
           break
         case 'cancel':
           break
@@ -1144,6 +1158,14 @@ export default class CourseList extends Vue {
       } else {
         this.pop.isShow = false
       }
+    }
+
+    setHint () {
+      this.tishishow = true
+      clearTimeout(this.hintSetTime)
+      this.hintSetTime = setTimeout(() => {
+        this.tishishow = false
+      }, 1500)
     }
 
     backhandler () {
@@ -1397,8 +1419,32 @@ export default class CourseList extends Vue {
       let applyrecordList = this.applyrecordList.slice()
       applyrecordList.map((v, k) => {
         v.hascur = k === index
+        v.boxshow = false
       })
+      if (item.positionStatus === 0) {
+        item.boxshow = true
+      } else {
+        item.boxshow = false
+      }
       this.applyrecordList = applyrecordList
+    }
+    resetboxcur (item, index) {
+      this.applyrecordList[index].boxshow = false
+    }
+    sureyuemian (data) {
+      openPositionApi({ id: data.positionId })
+        .then(() => {
+          confirmInterviewApi({ interviewId: data.interviewId }).then((res) => {
+            this.$message.success('约面成功')
+            this.pop = {
+              isShow: false
+            }
+            this.init()
+          })
+        })
+        .catch(e => {
+          this.$message.error(e.data.msg)
+        })
     }
     // 选择不合适原因
     togglereson (data) {

@@ -1,11 +1,38 @@
 <template>
   <div id="company">
-    <Search @on-search="(val) => handleSearch(val, 'append')" :height="height" :infos="infos" v-if="infos.industryList.length" />
+    <Search @on-search="(val) => handleSearch(val, 'append')" @on-reset="reset" :height="height" :infos="infos" v-if="infos.industryList.length" />
     <div class="banner">
       <div class="banner-title">精选酷公司</div>
       <Swiper :list="companyLogoLists" v-if="companyLogoLists.length" />
     </div>
-    <SearchBank @change="getSearchParams" :infos="infos" v-if="infos.industryList.length" />
+    <div class="bank-type-box">
+      <div class="bank-type">
+        <div class="type-item">
+          <div class="type-filter">公司地点：</div>
+          <div class="type-ul">
+            <span v-for="(area, areaIndex) in infos.areaList" :key="areaIndex" class="type-li" :class="{active: area.checked}" @click="onClick(area, areaIndex, 'areaList')">{{area.name}}</span>
+          </div>
+        </div>
+        <div class="type-item">
+          <div class="type-filter">融资规模：</div>
+          <div class="type-ul">
+            <span v-for="(finance, financeIndex) in infos.financingList" :key="financeIndex" class="type-li" :class="{active: finance.checked}" @click="onClick(finance, financeIndex, 'financingList')">{{finance.text}}</span>
+          </div>
+        </div>
+        <div class="type-item">
+          <div class="type-filter">人员规模：</div>
+          <div class="type-ul">
+            <span v-for="(employee, employeeIndex) in infos.employeeList" :key="employeeIndex" class="type-li" :class="{active: employee.checked}" @click="onClick(employee, employeeIndex, 'employeeList')">{{employee.text}}</span>
+          </div>
+        </div>
+        <div class="type-item">
+          <div class="type-filter">行业领域：</div>
+          <div class="type-ul">
+            <span v-for="(industry, industryIndex) in infos.industryList" :key="industryIndex" class="type-li" :class="{active: industry.checked}" @click="onClick(industry, industryIndex, 'industryList')">{{industry.name}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="search-lists" ref="search-lists">
       <template v-for="item in companyLists">
         <company-card :item="item"  :key="item.id"/>
@@ -27,7 +54,6 @@
 </template>
 <script>
 import Swiper from './components/swiper/index.vue'
-import SearchBank from './components/searchBank/index.vue'
 import CompanyCard from 'COMPONENTS/common/companyCard'
 import Search from './components/searchBar/index.vue'
 import NoFound from 'COMPONENTS/noFound'
@@ -40,7 +66,6 @@ import guideLogin from '@/components/common/guideLogin'
 export default {
   components: {
     Swiper,
-    SearchBank,
     CompanyCard,
     Search,
     NoFound,
@@ -69,7 +94,7 @@ export default {
   },
   computed: {
     ...mapState({
-      hasLogin: state => state.hasLogin
+      searchCollect: state => state.company.searchCollect
     })
   },
   methods: {
@@ -79,8 +104,8 @@ export default {
     getLogoListsLists () {
       getLogoListsListsApi().then(res => this.companyLogoLists = res.data.data)
     },
-    handleSearch (infos) {
-      this.search = infos
+    handleSearch (search) {
+      this.search = search
       this.getLists()
     },
     getLists () {
@@ -107,6 +132,7 @@ export default {
         this.companyLists = data.data
         this.total = data.meta.total
         this.page = Number(data.meta.currentPage)
+        delete query.count
         this.$router.push({ query })
       })
     },
@@ -178,6 +204,95 @@ export default {
     changePage (page) {
       this.page = page
       this.getLists()
+    },
+    reset () {
+      this.search = {
+        areaList: [],
+        industryList: [],
+        employeeList: [],
+        financingList: []
+      }
+      this.page = 1
+      for (let item in this.infos) {
+        this.infos[item].map(v => v.checked = false)
+      }
+      this.getLists()
+    },
+    onClick (item, index, key) {
+      const list = this.infos[key].slice()
+      switch (key) {
+        case 'employeeList':
+          if (item.value) {
+            list.map((v,i,arr) => {
+              if (i === index) {
+                v.checked = !v.checked
+                this.search[key] = arr.filter(v => v.checked)
+              }
+              if (i === 0) {
+                v.checked = false
+              }
+            })
+          } else {
+            if (!list[0].checked) {
+              list.map((v, i, a) => v.checked = !i ? true : false)
+              this.search[key] = []
+            }
+          }
+          break
+        case 'financingList':
+          if (item.value) {
+            list.map((v,i,arr) => {
+              if (i === index) {
+                v.checked = !v.checked
+                this.search[key] = arr.filter(v => v.checked)
+              }
+              if (i === 0) {
+                v.checked = false
+              }
+            })
+          } else {
+            if (!list[0].checked) {
+              list.map((v, i, a) => v.checked = !i ? true : false)
+              this.search[key] = []
+            }
+          }
+          break
+        case 'industryList':
+          if (item.labelId) {
+            list.map((v,i,arr) => {
+              if (i === index) {
+                v.checked = !v.checked
+                this.search[key] = arr.filter(v => v.checked)
+              }
+              if (i === 0) {
+                v.checked = false
+              }
+            })
+          } else {
+            if (!list[0].checked) {
+              list.map((v, i, a) => v.checked = !i ? true : false)
+              this.search[key] = []
+            }
+          }
+          break
+        case 'areaList':
+          list.map((v,i,arr) => {
+            v.checked = false
+            if (i === index) {
+              v.checked = !v.checked
+              if (v.areaId) {
+                this.search[key] = [v]
+              } else {
+                this.search[key] = []
+              }
+            }
+          })
+          break
+        default:
+          break
+      }
+      this.infos[key] = list
+      this.getLists()
     }
   },
   created () {
@@ -187,7 +302,9 @@ export default {
     }
     this.getLogoListsLists()
     this.getCollectList()
-    // this.getSearchCollectApi()
+    // this.getSearchCollectApi().then(() => {
+    //   console.log(this.searchCollect, 'hhhh')
+    // })
   },
   mounted () {
     this.$nextTick(function () {
@@ -227,6 +344,56 @@ export default {
       }
       .company-list-wrapper:nth-child(4n) {
         margin-right: 0;
+      }
+    }
+  }
+  .bank-type-box{
+    background: white;
+    padding-top: 30px;
+    background: white;
+    margin-bottom: 30px;
+    padding-bottom: 16px;
+    .bank-type{
+      width: 1200px;
+      margin: 0 auto;
+    }
+    .type-filter{
+      height:20px;
+      font-size:14px;
+      font-weight:400;
+      color:$font-color-3;
+      line-height:20px;
+      margin-right: 16px;
+      display: inline-block;
+      flex: 0 0 70px;
+      align-self: stretch;
+      position: relative;
+      text-align: left;
+    }
+    .type-li {
+      display: inline-block;
+      margin-right: 30px;
+      font-size:14px;
+      font-weight:400;
+      color:$font-color-6;
+      line-height:20px;
+      margin-bottom: 14px;
+      cursor: pointer;
+      &:hover {
+        font-weight:500;
+        color:$main-color-1;
+      }
+    }
+    .active{
+      font-weight:500;
+      color:$main-color-1;
+    }
+    .type-item {
+      margin-bottom: 10px;
+      display: flex;
+      align-items: flex-start;
+      &:last-child{
+        margin-bottom: 0px;
       }
     }
   }

@@ -1,15 +1,15 @@
 <template>
   <div class="companyDetail" v-if="companyInformation.id">
-    <header class="header">
-      <div class="inner">
+    <header class="header" :class="{ headerScrollY: isHeader }">
+      <div class="inner inner_ScrollY">
         <div class="header-left">
           <div class="header-left-top" v-if="companyInformation.logoInfo">
-            <img class="company-logo" :src = companyInformation.logoInfo.middleUrl />
-            <div class="header-left-text">
+            <img class="company-logo logo_ScrollY" :src = companyInformation.logoInfo.middleUrl />
+            <div class="header-left-text text_ScrollY">
               <p class="header-companyShortname">{{companyInformation.companyShortname}}</p>
               <p class="header-financingInfo">{{companyInformation.financingInfo}}·{{companyInformation.employeesInfo}}·{{companyInformation.industry}}</p>
-              <ul>
-                <li class="label" v-for="(item, index) in companyInformation.teamLabel" :key="index">{{item.title}}</li>
+              <ul v-if="!isHeader">
+                <li class="label" v-for="(item, index) in companyInformation.teamLabel" :key="index" v-if="index < 6">{{item.title}}</li>
               </ul>
             </div>
           </div>
@@ -18,18 +18,18 @@
             <div class="header-left-Introduction" :class="{ activation: !activation }" @click="activationType">招聘职位&nbsp;&nbsp;({{ companyInformation.positionNum }})</div>
           </div>
         </div>
-        <div class="header-right">
+        <div class="header-right right_ScrollY">
           <div class="header-right-position">
-            <p class="header-right-number">{{companyInformation.positionNum}}</p>
-            <p class="header-right-text">在招职位</p>
+            <p class="header-right-number"  v-if="!isHeader">{{companyInformation.positionNum}}</p>
+            <p class="header-right-text"  v-if="!isHeader">在招职位</p>
             <p class="header-right-resume" @click="resumeTo('online')">
               <i class="iconfont icon-ziwomiaoshu-"/>&nbsp;
               {{ online }}在线简历
             </p>
           </div>
           <div class="header-right-position">
-            <p class="header-right-number">{{ companyInformation.numOfVisitors }}</p>
-            <p class="header-right-text">浏览</p>
+            <p class="header-right-number" v-if="!isHeader">{{ companyInformation.numOfVisitors }}</p>
+            <p class="header-right-text" v-if="!isHeader">浏览</p>
             <file :Resume = myResume :showUploadDetails=false :showTips=true :islogin = islogin>
               <p class="header-right-resume" @click="resumeTo('annex')">
                 <i class="iconfont" :class="{ 'icon-weibiaoti-': annex === '上传', 'icon-zhongxinshangchuan-':  annex === '更新'}"/>&nbsp;
@@ -40,6 +40,7 @@
         </div>
       </div>
     </header>
+    <div :class="{ headerScrollY_box: isHeader }"></div>
 
     <template v-if="activation">
       <div class="hotPosition">
@@ -134,11 +135,11 @@
             <span v-if="companyInformation.address.length && activeName">{{ companyInformation.address[activeName].address }}</span>
           </p>
         </template>
-        <div id="map" style="width: 662px; height: 450px; margin-left: -20px;" v-if="dialogVisible"></div>
+        <div id="map" v-if="dialogVisible" style="width: 662px; height: 450px; margin-left: -20px;"></div>
       </el-dialog>
     </template>
 
-      <companyRecruitment v-if="!activation"></companyRecruitment>
+      <companyRecruitment :haslogin = haslogin v-if="!activation"></companyRecruitment>
   </div>
 </template>
 
@@ -172,11 +173,11 @@ import {
       userInfo: state => state.userInfo
     })
   },
-	watch: {
-		activeName (val) {
-			console.log(val, typeof val, 111)
-		}
-	}
+  watch: {
+    activeName (val) {
+      console.log(val, typeof val, 111)
+    }
+  }
 })
 export default class companyDetail extends Vue {
   activeName = 0 // mapType
@@ -190,11 +191,23 @@ export default class companyDetail extends Vue {
   dialogVisible = false // 地图弹窗
   getCompanysTeamText = {} // 招聘团队
   islogin = false // 子组件是否登陆弹窗
-  haslogin = false
+  haslogin = false // 是否已经登录
+  isIntroduction_text = true // 显示文案切换按钮
+  isHeader = false // 是否显示顶部悬浮栏
+
+  // 监听滚动
+  handleScroll () {
+    let scrollY = window.scrollY
+    if (scrollY > 260) {
+      this.isHeader = true
+    } else {
+      this.isHeader = false
+    }
+  }
 
   // 地图
   mapType () {
-		if (!this.companyInformation.address.length || (!this.activeName && this.activeName !== 0)) return
+    if (!this.companyInformation.address.length || (!this.activeName && this.activeName !== 0)) return
     this.$nextTick(() => {
       this.getMapLocation(this.companyInformation.address[this.activeName].lat, this.companyInformation.address[this.activeName].lng)
     })
@@ -320,6 +333,10 @@ export default class companyDetail extends Vue {
   //     }, 1000)
   //   }
   // }
+
+  // introductionFun () {
+
+  // }
   hasLogin () {
     this.haslogin = (JSON.stringify(this.userInfo) !== '{}')
   }
@@ -329,11 +346,19 @@ export default class companyDetail extends Vue {
     this.resumeTo('x')
   }
   created () {
+    window.addEventListener('scroll', this.handleScroll)
     this.getCompanysTeam()
     this.getCompanyHot()
     this.getCompany().then(() => {
       this.mapType()
     })
+  }
+  updated () {
+    // console.log(document.getElementsByClassName('introduction-text')[0].style.color)
+    // this.introductionFun() // 文字高度s
+  }
+  destroyed () {
+    window.removeEventListener('scroll', this.handleScroll)
   }
 }
 </script>
@@ -478,6 +503,38 @@ $sizing: border-box;
     }
   }
 }
+.headerScrollY{
+  height: 135px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1111;
+  .inner_ScrollY{
+    height: 135px;
+    padding-top: 21px;
+    .logo_ScrollY{
+      width: 60px !important;
+      height: 60px !important;
+    }
+    .text_ScrollY{
+      height: 52px !important;
+      .companyShortname{
+        font-size: 28px;
+      }
+    }
+    .right_ScrollY{
+      padding-top: 20px;
+    }
+  }
+}
+@keyframes mymove
+{
+from {top:-135px;}
+to {top:0px;}
+}
+.headerScrollY_box{
+  height: 210px;
+}
 .hotPosition {
   @extend %wrap-width;
   background: #F8FAFA;
@@ -548,10 +605,11 @@ $sizing: border-box;
           .introduction-left{
             border-right: 1px solid $border-color-1;
             width: 850px;
+            padding-right: 100px;
+            box-sizing: $sizing;
 
             .introduction-presentation{
               margin-bottom: 60px;
-              width: 750px;
               position: relative;
 
               .introduction-title{
@@ -603,6 +661,9 @@ $sizing: border-box;
                   .product-text-middle{
                     font-size: 12px;
                     color: $font-color-6;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
                   }
                   .product-text-buttom{
                     color: $font-color-2;
@@ -635,6 +696,8 @@ $sizing: border-box;
           }
           .introduction-right{
             padding-left: 50px;
+            width: 298px;
+            display: inline-block;
             .guideLogin{
               margin-bottom: 50px;
             }
@@ -684,6 +747,9 @@ $sizing: border-box;
                   .recruitmentTeam-text-buttom{
                     margin-top: 4px;
                     color: $font-color-6;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
                   }
                 }
               }
@@ -703,4 +769,15 @@ $sizing: border-box;
           }
         }
       }
+.address-text{
+  font-size: 14px;
+  color: $font-color-2;
+  font-weight:400;
+  i{
+    font-size: 15px;
+    color: $font-color-10;
+    display: inline-block;
+    margin: 0 7px 0 15px;
+  }
+}
 </style>
