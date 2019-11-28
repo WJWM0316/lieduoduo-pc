@@ -60,7 +60,12 @@ export default {
     NoFound,
     GuideLogin
   },
-
+  props: {
+    haslogin :{
+      type: Boolean,
+      default: true
+    }
+  },
   methods: {
     handleSearch () {
       let data = {
@@ -160,7 +165,6 @@ export default {
     display: flex;
     .list{
       width: 882px;
-      background: #ffffff;
     }
   }
   .position-right{

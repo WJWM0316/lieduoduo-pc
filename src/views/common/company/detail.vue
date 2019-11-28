@@ -66,7 +66,7 @@
             <div class="introduction-presentation">
               <p class="introduction-title">公司介绍</p>
               <p class="introduction-text" :class="{ introduction_viewAll: viewAllText }" v-html="companyInformation.intro"></p>
-              <el-button type="text" class="introduction-left-buttom" @click="viewAll">{{ this.viewAllText ? '收起' :'查看全部'}}</el-button>
+              <el-button type="text" ref="text" class="introduction-left-buttom" @click="viewAll">{{ this.viewAllText ? '收起' :'查看全部'}}</el-button>
             </div>
             <div class="product" v-if="companyInformation.product">
               <p class="product-title">公司产品</p>
@@ -129,14 +129,14 @@
         </div>
 
       </div>
-      <el-dialog :visible.sync="dialogVisible" width = "662px" modal-append-to-body append-to-body>
+      <el-dialog :visible.sync="dialogVisible" custom-class="bpp-dialog" width = "662px" modal-append-to-body append-to-body>
         <template slot="title">
           <p class="address-text">
             <i class="iconfont icon-dizhi"></i>
             <span v-if="companyInformation.address && activeName !== ''">{{ companyInformation.address[activeName].address }}</span>
           </p>
         </template>
-        <div id="map" v-if="dialogVisible" style="width: 662px; height: 450px; margin-left: -20px;"></div>
+        <div id="map" v-if="dialogVisible" style="width: 662px; height: 450px;"></div>
       </el-dialog>
     </template>
 
