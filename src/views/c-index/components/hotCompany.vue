@@ -13,8 +13,8 @@
     <div class="company-lists-wrapper" v-loading="getLoading">
       <!-- 隔离层 防止nth-child 多读取一个div -->
       <div class="company-lists">
-        <template v-for="item in listData">
-          <company-card :item="item"  :key="item.id"/>
+        <template v-for="(item, index) in listData">
+          <company-card :item="item"  :key="index"/>
         </template>
       </div>
     </div>
