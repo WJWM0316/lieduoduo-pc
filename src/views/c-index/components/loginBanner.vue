@@ -99,7 +99,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-$index-login-height: 120px;
+$index-login-height: 130px;
 .index-login {
   height: $index-login-height;
   width: 100%;
@@ -160,8 +160,9 @@ $index-login-height: 120px;
   width:152px;
   margin: 0 15px 0 6px;
   .code-span {
-    padding:0 3px 0 3px;
+    padding:0 8px 0 3px;
     line-height: 36px;
+    height: 100%;
     background: #fff;
     cursor: pointer;
     color: $main-color-1;
@@ -182,6 +183,9 @@ $index-login-height: 120px;
   width: 100%;
   @include flex-v-center;
   justify-content: flex-end;
+  & /deep/ .el-input__inner {
+    border: none;
+  }
 }
 
 </style>

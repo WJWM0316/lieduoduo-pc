@@ -18,6 +18,8 @@ $error-color-1: #FF9E40;
 // element-ui
 $--color-primary: $main-color-1;
 $--color-warning: $error-color-1;
+$--button-primary-background-color: #00C4CD;
+$--button-primary-border-color: #00C4CD;
 $--input-height: 46px;
 $--input-medium-height: 40px;
 $--button-small-height: 32px;
@@ -79,7 +81,7 @@ $title-color-2: $font-color-6;
 $title-color-3: $font-color-10;
 
 // 导航颜色
-$nav-color-hover: $main-color-1;
+$nav-color-hover: #4CD5DB;
 $nav-color-default: $font-color-10;
 $nav-color-bg-color: $bg-color-2;
 

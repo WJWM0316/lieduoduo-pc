@@ -92,11 +92,13 @@ export default {
     flex: 1;
     max-width: 194px;
     position: relative;
+    height: 80px;
     div {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
+      bottom: 0;
       color: #fff;
       box-sizing: border-box;
       padding: 11px 15px;
@@ -108,14 +110,13 @@ export default {
       font-size: 14px;
     }
   }
-  .city-list:hover {
-    img {
-      transform: scale(1.08);
-    }
+  div:hover {
+    background: rgba( #000, .28);
+    color: $font-color-10;
   }
   img {
     max-width: 100%;
-    transition: transform 600ms;
+    height: 100%;
   }
 }
 </style>
