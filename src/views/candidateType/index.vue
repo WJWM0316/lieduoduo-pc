@@ -192,12 +192,12 @@
         </div>
       </div>
 
-      <div class="resumeBox" v-if="showResume">
+      <div class="resumeBox" v-if="showResume" @click="closeload($event)">
         <div class="Numbering">
           <span>简历编号：{{nowResumeMsg.vkey}}</span>
           <span>{{nowResumeMsg.resumeUpdateTime}}更新</span>
           <div class="closediggle" @click="pop.isShow = false">
-        <i class="iconfont iconda"></i>
+        <i class="iconfont icon-guanbianniu"></i>
       </div>
         </div>
         <div class="printing">
@@ -358,12 +358,13 @@
               <div class="workList">
                 <pre v-if="nowResumeMsg.moreIntroduce.introduce">{{nowResumeMsg.moreIntroduce.introduce}}</pre>
                 <div class="imgList">
+                  <div style="position:relative" :key="index" v-for="(item, index) in nowResumeMsg.moreIntroduce.imgs">
                   <img
                     :src="item.url"
                     alt
-                    v-for="(item,index) in nowResumeMsg.moreIntroduce.imgs"
-                    :key="index"
                   />
+                  <a :href="item.url" target="_blank"></a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -373,17 +374,25 @@
               <div class="onload" @click="hasonload = !hasonload">
                 <i class="iconfont icon-xiazai"></i>
               </div>
-              <div class="onloadselect" v-show="hasonload">
+              <div class="onloadselect" v-show="hasonload" ref="queryBox">
                 <div class="title">下载简历</div>
                 <div class="select">请选择下载格式:</div>
                 <div class="pdf">
-                  <div class="p_l" v-if="nowResumeMsg.resumeAttach">
-                    <i class="iconfont icon-word" style="color: #2878ff" v-if="nowResumeMsg.resumeAttach.attachType === 'doc'"></i>
-                    <i class="iconfont icon-pdf" v-else style="color: #FA3939"></i>
+                  <div class="p_l">
+                    <i class="iconfont icon-pdf" style="color: #FA3939"></i>
                   </div>
-                  <div class="p_c" v-if="nowResumeMsg.resumeAttach">{{nowResumeMsg.resumeAttach.fileName}}</div>
-                  <div class="p_r" v-if="nowResumeMsg.resumeAttach">
-                    <a :href="nowResumeMsg.resumeAttach.url" :download="nowResumeMsg.resumeAttach.fileName"><i class="iconfont icon-xiazai"></i></a>
+                  <div class="p_c">{{nowResumeMsg.name}}.PDF</div>
+                  <div class="p_r">
+                    <a @click="onloadfile('pdf')"><i class="iconfont icon-xiazai"></i></a>
+                  </div>
+                </div>
+                <div class="pdf">
+                  <div class="p_l">
+                    <i class="iconfont icon-word" style="color: #2878ff"></i>
+                  </div>
+                  <div class="p_c">{{nowResumeMsg.name}}.DOC</div>
+                  <div class="p_r">
+                    <a @click="onloadfile('doc')"><i class="iconfont icon-xiazai"></i></a>
                   </div>
                 </div>
               </div>
@@ -428,11 +437,11 @@
               <div class="ContactInformation">
                 <p class="contactTitle" v-if="nowResumeMsg.mobile||nowResumeMsg.wechat">联系方式:</p>
                 <div class="Contact" v-if="nowResumeMsg.mobile">
-                  <span>手机号: </span>
+                  <span><i class="iconfont icon-dianhua"></i></span>
                   <span>{{nowResumeMsg.mobile}}</span>
                 </div>
                 <div class="Contact" v-if="nowResumeMsg.wechat">
-                  <span>微信号:</span>
+                  <span><i class="iconfont icon-weixin"></i></span>
                   <span >{{nowResumeMsg.wechat}}</span>
                 </div>
               </div>
@@ -715,7 +724,7 @@
 <script>
 import Vue from 'vue'
 import Component from 'vue-class-component'
-import { recruiterDetail } from 'API/common'
+import { recruiterDetail, createonlinepdf, createonlineword } from 'API/common'
 import { getPositionTypeApi, openPositionApi } from 'API/position'
 import { getSearchMyCollectApi, getSearchCollectApi, putCollectUserApi, cancelCollectUserApi } from 'API/collect'
 import { getSearchBrowseMyselfApi, getMyNavDataApi, getJobHunterPositionTypeApi } from 'API/browse'
@@ -1157,6 +1166,20 @@ export default class CourseList extends Vue {
         this.pop.Interview = false
       } else {
         this.pop.isShow = false
+      }
+    }
+
+    onloadfile (type) {
+      let params = { jobhunterVkey: this.nowResumeMsg.vkey }
+      if (type === 'pdf') {
+        createonlinepdf(params).then((res) => {
+          this.$util.downFile(res.data, this.nowResumeMsg.name + '.pdf')
+        })
+      }
+      if (type === 'doc') {
+        createonlineword(params).then((res) => {
+          this.$util.downFile(res.data.data, this.nowResumeMsg.name + '.doc')
+        })
       }
     }
 
@@ -1879,6 +1902,11 @@ export default class CourseList extends Vue {
     closeMsg (event) {
       if (event.target.className === 'pop') {
         this.pop.isShow = false
+      }
+    }
+    closeload (e) {
+      if ((!this.$refs.queryBox.contains(e.target)) && event.target.className !== 'iconfont icon-xiazai') {
+        this.hasonload = false
       }
     }
     toTop () {

@@ -226,7 +226,7 @@
       }
     }
     .cont_none {
-      width:1200px;
+      width:1140px;
       height:752px;
       background:rgba(255,255,255,1);
       display: flex;
@@ -660,7 +660,7 @@
             .pdf{
               width: 100%;
               display: flex;
-              margin-bottom: 24px;
+              margin-bottom: 20px;
               align-items: center;
               .pdf_l{
                 float: left;
@@ -767,6 +767,12 @@
               margin-left: 39px;
               color: #5C565D;
               font-size: 14px;
+              margin-bottom: 18px;
+              i{
+                color: #BCBCBC;
+                font-size: 14px;
+                margin-right: 7px;
+              }
             }
           }
           .seefujian{
@@ -897,21 +903,21 @@
                       color: #282828;
                       font-size: 14px;
                       overflow: 19px;
-                      &:nth-child(1) {
-                        span {
-                          font-weight: 300;
-                        }
-                      }
-                      &:nth-child(2) {
-                        span {
-                          font-weight: 300;
-                        }
-                      }
-                      &:nth-child(3) {
-                        span {
-                          font-weight: 300;
-                        }
-                      }
+                      // &:nth-child(1) {
+                      //   span {
+                      //     font-weight: 300;
+                      //   }
+                      // }
+                      // &:nth-child(2) {
+                      //   span {
+                      //     font-weight: 300;
+                      //   }
+                      // }
+                      // &:nth-child(3) {
+                      //   span {
+                      //     font-weight: 300;
+                      //   }
+                      // }
                       &:nth-child(4) {
                         height: 0px;
                         margin-right: 0px;
@@ -1025,9 +1031,11 @@
           display: inline-block;
           margin-left: 30px;
           .intentionItem {
-            width: 100%;
-            text-align: left;
-            padding-bottom: 20px;
+            width: 600px;
+            overflow: hidden;
+            height: 20px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
             .position {
               font-family: PingFangSC-Regular;
               font-size: 14px;
@@ -1089,6 +1097,13 @@
                 margin-right: 0px;
               }
             }
+            a{
+              width: 86px;
+              height: 86px;
+              display: block;
+              position: absolute;
+              top: 0;;
+            }
           }
           .workItem {
             margin-bottom: 28px;
@@ -1138,6 +1153,7 @@
                   color: #929292;
                   font-family: PingFangSC-Regular;
                   width: 545px;
+                  line-height: 21px;
                   white-space: pre-wrap;
                   margin: 0px;
                 }
