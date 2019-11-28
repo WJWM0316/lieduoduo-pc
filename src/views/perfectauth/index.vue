@@ -49,8 +49,9 @@
         <template v-else>
           <div class="status">
             <div class="topicon">
-              <img v-if="companyInfo.status === 1 || companyInfo.status === 0" src="@/assets/images/adopt.png" />
-              <img v-else src="@/assets/images/notadopt.png" />
+              <img v-if="companyInfo.status === 1" src="@/assets/images/adopt.png" />
+            <img v-if="companyInfo.status === 0" src="@/assets/images/examine.png" />
+            <img v-if="companyInfo.status === 2" src="@/assets/images/notadopt.png" />
             </div>
             <div class="status-text" v-if="companyInfo.status === 0">实名认证审核中</div>
             <div class="status-text" v-if="companyInfo.status === 2">实名认证审核不通过</div>
@@ -76,7 +77,7 @@
               </div>
               <div class="item">
                 <div class="title">身份证号</div>
-                <div class="text">{{info.identityNum.substr(0, 1) + '****************' + info.identityNum.substring(17, 18)}}</div>
+                <div class="text" v-if="info.identityNum">{{info.identityNum.substr(0, 1) + '****************' + info.identityNum.substring(17, 18)}}</div>
               </div>
               <div class="item">
                 <div class="title">证件照片</div>
@@ -170,17 +171,22 @@ export default {
         if (res.data.data.status === 1) {
           this.$router.push({ path: '/candidateType' })
         }
-        this.haveIdentity = res.data.data.haveIdentity
         this.companyInfo = res.data.data
         this.info = res.data.data
       })
     },
     change () {
       this.haveIdentity = false
-      // this.companyInfo.status = 0
     }
   },
   mounted () {
+    setTimeout(() => {
+      if (!this.$store.state.recruiterinfo.identityAuth) {
+        this.haveIdentity = true
+      } else {
+        this.haveIdentity = false
+      }
+    }, 1000)
     this.getCompanyIdentityInfos()
   }
 }
@@ -360,10 +366,9 @@ export default {
           color: #652791;
           cursor: pointer;
           float: right;
-          padding-left: 21px;
+          padding-right: 21px;
         }
         .reson{
-          width:392px;
           max-height:86px;
           background:rgba(255,252,240,1);
           border-radius:4px;
@@ -371,6 +376,7 @@ export default {
           font-size: 14px;
           padding-left: 20px;
           padding-top: 14px;
+          padding-bottom: 14px;
           span{
             line-height: 24px;
             display: block;

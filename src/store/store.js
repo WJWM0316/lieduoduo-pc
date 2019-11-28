@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { saveAccessToken, removeAccessToken, getAccessToken, getUserInfo, saveUserInfo } from '../api/cacheService'
 import { loginPutInApipc, getUserRoleInfoApi, switchRoleApi } from '@/api/auth'
+import { recruiterDetail } from 'API/common'
 import router from '@/router/index.js'
 import { mobileReg } from '@/util/fieldRegular.js'
 import { logoutApi } from '../api/auth'
@@ -19,6 +20,7 @@ export default new Vuex.Store({
     hasLogin: 0, // 是否登录
     userIdentity: 1, // 1 C端  2 B端
     userInfo: getUserInfo() || {},
+    recruiterinfo: {},
     token: getAccessToken(),
     pageName: '',
     loginValidTime: 60 * 60 * 24 * 7 * 1000,
@@ -36,6 +38,7 @@ export default new Vuex.Store({
   getters: {
     // 接受state作为参数，每次 count发生变化时 ， 都会被调用
     roleInfos: state => state.roleInfos,
+    recruiterinfo: state => state.recruiterinfo,
     pageName: state => state.pageName,
     userIdentity: state => state.userIdentity,
     userInfo: state => state.userInfo,
@@ -85,6 +88,9 @@ export default new Vuex.Store({
     setRoleInfos (state, data) {
       state.roleInfos = data
     },
+    setRecruiterinfo (state, data) {
+      state.recruiterinfo = data
+    },
     setCreateRecruiter (state, data) {
       state.guideCreateRecruiter = data
     },
@@ -107,7 +113,7 @@ export default new Vuex.Store({
       state.guideQrcodePop = data
     },
     switchIdentity (state, data) {
-			// 当前用户在C端，切换B端
+      // 当前用户在C端，切换B端
       if (state.userIdentity === 1) {
         if (state.roleInfos.isRecruiter) {
           switchRoleApi().then(res => {
@@ -116,23 +122,23 @@ export default new Vuex.Store({
           })
         } else {
           switchRoleApi().then(res => {
-						state.userIdentity = state.userIdentity === 2
+            state.userIdentity = state.userIdentity === 2
             router.replace({ path: '/register' })
           })
         }
       } else {
-				// 当前用户在B端，切换C端
-				if (state.roleInfos.isJobhunter) {
-					switchRoleApi().then(res => {
+        // 当前用户在B端，切换C端
+        if (state.roleInfos.isJobhunter) {
+          switchRoleApi().then(res => {
 					  state.userIdentity = state.userIdentity === 1
 					  router.replace({ path: '/index' })
-					})
-				} else {
-					switchRoleApi().then(res => {
+          })
+        } else {
+          switchRoleApi().then(res => {
 					  state.userIdentity = state.userIdentity === 1
 					  router.replace({ path: '/createUser' })
-					})
-				}       
+          })
+        }
       }
     }
   },
@@ -173,7 +179,7 @@ export default new Vuex.Store({
               router.replace({ path: '/register' })
               return
             }
-            
+
             if (loginData.refresh) {
               window.location.reload()
             } else if (loginData.needBack) {
@@ -187,6 +193,13 @@ export default new Vuex.Store({
             if (state.userIdentity === 1 && result.isJobhunter) {
               // 获取简历信息
               store.dispatch('getMyResume')
+            }
+            if (result.isRecruiter) {
+              // 获取简历信息
+              recruiterDetail().then((res) => {
+                store.commit('setRecruiterinfo', res.data.data)
+                console.log(res)
+              })
             }
           })
           resolve(res)

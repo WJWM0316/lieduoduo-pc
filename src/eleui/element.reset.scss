@@ -45,6 +45,12 @@
   background: $bg-color-5 !important;
 }
 
+.el-dialog__wrapper .bpp-dialog.el-dialog{
+  border-radius: 4px;
+  .el-dialog__body {
+    padding: 0px;
+  }
+}
 
 /** dialog */
 .el-dialog__wrapper .app-dialog.el-dialog {

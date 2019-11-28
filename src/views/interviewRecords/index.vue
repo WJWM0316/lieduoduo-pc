@@ -93,7 +93,7 @@
             </div>
 
             <div class="userOp">
-              <div class="like_user" @click.stop="setJob(vo.jobhunterUid, 'check-invitation', vo, 1)" v-show="vo.status === 57 || vo.status === 58">
+              <div class="like_user" @click.stop="setJob(vo.jobhunterUid, 'check-invitation', vo, 1)" v-show="vo.status === 51 || vo.status === 57 || vo.status === 58">
                   去评价
                 </div>
                 <div class="like_user" @click.stop="" v-show="vo.status === 60 || vo.status === 61">
@@ -331,7 +331,7 @@
               <div class="btn1" @click.stop="setJob(nowResumeMsg.uid, 'arranging-interviews', nowResumeMsg, 2)" v-if="nowResumeMsg.interviewInfo.data.haveInterview && nowResumeMsg.interviewInfo.data.interviewStatus === 32">
                 <span>修改面试</span>
               </div>
-              <div class="btn1" @click.stop="setJob(nowResumeMsg.uid, 'interview-retract', nowResumeMsg, 2)" v-if="!nowResumeMsg.interviewInfo.data.haveInterview && nowResumeMsg.interviewInfo.data.hasUnsuitRecord && nowResumeMsg.interviewInfo.data.lastInterviewStatus !== 61">撤回</div>
+              <div class="btn1" @click.stop="setJob(nowResumeMsg.uid, 'interview-retract', nowResumeMsg, 2)" v-if="!nowResumeMsg.interviewInfo.data.haveInterview && nowResumeMsg.interviewInfo.data.hasUnsuitRecord">撤回</div>
               <div class="btn1" @click.stop="setJob(nowResumeMsg.uid, 'check-invitation', nowResumeMsg, 2)" v-if="nowResumeMsg.interviewInfo.data.haveInterview && nowResumeMsg.interviewInfo.data.interviewStatus >= 41">面试详情</div>
 
               <div class="btn2" @click.stop="setJob(nowResumeMsg.uid, 'inappropriate', nowResumeMsg, 2)" v-if="nowResumeMsg.interviewInfo.data.haveInterview && !nowResumeMsg.interviewInfo.data.hasUnsuitRecord">不合适</div>
@@ -895,6 +895,7 @@ export default {
       this.tablist.map((v, k) => {
         v.cur = false
       })
+      this.tablist[0].cur = true
       this.getlist()
     },
     setJob (uid, type, vo, statusid) {
@@ -1690,6 +1691,7 @@ export default {
           border-radius: 4px;
           margin-top: 7px;
           position: relative;
+          z-index: 0;
           // width: 108px;
           color:rgba(40,40,40,1);
           background:rgba(255,220,41,1);

@@ -13,7 +13,7 @@
       custom-class="app-dialog"
       :visible.sync="showDialog">
       <div class="lists-wrapper">
-        <ul class="lists-left">
+        <ul class="warpper-scroll lists-left">
           <template v-for="item in listData">
             <li :key="item.labelId" :class="{active: item.labelId === parentListId}" @click="handleAsideCheck(item)">{{item.name}}</li>
           </template>

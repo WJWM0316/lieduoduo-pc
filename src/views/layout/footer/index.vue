@@ -61,10 +61,6 @@ export default PageFooter
     height: 112px;
     margin-top: 44px;
     justify-content: space-between;
-    .relation {
-      font-size:16px;
-      color:$font-color-1;
-    }
   }
   .footer_center {
     .footer-header-title {
@@ -79,6 +75,9 @@ export default PageFooter
         cursor: pointer;
         margin-left: 20px;
       }
+      span {
+        color: $border-color-1;
+      }
       a {
         color: $title-color-2;
       }
@@ -87,10 +86,11 @@ export default PageFooter
       }
     }
     .center_p {
-      margin-bottom: 6px;
+      margin-bottom: 10px;
     }
     p {
-      color: $font-color-10;
+      color: $title-color-3;
+      font-size: 13px;
     }
   }
   .footer-header-title {
@@ -101,7 +101,7 @@ export default PageFooter
       margin: 0;
     }
     h3 {
-      font-size: 18px;
+      font-size: 16px;
       color: $title-color-1;
     }
   }
@@ -113,6 +113,7 @@ export default PageFooter
     }
     .tips {
       color: $title-color-1;
+      font-weight: 300;
       font-size: 12px;
       margin-bottom: 20px;
     }
@@ -120,7 +121,6 @@ export default PageFooter
   .footer_right {
     display: flex;
     .right_code_blo {
-      margin-left: 40px;
       text-align: center;
       .code {
         width:86px;
@@ -128,6 +128,9 @@ export default PageFooter
         // background:#fff;
         overflow: hidden;
       }
+    }
+    .right_code_blo + .right_code_blo  {
+      margin-left: 70px;
     }
     p.black {
       font-size: 14px;
@@ -145,7 +148,7 @@ export default PageFooter
     background-color: rgba($bg-color-4, 0.27);
   }
   .gray, .gray a {
-    font-size: 14px;
+    font-size: 12px;
     color: $font-color-10;
   }
   &.isFixed {

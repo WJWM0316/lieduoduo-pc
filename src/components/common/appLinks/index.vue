@@ -1,6 +1,6 @@
 <template>
   <!-- 友情链接 -->
-  <dl class="app-links">
+  <dl class="app-links" v-if="links.length">
     <dt><span>友情链接</span></dt>
     <dd class="app-link-wrapper" :class="{'app-link-unfold': isUnfold}">
       <div>
@@ -98,9 +98,15 @@ export default {
   .app-link-wrapper {
     height: 31px;
     overflow: hidden;
+    a {
+      display: inline-block;
+      max-width: 150px;
+      @include ellipsis;
+    }
   }
   .app-link-wrapper.app-link-unfold {
     height: auto;
+    max-height: 102px;
   }
 }
 </style>
