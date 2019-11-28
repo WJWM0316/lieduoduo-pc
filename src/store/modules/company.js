@@ -109,7 +109,6 @@ const mutations = {
 				break
 		}
     state.searchCollect[key] = list
-    // console.log(state.searchCollect[key], { key, item, index })
   },
   [UPDATE_SEARCH_COLLECT_MUTIPLE] (state, params) {
     let { arr, key } = params
