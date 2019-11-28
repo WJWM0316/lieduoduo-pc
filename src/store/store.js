@@ -163,6 +163,15 @@ export default new Vuex.Store({
           getUserRoleInfoApi().then(({ data }) => {
             const result = data.data || {}
             store.commit('setRoleInfos', result)
+            // 登录跳转
+            if (loginData.refresh) {
+              window.location.reload()
+              return
+            } else if (loginData.needBack) {
+              router.go(-1)
+              return
+            }
+
             if (state.userIdentity === 1 && !result.isJobhunter) {
               router.replace({ path: '/createUser' })
               return
@@ -173,19 +182,11 @@ export default new Vuex.Store({
               return
             }
             // 如果是求职者
-            if (result.isJobhunter === 1) {
+            if (state.userIdentity === 1 && result.isJobhunter) {
               // 获取简历信息
               store.dispatch('getMyResume')
             }
-            // 登录跳转
-            if (loginData.refresh) {
-              window.location.reload()
-            } else if (loginData.needBack) {
-              router.go(-1)
-            } else {
-              let userIdentity = state.userIdentity
-              userIdentity === 1 ? router.replace({ path: '/index' }) : router.replace({ path: '/candidate' })
-            }
+            
           })
           resolve(res)
         }).catch(e => {
