@@ -1,29 +1,26 @@
 <template>
 	<div class="random-banner">
-<!-- 		<a @click="routeJump(item.vkey)" class="li-item" :class="'item' + index" v-for="(item, index) in banner" :key="item.vkey">
-			<img :src="item.src" alt="loading">
-		</a> -->
-		<a @click="routeJump('2ha5usmh')" class="li-item item0">
+		<router-link target="_blank" :to="{name: 'companyDetail', query: { vkey: '2ha5usmh' }}" class="li-item item0">
 			<img src="~@/assets/random_images/img0.jpg" alt="loading">
-		</a>
-		<a @click="routeJump('8sdlelbu')" class="li-item item1">
+		</router-link>
+		<router-link target="_blank" :to="{name: 'companyDetail', query: { vkey: '8sdlelbu' }}" class="li-item item1">
 			<img src="~@/assets/random_images/img1.jpg" alt="loading">
-		</a>
-		<a @click="routeJump('inxwzsxe')" class="li-item item2">
+		</router-link>
+		<router-link target="_blank" :to="{name: 'companyDetail', query: { vkey: 'inxwzsxe' }}" class="li-item item2">
 			<img src="~@/assets/random_images/img2.jpg" alt="loading">
-		</a>
-		<a @click="routeJump('kkwrgd1m')" class="li-item item3">
+		</router-link>
+		<router-link target="_blank" :to="{name: 'companyDetail', query: { vkey: 'kkwrgd1m' }}" class="li-item item3">
 			<img src="~@/assets/random_images/img3.jpg" alt="loading">
-		</a>
-		<a @click="routeJump('enbqgvgx')" class="li-item item4">
+		</router-link>
+		<router-link target="_blank" :to="{name: 'companyDetail', query: { vkey: 'enbqgvgx' }}" class="li-item item4">
 			<img src="~@/assets/random_images/img4.jpg" alt="loading">
-		</a>
-		<a @click="routeJump('4utnb5ri')" class="li-item item5">
+		</router-link>
+		<router-link target="_blank" :to="{name: 'companyDetail', query: { vkey: '4utnb5ri' }}" class="li-item item5">
 			<img src="~@/assets/random_images/img5.jpg" alt="loading">
-		</a>
-		<a @click="routeJump('dcrjn1kv')" class="li-item item6">
+		</router-link>
+		<router-link target="_blank" :to="{name: 'companyDetail', query: { vkey: 'dcrjn1kv' }}" class="li-item item6">
 			<img src="~@/assets/random_images/img6.jpg" alt="loading">
-		</a>
+		</router-link>
 	</div>
 </template>
 <script>
@@ -60,16 +57,6 @@ export default {
 					src: '../../../assets/random_images/img6.jpg'
 				}
 			]
-		}
-	},
-	methods: {
-		routeJump (vkey) {
-			this.$router.push({
-				name: 'companyDetail',
-				query: {
-					vkey
-				}
-			})
 		}
 	}
 }
