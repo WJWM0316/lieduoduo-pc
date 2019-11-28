@@ -15,16 +15,16 @@
     </div>
     <el-dialog
       width="450px"
-      :visible.sync="dialogStatus"
-      :show-close="false">
+      custom-class="app-dialog"
+      :visible.sync="dialogStatus">
       <div slot="title">{{'请选择' + title}} <span class="title-tips">(最多选{{limit}}个{{title}})</span></div>
-      <div class="">
-        <div class="selected-labels">
+      <div class="dialog-lables">
+        <div class="selected-labels" v-if="selectLabels.length">
           <template v-for="(item, index) in selectLabels">
             <span class="label-item active" :key="item.labelId" @click="handleRemove(item, index)"><i class="el-icon-error close-icon"></i>{{item.name}}</span>
           </template>
         </div>
-        <div class="lables">
+        <div class="warpper-scroll labels">
           <template v-if="multiple">
             <div v-for="(item, index) in multipleConfig" :key="index">
               <p class="labels-title">{{item.title}} </p>
@@ -53,7 +53,7 @@
   </div>
 </template>
 <script>
-import { getLables } from '@/api/resume'
+import { getLabels } from '@/api/resume'
 export default {
   props: {
     value: String,
@@ -73,6 +73,7 @@ export default {
     multipleConfig: Array,
     validFilter: Boolean, // 验证是否传入验证项
     validFilterText: String,
+    defaultValue: Array,
     filter: [String, Number, Function]
   },
   data () {
@@ -88,7 +89,7 @@ export default {
     getLable () {
       if (this.getLoading || this.loaded) return
       this.getLoading = true
-      getLables({ type: this.type }).then(({ data }) => {
+      getLabels({ type: this.type }).then(({ data }) => {
         this.getLoading = false
         this.loaded = true
         this.setLabels(data)
@@ -101,26 +102,61 @@ export default {
         case 'skills':
           const { labelProfessionalLiteracy, labelProfessionalSkills } = data.data
           const results = labelProfessionalSkills.find(val => val.labelId === this.filter)
-          const configs = JSON.parse(JSON.stringify(this.multipleConfig))
+          let configs = JSON.parse(JSON.stringify(this.multipleConfig))
           configs[0].labels = (results && results.children) || []
           configs[1].labels = labelProfessionalLiteracy
+          configs = this.handleReview(configs)
           this.$emit('update:multiple-config', configs)
           break
         case 'life':
           const personal = data.data[0].children
           const life = data.data[1].children
-          const lifeconfigs = JSON.parse(JSON.stringify(this.multipleConfig))
+          let lifeconfigs = JSON.parse(JSON.stringify(this.multipleConfig))
           lifeconfigs[0].labels = personal
           lifeconfigs[1].labels = life
+          lifeconfigs = this.handleReview(lifeconfigs)
           this.$emit('update:multiple-config', lifeconfigs)
           break
         case 'position':
           var labelProfessional = data.data.labelProfessionalSkills
-          this.labels = labelProfessional.find(val => val.labelId === this.filter).children
+          this.labels = this.handleReview(labelProfessional.find(val => val.labelId === this.filter).children)
           break
         default:
-          this.labels = data.data || []
+          this.labels = this.handleReview(data.data)
       }
+    },
+    // 数据复现
+    handleReview (data) {
+      if (!data) return []
+      if (!this.defaultValue) return data
+      if (this.multiple) {
+        let labels = []
+        for (let item in data) {
+          let results = data[item].labels.filter(val => {
+            let flag = this.defaultValue.includes(val.labelId)
+            if (flag) {
+              val.check = true
+              val.index = item
+            }
+            return flag
+          })
+          // console.log(data[item].labels, results)
+          data[item].checked = results
+          labels = labels.concat(results)
+        }
+        this.selectLabels = labels
+      } else {
+        let results = data.filter(val => {
+          let flag = this.defaultValue.includes(String(val.labelId))
+          if (flag) {
+            val.check = true
+          }
+          return flag
+        })
+        // console.log(results, data)
+        this.selectLabels = results
+      }
+      return data
     },
     handleSelect (item, parent, parentIndex) {
       let ischecked = !item.check
@@ -195,6 +231,10 @@ export default {
         return
       }
       this.dialogStatus = true
+      if (this.loaded) {
+        this.handleReview(this.multiple ? this.multipleConfig : this.labels)
+        return
+      }
       this.getLable()
     },
     // 保存数据
@@ -222,22 +262,23 @@ export default {
 <style lang="scss" scoped>
 .select-labels {
   line-height: normal;
-  & /deep/ .el-dialog__header {
-    padding-bottom: 0px;
-  }
   .el-input__inner {
     @include ellipsis;
   }
 }
-.lables {
+.labels {
+  padding: 0 40px;
   text-align: left;
   max-height: 300px;
   overflow-y: auto;
+  border-top: 1px solid $border-color-1;
 }
 .selected-labels {
+  padding: 0 40px;
   text-align: left;
-  border-bottom: 1px solid $border-color-1;
-  padding-bottom: 20px;
+  .label-item {
+    margin: 0px 8px 14px 0;
+  }
 }
 
 .labels-title {
@@ -279,8 +320,5 @@ export default {
 .label-item.active {
   border-color: $border-color-2;
   color: $main-color-1;
-}
-.select-labels-button .el-button {
-  width: 88px;
 }
 </style>
