@@ -416,7 +416,7 @@
               </div>
             </div>
             <!-- 更多介绍 -->
-            <div class="workExperience" v-if="nowResumeMsg.moreIntroduce.introduce && nowResumeMsg.moreIntroduce.imgs">
+            <div class="workExperience" v-if="nowResumeMsg.moreIntroduce">
               <p class="title">更多介绍</p>
               <div class="workList">
                 <pre v-if="nowResumeMsg.moreIntroduce.introduce">{{nowResumeMsg.moreIntroduce.introduce}}</pre>
