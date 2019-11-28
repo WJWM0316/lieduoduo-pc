@@ -98,7 +98,7 @@
             </div>
           </div>
           <div class="introduction-right">
-            <guideLogin v-if="!this.haslogin" class="guideLogin"></guideLogin>
+            <guideLogin v-if="!hasLogin" class="guideLogin"></guideLogin>
             <div class="surroundings">
               <p class="surroundings-title" v-if="companyInformation.albumInfo.length">
                 公司环境
@@ -133,14 +133,14 @@
         <template slot="title">
           <p class="address-text">
             <i class="iconfont icon-dizhi"></i>
-            <span v-if="companyInformation.address && activeName !== ''">{{ companyInformation.address[activeName].address }}</span>
+            <span v-if="dialogVisible && activeName !== ''">{{ companyInformation.address[activeName].address }}</span>
           </p>
         </template>
         <div id="map" v-if="dialogVisible" style="width: 662px; height: 450px;"></div>
       </el-dialog>
     </template>
 
-      <companyRecruitment :haslogin = haslogin v-if="!activation"></companyRecruitment>
+      <companyRecruitment v-if="!activation"></companyRecruitment>
   </div>
 </template>
 
@@ -171,7 +171,8 @@ import {
     ...mapState({
       myResume: state => state.resume.myResume,
       isFourResume: state => state.resume.isFourResume,
-      userInfo: state => state.userInfo
+      userInfo: state => state.userInfo,
+      hasLogin: state => state.hasLogin
     })
   },
   watch: {
@@ -192,7 +193,7 @@ export default class companyDetail extends Vue {
   dialogVisible = false // 地图弹窗
   getCompanysTeamText = {} // 招聘团队
   islogin = false // 子组件是否登陆弹窗
-  haslogin = false // 是否已经登录
+  // haslogin = false // 是否已经登录
   isIntroduction_text = true // 显示文案切换按钮
   isHeader = false // 是否显示顶部悬浮栏
 
@@ -262,15 +263,19 @@ export default class companyDetail extends Vue {
 
   resumeTo (type) {
     // 是否已经登陆
-    if (!this.haslogin && type !== 'x') {
+    if (!this.hasLogin && type !== 'x') {
       return this.$router.push({
         name: 'login',
         query: {
           type: 'msgLogin'
         }
       })
-    } else if (this.haslogin) {
-      this.online = this.myResume.resumeCompletePercentage >= 0.9 ? '更新' : '完善'
+    } else if (this.hasLogin) { // 已经登录
+      if (this.isFourResume === 701) { // 判断有没有走完简历四步
+        this.online = '填写'
+      } else {
+        this.online = this.myResume.resumeCompletePercentage >= 0.9 ? '更新' : '完善'
+      }
       if (JSON.stringify(this.myResume.resumeAttach) !== '{}') {
         this.annex = '更新'
       }
@@ -342,12 +347,8 @@ export default class companyDetail extends Vue {
   // introductionFun () {
 
   // }
-  hasLogin () {
-    this.haslogin = (JSON.stringify(this.userInfo) !== '{}')
-  }
 
   beforeMount () {
-    this.hasLogin()
     this.resumeTo('x')
   }
   created () {
