@@ -9,7 +9,7 @@
           </div>
           <div class="welcome" v-if="nowResumeMsg.sendInfo">
             <div class="welimg"><img :src="nowResumeMsg.sendInfo.avatarInfo.smallUrl" alt v-if="nowResumeMsg.sendInfo" /></div>
-            <span>{{nowResumeMsg.sendInfo.realname}} 将这封简历共享给你{{isshow}}</span>
+            <span>{{nowResumeMsg.sendInfo.realname}} 将这封简历共享给你</span>
           </div>
         </div>
         <div class="resumeLyout">
@@ -277,27 +277,17 @@ export default class CourseList extends Vue {
     login () {
       this.$router.push({ name: 'login' })
     }
-    downloadDoc (content, filename) {
-      var eleLink = document.createElement('a')
-      eleLink.download = filename
-      eleLink.style.display = 'none'
-      var blob = new Blob([content])
-      eleLink.href = URL.createObjectURL(blob)
-      document.body.appendChild(eleLink)
-      eleLink.click()
-      document.body.removeChild(eleLink)
-    }
     onloadfile (type) {
       let params = { jobhunterVkey: this.nowResumeMsg.vkey }
       if (type === 'pdf') {
         createonlinepdf(params).then((res) => {
           // console.log(res)
-          this.downloadDoc(res.data, this.nowResumeMsg.name + '.pdf')
+          this.$util.downFile(res.data, this.nowResumeMsg.name + '.pdf')
         })
       }
       if (type === 'doc') {
         createonlineword(params).then((res) => {
-          this.downloadDoc(res.data.data, this.nowResumeMsg.name + '.doc')
+          this.$util.downFile(res.data.data, this.nowResumeMsg.name + '.doc')
         })
       }
     }

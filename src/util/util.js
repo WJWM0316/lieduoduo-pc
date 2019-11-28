@@ -76,6 +76,17 @@ class Util {
     return result
   }
 
+  downFile (content, filename) {
+    var eleLink = document.createElement('a')
+    eleLink.download = filename
+    eleLink.style.display = 'none'
+    var blob = new Blob([content])
+    eleLink.href = URL.createObjectURL(blob)
+    document.body.appendChild(eleLink)
+    eleLink.click()
+    document.body.removeChild(eleLink)
+  }
+
   /**
    * 根据键值从源对象中抽取对象
    * @param {Object} source 源对象
