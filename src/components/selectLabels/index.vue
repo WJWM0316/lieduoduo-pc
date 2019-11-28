@@ -266,9 +266,6 @@ export default {
     @include ellipsis;
   }
 }
-.dialog-lables {
-
-}
 .labels {
   padding: 0 40px;
   text-align: left;
