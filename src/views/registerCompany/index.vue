@@ -179,7 +179,6 @@
       </div>
       <!-- 创建公司审核状态 -->
       <div class="registerBox" v-show="$route.query.page === 'status' && companyInfo.id">
-
         <template v-if="$route.query.from === 'company'">
           <div class="topicon">
             <img v-if="companyInfo.status === 1 || companyInfo.status === 0" src="@/assets/images/adopt.png" />
@@ -281,7 +280,6 @@
           <div class="gotoqiuzhi" @click="gotowhere('qiuzhi')">前往求职</div>
           </div>
         </template>
-
         <template v-if="$route.query.from === 'join'">
           <div class="topicon">
             <img v-if="(companyInfo.status === 0)" src="@/assets/images/adopt.png" />
@@ -331,7 +329,7 @@
                 </div>
                 </div>
               </div>
-              <div class="startrecruiting" @click="startrecruit()">开始招聘</div>
+              <div class="startrecruiting" @click="startrecruit">开始招聘</div>
             </div>
           </template>
 
@@ -384,7 +382,6 @@
           <div class="gotoqiuzhi" @click="gotowhere('qiuzhi')">前往求职</div>
           </div>
         </template>
-
       </div>
   </div>
   <!-- 职位弹窗 -->
@@ -831,6 +828,7 @@ export default {
     },
     editCreateCompany () {
       let formData = this.ruleForm
+      let query = {}
       let params = {
         id: formData.id,
         real_name: formData.real_name,
@@ -839,24 +837,14 @@ export default {
         company_name: formData.company_name
       }
       editCompanyFirstStepApi(params).then(() => {
-        this.$router.push({
-          query: {
-            page: 'submit',
-            from: 'company',
-            action: 'edit'
-          }
-        })
-        // this.getCompanyIdentityInfos()
+        query = { page: 'submit', from: 'company', action: 'edit' }
+        this.$router.push({ query })
       })
       .catch(err => {
         // 从后台完善信息
         if (err.data.code === 307) {
-          this.$router.push({
-            query: {
-              page: 'status',
-              from: 'company'
-            }
-          })
+          query = { page: 'status', from: 'company' }
+          this.$router.push({ query })
           return
         }
         // 创建公司后 重新编辑走加入公司逻辑  如果之前有一条加入记录 取之前的加入记录id
@@ -877,6 +865,7 @@ export default {
     },
     createCompany () {
       let formData = this.ruleForm
+      let query = {}
       let params = {
         real_name: formData.real_name,
         user_email: formData.user_email.trim(),
@@ -887,23 +876,14 @@ export default {
       createCompanyApi(params).then(res => {
         this.ruleForm.id = res.data.data.id
         this.ruleForm.company_name = res.data.data.companyName
-        this.$router.push({
-          query: {
-            page: 'submit',
-            from: 'company'
-          }
-        })
-        // this.getCompanyIdentityInfos()
+        query = { page: 'status', from: 'company' }
+        this.$router.push({ query })
       })
       .catch(err => {
         // 从后台完善信息
         if (err.data.code === 307) {
-          this.$router.push({
-            query: {
-              page: 'status',
-              from: 'company'
-            }
-          })
+          query = { page: 'status', from: 'company' }
+          this.$router.push({ query })
           return
         }
         // 990公司已经存在
@@ -915,6 +895,7 @@ export default {
     },
     editJoinCompany () {
       let formData = this.ruleForm
+      let query = {}
       let params = {
         id: formData.applyId,
         real_name: formData.real_name,
@@ -945,23 +926,15 @@ export default {
                       }
                     })
                   } else {
-                    this.$router.push({
-                      query: {
-                        page: 'status',
-                        from: 'join'
-                      }
-                    })
+                    query = { page: 'status', from: 'join' }
+                    this.$router.push({ query })
                   }
                 })
                 .catch(err => {
                   // 从后台完善信息
                   if (err.data.code === 307) {
-                    this.$router.push({
-                      query: {
-                        page: 'status',
-                        from: 'join'
-                      }
-                    })
+                    query = { page: 'status', from: 'join' }
+                    this.$router.push({ query })
                   }
                 })
               } else {
@@ -981,24 +954,16 @@ export default {
                   }
                 })
               } else {
-                this.$router.push({
-                  query: {
-                    page: 'status',
-                    from: 'join'
-                  }
-                })
+                query = { page: 'status', from: 'join' }
+                this.$router.push({ query })
                 this.getCompanyIdentityInfos()
               }
             })
             .catch(err => {
               // 从后台完善信息
               if (err.data.code === 307) {
-                this.$router.push({
-                  query: {
-                    page: 'status',
-                    from: 'join'
-                  }
-                })
+                query = { page: 'status', from: 'join' }
+                this.$router.push({ query })
               }
             })
           }
@@ -1009,6 +974,7 @@ export default {
     },
     joinCompany () {
       let formData = this.ruleForm
+      let query = {}
       let params = {
         real_name: formData.real_name,
         user_email: formData.user_email.trim(),
@@ -1024,33 +990,19 @@ export default {
         } else {
           return applyCompanyApi(params).then(res => {
             if (res.data.emailStatus) {
-              this.$router.push({
-                query: {
-                  page: 'submit',
-                  from: 'join',
-                  suffix: res.data.suffix,
-                  companyId: res.data.companyId
-                }
-              })
+              query = { page: 'submit', from: 'join', suffix: res.data.suffix, companyId: res.data.companyId}
+              this.$router.push({ query })
             } else {
-              this.$router.push({
-                query: {
-                  page: 'status',
-                  from: 'join'
-                }
-              })
+              query = { page: 'status', from: 'join' }
+              this.$router.push({ query })
               this.getCompanyIdentityInfos()
             }
           })
           .catch(err => {
             // 从后台完善信息
             if (err.data.code === 307) {
-              this.$router.push({
-                query: {
-                  page: 'status',
-                  from: 'join'
-                }
-              })
+              query = { page: 'status', from: 'join' }
+              this.$router.push({ query })
             }
           })
         }
@@ -1058,13 +1010,35 @@ export default {
     },
     submit () {
       if (Reflect.has(this.$route.query, 'action')) {
-        if (this.applyJoin) {
-          this.editJoinCompany()
-        } else {
-          this.editCreateCompany()
-        }
+        this[this.applyJoin ? 'editJoinCompany' : 'editCreateCompany']()
       } else {
         this.createCompany()
+      }
+    },
+    initPage(msg) {
+      let companyInfo = msg.data.companyInfo
+      let query = {}
+      if (msg.data.applyJoin) {
+        query = { page: 'status', from: 'join' }
+        this.$router.push({ query })
+      } else {
+        // 还没有创建公司信息
+        if (!Reflect.has(companyInfo, 'id')) {
+          query = {}
+          this.$router.push({ query })
+        } else {
+          if (companyInfo.status === 1) {
+            // 按钮触发前往首页
+          } else {
+            if (companyInfo.status === 3) {
+              query = { page: 'submit' }
+              this.$router.push({ query })
+            } else {
+              query = { page: 'status', from: 'company' }
+              this.$router.push({ query })
+            }
+          }
+        }
       }
     },
     getCompanyIdentityInfos () {
@@ -1102,39 +1076,7 @@ export default {
         this.checkupdata()
         this.bindButtonStatus()
         this.applyJoin = res.data.data.applyJoin
-
-        let callback = (msg) => {
-          let companyInfo = msg.data.companyInfo
-          if (msg.data.applyJoin) {
-            this.$router.push({
-              query: {
-                page: 'status',
-                from: 'join'
-              }
-            })
-          } else {
-            // 还没有创建公司信息
-            if (!Reflect.has(companyInfo, 'id')) {
-              this.$router.push({ name: 'register' })
-            } else {
-              if (companyInfo.status === 1) {
-                // wx.reLaunch({url: `${RECRUITER}index/index`})
-              } else {
-                if (companyInfo.status === 3) {
-                  this.$router.push({ query: { page: 'submit' } })
-                } else {
-                  this.$router.push({
-                    query: {
-                      page: 'status',
-                      from: 'company'
-                    }
-                  })
-                }
-              }
-            }
-          }
-        }
-        callback(res.data)
+        this.initPage(res.data)
       })
     },
     submit2 () {
@@ -1190,7 +1132,8 @@ export default {
       getUserRoleInfoApi().then(({ data }) => {
         const result = data.data || {}
         this.$store.commit('setRoleInfos', result)
-        this.$router.push({ name: 'candidatetype' })
+        // 删除路由栈
+        this.$router.replace({ name: 'candidatetype' })
       })
     },
     getlabellist () {
