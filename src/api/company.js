@@ -68,7 +68,7 @@ export const identityFailApi = (id, data) => request({
 })
 /* 填写公司信息 */
 export const setCompanyInfoApi = data => request({
-  url: `/company`,
+  url: '/company',
   method: 'post',
   params: data,
   config: { host: 'zhaopin' }
@@ -76,7 +76,7 @@ export const setCompanyInfoApi = data => request({
 
 /* 填写人员认证信息 */
 export const setIdentityInfoApi = data => request({
-  url: `/identity`,
+  url: '/identity',
   method: 'post',
   params: data,
   config: { host: 'zhaopin' }
@@ -108,7 +108,7 @@ export const deleteCompanyAdressApi = data => request({
 
 /* 添加地址 */
 export const addCompanyAdressApi = data => request({
-  url: `/company/position/address`,
+  url: '/company/position/address',
   method: 'put',
   params: data,
   config: { host: 'zhaopin' }
@@ -116,14 +116,14 @@ export const addCompanyAdressApi = data => request({
 
 /* 分页获取地址列表 */
 export const getAdressListApi = data => request({
-  url: `/company/position/simplepage/addresses`,
+  url: '/company/position/simplepage/addresses',
   method: 'get',
   params: data,
   config: { host: 'zhaopin' }
 })
 /* 获取录入公司列表 */
 export const getCompanyListApi = data => request({
-  url: `/company/list`,
+  url: '/company/list',
   method: 'get',
   params: data,
   config: { host: 'zhaopin' }
@@ -186,7 +186,7 @@ export const delCompanyAddressApi = (id, data) => request({
 
 /* 城市标签 */
 export const getCityApi = (data) => request({
-  url: `/area?level=3`,
+  url: '/area?level=3',
   method: 'get',
   params: data,
   config: { host: 'zhaopin' }
@@ -250,7 +250,7 @@ export const getCompanysPositionApi = (data) => request({
 
 /* 获取公司职位类型列表 */
 export const getCompanysPositionListApi = (data) => request({
-  url: `/position/list/`,
+  url: '/position/list',
   method: 'get',
   params: data,
   config: { host: 'qiuzhi' }
