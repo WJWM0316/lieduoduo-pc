@@ -8,7 +8,7 @@
       <div class="city-list" v-for="item in cityList" :key="item.chinese" @click="handleToSearchPage(item)">
         <img :src="item.url" alt="">
         <div>
-          <p>{{item.city}}</p>
+          <p class="city-name">{{item.city}}</p>
           <p>{{item.chinese}}</p>
         </div>
       </div>
@@ -63,6 +63,9 @@ export default {
     position: relative;
     padding: 0 8px;
   }
+  .iconfont {
+    font-size: 14px;
+  }
   span.city-title {
     padding: 0 3px;
     color: $title-color-3;
@@ -108,6 +111,9 @@ export default {
     }
     p + p {
       font-size: 14px;
+    }
+    .city-name {
+      font-weight: 500;
     }
   }
   div:hover {

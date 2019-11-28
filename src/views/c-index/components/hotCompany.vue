@@ -80,7 +80,7 @@ export default {
 <style lang="scss" scoped>
 .company-lists-wrapper {
   padding-top: 4px;
-  min-height: 200px;
+  min-height: 156px;
   & /deep/ .el-loading-mask {
     background: rgba(255, 255, 255, 0.1);;
   }
@@ -98,7 +98,7 @@ export default {
   }
 }
 .company-wrapper {
-  padding-bottom: 54px;
+  padding-bottom: 60px;
 }
 .header-wrapper{
   margin-top: 62px;
@@ -129,7 +129,7 @@ export default {
   }
 }
 .company-more-btn {
-  margin-top: 30px;
+  margin-top: 17px;
   text-align: center;
   .c-btn {
     width: 385px;
