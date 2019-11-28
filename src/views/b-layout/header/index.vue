@@ -78,10 +78,10 @@ export default {
       }
     },
     getCompanyIdentityInfos () {
-      if (this.$store.state.roleInfos.isRecruiter) {
-        this.haveIdentity = false
-      } else {
+      if (!this.$store.state.recruiterinfo.identityAuth) {
         this.haveIdentity = true
+      } else {
+        this.haveIdentity = false
       }
     }
   },
