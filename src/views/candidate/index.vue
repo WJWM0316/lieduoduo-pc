@@ -881,7 +881,6 @@ export default class CourseList extends Vue {
   hasonload = false
   toworddiggle = false
   tishishow = false
-  boxshow = false
   pop = {
     isShow: false,
     Interview: false,
@@ -1673,7 +1672,6 @@ export default class CourseList extends Vue {
                 v.positionName = '直接与我约面'
               }
               v.hascur = false
-              v.boxshow = false
             })
             this.applyrecordList = applylists
           } else {
