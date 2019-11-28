@@ -15,7 +15,7 @@
             <option-list :option="companylist" :visible="companyshow" @selectchange="changecompany"></option-list>
           </el-form-item>
           <el-form-item label="职位所属类型" prop="position_name">
-            <div class="positon-box" @click="selectposition()"></div>
+            <div class="positon-box" @click="selectposition"></div>
             <el-input :value="ruleForm.position_name" placeholder="请选择职位所属类型" @input="bindInput($event, 'position_name')"></el-input>
           </el-form-item>
           <el-form-item label="担任的职务" prop="user_position">
@@ -95,17 +95,17 @@
             </div>
           </el-form-item>
           <el-form-item label="所属行业" prop="industry_name">
-            <div class="positon-box" @click="selectindustry()"></div>
+            <div class="positon-box" @click="selectindustry"></div>
             <el-input :value="authForm.industry_name" placeholder="请选择所属行业" @input="authbindInput($event, 'industry_name')"></el-input>
             <option-list :option="industrylist" :visible="industryshow" @selectchange="changeindustry"></option-list>
           </el-form-item>
           <el-form-item label="融资情况" prop="financing_name">
-            <div class="positon-box" @click="selectfinancing()"></div>
+            <div class="positon-box" @click="selectfinancing"></div>
             <el-input :value="authForm.financing_name" placeholder="请选择融资情况" @input="authbindInput($event, 'financing_name')"></el-input>
             <option-list :option="financinglist" :visible="financingshow" @selectchange="changefinancing"></option-list>
           </el-form-item>
           <el-form-item label="人员规模" prop="employees_name">
-            <div class="positon-box" @click="selectemployees()"></div>
+            <div class="positon-box" @click="selectemployees"></div>
             <el-input :value="authForm.employees_name" placeholder="请选择人员规模" @input="authbindInput($event, 'employees_name')"></el-input>
             <option-list :option="employeeslist" :visible="employeesshow" @selectchange="changeemployee"></option-list>
           </el-form-item>
@@ -229,7 +229,7 @@
                 </div>
                 </div>
               </div>
-              <div class="startrecruiting" @click="startrecruit()">开始招聘</div>
+              <div class="startrecruiting" @click="startrecruit">开始招聘</div>
             </div>
           </template>
 
@@ -893,12 +893,11 @@ export default {
       createCompanyApi(params).then(res => {
         this.ruleForm.id = res.data.data.id
         this.ruleForm.company_name = res.data.data.companyName
-        query = { page: 'status', from: 'company' }
+        query = { page: 'submit' }
         this.$router.push({ query })
       })
       .catch(err => {
         // 从后台完善信息
-        console.log(err.data.code)
         if (err.data.code === 307) {
           query = { page: 'status', from: 'company' }
           this.$router.push({ query })
