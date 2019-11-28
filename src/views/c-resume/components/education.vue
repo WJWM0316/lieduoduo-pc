@@ -195,7 +195,11 @@ export default {
           experience: ''
         }
       }
+      this.jsonFormString = JSON.stringify(this.form)
       this.$refs.wrapper.showEditCompoents()
+    },
+    validFormData () {
+      return this.jsonFormString === JSON.stringify(this.form)
     }
   }
 

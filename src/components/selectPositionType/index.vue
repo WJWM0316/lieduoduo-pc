@@ -10,6 +10,7 @@
     <el-dialog
       :title="title"
       width="650px"
+      custom-class="app-dialog"
       :visible.sync="showDialog">
       <div class="lists-wrapper">
         <ul class="lists-left">
@@ -31,7 +32,7 @@
           </el-input>
           <div class="lists-items">
             <template v-for="item in parentSelectData">
-              <span :key="item.labelId" @click="handleShowDetails(item)">
+              <span :key="item.labelId" @click="handleShowDetails(item)" :class="{active: item.open}">
                 <i class="iconfont" :class="item.open ? 'icon-shouqi' : 'icon-tianjia'" /> {{item.name}}
               </span>
             </template>
@@ -172,16 +173,6 @@ export default {
 .position-type {
   line-height: normal !important;
 }
-.el-dialog__wrapper {
-  & /deep/ {
-    .el-dialog__header {
-      padding: 32px 20px 20px 42px;
-    }
-    .el-dialog__body {
-      padding: 0;
-    }
-  }
-}
 .lists-wrapper {
   height: 550px;
   .lists-left {
@@ -198,7 +189,7 @@ export default {
     }
     .active {
       color: $main-color-1;
-      background-color: $bg-color-8;
+      background-color: $bg-color-1;
     }
     li.active:after {
       content: "";
@@ -222,7 +213,7 @@ export default {
     padding: 20px 28px;
     box-sizing: border-box;
     overflow-y: auto;
-    background-color: $bg-color-8;
+    background-color: $bg-color-1;
   }
 }
 .lists-items, .lists-selected {
@@ -236,22 +227,29 @@ export default {
     margin: 12px 0;
   }
 }
+.lists-selected span {
+  margin-top: 0;
+}
 .lists-items {
   padding: 8px 0;
   width: 100%;
+  .active {
+    color: $main-color-1;
+    font-weight: bold;
+  }
+  .active i{
+    font-weight: normal;
+  }
   i {
     color: $main-color-1;
   }
 }
 .lists-selected {
-  background-color: $bg-color-1;
-  padding: 16px;
+  background-color: $bg-color-7;
+  padding: 14px;
   box-sizing: border-box;
   span {
     color: $main-color-1;
-  }
-  span:hover{
-    color: $font-color-1;
   }
 }
 </style>

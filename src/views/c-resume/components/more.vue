@@ -114,6 +114,10 @@ export default {
     handleShowForm (isAdd = true) {
       this.isAdd = isAdd
       this.$refs.wrapper.showEditCompoents()
+      this.jsonFormString = JSON.stringify(this.form)
+    },
+    validFormData () {
+      return this.jsonFormString === JSON.stringify(this.form)
     }
   }
 }
@@ -129,15 +133,15 @@ export default {
     flex-wrap: wrap;
   }
   .image-wrapper {
-    @include img-radius(96px, 96px, 4px);
+    @include img-radius(94px, 94px, 4px);
     margin-bottom: 10px;
   }
-  .image-wrapper+.image-wrapper{
+  .image-wrapper{
     margin-left: 10px;
   }
-  .image-wrapper:nth-child(6n) {
-    margin-left: 0px;
-  }
+  // .image-wrapper:nth-child(5n) {
+  //   margin-left: 0px;
+  // }
 }
 .form-titl-tips {
   font-size: 12px;

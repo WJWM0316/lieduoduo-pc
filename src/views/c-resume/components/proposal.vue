@@ -46,7 +46,13 @@
           <div class="form-item">
             <p class="form-title">期望行业</p>
             <el-form-item prop="fieldIds">
-              <select-labels v-model="form.fieldIds" :limit="3" title="请选择期望行业" type="field" @on-selected="handleSelectLabeld" />
+              <select-labels
+                v-model="form.fieldIds"
+                :limit="3"
+                title="期望行业"
+                type="field"
+                :default-value="form.fields"
+                @on-selected="handleSelectLabeld" />
             </el-form-item>
           </div>
           <div class="form-item">
@@ -111,12 +117,13 @@ export default {
   methods: {
     handleCommand ({ type, cb, item, index }) {
       if (type === 'edit') {
-        const { cityNum, fields, position, positionId, salaryCeil, salaryFloor, id, provinceNum } = item
+        const { cityNum, fields, position, positionId, salaryCeil, salaryFloor, id, provinceNum, fieldIds } = item
         this.currentId = id
         this.form = {
           cityNum: [provinceNum, cityNum],
           positionId,
           position,
+          fields: fieldIds,
           fieldIds: fields.map(val => val.field).join('、'),
           salary: `${salaryFloor}-${salaryCeil}`
         }
@@ -224,9 +231,13 @@ export default {
           fieldIds: ''
         }
       }
+      this.jsonFormString = JSON.stringify(this.form)
       this.$nextTick(() => {
         this.$refs.salary.handleInit(salary.salaryFloor, salary.salaryCeil)
       })
+    },
+    validFormData () {
+      return this.jsonFormString === JSON.stringify(this.form)
     },
     // 选择职位
     selectedPosition (item) {

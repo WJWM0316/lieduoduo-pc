@@ -220,7 +220,11 @@ export default {
           link: ''
         }
       }
+      this.jsonFormString = JSON.stringify(this.form)
       this.$refs.wrapper.showEditCompoents()
+    },
+    validFormData () {
+      return this.jsonFormString === JSON.stringify(this.form)
     },
     openNewWindow (link) {
       let protocol = link.indexOf('http') >= 0 ? '' : 'http://'
