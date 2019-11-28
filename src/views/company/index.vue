@@ -123,7 +123,6 @@ export default {
       getCompanyListsApi({ ...query, count: 20 }).then(({data}) => {
         this.companyLists = data.data
         this.total = data.meta.total
-        this.page = Number(data.meta.currentPage)
         this.$router.push({ query })
       })
     },
