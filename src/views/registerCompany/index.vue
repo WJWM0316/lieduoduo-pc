@@ -182,8 +182,9 @@
 
         <template v-if="$route.query.from === 'company'">
           <div class="topicon">
-            <img v-if="companyInfo.status === 1 || companyInfo.status === 0" src="@/assets/images/adopt.png" />
-            <img v-else src="@/assets/images/notadopt.png" />
+            <img v-if="companyInfo.status === 1" src="@/assets/images/adopt.png" />
+            <img v-if="companyInfo.status === 0" src="@/assets/images/examine.png" />
+            <img v-if="companyInfo.status === 2" src="@/assets/images/notadopt.png" />
           </div>
 
           <template v-if="companyInfo.status === 0">
@@ -276,7 +277,7 @@
             <div class="title">快速通道权益</div>
             <div class="desc">助你创建公司更快捷，欢迎体验～</div>
             </div>
-            <div class="contact-btn">联系体验</div>
+            <div class="contact-btn" @click="showourbox = true">联系体验</div>
           </div>
           <div class="gotoqiuzhi" @click="gotowhere('qiuzhi')">前往求职</div>
           </div>
@@ -284,8 +285,9 @@
 
         <template v-if="$route.query.from === 'join'">
           <div class="topicon">
-            <img v-if="(companyInfo.status === 0)" src="@/assets/images/adopt.png" />
-            <img v-else src="@/assets/images/notadopt.png" />
+            <img v-if="companyInfo.status === 1" src="@/assets/images/adopt.png" />
+            <img v-if="companyInfo.status === 0" src="@/assets/images/examine.png" />
+            <img v-if="companyInfo.status === 2" src="@/assets/images/notadopt.png" />
           </div>
 
           <template v-if="(companyInfo.status === 0)">
@@ -379,13 +381,27 @@
             <div class="title">快速通道权益</div>
             <div class="desc">助你创建公司更快捷，欢迎体验～</div>
             </div>
-            <div class="contact-btn">联系体验</div>
+            <div class="contact-btn" @click="showourbox = true">联系体验</div>
           </div>
           <div class="gotoqiuzhi" @click="gotowhere('qiuzhi')">前往求职</div>
           </div>
         </template>
 
       </div>
+  </div>
+  <div class="contactour" v-if="showourbox">
+    <div class="ourBox">
+      <div class="close"><i @click="showourbox = false" class="iconfont icon-danchuang-guanbi"></i></div>
+      <div class="content-all">
+        <div class="title">联系我们</div>
+        <div class="desc">您可用「微信」扫下方二维码，关注官方公众号</div>
+        <div class="qrcode">
+          <img src="@/assets/images/qrcode.png" alt="">
+        </div>
+        <div class="s-desc">或请拨打全国咨询热线</div>
+        <div class="s-phone">400-065-5788</div>
+      </div>
+    </div>
   </div>
   <!-- 职位弹窗 -->
   <MyModel @resultEvent="resultEvent" v-model="showPositionModel" :data="positiondata"></MyModel>
@@ -514,6 +530,7 @@ export default {
         on_job_url: '',
         intro: ''
       },
+      showourbox: false,
       tipsshow: false,
       avatarLoading: false,
       businessLoading: false,
@@ -1764,6 +1781,73 @@ export default {
       color: #652791;
       cursor: pointer;
       text-align: center;
+    }
+  }
+}
+.contactour{
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 101;
+  background:rgba(0,0,0,0.6);
+  .ourBox {
+    width:432px;
+    height:470px;
+    background:rgba(255,255,255,1);
+    box-shadow:0px 6px 14px 2px rgba(0,0,0,0.2);
+    border-radius:8px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    .close{
+      width: 100%;
+      position: relative;
+      height: 50px;
+      i{
+        font-size: 10px;
+        color: #BCBCBC;
+        margin-top: 16px;
+        cursor: pointer;
+        position: absolute;
+        right: 16px;
+      }
+    }
+    .content-all{
+      text-align: center;
+      .title{
+        color: #282828;
+        font-size: 26px;
+        font-weight: bold;
+        margin-bottom: 30px;
+      }
+      .desc{
+        color: #6D696E;
+        font-size: 14px;
+      }
+      .qrcode{
+        width:202px;
+        height:202px;
+        margin: 0 auto;
+        border-radius:4px;
+        margin-bottom: 30px;
+        img{
+          width: 100%;
+          height: 100%;
+        }
+      }
+      .s-desc{
+        color: #282828;
+        font-size: 14px;
+        margin-bottom: 10px;
+      }
+      .s-phone{
+        color: #652791;
+        font-size: 30px;
+        font-weight: bold;
+      }
     }
   }
 }
