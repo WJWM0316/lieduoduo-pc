@@ -60,6 +60,10 @@ export default {
     left: 0;
     right: 0;
     margin: 0 36px;
+  }
+}
+.position-list+.position-list {
+  &::after {
     border-top: 1px dashed $border-color-1;
   }
 }
