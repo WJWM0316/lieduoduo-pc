@@ -34,9 +34,11 @@ export default class APP extends Vue {
   created () {
     if (getAccessToken()) {
       this.getUserInfo()
-      perfectauthDetail().then((res) => {
-        this.$store.commit('setRecruiterinfo', res.data.data)
-      })
+      if (this.$store.state.roleInfos.isRecruiter) {
+        perfectauthDetail().then((res) => {
+          this.$store.commit('setRecruiterinfo', res.data.data)
+        })
+      }
     }
   }
 }
