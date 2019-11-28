@@ -77,7 +77,7 @@
               </div>
               <div class="item">
                 <div class="title">身份证号</div>
-                <div class="text">{{info.identityNum.substr(0, 1) + '****************' + info.identityNum.substring(17, 18)}}</div>
+                <div class="text" v-if="info.identityNum">{{info.identityNum.substr(0, 1) + '****************' + info.identityNum.substring(17, 18)}}</div>
               </div>
               <div class="item">
                 <div class="title">证件照片</div>
