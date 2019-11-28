@@ -25,12 +25,7 @@
         </div>
         <div class="position-right">
           <guide-login class="guidelogin" v-if="!haslogin"></guide-login>
-          <template>
-            <adpostion class="adpostion" position="searchResult"></adpostion>
-          </template>
-          <template>
-            <adpostion class="adpostion" position="positionDetail"></adpostion>
-          </template>
+          <adpostion class="adpostion" position="searchResult"></adpostion>
         </div>
       </div>
     </div>
