@@ -30,7 +30,7 @@
           <div class="header-right-position">
             <p class="header-right-number" v-if="!isHeader">{{ companyInformation.numOfVisitors }}</p>
             <p class="header-right-text" v-if="!isHeader">浏览</p>
-            <file :Resume = myResume :showUploadDetails=false :showTips=true :islogin = islogin>
+            <file @change="saveResume" @fail="saveResume" :Resume = myResume :showUploadDetails=false :showTips=true :islogin = islogin>
               <p class="header-right-resume" @click="resumeTo('annex')">
                 <i class="iconfont" :class="{ 'icon-weibiaoti-': annex === '上传', 'icon-zhongxinshangchuan-':  annex === '更新'}"/>&nbsp;
                 {{ annex }}附件简历
@@ -153,6 +153,7 @@ import appLinks from '@/components/common/appLinks'
 import file from '@/components/common/upload/file'
 import companyRecruitment from './components/Recruitment'
 
+import { saveResumeAttach } from 'API/resume.js'
 import {
   getCompanyHotApi,
   getVkeyCompanyApi,
@@ -170,7 +171,7 @@ import {
   computed: {
     ...mapState({
       myResume: state => state.resume.myResume,
-      isFourResume: state => state.resume.isFourResume,
+      roleInfos: state => state.roleInfos,
       userInfo: state => state.userInfo,
       hasLogin: state => state.hasLogin
     })
@@ -193,7 +194,6 @@ export default class companyDetail extends Vue {
   dialogVisible = false // 地图弹窗
   getCompanysTeamText = {} // 招聘团队
   islogin = false // 子组件是否登陆弹窗
-  // haslogin = false // 是否已经登录
   isIntroduction_text = true // 显示文案切换按钮
   isHeader = false // 是否显示顶部悬浮栏
 
@@ -208,12 +208,12 @@ export default class companyDetail extends Vue {
   }
 
   // 地图
-  mapType () {
-    // if (!this.companyInformation.address.length || (!this.activeName && this.activeName !== 0)) return
-    // this.$nextTick(() => {
-    //   this.getMapLocation(this.companyInformation.address[this.activeName].lat, this.companyInformation.address[this.activeName].lng)
-    // })
-  }
+  // mapType () {
+  // if (!this.companyInformation.address.length || (!this.activeName && this.activeName !== 0)) return
+  // this.$nextTick(() => {
+  //   this.getMapLocation(this.companyInformation.address[this.activeName].lat, this.companyInformation.address[this.activeName].lng)
+  // })
+  // }
 
   viewAll () {
     this.viewAllText = !this.viewAllText
@@ -264,6 +264,7 @@ export default class companyDetail extends Vue {
   resumeTo (type) {
     // 是否已经登陆
     if (!this.hasLogin && type !== 'x') {
+      console.log(110)
       return this.$router.push({
         name: 'login',
         query: {
@@ -271,18 +272,18 @@ export default class companyDetail extends Vue {
         }
       })
     } else if (this.hasLogin) { // 已经登录
-      if (this.isFourResume === 701) { // 判断有没有走完简历四步
+      if (!this.roleInfos.isJobhunter) { // 判断有没有走完简历四步
         this.online = '填写'
       } else {
         this.online = this.myResume.resumeCompletePercentage >= 0.9 ? '更新' : '完善'
-      }
-      if (JSON.stringify(this.myResume.resumeAttach) !== '{}') {
-        this.annex = '更新'
+        if (JSON.stringify(this.myResume.resumeAttach) !== '{}') {
+          this.annex = '更新'
+        }
       }
     }
 
     if (type === 'online') {
-      if (this.isFourResume === 701) { return this.$router.push({ name: 'createUser' }) }
+      if (!this.roleInfos.isJobhunter) { return this.$router.push({ name: 'createUser' }) }
       // 跳我的简历
       return this.$router.push({ name: 'cresume' })
     } else if (type === 'annex') {
@@ -347,9 +348,17 @@ export default class companyDetail extends Vue {
   // introductionFun () {
 
   // }
-
-  beforeMount () {
-    this.resumeTo('x')
+  // 保存简历附件
+  saveResume (attach) {
+    if (!attach) return this.$message.error('上传附件简历失败')
+    saveResumeAttach({ attach_resume: attach.id, attach_name: attach.fileName }).then(({ data }) => {
+      if (data.httpStatus === 200) {
+        this.$message.success('上传附件简历成功')
+        this.$store.commit('overwriteResume', {
+          resumeAttach: attach
+        })
+      }
+    })
   }
   created () {
     window.addEventListener('scroll', this.handleScroll)
@@ -361,6 +370,7 @@ export default class companyDetail extends Vue {
     // })
   }
   updated () {
+    this.resumeTo('x')
     // console.log(document.getElementsByClassName('introduction-text')[0].style.color)
     // this.introductionFun() // 文字高度s
   }

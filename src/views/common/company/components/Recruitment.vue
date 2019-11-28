@@ -59,12 +59,6 @@ export default {
       hasLogin: state => state.hasLogin
     })
   },
-  props: {
-    haslogin: {
-      type: Boolean,
-      default: true
-    }
-  },
   components: {
     positionItem,
     adpostion,
