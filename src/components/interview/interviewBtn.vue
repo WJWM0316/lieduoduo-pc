@@ -196,7 +196,7 @@ export default class InterviewBtn extends Component {
     }
   }
   created () {
-		this.getInterviewStatus()
+    this.getInterviewStatus()
   }
 }
 </script>

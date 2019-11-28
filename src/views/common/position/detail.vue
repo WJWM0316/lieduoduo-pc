@@ -157,7 +157,7 @@ let that = null
         let serviceEndTime = `${parseInt(this.infos.rapidlyServiceEndTime.slice(5, 7))}月${parseInt(this.infos.rapidlyServiceEndTime.slice(8, 10))}日`
         return `现在申请最迟${serviceEndTime}反馈`
       } else {
-        return `现在申请24小时内必定反馈`
+        return '现在申请24小时内必定反馈'
       }
     }
   }
@@ -241,12 +241,18 @@ export default class PositionDetail extends Vue {
             let infos = this.infos
             infos.isCollect = true
             this.infos = infos
+            if (res.data.httpStatus === 200) {
+              this.$message.success('成功标记感兴趣')
+            }
           })
         } else {
           deleteMycollectPositionApi({ id: this.id }).then(res => {
             let infos = this.infos
             infos.isCollect = false
             this.infos = infos
+            if (res.data.httpStatus === 200) {
+              this.$message.success('已取消标记')
+            }
           })
         }
         break

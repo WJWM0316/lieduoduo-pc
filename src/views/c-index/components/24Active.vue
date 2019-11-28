@@ -157,6 +157,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+$position-process-bg-color: #99e7e8;
 .active-header-wrapper {
   @include flex-v-center;
   height: 64px;
@@ -335,6 +336,7 @@ export default {
     background: #fff;
     color: $sub-color-1;
     text-align: center;
+    font-weight: 500;
     border-radius:4px;
     margin: 0 3px;
   }
@@ -360,7 +362,7 @@ export default {
     }
   }
   .position-process {
-    background: rgba(#fff, 0.6);
+    background: $position-process-bg-color;
     width:53px;
     position: relative;
     margin-left: 26px;
