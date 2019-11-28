@@ -48,7 +48,7 @@
         :total="total">
       </el-pagination>
     </div>
-    <div v-if="!total"><no-found :max-width="300"/></div>
+    <div v-if="!total"><no-found :max-width="300" :tipText="'没有符合筛选条件的公司，放宽筛选条件试试？'"/></div>
     <loginPop ref="loginPop"></loginPop>
   </div>
 </template>
@@ -121,9 +121,9 @@ export default {
         query = Object.assign(query, { financingIds })
       }
       getCompanyListsApi({ ...query, count: 20 }).then(({ data }) => {
+        this.$router.push({ query })
         this.companyLists = data.data
         this.total = data.meta.total
-        this.$router.push({ query })
       })
     },
     changePage (page) {

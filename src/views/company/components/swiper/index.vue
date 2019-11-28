@@ -2,8 +2,8 @@
 	<div class="swiper1">
 		<span class="btn prev" :class="{'btn-disabled': !btnPrevCanclick, 'btn-abled': btnPrevCanclick}"><i class="iconfont icon icon-right"></i></span>
 		<div class="scroll">
-			<ul id="swiper1">
-				<li v-for="(item, i) in list" :key="i" class="item" :style="{ 'marginLeft': offset + 'px', 'marginRight': offset + 'px', 'marginTop': '8px', 'marginBottom': '8px'}">
+			<div id="swiper1">
+				<router-link target="_blank" :to="{name: 'companyDetail', query: { vkey: item.vkey }}" v-for="(item, i) in list" :key="i" class="item" :style="{ 'marginLeft': offset + 'px', 'marginRight': offset + 'px', 'marginTop': '8px', 'marginBottom': '8px'}">
 					<div class="company-logo" v-if="item.logoInfo">
 						<img :src="item.logoInfo.smallUrl" alt="loading" class="logo">
 					</div>
@@ -15,10 +15,10 @@
 							<p class="num">{{item.positionNum}}个</p>
 							<p class="hot">热招职位</p>
 						</div>
-						<router-link :to="{name: 'companyDetail', query: { vkey: item.vkey }}" class="enter" target="_blank">进入公司主页</router-link>
+						<span class="enter">进入公司主页</span>
 					</div>
-				</li>
-			</ul>
+				</router-link>
+			</div>
 		</div>
 		<span class="btn next" :class="{'btn-disabled': !btnNextCanclick, 'btn-abled': btnNextCanclick}"><i class="iconfont icon icon-right"></i></span>
 	</div>
@@ -128,6 +128,7 @@ export default {
 		padding: 12px;
 		position: relative;
 		height: 192px;
+		cursor: pointer;
 		&:hover {
 			.backend{
 				opacity: 1;
@@ -164,13 +165,14 @@ export default {
 		background:rgba(255,255,255,0.9);
 		border-radius:4px;
 		opacity: 0;
-		transition: all 1s;
+		transition: all .5s;
 		box-sizing: border-box;
 		padding: 20px;
 		height: 0;
 		height: 208px;
 		width: 160px;
 		transform: translate(-50%, -50%);
+		cursor: pointer;
 	}
 	.num {
 		height:24px;
@@ -209,6 +211,7 @@ export default {
 		height: 120px;
 		width: 120px;
 		box-sizing: border-box;
+		cursor: pointer;
 	}
 	.enter{
 		font-size:14px;
@@ -219,13 +222,11 @@ export default {
 		height:32px;
 		line-height: 32px;
 		border-radius:4px;
-		transition: all ease .5s;
 		display: block;
 		background:$bg-color-4;
 		color: white;
 		width: 100%;
 		margin-bottom: 22px;
-		cursor: pointer;
 	}
 	.btn {
 		width: 40px;
