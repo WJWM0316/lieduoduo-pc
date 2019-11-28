@@ -1,6 +1,6 @@
 <template>
   <div id="company">
-    <Search @on-search="(val) => handleSearch(val, 'append')" @on-reset="reset" :height="height" :infos="infos" v-if="infos.industryList.length" />
+    <Search @on-search="handleSearch" @on-reset="reset" :height="height" />
     <div class="banner">
       <div class="banner-title">精选酷公司</div>
       <Swiper :list="companyLogoLists" v-if="companyLogoLists.length" />
@@ -10,25 +10,25 @@
         <div class="type-item">
           <div class="type-filter">公司地点：</div>
           <div class="type-ul">
-            <span v-for="(area, areaIndex) in infos.areaList" :key="areaIndex" class="type-li" :class="{active: area.checked}" @click="onClick(area, areaIndex, 'areaList')">{{area.name}}</span>
+            <span v-for="(area, areaIndex) in searchCollect.area" :key="areaIndex" class="type-li" :class="{active: area.checked}" @click="onClick(area, areaIndex, 'area')">{{area.name}}</span>
           </div>
         </div>
         <div class="type-item">
           <div class="type-filter">融资规模：</div>
           <div class="type-ul">
-            <span v-for="(finance, financeIndex) in infos.financingList" :key="financeIndex" class="type-li" :class="{active: finance.checked}" @click="onClick(finance, financeIndex, 'financingList')">{{finance.text}}</span>
+            <span v-for="(finance, financeIndex) in searchCollect.financing" :key="financeIndex" class="type-li" :class="{active: finance.checked}" @click="onClick(finance, financeIndex, 'financing')">{{finance.text}}</span>
           </div>
         </div>
         <div class="type-item">
           <div class="type-filter">人员规模：</div>
           <div class="type-ul">
-            <span v-for="(employee, employeeIndex) in infos.employeeList" :key="employeeIndex" class="type-li" :class="{active: employee.checked}" @click="onClick(employee, employeeIndex, 'employeeList')">{{employee.text}}</span>
+            <span v-for="(employee, employeeIndex) in searchCollect.employee" :key="employeeIndex" class="type-li" :class="{active: employee.checked}" @click="onClick(employee, employeeIndex, 'employee')">{{employee.text}}</span>
           </div>
         </div>
         <div class="type-item">
           <div class="type-filter">行业领域：</div>
           <div class="type-ul">
-            <span v-for="(industry, industryIndex) in infos.industryList" :key="industryIndex" class="type-li" :class="{active: industry.checked}" @click="onClick(industry, industryIndex, 'industryList')">{{industry.name}}</span>
+            <span v-for="(industry, industryIndex) in searchCollect.industry" :key="industryIndex" class="type-li" :class="{active: industry.checked}" @click="onClick(industry, industryIndex, 'industry')">{{industry.name}}</span>
           </div>
         </div>
       </div>
@@ -49,7 +49,7 @@
       </el-pagination>
     </div>
     <div v-if="!total"><no-found :max-width="300"/></div>
-    <!-- <guideLogin></guideLogin> -->
+    <loginPop ref="loginPop"></loginPop>
   </div>
 </template>
 <script>
@@ -60,8 +60,7 @@ import NoFound from 'COMPONENTS/noFound'
 import { getLogoListsListsApi } from 'API/company'
 import { getCompanyListsApi } from 'API/search'
 import { getSearchCollect } from 'API/common'
-import { mapGetters, mapActions, mapState } from 'vuex'
-import guideLogin from '@/components/common/guideLogin'
+import loginPop from '@/components/common/loginPop'
 
 export default {
   components: {
@@ -69,7 +68,7 @@ export default {
     CompanyCard,
     Search,
     NoFound,
-    guideLogin
+    loginPop
   },
   data () {
     return {
@@ -77,222 +76,76 @@ export default {
       companyLists: [],
       page: 1,
       total: 0,
-      height: 0,
-      search: {
-        areaList: [],
-        industryList: [],
-        employeeList: [],
-        financingList: []
-      },
-      infos: {
-        areaList: [],
-        industryList: [],
-        employeeList: [],
-        financingList: []
-      }
+      height: 0
     }
   },
   computed: {
     ...mapState({
       searchCollect: state => state.company.searchCollect
-    })
+    }),
+    ...mapGetters([
+      'filterSearchCollect'
+    ]),
+    isLogin () {
+      return !!this.$store.state.userInfo.id
+    }
   },
   methods: {
     ...mapActions([
-      'getSearchCollectApi'
+      'getSearchCollectApi',
+      'updateSearchCollectApi',
+      'updateSearchCollectMutipleApi'
     ]),
     getLogoListsLists () {
-      getLogoListsListsApi().then(res => this.companyLogoLists = res.data.data)
+      getLogoListsListsApi().then(({ data }) => this.companyLogoLists = data.data)
     },
-    handleSearch (search) {
-      this.search = search
+    handleSearch () {
       this.getLists()
     },
     getLists () {
-      let search = {
-        cityNums: this.search.areaList.map(v => v.areaId).join(','),
-        industryIds: this.search.industryList.map(v => v.labelId).join(','),
-        employeeIds: this.search.employeeList.map(v => v.value).join(','),
-        financingIds: this.search.financingList.map(v => v.value).join(',')
+      let cityNums = this.filterSearchCollect.area.map(v => v.areaId).join(',')
+      let industryIds = this.filterSearchCollect.industry.map(v => v.labelId).join(',')
+      let employeeIds = this.filterSearchCollect.employee.map(v => v.value).join(',')
+      let financingIds = this.filterSearchCollect.financing.map(v => v.value).join(',')
+      let query = { page: this.page }
+      if (cityNums) {
+        query = Object.assign(query, { cityNums })
       }
-      let query = Object.assign({page: this.page, count: 20}, search)
-      if (!query.cityNums) {
-        delete query.cityNums
+      if (industryIds) {
+        query = Object.assign(query, { industryIds })
       }
-      if (!query.industryIds) {
-        delete query.industryIds
+      if (employeeIds) {
+        query = Object.assign(query, { employeeIds })
       }
-      if (!query.employeeIds) {
-        delete query.employeeIds
+      if (financingIds) {
+        query = Object.assign(query, { financingIds })
       }
-      if (!query.financingIds) {
-        delete query.financingIds
-      }
-      getCompanyListsApi(query).then(({data}) => {
+      getCompanyListsApi({ ...query, count: 20 }).then(({data}) => {
         this.companyLists = data.data
         this.total = data.meta.total
         this.page = Number(data.meta.currentPage)
-        delete query.count
         this.$router.push({ query })
       })
     },
-    getSearchParams (params) {
-      this.search = params
-      this.page = 1
-      this.getLists()
+    changePage (page) {
+      if (this.isLogin) {
+        this.page = page
+        this.getLists()
+      } else {
+        this.$refs.loginPop.showLoginPop = true
+      }
     },
-    getCollectList () {
-      getSearchCollect().then(({ data }) => {
-        const { query } = this.$route
-        const { employee, financing, industry, area } = data.data
-        this.search.areaList = []
-        this.search.industryList = []
-        this.search.employeeList = []
-        this.search.financingList = []
-
-        if (query.cityNums) {
-          let cityNumsArr = query.cityNums.split(',')
-          area.map((v, i, arr) => {
-            v.checked = false
-            if (cityNumsArr.includes(String(v.areaId))) {
-              v.checked = true
-              this.search.areaList.push(v)
-            }
-          })
-        }
-
-        if (query.industryIds) {
-          let industryIdsArr = query.industryIds.split(',')
-          industry.map((v, i, arr) => {
-            v.checked = false
-            if (industryIdsArr.includes(String(v.labelId))) {
-              v.checked = true
-              this.search.industryList.push(v)
-            }
-          })
-        }
-        
-        if (query.financingIds) {
-          let financingIdsArr = query.financingIds.split(',')
-          financing.map((v, i, arr) => {
-            v.checked = false
-            if (financingIdsArr.includes(String(v.value))) {
-              v.checked = true
-              this.search.financingList.push(v)
-            }
-          })
-        }
-
-        if (query.employeeIds) {
-          let employeeIdsArr = query.employeeIds.split(',')
-          employee.map((v, i, arr) => {
-            v.checked = false
-            if (employeeIdsArr.includes(String(v.value))) {
-              v.checked = true
-              this.search.employeeList.push(v)
-            }
-          })
-        }
-
-        this.infos.employeeList = employee
-        this.infos.financingList = financing
-        this.infos.industryList = industry
-        this.infos.areaList = area
+    reset () {
+      for (let key in this.searchCollect) {
+        this.updateSearchCollectMutipleApi({ arr: [], key })
+      }
+      setTimeout(() => {
+        this.page = 1
         this.getLists()
       })
     },
-    changePage (page) {
-      this.page = page
-      this.getLists()
-    },
-    reset () {
-      this.search = {
-        areaList: [],
-        industryList: [],
-        employeeList: [],
-        financingList: []
-      }
-      this.page = 1
-      for (let item in this.infos) {
-        this.infos[item].map(v => v.checked = false)
-      }
-      this.getLists()
-    },
     onClick (item, index, key) {
-      const list = this.infos[key].slice()
-      switch (key) {
-        case 'employeeList':
-          if (item.value) {
-            list.map((v,i,arr) => {
-              if (i === index) {
-                v.checked = !v.checked
-                this.search[key] = arr.filter(v => v.checked)
-              }
-              if (i === 0) {
-                v.checked = false
-              }
-            })
-          } else {
-            if (!list[0].checked) {
-              list.map((v, i, a) => v.checked = !i ? true : false)
-              this.search[key] = []
-            }
-          }
-          break
-        case 'financingList':
-          if (item.value) {
-            list.map((v,i,arr) => {
-              if (i === index) {
-                v.checked = !v.checked
-                this.search[key] = arr.filter(v => v.checked)
-              }
-              if (i === 0) {
-                v.checked = false
-              }
-            })
-          } else {
-            if (!list[0].checked) {
-              list.map((v, i, a) => v.checked = !i ? true : false)
-              this.search[key] = []
-            }
-          }
-          break
-        case 'industryList':
-          if (item.labelId) {
-            list.map((v,i,arr) => {
-              if (i === index) {
-                v.checked = !v.checked
-                this.search[key] = arr.filter(v => v.checked)
-              }
-              if (i === 0) {
-                v.checked = false
-              }
-            })
-          } else {
-            if (!list[0].checked) {
-              list.map((v, i, a) => v.checked = !i ? true : false)
-              this.search[key] = []
-            }
-          }
-          break
-        case 'areaList':
-          list.map((v,i,arr) => {
-            v.checked = false
-            if (i === index) {
-              v.checked = !v.checked
-              if (v.areaId) {
-                this.search[key] = [v]
-              } else {
-                this.search[key] = []
-              }
-            }
-          })
-          break
-        default:
-          break
-      }
-      this.infos[key] = list
-      this.getLists()
+      this.updateSearchCollectApi({ item, index, key }).then(() => this.getLists())
     }
   },
   created () {
@@ -301,10 +154,7 @@ export default {
       this.page = Number(query.page)
     }
     this.getLogoListsLists()
-    this.getCollectList()
-    // this.getSearchCollectApi().then(() => {
-    //   console.log(this.searchCollect, 'hhhh')
-    // })
+    this.getSearchCollectApi().then(() => this.getLists())
   },
   mounted () {
     this.$nextTick(function () {
