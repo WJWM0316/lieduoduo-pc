@@ -78,7 +78,7 @@ export default {
 .random-banner {
 	position: relative;
 	width: 763px;
-	height: 416px;
+	height: 414px;
 	overflow: hidden;
 	margin-left: 18px;
 	.li-item{
