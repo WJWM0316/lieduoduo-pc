@@ -47,7 +47,7 @@
         <div class="hotPosition-inner">
           <p class="hotPosition-title">热招职位：</p>
           <div class="hotPosition-buttom">
-            <div class="hotPosition-box" v-for="(item, index) in HotPositionList" :key="index" @click="toJobDetails(item,index)">
+            <div class="hotPosition-box" :class="{ hotPosition_box_one: index === 0 }" v-for="(item, index) in HotPositionList" :key="index" @click="toJobDetails(item,index)">
               <span class="hot-positionName">{{item.positionName}}</span>
               <span
                 class="hot-annualSalaryDesc"
@@ -598,6 +598,9 @@ to {top:0px;}
           color: $font-color-temp2;
           margin-top: 20px;
         }
+      }
+      .hotPosition_box_one{ // 解决第一个盒子左边距
+        margin-left: 0;
       }
     }
   }
