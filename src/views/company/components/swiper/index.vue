@@ -2,7 +2,7 @@
 	<div class="swiper1">
 		<span class="btn prev" :class="{'btn-disabled': !btnPrevCanclick, 'btn-abled': btnPrevCanclick}"><i class="iconfont icon icon-right"></i></span>
 		<div class="scroll">
-			<div id="swiper1">
+			<div id="swiper1" class="card-list">
 				<router-link target="_blank" :to="{name: 'companyDetail', query: { vkey: item.vkey }}" v-for="(item, i) in list" :key="i" class="item" :style="{ 'marginLeft': offset + 'px', 'marginRight': offset + 'px', 'marginTop': '8px', 'marginBottom': '8px'}">
 					<div class="company-logo" v-if="item.logoInfo">
 						<img :src="item.logoInfo.smallUrl" alt="loading" class="logo">
@@ -37,7 +37,7 @@ export default {
     list: {
       type: Array,
       default() {
-        return [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
+        return []
       }
     }
   },
@@ -111,7 +111,7 @@ export default {
 		height: 208px;
 		overflow: hidden;
 	}
-	ul {
+	.card-list {
 		position: absolute;
 		left: 0;
 		top: 0;
