@@ -209,7 +209,7 @@ img {
 		&.isRapidly {
 			background: url(#{$image-cdn-url}/images/24h.png), #03B3BB;
 			background-repeat: no-repeat;
-			background-position: right 100%;
+			background-position: 1280px 100%;
 			.inner {
 				.header-content {
 					.name, .info-item {
@@ -219,7 +219,9 @@ img {
 						color: #fff !important;
 					}
 					.label-item {
-						color: $main-color-1 !important;
+						color: #fff;
+						background: transparent;
+						border:1px solid #fff;
 					}
 					.infos {
 						.info-item {
@@ -232,7 +234,7 @@ img {
 				.aside {
 					padding-top: 6px;
 					.yuemian24 {
-						padding-left: 56px;
+						padding-left: 52px;
 						position: relative;
 						font-size: 0;
 						margin-bottom: 12px;
@@ -269,7 +271,7 @@ img {
 							.little-box {
 								width:24px;
 								height:24px;
-								background:#EFE9F4;
+								background: #fff;
 								border-radius:2px;
 								line-height: 24px;
 								text-align: center;
@@ -352,7 +354,7 @@ img {
 			padding-right: 100px;
 			margin: 0;
 			.part {
-				margin-bottom: 40px;
+				margin-bottom: 60px;
 				&:last-child {
 					margin-bottom: 0;
 				}
@@ -381,7 +383,7 @@ img {
 						color:$font-color-6;
 						line-height:28px;
 						padding: 0 14px;
-						background: #F2F1F5;
+						background: $bg-color-1;
 						margin-right: 16px;
 						display: inline-block;
 					}
