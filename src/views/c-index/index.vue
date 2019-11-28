@@ -5,7 +5,8 @@
     <div class="position-wrapper main-center">
       <div class="index-part-1">
         <position-name :list="positionData"></position-name>
-        <index-banner :items="bannerLists" ref="indexBanner"></index-banner>
+        <!-- <index-banner :items="bannerLists" ref="indexBanner"></index-banner> -->
+        <IndexBanner3 />
       </div>
       <active />
       <!-- <position-list :nameList="positionLabel" ref="positionList"></position-list> -->
@@ -23,6 +24,8 @@ import SearchWrapper from './components/indexSearch'
 import PositionName from './components/postionName'
 import IndexBanner from './components/indexBanner'
 import Active from './components/24Active'
+import IndexBanner3 from './components/indexBanner3'
+
 // 职位列表
 // import PositionList from './components/positionList.vue'
 // 热门公司列表
@@ -41,7 +44,8 @@ export default {
     HotCity,
     HotCompany,
     AppLinks,
-    ScrollToTop
+    ScrollToTop,
+    IndexBanner3
   },
   data () {
     return {
@@ -79,11 +83,11 @@ export default {
           }
           return true
         })
-        if (this.bannerLists.length > 1) {
-          this.$nextTick(() => {
-            this.$refs.indexBanner.autoplay()
-          })
-        }
+        // if (this.bannerLists.length > 1) {
+        //   this.$nextTick(() => {
+        //     this.$refs.indexBanner.autoplay()
+        //   })
+        // }
       })
     },
     // 获取页面数据 比如职位，地址等等
