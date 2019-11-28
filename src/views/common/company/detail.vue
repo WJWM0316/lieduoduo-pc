@@ -568,7 +568,6 @@ to {top:0px;}
       font-weight:400;
     }
     .hotPosition-buttom{
-      @include flex-justify-between;
 
       .hotPosition-box{
         padding: 24px 24px;
@@ -578,6 +577,8 @@ to {top:0px;}
         box-sizing: $sizing;
         border-radius:4px;
         cursor: pointer;
+        display: inline-block;
+        margin-left: 15px;
 
         .hot-positionName{
           font-size: 16px;
@@ -602,190 +603,190 @@ to {top:0px;}
   }
 }
 .introduction-mian{
-        @extend %wrap-width;
+  @extend %wrap-width;
+  background: #FFFFFF;
+
+  .introduction-inner{
+    width: $page-width;
+    margin: 0 auto;
+    padding: 40px 0;
+    display: flex;
+    flex-wrap: wrap;
+    .appLinks{
+      box-sizing: border-box;
+      padding: 90px 0 40px 0;
+      & /deep/ .show-more-btn{
         background: #FFFFFF;
+      }
+    }
 
-        .introduction-inner{
-          width: $page-width;
-          margin: 0 auto;
-          padding: 40px 0;
+    .introduction-left{
+      border-right: 1px solid $border-color-1;
+      width: 850px;
+      padding-right: 100px;
+      box-sizing: $sizing;
+
+      .introduction-presentation{
+        margin-bottom: 60px;
+        position: relative;
+
+        .introduction-title{
+          @extend %introductionTitle;
+        }
+        .introduction-text{
+          font-size: 14px;
+          color: $font-color-3;
+          font-weight: 400;
+          line-height: 26px;
+          height: 158px;
+          overflow: hidden;
+        }
+        .introduction-left-buttom{
+          position: absolute;
+          right: 15px;
+        }
+        .introduction_viewAll{
+          height: auto;
+        }
+      }
+      .product{
+        margin-bottom: 60px;
+
+        .product-title{
+          @extend %introductionTitle;
+        }
+
+        .product-box{
           display: flex;
-          flex-wrap: wrap;
-          .appLinks{
-            box-sizing: border-box;
-            padding: 90px 0 40px 0;
-            & /deep/ .show-more-btn{
-              background: #FFFFFF;
-            }
+          margin-bottom: 24px;
+
+          .product-img{
+          width: 77px;
+          height: 77px;
+          border-radius: 8px;
           }
+          .product-text{
+            margin: 6px 0 0 20px;
+            height: 66px;
+            @include flex-justify-between;
+            @include flex-direction-column;
+            font-weight: 400;
 
-          .introduction-left{
-            border-right: 1px solid $border-color-1;
-            width: 850px;
-            padding-right: 100px;
-            box-sizing: $sizing;
-
-            .introduction-presentation{
-              margin-bottom: 60px;
-              position: relative;
-
-              .introduction-title{
-                @extend %introductionTitle;
-              }
-              .introduction-text{
-                font-size: 14px;
-                color: $font-color-3;
-                font-weight: 400;
-                line-height: 26px;
-                height: 158px;
-                overflow: hidden;
-              }
-              .introduction-left-buttom{
-                position: absolute;
-                right: 15px;
-              }
-              .introduction_viewAll{
-                height: auto;
-              }
+            .product-text-top{
+              font-size: 14px;
+              color: $font-color-3;
             }
-            .product{
-              margin-bottom: 60px;
-
-              .product-title{
-                @extend %introductionTitle;
-              }
-
-              .product-box{
-                display: flex;
-                margin-bottom: 24px;
-
-                .product-img{
-                width: 77px;
-                height: 77px;
-                border-radius: 8px;
-                }
-                .product-text{
-                  margin: 6px 0 0 20px;
-                  height: 66px;
-                  @include flex-justify-between;
-                  @include flex-direction-column;
-                  font-weight: 400;
-
-                  .product-text-top{
-                    font-size: 14px;
-                    color: $font-color-3;
-                  }
-                  .product-text-middle{
-                    font-size: 12px;
-                    color: $font-color-6;
-                    overflow: hidden;
-                    white-space: nowrap;
-                    text-overflow: ellipsis;
-                  }
-                  .product-text-buttom{
-                    color: $font-color-2;
-                    font-size: 12px;
-                  }
-                }
-              }
+            .product-text-middle{
+              font-size: 12px;
+              color: $font-color-6;
+              overflow: hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
             }
-
-            .address{
-              width: 750px;
-              img{
-                cursor: pointer;
-              }
-              .address-title{
-                @extend %introductionTitle;
-              }
-              .address-text{
-                font-size: 14px;
-                color: $font-color-2;
-                font-weight:400;
-                i{
-                  font-size: 15px;
-                  color: $font-color-10;
-                  display: inline-block;
-                  margin: 0 7px 0 15px;
-                }
-              }
-            }
-          }
-          .introduction-right{
-            padding-left: 50px;
-            width: 298px;
-            display: inline-block;
-            .guideLogin{
-              margin-bottom: 50px;
-            }
-            .surroundings{
-              .surroundings-title{
-                @extend %introductionTitle;
-              }
-              .surroundings-container{
-                width: 298px;
-                height: 160px;
-                overflow: hidden;
-                .photo{
-                  @include clearfix;
-                  img{
-                    width: 298px;
-                    height: 147px;
-                    display: block;
-                    float: left;
-                  }
-                }
-              }
-            }
-            .recruitmentTeam{
-              margin-top: 50px;
-              .recruitmentTeam-title{
-                @extend %introductionTitle;
-              }
-              .recruitmentTeam-box{
-                height: 99px;
-                display: flex;
-                @include flex-v-center;
-                img{
-                  width: 66px;
-                  height: 66px;
-                  border-radius: 50%;
-                }
-                .recruitmentTeam-text{
-                  height: 44px;
-                  margin-left: 14px;
-                  font-weight: 400;
-                  font-size: 14px;
-                  line-height: 20px;
-
-                  .recruitmentTeam-text-top{
-                    color: $font-color-3;
-                  }
-                  .recruitmentTeam-text-buttom{
-                    margin-top: 4px;
-                    color: $font-color-6;
-                    overflow: hidden;
-                    white-space: nowrap;
-                    text-overflow: ellipsis;
-                  }
-                }
-              }
-              .recruitmentTeam-buttom{
-                margin-top: 10px;
-                width: 280px;
-                height: 37px;
-                border: 1px solid $border-color-1;
-                color: $border-color-5;
-                border-radius:2px;
-                font-size: 14px;
-                i{
-                  font-size: 14px;
-                }
-              }
+            .product-text-buttom{
+              color: $font-color-2;
+              font-size: 12px;
             }
           }
         }
       }
+
+      .address{
+        width: 750px;
+        img{
+          cursor: pointer;
+        }
+        .address-title{
+          @extend %introductionTitle;
+        }
+        .address-text{
+          font-size: 14px;
+          color: $font-color-2;
+          font-weight:400;
+          i{
+            font-size: 15px;
+            color: $font-color-10;
+            display: inline-block;
+            margin: 0 7px 0 15px;
+          }
+        }
+      }
+    }
+    .introduction-right{
+      padding-left: 50px;
+      width: 298px;
+      display: inline-block;
+      .guideLogin{
+        margin-bottom: 50px;
+      }
+      .surroundings{
+        .surroundings-title{
+          @extend %introductionTitle;
+        }
+        .surroundings-container{
+          width: 298px;
+          height: 160px;
+          overflow: hidden;
+          .photo{
+            @include clearfix;
+            img{
+              width: 298px;
+              height: 147px;
+              display: block;
+              float: left;
+            }
+          }
+        }
+      }
+      .recruitmentTeam{
+        margin-top: 50px;
+        .recruitmentTeam-title{
+          @extend %introductionTitle;
+        }
+        .recruitmentTeam-box{
+          height: 99px;
+          display: flex;
+          @include flex-v-center;
+          img{
+            width: 66px;
+            height: 66px;
+            border-radius: 50%;
+          }
+          .recruitmentTeam-text{
+            height: 44px;
+            margin-left: 14px;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 20px;
+
+            .recruitmentTeam-text-top{
+              color: $font-color-3;
+            }
+            .recruitmentTeam-text-buttom{
+              margin-top: 4px;
+              color: $font-color-6;
+              overflow: hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+            }
+          }
+        }
+        .recruitmentTeam-buttom{
+          margin-top: 10px;
+          width: 280px;
+          height: 37px;
+          border: 1px solid $border-color-1;
+          color: $border-color-5;
+          border-radius:2px;
+          font-size: 14px;
+          i{
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+}
 .address-text{
   font-size: 14px;
   color: $font-color-2;
