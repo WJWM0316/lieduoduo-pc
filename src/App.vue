@@ -7,7 +7,7 @@ import Component from 'vue-class-component'
 import { getUserInfosApi } from '@/api/auth.js'
 import { getUserRoleInfoApi } from '@/api/auth'
 import { getAccessToken } from 'API/cacheService'
-import { recruiterDetail } from 'API/common'
+import { perfectauthDetail } from 'API/common'
 @Component({
   name: 'APP'
 })
@@ -34,7 +34,7 @@ export default class APP extends Vue {
   created () {
     if (getAccessToken()) {
       this.getUserInfo()
-      recruiterDetail().then((res) => {
+      perfectauthDetail().then((res) => {
         this.$store.commit('setRecruiterinfo', res.data.data)
       })
     }

@@ -7,7 +7,7 @@
       </div>
     </div>
     <div class="info">
-      <template v-if="!haveIdentity">
+      <template v-if="!haveIdentity.identityAuth && (haveIdentity.identityStatus !== 0 && haveIdentity.identityStatus !== 1 && haveIdentity.identityStatus !== 2)">
       <div class="authtitle">
         完善身份信息
       </div>
@@ -49,15 +49,15 @@
         <template v-else>
           <div class="status">
             <div class="topicon">
-              <img v-if="companyInfo.status === 1" src="@/assets/images/adopt.png" />
-            <img v-if="companyInfo.status === 0" src="@/assets/images/examine.png" />
-            <img v-if="companyInfo.status === 2" src="@/assets/images/notadopt.png" />
+              <img v-if="haveIdentity.identityStatus === 1" src="@/assets/images/adopt.png" />
+            <img v-if="haveIdentity.identityStatus === 0" src="@/assets/images/examine.png" />
+            <img v-if="haveIdentity.identityStatus === 2" src="@/assets/images/notadopt.png" />
             </div>
-            <div class="status-text" v-if="companyInfo.status === 0">实名认证审核中</div>
-            <div class="status-text" v-if="companyInfo.status === 2">实名认证审核不通过</div>
-            <div class="status-desc" v-if="companyInfo.status === 0">该申请将在1个工作日内审核，审核通过后即可开始招聘</div>
-            <div class="status-desc" v-if="companyInfo.status === 2">请重新提交资料，完成个人信息认证</div>
-            <div class="nopass" v-if="companyInfo.status === 2">
+            <div class="status-text" v-if="haveIdentity.identityStatus === 0">实名认证审核中</div>
+            <div class="status-text" v-if="haveIdentity.identityStatus === 2">实名认证审核不通过</div>
+            <div class="status-desc" v-if="haveIdentity.identityStatus === 0">该申请将在1个工作日内审核，审核通过后即可开始招聘</div>
+            <div class="status-desc" v-if="haveIdentity.identityStatus === 2">请重新提交资料，完成个人信息认证</div>
+            <div class="nopass" v-if="haveIdentity.identityStatus === 2">
               <div class="title">
                 <span>实名认证审核未通过的原因如下</span>
                 <span @click="change()" class="cxtitle">重新提交认证信息</span>
@@ -94,6 +94,7 @@
 import { realNameReg, idCardReg } from '@/util/fieldRegular.js'
 import Picture from 'COMPONENTS/common/upload/picture'
 import { getCompanyIdentityInfosApi, identityCompanyApi, editCompanyIdentityInfosApi } from 'API/register'
+import { perfectauthDetail } from 'API/common'
 export default {
   components: {
     Picture
@@ -124,7 +125,7 @@ export default {
         real_name: '',
         identity_num: ''
       },
-      haveIdentity: false,
+      haveIdentity: '',
       companyInfo: '',
       info: '',
       frontLoading: false,
@@ -149,11 +150,23 @@ export default {
           if (this.companyInfo.status === 2 || this.companyInfo.status === 0) {
             editCompanyIdentityInfosApi(this.ruleForm).then((res) => {
               this.getCompanyIdentityInfos()
+              perfectauthDetail().then((res) => {
+                this.haveIdentity = {
+                  haveIdentity: res.data.data.identityAuth,
+                  identityStatus: res.data.data.identityStatus
+                }
+              })
               this.$message.success('编辑成功')
             })
           } else {
             identityCompanyApi(this.ruleForm).then((res) => {
               this.getCompanyIdentityInfos()
+              perfectauthDetail().then((res) => {
+                this.haveIdentity = {
+                  haveIdentity: res.data.data.identityAuth,
+                  identityStatus: res.data.data.identityStatus
+                }
+              })
               this.$message.success('完善信息成功')
             })
           }
@@ -176,16 +189,15 @@ export default {
       })
     },
     change () {
-      this.haveIdentity = false
+      this.haveIdentity = {
+        haveIdentity: null,
+        identityStatus: 4
+      }
     }
   },
   mounted () {
     setTimeout(() => {
-      if (!this.$store.state.recruiterinfo.identityAuth) {
-        this.haveIdentity = true
-      } else {
-        this.haveIdentity = false
-      }
+      this.haveIdentity = this.$store.state.recruiterinfo
     }, 1000)
     this.getCompanyIdentityInfos()
   }
