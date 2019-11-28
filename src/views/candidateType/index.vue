@@ -673,7 +673,7 @@
               <div :class="['benke', item.positionStatus === 0 || item.positionStatus === 3 || item.positionStatus === 4 ? 'hui' : '']">{{item.educationName}}</div>
             </div>
             <div class="info" v-else>选择此项，以上申请记录将全部合并处理为不合适</div>
-            <div class="selectcur" v-if="item.positionStatus === 1 || item.positionStatus === 0">
+            <div class="selectcur" v-if="item.positionStatus === 1 || item.positionStatus === 0 || item.positionStatus === 2 || item.positionName === '都不合适'">
               <i :class="['iconfont icon-chenggong position bg']" v-if="item.hascur"></i>
                 <i :class="['iconfont icon-beixuanxiang position']" v-else></i>
             </div>
@@ -1261,23 +1261,29 @@ export default class CourseList extends Vue {
       // 点击处理多条记录
       if (this.pop.type === 'applyrecord') {
         let arr = []
+        let canclick = false
         this.applyrecordList.map((v, k) => {
           if (v.hascur) {
             arr.push(v)
             this.interviewId = v.interviewId
           }
+          if (v.boxshow) {
+            canclick = true
+          }
         })
         if (this.pop.recordtext === '确认选择后，候选人多条申请将合并为一条面试记录；面试最终确认前，可随时沟通更新面试职位；') {
-          if (arr.length === 0) {
-            this.$message.warning('请选择一条面试')
-          } else {
-            confirmInterviewApi({ interviewId: this.interviewId }).then((res) => {
-              this.$message.success('约面成功')
-              this.pop = {
-                isShow: false
-              }
-              this.init()
-            })
+          if (!canclick) {
+            if (arr.length === 0) {
+              this.$message.warning('请选择一条面试')
+            } else {
+              confirmInterviewApi({ interviewId: this.interviewId }).then((res) => {
+                this.$message.success('约面成功')
+                this.pop = {
+                  isShow: false
+                }
+                this.init()
+              })
+            }
           }
         } else {
           if (arr.length === 0) {
@@ -1430,6 +1436,7 @@ export default class CourseList extends Vue {
     }
     resetboxcur (item, index) {
       this.applyrecordList[index].boxshow = false
+      this.applyrecordList[index].hascur = false
     }
     sureyuemian (data) {
       openPositionApi({ id: data.positionId })
