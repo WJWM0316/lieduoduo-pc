@@ -64,11 +64,13 @@ export default {
     padding: 0 8px;
   }
   .iconfont {
-    font-size: 14px;
+    font-size: 12px;
   }
   span.city-title {
-    padding: 0 3px;
+    padding: 0 9px;
     color: $title-color-3;
+    letter-spacing: 2px;
+    font-weight: 500;
   }
   &::after, &::before {
     content: "";

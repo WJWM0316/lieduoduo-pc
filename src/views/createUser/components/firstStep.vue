@@ -295,7 +295,6 @@ export default class CourseList extends Vue {
     line-height: 46px;
     display: flex;
     color: #666666;
-    margin-bottom: 20px;
     background:$bg-color-1;
     border-radius: 4px;
     display: inline-block;
@@ -323,6 +322,9 @@ export default class CourseList extends Vue {
       bottom: 0;
       opacity: 0;
     }
+  }
+  .formTimeItem + .formTimeItem {
+    margin-top: 20px;
   }
 }
 .el-dropdown-menu {

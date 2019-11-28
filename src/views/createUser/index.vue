@@ -66,7 +66,8 @@ export default class createUser extends Vue {
     height: 100vh;
     min-height: 900px;
     box-sizing: border-box;
-    background: url(#{$image-cdn-url}/images/bg_createjl.png) 100% repeat $bg-color-4;
+    background: url('../../assets/images/create_bg.jpg') repeat $bg-color-4;
+    background-size: 30%;
     .defalut-position{
       position: absolute;
       top: 50%;
@@ -117,13 +118,12 @@ export default class createUser extends Vue {
     }
     .title {
       font-size:22px;
-      font-family:PingFangSC;
       font-weight:700;
       color:#fff;
       line-height:32px;
       padding-top: 48px;
       span {
-        color:#FFDC29;
+        color: $sub-color-1;
       }
     }
     .slogon-box{

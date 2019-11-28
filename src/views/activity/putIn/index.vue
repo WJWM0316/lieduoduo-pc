@@ -37,9 +37,9 @@
                 <div class="select_op">
                   <div class="op_left" @click="isShowSelect = false">关闭</div>
                   <div class="op_right" @click="openMask('login')">
-                    查看更多
-                    <span>{{searchJobData.keyword}}</span>岗位
-                    <img class="arrowsR" :src="cdnPath + 'arrowsR.png'" />
+                    查看更多 <span>{{searchJobData.keyword}}</span> 岗位
+                    <!-- <img class="arrowsR" :src="cdnPath + 'arrowsR.png'" /> -->
+                    <span class="iconfont icon-zizhurenzheng arrowsR" />
                   </div>
                 </div>
               </div>
@@ -575,7 +575,7 @@ export default class CourseList extends Vue {
           }
           .modal-top-emolumentMax{
             font-size: 18px;
-            color: #FF7F4C;
+            color: $sub-color-1;
           }
           .modal-top-des {
             font-size:16px;
@@ -725,6 +725,7 @@ export default class CourseList extends Vue {
     .icon-close {
       width: 15px;
       height: 15px;
+      color: $title-color-3;
       display: inline-block;
       background-size: contain;
       position: absolute;
@@ -775,7 +776,7 @@ export default class CourseList extends Vue {
         width:113px;
         height:34px;
         background: $bg-color-4;
-        border-radius:84px;
+        border-radius: 4px;
         font-size:14px;
         font-weight:700;
         color:#fff;
@@ -910,11 +911,10 @@ export default class CourseList extends Vue {
             .select-main {
               width:564px;
               height:436px;
-
               background:#fff;
               border-radius:4px;
               position: absolute;
-              top: 65px;
+              top: 64px;
               left: 0;
               z-index: 10;
               .select-none {
@@ -945,22 +945,21 @@ export default class CourseList extends Vue {
                   cursor: pointer;
                 }
               }
-              .select-cont {
-              }
               .select_list {
                 height: 382px;
                 overflow-y: auto;
+                padding: 9px 0;
+                box-sizing: border-box;
                 .job_blo {
-                  padding: 0 40px;
-                  box-sizing: border-box;
+                  padding: 19px 40px;
+                  cursor: pointer;
                   display: flex;
                   justify-content: space-between;
                   align-items: center;
-                  height: 60px;
-                  border-bottom: 1px solid #E8E9EB;
+                  position: relative;
                   text-align: left;
                   &:hover {
-                    background: rgba($bg-color-4, 0.1);
+                    background: rgba($bg-color-5, 0.5);
                   }
                   .job_blo_left {
                     width: 160px;
@@ -978,8 +977,18 @@ export default class CourseList extends Vue {
                   .job_blo_right {
                     text-align: right;
                     font-size:18px;
-                    font-weight:400;
-                    color:#FF7F4C;
+                    font-weight: bold;
+                    color:$sub-color-1;
+                  }
+                }
+                .job_blo + .job_blo {
+                  &::after {
+                    content: "";
+                    position: absolute;
+                    top: 0;
+                    height: 1px;
+                    background: rgba($border-color-1, 0.5);
+                    width: 100%;
                   }
                 }
               }
@@ -1004,18 +1013,19 @@ export default class CourseList extends Vue {
                   color: $main-color-1;
                   display: flex;
                   span {
-                    color: #FF7F4C;
-                    margin-right: 5px;
+                    color: $sub-color-1;
+                    margin: 0 5px;
+                  }
+                  .arrowsR {
+                    display: inline-block;
+                    vertical-align: middle;
+                    margin-left: 6px;
+                    font-size: 14px;
+                    position: relative;
+                    color: $main-color-1;
                   }
                 }
-                .arrowsR {
-                  width:16px;
-                  height:16px;
-                  margin-left: 6px;
-                  display: block;
-                  position: relative;
-                  top: -1px;
-                }
+
               }
             }
           }
@@ -1252,6 +1262,7 @@ export default class CourseList extends Vue {
               text-align: center;
               text-decoration: none;
               border-radius: 3px;
+              font-weight: bold;
               cursor: pointer;
               &.false {
                 cursor: inherit;
@@ -1272,7 +1283,7 @@ export default class CourseList extends Vue {
             text-align: center;
             width:328px;
             background: $bg-color-4;
-            border-radius:100px;
+            border-radius: 4px;
             cursor: pointer;
           }
           .lp_agreeNotice_box {
@@ -1285,7 +1296,6 @@ export default class CourseList extends Vue {
               color: #999;
               span {
                 color: #555;
-                text-decoration: underline;
                 cursor: pointer;
                 color: $main-color-1;
               }

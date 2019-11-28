@@ -86,7 +86,7 @@
           </section>
           <section class="part" v-if="infos.companyInfo.intro">
             <div class="title">公司介绍</div>
-            <pre class="richText">{{infos.companyInfo.intro}}</pre>
+            <block-overflow class="richText" ref="blockOverflow" :text="infos.companyInfo.intro" />
           </section>
           <section class="part" v-if="infos.address">
             <div class="title">工作地址</div>
@@ -132,6 +132,7 @@ import guideLogin from '@/components/common/guideLogin'
 import adpostion from '@/components/common/adpostion'
 import { mapState } from 'vuex'
 import AppLinks from 'COMPONENTS/common/appLinks'
+import BlockOverflow from 'COMPONENTS/common/blockOverflow'
 let that = null
 
 @Component({
@@ -141,7 +142,8 @@ let that = null
     guideLogin,
     adpostion,
     interviewBtn,
-    AppLinks
+    AppLinks,
+    BlockOverflow
   },
   computed: {
     ...mapState({
@@ -157,7 +159,7 @@ let that = null
         let serviceEndTime = `${parseInt(this.infos.rapidlyServiceEndTime.slice(5, 7))}月${parseInt(this.infos.rapidlyServiceEndTime.slice(8, 10))}日`
         return `现在申请最迟${serviceEndTime}反馈`
       } else {
-        return `现在申请24小时内必定反馈`
+        return '现在申请24小时内必定反馈'
       }
     }
   }
@@ -202,6 +204,9 @@ export default class PositionDetail extends Vue {
           this.remainingTime = res
         })
       }
+      this.$nextTick(() => {
+        this.$refs.blockOverflow.updateTextHigh()
+      })
       this.getMapLocation(that.infos.lat, that.infos.lng)
     })
   }
@@ -241,12 +246,18 @@ export default class PositionDetail extends Vue {
             let infos = this.infos
             infos.isCollect = true
             this.infos = infos
+            if (res.data.httpStatus === 200) {
+              this.$message.success('成功标记感兴趣')
+            }
           })
         } else {
           deleteMycollectPositionApi({ id: this.id }).then(res => {
             let infos = this.infos
             infos.isCollect = false
             this.infos = infos
+            if (res.data.httpStatus === 200) {
+              this.$message.success('已取消标记')
+            }
           })
         }
         break
