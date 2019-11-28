@@ -898,6 +898,7 @@ export default {
       })
       .catch(err => {
         // 从后台完善信息
+        console.log(err.data.code)
         if (err.data.code === 307) {
           query = { page: 'status', from: 'company' }
           this.$router.push({ query })
@@ -1146,12 +1147,13 @@ export default {
     },
     // 开始招聘
     startrecruit () {
-      getUserRoleInfoApi().then(({ data }) => {
-        const result = data.data || {}
-        this.$store.commit('setRoleInfos', result)
-        // 删除路由栈
-        this.$router.replace({ name: 'candidatetype' })
-      })
+      this.$router.replace({ name: 'candidatetype' })
+      // getUserRoleInfoApi().then(({ data }) => {
+      //   const result = data.data || {}
+      //   this.$store.commit('setRoleInfos', result)
+      //   // 删除路由栈
+      //   this.$router.replace({ name: 'candidatetype' })
+      // })
     },
     getlabellist () {
       getLabelFieldListApi().then((res) => {
