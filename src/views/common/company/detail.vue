@@ -65,8 +65,7 @@
           <div class="introduction-left">
             <div class="introduction-presentation">
               <p class="introduction-title">公司介绍</p>
-              <p class="introduction-text" ref="text" :class="{ introduction_viewAll: viewAllText }" v-html="companyInformation.intro"></p>
-              <el-button v-if="isIntroductionButtom" type="text" class="introduction-left-buttom" @click="viewAll">{{ this.viewAllText ? '收起' :'查看全部'}}</el-button>
+              <block-overflow ref="blockOverflow" :text="companyInformation.intro"></block-overflow>
             </div>
             <div class="product" v-if="companyInformation.product">
               <p class="product-title">公司产品</p>
@@ -99,8 +98,8 @@
           </div>
           <div class="introduction-right">
             <guideLogin v-if="!hasLogin" class="guideLogin"></guideLogin>
-            <div class="surroundings">
-              <p class="surroundings-title" v-if="companyInformation.albumInfo.length">
+            <div class="surroundings" v-if="companyInformation.albumInfo.length">
+              <p class="surroundings-title">
                 公司环境
               </p>
               <div class="surroundings-container">
@@ -152,6 +151,7 @@ import { TMap } from '@/util/TMap.js'
 import appLinks from '@/components/common/appLinks'
 import file from '@/components/common/upload/file'
 import companyRecruitment from './components/Recruitment'
+import blockOverflow from '@/components/common/blockOverflow/index'
 
 import { saveResumeAttach } from 'API/resume.js'
 import {
@@ -166,7 +166,8 @@ import {
     guideLogin,
     appLinks,
     file,
-    companyRecruitment
+    companyRecruitment,
+    blockOverflow
   },
   computed: {
     ...mapState({
@@ -190,13 +191,11 @@ export default class companyDetail extends Vue {
   activation = true
   online = '填写' // 在线简历显示文案
   annex = '上传' // 附件简历显示文案
-  viewAllText = false // 公司介绍文案隐藏
   dialogVisible = false // 地图弹窗
   getCompanysTeamText = {} // 招聘团队
   islogin = false // 子组件是否登陆弹窗
   isIntroduction_text = true // 显示文案切换按钮
   isHeader = false // 是否显示顶部悬浮栏
-  isIntroductionButtom = false // 是否显示展开全部 按钮
 
   // 监听滚动
   handleScroll () {
@@ -207,23 +206,9 @@ export default class companyDetail extends Vue {
       this.isHeader = false
     }
   }
-
-  // 地图
-  // mapType () {
-  // if (!this.companyInformation.address.length || (!this.activeName && this.activeName !== 0)) return
-  // this.$nextTick(() => {
-  //   this.getMapLocation(this.companyInformation.address[this.activeName].lat, this.companyInformation.address[this.activeName].lng)
-  // })
-  // }
-
-  viewAll () {
-    this.viewAllText = !this.viewAllText
-  }
-
   activationType () {
     this.activation = !this.activation
   }
-
   // 获取公司信息
   async getCompany () {
     let data = {
@@ -234,6 +219,9 @@ export default class companyDetail extends Vue {
       // 遍历地址，没有http协议则加上
       this.companyInformation.product.forEach(function (item, index) {
         item.siteUrl = item.siteUrl.indexOf('http') !== -1 ? item.siteUrl : 'http://' + item.siteUrl
+      })
+      this.$nextTick(() => {
+        this.$refs.blockOverflow.updateTextHeigth()
       })
     })
   }
@@ -249,7 +237,6 @@ export default class companyDetail extends Vue {
         this.getCompanysTeamText = res.data.data
       })
   }
-
   // 获取公司热门职位
   getCompanyHot () {
     let data = {
@@ -370,16 +357,16 @@ export default class companyDetail extends Vue {
     //   this.mapType()
     // })
   }
-  updated () {
-    this.resumeTo('x')
-    this.$nextTick(() => {
-      if(this.$refs.text.clientHeight > 157) {
-        this.isIntroductionButtom = true
-      } else {
-        this.isIntroductionButtom = false
-      }
-    })
-  }
+  // updated () {
+  //   this.resumeTo('x')
+  //   this.$nextTick(() => {
+  //     if(this.$refs.text.clientHeight > 157) {
+  //       this.isIntroductionButtom = true
+  //     } else {
+  //       this.isIntroductionButtom = false
+  //     }
+  //   })
+  // }
   destroyed () {
     window.removeEventListener('scroll', this.handleScroll)
   }
@@ -641,21 +628,6 @@ to {top:0px;}
 
         .introduction-title{
           @extend %introductionTitle;
-        }
-        .introduction-text{
-          font-size: 14px;
-          color: $font-color-3;
-          font-weight: 400;
-          line-height: 26px;
-          overflow: hidden;
-          max-height: 158px;
-        }
-        .introduction-left-buttom{
-          position: absolute;
-          right: 15px;
-        }
-        .introduction_viewAll{
-          max-height: none;
         }
       }
       .product{
