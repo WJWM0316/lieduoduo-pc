@@ -15,7 +15,7 @@
         </div>
       </div>
     </div>
-    <div class="is-login-bg" :style="{'backgroundImage': `url(${banner[0] && banner[0].bigImgUrl})`, color: '#fff'}" v-else />
+    <div   class="is-login-bg" :style="{'backgroundImage': `url(${banner[0] && banner[0].bigImgUrl})`, color: '#fff'}" @click="handleOpenUrl" v-else />
   </div>
 </template>
 <script>
@@ -88,6 +88,9 @@ export default {
         refresh: true
       }
       this.$store.dispatch('login', parmas)
+    },
+    handleOpenUrl () {
+      window.open(this.banner[0].otherUrl, '_blank')
     }
   },
   destroyed () {

@@ -33,6 +33,9 @@
 .el-form-item.is-error .el-input.no-error .el-input__inner {
   border-color: $border-color-2;
 }
+.el-textarea .el-input__count {
+  line-height: 22px;
+}
 
 /** 下拉框 */
 .el-select-dropdown__item.hover, 
@@ -44,17 +47,57 @@
 
 
 /** dialog */
-.el-dialog {
+.el-dialog__wrapper .app-dialog.el-dialog {
+  border-radius: 4px;
   .el-dialog__header {
     font-size: 18px;
     text-align: left;
     color: $title-color-1;
+    padding: 32px 0 20px 40px;
+    font-weight: bold;
     .title-tips {
       font-size: 14px;
       color: $font-color-9;
     }
   }
   .el-dialog__body {
-    padding: 0px 20px;
+    padding: 0px;
+  }
+  .el-dialog__footer {
+    padding: 34px 34px 24px 0;
+    .el-button {
+      width: 88px;
+    }
+    .el-button:last-child{
+      width: 116px;
+    }
+    .el-button + .el-button {
+      margin-left: 16px;
+    }
+  }
+}
+/** message box */
+.el-message-box .el-message-box__header {
+  font-size: 16px;
+  color: $title-color-1;
+  padding: 34px 14px 14px 34px;
+}
+.el-message-box .el-message-box__content {
+  padding: 0 34px;
+}
+.el-message-box .el-message-box__message {
+  font-size: 14px;
+  color: $title-color-2;
+}
+.el-message-box .el-message-box__btns {
+  padding: 34px 34px 24px 0;
+  .el-button {
+    width: 88px;
+  }
+  .el-button:last-child{
+    width: 116px;
+  }
+  .el-button + .el-button {
+    margin-left: 16px;
   }
 }

@@ -49,6 +49,7 @@ export default {
   props: {
     isDelete: Boolean,
     isEmpty: Boolean,
+
     list: {
       type: Array,
       default: () => ([])
@@ -93,6 +94,15 @@ export default {
       })
     },
     handleClose () {
+      // 验证表单是否存在内容，如果没有可以直接关闭
+      if (this.$parent.validFormData) {
+        let results = this.$parent.validFormData()
+        if (results) {
+          this.$store.commit('setEditStatus', { status: false })
+          this.unshowEdit = true
+          return
+        }
+      }
       this.$confirm('确定退出，更新的内容将不被保存', '有编辑中内容尚未保存，确定退出编辑吗?', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',

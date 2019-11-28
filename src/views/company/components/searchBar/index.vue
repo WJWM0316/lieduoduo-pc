@@ -3,20 +3,19 @@
     <div class="main-center">
       <div class="search-filter">
         <drop-down
-          v-model="infos.emolumentIds"
-          :items="infos.areaList"
+          v-model="value"
+          :items="searchCollect.area"
           :showArrow="true"
           :all-value="0"
           :props="{
             value: 'areaId',
             label: 'name'
           }"
-          @on-select="handleSelect($event, 'areaList')">
-          <span class="filter-name">公司地点 <span>{{params.areaList.length ? '('+ params.areaList.length +')' : '' }}</span></span>
+          @input="handleSelect($event, 'area')">
+          <span class="filter-name">公司地点 <span>{{filterSearchCollect.area.length ? '('+ filterSearchCollect.area.length +')' : '' }}</span></span>
         </drop-down>
         <drop-down
-          v-model="infos.financingIds"
-          :items="infos.financingList"
+          :items="searchCollect.financing"
           :multiple="true"
           :showArrow="true"
           :all-value="0"
@@ -25,12 +24,11 @@
             value: 'value',
             label: 'text'
           }"
-          @on-select="handleSelect($event, 'financingList')">
-          <span class="filter-name">融资规模 <span v-if="params.financingList.length">({{params.financingList.length}})</span></span>
+          @on-select="handleSelect($event, 'financing')">
+          <span class="filter-name">融资规模 <span v-if="filterSearchCollect.financing.length">({{filterSearchCollect.financing.length}})</span></span>
         </drop-down>
         <drop-down
-          v-model="infos.employeeIds"
-          :items="infos.employeeList"
+          :items="searchCollect.employee"
           :multiple="true"
           :limit="100000"
           :showArrow="true"
@@ -39,12 +37,11 @@
             value: 'value',
             label: 'text'
           }"
-          @on-select="handleSelect($event, 'employeeList')">
-          <span class="filter-name">人员规模 <span v-if="params.employeeList.length">({{params.employeeList.length}})</span></span>
+          @on-select="handleSelect($event, 'employee')">
+          <span class="filter-name">人员规模 <span v-if="filterSearchCollect.employee.length">({{filterSearchCollect.employee.length}})</span></span>
         </drop-down>
         <drop-down
-          v-model="infos.industryIds"
-          :items="infos.industryList"
+          :items="searchCollect.industry"
           :multiple="true"
           :showArrow="true"
           :col="3"
@@ -54,8 +51,8 @@
             value: 'labelId',
             label: 'name'
           }"
-          @on-select="handleSelect($event, 'industryList')">
-          <span class="filter-name">行业领域 <span v-if="params.industryList.length">({{params.industryList.length}})</span></span>
+          @on-select="handleSelect($event, 'industry')">
+          <span class="filter-name">行业领域 <span v-if="filterSearchCollect.industry.length">({{filterSearchCollect.industry.length}})</span></span>
         </drop-down>
         <span class="filter-remove" @click="handleRemove">清空筛选条件</span>
       </div>
@@ -69,33 +66,20 @@ export default {
     height: {
       type: Number,
       default: 0
-    },
-    infos: {
-      type: Object,
-      default: () => ({})
     }
   },
-  watch: {
-    '$route': {
-      handler() {
-        let { areaList, industryList, employeeList, financingList } = this.infos
-        this.params.areaList = areaList.filter(v => v.checked && v.areaId)
-        this.params.industryList = industryList.filter(v => v.checked && v.labelId)
-        this.params.employeeList = employeeList.filter(v => v.checked && v.value)
-        this.params.financingList = financingList.filter(v => v.checked && v.value)
-      },
-      immediate: true
-    }
+  computed: {
+    ...mapState({
+      searchCollect: state => state.company.searchCollect
+    }),
+    ...mapGetters([
+      'filterSearchCollect'
+    ])
   },
   data () {
     return {
       headerFixed: false,
-      params: {
-        areaList: [],
-        industryList: [],
-        employeeList: [],
-        financingList: []
-      }
+      value: ''
     }
   },
   components: { DropDown },
@@ -103,31 +87,42 @@ export default {
     window.addEventListener('scroll', this.handleScroll)
   },
   methods: {
+    ...mapActions([
+      'updateSearchCollectApi',
+      'updateSearchCollectMutipleApi'
+    ]),
     handleScroll () {
       // 得到页面滚动的距离
       let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
       // 判断页面滚动的距离是否大于吸顶元素的位置
       this.headerFixed = scrollTop > this.height
     },
-    handleSelect (data, key) {
-      const params = {}
-      if (key === 'areaList') {
-        this.infos.areaList.map(v => v.checked = v.areaId === data.areaId ? true : false)
+    handleSelect (item, key) {
+      let arr = []
+      switch (key) {
+        case 'area':
+          let index = this.searchCollect.area.findIndex(v => v.areaId === item)
+          let item1 = this.searchCollect.area.find(v => v.areaId === item)
+          this.updateSearchCollectApi({ item: item1, index, key }).then(() => this.$emit('on-search'))
+          break
+        case 'financing':
+          arr = item.map(v => v.value)
+          this.updateSearchCollectMutipleApi({ arr, key }).then(() => this.$emit('on-search'))
+          break
+        case 'employee':
+          arr = item.map(v => v.value)
+          this.updateSearchCollectMutipleApi({ arr, key }).then(() => this.$emit('on-search'))
+          break
+        case 'industry':
+          arr = item.map(v => v.labelId)
+          this.updateSearchCollectMutipleApi({ arr, key }).then(() => this.$emit('on-search'))
+          break
+        default:
+          break
       }
-      for (let item in this.infos) {
-        params[item] = Array.isArray(this.infos[item]) ? this.infos[item].filter(v => v.checked) : this.infos[item]
-      }
-      this.params = params
-      this.$emit('on-search', params)
     },
     // 清空筛选
     handleRemove () {
-      this.params = {
-        areaList: [],
-        industryList: [],
-        employeeList: [],
-        financingList: []
-      }
       this.$emit('on-reset')
     }
   },

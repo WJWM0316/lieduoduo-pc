@@ -81,9 +81,9 @@
                 </div>
               </div>
             </div>
-            <div class="address" v-if="companyInformation.address.length">
+            <div class="address" v-if="companyInformation.address">
               <p class="address-title">公司地址</p>
-              <el-collapse v-model="activeName" accordion @change="mapType">
+              <el-collapse v-model="activeName" accordion>
                 <el-collapse-item v-for="(item, index) in companyInformation.address" :key="index" :title="item.address" :name="index">
                   <template slot="title">
                     <p class="address-text">
@@ -91,7 +91,8 @@
                       <span>{{ item.address }}</span>
                     </p>
                   </template>
-                  <div id="map" v-if="activeName === index && !dialogVisible" @click="addressAlert"></div>
+                  <img v-if="item.lat" :src="'https://apis.map.qq.com/ws/staticmap/v2/?size=750*147&center=' + item.lat + ',' + item.lng + '&zoom=15&key=TMZBZ-S72K6-66ISB-ES3XG-CVJC6-HKFZG&maptype=roadmap&markers=size:large|color:blue|'+ item.lat + ',' + item.lng" @click="addressAlert"/>
+                  <!-- <div id="map" v-if="activeName === index && !dialogVisible" @click="addressAlert"></div> -->
                 </el-collapse-item>
               </el-collapse>
             </div>
@@ -99,10 +100,10 @@
           <div class="introduction-right">
             <guideLogin v-if="!this.haslogin" class="guideLogin"></guideLogin>
             <div class="surroundings">
-              <p class="surroundings-title">
+              <p class="surroundings-title" v-if="companyInformation.albumInfo.length">
                 公司环境
               </p>
-              <div class="surroundings-container" v-if="companyInformation.albumInfo.length">
+              <div class="surroundings-container">
                 <div class="photo" ref="photo">
                   <img :src="item.middleUrl" v-for="(item, index) in companyInformation.albumInfo" :key="index"/>
                 </div>
@@ -132,7 +133,7 @@
         <template slot="title">
           <p class="address-text">
             <i class="iconfont icon-dizhi"></i>
-            <span v-if="companyInformation.address.length && activeName">{{ companyInformation.address[activeName].address }}</span>
+            <span v-if="companyInformation.address && activeName !== ''">{{ companyInformation.address[activeName].address }}</span>
           </p>
         </template>
         <div id="map" v-if="dialogVisible" style="width: 662px; height: 450px; margin-left: -20px;"></div>
@@ -207,10 +208,10 @@ export default class companyDetail extends Vue {
 
   // 地图
   mapType () {
-    if (!this.companyInformation.address.length || (!this.activeName && this.activeName !== 0)) return
-    this.$nextTick(() => {
-      this.getMapLocation(this.companyInformation.address[this.activeName].lat, this.companyInformation.address[this.activeName].lng)
-    })
+    // if (!this.companyInformation.address.length || (!this.activeName && this.activeName !== 0)) return
+    // this.$nextTick(() => {
+    //   this.getMapLocation(this.companyInformation.address[this.activeName].lat, this.companyInformation.address[this.activeName].lng)
+    // })
   }
 
   viewAll () {
@@ -294,6 +295,7 @@ export default class companyDetail extends Vue {
     })
   }
   getMapLocation (lat, lng) {
+    console.log(document.getElementById('map'))
     TMap('TMZBZ-S72K6-66ISB-ES3XG-CVJC6-HKFZG').then(qq => {
       this.$nextTick(() => {
         var myLatlng = new qq.maps.LatLng(lat, lng)
@@ -312,7 +314,10 @@ export default class companyDetail extends Vue {
   }
   addressAlert () {
     this.dialogVisible = true
-    this.mapType()
+    // this.mapType()
+    this.$nextTick(() => {
+      this.getMapLocation(this.companyInformation.address[this.activeName].lat, this.companyInformation.address[this.activeName].lng)
+    })
   }
   // photoAnimation () {
   //   let translateWidths = 0
@@ -349,9 +354,10 @@ export default class companyDetail extends Vue {
     window.addEventListener('scroll', this.handleScroll)
     this.getCompanysTeam()
     this.getCompanyHot()
-    this.getCompany().then(() => {
-      this.mapType()
-    })
+    this.getCompany()
+    // .then(() => {
+    //   this.mapType()
+    // })
   }
   updated () {
     // console.log(document.getElementsByClassName('introduction-text')[0].style.color)
@@ -675,6 +681,9 @@ to {top:0px;}
 
             .address{
               width: 750px;
+              img{
+                cursor: pointer;
+              }
               .address-title{
                 @extend %introductionTitle;
               }
@@ -688,9 +697,6 @@ to {top:0px;}
                   display: inline-block;
                   margin: 0 7px 0 15px;
                 }
-              }
-              #map{
-                height: 147px;
               }
             }
           }

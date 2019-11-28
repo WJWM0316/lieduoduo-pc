@@ -2,6 +2,7 @@ import { getSearchCollect } from 'API/common'
 
 const GET_SEARCH_COLLECT = 'GET_SEARCH_COLLECT'
 const UPDATE_SEARCH_COLLECT = 'UPDATE_SEARCH_COLLECT'
+const UPDATE_SEARCH_COLLECT_MUTIPLE = 'UPDATE_SEARCH_COLLECT_MUTIPLE'
 const UrlParams = new URLSearchParams(window.location.search)
 
 const state = {
@@ -23,6 +24,8 @@ const mutations = {
           v.checked = true
         }
       })
+    } else {
+      infos.area.map(v => v.checked = false)
     }
     if (UrlParams.get('industryIds')) {
       let industryIdsArr = UrlParams.get('industryIds').split(',')
@@ -32,6 +35,8 @@ const mutations = {
           v.checked = true
         }
       })
+    } else {
+      infos.industry.map(v => v.checked = false)
     }
     if (UrlParams.get('financingIds')) {
       let financingIdsArr = UrlParams.get('financingIds').split(',')
@@ -41,6 +46,8 @@ const mutations = {
           v.checked = true
         }
       })
+    } else {
+      infos.financing.map(v => v.checked = false)
     }
     if (UrlParams.get('employeeIds')) {
       let employeeIdsArr = UrlParams.get('employeeIds').split(',')
@@ -50,12 +57,14 @@ const mutations = {
           v.checked = true
         }
       })
+    } else {
+      infos.employee.map(v => v.checked = false)
     }
     state.searchCollect = infos
   },
   [UPDATE_SEARCH_COLLECT] (state, params) {
     let { key, item, index } = params
-  	let list = state.searchCollect[key]
+  	let list = state.searchCollect[key].slice()
     switch (key) {
 			case 'employee':
 			  if (item.value) {
@@ -82,7 +91,7 @@ const mutations = {
 			  }
   			break
   		case 'industry':
-  		  if (params.item.labelId) {
+  		  if (item.labelId) {
 			    list[index].checked = !list[index].checked
           if (list[0].checked) {
             list[0].checked = false
@@ -94,21 +103,67 @@ const mutations = {
 			  }
   			break
   		case 'area':
-        list[index].checked = !list[index].checked
+        list.map((v, i, arr) => v.checked = i === index ? true : false)
   			break
 			default:
 				break
 		}
+    state.searchCollect[key] = list
+  },
+  [UPDATE_SEARCH_COLLECT_MUTIPLE] (state, params) {
+    let { arr, key } = params
+    let list = state.searchCollect[key].slice()
+    switch (key) {
+      case 'employee':
+        list.map(v => {
+          if (arr.includes(v.value)) {
+            v.checked = true
+          } else {
+            v.checked = false
+          }
+        })
+        break
+      case 'financing':
+        list.map(v => {
+          if (arr.includes(v.value)) {
+            v.checked = true
+          } else {
+            v.checked = false
+          }
+        })
+        break
+      case 'industry':
+        list.map(v => {
+          if (arr.includes(v.labelId)) {
+            v.checked = true
+          } else {
+            v.checked = false
+          }
+        })
+        break
+      case 'area':
+        list.map(v => {
+          if (arr.includes(v.areaId)) {
+            v.checked = true
+          } else {
+            v.checked = false
+          }
+        })
+        break
+      default:
+        break
+    }
+    state.searchCollect[key] = list
   }
 }
 
 const getters = {
   filterSearchCollect: state => {
-    let data = {}
-    Object.keys(state.searchCollect).forEach(key => {
-      data[key] = state.searchCollect[key].filter(v => v.checked)
-    })
-    return data
+    let employee = state.searchCollect.employee.filter(v => v.value && v.checked)
+    let financing = state.searchCollect.financing.filter(v => v.value && v.checked)
+    let industry = state.searchCollect.industry.filter(v => v.labelId && v.checked)
+    let area = state.searchCollect.area.filter(v => v.areaId && v.checked)
+    return { employee, financing, industry, area }
   }
 }
 
@@ -121,8 +176,17 @@ const actions = {
       return Promise.reject(err.data.data || {})
     })
   },
-  updateSearchCollect (store, params) {
-    store.commit(UPDATE_SEARCH_COLLECT, params)
+  updateSearchCollectApi (store, params) {
+    return new Promise((resolve, reject) => {
+      store.commit(UPDATE_SEARCH_COLLECT, params)
+      resolve()
+    })
+  },
+  updateSearchCollectMutipleApi (store, params) {
+    return new Promise((resolve, reject) => {
+      store.commit(UPDATE_SEARCH_COLLECT_MUTIPLE, params)
+      resolve()
+    })
   }
 }
 

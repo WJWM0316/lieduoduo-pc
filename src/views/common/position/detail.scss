@@ -555,3 +555,10 @@ img {
 		line-height: 16px;
 	}
 }
+
+.app-links {
+	margin-top: 80px;
+	& /deep/ .show-more-btn {
+		background: #fff;
+	}
+}
