@@ -323,7 +323,7 @@ export default class CourseList extends Vue {
         }
         break
       case 'addJob':
-        if (!this.$store.state.roleInfos.isRecruiter) {
+        if (!this.$store.state.recruiterinfo.identityAuth) {
           this.msg = {
             messageshow: true,
             msgtitle: '身份认证',
