@@ -7,7 +7,7 @@
       </div>
     </div>
     <div class="info">
-      <template v-if="!haveIdentity">
+      <template v-if="!haveIdentity.identityAuth && (haveIdentity.identityStatus !== 0 && haveIdentity.identityStatus !== 1 && haveIdentity.identityStatus !== 2)">
       <div class="authtitle">
         完善身份信息
       </div>
@@ -49,14 +49,15 @@
         <template v-else>
           <div class="status">
             <div class="topicon">
-              <img v-if="companyInfo.status === 1 || companyInfo.status === 0" src="@/assets/images/adopt.png" />
-              <img v-else src="@/assets/images/notadopt.png" />
+              <img v-if="haveIdentity.identityStatus === 1" src="@/assets/images/adopt.png" />
+            <img v-if="haveIdentity.identityStatus === 0" src="@/assets/images/examine.png" />
+            <img v-if="haveIdentity.identityStatus === 2" src="@/assets/images/notadopt.png" />
             </div>
-            <div class="status-text" v-if="companyInfo.status === 0">实名认证审核中</div>
-            <div class="status-text" v-if="companyInfo.status === 2">实名认证审核不通过</div>
-            <div class="status-desc" v-if="companyInfo.status === 0">该申请将在1个工作日内审核，审核通过后即可开始招聘</div>
-            <div class="status-desc" v-if="companyInfo.status === 2">请重新提交资料，完成个人信息认证</div>
-            <div class="nopass" v-if="companyInfo.status === 2">
+            <div class="status-text" v-if="haveIdentity.identityStatus === 0">实名认证审核中</div>
+            <div class="status-text" v-if="haveIdentity.identityStatus === 2">实名认证审核不通过</div>
+            <div class="status-desc" v-if="haveIdentity.identityStatus === 0">该申请将在1个工作日内审核，审核通过后即可开始招聘</div>
+            <div class="status-desc" v-if="haveIdentity.identityStatus === 2">请重新提交资料，完成个人信息认证</div>
+            <div class="nopass" v-if="haveIdentity.identityStatus === 2">
               <div class="title">
                 <span>实名认证审核未通过的原因如下</span>
                 <span @click="change()" class="cxtitle">重新提交认证信息</span>
@@ -76,7 +77,7 @@
               </div>
               <div class="item">
                 <div class="title">身份证号</div>
-                <div class="text">{{info.identityNum.substr(0, 1) + '****************' + info.identityNum.substring(17, 18)}}</div>
+                <div class="text" v-if="info.identityNum">{{info.identityNum.substr(0, 1) + '****************' + info.identityNum.substring(17, 18)}}</div>
               </div>
               <div class="item">
                 <div class="title">证件照片</div>
@@ -93,6 +94,7 @@
 import { realNameReg, idCardReg } from '@/util/fieldRegular.js'
 import Picture from 'COMPONENTS/common/upload/picture'
 import { getCompanyIdentityInfosApi, identityCompanyApi, editCompanyIdentityInfosApi } from 'API/register'
+import { perfectauthDetail } from 'API/common'
 export default {
   components: {
     Picture
@@ -123,7 +125,7 @@ export default {
         real_name: '',
         identity_num: ''
       },
-      haveIdentity: false,
+      haveIdentity: '',
       companyInfo: '',
       info: '',
       frontLoading: false,
@@ -148,11 +150,23 @@ export default {
           if (this.companyInfo.status === 2 || this.companyInfo.status === 0) {
             editCompanyIdentityInfosApi(this.ruleForm).then((res) => {
               this.getCompanyIdentityInfos()
+              perfectauthDetail().then((res) => {
+                this.haveIdentity = {
+                  haveIdentity: res.data.data.identityAuth,
+                  identityStatus: res.data.data.identityStatus
+                }
+              })
               this.$message.success('编辑成功')
             })
           } else {
             identityCompanyApi(this.ruleForm).then((res) => {
               this.getCompanyIdentityInfos()
+              perfectauthDetail().then((res) => {
+                this.haveIdentity = {
+                  haveIdentity: res.data.data.identityAuth,
+                  identityStatus: res.data.data.identityStatus
+                }
+              })
               this.$message.success('完善信息成功')
             })
           }
@@ -170,17 +184,21 @@ export default {
         if (res.data.data.status === 1) {
           this.$router.push({ path: '/candidateType' })
         }
-        this.haveIdentity = res.data.data.haveIdentity
         this.companyInfo = res.data.data
         this.info = res.data.data
       })
     },
     change () {
-      this.haveIdentity = false
-      // this.companyInfo.status = 0
+      this.haveIdentity = {
+        haveIdentity: null,
+        identityStatus: 4
+      }
     }
   },
   mounted () {
+    setTimeout(() => {
+      this.haveIdentity = this.$store.state.recruiterinfo
+    }, 1000)
     this.getCompanyIdentityInfos()
   }
 }
@@ -360,10 +378,9 @@ export default {
           color: #652791;
           cursor: pointer;
           float: right;
-          padding-left: 21px;
+          padding-right: 21px;
         }
         .reson{
-          width:392px;
           max-height:86px;
           background:rgba(255,252,240,1);
           border-radius:4px;
@@ -371,6 +388,7 @@ export default {
           font-size: 14px;
           padding-left: 20px;
           padding-top: 14px;
+          padding-bottom: 14px;
           span{
             line-height: 24px;
             display: block;

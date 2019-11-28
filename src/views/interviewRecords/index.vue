@@ -895,6 +895,7 @@ export default {
       this.tablist.map((v, k) => {
         v.cur = false
       })
+      this.tablist[0].cur = true
       this.getlist()
     },
     setJob (uid, type, vo, statusid) {

@@ -30,7 +30,7 @@
           <div class="header-right-position">
             <p class="header-right-number" v-if="!isHeader">{{ companyInformation.numOfVisitors }}</p>
             <p class="header-right-text" v-if="!isHeader">浏览</p>
-            <file :Resume = myResume :showUploadDetails=false :showTips=true :islogin = islogin>
+            <file @change="saveResume" @fail="saveResume" :Resume = myResume :showUploadDetails=false :showTips=true :islogin = islogin>
               <p class="header-right-resume" @click="resumeTo('annex')">
                 <i class="iconfont" :class="{ 'icon-weibiaoti-': annex === '上传', 'icon-zhongxinshangchuan-':  annex === '更新'}"/>&nbsp;
                 {{ annex }}附件简历
@@ -47,7 +47,7 @@
         <div class="hotPosition-inner">
           <p class="hotPosition-title">热招职位：</p>
           <div class="hotPosition-buttom">
-            <div class="hotPosition-box" v-for="(item, index) in HotPositionList" :key="index" @click="toJobDetails(item,index)">
+            <div class="hotPosition-box" :class="{ hotPosition_box_one: index === 0 }" v-for="(item, index) in HotPositionList" :key="index" @click="toJobDetails(item,index)">
               <span class="hot-positionName">{{item.positionName}}</span>
               <span
                 class="hot-annualSalaryDesc"
@@ -153,6 +153,7 @@ import appLinks from '@/components/common/appLinks'
 import file from '@/components/common/upload/file'
 import companyRecruitment from './components/Recruitment'
 
+import { saveResumeAttach } from 'API/resume.js'
 import {
   getCompanyHotApi,
   getVkeyCompanyApi,
@@ -170,7 +171,7 @@ import {
   computed: {
     ...mapState({
       myResume: state => state.resume.myResume,
-      isFourResume: state => state.resume.isFourResume,
+      roleInfos: state => state.roleInfos,
       userInfo: state => state.userInfo,
       hasLogin: state => state.hasLogin
     })
@@ -193,7 +194,6 @@ export default class companyDetail extends Vue {
   dialogVisible = false // 地图弹窗
   getCompanysTeamText = {} // 招聘团队
   islogin = false // 子组件是否登陆弹窗
-  // haslogin = false // 是否已经登录
   isIntroduction_text = true // 显示文案切换按钮
   isHeader = false // 是否显示顶部悬浮栏
 
@@ -208,12 +208,12 @@ export default class companyDetail extends Vue {
   }
 
   // 地图
-  mapType () {
-    // if (!this.companyInformation.address.length || (!this.activeName && this.activeName !== 0)) return
-    // this.$nextTick(() => {
-    //   this.getMapLocation(this.companyInformation.address[this.activeName].lat, this.companyInformation.address[this.activeName].lng)
-    // })
-  }
+  // mapType () {
+  // if (!this.companyInformation.address.length || (!this.activeName && this.activeName !== 0)) return
+  // this.$nextTick(() => {
+  //   this.getMapLocation(this.companyInformation.address[this.activeName].lat, this.companyInformation.address[this.activeName].lng)
+  // })
+  // }
 
   viewAll () {
     this.viewAllText = !this.viewAllText
@@ -264,6 +264,7 @@ export default class companyDetail extends Vue {
   resumeTo (type) {
     // 是否已经登陆
     if (!this.hasLogin && type !== 'x') {
+      console.log(110)
       return this.$router.push({
         name: 'login',
         query: {
@@ -271,18 +272,18 @@ export default class companyDetail extends Vue {
         }
       })
     } else if (this.hasLogin) { // 已经登录
-      if (this.isFourResume === 701) { // 判断有没有走完简历四步
+      if (!this.roleInfos.isJobhunter) { // 判断有没有走完简历四步
         this.online = '填写'
       } else {
         this.online = this.myResume.resumeCompletePercentage >= 0.9 ? '更新' : '完善'
-      }
-      if (JSON.stringify(this.myResume.resumeAttach) !== '{}') {
-        this.annex = '更新'
+        if (JSON.stringify(this.myResume.resumeAttach) !== '{}') {
+          this.annex = '更新'
+        }
       }
     }
 
     if (type === 'online') {
-      if (this.isFourResume === 701) { return this.$router.push({ name: 'createUser' }) }
+      if (!this.roleInfos.isJobhunter) { return this.$router.push({ name: 'createUser' }) }
       // 跳我的简历
       return this.$router.push({ name: 'cresume' })
     } else if (type === 'annex') {
@@ -347,9 +348,17 @@ export default class companyDetail extends Vue {
   // introductionFun () {
 
   // }
-
-  beforeMount () {
-    this.resumeTo('x')
+  // 保存简历附件
+  saveResume (attach) {
+    if (!attach) return this.$message.error('上传附件简历失败')
+    saveResumeAttach({ attach_resume: attach.id, attach_name: attach.fileName }).then(({ data }) => {
+      if (data.httpStatus === 200) {
+        this.$message.success('上传附件简历成功')
+        this.$store.commit('overwriteResume', {
+          resumeAttach: attach
+        })
+      }
+    })
   }
   created () {
     window.addEventListener('scroll', this.handleScroll)
@@ -361,6 +370,7 @@ export default class companyDetail extends Vue {
     // })
   }
   updated () {
+    this.resumeTo('x')
     // console.log(document.getElementsByClassName('introduction-text')[0].style.color)
     // this.introductionFun() // 文字高度s
   }
@@ -558,7 +568,6 @@ to {top:0px;}
       font-weight:400;
     }
     .hotPosition-buttom{
-      @include flex-justify-between;
 
       .hotPosition-box{
         padding: 24px 24px;
@@ -568,6 +577,8 @@ to {top:0px;}
         box-sizing: $sizing;
         border-radius:4px;
         cursor: pointer;
+        display: inline-block;
+        margin-left: 15px;
 
         .hot-positionName{
           font-size: 16px;
@@ -588,194 +599,197 @@ to {top:0px;}
           margin-top: 20px;
         }
       }
+      .hotPosition_box_one{ // 解决第一个盒子左边距
+        margin-left: 0;
+      }
     }
   }
 }
 .introduction-mian{
-        @extend %wrap-width;
+  @extend %wrap-width;
+  background: #FFFFFF;
+
+  .introduction-inner{
+    width: $page-width;
+    margin: 0 auto;
+    padding: 40px 0;
+    display: flex;
+    flex-wrap: wrap;
+    .appLinks{
+      box-sizing: border-box;
+      padding: 90px 0 40px 0;
+      & /deep/ .show-more-btn{
         background: #FFFFFF;
+      }
+    }
 
-        .introduction-inner{
-          width: $page-width;
-          margin: 0 auto;
-          padding: 40px 0;
+    .introduction-left{
+      border-right: 1px solid $border-color-1;
+      width: 850px;
+      padding-right: 100px;
+      box-sizing: $sizing;
+
+      .introduction-presentation{
+        margin-bottom: 60px;
+        position: relative;
+
+        .introduction-title{
+          @extend %introductionTitle;
+        }
+        .introduction-text{
+          font-size: 14px;
+          color: $font-color-3;
+          font-weight: 400;
+          line-height: 26px;
+          height: 158px;
+          overflow: hidden;
+        }
+        .introduction-left-buttom{
+          position: absolute;
+          right: 15px;
+        }
+        .introduction_viewAll{
+          height: auto;
+        }
+      }
+      .product{
+        margin-bottom: 60px;
+
+        .product-title{
+          @extend %introductionTitle;
+        }
+
+        .product-box{
           display: flex;
-          flex-wrap: wrap;
-          .appLinks{
-            box-sizing: border-box;
-            padding: 90px 0 40px 0;
-            & /deep/ .show-more-btn{
-              background: #FFFFFF;
-            }
+          margin-bottom: 24px;
+
+          .product-img{
+          width: 77px;
+          height: 77px;
+          border-radius: 8px;
           }
+          .product-text{
+            margin: 6px 0 0 20px;
+            height: 66px;
+            @include flex-justify-between;
+            @include flex-direction-column;
+            font-weight: 400;
 
-          .introduction-left{
-            border-right: 1px solid $border-color-1;
-            width: 850px;
-            padding-right: 100px;
-            box-sizing: $sizing;
-
-            .introduction-presentation{
-              margin-bottom: 60px;
-              position: relative;
-
-              .introduction-title{
-                @extend %introductionTitle;
-              }
-              .introduction-text{
-                font-size: 14px;
-                color: $font-color-3;
-                font-weight: 400;
-                line-height: 26px;
-                height: 158px;
-                overflow: hidden;
-              }
-              .introduction-left-buttom{
-                position: absolute;
-                right: 15px;
-              }
-              .introduction_viewAll{
-                height: auto;
-              }
+            .product-text-top{
+              font-size: 14px;
+              color: $font-color-3;
             }
-            .product{
-              margin-bottom: 60px;
-
-              .product-title{
-                @extend %introductionTitle;
-              }
-
-              .product-box{
-                display: flex;
-                margin-bottom: 24px;
-
-                .product-img{
-                width: 77px;
-                height: 77px;
-                border-radius: 8px;
-                }
-                .product-text{
-                  margin: 6px 0 0 20px;
-                  height: 66px;
-                  @include flex-justify-between;
-                  @include flex-direction-column;
-                  font-weight: 400;
-
-                  .product-text-top{
-                    font-size: 14px;
-                    color: $font-color-3;
-                  }
-                  .product-text-middle{
-                    font-size: 12px;
-                    color: $font-color-6;
-                    overflow: hidden;
-                    white-space: nowrap;
-                    text-overflow: ellipsis;
-                  }
-                  .product-text-buttom{
-                    color: $font-color-2;
-                    font-size: 12px;
-                  }
-                }
-              }
+            .product-text-middle{
+              font-size: 12px;
+              color: $font-color-6;
+              overflow: hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
             }
-
-            .address{
-              width: 750px;
-              img{
-                cursor: pointer;
-              }
-              .address-title{
-                @extend %introductionTitle;
-              }
-              .address-text{
-                font-size: 14px;
-                color: $font-color-2;
-                font-weight:400;
-                i{
-                  font-size: 15px;
-                  color: $font-color-10;
-                  display: inline-block;
-                  margin: 0 7px 0 15px;
-                }
-              }
-            }
-          }
-          .introduction-right{
-            padding-left: 50px;
-            width: 298px;
-            display: inline-block;
-            .guideLogin{
-              margin-bottom: 50px;
-            }
-            .surroundings{
-              .surroundings-title{
-                @extend %introductionTitle;
-              }
-              .surroundings-container{
-                width: 298px;
-                height: 160px;
-                overflow: hidden;
-                .photo{
-                  @include clearfix;
-                  img{
-                    width: 298px;
-                    height: 147px;
-                    display: block;
-                    float: left;
-                  }
-                }
-              }
-            }
-            .recruitmentTeam{
-              margin-top: 50px;
-              .recruitmentTeam-title{
-                @extend %introductionTitle;
-              }
-              .recruitmentTeam-box{
-                height: 99px;
-                display: flex;
-                @include flex-v-center;
-                img{
-                  width: 66px;
-                  height: 66px;
-                  border-radius: 50%;
-                }
-                .recruitmentTeam-text{
-                  height: 44px;
-                  margin-left: 14px;
-                  font-weight: 400;
-                  font-size: 14px;
-                  line-height: 20px;
-
-                  .recruitmentTeam-text-top{
-                    color: $font-color-3;
-                  }
-                  .recruitmentTeam-text-buttom{
-                    margin-top: 4px;
-                    color: $font-color-6;
-                    overflow: hidden;
-                    white-space: nowrap;
-                    text-overflow: ellipsis;
-                  }
-                }
-              }
-              .recruitmentTeam-buttom{
-                margin-top: 10px;
-                width: 280px;
-                height: 37px;
-                border: 1px solid $border-color-1;
-                color: $border-color-5;
-                border-radius:2px;
-                font-size: 14px;
-                i{
-                  font-size: 14px;
-                }
-              }
+            .product-text-buttom{
+              color: $font-color-2;
+              font-size: 12px;
             }
           }
         }
       }
+
+      .address{
+        width: 750px;
+        img{
+          cursor: pointer;
+        }
+        .address-title{
+          @extend %introductionTitle;
+        }
+        .address-text{
+          font-size: 14px;
+          color: $font-color-2;
+          font-weight:400;
+          i{
+            font-size: 15px;
+            color: $font-color-10;
+            display: inline-block;
+            margin: 0 7px 0 15px;
+          }
+        }
+      }
+    }
+    .introduction-right{
+      padding-left: 50px;
+      width: 298px;
+      display: inline-block;
+      .guideLogin{
+        margin-bottom: 50px;
+      }
+      .surroundings{
+        .surroundings-title{
+          @extend %introductionTitle;
+        }
+        .surroundings-container{
+          width: 298px;
+          height: 160px;
+          overflow: hidden;
+          .photo{
+            @include clearfix;
+            img{
+              width: 298px;
+              height: 147px;
+              display: block;
+              float: left;
+            }
+          }
+        }
+      }
+      .recruitmentTeam{
+        margin-top: 50px;
+        .recruitmentTeam-title{
+          @extend %introductionTitle;
+        }
+        .recruitmentTeam-box{
+          height: 99px;
+          display: flex;
+          @include flex-v-center;
+          img{
+            width: 66px;
+            height: 66px;
+            border-radius: 50%;
+          }
+          .recruitmentTeam-text{
+            height: 44px;
+            margin-left: 14px;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 20px;
+
+            .recruitmentTeam-text-top{
+              color: $font-color-3;
+            }
+            .recruitmentTeam-text-buttom{
+              margin-top: 4px;
+              color: $font-color-6;
+              overflow: hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+            }
+          }
+        }
+        .recruitmentTeam-buttom{
+          margin-top: 10px;
+          width: 280px;
+          height: 37px;
+          border: 1px solid $border-color-1;
+          color: $border-color-5;
+          border-radius:2px;
+          font-size: 14px;
+          i{
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+}
 .address-text{
   font-size: 14px;
   color: $font-color-2;
