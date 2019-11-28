@@ -100,3 +100,20 @@ export const createonlineword = data => request({
     host: 'zhaopin'
   }
 })
+
+export const downloadPDF = data => request({
+  url: `/jobhunter/auto_resume/pdf/${data.vkey}`,
+  method: 'get',
+  params: data,
+  config: {
+    host: 'qiuzhi'
+  }
+})
+export const downloadWord = data => request({
+  url: `/jobhunter/auto_resume/word/${data.vkey}`,
+  method: 'get',
+  params: data,
+  config: {
+    host: 'qiuzhi'
+  }
+})

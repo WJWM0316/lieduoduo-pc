@@ -47,9 +47,9 @@ export default {
   },
   computed: {
     scrollTop () {
-      // 如果是登陆状态是 120 非登陆状态 是 170
+      // 如果是登陆状态是 120 非登陆状态 是 180
       const { userInfo } = this.$store.state
-      return userInfo && userInfo.id ? 120 : 170
+      return userInfo && userInfo.id ? 120 : 180
     }
   },
   mounted () {

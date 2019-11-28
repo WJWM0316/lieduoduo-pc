@@ -24,7 +24,7 @@
           </div>
         </div>
         <div class="position-right">
-          <guide-login class="guidelogin" v-if="!haslogin"></guide-login>
+          <guide-login class="guidelogin" v-if="!hasLogin"></guide-login>
           <adpostion class="adpostion" position="searchResult"></adpostion>
         </div>
       </div>
@@ -54,6 +54,17 @@ export default {
       page: 1
     }
   },
+  computed: {
+    ...mapState({
+      hasLogin: state => state.hasLogin
+    })
+  },
+  props: {
+    haslogin: {
+      type: Boolean,
+      default: true
+    }
+  },
   components: {
     positionItem,
     adpostion,
@@ -64,8 +75,7 @@ export default {
   methods: {
     handleSearch () {
       let data = {
-        // companyId: this.$route.query.vkey
-        companyId: 1346,
+        company_vkey: this.$route.query.vkey,
         type: this.typeActivationItem.id,
         page: this.page
       }
@@ -74,8 +84,7 @@ export default {
     // 获得职位详情
     async getCompanysPosition () {
       let data = {
-        // companyId: this.$route.query.vkey
-        companyId: 1346
+        vkey: this.$route.query.vkey
       }
       await getCompanysPositionApi(data)
         .then(res => {
@@ -91,8 +100,7 @@ export default {
       this.page = 1 // 点击还原页码
 
       var data = {
-        // company_id: this.$route.query.vkey,
-        company_id: 1346,
+        company_vkey: this.$route.query.vkey,
         type: item.id
       }
       this.typeActivation = index
@@ -111,7 +119,7 @@ export default {
   mounted () {
     this.$nextTick(() => {
       this.getCompanysPosition()
-      this.getCompanysPositionList({ company_id: 1346, id: '' })
+      this.getCompanysPositionList({ company_vkey: this.$route.query.vkey, id: '' })
     })
   }
 }

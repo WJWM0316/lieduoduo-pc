@@ -13,8 +13,8 @@
     <div class="company-lists-wrapper" v-loading="getLoading">
       <!-- 隔离层 防止nth-child 多读取一个div -->
       <div class="company-lists">
-        <template v-for="item in listData">
-          <company-card :item="item"  :key="item.id"/>
+        <template v-for="(item, index) in listData">
+          <company-card :item="item"  :key="index"/>
         </template>
       </div>
     </div>
@@ -80,7 +80,7 @@ export default {
 <style lang="scss" scoped>
 .company-lists-wrapper {
   padding-top: 4px;
-  min-height: 200px;
+  min-height: 156px;
   & /deep/ .el-loading-mask {
     background: rgba(255, 255, 255, 0.1);;
   }
@@ -98,7 +98,7 @@ export default {
   }
 }
 .company-wrapper {
-  padding-bottom: 54px;
+  padding-bottom: 60px;
 }
 .header-wrapper{
   margin-top: 62px;
@@ -129,7 +129,7 @@ export default {
   }
 }
 .company-more-btn {
-  margin-top: 30px;
+  margin-top: 17px;
   text-align: center;
   .c-btn {
     width: 385px;

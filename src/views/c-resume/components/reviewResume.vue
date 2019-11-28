@@ -42,10 +42,10 @@
           placement="right"
           width="150"
           trigger="click">
-          <div class="download-popover">
+          <div class="download-popover" v-loading="downloadLoading">
               <p class="download-popover-title">下载简历</p>
               <p class="download-popover-tip">请选择下载格式：</p>
-              <div v-for="item in downFileType" :key="item.type" class="download-popover-list">
+              <div v-for="item in downFileType" :key="item.type" class="download-popover-list" @click="handleDownload(item)">
                 <span>
                   <i class="iconfont" :class="item.icon" :style="{color: item.color}"></i>
                 </span>
@@ -72,6 +72,7 @@ import Education from './education'
 import More from './more'
 import { getMyQrcodeApi } from 'API/qrcode'
 import { FileType } from '@/config/vars'
+import { downloadPDF, downloadWord } from 'API/common'
 export default {
   components: {
     BaseInfo,
@@ -91,6 +92,7 @@ export default {
   data () {
     return {
       reviewStatus: false,
+      downloadLoading: false,
       downFileType: [FileType.pdf, FileType.doc],
       qrcode: ''
     }
@@ -108,6 +110,27 @@ export default {
       }).then(({ data }) => {
         this.qrcode = data.data.url
       })
+    },
+    handleDownload (item) {
+      if (this.downloadLoading) return
+      const { vkey, name } = this.resume
+      if (!vkey) return
+      this.downloadLoading = true
+      if (item.type === 'pdf') {
+        downloadPDF({ vkey }).then(({ data }) => {
+          this.downloadLoading = false
+          this.$util.downFile(data, name + '.pdf')
+        }).catch(() => {
+          this.downloadLoading = false
+        })
+      } else if (item.type === 'doc') {
+        downloadWord({ vkey }).then(({ data }) => {
+          this.downloadLoading = false
+          this.$util.downFile(data, name + '.doc')
+        }).catch(() => {
+          this.downloadLoading = false
+        })
+      }
     }
   }
 }

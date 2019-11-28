@@ -215,7 +215,7 @@ $header-height-1: $page-header-height;
   font-size: 20px;
   color: #fff;
   height: 20px;
-  margin-right: 70px;
+  margin-right: 58px;
   img {
     max-height: 100%;
   }
@@ -283,6 +283,9 @@ $header-height-1: $page-header-height;
     padding-left: 24px;
   }
   span:hover,.active {
+    color: $nav-color-hover;
+  }
+  .search-job {
     color: $nav-color-hover;
   }
 }
