@@ -396,6 +396,7 @@
 <script>
 import { realNameReg, companyNameReg, emailReg, abbreviationReg } from '@/util/fieldRegular.js'
 // import { SubmitpersonalApi, getCompanyNameListApi, applycompanyApi } from 'API/register'
+import { getUserRoleInfoApi } from '@/api/auth'
 import OptionList from '../registerCompany/components/option.vue'
 import MessageDiggle from '../registerCompany/components/message.vue'
 import Picture from 'COMPONENTS/common/upload/picture'
@@ -1188,7 +1189,12 @@ export default {
     },
     // 开始招聘
     startrecruit () {
-      this.$router.push({ name: 'candidatetype' })
+      getUserRoleInfoApi().then(({ data }) => {
+        const result = data.data || {}
+        this.$store.commit('setRoleInfos', result)
+        console.log(data)
+      })
+      // this.$router.push({ name: 'candidatetype' })
     },
     getlabellist () {
       getLabelFieldListApi().then((res) => {
