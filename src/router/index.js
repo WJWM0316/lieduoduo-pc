@@ -21,16 +21,16 @@ let routes = [
   ...company
 ]
 Vue.use(Router)
-// const originalPush = Router.prototype.push
-// Router.prototype.push = function push (location) {
-//   return originalPush.call(this, location).catch(err => err)
-// }
+const originalPush = Router.prototype.push
+Router.prototype.push = function push (location) {
+  return originalPush.call(this, location).catch(err => err)
+}
 const router = new Router({
   mode: 'history',
-  routes,
-  scrollBehavior (to, from, savedPosition) {
-    return savedPosition || { x: 0, y: 0 }
-  }
+  routes
+  // scrollBehavior (to, from, savedPosition) {
+  //   return savedPosition || { x: 0, y: 0 }
+  // }
 })
 let getUserInfo = () => {
   return getUserInfosApi().then(res => {
