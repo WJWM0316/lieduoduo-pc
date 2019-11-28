@@ -24,8 +24,8 @@ export default {
         { url: `${process.env.VUE_APP_CDN_PATH}/images/guangzhou.png`, city: '广州', chinese: 'Guangzhou', cityNums: 440100 },
         { url: `${process.env.VUE_APP_CDN_PATH}/images/shenzhen.png`, city: '深圳', chinese: 'Shenzhen', cityNums: 440300 },
         { url: `${process.env.VUE_APP_CDN_PATH}/images/shanghai.png`, city: '上海', chinese: 'Shanghai', cityNums: 310100 },
-        { url: `${process.env.VUE_APP_CDN_PATH}/images/chengdu.png`, city: '成都', chinese: 'Chengdu', cityNums: 510100 },
-        { url: `${process.env.VUE_APP_CDN_PATH}/images/hangzhou.png`, city: '杭州', chinese: 'Hangzhou', cityNums: 330100 }
+        { url: `${process.env.VUE_APP_CDN_PATH}/images/hangzhou.png`, city: '杭州', chinese: 'Hangzhou', cityNums: 330100 },
+        { url: `${process.env.VUE_APP_CDN_PATH}/images/chengdu.png`, city: '成都', chinese: 'Chengdu', cityNums: 510100 }
       ]
     }
   },
