@@ -119,14 +119,14 @@ export default {
       if (item.type === 'pdf') {
         downloadPDF({ vkey }).then(({ data }) => {
           this.downloadLoading = false
-          this.$util.downFile(data.data, name + '.pdf')
+          this.$util.downFile(data, name + '.pdf')
         }).catch(() => {
           this.downloadLoading = false
         })
       } else if (item.type === 'doc') {
         downloadWord({ vkey }).then(({ data }) => {
           this.downloadLoading = false
-          this.$util.downFile(data.data, name + '.doc')
+          this.$util.downFile(data, name + '.doc')
         }).catch(() => {
           this.downloadLoading = false
         })
