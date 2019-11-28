@@ -73,7 +73,7 @@
               </div>
             </div>
           </div>
-          <el-button class="login_button" @click="logintoo" :loading="loading">{{type === 'register' ? '注册' : type === 'msgLogin' && toggleType ? '登录' : '登录/注册' }}</el-button>
+          <el-button type="primary" class="login_button" @click="logintoo" :loading="loading">{{type === 'register' ? '注册' : type === 'msgLogin' && toggleType ? '登录' : '登录/注册' }}</el-button>
           <div class="bottom_text" v-if="toggleType">
             {{type === 'msgLogin' ? '没有账号' : '已有账号' }}
             <span @click="changetypeto">{{ type === 'msgLogin' ? '立即注册' : '马上登录' }}</span>
@@ -446,7 +446,7 @@ export default class loginForm extends Component {
     position: relative;
     box-sizing: border-box;
     .login_type {
-      width: 180px;
+      width: 200px;
       position: absolute;
       right: 0;
       height: 83px;
@@ -467,7 +467,9 @@ export default class loginForm extends Component {
       }
       .login-img {
         width: 83px;
+        padding: 9px;
         height: 83px;
+        cursor: pointer;
         display: inline-block;
         vertical-align: top;
         img {
@@ -701,14 +703,15 @@ export default class loginForm extends Component {
       width: 406px;
       height: 50px;
       border-radius: 4px;
-      border: 1px solid #d8dce6;
+      border: 1px solid $border-color-1;
       box-sizing: border-box;
       text-align: left;
       line-height: 46px;
       font-size: 0;
       .input_img {
         margin: 0 12px 0 29px;
-        font-size: 18px
+        font-size: 18px;
+        color: $font-color-10;
       }
       .input_i{
         font-size: 14px !important;
@@ -767,9 +770,6 @@ export default class loginForm extends Component {
     .login_button {
       width: 406px;
       height: 50px;
-      background: $main-color-1;
-      // border-radius: 100px;
-      cursor: pointer;
       margin: 0 auto 58px auto;
       color: #fff;
       font-size: 20px;
@@ -901,7 +901,7 @@ export default class loginForm extends Component {
           width: 354px;
           height: 46px;
           .input_img{
-            color: #CDCBCF;
+            color: $border-color-1;
             margin-left: 14px;
           }
 

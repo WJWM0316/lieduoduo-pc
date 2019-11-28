@@ -24,8 +24,8 @@ export default {
         { url: `${process.env.VUE_APP_CDN_PATH}/images/guangzhou.png`, city: '广州', chinese: 'Guangzhou', cityNums: 440100 },
         { url: `${process.env.VUE_APP_CDN_PATH}/images/shenzhen.png`, city: '深圳', chinese: 'Shenzhen', cityNums: 440300 },
         { url: `${process.env.VUE_APP_CDN_PATH}/images/shanghai.png`, city: '上海', chinese: 'Shanghai', cityNums: 310100 },
-        { url: `${process.env.VUE_APP_CDN_PATH}/images/chengdu.png`, city: '成都', chinese: 'Chengdu', cityNums: 510100 },
-        { url: `${process.env.VUE_APP_CDN_PATH}/images/hangzhou.png`, city: '杭州', chinese: 'Hangzhou', cityNums: 330100 }
+        { url: `${process.env.VUE_APP_CDN_PATH}/images/hangzhou.png`, city: '杭州', chinese: 'Hangzhou', cityNums: 330100 },
+        { url: `${process.env.VUE_APP_CDN_PATH}/images/chengdu.png`, city: '成都', chinese: 'Chengdu', cityNums: 510100 }
       ]
     }
   },
@@ -92,11 +92,13 @@ export default {
     flex: 1;
     max-width: 194px;
     position: relative;
+    height: 80px;
     div {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
+      bottom: 0;
       color: #fff;
       box-sizing: border-box;
       padding: 11px 15px;
@@ -108,14 +110,13 @@ export default {
       font-size: 14px;
     }
   }
-  .city-list:hover {
-    img {
-      transform: scale(1.08);
-    }
+  div:hover {
+    background: rgba( #000, .28);
+    color: $font-color-10;
   }
   img {
     max-width: 100%;
-    transition: transform 600ms;
+    height: 100%;
   }
 }
 </style>

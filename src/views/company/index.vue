@@ -59,7 +59,7 @@ import Search from './components/searchBar/index.vue'
 import NoFound from 'COMPONENTS/noFound'
 import { getLogoListsListsApi } from 'API/company'
 import { getCompanyListsApi } from 'API/search'
-import { getSearchCollect } from 'API/common'
+// import { getSearchCollect } from 'API/common'
 import loginPop from '@/components/common/loginPop'
 
 export default {
@@ -120,10 +120,9 @@ export default {
       if (financingIds) {
         query = Object.assign(query, { financingIds })
       }
-      getCompanyListsApi({ ...query, count: 20 }).then(({data}) => {
+      getCompanyListsApi({ ...query, count: 20 }).then(({ data }) => {
         this.companyLists = data.data
         this.total = data.meta.total
-        this.page = Number(data.meta.currentPage)
         this.$router.push({ query })
       })
     },

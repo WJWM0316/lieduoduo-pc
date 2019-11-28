@@ -15,7 +15,7 @@
               <li :key="item" @click="handleChangeYear('startTime', item)" :class="{active: startTimeValue.year == item}">{{item}}</li>
             </template>
           </ul>
-          <div class="date-months">
+          <div class="date-months" :class="{'date-disabled': startTimeValue.now}">
             <template v-for="item in months">
               <div :key="item.value" @click="handleSelect('startTime', item)" :class="{active: startTimeValue.month == item.value}">{{item.label}}</div>
             </template>
@@ -46,7 +46,7 @@
                 <li :key="item" @click="handleChangeYear('endTime', item)" :class="{active: endTimeValue.year == item}">{{item}}</li>
               </template>
             </ul>
-            <div class="date-months">
+            <div class="date-months" :class="{'date-disabled': endTimeValue.now}">
               <template v-for="item in months">
                 <div :key="item.value" @click="handleSelect('endTime', item)" :class="{active: endTimeValue.month == item.value}">{{item.label}}</div>
               </template>
@@ -327,6 +327,15 @@ export default {
     div:hover,.active {
       color: $main-color-1;
     }
+  }
+}
+.popover-date.el-popper .date-months.date-disabled {
+  div {
+    cursor: not-allowed;
+    color: $title-color-3;
+  }
+  div:hover {
+    color: $title-color-3;
   }
 }
 </style>

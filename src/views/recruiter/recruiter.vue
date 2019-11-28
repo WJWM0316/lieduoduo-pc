@@ -591,7 +591,8 @@ export default class CourseList extends Vue {
       &.isFixed {
         position: fixed;
         background-color: #fff;
-        top: 60px;
+        top: 0px;
+        padding-top: 60px;
         z-index: 1;
       }
       .recruiter_classify {

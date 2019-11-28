@@ -86,8 +86,7 @@
                 type="textarea"
                 placeholder="在任职期间，工作职责主要是****，经手过****项目，取得了*****的成绩。"
                 v-model="form.duty"
-                :autosize="{ minRows: 3, maxRows: 7}"
-                :rows="7"
+                :autosize="{ minRows: 7, maxRows: 10}"
                 maxlength="1000"
                 show-word-limit/>
             </el-form-item>
