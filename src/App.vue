@@ -28,19 +28,17 @@ export default class APP extends Vue {
       if (res.data.data.isJobhunter) {
         this.$store.dispatch('getMyResume')
       }
+      if (res.data.data.isRecruiter) {
+        perfectauthDetail().then((res) => {
+          this.$store.commit('setRecruiterinfo', res.data.data)
+        })
+      }
       this.$store.commit('setRoleInfos', res.data.data)
     })
   }
   created () {
     if (getAccessToken()) {
       this.getUserInfo()
-      setTimeout(() => {
-        if (this.$store.state.roleInfos.isRecruiter) {
-          perfectauthDetail().then((res) => {
-            this.$store.commit('setRecruiterinfo', res.data.data)
-          })
-        }
-      }, 1000)
     }
   }
 }

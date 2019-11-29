@@ -691,6 +691,7 @@
           }
           .handlerpring{
             display: flex;
+            justify-content: center;
             font-size:18px;
             margin-bottom: 20px;
             position: relative;
@@ -786,7 +787,7 @@
             .share{
               width:18px;
               height:18px;
-              margin: 0 0px 0px 16px;
+              margin: 0 35px 0px 16px;
               cursor: pointer;
             }
             i{
@@ -890,6 +891,27 @@
               margin-bottom: 10px;
               font-weight: 700;
               cursor: pointer;
+            }
+          }
+          .seefujian{
+            margin-top: 83px;
+            padding-left: 22px;
+            .title{
+              font-size: 14px;
+              color: #282828;
+              margin-bottom: 16px;;
+              font-weight: bold;
+            }
+            a{
+              width:152px;
+              height:40px;
+              border-radius:4px;
+              font-size: 14px;
+              line-height: 40px;
+              display:block;
+              color: #652791;
+              text-align: center;
+              border:1px solid rgba(132,82,167,1);  
             }
           }
           .ContactInformation {
