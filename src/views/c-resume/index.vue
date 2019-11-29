@@ -4,17 +4,12 @@
     <div class="resume-content">
       <p class="resume-update-time">最后更新 {{resume.resumeUpdateTime}}</p>
       <base-info class="base-scroll" prop-class="base-scroll" :resume="resume" />
-      <span class="resume-hr"><span></span></span>
       <desc-info class="desc-scroll" prop-class="desc-scroll" :resume="resume" />
-      <span class="resume-hr"><span></span></span>
       <proposal class="proposal-scroll" prop-class="proposal-scroll" :resume="resume" />
-      <span class="resume-hr"><span></span></span>
       <experience class="experience-scroll" prop-class="experience-scroll" :resume="resume" />
-      <span class="resume-hr"><span></span></span>
       <project class="project-scroll" prop-class="project-scroll" :resume="resume" />
-      <span class="resume-hr"><span></span></span>
       <education class="education-scroll" prop-class="education-scroll" :resume="resume" />
-      <span class="resume-hr"><span></span></span>
+      <!-- <span class="resume-hr"><span></span></span> -->
       <more class="more-scroll" prop-class="more-scroll" :resume="resume" />
     </div>
     <!-- 简历配置 -->
@@ -141,9 +136,6 @@ export default {
   background: #fff;
   box-shadow: $shadow-1;
   margin-right: 20px;
-  & > div {
-    padding: 36px 0 ;
-  }
   .resume-update-time {
     padding: 30px 0 0px 46px;
     font-size: 12px;
@@ -222,7 +214,7 @@ export default {
     }
   }
   .resume-list-desc {
-    padding: 16px 0;
+    padding: 16px 0 0;
     line-height: 22px;
     color: $title-color-2;
     white-space: pre-wrap;

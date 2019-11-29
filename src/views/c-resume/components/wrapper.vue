@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div v-if="isEmptyView">
+    <span class="resume-hr" v-if="'base-scroll' !== propClasses"><span></span></span>
     <div class="resume-wrapper-item" v-if="unshowEdit">
       <div class="wrapper-header">
         <slot name="header"></slot>
@@ -49,7 +50,6 @@ export default {
   props: {
     isDelete: Boolean,
     isEmpty: Boolean,
-
     list: {
       type: Array,
       default: () => ([])
@@ -66,6 +66,14 @@ export default {
   computed: {
     setEditStatus () {
       return this.$store.state.resume.eidtStatus
+    },
+    propClasses () {
+      return this.$parent.propClass
+    },
+    isEmptyView () {
+      if (!this.status) return true
+      if (this.status === 'view' && this.isEmpty) return false
+      return true
     }
   },
   data () {
@@ -175,7 +183,7 @@ export default {
 <style lang="scss" scoped>
 .resume-wrapper-item {
   @include flex-v-top;
-  padding: 0 46px;
+  padding: 36px 46px;
   .wrapper-content {
     flex: 1;
     @include flex-v-top;

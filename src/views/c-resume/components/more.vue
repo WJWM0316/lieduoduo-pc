@@ -34,6 +34,7 @@
             <p class="form-titl-tips">可上传能体现你专业能力的作品、证书等图片（文件格式需为png/jpg/jepg）</p>
             <el-form-item>
               <Picture
+                class="cresume-upload-wrapper"
                 :value.sync="form.imgs"
                 :multiple="true"
                 :size="20"
@@ -147,5 +148,12 @@ export default {
   font-size: 12px;
   color: $title-color-2;
   margin-bottom: 20px;
+}
+.cresume-upload-wrapper /deep/ .common-list li {
+  width: 88px;
+  height: 88px;
+}
+.cresume-upload-wrapper /deep/ .common-list li:nth-child(7n){
+  margin-right: 0;
 }
 </style>

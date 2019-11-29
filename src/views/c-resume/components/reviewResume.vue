@@ -12,18 +12,12 @@
       :lock-scroll="true"
       width="770px">
       <div class="resume-content">
-        <base-info :resume="resume" status="view"/>
-        <span class="resume-hr"><span></span></span>
+        <base-info :resume="resume" prop-class="base-scroll" status="view"/>
         <desc-info :resume="resume" status="view" />
-        <span class="resume-hr"><span></span></span>
         <proposal :resume="resume" status="view"/>
-        <span class="resume-hr"><span></span></span>
         <experience :resume="resume" status="view" />
-        <span class="resume-hr"><span></span></span>
         <project :resume="resume" status="view" />
-        <span class="resume-hr"><span></span></span>
         <education :resume="resume" status="view" />
-        <span class="resume-hr"><span></span></span>
         <more :resume="resume" status="view" />
       </div>
       <div slot="footer" class="resume-review-extend">
