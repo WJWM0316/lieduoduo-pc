@@ -76,11 +76,13 @@ export default new Vuex.Store({
     },
     // 退出登录回调
     LOGOUT: (state) => {
+      // console.log(state.pageName, location)
       state.userInfo = {}
       state.token = null
       removeAccessToken()
       if (state.userIdentity === 1) {
-        router.replace({ path: '/index', query: { q: Date.now() } })
+        window.location.href = window.location.href
+        // router.replace({ path: '/index', query: { q: Date.now() } })
       } else {
         router.replace({ path: '/login', query: { type: 'msgLogin' } })
       }
