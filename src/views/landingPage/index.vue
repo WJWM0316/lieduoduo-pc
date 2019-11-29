@@ -45,14 +45,9 @@
                         <i class="icon iconfont icon-jiaoyu"></i>
                         <span>{{nowResumeMsg.degreeDesc}}</span>
                       </div>
-                      <div class="lebalItem">
-                        <span
-                          class="status"
-                          v-if="nowResumeMsg.jobStatus"
-                        >{{nowResumeMsg.jobStatusDesc}}</span>
-                      </div>
                     </div>
-                  </div>
+										<div class="jobStatusDesc" v-if="nowResumeMsg.jobStatus">{{nowResumeMsg.jobStatusDesc}}</div>
+									</div>
                   <div class="description">
                     <span class="msg">{{nowResumeMsg.signature}}</span>
                     <div class="iconList">
@@ -168,7 +163,7 @@
                 <div class="imgList">
                   <div style="position:relative" :key="index" v-for="(item, index) in nowResumeMsg.moreIntroduce.imgs">
                   <img
-                    :src="item.url"
+                    :src="item.smallUrl"
                     alt
                   />
                   <a :href="item.url" target="_blank"></a>
