@@ -12,7 +12,7 @@
           <div class="wrapper-operate" v-if="status !== 'view'">
             <slot name="operate">
               <span class="iconfont icon-shanchu"  @click="handleDelete(item, index)" v-if="isDelete && list.length > config.limit"></span>
-              <span class="el-icon-edit" v-if="!isEmpty" @click="handleEdit(item, index)"></span>
+              <span class="iconfont icon-bianji" v-if="!isEmpty" @click="handleEdit(item, index)"></span>
             </slot>
           </div>
         </div>
@@ -29,7 +29,7 @@
         </div>
         <div class="wrapper-operate" v-if="status !== 'view'">
           <slot name="operate">
-            <span class="el-icon-edit" v-if="!isEmpty"  @click="handleEdit"></span>
+            <span class="iconfont icon-bianji" v-if="!isEmpty"  @click="handleEdit"></span>
           </slot>
         </div>
       </div>

@@ -169,6 +169,7 @@ export default {
       padding-right: 12px;
       width: 50%;
       box-sizing: border-box;
+      position: relative;
     }
     .form-item:nth-child(2n) {
       display: inline-block;
