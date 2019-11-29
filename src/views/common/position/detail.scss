@@ -139,7 +139,7 @@ img {
 						cursor: pointer;
 						font-size:14px;
 						font-weight:400;
-						color:$lightFont-color-purple;
+						color: $lightFont-color-purple;
 						line-height:20px;
 						white-space: nowrap;
 						display: inline-block;
@@ -209,7 +209,7 @@ img {
 		&.isRapidly {
 			background: url(#{$image-cdn-url}/images/24h.png), #03B3BB;
 			background-repeat: no-repeat;
-			background-position: 1280px 100%;
+			background-position: 100% 112%;
 			.inner {
 				.header-content {
 					.name, .info-item {
@@ -323,8 +323,8 @@ img {
 					.botBtnBox {
 						.botBtn {
 							color: #fff;
-							&.cur {
-								color: #FFDC29;
+							&.cur .icon{
+								color: $sub-color-1;
 							}
 						}
 					}
@@ -425,7 +425,6 @@ img {
 			width: $content-right;
 			float: right;
 			.companyInfos {
-				margin-top: 28px;
 				margin-bottom: 34px;
 				.title {
 					font-size:16px;
