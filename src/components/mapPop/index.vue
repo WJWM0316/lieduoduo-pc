@@ -1,5 +1,5 @@
 <template>
-  <div v-if="companyAddress">
+  <div>
     <el-collapse v-model="activeName" accordion>
       <el-collapse-item v-for="(item, index) in companyAddress" :key="index" :title="item.address" :name="index">
         <template slot="title">
@@ -29,7 +29,7 @@ export default {
   props: {
     companyAddress: {
       type: Array,
-      default: () => {}
+      default: () => ([])
     }
   },
   data () {

@@ -91,7 +91,7 @@
           <section class="part" v-if="infos.address">
             <div class="title">工作地址</div>
             <div class="map">
-              <map-pop :companyAddress = "adress"></map-pop>
+              <map-pop :companyAddress ="adress"></map-pop>
             </div>
           </section>
         </article>
@@ -164,10 +164,10 @@ let that = null
       }
     },
     adress () {
-      if (this.infos.adress) {
+      if (this.infos.address) {
         return [
           {
-            adress: this.infos.adress,
+            address: this.infos.address,
             lat: this.infos.lat,
             lng: this.infos.lng
           }
