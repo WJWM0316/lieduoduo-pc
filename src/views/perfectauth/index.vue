@@ -36,10 +36,10 @@
             <el-input v-model="ruleForm.passport_front" placeholder="请填写你的真实姓名" v-show="0"></el-input>
             <div class="updata-text">正面身份证（人像面）信息均在照片内清晰可识别身份信息。</div>
           </el-form-item>
-          <el-form-item label="真实姓名" prop="real_name">
+          <el-form-item label="真实姓名" prop="real_name" class="formitem">
             <el-input v-model="ruleForm.real_name" placeholder="请填写你的真实姓名"></el-input>
           </el-form-item>
-           <el-form-item label="身份证号" prop="identity_num">
+           <el-form-item label="身份证号" prop="identity_num" class="formitem">
             <el-input :maxlength="18" v-model="ruleForm.identity_num" placeholder="请填写18位身份证号码"></el-input>
           </el-form-item>
         </el-form>
@@ -268,9 +268,10 @@ export default {
         border-radius:6px;
       }
       .upimages{
-        width:140px;
+        width:112px;
         height:85px;
         cursor: pointer;
+        overflow: hidden;
         border-radius:6px;
         position: relative;
         img{
@@ -279,7 +280,7 @@ export default {
         }
         .hasupdata{
           bottom: -10px;
-          left: 36px;
+          left: 27px;
           font-size: 14px;
           color:#fff;
           position: absolute;
@@ -399,5 +400,13 @@ export default {
       }
     }
   }
+}
+</style>
+<style>
+.perfect .formitem .el-input__inner{
+  font-weight: bold;
+}
+.perfect .formitem .el-input__inner::placeholder{
+  font-weight: normal;
 }
 </style>

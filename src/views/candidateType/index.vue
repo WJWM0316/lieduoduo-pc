@@ -200,9 +200,9 @@
         <i class="iconfont icon-guanbianniu"></i>
       </div>
         </div>
-        <div class="printing">
+        <!-- <div class="printing">
           <span>简历打印</span>
-          </div>
+          </div> -->
         <div class="resumeLyout">
           <div class="ResumeDetails">
             <!-- 基础信息 -->
@@ -396,9 +396,9 @@
                   </div>
                 </div>
               </div>
-              <div class="dayin">
+              <!-- <div class="dayin">
                 <i class="iconfont icon-dayin-"></i>
-              </div>
+              </div> -->
               <div class="share" @click="sharediggle()">
                 <i class="iconfont icon-fenxiang"></i>
               </div>
@@ -445,6 +445,11 @@
                   <span >{{nowResumeMsg.wechat}}</span>
                 </div>
               </div>
+            </div>
+             <div class="seefujian" v-if="nowResumeMsg.resumeAttach">
+              <div class="title">附件简历:</div>
+              <div class="seebtn" v-if="nowResumeMsg.resumeAttach.extension === 'doc'"><a :href="'https://view.officeapps.live.com/op/view.aspx?src=' + nowResumeMsg.resumeAttach.url" :download="nowResumeMsg.resumeAttach.fileName">查看附件</a></div>
+              <div class="seebtn" v-else><a :href="nowResumeMsg.resumeAttach.url" :download="nowResumeMsg.resumeAttach.fileName">查看附件</a></div>
             </div>
           </div>
         </div>

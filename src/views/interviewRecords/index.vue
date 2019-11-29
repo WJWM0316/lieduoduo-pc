@@ -359,6 +359,10 @@
               <div class="TabSelect" v-if="nowResumeMsg.resumeAttach">
                 <p class="addTab"><a :href="nowResumeMsg.resumeAttach.url" :download="nowResumeMsg.resumeAttach.fileName">下载附件</a></p>
               </div>
+              <div class="seefujian" v-if="nowResumeMsg.resumeAttach">
+              <div class="title">附件简历:</div>
+              <div class="seebtn"><a :href="nowResumeMsg.resumeAttach.url" :download="nowResumeMsg.resumeAttach.fileName">查看附件</a></div>
+            </div>
             </div>
           </div>
         </div>
@@ -2204,6 +2208,27 @@ export default {
               margin-bottom: 10px;
               font-weight: 700;
               cursor: pointer;
+            }
+          }
+          .seefujian{
+            margin-top: 63px;
+            padding-left: 39px;
+            .title{
+              font-size: 14px;
+              color: #282828;
+              margin-bottom: 16px;;
+              font-weight: bold;
+            }
+            a{
+              width:250px;
+              height:36px;
+              border-radius:4px;
+              font-size: 14px;
+              line-height: 36px;
+              display:block;
+              color: #652791;
+              text-align: center;
+              border:1px solid rgba(132,82,167,1);
             }
           }
           .ContactInformation {

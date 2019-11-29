@@ -16,7 +16,7 @@
       </div>
       <div class="pop_right">
         <div class="search-box">
-          <input type="text" @input="handleSearch" v-model="keyword" />
+          <input type="text" @input="handleSearch" placeholder="请输入职位关键字" v-model="keyword" />
           <i class="el-icon-search" @click="handleSearch"></i>
         </div>
         <i class="el-icon-close" @click="close"></i>
@@ -28,7 +28,7 @@
             :key="index"
           >
             <i
-              class="el-icon-circle-plus-outline classily_icon"
+              class="iconfont icon-tianjia classily_icon"
               v-if="!item.active"
               style="color: #5C565D;"
             ></i>
@@ -282,6 +282,8 @@ export default class MyModel extends Vue {
     .classily_icon {
       display: inline-block;
       font-size: 16px;
+      color: #652791;
+      font-weight: bold;
     }
     .el-icon-close {
       position: absolute;
