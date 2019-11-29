@@ -98,7 +98,8 @@ export const createonlinepdf = data => request({
   method: 'get',
   params: data,
   config: {
-    host: 'zhaopin'
+    host: 'zhaopin',
+		responseType: 'blob'
   }
 })
 export const createonlineword = data => request({
@@ -106,7 +107,8 @@ export const createonlineword = data => request({
   method: 'get',
   params: data,
   config: {
-    host: 'zhaopin'
+    host: 'zhaopin',
+		responseType: 'blob'
   }
 })
 
@@ -115,7 +117,8 @@ export const downloadPDF = data => request({
   method: 'get',
   params: data,
   config: {
-    host: 'qiuzhi'
+    host: 'qiuzhi',
+		responseType: 'blob'
   }
 })
 export const downloadWord = data => request({
@@ -123,6 +126,7 @@ export const downloadWord = data => request({
   method: 'get',
   params: data,
   config: {
-    host: 'qiuzhi'
+    host: 'qiuzhi',
+		responseType: 'blob'
   }
 })

@@ -87,24 +87,6 @@
       <span class="total">共{{ Math.ceil(pageInfo.totalPage) }}页, {{pageInfo.total}}条记录</span>
     </el-pagination>
 
-    <div class="service" @mouseover="isService = true" @mouseout="isService = false">
-      <img class="service_icon" src="../../assets/images/service.png">
-
-      客服咨询
-      <div class="service_pop" v-if="isService">
-        <div class="pop_tit">联系我们</div>
-        <div class="pop_cont">
-          <h3 class="pop_text">请拨打全国咨询热线</h3>
-          <p class="pop_text2">400-065-5788</p>
-          <img class="pop_code" src="../../assets/images/gzh.png">
-          <p class="pop_text3">猎多多公众号</p>
-          <p class="pop_text4">微信扫描二维码，关注官方公众号</p>
-        </div>
-        <!-- <div class="triangle_border_right">
-        </div>-->
-      </div>
-    </div>
-
     <div class="pop" v-if="pop.isShow">
       <div class="share" v-if="pop.type==='share'">
         <div class="share_blo">
@@ -323,6 +305,7 @@ export default class CourseList extends Vue {
         }
         break
       case 'addJob':
+        console.log(this.$store.state.recruiterinfo.identityAuth, '0是没有认证')
         if (!this.$store.state.recruiterinfo.identityAuth) {
           this.msg = {
             messageshow: true,
@@ -609,6 +592,7 @@ export default class CourseList extends Vue {
           color: rgba(98, 98, 98, 1);
           margin-right: 40px;
           line-height: 46px;
+          cursor: pointer;
           &.cur {
             font-weight: bold;
             color: rgba(101, 39, 145, 1);
@@ -794,6 +778,7 @@ export default class CourseList extends Vue {
           font-weight: 400;
           color: rgba(101, 39, 145, 1);
           margin-right: 38px;
+          cursor: pointer;
         }
       }
     }
