@@ -6,7 +6,7 @@
         <div class="resume-list-desc" v-if="info.introduce">{{info.introduce}}</div>
         <div class="resume-images">
           <div class="image-wrapper" v-for="item in info.imgs" :key="item.id">
-            <img :src="item.url" alt="">
+            <img :src="item.smallUrl" alt="">
           </div>
         </div>
       </template>
