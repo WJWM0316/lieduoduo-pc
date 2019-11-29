@@ -5,7 +5,7 @@
      <div class="middle">
        <div class="contain">
         <h3 class="title"><span>3分钟</span>创建微简历，<span>1000+名企</span>高薪职位任你选</h3>
-        <img class="slogon-box" v-if="step === 1" :src="cdnPath + 'img_sentence_01.png'"/>
+        <img class="slogon-box c-first-create-resume" v-if="step === 1" :src="cdnPath + 'img_sentence_01.png'"/>
         <img class="slogon-box" v-if="step === 2" :src="cdnPath + 'img_sentence_02.png'"/>
         <img class="slogon-box" v-if="step === 3" :src="cdnPath + 'img_sentence_03.png'"/>
         <img class="slogon-box" v-if="step === 4" :src="cdnPath + 'img_sentence_04.png'"/>
@@ -68,14 +68,14 @@ export default class createUser extends Vue {
     box-sizing: border-box;
     background: url('../../assets/images/create_bg.jpg') repeat $bg-color-4;
     background-size: 30%;
-    .defalut-position{
+    & /deep/ .defalut-position{
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
       right: 25px;
       color: #CDCBCF;
       transition: all ease .3s;
-      z-index: 222
+      z-index: 1;
     }
     .icon_active{
       transform: translateY(-50%) rotate(180deg);
@@ -126,10 +126,13 @@ export default class createUser extends Vue {
         color: $sub-color-1;
       }
     }
+    .c-first-create-resume.slogon-box {
+      margin: 38px auto 50px;
+    }
     .slogon-box{
       width:450px;
       height:auto;
-      margin: 38px auto 50px;
+      margin: 38px auto 20px;
     }
   }
 }

@@ -8,7 +8,7 @@
           :key="imageIndex"
           :data-key="imageIndex"
           class="draggable"
-          :style="`background-image: url(${imageItem.url}); background-size: cover; background-repeat: no-repeat; background-position: center center;`"
+          :style="`background-image: url(${imageItem.smallUrl}); background-size: cover; background-repeat: no-repeat; background-position: center center;`"
           draggable="true">
           <div class="btn-close" @click="handleRemoveImage(imageIndex)">
             <i class="iconfont icon-xiantiaoguanbi"></i>

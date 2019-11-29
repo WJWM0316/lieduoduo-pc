@@ -6,10 +6,10 @@
           <div class="header-left-top" v-if="companyInformation.logoInfo">
             <img class="company-logo logo_ScrollY" :src = companyInformation.logoInfo.middleUrl />
             <div class="header-left-text text_ScrollY">
-              <p class="header-companyShortname">{{companyInformation.companyShortname}}</p>
-              <p class="header-financingInfo">{{companyInformation.financingInfo}}·{{companyInformation.employeesInfo}}·{{companyInformation.industry}}</p>
+              <p class="header-companyShortname companyShortname_ScrollY">{{companyInformation.companyShortname}}</p>
+              <p class="header-financingInfo financingInfo_ScrollY">{{companyInformation.financingInfo}}·{{companyInformation.employeesInfo}}·{{companyInformation.industry}}</p>
               <ul v-if="!isHeader">
-                <li class="label" v-for="(item, index) in companyInformation.teamLabel" :key="index" v-if="index < 6">{{item.title}}</li>
+                <li class="label" v-for="(item, index) in companyInformation.teamLabel" :key="index">{{item.title}}</li>
               </ul>
             </div>
           </div>
@@ -103,8 +103,10 @@
               </p>
               <div class="surroundings-container">
                 <div class="photo" ref="photo">
-                  <img :src="item.middleUrl" v-for="(item, index) in companyInformation.albumInfo" :key="index"/>
-                  <img :src="companyInformation.albumInfo[0].middleUrl"/>
+                  <div v-for="(item, index) in companyInformation.albumInfo" :key="index" :style="'background: url(' + item.middleUrl + ')'">
+                  </div>
+                  <div :style="'background: url(' + companyInformation.albumInfo[0].middleUrl + ')'">
+                  </div>
                 </div>
               </div>
             </div>
@@ -203,6 +205,9 @@ export default class companyDetail extends Vue {
   }
   activationType () {
     this.activation = !this.activation
+    setTimeout(() => { // 切换按钮后延迟执行动画确保虚拟DOM渲染完成
+      this.photoAnimation()
+    }, 1000)
   }
   // 获取公司信息
   async getCompany () {
@@ -247,7 +252,6 @@ export default class companyDetail extends Vue {
   resumeTo (type) {
     // 是否已经登陆
     if (!this.hasLogin && type !== 'x') {
-      console.log(110)
       return this.$router.push({
         name: 'login',
         query: {
@@ -284,7 +288,6 @@ export default class companyDetail extends Vue {
     })
   }
   getMapLocation (lat, lng) {
-    console.log(document.getElementById('map'))
     TMap('TMZBZ-S72K6-66ISB-ES3XG-CVJC6-HKFZG').then(qq => {
       this.$nextTick(() => {
         var myLatlng = new qq.maps.LatLng(lat, lng)
@@ -308,18 +311,20 @@ export default class companyDetail extends Vue {
     })
   }
   photoAnimation () {
-    if (!this.companyInformation.albumInfo && this.companyInformation.albumInfo.length <= 1) return
-    var translateWidths = 0
+    if (!this.companyInformation.albumInfo && this.$refs.photo && this.companyInformation.albumInfo.length <= 1) return
+    var translateWidths = 0; var timeOut
     var timer = () => {
       translateWidths = ++translateWidths
       if (translateWidths >= this.companyInformation.albumInfo.length * 298) {
         translateWidths = 0
       }
+      if (this.$refs.photo === undefined) return
       this.$refs.photo.style.transform = `translate3d(-${translateWidths}px, 0, 0)`
+      timeOut = setTimeout(() => {
+        timer()
+      }, 10)
     }
-    setInterval(() => {
-      timer()
-    }, 10)
+    timer()
   }
   // 保存简历附件
   saveResume (attach) {
@@ -340,6 +345,9 @@ export default class companyDetail extends Vue {
     this.getCompany()
       .then(() => {
         this.photoAnimation()
+        this.$nextTick(() => {
+          this.resumeTo('x')
+        })
       })
   }
   destroyed () {
@@ -404,18 +412,23 @@ $sizing: border-box;
 
         .header-left-text{
           margin: 10px 0 0 30px;
-          @include flex-justify-between;
           @include flex-direction-column;
+          justify-content: center;
+          overflow: hidden;
 
           .header-companyShortname{
             font-size: 32px;
             color: #FFFFFF;
             font-weight: 500;
+            margin-bottom: 12px;
+            line-height: 32px;
           }
           .header-financingInfo{
             font-size: 14px;
             font-weight: 400;
             color: #FFFFFF;
+            margin-bottom: 14px;
+            line-height: 14px;
           }
           .label{
             display: inline-block;
@@ -506,6 +519,14 @@ $sizing: border-box;
       margin-top: 4px !important;
       .companyShortname{
         font-size: 28px;
+      }
+      .companyShortname_ScrollY{
+        font-size: 28px;
+        margin-bottom: 6px !important;
+        line-height: 32px;
+      }
+      .financingInfo_ScrollY{
+        margin-bottom: 0 !important;
       }
     }
     .right_ScrollY{
@@ -687,11 +708,14 @@ to {top:0px;}
           .photo{
             @include clearfix;
             width: 8888px;
-            img{
+            div{
               width: 298px;
               height: 147px;
               display: block;
               float: left;
+              background-repeat: no-repeat;
+              background-position: center;
+              background-size: cover;
             }
           }
         }
