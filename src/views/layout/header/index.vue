@@ -13,8 +13,8 @@
             label: 'name'
           }"
           @on-select="changeLocation">
-          <span class="iconfont icon-dizhi">{{addressName}}</span>
-          <span class="change-address">【切换城市】</span>
+          <span class="iconfont icon-dizhi" />
+          <span class="change-address">{{addressName}}【切换城市】</span>
         </drop-down>
       </div>
       <ul class="header-nav">
@@ -133,7 +133,7 @@ export default {
     handleClick (e) {
       switch (e) {
         case 'logout':
-          this.$store.dispatch('logoutApi', {curPage: 1}).then(() => {
+          this.$store.dispatch('logoutApi', { curPage: 1 }).then(() => {
             this.$store.commit('removeResume')
           })
 
@@ -142,7 +142,7 @@ export default {
           this.$router.push('/position')
           break
         case 'toggleIdentity':
-          this.$store.commit('switchIdentity', {toSiutchRole: 2})
+          this.$store.commit('switchIdentity', { toSiutchRole: 2 })
       }
     },
     handleToLogin (type) {
@@ -228,10 +228,12 @@ $header-height-1: $page-header-height;
     color: $nav-color-hover;
     padding-right: 16px;
   }
-  .iconfont {
+  span.iconfont {
     font-size: 14px;
+    padding-right: 9px;
   }
   & /deep/ .drop-down-header {
+    width: 150px;
     height: $header-height-1;
     line-height: $header-height-1;
   }
@@ -277,7 +279,7 @@ $header-height-1: $page-header-height;
 }
 .system {
   div {
-    padding-right: 24px;
+    padding-right: 20px;
   }
   span ~ span {
     padding-left: 24px;
@@ -294,6 +296,9 @@ $header-height-1: $page-header-height;
   .login-btn, .register-btn{
     padding:0 12px 0  12px;
   }
+  .register-btn {
+    padding-right: 0;
+  }
   .iconfont {
     font-size: 14px;
     padding-right: 3px;
@@ -309,7 +314,7 @@ $header-height-1: $page-header-height;
     @include img-radius(30px, 30px);
     display: inline-block;
     vertical-align: middle;
-    margin: 0 12px;
+    margin: 0 0 0 12px;
   }
 }
 </style>

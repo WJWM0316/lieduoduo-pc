@@ -93,6 +93,7 @@ export default {
         const domBounding = dom.getBoundingClientRect()
         const { y } = domBounding
         if (y === 0) return
+        // util(document.documentElement, dom)
         window.scrollTo(0, document.documentElement.scrollTop + y)
       }
     },

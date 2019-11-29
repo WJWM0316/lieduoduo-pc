@@ -63,6 +63,7 @@ export default PageFooter
     justify-content: space-between;
   }
   .footer_center {
+    margin-right: 35px;
     .footer-header-title {
       height: 24px;
       padding-bottom: 9px;
@@ -130,7 +131,7 @@ export default PageFooter
       }
     }
     .right_code_blo + .right_code_blo  {
-      margin-left: 70px;
+      margin-left: 58px;
     }
     p.black {
       font-size: 14px;

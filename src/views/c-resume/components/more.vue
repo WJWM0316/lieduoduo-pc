@@ -23,8 +23,7 @@
                 type="textarea"
                 placeholder="可以描述你的特长、技能、职业成就等任何能展示你职业风采的信息。"
                 v-model="form.introduce"
-                :autosize="{ minRows: 3, maxRows: 7}"
-                :rows="5"
+                :autosize="{ minRows: 7, maxRows: 10}"
                 maxlength="250"
                 show-word-limit />
             </el-form-item>
