@@ -29,12 +29,17 @@
         </template>
       </p>
     </div>
-
   </div>
 </template>
 <script>
 import { getMatchesPosition, getHotKeyword } from 'API/search'
 export default {
+  props: {
+    banner: {
+      type: Array,
+      default: () => ([])
+    }
+  },
   data () {
     return {
       searchValue: '', // 需要查询的值
@@ -49,7 +54,8 @@ export default {
     scrollTop () {
       // 如果是登陆状态是 120 非登陆状态 是 180
       const { userInfo } = this.$store.state
-      return userInfo && userInfo.id ? 120 : 180
+      let bannerHeight = this.banner[0] && this.banner[0].bigImgUrl ? 70 : 0
+      return userInfo && userInfo.id ? 50 + bannerHeight : 180
     }
   },
   mounted () {
