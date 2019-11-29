@@ -374,14 +374,14 @@
               <div class="onload" @click="hasonload = !hasonload">
                 <i class="iconfont icon-xiazai"></i>
               </div>
-              <div class="onloadselect" v-show="hasonload" ref="queryBox">
+              <div class="onloadselect"  v-loading="loadingshow" v-show="hasonload" ref="queryBox">
                 <div class="title">下载简历</div>
                 <div class="select">请选择下载格式:</div>
                 <div class="pdf">
                   <div class="p_l">
                     <i class="iconfont icon-pdf" style="color: #FA3939"></i>
                   </div>
-                  <div class="p_c">{{nowResumeMsg.name}}.PDF</div>
+                  <div class="p_c">PDF格式</div>
                   <div class="p_r">
                     <a @click="onloadfile('pdf')"><i class="iconfont icon-xiazai"></i></a>
                   </div>
@@ -390,7 +390,7 @@
                   <div class="p_l">
                     <i class="iconfont icon-word" style="color: #2878ff"></i>
                   </div>
-                  <div class="p_c">{{nowResumeMsg.name}}.DOC</div>
+                  <div class="p_c">Word格式</div>
                   <div class="p_r">
                     <a @click="onloadfile('doc')"><i class="iconfont icon-xiazai"></i></a>
                   </div>
@@ -779,6 +779,7 @@ export default class CourseList extends Vue {
     hasonload = false
     toworddiggle = false
     tishishow = false
+    loadingshow = false
     pop = {
       isShow: false,
       Interview: false,
@@ -1179,15 +1180,22 @@ export default class CourseList extends Vue {
     }
 
     onloadfile (type) {
+      this.loadingshow = true
       let params = { jobhunterVkey: this.nowResumeMsg.vkey }
       if (type === 'pdf') {
         createonlinepdf(params).then((res) => {
+          this.loadingshow = false
           this.$util.downFile(res.data, this.nowResumeMsg.name + '.pdf')
+        }).catch((e) => {
+          this.loadingshow = false
         })
       }
       if (type === 'doc') {
         createonlineword(params).then((res) => {
+          this.loadingshow = false
           this.$util.downFile(res.data, this.nowResumeMsg.name + '.docx')
+        }).catch((e) => {
+          this.loadingshow = false
         })
       }
     }
