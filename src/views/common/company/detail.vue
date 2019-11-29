@@ -91,7 +91,6 @@
                     </p>
                   </template>
                   <img v-if="item.lat" :src="'https://apis.map.qq.com/ws/staticmap/v2/?size=750*147&center=' + item.lat + ',' + item.lng + '&zoom=15&key=TMZBZ-S72K6-66ISB-ES3XG-CVJC6-HKFZG&maptype=roadmap&markers=size:large|color:blue|'+ item.lat + ',' + item.lng" @click="addressAlert"/>
-                  <!-- <div id="map" v-if="activeName === index && !dialogVisible" @click="addressAlert"></div> -->
                 </el-collapse-item>
               </el-collapse>
             </div>
@@ -105,6 +104,7 @@
               <div class="surroundings-container">
                 <div class="photo" ref="photo">
                   <img :src="item.middleUrl" v-for="(item, index) in companyInformation.albumInfo" :key="index"/>
+                  <img :src="companyInformation.albumInfo[0].middleUrl"/>
                 </div>
               </div>
             </div>
@@ -176,11 +176,6 @@ import {
       userInfo: state => state.userInfo,
       hasLogin: state => state.hasLogin
     })
-  },
-  watch: {
-    activeName (val) {
-      console.log(val, typeof val, 111)
-    }
   }
 })
 export default class companyDetail extends Vue {
@@ -308,34 +303,24 @@ export default class companyDetail extends Vue {
   }
   addressAlert () {
     this.dialogVisible = true
-    // this.mapType()
     this.$nextTick(() => {
       this.getMapLocation(this.companyInformation.address[this.activeName].lat, this.companyInformation.address[this.activeName].lng)
     })
   }
-  // photoAnimation () {
-  //   let translateWidths = 0
-  //   let timers = function () {
-
-  //   }
-  //   let timer = function () {
-  //     translateWidths = translateWidths + 298
-  //     if (translateWidths / 298 > this.companyInformation.albumInfo.middleUrl.length) {
-  //       translateWidths = 0
-  //     }
-  //     setInterval(() => {
-  //       timer()
-  //       console.log(1)
-  //       this.$nextTick(function () {
-  //         this.$refs.photo.style.transform = `translate3d(-${translateWidths}px, 0, 0)`
-  //       })
-  //     }, 1000)
-  //   }
-  // }
-
-  // introductionFun () {
-
-  // }
+  photoAnimation () {
+    if (!this.companyInformation.albumInfo && this.companyInformation.albumInfo.length <= 1) return
+    var translateWidths = 0
+    var timer = () => {
+      translateWidths = ++translateWidths
+      if (translateWidths >= this.companyInformation.albumInfo.length * 298) {
+        translateWidths = 0
+      }
+      this.$refs.photo.style.transform = `translate3d(-${translateWidths}px, 0, 0)`
+    }
+    setInterval(() => {
+      timer()
+    }, 10)
+  }
   // 保存简历附件
   saveResume (attach) {
     if (!attach) return this.$message.error('上传附件简历失败')
@@ -353,20 +338,10 @@ export default class companyDetail extends Vue {
     this.getCompanysTeam()
     this.getCompanyHot()
     this.getCompany()
-    // .then(() => {
-    //   this.mapType()
-    // })
+      .then(() => {
+        this.photoAnimation()
+      })
   }
-  // updated () {
-  //   this.resumeTo('x')
-  //   this.$nextTick(() => {
-  //     if(this.$refs.text.clientHeight > 157) {
-  //       this.isIntroductionButtom = true
-  //     } else {
-  //       this.isIntroductionButtom = false
-  //     }
-  //   })
-  // }
   destroyed () {
     window.removeEventListener('scroll', this.handleScroll)
   }
@@ -419,6 +394,7 @@ $sizing: border-box;
 
       .header-left-top{
         display: flex;
+        @include flex-v-center;
 
         .company-logo{
           width: 106px;
@@ -428,7 +404,6 @@ $sizing: border-box;
 
         .header-left-text{
           margin: 10px 0 0 30px;
-          height: 100px;
           @include flex-justify-between;
           @include flex-direction-column;
 
@@ -453,7 +428,7 @@ $sizing: border-box;
             text-align: center;
             vertical-align: middle;
             margin-right: 14px;
-            color: #FFFFFF;
+            color: $font-color-temp4;
             line-height: 24px;
           }
         }
@@ -528,6 +503,7 @@ $sizing: border-box;
     }
     .text_ScrollY{
       height: 52px !important;
+      margin-top: 4px !important;
       .companyShortname{
         font-size: 28px;
       }
@@ -610,7 +586,7 @@ to {top:0px;}
     flex-wrap: wrap;
     .appLinks{
       box-sizing: border-box;
-      padding: 90px 0 40px 0;
+      padding: 90px 0 0 0;
       & /deep/ .show-more-btn{
         background: #FFFFFF;
       }
@@ -710,6 +686,7 @@ to {top:0px;}
           overflow: hidden;
           .photo{
             @include clearfix;
+            width: 8888px;
             img{
               width: 298px;
               height: 147px;
@@ -724,13 +701,16 @@ to {top:0px;}
         .recruitmentTeam-title{
           @extend %introductionTitle;
         }
+        .recruitmentTeam-mian{
+          margin-top: -10px;
+        }
         .recruitmentTeam-box{
           height: 99px;
           display: flex;
           @include flex-v-center;
           img{
-            width: 66px;
-            height: 66px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
           }
           .recruitmentTeam-text{

@@ -44,8 +44,8 @@
           </div>
           <div>
             <p v-if="resume.jobStatus"><span class="resume-status">{{resume.jobStatusDesc}}</span></p>
-            <p class="user-phone"><i class="iconfont icon-dianhua"></i>{{resume.mobile}}</p>
-            <p v-if="resume.wechat" class="user-wechat"><i class="iconfont icon-weixin"></i>{{resume.wechat}}</p>
+            <p v-if="resume.wechat" class="user-phone"><i class="iconfont icon-weixin"></i>{{resume.wechat}}</p>
+            <p  class="user-wechat"><i class="iconfont icon-dianhua"></i>{{resume.mobile}}</p>
           </div>
         </div>
       </template>
@@ -100,19 +100,31 @@
           </div>
           <div class="form-item">
              <p class="form-title">最高学历</p>
-             <el-form-item prop="name"><el-input v-model="form.degreeDesc" :disabled="true" /></el-form-item>
+             <el-form-item prop="name">
+               <el-input v-model="form.degreeDesc" :disabled="true" />
+               <p>读取教育经历，如需修改可前往编辑教育经历</p>
+              </el-form-item>
           </div>
           <div class="form-item">
              <p class="form-title">最近任职公司</p>
-             <el-form-item prop="name"><el-input v-model="form.lastCompanyName" :disabled="true" /></el-form-item>
+             <el-form-item prop="name">
+               <el-input v-model="form.lastCompanyName" :disabled="true" />
+               <p class="form-item-tips">读取最近一份工作经历，如需修改可前往编辑工作经历</p>
+              </el-form-item>
           </div>
           <div class="form-item">
              <p class="form-title">最近任职</p>
-             <el-form-item prop="name"><el-input v-model="form.lastPosition" :disabled="true" /></el-form-item>
+             <el-form-item prop="name">
+               <el-input v-model="form.lastPosition" :disabled="true" />
+               <p class="form-item-tips">读取最近一份工作经历，如需修改可前往编辑工作经</p>
+             </el-form-item>
           </div>
           <div class="form-item">
              <p class="form-title">手机号码</p>
-             <el-form-item prop="name"><el-input v-model="form.mobile" :disabled="true" /></el-form-item>
+             <el-form-item prop="name">
+               <el-input v-model="form.mobile" :disabled="true" />
+               <p class="form-item-tips">读取最近一份工作经历，如需修改可前往编辑工作经</p>
+             </el-form-item>
           </div>
           <div class="form-item">
              <p class="form-title">微信号（选填）</p>
@@ -353,6 +365,7 @@ $image-wrapper: 112px;
   }
   .user-name {
     max-width: 200px;
+    margin-bottom: 13px;
   }
   .user-company span.ellipsis {
     max-width: 180px;
@@ -369,7 +382,6 @@ $image-wrapper: 112px;
     vertical-align: middle;
   }
   .user-company {
-    margin-top: 10px;
     margin-bottom: 20px;
   }
   .user-phone {
@@ -389,4 +401,23 @@ $image-wrapper: 112px;
     border-radius:2px;
   }
 }
+.form-item /deep/ .el-form-item__content{
+  p {
+    position: absolute;
+    bottom: -30px;
+    width: 100%;
+    min-height: 30px;
+    box-sizing: border-box;
+    background: #fff;
+    line-height: 1.2;
+    z-index: 10;
+    border: 1px solid $border-color-1;
+    border-radius:4px;
+    line-height: 30px;
+    padding: 0px 14px;
+    font-size: 12px;
+    color: $title-color-2;
+  }
+}
+
 </style>
