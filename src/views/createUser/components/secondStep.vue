@@ -1,5 +1,5 @@
 <template>
-  <div class="wrap">
+  <div class="createuser">
     <div class="resumeOpFirstMain">
       <h3 class="form-title">请填写工作经历</h3>
       <div class="form">
@@ -260,7 +260,8 @@ export default class CourseList extends Vue {
   }
 </script>
 <style lang="scss">
-.resumeOpFirstMain {
+.createuser{
+  .resumeOpFirstMain {
   width:450px;
   background:rgba(255,255,255,1);
   box-shadow:0px 3px 20px 2px rgba(0,0,0,0.09);
@@ -494,6 +495,7 @@ export default class CourseList extends Vue {
       font-weight: 300;
     }
   }
+}
 }
 
 </style>

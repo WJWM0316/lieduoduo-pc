@@ -71,6 +71,9 @@ $company-msg-height: 60px;
     i,span {
       vertical-align: middle;
     }
+    .kk{
+      font-size: 12px;
+    }
   }
   li:hover {
     color: #fff;
