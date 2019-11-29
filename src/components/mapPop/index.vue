@@ -9,7 +9,6 @@
           </p>
         </template>
         <img class="mapImg" v-if="item.lat" :src="'https://apis.map.qq.com/ws/staticmap/v2/?size=750*147&center=' + item.lat + ',' + item.lng + '&zoom=15&key=TMZBZ-S72K6-66ISB-ES3XG-CVJC6-HKFZG&maptype=roadmap&markers=size:large|color:blue|'+ item.lat + ',' + item.lng" @click="addressAlert"/>
-        <p v-if="!item.lat" style="margin-left: 14px;">该公司暂时没有详细地址</p>
       </el-collapse-item>
     </el-collapse>
 
@@ -30,7 +29,7 @@ export default {
   props: {
     companyAddress: {
       type: Array,
-      default: []
+      default: () => {}
     }
   },
   data () {

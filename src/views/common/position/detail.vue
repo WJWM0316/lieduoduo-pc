@@ -91,7 +91,7 @@
           <section class="part" v-if="infos.address">
             <div class="title">工作地址</div>
             <div class="map">
-              <map-pop :companyAddress = infos.companyInfo.address></map-pop>
+              <map-pop :companyAddress = "adress"></map-pop>
             </div>
           </section>
         </article>
@@ -161,6 +161,17 @@ let that = null
         return `现在申请最迟${serviceEndTime}反馈`
       } else {
         return '现在申请24小时内必定反馈'
+      }
+    },
+    adress () {
+      if (this.infos.adress) {
+        return [
+          {
+            adress: this.infos.adress,
+            lat: this.infos.lat,
+            lng: this.infos.lng
+          }
+        ]
       }
     }
   }
