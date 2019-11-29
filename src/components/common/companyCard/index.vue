@@ -7,7 +7,7 @@
       </div>
       <div class="company-info">
         <p>{{item.companyShortname}}</p>
-        <p>{{item.financingInfo}}<span v-if="item.employeesInfo">·{{item.employeesInfo}}</span><span v-if="item.industry">·{{item.industry}}</span></p>
+        <p>{{item.financingInfo}}<template v-if="item.employeesInfo">·{{item.employeesInfo}}</template><template v-if="item.industry">·{{item.industry}}</template></p>
       </div>
     </div>
     <div class="list-footer">
@@ -50,12 +50,15 @@ export default {
     }
     p {
       color: $title-color-1;
+      font-size: 16px;
+      font-weight: 500;
     }
     p + p {
       margin-top: 14px;
+      font-weight: normal;
       color: $title-color-2;
       font-size: 12px;
-      max-width: 172px;
+      max-width: 174px;
       @include ellipsis;
     }
   }
