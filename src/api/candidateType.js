@@ -3,7 +3,7 @@ import { request } from './index.js'
 // 超管的职位列表
 // export const topAdminPositonList = data => request('/position/company_top/list', 'get', data)
 export const topAdminPositonList = data => request({
-  url: `/position/company_top/list`,
+  url: '/position/company_top/list',
   method: 'get',
   params: data,
   config: {
@@ -14,7 +14,7 @@ export const topAdminPositonList = data => request({
 // 机构和招聘官的职位列表
 // export const recruiterPositonList = data => request('/position/mylist', 'get', data)
 export const recruiterPositonList = data => request({
-  url: `/position/mylist`,
+  url: '/position/mylist',
   method: 'get',
   params: data,
   config: {
@@ -25,7 +25,7 @@ export const recruiterPositonList = data => request({
 // 选择职位后确定开撩
 // export const sureOpenupAPi = data => request('/interview/applyInterview', 'post', data)
 export const sureOpenupAPi = data => request({
-  url: `/interview/applyInterview`,
+  url: '/interview/applyInterview',
   method: 'post',
   params: data,
   config: {
@@ -44,10 +44,20 @@ export const watchInvitationAPi = data => request({
   }
 })
 
-// 选择不合适原因列表（获取面试评价不合适理由）
+// 选择不合适原因列表（获取面试评价不合适理由）（面试结束）
 // export const getCommentReasonApi = data => request(`/interview/getCommentReason`, 'get', data)
 export const getCommentReasonApi = data => request({
-  url: `/interview/getCommentReason`,
+  url: '/interview/getCommentReason',
+  method: 'get',
+  params: data,
+  config: {
+    host: 'zhaopin'
+  }
+})
+// 选择不合适原因列表（获取面试评价不合适理由）（面试过程不合适）
+// export const getCommentReasonApi = data => request(`/interview/getCommentReason`, 'get', data)
+export const getloadingReasonApi = data => request({
+  url: '/interview/getInterviewNotSuitReason',
   method: 'get',
   params: data,
   config: {
@@ -69,7 +79,7 @@ export const improperMarkingApi = data => request({
 // 获取不合适理由
 // export const getInterviewComment = data => request(`/interview/getInterviewComment`, 'get', data)
 export const getInterviewComment = data => request({
-  url: `/interview/getInterviewComment`,
+  url: '/interview/getInterviewComment',
   method: 'get',
   params: data,
   config: {
@@ -91,7 +101,7 @@ export const confirmInterviewApi = data => request({
 // 安排面试（地址列表）
 // export const addressListApi = data => request(`/company/position/simplepage/addresses`, 'get', data)
 export const addressListApi = data => request({
-  url: `/company/position/simplepage/addresses`,
+  url: '/company/position/simplepage/addresses',
   method: 'get',
   params: data,
   config: {
@@ -124,7 +134,7 @@ export const setInterviewInfoApi = data => request({
 // 设置候选人是否到场
 // export const setAttendApi = data => request(`/interview/attend/`, 'put', data)
 export const setAttendApi = data => request({
-  url: `/interview/attend/`,
+  url: '/interview/attend/',
   method: 'put',
   params: data,
   config: {
@@ -135,7 +145,7 @@ export const setAttendApi = data => request({
 // 面试评价（设置感兴趣，不错）
 // export const setCommentApi = data => request(`/interview/interviewComment/`, 'post', data)
 export const setCommentApi = data => request({
-  url: `/interview/interviewComment/`,
+  url: '/interview/interviewComment/',
   method: 'post',
   params: data,
   config: {
@@ -146,7 +156,7 @@ export const setCommentApi = data => request({
 /* 添加地址 */
 // export const addCompanyAdressApi = data => request(`/company/position/address`, 'put', data)
 export const addCompanyAdressApi = data => request({
-  url: `/company/position/address`,
+  url: '/company/position/address',
   method: 'put',
   params: data,
   config: {
@@ -172,7 +182,7 @@ export const editCompanyAdressApi = data => request({
 /* 高级筛选选项候选人动态全部和同事转发 */
 // export const filterlistApi = data => request(`/common/search/range`, 'get')
 export const filterlistApi = data => request({
-  url: `/common/search/range`,
+  url: '/common/search/range',
   method: 'get',
   params: data,
   config: {
@@ -183,7 +193,7 @@ export const filterlistApi = data => request({
 /* 高级筛选选项候选人动态其他3个tab */
 // export const filterothertabApi = data => request(`/common/myself/search/range`, 'get', data)
 export const filterothertabApi = data => request({
-  url: `/common/myself/search/range`,
+  url: '/common/myself/search/range',
   method: 'get',
   params: data,
   config: {
@@ -194,7 +204,7 @@ export const filterothertabApi = data => request({
 /* 高级筛选选项候选人库 */
 // export const filtercandidateApi = data => request(`/common/interview/search/range`, 'get', data)
 export const filtercandidateApi = data => request({
-  url: `/common/interview/search/range`,
+  url: '/common/interview/search/range',
   method: 'get',
   params: data,
   config: {
@@ -205,7 +215,7 @@ export const filtercandidateApi = data => request({
 /* 筛选机构列表 */
 // export const filterorilistApi = data => request(`/common/search/company/list`, 'get')
 export const filterorilistApi = data => request({
-  url: `/common/search/company/list`,
+  url: '/common/search/company/list',
   method: 'get',
   params: data,
   config: {
@@ -216,7 +226,7 @@ export const filterorilistApi = data => request({
 /* 筛选招聘官列表 */
 // export const filterrecruiterlistApi = data => request(`/common/search/company/recruiter`, 'get', data)
 export const filterrecruiterlistApi = data => request({
-  url: `/common/search/company/recruiter`,
+  url: '/common/search/company/recruiter',
   method: 'get',
   params: data,
   config: {
@@ -227,7 +237,7 @@ export const filterrecruiterlistApi = data => request({
 // 候选人动态候选人全部列表
 // export const candidateAlllistApi = data => request(`/dynamics/all/search`, 'get', data)
 export const candidateAlllistApi = data => request({
-  url: `/dynamics/all/search`,
+  url: '/dynamics/all/search',
   method: 'get',
   params: data,
   config: {
@@ -238,7 +248,7 @@ export const candidateAlllistApi = data => request({
 // 候选人动态看过我的列表
 // export const candidateBorwsedmyself = data => request(`/dynamics/search/browsed/myself`, 'get', data)
 export const candidateBorwsedmyself = data => request({
-  url: `/dynamics/search/browsed/myself`,
+  url: '/dynamics/search/browsed/myself',
   method: 'get',
   params: data,
   config: {
@@ -249,7 +259,7 @@ export const candidateBorwsedmyself = data => request({
 // 候选人动态对我感兴趣的列表
 // export const  = data => request(`/dynamics/search/collected/myself`, 'get', data)
 export const candidateCollectedmyself = data => request({
-  url: `/dynamics/search/collected/myself`,
+  url: '/dynamics/search/collected/myself',
   method: 'get',
   params: data,
   config: {
@@ -260,7 +270,7 @@ export const candidateCollectedmyself = data => request({
 // 候选人动态我感兴趣的列表
 // export const candidatemyCollected = data => request(`/dynamics/search/my/collected`, 'get', data)
 export const candidatemyCollected = data => request({
-  url: `/dynamics/search/my/collected`,
+  url: '/dynamics/search/my/collected',
   method: 'get',
   params: data,
   config: {
@@ -271,7 +281,7 @@ export const candidatemyCollected = data => request({
 // 候选人动态同事转发的列表
 // export const candidateforwardlist = data => request(`/dynamics/search/colleague/forward`, 'get', data)
 export const candidateforwardlist = data => request({
-  url: `/dynamics/search/colleague/forward`,
+  url: '/dynamics/search/colleague/forward',
   method: 'get',
   params: data,
   config: {
@@ -282,7 +292,7 @@ export const candidateforwardlist = data => request({
 // 转发候选人
 // export const forwardCandidate = data => request(`/dynamics/forward`, 'post', data)
 export const forwardCandidate = data => request({
-  url: `/dynamics/forward`,
+  url: '/dynamics/forward',
   method: 'post',
   params: data,
   config: {
@@ -312,7 +322,7 @@ export const generateUrl = data => request({
 
 // 获取历史发送邮箱地址
 export const gethistoryUrl = data => request({
-  url: `/resumeemail/address`,
+  url: '/resumeemail/address',
   method: 'get',
   params: data,
   config: {
@@ -322,7 +332,7 @@ export const gethistoryUrl = data => request({
 
 // 邮件转发简历
 export const emailtoforword = data => request({
-  url: `/resumeemail/send`,
+  url: '/resumeemail/send',
   method: 'post',
   params: data,
   config: {
@@ -332,7 +342,7 @@ export const emailtoforword = data => request({
 
 // 候选人动态处理多条记录
 export const manyrecordstatus = data => request({
-  url: `/interview/getInterviewStatus`,
+  url: '/interview/getInterviewStatus',
   method: 'get',
   params: data,
   config: {

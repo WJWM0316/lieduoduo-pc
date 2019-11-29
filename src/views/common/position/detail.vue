@@ -217,7 +217,7 @@ export default class PositionDetail extends Vue {
         })
       }
       this.$nextTick(() => {
-        this.$refs.blockOverflow.updateTextHigh()
+        if (this.$refs.blockOverflow) this.$refs.blockOverflow.updateTextHeigth()
       })
     })
   }

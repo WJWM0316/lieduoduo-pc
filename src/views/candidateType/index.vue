@@ -195,7 +195,7 @@
       <div class="resumeBox" v-if="showResume" @click="closeload($event)">
         <div class="Numbering">
           <span>简历编号：{{nowResumeMsg.vkey}}</span>
-          <span>{{nowResumeMsg.resumeUpdateTime}}更新</span>
+          <span v-if="nowResumeMsg.resumeUpdateTime !== '0000-00-00 00:00:00'">{{nowResumeMsg.resumeUpdateTime}}更新</span>
           <div class="closediggle" @click="pop.isShow = false">
         <i class="iconfont icon-guanbianniu"></i>
       </div>
@@ -374,14 +374,14 @@
               <div class="onload" @click="hasonload = !hasonload">
                 <i class="iconfont icon-xiazai"></i>
               </div>
-              <div class="onloadselect" v-show="hasonload" ref="queryBox">
+              <div class="onloadselect"  v-loading="loadingshow" v-show="hasonload" ref="queryBox">
                 <div class="title">下载简历</div>
                 <div class="select">请选择下载格式:</div>
                 <div class="pdf">
                   <div class="p_l">
                     <i class="iconfont icon-pdf" style="color: #FA3939"></i>
                   </div>
-                  <div class="p_c">{{nowResumeMsg.name}}.PDF</div>
+                  <div class="p_c">PDF格式</div>
                   <div class="p_r">
                     <a @click="onloadfile('pdf')"><i class="iconfont icon-xiazai"></i></a>
                   </div>
@@ -390,7 +390,7 @@
                   <div class="p_l">
                     <i class="iconfont icon-word" style="color: #2878ff"></i>
                   </div>
-                  <div class="p_c">{{nowResumeMsg.name}}.DOC</div>
+                  <div class="p_c">Word格式</div>
                   <div class="p_r">
                     <a @click="onloadfile('doc')"><i class="iconfont icon-xiazai"></i></a>
                   </div>
@@ -743,6 +743,7 @@ import {
   sureOpenupAPi,
   watchInvitationAPi,
   getCommentReasonApi,
+  getloadingReasonApi,
   getInterviewComment,
   improperMarkingApi,
   confirmInterviewApi,
@@ -779,6 +780,7 @@ export default class CourseList extends Vue {
     hasonload = false
     toworddiggle = false
     tishishow = false
+    loadingshow = false
     pop = {
       isShow: false,
       Interview: false,
@@ -1035,6 +1037,10 @@ export default class CourseList extends Vue {
               }
               let applylists = res.data.data.data
               applylists.map((v, k) => {
+                if (v.positionId === 0) {
+                  v.positionName = '直接与我约面'
+                }
+                v.hascur = false
                 v.boxshow = false
               })
               this.applyrecordList = applylists
@@ -1067,6 +1073,8 @@ export default class CourseList extends Vue {
             this.arrangementInfo.addressName = res.data.data.address
             if (res.data.data.arrangementInfo.appointmentList) {
               this.model.dateLists = res.data.data.arrangementInfo.appointmentList
+            } else {
+              this.model.dateLists = []
             }
 
             if (this.info.isCompanyTopAdmin) {
@@ -1149,13 +1157,24 @@ export default class CourseList extends Vue {
                 btntext: '保存',
                 type: 'inappropriate'
               }
-              getCommentReasonApi().then((res) => {
-                let arr = res.data.data
-                arr.map((v, k) => {
-                  v.cur = false
+              // 大于61是结束后不满意
+              if (res.data.data.interviewStatus === 58 || res.data.data.interviewStatus === 59) {
+                getCommentReasonApi().then((res) => {
+                  let arr = res.data.data
+                  arr.map((v, k) => {
+                    v.cur = false
+                  })
+                  this.reasonlist = arr
                 })
-                this.reasonlist = arr
-              })
+              } else {
+                getloadingReasonApi().then((res) => {
+                  let arr = res.data.data
+                  arr.map((v, k) => {
+                    v.cur = false
+                  })
+                  this.reasonlist = arr
+                })
+              }
             }
           })
           break
@@ -1175,15 +1194,22 @@ export default class CourseList extends Vue {
     }
 
     onloadfile (type) {
+      this.loadingshow = true
       let params = { jobhunterVkey: this.nowResumeMsg.vkey }
       if (type === 'pdf') {
         createonlinepdf(params).then((res) => {
+          this.loadingshow = false
           this.$util.downFile(res.data, this.nowResumeMsg.name + '.pdf')
+        }).catch((e) => {
+          this.loadingshow = false
         })
       }
       if (type === 'doc') {
         createonlineword(params).then((res) => {
+          this.loadingshow = false
           this.$util.downFile(res.data, this.nowResumeMsg.name + '.docx')
+        }).catch((e) => {
+          this.loadingshow = false
         })
       }
     }

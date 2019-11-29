@@ -57,7 +57,7 @@
               class="job_op"
               @click="opJob('open',item.id)"
               v-if="item.isOnline===2 && form.status === '0,1'"
-            >开放</span>
+            >开放职位</span>
             <span class="job_op" @click="todoAction('editJob',item.id)">编辑</span>
           </div>
         </li>
@@ -1016,7 +1016,6 @@ export default class CourseList extends Vue {
       }
       .share_help_text {
         font-size: 14px;
-        font-weight: 700;
         color: rgba(101, 39, 145, 1);
         line-height: 22px;
         text-align: center;
@@ -1027,7 +1026,7 @@ export default class CourseList extends Vue {
           display: inline-block;
           margin-left: 6px;
           position: relative;
-          top: -3px;
+          top: 2px;
         }
       }
       .help_icon {

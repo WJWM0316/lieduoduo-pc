@@ -4,7 +4,7 @@
     <div class="main-center">
       <div class="lists-wrapper" v-loading="getLoading">
         <template v-if="currentType === 'position'">
-          <no-found v-if="!getLoading && !listData.length" :max-width="400"></no-found>
+          <no-found v-if="!getLoading && !listData.length" tip-text="没有符合筛选条件的公司，放宽筛选条件试试？" :max-width="400"></no-found>
           <div class="position-lists" v-else>
             <template v-for="item in listData">
               <position-item :key="item.id" :item="item" />
@@ -12,7 +12,7 @@
           </div>
         </template>
         <template v-else>
-          <no-found v-if="!getLoading && !companyListData.length" :max-width="400"></no-found>
+          <no-found v-if="!getLoading && !companyListData.length" tip-text="没有符合筛选条件的公司，放宽筛选条件试试？" :max-width="400"></no-found>
           <div class="position-lists" v-else>
             <template v-for="item in companyListData">
               <company-item :key="item.id" :item="item" />

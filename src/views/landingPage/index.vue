@@ -45,14 +45,9 @@
                         <i class="icon iconfont icon-jiaoyu"></i>
                         <span>{{nowResumeMsg.degreeDesc}}</span>
                       </div>
-                      <div class="lebalItem">
-                        <span
-                          class="status"
-                          v-if="nowResumeMsg.jobStatus"
-                        >{{nowResumeMsg.jobStatusDesc}}</span>
-                      </div>
                     </div>
-                  </div>
+										<div class="jobStatusDesc" v-if="nowResumeMsg.jobStatus">{{nowResumeMsg.jobStatusDesc}}</div>
+									</div>
                   <div class="description">
                     <span class="msg">{{nowResumeMsg.signature}}</span>
                     <div class="iconList">
@@ -168,7 +163,7 @@
                 <div class="imgList">
                   <div style="position:relative" :key="index" v-for="(item, index) in nowResumeMsg.moreIntroduce.imgs">
                   <img
-                    :src="item.url"
+                    :src="item.smallUrl"
                     alt
                   />
                   <a :href="item.url" target="_blank"></a>
@@ -178,7 +173,7 @@
             </div>
           </div>
           <div class="Code">
-            <div class="download">
+            <div class="download" v-loading="loadingshow">
               <div class="title">下载简历</div>
               <div class="select">请选择下载格式：</div>
               <div class="pdf">
@@ -186,7 +181,7 @@
                   <i class="iconfont icon-pdf" v-if="!isshow" style="color: #926666"></i>
                   <i class="iconfont icon-pdf" v-else style="color: #FA3939"></i>
                 </div>
-                <div class="pdf-c">{{nowResumeMsg.name}}.PDF</div>
+                <div class="pdf-c">PDF格式</div>
                 <div class="pdf-r" v-if="!isshow"><a>下载</a></div>
                 <div class="pdf-r" @click="onloadfile('pdf')" v-else><a style="color:#652791">下载</a></div>
               </div>
@@ -195,7 +190,7 @@
                   <i class="iconfont icon-word" v-if="!isshow" style="color: #667c96"></i>
                   <i class="iconfont icon-word" v-else style="color: #4a90e2"></i>
                 </div>
-                <div class="pdf-c">{{nowResumeMsg.name}}.DOC</div>
+                <div class="pdf-c">Word格式</div>
                 <div class="pdf-r" v-if="!isshow"><a>下载</a></div>
                 <div class="pdf-r" @click="onloadfile('doc')" v-else><a style="color:#652791">下载</a></div>
                 <!-- <a :href="nowResumeMsg.resumeAttach.url" :download="nowResumeMsg.resumeAttach.fileName">下载</a> -->
@@ -256,6 +251,7 @@ import { createonlinepdf, createonlineword } from 'API/common'
   })
 export default class CourseList extends Vue {
     hasonload = false
+    loadingshow = false
     uid = ''
     isshow = false
     hasonline = true
@@ -288,15 +284,22 @@ export default class CourseList extends Vue {
       this.$router.push({ name: 'login' })
     }
     onloadfile (type) {
+      this.loadingshow = true
       let params = { jobhunterVkey: this.nowResumeMsg.vkey }
       if (type === 'pdf') {
         createonlinepdf(params).then((res) => {
+          this.loadingshow = false
           this.$util.downFile(res.data, this.nowResumeMsg.name + '.pdf')
+        }).catch((e) => {
+          this.loadingshow = false
         })
       }
       if (type === 'doc') {
         createonlineword(params).then((res) => {
+          this.loadingshow = false
           this.$util.downFile(res.data, this.nowResumeMsg.name + '.docx')
+        }).catch((e) => {
+          this.loadingshow = false
         })
       }
     }

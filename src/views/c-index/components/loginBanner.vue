@@ -15,7 +15,9 @@
         </div>
       </div>
     </div>
-    <div   class="is-login-bg" :style="{'backgroundImage': `url(${banner[0] && banner[0].bigImgUrl})`, color: '#fff'}" @click="handleOpenUrl" v-else />
+    <template v-else>
+      <div class="is-login-bg" v-if="banner[0]" :style="{'backgroundImage': `url(${banner[0].bigImgUrl})`, color: '#fff'}" @click="handleOpenUrl" />
+    </template>
   </div>
 </template>
 <script>

@@ -51,7 +51,7 @@
             <el-form-item prop="signature">
               <el-input
                 type="textarea"
-                placeholder="说明为什么非你不可"
+                placeholder="请简要描述你的职业优势或规划"
                 v-model="form.signature"
                 :autosize="{ minRows: 3, maxRows: 7}"
                 :rows="7"

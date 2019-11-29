@@ -27,7 +27,7 @@
           </div>
         </div>
         <el-dropdown-menu slot="dropdown">
-           <el-dropdown-item command="perfectauth" v-if="haveIdentity.identityStatus !== 1">
+           <el-dropdown-item command="perfectauth" v-if="haveIdentity.identityAuth !== 1">
              身份认证
              <div class="reddot"></div>
              </el-dropdown-item>
@@ -61,30 +61,29 @@ export default {
   },
   computed: {
     ...mapState({
-      userInfo: state => state.userInfo
+      userInfo: state => state.userInfo,
+      Identityinfo: state => state.recruiterinfo
     })
+  },
+  watch: {
+    'Identityinfo': function (n) {
+      this.haveIdentity = n
+      console.log(n, '监听到变化了')
+    }
   },
   methods: {
     handleClick (e) {
       switch (e) {
         case 'logout':
-          this.$store.dispatch('logoutApi', {curPage: 2})
+          this.$store.dispatch('logoutApi', { curPage: 2 })
           break
         case 'toggleIdentity':
-          this.$store.commit('switchIdentity', {toSiutchRole: 1})
+          this.$store.commit('switchIdentity', { toSiutchRole: 1 })
           break
         case 'perfectauth':
           this.$router.push({ name: 'perfectauth' })
       }
-    },
-    getCompanyIdentityInfos () {
-      setTimeout(() => {
-        this.haveIdentity = this.$store.state.recruiterinfo
-      }, 1000)
     }
-  },
-  mounted () {
-    this.getCompanyIdentityInfos()
   }
 }
 </script>

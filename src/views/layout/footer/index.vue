@@ -1,6 +1,6 @@
 <template>
   <footer id="page-footer" class="page-footer" :class="{'isFixed': shouldFixed()}">
-    <section>
+    <section :class="{'minn-footer': miniFooter}">
         <div class="footer_left">
           <div class="footer-header-title">
              <img class="ft_logo" :src="cdnPath + 'logo.png'" />
@@ -60,9 +60,16 @@ export default PageFooter
     margin: 0 auto;
     height: 112px;
     margin-top: 44px;
-    justify-content: space-between;
+  }
+  section.minn-footer {
+    width: 1000px;
+    .footer_center {
+      margin-left: 84px;
+    }
   }
   .footer_center {
+    flex:1;
+    margin-left: 155px;
     .footer-header-title {
       height: 24px;
       padding-bottom: 9px;
@@ -130,7 +137,7 @@ export default PageFooter
       }
     }
     .right_code_blo + .right_code_blo  {
-      margin-left: 70px;
+      margin-left: 58px;
     }
     p.black {
       font-size: 14px;

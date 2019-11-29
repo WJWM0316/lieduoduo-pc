@@ -45,8 +45,10 @@
           </div>
           <div :class="['countdown', vo.status >= 51 ? 'bg' : '']">
             <i class="iconfont iconshijian time"></i>
-            <span v-if="tablist[0].cur">{{vo.arrangementInfo.appointment}}</span>
-            <span v-else>{{vo.arrangementInfo.appointment.substring(5)}}</span>
+            <span v-if="tablist[0].cur">
+              {{(vo.arrangementInfo.appointmentTime)*1000 | date('YYYY-MM-DD HH:mm') }}
+              </span>
+            <span v-else>{{vo.arrangementInfo.appointment.substring(11, 16)}}</span>
           </div>
           </div>
           <div class="bloCont">
@@ -146,7 +148,7 @@
       <div class="resumeBox" v-if="showResume" @click="closeload($event)">
         <div class="Numbering">
           <span>简历编号：{{nowResumeMsg.vkey}}</span>
-          <span>{{nowResumeMsg.resumeUpdateTime}}更新</span>
+          <span v-if="nowResumeMsg.resumeUpdateTime !== '0000-00-00 00:00:00'">{{nowResumeMsg.resumeUpdateTime}}更新</span>
           <div class="closediggle" @click="pop.isShow = false">
         <i class="iconfont icon-guanbianniu"></i>
       </div>
@@ -324,14 +326,14 @@
               <div class="onload" @click="hasonload = !hasonload">
                 <i class="iconfont icon-xiazai"></i>
               </div>
-              <div class="onloadselect" v-show="hasonload" ref="queryBox">
+              <div class="onloadselect" v-loading="loadingshow" v-show="hasonload" ref="queryBox">
                 <div class="title">下载简历</div>
                 <div class="select">请选择下载格式:</div>
                 <div class="pdf">
                   <div class="p_l">
                     <i class="iconfont icon-pdf" style="color: #FA3939"></i>
                   </div>
-                  <div class="p_c">{{nowResumeMsg.name}}.PDF</div>
+                  <div class="p_c">PDF格式</div>
                   <div class="p_r">
                     <a @click="onloadfile('pdf')"><i class="iconfont icon-xiazai"></i></a>
                   </div>
@@ -340,7 +342,7 @@
                   <div class="p_l">
                     <i class="iconfont icon-word" style="color: #2878ff"></i>
                   </div>
-                  <div class="p_c">{{nowResumeMsg.name}}.DOC</div>
+                  <div class="p_c">Word格式</div>
                   <div class="p_r">
                     <a @click="onloadfile('doc')"><i class="iconfont icon-xiazai"></i></a>
                   </div>
@@ -743,6 +745,7 @@ export default {
         type: 'clickPic',
         InterviewTitle: '面试信息'
       },
+      loadingshow: false,
       toworddiggle: false,
       nowResumeMsg: {},
       hasonload: false,
@@ -1064,6 +1067,7 @@ export default {
                 v.positionName = '直接与我约面'
               }
               v.hascur = false
+              v.boxshow = false
             })
             this.applyrecordList = applylists
           } else {
@@ -1534,15 +1538,22 @@ export default {
       })
     },
     onloadfile (type) {
+      this.loadingshow = true
       let params = { jobhunterVkey: this.nowResumeMsg.vkey }
       if (type === 'pdf') {
         createonlinepdf(params).then((res) => {
+          this.loadingshow = false
           this.$util.downFile(res.data, this.nowResumeMsg.name + '.pdf')
+        }).catch((e) => {
+          this.loadingshow = false
         })
       }
       if (type === 'doc') {
         createonlineword(params).then((res) => {
+          this.loadingshow = false
           this.$util.downFile(res.data, this.nowResumeMsg.name + '.docx')
+        }).catch((e) => {
+          this.loadingshow = false
         })
       }
     },
