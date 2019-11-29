@@ -198,11 +198,6 @@ export default {
 }
 .position-lists {
   box-shadow: $shadow-1;
-  & /deep/ {
-    .position-list:first-child::after, .company-list:first-child::after {
-      border-top: none;
-    }
-  }
 }
 
 .pagination {

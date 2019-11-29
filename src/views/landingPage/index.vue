@@ -162,16 +162,17 @@
             </div>
             <!-- 更多介绍 -->
             <div class="workExperience" v-if="nowResumeMsg.moreIntroduce">
-              <p class="title">更多介绍</p>
+              <p class="title" v-if="nowResumeMsg.moreIntroduce.introduce">更多介绍</p>
               <div class="workList">
                 <pre v-if="nowResumeMsg.moreIntroduce.introduce">{{nowResumeMsg.moreIntroduce.introduce}}</pre>
                 <div class="imgList">
+                  <div style="position:relative" :key="index" v-for="(item, index) in nowResumeMsg.moreIntroduce.imgs">
                   <img
                     :src="item.url"
                     alt
-                    v-for="(item,index) in nowResumeMsg.moreIntroduce.imgs"
-                    :key="index"
                   />
+                  <a :href="item.url" target="_blank"></a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -212,11 +213,11 @@
               <div class="ContactInformation">
                 <p class="contactTitle" v-if="nowResumeMsg.mobile||nowResumeMsg.wechat">联系方式:</p>
                 <div class="Contact" v-if="nowResumeMsg.mobile">
-                  <span>手机号: </span>
+                  <span><i class="iconfont icon-dianhua"></i></span>
                   <span>{{nowResumeMsg.mobile}}</span>
                 </div>
                 <div class="Contact" v-if="nowResumeMsg.wechat">
-                  <span>微信号:</span>
+                  <span><i class="iconfont icon-weixin"></i></span>
                   <span >{{nowResumeMsg.wechat}}</span>
                 </div>
               </div>

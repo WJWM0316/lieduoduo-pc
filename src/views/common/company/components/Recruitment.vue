@@ -13,13 +13,14 @@
         <div class="list" v-loading="getLoading">
           <no-found v-if="!getLoading && !PositionList.length" :max-width="400"></no-found>
           <positionItem v-for="(item, index) in PositionList" :key="index" :item = item></positionItem>
-          <div class="pagination" v-if="PositionList.length > 1">
+          <div class="pagination" v-if="total > 20">
             <el-pagination
               background
               @current-change="handleSearch"
               :current-page.sync ="page"
               layout="prev, pager, next"
-              :total="PositionList.length">
+              :page-size="20"
+              :total="total">
             </el-pagination>
           </div>
         </div>
@@ -50,20 +51,15 @@ export default {
       type: {}, // type类型
       typeActivation: 0,
       PositionList: {},
-      typeActivationItem: {}, // 当前激活按钮数据
-      page: 1
+      page: 1,
+      total: 0,
+      typeId: ''
     }
   },
   computed: {
     ...mapState({
       hasLogin: state => state.hasLogin
     })
-  },
-  props: {
-    haslogin: {
-      type: Boolean,
-      default: true
-    }
   },
   components: {
     positionItem,
@@ -73,13 +69,9 @@ export default {
   },
 
   methods: {
-    handleSearch () {
-      let data = {
-        company_vkey: this.$route.query.vkey,
-        type: this.typeActivationItem.id,
-        page: this.page
-      }
-      this.getCompanysPositionList(data)
+    handleSearch (page) {
+      this.page = page
+      this.getCompanysPositionList()
     },
     // 获得职位详情
     async getCompanysPosition () {
@@ -96,23 +88,25 @@ export default {
         })
     },
     TypeClick (item, index) {
-      this.typeActivationItem = item.id
-      this.page = 1 // 点击还原页码
-
-      var data = {
-        company_vkey: this.$route.query.vkey,
-        type: item.id
-      }
+      this.typeId = item.id
+      this.page = 1
       this.typeActivation = index
-      this.getCompanysPositionList(data)
+      this.getCompanysPositionList()
     },
     // 拿到列表数据
-    getCompanysPositionList (data) {
-      getCompanysPositionListApi(data)
-        .then(res => {
-          this.PositionList = res.data.data
-          this.getLoading = false
-        })
+    getCompanysPositionList () {
+      let params = {
+        company_vkey: this.$route.query.vkey,
+        page: this.page
+      }
+      if (this.typeId) {
+        params = Object.assign(params, { type: this.typeId })
+      }
+      getCompanysPositionListApi(params).then(({ data }) => {
+        this.PositionList = data.data
+        this.getLoading = false
+        this.total = data.meta.total
+      })
     }
   },
 

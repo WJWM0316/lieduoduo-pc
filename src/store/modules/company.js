@@ -25,7 +25,7 @@ const mutations = {
         }
       })
     } else {
-      infos.area.map(v => v.checked = false)
+      infos.area.map((v, i) => v.checked = !i ? true : false)
     }
     if (UrlParams.get('industryIds')) {
       let industryIdsArr = UrlParams.get('industryIds').split(',')
@@ -36,7 +36,7 @@ const mutations = {
         }
       })
     } else {
-      infos.industry.map(v => v.checked = false)
+      infos.industry.map((v, i) => v.checked = !i ? true : false)
     }
     if (UrlParams.get('financingIds')) {
       let financingIdsArr = UrlParams.get('financingIds').split(',')
@@ -47,7 +47,7 @@ const mutations = {
         }
       })
     } else {
-      infos.financing.map(v => v.checked = false)
+      infos.financing.map((v, i) => v.checked = !i ? true : false)
     }
     if (UrlParams.get('employeeIds')) {
       let employeeIdsArr = UrlParams.get('employeeIds').split(',')
@@ -58,7 +58,7 @@ const mutations = {
         }
       })
     } else {
-      infos.employee.map(v => v.checked = false)
+      infos.employee.map((v, i) => v.checked = !i ? true : false)
     }
     state.searchCollect = infos
   },

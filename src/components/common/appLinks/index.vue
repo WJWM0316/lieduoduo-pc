@@ -100,8 +100,6 @@ export default {
     overflow: hidden;
     a {
       display: inline-block;
-      max-width: 150px;
-      @include ellipsis;
     }
   }
   .app-link-wrapper.app-link-unfold {

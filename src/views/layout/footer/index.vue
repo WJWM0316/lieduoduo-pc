@@ -113,7 +113,7 @@ export default PageFooter
     }
     .tips {
       color: $title-color-1;
-      font-weight: 300;
+      // font-weight: 300;
       font-size: 12px;
       margin-bottom: 20px;
     }

@@ -467,7 +467,6 @@ export default class loginForm extends Component {
       }
       .login-img {
         width: 83px;
-        padding: 9px;
         height: 83px;
         cursor: pointer;
         display: inline-block;

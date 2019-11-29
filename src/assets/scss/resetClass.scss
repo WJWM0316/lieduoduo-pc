@@ -53,6 +53,6 @@
   }
 }
 
-// .el-input__inner {
-// 	background: none !important;
-// }
+.el-input__inner::placeholder, input::placeholder {
+  color: $font-color-10;
+}

@@ -148,7 +148,7 @@
           <span>简历编号：{{nowResumeMsg.vkey}}</span>
           <span>{{nowResumeMsg.resumeUpdateTime}}更新</span>
           <div class="closediggle" @click="pop.isShow = false">
-        <i class="iconfont iconda"></i>
+        <i class="iconfont icon-guanbianniu"></i>
       </div>
         </div>
         <div class="resumeLyout">
@@ -308,12 +308,13 @@
               <div class="workList">
                 <pre v-if="nowResumeMsg.moreIntroduce.introduce">{{nowResumeMsg.moreIntroduce.introduce}}</pre>
                 <div class="imgList">
+                  <div style="position:relative" :key="index" v-for="(item, index) in nowResumeMsg.moreIntroduce.imgs">
                   <img
                     :src="item.url"
                     alt
-                    v-for="(item,index) in nowResumeMsg.moreIntroduce.imgs"
-                    :key="index"
                   />
+                  <a :href="item.url" target="_blank"></a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -340,17 +341,17 @@
             </div>
             <div class="msgCode"  v-if="shareResumeImg">
               <img :src="shareResumeImg" />
-              <span>扫码进入</span>
+              <span>扫码分享</span>
             </div>
             <div class="isAdmin">
               <div class="ContactInformation">
                 <p class="contactTitle" v-if="nowResumeMsg.mobile||nowResumeMsg.wechat">联系方式:</p>
                 <div class="Contact" v-if="nowResumeMsg.mobile">
-                  <span>手机号: </span>
+                  <span><i class="iconfont icon-dianhua"></i></span>
                   <span>{{nowResumeMsg.mobile}}</span>
                 </div>
                 <div class="Contact" v-if="nowResumeMsg.wechat">
-                  <span>微信号:</span>
+                  <span><i class="iconfont icon-weixin"></i></span>
                   <span >{{nowResumeMsg.wechat}}</span>
                 </div>
                 <p v-if="nowResumeMsg.wechat==''&&nowResumeMsg.mobile==''" class="noUpload">暂无上传</p>
@@ -2223,6 +2224,12 @@ export default {
               margin-left: 23px;
               color: #5C565D;
               font-size: 14px;
+              margin-bottom: 18px;
+              i{
+                color: #BCBCBC;
+                font-size: 14px;
+                margin-right: 7px;
+              }
             }
           }
           .download {
@@ -2554,6 +2561,13 @@ export default {
               &:nth-child(6n + 6) {
                 margin-right: 0px;
               }
+            }
+            a{
+              width: 86px;
+              height: 86px;
+              display: block;
+              position: absolute;
+              top: 0;;
             }
           }
           .workItem {

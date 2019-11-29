@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { saveAccessToken, removeAccessToken, getAccessToken, getUserInfo, saveUserInfo } from '../api/cacheService'
 import { loginPutInApipc, getUserRoleInfoApi, switchRoleApi } from '@/api/auth'
-import { recruiterDetail } from 'API/common'
+import { perfectauthDetail } from 'API/common'
 import router from '@/router/index.js'
 import { mobileReg } from '@/util/fieldRegular.js'
 import { logoutApi } from '../api/auth'
@@ -76,11 +76,13 @@ export default new Vuex.Store({
     },
     // 退出登录回调
     LOGOUT: (state) => {
+      // console.log(state.pageName, location)
       state.userInfo = {}
       state.token = null
       removeAccessToken()
       if (state.userIdentity === 1) {
-        router.replace({ path: '/index', query: { q: Date.now() } })
+        window.location.href = window.location.href
+        // router.replace({ path: '/index', query: { q: Date.now() } })
       } else {
         router.replace({ path: '/login', query: { type: 'msgLogin' } })
       }
@@ -195,10 +197,8 @@ export default new Vuex.Store({
               store.dispatch('getMyResume')
             }
             if (result.isRecruiter) {
-              // 获取简历信息
-              recruiterDetail().then((res) => {
+              perfectauthDetail().then((res) => {
                 store.commit('setRecruiterinfo', res.data.data)
-                console.log(res)
               })
             }
           })

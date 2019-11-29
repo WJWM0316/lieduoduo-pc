@@ -27,7 +27,7 @@
           </div>
         </div>
         <el-dropdown-menu slot="dropdown">
-           <el-dropdown-item command="perfectauth" v-if="haveIdentity">
+           <el-dropdown-item command="perfectauth" v-if="haveIdentity.identityStatus !== 1">
              身份认证
              <div class="reddot"></div>
              </el-dropdown-item>
@@ -56,7 +56,7 @@ export default {
           img: mp_qrcode
         }
       ],
-      haveIdentity: false
+      haveIdentity: ''
     }
   },
   computed: {
@@ -78,11 +78,9 @@ export default {
       }
     },
     getCompanyIdentityInfos () {
-      if (!this.$store.state.recruiterinfo.identityAuth) {
-        this.haveIdentity = true
-      } else {
-        this.haveIdentity = false
-      }
+      setTimeout(() => {
+        this.haveIdentity = this.$store.state.recruiterinfo
+      }, 1000)
     }
   },
   mounted () {

@@ -83,6 +83,15 @@ export const recruiterDetail = data => request({
     host: 'zhaopin'
   }
 })
+// 获取身份是否认证信息
+export const perfectauthDetail = data => request({
+  url: 'recruiter/mine/extra',
+  method: 'get',
+  params: data,
+  config: {
+    host: 'zhaopin'
+  }
+})
 
 export const createonlinepdf = data => request({
   url: `/jobhunter/auto_resume/pdf/${data.jobhunterVkey}`,

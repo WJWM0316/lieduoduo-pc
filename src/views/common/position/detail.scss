@@ -23,7 +23,7 @@ img {
 	.header {
 		width: 100%;
 		padding: 34px 0 30px;
-		background-color: #F5F5F5;
+		background-color: $bg-color-1;
 		background-position: right center;
 		background-repeat: no-repeat;
 		transition: all .4s;
@@ -209,7 +209,7 @@ img {
 		&.isRapidly {
 			background: url(#{$image-cdn-url}/images/24h.png), #03B3BB;
 			background-repeat: no-repeat;
-			background-position: right 100%;
+			background-position: 1280px 100%;
 			.inner {
 				.header-content {
 					.name, .info-item {
@@ -219,7 +219,9 @@ img {
 						color: #fff !important;
 					}
 					.label-item {
-						color: $main-color-1 !important;
+						color: #fff;
+						background: transparent;
+						border:1px solid #fff;
 					}
 					.infos {
 						.info-item {
@@ -232,7 +234,7 @@ img {
 				.aside {
 					padding-top: 6px;
 					.yuemian24 {
-						padding-left: 56px;
+						padding-left: 52px;
 						position: relative;
 						font-size: 0;
 						margin-bottom: 12px;
@@ -248,6 +250,7 @@ img {
 							font-weight:400;
 							color:#fff;
 							line-height:20px;
+							position: relative;
 							.num {
 								font-size:24px;
 								font-weight:700;
@@ -259,9 +262,17 @@ img {
 								font-size:12px;
 							}
 						}
+						.number::after {
+							position: absolute;
+							content: "";
+							height: 24px;
+							border-left: 1px dashed rgba(#fff, .5);
+							width: 1px;
+							right: -12px;
+							top: 12px;
+						}
 						.timeBox {
 							float: right;
-							display: inline-block;
 							font-size:14px;
 							font-weight:400;
 							color:#fff;
@@ -269,14 +280,14 @@ img {
 							.little-box {
 								width:24px;
 								height:24px;
-								background:#EFE9F4;
+								background: #fff;
 								border-radius:2px;
 								line-height: 24px;
 								text-align: center;
 								font-size:16px;
 								color: $lightFont-color-orange;
 								display: inline-block;
-								margin: 0 6px;
+								margin: 0 5px;
 								&:last-child {
 									margin-right: 0;
 								}
@@ -352,7 +363,7 @@ img {
 			padding-right: 100px;
 			margin: 0;
 			.part {
-				margin-bottom: 40px;
+				margin-bottom: 60px;
 				&:last-child {
 					margin-bottom: 0;
 				}
@@ -381,7 +392,7 @@ img {
 						color:$font-color-6;
 						line-height:28px;
 						padding: 0 14px;
-						background: #F2F1F5;
+						background: $bg-color-1;
 						margin-right: 16px;
 						display: inline-block;
 					}
@@ -559,6 +570,6 @@ img {
 .app-links {
 	margin-top: 80px;
 	& /deep/ .show-more-btn {
-		background: #fff;
+		background: #fff !important;
 	}
 }
