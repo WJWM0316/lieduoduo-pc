@@ -46,14 +46,14 @@
               <span>2 . 身份信息认证</span>
             </div>
             <div class="center-r">
-              <span><i class="iconfont icon-shengchenghaibao"></i></span>
-              <span><i class="iconfont icon-shengchenghaibao"></i></span>
+              <span><i class="iconfont icon-tijiaoshenqing"></i></span>
+              <span><i class="iconfont icon-shenfenrenzheng"></i></span>
             </div>
           </div>
         </div>
         <div class="auth-btn" @click="gotowhere('perfect')">
-          <span>等不及了，在线自主完成认证</span>
-          <i class="iconfont icon-right"></i>
+          <span style="margin-right:15px">等不及了，在线自主完成认证</span>
+          <i class="iconfont icon-zizhurenzheng" style="font-size:15px"></i>
         </div>
         <div class="handler">
           <div class="goqiuzhi" @click="gotowhere('qiuzhi')">前往求职端</div>
@@ -88,30 +88,30 @@
             </Picture>
           </div>
           </el-form-item>
-          <el-form-item label="公司简称" prop="company_shortname">
+          <el-form-item label="公司简称" prop="company_shortname" class="formitem">
             <el-input :value="authForm.company_shortname" placeholder="请填写公司简称" @input="authbindInput($event, 'company_shortname')"></el-input>
-            <i class="iconfont icon-bangzhu icontip" @mouseenter="tipsshow = true" @mouseleave="tipsshow = false"></i>
+            <i class="iconfont icon-question-circle icontip" @mouseenter="tipsshow = true" @mouseleave="tipsshow = false"></i>
             <div v-show="tipsshow">
               <div class="icontipbox">公司简称能让候选人记住你的公司，可以是品牌名/产品名/关键词，创建后不可修改。</div>
               <div class="forward"></div>
             </div>
           </el-form-item>
-          <el-form-item label="所属行业" prop="industry_name">
+          <el-form-item label="所属行业" prop="industry_name" class="formitem">
             <div class="positon-box" @click="selectindustry"></div>
             <el-input :value="authForm.industry_name" placeholder="请选择所属行业" @input="authbindInput($event, 'industry_name')"></el-input>
             <option-list :option="industrylist" :visible="industryshow" @selectchange="changeindustry"></option-list>
           </el-form-item>
-          <el-form-item label="融资情况" prop="financing_name">
+          <el-form-item label="融资情况" prop="financing_name" class="formitem">
             <div class="positon-box" @click="selectfinancing"></div>
             <el-input :value="authForm.financing_name" placeholder="请选择融资情况" @input="authbindInput($event, 'financing_name')"></el-input>
             <option-list :option="financinglist" :visible="financingshow" @selectchange="changefinancing"></option-list>
           </el-form-item>
-          <el-form-item label="人员规模" prop="employees_name">
+          <el-form-item label="人员规模" prop="employees_name" class="formitem">
             <div class="positon-box" @click="selectemployees"></div>
             <el-input :value="authForm.employees_name" placeholder="请选择人员规模" @input="authbindInput($event, 'employees_name')"></el-input>
             <option-list :option="employeeslist" :visible="employeesshow" @selectchange="changeemployee"></option-list>
           </el-form-item>
-          <el-form-item>
+          <el-form-item class="formitem">
             <div class="intro">
               <textarea placeholder="请填写公司介绍" v-model="authForm.intro"></textarea>
             </div>
@@ -134,15 +134,15 @@
                 <Picture
                 :value.sync="authForm.business_license_url"
                 attach-type="img"
-                class="updataimg"
+                class="updataimg oneimg"
                 @before="businessLoading = true"
                 @fail="businessLoading = false"
                 @change="handleChangeBusiness"
                 v-loading="businessLoading">
-                <div class="updataimg" v-if="!authForm.business_license_url">
+                <div class="updataimg oneimg" v-if="!authForm.business_license_url">
                   <img src="@/assets/images/business.png" alt="">
                 </div>
-                <div class="updataimg" v-else>
+                <div class="updataimg oneimg" v-else>
                 <img :src="authForm.business_license_url" alt="">
               </div>
               </Picture>
@@ -1277,6 +1277,9 @@ export default {
               cursor: pointer;
               border-radius:4px;
             }
+            .oneimg{
+              margin-top: 17px;
+            }
             img{
               max-width: 100%;
               max-height: 100%;
@@ -1332,19 +1335,20 @@ export default {
       font-size: 14px;
       cursor: pointer;
       top: 0px;
+      color: #CDCBCF;
       z-index: 999;
     }
     .icontipbox{
       position: absolute;
       left: 57px;
       cursor: pointer;
-      top: -55px;
-      padding: 11px 10px;
+      top: -50px;
+      padding: 10px;
       line-height: 17px;
       width: 270px;
       color: #6D696E;
       font-size: 12px;
-      height: 40px;
+      height: 34px;
       background: #ffffff;
       -webkit-box-shadow: 0px 0px 30px 0px rgba(22, 39, 77, 0.07);
       box-shadow: 0px 0px 30px 0px rgba(22, 39, 77, 0.07);
@@ -1472,6 +1476,7 @@ export default {
       border-radius:4px;
       display: flex;
       color: #fff;
+      margin-top: 40px;
       font-size: 14px;
       line-height: 50px;
       justify-content: center;
@@ -1505,11 +1510,11 @@ export default {
             background: #652791;
           }
           .tips-box{
-            width:8px;
-            height:8px;
+            width:6px;
+            height:6px;
             background:rgba(101,39,145,1);
             float: left;
-            margin-top: 7px;
+            margin-top: 8px;
             transform: rotate(225deg);
           }
         }
@@ -1532,11 +1537,11 @@ export default {
             background: #652791;
           }
           .tips-box{
-            width:8px;
-            height:8px;
+            width:6px;
+            height:6px;
             background:rgba(101,39,145,1);
             float: left;
-            margin-top: 7px;
+            margin-top: 8px;
             transform: rotate(225deg);
           }
         }
@@ -1579,6 +1584,7 @@ export default {
         font-size: 14px;
         color: #fff;
         margin-top: 40px;
+        margin-bottom: 38px;
         line-height: 50px;
         text-align: center;
         height:50px;
@@ -1713,7 +1719,7 @@ export default {
       }
       .desc{
         color: #6D696E;
-        padding-top: 4px;
+        padding-top: 6px;
         font-size: 14px
       }
     }
@@ -1824,5 +1830,30 @@ export default {
 }
 .registerBox .el-input .el-input__inner::placeholder{
   color: #A29CA6;
+}
+</style>
+<style>
+.registerBox .formitem .el-input__inner{
+  font-weight: bold;
+  color: #333333;
+}
+.registerBox .formitem .el-input__inner::placeholder{
+  font-weight: normal;
+}
+.registerBox::-webkit-scrollbar{
+  width: 4px;
+}
+.registerBox textarea::-webkit-scrollbar-track{
+  background:#fff;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius:3px;
+  height: 226px;
+}
+.registerBox textarea::-webkit-scrollbar{
+  background:#EBEBEB;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius:3px;
 }
 </style>

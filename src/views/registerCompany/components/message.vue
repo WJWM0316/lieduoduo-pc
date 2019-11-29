@@ -77,7 +77,6 @@ export default {
     color: #5C565D;
     font-size: 14px;
     margin-bottom: 52px;
-    height: 20px;
     line-height: 20px;
   }
   .handler{

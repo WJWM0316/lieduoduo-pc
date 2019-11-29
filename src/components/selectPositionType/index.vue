@@ -24,6 +24,7 @@
             :show-message="false"
             style="width: 320px;"
             size="medium"
+            placeholder="请输入职位关键字"
             v-model="keyword"
             @keyup.native="handleSearch">
             <template slot="suffix">
@@ -223,8 +224,9 @@ export default {
     cursor: pointer;
     font-size: 14px;
     @include ellipsis();
-    line-height: 14px;
+    line-height: 16px;
     margin: 12px 0;
+    height: 16px;
   }
 }
 .lists-selected span {

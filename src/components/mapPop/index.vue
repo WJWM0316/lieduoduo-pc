@@ -1,14 +1,15 @@
 <template>
-  <div>
+  <div v-if="companyAddress">
     <el-collapse v-model="activeName" accordion>
-      <el-collapse-item v-for="(item, index) in companyAddress.address" :key="index" :title="item.address" :name="index">
+      <el-collapse-item v-for="(item, index) in companyAddress" :key="index" :title="item.address" :name="index">
         <template slot="title">
           <p class="address-text">
             <i class="iconfont icon-dizhi"></i>
             <span>{{ item.address }}</span>
           </p>
         </template>
-        <img v-if="item.lat" :src="'https://apis.map.qq.com/ws/staticmap/v2/?size=750*147&center=' + item.lat + ',' + item.lng + '&zoom=15&key=TMZBZ-S72K6-66ISB-ES3XG-CVJC6-HKFZG&maptype=roadmap&markers=size:large|color:blue|'+ item.lat + ',' + item.lng" @click="addressAlert"/>
+        <img class="mapImg" v-if="item.lat" :src="'https://apis.map.qq.com/ws/staticmap/v2/?size=750*147&center=' + item.lat + ',' + item.lng + '&zoom=15&key=TMZBZ-S72K6-66ISB-ES3XG-CVJC6-HKFZG&maptype=roadmap&markers=size:large|color:blue|'+ item.lat + ',' + item.lng" @click="addressAlert"/>
+        <p v-if="!item.lat" style="margin-left: 14px;">该公司暂时没有详细地址</p>
       </el-collapse-item>
     </el-collapse>
 
@@ -16,10 +17,10 @@
       <template slot="title">
         <p class="address-text">
           <i class="iconfont icon-dizhi"></i>
-          <span v-if="dialogVisible && activeName !== ''">{{ companyInformation.address[activeName].address }}</span>
+          <span v-if="dialogVisible && activeName !== ''">{{ companyAddress[activeName].address }}</span>
         </p>
       </template>
-      <div id="map" v-if="dialogVisible" style="width: 662px; height: 450px;"></div>
+      <div id="map" v-if="dialogVisible" style="width: 662px; height: 450px; border-radius: 0 0 8px 8px"></div>
     </el-dialog>
   </div>
 </template>
@@ -34,14 +35,15 @@ export default {
   },
   data () {
     return {
-      dialogVisible: false // 地图弹窗
+      dialogVisible: false, // 地图弹窗
+      activeName: 0
     }
   },
   methods: {
     addressAlert () {
       this.dialogVisible = true
       this.$nextTick(() => {
-        this.getMapLocation(this.companyInformation.address[this.activeName].lat, this.companyInformation.address[this.activeName].lng)
+        this.getMapLocation(this.companyAddress[this.activeName].lat, this.companyAddress[this.activeName].lng)
       })
     },
     getMapLocation (lat, lng) {
@@ -76,5 +78,8 @@ export default {
     display: inline-block;
     margin: 0 7px 0 15px;
   }
+}
+.mapImg{
+  cursor: pointer;
 }
 </style>

@@ -57,7 +57,7 @@
               class="job_op"
               @click="opJob('open',item.id)"
               v-if="item.isOnline===2 && form.status === '0,1'"
-            >开放</span>
+            >开放职位</span>
             <span class="job_op" @click="todoAction('editJob',item.id)">编辑</span>
           </div>
         </li>

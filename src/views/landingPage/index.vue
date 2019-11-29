@@ -1,7 +1,7 @@
 <template>
   <div id="candidate">
     <div class="pop">
-      <div class="resumeBox">
+      <div class="resumeBox" v-if="hasonline">
         <div class="head">
           <div class="back" v-if="isshow" @click="toback()">
             <i class="iconfont icon-right"></i>
@@ -224,6 +224,12 @@
           </div>
         </div>
       </div>
+      <div class="resumeBox" v-else>
+        <div class="null-img">
+          <img src="@/assets/images/fly.png" />
+        </div>
+        <div class="null-text">链接已过期，无法支持在线预览（预览有效期14天）</div>
+      </div>
     </div>
   </div>
 </template>
@@ -247,6 +253,7 @@ export default class CourseList extends Vue {
     hasonload = false
     uid = ''
     isshow = false
+    hasonline = true
     nowResumeMsg = {}
     shareResumeImg = '' // 简历二维码
     created () {
@@ -265,6 +272,8 @@ export default class CourseList extends Vue {
         if (getAccessToken()) {
           this.getShareResume(resumeId)
         }
+      }).catch((e) => {
+        this.hasonline = false
       })
     }
     toback () {
@@ -277,7 +286,6 @@ export default class CourseList extends Vue {
       let params = { jobhunterVkey: this.nowResumeMsg.vkey }
       if (type === 'pdf') {
         createonlinepdf(params).then((res) => {
-          // console.log(res)
           this.$util.downFile(res.data, this.nowResumeMsg.name + '.pdf')
         })
       }

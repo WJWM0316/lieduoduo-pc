@@ -459,9 +459,9 @@
                   </div>
                 </div>
               </div>
-              <div class="dayin">
+              <!-- <div class="dayin">
                 <i class="iconfont icon-dayin-"></i>
-              </div>
+              </div> -->
               <div class="share" @click="sharediggle()">
                 <i class="iconfont icon-fenxiang"></i>
               </div>
@@ -509,6 +509,11 @@
                   <span >{{nowResumeMsg.wechat}}</span>
                 </div>
               </div>
+            </div>
+            <div class="seefujian" v-if="nowResumeMsg.resumeAttach">
+              <div class="title">附件简历:</div>
+              <div class="seebtn" v-if="nowResumeMsg.resumeAttach.extension === 'doc'"><a :href="'https://view.officeapps.live.com/op/view.aspx?src=' + nowResumeMsg.resumeAttach.url" :download="nowResumeMsg.resumeAttach.fileName" target="_blank">查看附件</a></div>
+              <div class="seebtn" v-else><a :href="nowResumeMsg.resumeAttach.url" :download="nowResumeMsg.resumeAttach.fileName" target="_blank">查看附件</a></div>
             </div>
           </div>
         </div>
@@ -1595,6 +1600,10 @@ export default class CourseList extends Vue {
             }
             let applylists = res.data.data.data
             applylists.map((v, k) => {
+              if (v.positionId === 0) {
+                v.positionName = '直接与我约面'
+              }
+              v.hascur = false
               v.boxshow = false
             })
             this.applyrecordList = applylists

@@ -45,8 +45,10 @@
           </div>
           <div :class="['countdown', vo.status >= 51 ? 'bg' : '']">
             <i class="iconfont iconshijian time"></i>
-            <span v-if="tablist[0].cur">{{vo.arrangementInfo.appointment}}</span>
-            <span v-else>{{vo.arrangementInfo.appointment.substring(5)}}</span>
+            <span v-if="tablist[0].cur">
+              {{(vo.arrangementInfo.appointmentTime)*1000 | date('YYYY-MM-DD HH:mm:ss') }}
+              </span>
+            <span v-else>{{vo.arrangementInfo.appointment.substring(11, 16)}}</span>
           </div>
           </div>
           <div class="bloCont">
@@ -143,7 +145,7 @@
         </div>
       </div>
 
-      <div class="resumeBox" v-if="showResume">
+      <div class="resumeBox" v-if="showResume" @click="closeload($event)">
         <div class="Numbering">
           <span>简历编号：{{nowResumeMsg.vkey}}</span>
           <span>{{nowResumeMsg.resumeUpdateTime}}更新</span>
@@ -320,6 +322,39 @@
             </div>
           </div>
           <div class="Code">
+            <div class="handlerpring">
+              <div class="onload" @click="hasonload = !hasonload">
+                <i class="iconfont icon-xiazai"></i>
+              </div>
+              <div class="onloadselect" v-show="hasonload" ref="queryBox">
+                <div class="title">下载简历</div>
+                <div class="select">请选择下载格式:</div>
+                <div class="pdf">
+                  <div class="p_l">
+                    <i class="iconfont icon-pdf" style="color: #FA3939"></i>
+                  </div>
+                  <div class="p_c">{{nowResumeMsg.name}}.PDF</div>
+                  <div class="p_r">
+                    <a @click="onloadfile('pdf')"><i class="iconfont icon-xiazai"></i></a>
+                  </div>
+                </div>
+                <div class="pdf">
+                  <div class="p_l">
+                    <i class="iconfont icon-word" style="color: #2878ff"></i>
+                  </div>
+                  <div class="p_c">{{nowResumeMsg.name}}.DOC</div>
+                  <div class="p_r">
+                    <a @click="onloadfile('doc')"><i class="iconfont icon-xiazai"></i></a>
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="dayin">
+                <i class="iconfont icon-dayin-"></i>
+              </div> -->
+              <div class="share" @click="sharediggle()">
+                <i class="iconfont icon-fenxiang"></i>
+              </div>
+            </div>
             <div class="btnstatus">
               <div class="btn1" @click.stop="setJob(nowResumeMsg.uid, 'recruiter-chat', nowResumeMsg, 2)" v-if="!nowResumeMsg.interviewInfo.data.haveInterview && !nowResumeMsg.interviewInfo.data.isOnProtected && !nowResumeMsg.interviewInfo.data.hasUnsuitRecord">开撩约面</div>
               <div class="btndisable" v-if="!nowResumeMsg.interviewInfo.data.haveInterview && nowResumeMsg.interviewInfo.data.isOnProtected">暂时无法约面</div>
@@ -337,8 +372,15 @@
 
               <div class="btn2" @click.stop="setJob(nowResumeMsg.uid, 'inappropriate', nowResumeMsg, 2)" v-if="nowResumeMsg.interviewInfo.data.haveInterview && !nowResumeMsg.interviewInfo.data.hasUnsuitRecord">不合适</div>
               <div class="btn2" @click.stop="setJob(nowResumeMsg.uid, 'watch-reson', nowResumeMsg, 2)"  v-if="!nowResumeMsg.interviewInfo.data.haveInterview && nowResumeMsg.interviewInfo.data.hasUnsuitRecord">查看原因</div>
-
             </div>
+            <div class="like_user" @click.stop="ownerOp(true,nowResumeMsg.uid)" v-if="nowResumeMsg.interested">
+                <img class="like" src="../../assets/images/like.png"/>
+                取消感兴趣
+              </div>
+              <div class="like_user" @click.stop="ownerOp(false,nowResumeMsg.uid)" v-else >
+                <img class="like" src="../../assets/images/like_no.png"/>
+                  对Ta感兴趣
+              </div>
             <div class="msgCode"  v-if="shareResumeImg">
               <img :src="shareResumeImg" />
               <span>扫码分享</span>
@@ -355,10 +397,11 @@
                   <span >{{nowResumeMsg.wechat}}</span>
                 </div>
               </div>
-
-              <div class="TabSelect" v-if="nowResumeMsg.resumeAttach">
-                <p class="addTab"><a :href="nowResumeMsg.resumeAttach.url" :download="nowResumeMsg.resumeAttach.fileName">下载附件</a></p>
-              </div>
+            </div>
+             <div class="seefujian" v-if="nowResumeMsg.resumeAttach">
+              <div class="title">附件简历:</div>
+              <div class="seebtn" v-if="nowResumeMsg.resumeAttach.extension === 'doc'"><a :href="'https://view.officeapps.live.com/op/view.aspx?src=' + nowResumeMsg.resumeAttach.url" :download="nowResumeMsg.resumeAttach.fileName" target="_blank">查看附件</a></div>
+              <div class="seebtn" v-else><a :href="nowResumeMsg.resumeAttach.url" :download="nowResumeMsg.resumeAttach.fileName" target="_blank">查看附件</a></div>
             </div>
           </div>
         </div>
@@ -662,18 +705,36 @@
       </div>
 
     </div>
+        <!-- 转发简历弹窗 -->
+    <dynamic-record
+      :visible="toworddiggle"
+      :info.sync="nowResumeMsg"
+      :imagesurl.sync="shareResumeImg"
+      @clicksend="sendford"
+      @clickcancel="cancelmessage"
+    ></dynamic-record>
   </div>
 </template>
 <script>
 import { getScheduletodayListtApi, getguanListtApi, getnewHistoryListtApi, getDetailApi, getScheduleListApi } from 'API/schedule'
-import { getCommentReasonApi, interviewRetract, getInterviewComment, addressListApi, watchInvitationAPi, setAttendApi, improperMarkingApi, sureOpenupAPi, setCommentApi, topAdminPositonList, recruiterPositonList, confirmInterviewApi, addCompanyAdressApi, editCompanyAdressApi, setInterviewInfoApi } from 'API/candidateType'
+import { getCommentReasonApi, interviewRetract, getInterviewComment, addressListApi, watchInvitationAPi, setAttendApi, improperMarkingApi, sureOpenupAPi, setCommentApi, topAdminPositonList, recruiterPositonList, confirmInterviewApi, addCompanyAdressApi, editCompanyAdressApi, setInterviewInfoApi, emailtoforword } from 'API/candidateType'
 import { getResumeIdApi } from 'API/userJobhunter'
 import { shareResumeApi } from 'API/forward'
-import { recruiterDetail } from 'API/common'
+import { putCollectUserApi, cancelCollectUserApi } from 'API/collect'
+import { recruiterDetail, createonlinepdf, createonlineword } from 'API/common'
 import MapSearch from 'COMPONENTS/map'
+import DynamicRecord from '../candidateType/dynamicrecord.vue'
 export default {
   components: {
-    MapSearch
+    MapSearch,
+    DynamicRecord
+  },
+  watch: {
+    'pop.isShow': function (n) {
+      if (!n) {
+        this.hasonload = false
+      }
+    }
   },
   data () {
     return {
@@ -684,6 +745,9 @@ export default {
         type: 'clickPic',
         InterviewTitle: '面试信息'
       },
+      toworddiggle: false,
+      nowResumeMsg: {},
+      hasonload: false,
       showResume: false,
       arrangementInfo: {
         interviewId: '',
@@ -1002,6 +1066,7 @@ export default {
                 v.positionName = '直接与我约面'
               }
               v.hascur = false
+              v.boxshow = false
             })
             this.applyrecordList = applylists
           } else {
@@ -1433,7 +1498,7 @@ export default {
     // 获取简历二维码
     getShareResume (resumeId) {
       shareResumeApi({ resumeUid: resumeId, forwardType: 1 }).then(res => {
-        this.shareResumeImg = res.data.data.qrCodeUrl
+        this.shareResumeImg = res.data.data.positionQrCodeUrl
       })
     },
     // 点击其他区域关闭弹窗
@@ -1442,11 +1507,47 @@ export default {
         this.pop.isShow = false
       }
     },
+    closeload (e) {
+      if ((!this.$refs.queryBox.contains(e.target)) && event.target.className !== 'iconfont icon-xiazai') {
+        this.hasonload = false
+      }
+    },
     toggleaddress (data) {
       console.log(data)
       this.addresslist.map((v, k) => {
         v.cur = data === v
       })
+    },
+    sharediggle () {
+      this.toworddiggle = true
+    },
+    cancelmessage () {
+      this.toworddiggle = !this.toworddiggle
+      this.pop.isShow = true
+    },
+    sendford (data) {
+      emailtoforword(data).then((res) => {
+        this.getScheduleList()
+        this.pop.isShow = false
+        this.toworddiggle = false
+        this.$message({
+          type: 'success',
+          message: '转发成功成功!'
+        })
+      })
+    },
+    onloadfile (type) {
+      let params = { jobhunterVkey: this.nowResumeMsg.vkey }
+      if (type === 'pdf') {
+        createonlinepdf(params).then((res) => {
+          this.$util.downFile(res.data, this.nowResumeMsg.name + '.pdf')
+        })
+      }
+      if (type === 'doc') {
+        createonlineword(params).then((res) => {
+          this.$util.downFile(res.data, this.nowResumeMsg.name + '.docx')
+        })
+      }
     },
     addaddress () {
       this.pop.type = 'addaddress'
@@ -1559,6 +1660,33 @@ export default {
         })
         this.reasonlist = arr
       })
+    },
+    ownerOp (status, uid) {
+      let data = {
+        uid: uid
+      }
+
+      if (!status) {
+        putCollectUserApi(data).then(res => {
+          this.$message({
+            type: 'success',
+            message: '成功标记感兴趣'
+          })
+          this.getResume(uid)
+        }).catch(err => {
+          this.$message.error(err.data.msg)
+        })
+      } else {
+        cancelCollectUserApi(data).then(res => {
+          this.$message({
+            type: 'success',
+            message: '已取消标记'
+          })
+          this.getResume(uid)
+        }).catch(err => {
+          this.$message.error(err.data.msg)
+        })
+      }
     },
     hasadmin () {
       recruiterDetail().then((res) => {
@@ -2086,10 +2214,150 @@ export default {
         display: flex;
         justify-content: flex-start;
         align-items: flex-start;
-        .Code {
+         .Code {
           width: 198px;
           // border-left: 1px solid #ededed;
           display: inline-block;
+          .msgCode {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-top: 67px;
+            img {
+              width: 130px;
+              height: 130px;
+              border-radius: 50%;
+            }
+            span {
+              font-size: 12px;
+              color: #42334d;
+              width: 72px;
+              height: 26px;
+              background: rgba(237, 237, 237, 1);
+              line-height: 26px;
+              position: relative;
+              text-align: center;
+              margin-top: 6px;
+              &:before {
+                content: "";
+                position: absolute;
+                width: 0;
+                height: 0;
+                border-left: 5px solid transparent;
+                border-right: 5px solid transparent;
+                border-bottom: 7px solid #ededed;
+                left: 31px;
+                top: -6px;
+              }
+            }
+          }
+          .handlerpring{
+            display: flex;
+            justify-content: center;
+            font-size:18px;
+            margin-bottom: 20px;
+            position: relative;
+            .onload{
+              width:18px;
+              height:18px;
+              margin: 0 16px 0px 35px;
+              position: relative;
+              cursor: pointer;
+              &::after{
+                content: '';
+                position: absolute;
+                background: #E8E9EB;
+                width: 1px;
+                height: 16px;
+                right: -16px;
+              }
+            }
+            .onloadselect{
+              width:221px;
+              height:199px;
+              background:rgba(255,255,255,1);
+              position: absolute;
+              top: 26px;
+              left: -179px;
+              z-index: 1;
+              box-shadow:0px 0px 26px 0px rgba(22,39,77,0.12);
+              .title{
+                font-size: 14px;
+                color: #333333;
+                font-weight: bold;
+                height:20px;
+                line-height: 20px;
+                padding-left: 20px;
+                margin: 20px 0px 2px 0px;
+              }
+              .select{
+                font-size: 12px;
+                height: 18px;
+                line-height: 18px;
+                color: #6D696E;
+                padding-left: 20px;
+                margin-bottom: 12px;
+              }
+              .pdf{
+                padding: 0 22px 0 20px;
+                display: flex;
+                margin-bottom: 20px;
+                cursor: pointer;
+                .p_l{
+                  width:36px;
+                  height:36px;
+                  border-radius:4px;
+                  i{
+                    font-size: 36px;
+                  }
+                }
+                .p_c{
+                  font-size: 12px;
+                  width: 112px;
+                  color: #6D696E;
+                  line-height: 42px;
+                  margin-left: 6px;
+                }
+                .p_r{
+                  width: 14px;
+                  height: 14px;
+                  margin-left: 11px;
+                  margin-top: 11px;
+                  i{
+                    font-size: 14px;
+                    color: #652791;
+                    vertical-align: super
+                  }
+                }
+              }
+            }
+            .dayin{
+              width:18px;
+              height:18px;
+              margin: 0 16px 0px 17px;
+              position: relative;
+              cursor: pointer;
+              &::after{
+                content: '';
+                position: absolute;
+                background: #E8E9EB;
+                width: 1px;
+                height: 16px;
+                right: -17px;
+              }
+            }
+            .share{
+              width:18px;
+              height:18px;
+              margin: 0 35px 0px 16px;
+              cursor: pointer;
+            }
+            i{
+              font-size: 18px;
+              color: #8452A7;
+            }
+          }
           .btnstatus{
             display: flex;
             flex-direction: column;
@@ -2101,6 +2369,7 @@ export default {
               height:42px;
               line-height: 42px;
               text-align: center;
+              font-family:PingFangSC-Medium,PingFangSC;
               font-weight:500;
               color:rgba(255,255,255,1);
               background:rgba(101,39,145,1);
@@ -2113,6 +2382,7 @@ export default {
               height:42px;
               line-height: 42px;
               text-align: center;
+              font-family:PingFangSC-Medium,PingFangSC;
               font-weight:500;
               border-radius:4px;
               cursor: pointer;
@@ -2128,43 +2398,23 @@ export default {
               color:rgba(146,146,146,1);
               text-align: center;
               border-radius:4px;
-              cursor: pointer;
               margin-bottom: 12px;
+              cursor: pointer;
               border:1px solid rgba(205,203,207,1);
             }
           }
-          .msgCode {
+          .like_user {
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            margin-top: 48px;
+            flex-direction: row;
+            color: #652791;
+            cursor: pointer;
+            height: 42px;
             img {
-              width: 130px;
-              height: 130px;
-              border-radius: 50%;
-            }
-            span {
-              font-size: 12px;
-              color: #42334d;
-              margin-top: 6px;
-              width: 72px;
-              height: 26px;
-              background: rgba(237, 237, 237, 1);
-              line-height: 26px;
+              margin-right: 7px;
               position: relative;
-              text-align: center;
-              &:before {
-                content: "";
-                position: absolute;
-                width: 0;
-                height: 0;
-                border-left: 5px solid transparent;
-                border-right: 5px solid transparent;
-                border-bottom: 7px solid #ededed;
-                left: 31px;
-                top: -6px;
-              }
+              top: -2px;
             }
           }
           .TabSelect {
@@ -2206,6 +2456,27 @@ export default {
               cursor: pointer;
             }
           }
+          .seefujian{
+            margin-top: 83px;
+            padding-left: 22px;
+            .title{
+              font-size: 14px;
+              color: #282828;
+              margin-bottom: 16px;;
+              font-weight: bold;
+            }
+            a{
+              width:152px;
+              height:40px;
+              border-radius:4px;
+              font-size: 14px;
+              line-height: 40px;
+              display:block;
+              color: #652791;
+              text-align: center;
+              border:1px solid rgba(132,82,167,1);
+            }
+          }
           .ContactInformation {
             margin-top: 52px;
             .contactTitle {
@@ -2217,8 +2488,7 @@ export default {
               font-weight: 700;
             }
             .noUpload {
-              text-align: left;
-              margin-left: 20px;
+              text-align: center;
               font-size: 13px;
               color: #929292;
             }
@@ -2236,10 +2506,8 @@ export default {
           }
           .download {
             margin-top: 30px;
-
             .noUpload {
-              text-align: left;
-              margin-left: 20px;
+              text-align: center;
               font-size: 13px;
               color: #929292;
             }
@@ -3359,6 +3627,11 @@ export default {
         }
       }
     }
+  }
+  .like {
+    width:16px;
+    height:16px;
+    display: block;
   }
 </style>
 <style>

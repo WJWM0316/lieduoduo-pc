@@ -328,7 +328,7 @@ $position-process-bg-color: #99e7e8;
       vertical-align: middle;
       display: inline-block;
       height: 24px;
-      line-height: 26px;
+      line-height: 24px;
     }
   }
   .list-day, .list-hour, .list-mins, .list-second {
@@ -336,7 +336,7 @@ $position-process-bg-color: #99e7e8;
     background: #fff;
     color: $sub-color-1;
     text-align: center;
-    font-weight: 500;
+    font-weight: 700;
     border-radius:4px;
     margin: 0 3px;
   }
