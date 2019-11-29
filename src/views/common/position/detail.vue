@@ -91,7 +91,7 @@
           <section class="part" v-if="infos.address">
             <div class="title">工作地址</div>
             <div class="map">
-              <map-pop :companyAddress = infos.companyInfo.address></map-pop>
+              <map-pop :companyAddress ="adress"></map-pop>
             </div>
           </section>
         </article>
@@ -162,6 +162,17 @@ let that = null
       } else {
         return '现在申请24小时内必定反馈'
       }
+    },
+    adress () {
+      if (this.infos.address) {
+        return [
+          {
+            address: this.infos.address,
+            lat: this.infos.lat,
+            lng: this.infos.lng
+          }
+        ]
+      }
     }
   }
 })
@@ -206,7 +217,7 @@ export default class PositionDetail extends Vue {
         })
       }
       this.$nextTick(() => {
-        if (this.$refs.blockOverflow) this.$refs.blockOverflow.updateTextHigh()
+        if (this.$refs.blockOverflow) this.$refs.blockOverflow.updateTextHeigth()
       })
     })
   }

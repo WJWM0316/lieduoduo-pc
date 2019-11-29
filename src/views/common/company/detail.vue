@@ -676,7 +676,7 @@ to {top:0px;}
           @extend %introductionTitle;
         }
         .recruitmentTeam-mian{
-          margin-top: -10px;
+          margin-top: -13px;
         }
         .recruitmentTeam-box{
           height: 99px;

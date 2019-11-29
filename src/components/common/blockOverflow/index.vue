@@ -1,8 +1,6 @@
 <template>
   <div class="block-overflow">
-    <p class="introduction-text" ref="text" :class="{ introduction_viewAll: viewAllText }">
-      {{ text }}
-    </p>
+    <p class="introduction-text" ref="text" :class="{ introduction_viewAll: viewAllText }">{{ text }}</p>
     <el-button v-if="isIntroductionButtom" type="text" class="introduction-left-buttom" @click="viewAll">{{ this.viewAllText ? '收起' :'查看全部'}}</el-button>
   </div>
 </template>
