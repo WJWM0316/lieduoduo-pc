@@ -91,8 +91,7 @@
           <section class="part" v-if="infos.address">
             <div class="title">工作地址</div>
             <div class="map">
-              <div class="address"><i class="icon iconfont"></i>{{infos.address}}</div>
-              <div id="map" style="width:750px; height:147px"></div>
+              <map-pop :companyAddress = infos.companyInfo.address></map-pop>
             </div>
           </section>
         </article>
@@ -133,6 +132,7 @@ import adpostion from '@/components/common/adpostion'
 import { mapState } from 'vuex'
 import AppLinks from 'COMPONENTS/common/appLinks'
 import BlockOverflow from 'COMPONENTS/common/blockOverflow'
+import mapPop from '@/components/mapPop/index'
 let that = null
 
 @Component({
@@ -143,7 +143,8 @@ let that = null
     adpostion,
     interviewBtn,
     AppLinks,
-    BlockOverflow
+    BlockOverflow,
+    mapPop
   },
   computed: {
     ...mapState({
@@ -207,7 +208,6 @@ export default class PositionDetail extends Vue {
       this.$nextTick(() => {
         this.$refs.blockOverflow.updateTextHigh()
       })
-      this.getMapLocation(that.infos.lat, that.infos.lng)
     })
   }
   closePoster () {
@@ -266,25 +266,6 @@ export default class PositionDetail extends Vue {
   getQrcode () {
     getMyQrcodeApi({ path: 'page/common/pages/positionDetail/positionDetail', params: `id=${this.id}` }).then(res => {
       this.qrcodeUrl = res.data.data.url
-    })
-  }
-
-  getMapLocation (lat, lng) {
-    TMap('TMZBZ-S72K6-66ISB-ES3XG-CVJC6-HKFZG').then(qq => {
-      this.$nextTick(() => {
-        var myLatlng = new qq.maps.LatLng(lat, lng)
-        var myOptions = {
-          zoom: 15,
-          center: myLatlng
-        }
-        var map = new qq.maps.Map(document.getElementById('map'), myOptions)
-        // eslint-disable-next-line no-unused-vars
-        var marker = new qq.maps.Marker({
-          position: myLatlng,
-          animation: qq.maps.MarkerAnimation.DROP,
-          map: map
-        })
-      })
     })
   }
   imgLoad (e) {
