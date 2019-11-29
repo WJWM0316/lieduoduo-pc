@@ -207,7 +207,7 @@ export default class companyDetail extends Vue {
     this.activation = !this.activation
     setTimeout(() => { // 切换按钮后延迟执行动画确保虚拟DOM渲染完成
       this.photoAnimation()
-    }, 1000);
+    }, 1000)
   }
   // 获取公司信息
   async getCompany () {
@@ -312,14 +312,13 @@ export default class companyDetail extends Vue {
   }
   photoAnimation () {
     if (!this.companyInformation.albumInfo && this.$refs.photo && this.companyInformation.albumInfo.length <= 1) return
-    var translateWidths = 0,timeOut
-    
+    var translateWidths = 0; var timeOut
     var timer = () => {
       translateWidths = ++translateWidths
       if (translateWidths >= this.companyInformation.albumInfo.length * 298) {
         translateWidths = 0
       }
-      if(this.$refs.photo === undefined) return
+      if (this.$refs.photo === undefined) return
       this.$refs.photo.style.transform = `translate3d(-${translateWidths}px, 0, 0)`
       timeOut = setTimeout(() => {
         timer()
@@ -346,6 +345,9 @@ export default class companyDetail extends Vue {
     this.getCompany()
       .then(() => {
         this.photoAnimation()
+        this.$nextTick(() => {
+          this.resumeTo('x')
+        })
       })
   }
   destroyed () {
