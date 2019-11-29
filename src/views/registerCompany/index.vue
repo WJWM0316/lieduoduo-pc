@@ -1182,8 +1182,8 @@ export default {
   background: url("../../assets/images/register-bg.png") no-repeat;
   z-index: 100;
   display: flex;
+  background-size: 100% auto;
   min-height: 100%;
-  padding-bottom: 30px;
   align-items: center;
   // justify-content: center;
   flex-direction: column;
