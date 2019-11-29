@@ -12,26 +12,21 @@
       :lock-scroll="true"
       width="770px">
       <div class="resume-content">
-        <base-info :resume="resume" status="view"/>
-        <span class="resume-hr"><span></span></span>
+        <base-info :resume="resume" prop-class="base-scroll" status="view"/>
         <desc-info :resume="resume" status="view" />
-        <span class="resume-hr"><span></span></span>
         <proposal :resume="resume" status="view"/>
-        <span class="resume-hr"><span></span></span>
         <experience :resume="resume" status="view" />
-        <span class="resume-hr"><span></span></span>
         <project :resume="resume" status="view" />
-        <span class="resume-hr"><span></span></span>
         <education :resume="resume" status="view" />
-        <span class="resume-hr"><span></span></span>
         <more :resume="resume" status="view" />
       </div>
       <div slot="footer" class="resume-review-extend">
         <el-popover
           placement="right"
-          width="150"
+          width="145"
+          popper-class="c-resume-share-image"
           trigger="click">
-          <div class="share-image">
+          <div class="cresume-share-image">
             <img :src="qrcode" alt="" style="width: 100%">
           </div>
           <div slot="reference" class="resume-share">
@@ -39,7 +34,7 @@
           </div>
         </el-popover>
         <el-popover
-          placement="right"
+          placement="right-start"
           width="150"
           trigger="click">
           <div class="download-popover" v-loading="downloadLoading">
@@ -235,5 +230,17 @@ export default {
       color: $main-color-1;
     }
   }
+}
+.c-resume-share-image.el-popover {
+  width: 146px;
+  min-width: 140px;
+  box-sizing: border-box;
+  height: 140px;
+}
+.cresume-share-image {
+  img {
+    max-width: 100%;
+  }
+
 }
 </style>

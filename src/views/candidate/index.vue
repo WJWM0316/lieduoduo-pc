@@ -1813,6 +1813,7 @@ export default class CourseList extends Vue {
       let mark = { jobhunterUid: this.jobuid, interviewId: this.interviewId, extra: this.extra, reason: inapp.join(',') }
       if (inapp.length > 0) {
         improperMarkingApi(mark).then((res) => {
+          this.extra = ''
           this.$message.success('操作成功')
           this.init()
           this.pop = {
@@ -1968,8 +1969,10 @@ export default class CourseList extends Vue {
     }
     // 查看原因
     if (this.pop.type === 'watchreson') {
-      this.pop = {
-        isShow: false
+      if (this.showResume) {
+        this.pop.Interview = false
+      } else {
+        this.pop.isShow = false
       }
     }
   }
@@ -2062,7 +2065,7 @@ export default class CourseList extends Vue {
       putCollectUserApi(data).then(res => {
         this.$message({
           type: 'success',
-          message: '感兴趣成功!'
+          message: '成功标记感兴趣'
         })
         this.getResume(uid)
       }).catch(err => {
@@ -2072,7 +2075,7 @@ export default class CourseList extends Vue {
       cancelCollectUserApi(data).then(res => {
         this.$message({
           type: 'success',
-          message: '取消成功!'
+          message: '已取消标记'
         })
         this.getResume(uid)
       }).catch(err => {
@@ -2169,7 +2172,6 @@ export default class CourseList extends Vue {
     this.pop.isShow = true
   }
   sharediggle () {
-    this.pop.isShow = false
     this.toworddiggle = true
   }
 

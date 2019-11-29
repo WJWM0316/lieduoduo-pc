@@ -125,7 +125,7 @@ export default {
   width: 100%;
   box-sizing: border-box;
   background: #ffffff;
-  padding-top: 24px;
+  padding-top: 18px;
   .inner{
     width: $page-width;
     margin: auto;
@@ -133,19 +133,23 @@ export default {
       color: $font-color-3;
       font-weight: 400;
       font-size: 16px;
-      margin-bottom: 18px;
+      margin-bottom: 19px;
+      line-height: 24px;
     }
-    .positionType-buttom{
+    ul{
+      margin-bottom: 5px;
+      .positionType-buttom{
       padding: 0 10px;
-      margin: 11px 40px 11px 0;
+      margin: 0 24px 14px 0;
       cursor: pointer;
       display: inline-block;
-      min-width: 98px;
       height: 32px;
       color: $border-color-7;
       text-align: center;
       line-height: 32px;
       font-weight: 400;
+      border-radius:2px;
+      }
     }
     .activation{
       color: $main-color-1;

@@ -1,7 +1,7 @@
 <template>
   <!-- 项目经历 -->
   <div>
-    <wrapper :is-delete="true" :list="list" ref="wrapper" @command="handleCommand" :status="status" :config="{limit: 1, max: 10}">
+    <wrapper :is-delete="true" :is-empty="!list.length" :list="list" ref="wrapper" @command="handleCommand" :status="status" :config="{limit: 1, max: 10}">
       <template slot="header">项目经历</template>
       <template v-slot:content="{row}">
         <template v-if="row">
@@ -235,6 +235,7 @@ export default {
 <style lang="scss" scoped>
 .resume-list-link {
   font-size: 14px;
+  margin-top: 10px;
   color: $title-color-2;
   span {
     color: $main-color-1;

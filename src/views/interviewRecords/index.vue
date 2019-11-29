@@ -354,7 +354,6 @@
                   <span><i class="iconfont icon-weixin"></i></span>
                   <span >{{nowResumeMsg.wechat}}</span>
                 </div>
-                <p v-if="nowResumeMsg.wechat==''&&nowResumeMsg.mobile==''" class="noUpload">暂无上传</p>
               </div>
 
               <div class="TabSelect" v-if="nowResumeMsg.resumeAttach">
@@ -377,7 +376,7 @@
       <div class="noJobBox" v-if="pop.Interview">
         <div class="close"><i @click="cancelshow()" class="iconfont icon-danchuang-guanbi"></i></div>
          <div class="content-info">
-          <div class="title">{{InterviewTitle}}</div>
+          <div class="title">{{pop.InterviewTitle}}</div>
           <!-- 面试安排 -->
         <div class="arrange" v-if="pop.type === 'setinterinfo'">
           <div class="item">
@@ -682,7 +681,8 @@ export default {
       pop: {
         isShow: false,
         Interview: false,
-        type: 'clickPic'
+        type: 'clickPic',
+        InterviewTitle: '面试信息'
       },
       showResume: false,
       arrangementInfo: {
@@ -694,7 +694,6 @@ export default {
         addressName: '',
         interviewTime: ''
       },
-      InterviewTitle: '面试信息',
       hasfrom: false,
       hascback: false,
       resonword: '',
@@ -1260,6 +1259,7 @@ export default {
         let mark = { jobhunterUid: this.jobuid, interviewId: this.interviewId, extra: this.extra, reason: inapp.join(',') }
         if (inapp.length > 0) {
           improperMarkingApi(mark).then((res) => {
+            this.extra = ''
             this.$message.success('操作成功')
             this.getScheduleList()
             this.pop = {
@@ -1409,8 +1409,10 @@ export default {
       }
       // 查看原因
       if (this.pop.type === 'watchreson') {
-        this.pop = {
-          isShow: false
+        if (this.showResume) {
+          this.pop.Interview = false
+        } else {
+          this.pop.isShow = false
         }
       }
     },

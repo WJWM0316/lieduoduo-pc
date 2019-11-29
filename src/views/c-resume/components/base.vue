@@ -100,30 +100,30 @@
           </div>
           <div class="form-item">
              <p class="form-title">最高学历</p>
-             <el-form-item prop="name">
+             <el-form-item prop="name" @mouseover.native="handleShowTips" @mouseout.native="handleShowTips">
                <el-input v-model="form.degreeDesc" :disabled="true" />
-               <p>读取教育经历，如需修改可前往编辑教育经历</p>
+               <p class="form-item-tips">读取教育经历，如需修改可前往编辑教育经历</p>
               </el-form-item>
           </div>
           <div class="form-item">
              <p class="form-title">最近任职公司</p>
-             <el-form-item prop="name">
+             <el-form-item prop="name" @mouseover.native="handleShowTips" @mouseout.native="handleShowTips">
                <el-input v-model="form.lastCompanyName" :disabled="true" />
                <p class="form-item-tips">读取最近一份工作经历，如需修改可前往编辑工作经历</p>
               </el-form-item>
           </div>
           <div class="form-item">
              <p class="form-title">最近任职</p>
-             <el-form-item prop="name">
+             <el-form-item prop="name" @mouseover.native="handleShowTips" @mouseout.native="handleShowTips">
                <el-input v-model="form.lastPosition" :disabled="true" />
-               <p class="form-item-tips">读取最近一份工作经历，如需修改可前往编辑工作经</p>
+               <p class="form-item-tips">读取最近一份工作经历，如需修改可前往编辑工作经历</p>
              </el-form-item>
           </div>
           <div class="form-item">
              <p class="form-title">手机号码</p>
-             <el-form-item prop="name">
+             <el-form-item prop="name" @mouseover.native="handleShowTips" @mouseout.native="handleShowTips">
                <el-input v-model="form.mobile" :disabled="true" />
-               <p class="form-item-tips">读取最近一份工作经历，如需修改可前往编辑工作经</p>
+               <p class="form-item-tips">手机号码即登录账号，修改可前往<b>小程序</b>账号设置中修改</p>
              </el-form-item>
           </div>
           <div class="form-item">
@@ -164,7 +164,7 @@ export default {
       for (let item in result) {
         result[item] = this.resume[item]
       }
-      result.avatarUrl = avatar && avatar.url
+      result.avatarUrl = avatar && avatar.smallUrl
       result.avatar = avatar && avatar.id
       return result
     }
@@ -246,6 +246,12 @@ export default {
       }).catch(() => {
         this.avatarLoading = false
       })
+    },
+    handleShowTips (e) {
+      const parentDom = e.target.parentElement.parentNode
+      const dom = parentDom.querySelector('.form-item-tips')
+      if (!dom) return
+      dom.classList.toggle('active')
     },
     async getBaseInfo () {
       await getResumeBaseInfo().then(({ data }) => {
@@ -388,7 +394,7 @@ $image-wrapper: 112px;
     margin-top: 24px;
   }
   .user-wechat {
-    margin-top: 16px;
+    margin-top: 20px;
   }
   .user-name {
     font-size: 26px;
@@ -402,6 +408,9 @@ $image-wrapper: 112px;
   }
 }
 .form-item /deep/ .el-form-item__content{
+  .el-input.is-disabled .el-input__inner {
+    cursor: pointer;
+  }
   p {
     position: absolute;
     bottom: -30px;
@@ -417,6 +426,14 @@ $image-wrapper: 112px;
     padding: 0px 14px;
     font-size: 12px;
     color: $title-color-2;
+    opacity: 0;
+    transform: opacity 400ms;
+  }
+  .form-item-tips b {
+    color: $main-color-1;
+  }
+  .form-item-tips.active {
+    opacity: 1;
   }
 }
 
