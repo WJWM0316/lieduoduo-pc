@@ -373,6 +373,8 @@ $sizing: border-box;
           @include flex-direction-column;
           justify-content: center;
           overflow: hidden;
+          height: 96px;
+          width: 720px;
 
           .header-companyShortname{
             font-size: 32px;
@@ -440,16 +442,20 @@ $sizing: border-box;
           color: #FFFFFF;
           font-size: 36px;
           font-weight: 500;
+          line-height: 36px;
         }
         .header-right-text{
           font-size: 14px;
           font-weight: 400;
           color: #FFFFFF;
+          margin-bottom: 6px;
+          line-height:14px;
         }
         .header-right-resume{
           color: $font-color-temp1;
           font-size: 14px;
           font-weight: 400;
+          line-height:20px;
           cursor: pointer;
           i{
             font-size: 14px;
