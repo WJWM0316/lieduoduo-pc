@@ -46,7 +46,7 @@
           <div :class="['countdown', vo.status >= 51 ? 'bg' : '']">
             <i class="iconfont iconshijian time"></i>
             <span v-if="tablist[0].cur">
-              {{(vo.arrangementInfo.appointmentTime)*1000 | date('YYYY-MM-DD HH:mm:ss') }}
+              {{(vo.arrangementInfo.appointmentTime)*1000 | date('YYYY-MM-DD HH:mm') }}
               </span>
             <span v-else>{{vo.arrangementInfo.appointment.substring(11, 16)}}</span>
           </div>
