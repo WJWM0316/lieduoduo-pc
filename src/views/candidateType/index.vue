@@ -1073,6 +1073,8 @@ export default class CourseList extends Vue {
             this.arrangementInfo.addressName = res.data.data.address
             if (res.data.data.arrangementInfo.appointmentList) {
               this.model.dateLists = res.data.data.arrangementInfo.appointmentList
+            } else {
+              this.model.dateLists = []
             }
 
             if (this.info.isCompanyTopAdmin) {
