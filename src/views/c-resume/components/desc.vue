@@ -27,6 +27,7 @@
                 v-model="form.position"
                 title="职业标签"
                 type="skills"
+                @on-selected="(val) => handleSelectLabel(val, 'positionLabels')"
                 :default-value="info.positionIds"
                 :filter="expectId"
                 :multiple-config.sync="positionLabelsConfig" />
@@ -40,6 +41,7 @@
                 title="生活标签"
                 :multiple="true"
                 :default-value="info.lifeIds"
+                @on-selected="(val) => handleSelectLabel(val, 'lifeLabels')"
                 :multiple-config.sync="listLabelsConfig"
                 type="life" />
             </el-form-item>
@@ -87,7 +89,9 @@ export default {
       },
       formRules: {
         signature: [{ required: true, message: '请填写自我描述信息', trigger: 'blur' }]
-      }
+      },
+      lifeLabels: [],
+      positionLabels: []
     }
   },
   computed: {
@@ -95,6 +99,10 @@ export default {
       const { signature, personalizedLabels } = this.resume
       const labelLabes = personalizedLabels ? personalizedLabels.filter(val => val.type === 'label_life') : []
       const positionLabels = personalizedLabels ? personalizedLabels.filter(val => val.type === 'label_professional_literacy' || val.type === 'label_professional_skills') : []
+      // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+      this.lifeLabels = labelLabes
+      // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+      this.positionLabels = positionLabels
       return {
         signature,
         lifeIds: labelLabes.map(val => val.labelId),
@@ -123,19 +131,7 @@ export default {
       } else if (type === 'save') {
         this.$refs.form.validate(valid => {
           if (valid) {
-            const { life, position } = this.info
-            // 取出集合的数据
-            let positionLabels = []
-            this.positionLabelsConfig.forEach(val => {
-              positionLabels = positionLabels.concat(val.checked)
-            })
-            let lifeLabels = []
-            this.listLabelsConfig.forEach(val => {
-              lifeLabels = lifeLabels.concat(val.checked)
-            })
-            let labels = []
-            labels = positionLabels.length ? labels.concat(positionLabels) : labels.concat(position)
-            labels = lifeLabels.length ? labels.concat(lifeLabels) : labels.concat(life)
+            let labels = [...this.lifeLabels, ...this.positionLabels]
             setResumeDesc({
               signature: this.form.signature,
               labels
@@ -169,6 +165,9 @@ export default {
     handleAdd () {
       this.jsonFormString = JSON.stringify(this.form)
       this.$refs.wrapper.showEditCompoents()
+    },
+    handleSelectLabel (val, type) {
+      this[type] = val
     },
     validFormData () {
       return this.jsonFormString === JSON.stringify(this.form)

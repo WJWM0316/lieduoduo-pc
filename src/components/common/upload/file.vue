@@ -158,7 +158,7 @@ export default {
       if (this.disabled || this.uploadLoading) return
       if (!this.islogin) { return }
       if (this.showTips) {
-        this.$alert(`<p class="alert-content">文件大小不超过 ${this.size}M</p>`, `支持pdf、jpg、png、doc、docx格式附件`, {
+        this.$alert(`<p class="alert-content">文件大小不超过 ${this.size}M</p>`, '支持pdf、jpg、png、doc、docx格式附件', {
           confirmButtonText: '确定',
           confirmButtonClass: 'alert button',
           dangerouslyUseHTMLString: true,
@@ -225,11 +225,14 @@ export default {
   font-size: 14px;
   color: $title-color-1;
 }
+.file-alert .el-message-box__btns {
+  padding: 42px 0 0px !important;
+}
 .alert-content {
   color: $sub-color-1;
 }
 .alert.button {
-  width: 258px;
+  width: 258px !important;
 }
 
 </style>

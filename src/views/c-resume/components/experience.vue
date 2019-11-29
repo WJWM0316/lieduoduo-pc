@@ -73,6 +73,7 @@
                 :valid-filter="true"
                 valid-filter-text="请选择职位类别"
                 :limit="3"
+                :default-value="form.technicalLabelIds"
                 :filter="form.positionTopid"
                 title="技能标签"
                 type="position"
@@ -172,6 +173,7 @@ export default {
           positionType: item.positionType,
           positionTopid: item.positionTypeTopPid,
           position: item.position,
+          technicalLabelIds: item.technicalLabelIds,
           labelIds: item.technicalLabels.map(val => val.labelName).join(','),
           duty: item.duty
         })

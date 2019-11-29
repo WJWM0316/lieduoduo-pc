@@ -308,24 +308,16 @@ export default {
     .search-tap + .search-tap {
       margin-left: 18px;
     }
-    .active::before, .active::after {
-      content: "";
-      position: absolute;
-      background: $bg-color-4;
-    }
     .active::after {
+      content: "";
+      height: 8px;
       width: 100%;
-      left: 0;
+      background-image: url('../../../assets/images/tab.png');
+      background-size: cover;
+      background-repeat: no-repeat;
+      position: absolute;
       bottom: -21px;
-      border-radius:2px 2px 0px 0px;
-      height: 5px;
-    }
-    .search-tap::before {
-      width: 7px;
-      bottom: -19px;
-      height: 7px;
-      left: calc(50% - 4px);
-      transform: rotate(45deg);
+      left: 0;
     }
   }
   &>div {

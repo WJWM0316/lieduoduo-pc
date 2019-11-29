@@ -11,7 +11,7 @@
             :to="{ path: item.path}"
             v-if="item.meta && item.meta.useNav"
             :key="index">
-            <i :class="item.meta.icon"></i>
+            <i :class="[item.meta.icon, item.title === '面试日程' ? 'kk' : '']"></i>
             <span>{{ item.title }}</span>
           </router-link>
         </template>
@@ -70,6 +70,9 @@ $company-msg-height: 60px;
     }
     i,span {
       vertical-align: middle;
+    }
+    .kk{
+      font-size: 12px;
     }
   }
   li:hover {
