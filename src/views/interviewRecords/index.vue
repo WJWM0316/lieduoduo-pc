@@ -46,7 +46,7 @@
           <div :class="['countdown', vo.status >= 51 ? 'bg' : '']">
             <i class="iconfont iconshijian time"></i>
             <span v-if="tablist[0].cur">
-              {{(vo.arrangementInfo.appointmentTime)*1000 | date('YYYY-MM-DD HH:mm:ss') }}
+              {{(vo.arrangementInfo.appointmentTime)*1000 | date('YYYY-MM-DD HH:mm') }}
               </span>
             <span v-else>{{vo.arrangementInfo.appointment.substring(11, 16)}}</span>
           </div>
@@ -148,7 +148,7 @@
       <div class="resumeBox" v-if="showResume" @click="closeload($event)">
         <div class="Numbering">
           <span>简历编号：{{nowResumeMsg.vkey}}</span>
-          <span>{{nowResumeMsg.resumeUpdateTime}}更新</span>
+          <span v-if="nowResumeMsg.resumeUpdateTime !== '0000-00-00 00:00:00'">{{nowResumeMsg.resumeUpdateTime}}更新</span>
           <div class="closediggle" @click="pop.isShow = false">
         <i class="iconfont icon-guanbianniu"></i>
       </div>

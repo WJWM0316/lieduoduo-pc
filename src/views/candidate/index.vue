@@ -254,7 +254,7 @@
       <div class="resumeBox" v-if="showResume" @click="closeload($event)">
         <div class="Numbering">
           <span>简历编号：{{nowResumeMsg.vkey}}</span>
-          <span>{{nowResumeMsg.resumeUpdateTime}}更新</span>
+          <span v-if="nowResumeMsg.resumeUpdateTime !== '0000-00-00 00:00:00'">{{nowResumeMsg.resumeUpdateTime}}更新</span>
           <div class="closediggle" @click="pop.isShow = false">
             <i class="iconfont icon-guanbianniu"></i>
           </div>
@@ -865,6 +865,7 @@ import {
   sureOpenupAPi,
   watchInvitationAPi,
   getCommentReasonApi,
+  getloadingReasonApi,
   getInterviewComment,
   improperMarkingApi,
   confirmInterviewApi,
@@ -1726,13 +1727,24 @@ export default class CourseList extends Vue {
               btntext: '保存',
               type: 'inappropriate'
             }
-            getCommentReasonApi().then((res) => {
-              let arr = res.data.data
-              arr.map((v, k) => {
-                v.cur = false
+            // 大于61是结束后不满意
+            if (res.data.data.interviewStatus === 58 || res.data.data.interviewStatus === 59) {
+              getCommentReasonApi().then((res) => {
+                let arr = res.data.data
+                arr.map((v, k) => {
+                  v.cur = false
+                })
+                this.reasonlist = arr
               })
-              this.reasonlist = arr
-            })
+            } else {
+              getloadingReasonApi().then((res) => {
+                let arr = res.data.data
+                arr.map((v, k) => {
+                  v.cur = false
+                })
+                this.reasonlist = arr
+              })
+            }
           }
         })
         break
