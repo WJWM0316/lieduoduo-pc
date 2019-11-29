@@ -159,7 +159,7 @@ export default {
       if (!this.islogin) { return }
       if (this.showTips) {
         this.$alert(`<p class="alert-content">文件大小不超过 ${this.size}M</p>`, '支持pdf、jpg、png、doc、docx格式附件', {
-          confirmButtonText: '确定',
+          confirmButtonText: '马上上传',
           confirmButtonClass: 'alert button',
           dangerouslyUseHTMLString: true,
           customClass: 'file-alert',
