@@ -61,8 +61,15 @@ export default {
   },
   computed: {
     ...mapState({
-      userInfo: state => state.userInfo
+      userInfo: state => state.userInfo,
+      Identityinfo: state => state.recruiterinfo
     })
+  },
+  watch: {
+    'Identityinfo': function (n) {
+      this.haveIdentity = n
+      console.log(n, '监听到变化了')
+    }
   },
   methods: {
     handleClick (e) {
@@ -77,10 +84,6 @@ export default {
           this.$router.push({ name: 'perfectauth' })
       }
     }
-  },
-  mounted () {
-    this.haveIdentity = this.$store.state.recruiterinfo
-    console.log(this.haveIdentity)
   }
 }
 </script>
