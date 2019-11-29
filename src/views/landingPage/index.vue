@@ -288,7 +288,7 @@ export default class CourseList extends Vue {
       }
       if (type === 'doc') {
         createonlineword(params).then((res) => {
-          this.$util.downFile(res.data.data, this.nowResumeMsg.name + '.doc')
+          this.$util.downFile(res.data, this.nowResumeMsg.name + '.docx')
         })
       }
     }

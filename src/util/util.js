@@ -80,7 +80,7 @@ class Util {
     var eleLink = document.createElement('a')
     eleLink.download = filename
     eleLink.style.display = 'none'
-    var blob = new Blob([content], {type:'text/plain,charset=UTF-8'}); 
+    var blob = new Blob([content]); 
     eleLink.href = URL.createObjectURL(blob)
     document.body.appendChild(eleLink)
     eleLink.click()
