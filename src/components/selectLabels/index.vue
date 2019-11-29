@@ -271,7 +271,16 @@ export default {
   text-align: left;
   max-height: 300px;
   overflow-y: auto;
-  border-top: 1px solid $border-color-1;
+  position: relative;
+}
+.labels::after {
+  content: "";
+  top: 0;
+  left: 40px;
+  width: calc(100% - 80px);
+  position: absolute;
+  height: 1px;
+  background: $border-color-1;
 }
 .selected-labels {
   padding: 0 40px;

@@ -105,7 +105,19 @@ export default {
         margin: 50px auto 0;
         border-radius:70px;
         padding: 8px;
+        position: relative;
         border:1px solid rgba(239,233,244,1);
+      }
+      .qrcode::after {
+        content: "";
+        background-image: url("../../../assets/images/qrcode_placeholder.png");
+        position: absolute;
+        background-size: cover;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 58px;
+        height: 58px;
       }
       .close {
         font-size: 12px;
