@@ -20,7 +20,7 @@
           <span v-if="dialogVisible && activeName !== ''">{{ companyAddress[activeName].address }}</span>
         </p>
       </template>
-      <div id="map" v-if="dialogVisible" style="width: 662px; height: 450px;"></div>
+      <div id="map" v-if="dialogVisible" style="width: 662px; height: 450px; border-radius: 0 0 8px 8px"></div>
     </el-dialog>
   </div>
 </template>

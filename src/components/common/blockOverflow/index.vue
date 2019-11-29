@@ -58,8 +58,10 @@ export default {
   word-break: break-all;
 }
 .introduction-left-buttom{
+  background: #ffffff;
   position: absolute;
-  right: 15px;
+  right: 12px;
+  bottom: -5px;
 }
 .introduction_viewAll{
   max-height: none;
