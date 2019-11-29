@@ -80,12 +80,6 @@ export default new Vuex.Store({
       state.userInfo = {}
       state.token = null
       removeAccessToken()
-      if (state.userIdentity === 1) {
-        window.location.href = window.location.href
-        // router.replace({ path: '/index', query: { q: Date.now() } })
-      } else {
-        router.replace({ path: '/login', query: { type: 'msgLogin' } })
-      }
     },
     setRoleInfos (state, data) {
       state.roleInfos = data
@@ -115,33 +109,32 @@ export default new Vuex.Store({
       state.guideQrcodePop = data
     },
     switchIdentity (state, data) {
-      // 当前用户在C端，切换B端
-      if (state.userIdentity === 1) {
-        if (state.roleInfos.isRecruiter) {
-          switchRoleApi().then(res => {
-            state.userIdentity = state.userIdentity === 2
-            router.replace({ path: '/candidate' })
-          })
-        } else {
-          switchRoleApi().then(res => {
-            state.userIdentity = state.userIdentity === 2
-            router.replace({ path: '/register' })
-          })
-        }
-      } else {
-        // 当前用户在B端，切换C端
-        if (state.roleInfos.isJobhunter) {
-          switchRoleApi().then(res => {
-					  state.userIdentity = state.userIdentity === 1
+			let todo = () => {
+				if (data.toSiutchRole === 1) {
+					if (state.roleInfos.isJobhunter) {
 					  router.replace({ path: '/index' })
-          })
-        } else {
-          switchRoleApi().then(res => {
-					  state.userIdentity = state.userIdentity === 1
+					} else {
 					  router.replace({ path: '/createUser' })
-          })
-        }
-      }
+					}
+				} else {
+					if (state.roleInfos.isRecruiter) {
+					  router.replace({ path: '/candidate' })
+					} else {
+					  router.replace({ path: '/register' })
+					}
+				}
+			}
+			if (data.toSiutchRole) {
+				// 当前身份 跟 需要切换的身份一致，则不需要切换身份
+				if (data.toSiutchRole === state.userIdentity) {
+					todo()
+				} else {
+					switchRoleApi().then(res => {
+					  state.userIdentity = res.data.data.curInUseRole
+					  todo()
+					})
+				}
+			}
     }
   },
   // 借助actions的手去 执行 mutations ， 通过  this.$store.dispatch 的方式调用
@@ -213,6 +206,16 @@ export default new Vuex.Store({
       return logoutApi()
         .then(res => {
           store.commit('LOGOUT', data)
+					// 在C端页面退登
+					if (data.curPage === 1) {
+						if (router.history.current.name === 'cresume') {
+							router.replace({ path: '/index' })
+						} else {
+							window.location.href = window.location.href
+						}
+					} else {
+						router.replace({ path: '/login', query: { type: 'msgLogin' } })
+					}
           return res
         })
     },
