@@ -1,7 +1,9 @@
 <template>
 <div class="register-all">
   <div id="register" class="register">
-      <div class="b-title">猎多多</div>
+      <div class="b-title">
+        <img src="@/assets/images/register-logo.png" alt="">
+      </div>
       <div class="l-title">高端人才招聘平台</div>
       <!-- 创建公司模块 -->
       <div class="registerBox" v-show="!$route.query.page" @click="closeMsg($event)">
@@ -857,28 +859,28 @@ export default {
         query = { page: 'submit', from: 'company', action: 'edit' }
         this.$router.push({ query })
       })
-      .catch(err => {
+        .catch(err => {
         // 从后台完善信息
-        if (err.data.code === 307) {
-          query = { page: 'status', from: 'company' }
-          this.$router.push({ query })
-          return
-        }
-        // 创建公司后 重新编辑走加入公司逻辑  如果之前有一条加入记录 取之前的加入记录id
-        hasApplayRecordApi().then(res => {
-          if (res.data.data.id) {
-            this.ruleForm.applyId = res.data.data.id
-            this.ruleForm.id = res.data.data.companyId
-            this.editJoinCompany()
-          } else {
-            // 990公司已经存在
-            if (err.data.code === 990) {
-              this.ruleForm.id = err.data.data.companyId
-              this.joinCompany()
-            }
+          if (err.data.code === 307) {
+            query = { page: 'status', from: 'company' }
+            this.$router.push({ query })
+            return
           }
+          // 创建公司后 重新编辑走加入公司逻辑  如果之前有一条加入记录 取之前的加入记录id
+          hasApplayRecordApi().then(res => {
+            if (res.data.data.id) {
+              this.ruleForm.applyId = res.data.data.id
+              this.ruleForm.id = res.data.data.companyId
+              this.editJoinCompany()
+            } else {
+            // 990公司已经存在
+              if (err.data.code === 990) {
+                this.ruleForm.id = err.data.data.companyId
+                this.joinCompany()
+              }
+            }
+          })
         })
-      })
     },
     createCompany () {
       let formData = this.ruleForm
@@ -896,19 +898,19 @@ export default {
         query = { page: 'submit' }
         this.$router.push({ query })
       })
-      .catch(err => {
+        .catch(err => {
         // 从后台完善信息
-        if (err.data.code === 307) {
-          query = { page: 'status', from: 'company' }
-          this.$router.push({ query })
-          return
-        }
-        // 990公司已经存在
-        if (err.data.code === 990) {
-          this.ruleForm.id = err.data.data.companyId
-          this.joinCompany()
-        }
-      })
+          if (err.data.code === 307) {
+            query = { page: 'status', from: 'company' }
+            this.$router.push({ query })
+            return
+          }
+          // 990公司已经存在
+          if (err.data.code === 990) {
+            this.ruleForm.id = err.data.data.companyId
+            this.joinCompany()
+          }
+        })
     },
     editJoinCompany () {
       let formData = this.ruleForm
@@ -947,13 +949,13 @@ export default {
                     this.$router.push({ query })
                   }
                 })
-                .catch(err => {
+                  .catch(err => {
                   // 从后台完善信息
-                  if (err.data.code === 307) {
-                    query = { page: 'status', from: 'join' }
-                    this.$router.push({ query })
-                  }
-                })
+                    if (err.data.code === 307) {
+                      query = { page: 'status', from: 'join' }
+                      this.$router.push({ query })
+                    }
+                  })
               } else {
                 this.ruleForm.id = res0.data.data.id
                 this.joinCompany()
@@ -976,13 +978,13 @@ export default {
                 this.getCompanyIdentityInfos()
               }
             })
-            .catch(err => {
+              .catch(err => {
               // 从后台完善信息
-              if (err.data.code === 307) {
-                query = { page: 'status', from: 'join' }
-                this.$router.push({ query })
-              }
-            })
+                if (err.data.code === 307) {
+                  query = { page: 'status', from: 'join' }
+                  this.$router.push({ query })
+                }
+              })
           }
         } else {
           this.createCompany()
@@ -1007,7 +1009,7 @@ export default {
         } else {
           return applyCompanyApi(params).then(res => {
             if (res.data.emailStatus) {
-              query = { page: 'submit', from: 'join', suffix: res.data.suffix, companyId: res.data.companyId}
+              query = { page: 'submit', from: 'join', suffix: res.data.suffix, companyId: res.data.companyId }
               this.$router.push({ query })
             } else {
               query = { page: 'status', from: 'join' }
@@ -1015,13 +1017,13 @@ export default {
               this.getCompanyIdentityInfos()
             }
           })
-          .catch(err => {
+            .catch(err => {
             // 从后台完善信息
-            if (err.data.code === 307) {
-              query = { page: 'status', from: 'join' }
-              this.$router.push({ query })
-            }
-          })
+              if (err.data.code === 307) {
+                query = { page: 'status', from: 'join' }
+                this.$router.push({ query })
+              }
+            })
         }
       })
     },
@@ -1032,7 +1034,7 @@ export default {
         this.createCompany()
       }
     },
-    initPage(msg) {
+    initPage (msg) {
       let companyInfo = msg.data.companyInfo
       let query = {}
       if (msg.data.applyJoin) {
@@ -1122,27 +1124,27 @@ export default {
           }
         })
       })
-      .catch(err => {
+        .catch(err => {
         // 从后台完善信息
-        if (err.data.code === 307) {
-          this.$router.push({
-            query: {
-              page: 'status',
-              from: 'company'
-            }
-          })
-          return
-        }
-        // 公司已经存在
-        if (err.data.code === 808) {
-          this.$router.push({
-            query: {
-              page: 'status',
-              from: 'company'
-            }
-          })
-        }
-      })
+          if (err.data.code === 307) {
+            this.$router.push({
+              query: {
+                page: 'status',
+                from: 'company'
+              }
+            })
+            return
+          }
+          // 公司已经存在
+          if (err.data.code === 808) {
+            this.$router.push({
+              query: {
+                page: 'status',
+                from: 'company'
+              }
+            })
+          }
+        })
     },
     // 开始招聘
     startrecruit () {
@@ -1177,7 +1179,7 @@ export default {
 }
 #register {
   padding: 0;
-  background: #652791 url("https://lieduoduo-uploads-test.oss-cn-shenzhen.aliyuncs.com/front-assets/web/images/bg_loginpage.png") no-repeat;
+  background: url("../../assets/images/register-bg.png") no-repeat;
   z-index: 100;
   display: flex;
   min-height: 100%;
@@ -1196,16 +1198,15 @@ export default {
     margin: 0 0 42px 0;
   }
   .b-title{
-    width: 100%;
-    text-align: center;
-    color:rgba(255,255,255,1);
-    font-size: 56px;
-    font-weight: bold;
+    width: 154px;
     height: 56px;
-    line-height: 56px;
     margin-top: 66px;
     margin-bottom: 10px;
     cursor: pointer;
+    img{
+      width: 100%;
+      height: 100%;
+    }
   }
   .l-title{
     color:rgba(255,255,255,1);

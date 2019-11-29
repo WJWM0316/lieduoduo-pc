@@ -127,7 +127,7 @@ export default {
       } else if (item.type === 'doc') {
         downloadWord({ vkey }).then(({ data }) => {
           this.downloadLoading = false
-          this.$util.downFile(data, name + '.doc')
+          this.$util.downFile(data, name + '.docx')
         }).catch(() => {
           this.downloadLoading = false
         })

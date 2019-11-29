@@ -143,7 +143,7 @@
       </div>
     </div>
     <!-- 提示弹窗 -->
-  <message-diggle :visible="msg.messageshow" @clicksure="msgsure" @clickcancle="msgcancel" :title="msg.msgtitle" :desc="msg.msgdesc"></message-diggle>
+  <message-diggle :visible="msg.messageshow" @clicksure="msgsure" @clickcancle="msgcancel" :btntitle="'前往认证'" :title="msg.msgtitle" :desc="msg.msgdesc"></message-diggle>
   </div>
 </template>
 <script>
@@ -305,7 +305,6 @@ export default class CourseList extends Vue {
         }
         break
       case 'addJob':
-        console.log(this.$store.state.recruiterinfo.identityAuth, '0是没有认证')
         if (!this.$store.state.recruiterinfo.identityAuth) {
           this.msg = {
             messageshow: true,
@@ -575,6 +574,7 @@ export default class CourseList extends Vue {
         position: fixed;
         background-color: #fff;
         top: 0px;
+        width: 1140px;
         padding-top: 60px;
         z-index: 1;
       }
