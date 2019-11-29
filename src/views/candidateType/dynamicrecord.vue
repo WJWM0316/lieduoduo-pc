@@ -90,7 +90,11 @@ export default {
       this.$emit('clickcancel', this.visible)
     },
     addemail () {
-      this.email.push({ text: '' })
+      if (this.email.length > 9) {
+        this.$message.warning('最多同时添加10个邮箱')
+      } else {
+        this.email.push({ text: '' })
+      }
     },
     selectemail (data, i) {
       this.historyemail.map((v, k) => {
@@ -162,10 +166,11 @@ export default {
   width: 100%;
   height: 100%;
   z-index: 1;
-  background:rgba(0,0,0,0.6);
+  // background:rgba(0,0,0,0.6);
   .noJobBox {
     width:612px;
-    // max-height:392px;
+    overflow-y: scroll;
+    max-height: 600px;
     padding-bottom: 32px;
     background:rgba(255,255,255,1);
     box-shadow:0px 6px 14px 2px rgba(0,0,0,0.2);
@@ -174,6 +179,21 @@ export default {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+    &::-webkit-scrollbar-track {
+      background:#fff;
+      -webkit-border-radius: 20px;
+      -moz-border-radius: 20px;
+      border-radius:20px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background:#BCBCBC;
+      -webkit-border-radius: 20px;
+      -moz-border-radius: 20px;
+      border-radius:20px;
+    }
     .close{
       width: 100%;
       position: relative;
@@ -183,6 +203,7 @@ export default {
         margin-top: 16px;
         position: absolute;
         right: 16px;
+        cursor: pointer;
         transform: scale(0.8);
       }
     }
@@ -229,6 +250,7 @@ export default {
           right: -1px;
           top: -1px;
           width:74px;
+          cursor: pointer;
           line-height: 40px;
           height:40px;
           font-size: 14px;

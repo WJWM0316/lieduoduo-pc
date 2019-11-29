@@ -5,7 +5,7 @@
         <div class="title">{{title}}</div>
         <div class="desc">{{desc}}</div>
         <div class="handler">
-          <div class="sure" @click="sure()">确定</div>
+          <div class="sure" @click="sure()">{{btntitle}}</div>
           <div class="cancel" @click="cancel()">取消</div>
         </div>
         </div>
@@ -17,7 +17,11 @@ export default {
   props: {
     visible: Boolean,
     title: String,
-    desc: String
+    desc: String,
+    btntitle: {
+      type: String,
+      default: '确定'
+    }
   },
   data () {
     return {
