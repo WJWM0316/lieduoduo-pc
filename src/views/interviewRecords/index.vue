@@ -48,7 +48,7 @@
             <span v-if="tablist[0].cur">
               {{(vo.arrangementInfo.appointmentTime)*1000 | date('YYYY-MM-DD HH:mm:ss') }}
               </span>
-            <span v-else>{{vo.arrangementInfo.appointment.substring(5)}}</span>
+            <span v-else>{{vo.arrangementInfo.appointment.substring(11, 16)}}</span>
           </div>
           </div>
           <div class="bloCont">

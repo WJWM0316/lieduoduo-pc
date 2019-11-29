@@ -156,7 +156,7 @@ export default {
                   identityStatus: res.data.data.identityStatus
                 }
               })
-              this.$message.success('编辑成功')
+              this.$message.success('认证信息提交成功')
             })
           } else {
             identityCompanyApi(this.ruleForm).then((res) => {
