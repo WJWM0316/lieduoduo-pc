@@ -1,6 +1,6 @@
 <template>
 	<div class="swiper1">
-		<span class="btn prev" :class="{'btn-disabled': !btnPrevCanclick, 'btn-abled': btnPrevCanclick}"><i class="iconfont icon icon-right"></i></span>
+		<span class="btn prev" :class="index > 0 ? 'btn-abled' : 'btn-disabled'"><i class="iconfont icon icon-right"></i></span>
 		<div class="scroll">
 			<div id="swiper1" class="card-list">
 				<router-link target="_blank" :to="{name: 'companyDetail', query: { vkey: item.vkey }}" v-for="(item, i) in list" :key="i" class="item" :style="{ 'marginLeft': offset + 'px', 'marginRight': offset + 'px', 'marginTop': '8px', 'marginBottom': '8px'}">
@@ -20,7 +20,7 @@
 				</router-link>
 			</div>
 		</div>
-		<span class="btn next" :class="{'btn-disabled': !btnNextCanclick, 'btn-abled': btnNextCanclick}"><i class="iconfont icon icon-right"></i></span>
+		<span class="btn next" :class="index < Math.ceil(this.list.length / this.slidesPerView) - 1 ? 'btn-abled' : 'btn-disabled'"><i class="iconfont icon icon-right"></i></span>
 	</div>
 </template>
 <script>
@@ -43,8 +43,6 @@ export default {
   },
 	data() {
 		return {
-			btnPrevCanclick: true,
-			btnNextCanclick: true,
 			index: 0,
 			xPox: 0
 		}
@@ -55,14 +53,13 @@ export default {
 			swiper.style.transform = `translateX(${x}px)`
 		},
 		init (scroll, swiper, itemWidth) {
-			if (this.index === 0) {this.btnNextCanclick = false
+			if (this.index === 0) {
 				this.xPox = this.index * itemWidth
-				this.move(this.xPox)
+				this.move(-this.xPox)
 			}
-			if (this.index && this.index > - (this.list.length - this.slidesPerView)) {
-				this.btnPrevCanclick = false
-				this.xPox = -this.index * itemWidth
-				this.move(this.xPox)
+			if (this.index === Math.ceil(this.list.length / this.slidesPerView) - 1) {
+				this.xPox = this.index * itemWidth
+				this.move(-this.xPox)
 			}
 			scroll.style.width = `${this.slidesPerView * itemWidth + this.offset * 2 * this.slidesPerView}px`
 		}
@@ -77,23 +74,17 @@ export default {
 		let btnNext = document.querySelector('.next');
 		this.init(scroll, swiper, liItem.offsetWidth)
 		btnPrev.onclick = () => {
-			if(this.index > -(this.list.length - this.slidesPerView)){
+			if(this.index > 0){
 				this.index--
-				this.xPox = this.index * itemWidth
-				this.btnNextCanclick = true
-				this.move(this.xPox)
-			} else {
-				this.btnPrevCanclick = false
+				this.xPox = this.index * itemWidth * this.slidesPerView
+				this.move(-this.xPox)
 			}
 		}
 		btnNext.onclick = () => {
-			if(this.index < 0) {
+			if(this.index < Math.ceil(this.list.length / this.slidesPerView) - 1) {
 				this.index++
-				this.xPox = this.index * itemWidth
-				this.btnPrevCanclick = true
-				this.move(this.xPox)
-			} else {
-				this.btnNextCanclick = false
+				this.xPox = this.index * itemWidth * this.slidesPerView
+				this.move(-this.xPox)
 			}
 		}
 	}
@@ -258,7 +249,9 @@ export default {
 			}
 		};
 	}
-	.btn-disabled{}
+	.btn-disabled{
+		display: none;
+	}
 	.iconfont{
 		font-size: 30px;
 		color: rgba(255,255,255,.5);
