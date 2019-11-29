@@ -100,7 +100,7 @@
           <div class="companyInfos">
             <p class="title">公司基本信息</p>
             <div class="details">
-              <div class="logo"><el-image ref="logo" :class="verticalLogo ? 'vertical' : true" :src="infos.companyInfo.logoInfo.smallUrl" alt="" fit='scale-down'></el-image></div>
+              <div class="logo" @click="toCompanyDetail"><el-image ref="logo" :class="verticalLogo ? 'vertical' : true" :src="infos.companyInfo.logoInfo.smallUrl" alt="" fit='scale-down'></el-image></div>
               <div class="name">{{infos.companyInfo.companyShortname}}</div>
             </div>
             <div class="infos">
@@ -208,6 +208,14 @@ export default class PositionDetail extends Vue {
       this.$nextTick(() => {
         this.$refs.blockOverflow.updateTextHigh()
       })
+    })
+  }
+  toCompanyDetail () {
+    this.$router.push({
+      name: 'companyDetail',
+      query: {
+        vkey: this.infos.companyInfo.vkey
+      }
     })
   }
   closePoster () {
