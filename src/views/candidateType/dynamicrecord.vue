@@ -21,7 +21,7 @@
               <div class="eachinput" :key="i" v-for="(item, i) in email">
                 <input type="text" placeholder="请输入同事邮箱地址" @input="searchEmail" v-model="item.text" @click="historyemailshow = !historyemailshow">
                 <div class="del" v-if="i > 0" @click="delect(i)">
-                  <i class="iconfont icon-shouqi"></i>
+                  <i class="iconfont icon-shanjian"></i>
                 </div>
                 <div class="select" v-show="historyemailshow">
                   <div :class="['select-item', vo.cur ? 'active' : '']" @click="selectemail(vo, i)" :key="j" v-for="(vo, j) in historyemail">{{vo.text}}</div>
@@ -170,7 +170,7 @@ export default {
   .noJobBox {
     width:612px;
     overflow-y: scroll;
-    max-height: 600px;
+    max-height: 578px;
     padding-bottom: 32px;
     background:rgba(255,255,255,1);
     box-shadow:0px 6px 14px 2px rgba(0,0,0,0.2);
