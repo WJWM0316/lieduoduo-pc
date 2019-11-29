@@ -1,6 +1,29 @@
 import Layout from '@/views/b-layout'
 const recruiter = [
   {
+    path: '/recruiterIndex',
+    title: '职位管理',
+    component: Layout,
+    meta: {
+      useNav: true,
+      module: 'recruiterResource',
+      icon: 'iconfont icon-zhiwei'
+    },
+    children: [
+      {
+        path: '',
+        name: 'recruiterIndex',
+        component: resolve => require(['../views/recruiter/recruiter.vue'], resolve)
+      },
+      {
+        path: 'postJob',
+        title: '操作职位',
+        name: 'postJob',
+        component: resolve => require(['../views/postJob/postJob.vue'], resolve)
+      }
+    ]
+  },
+  {
     path: '/candidateType',
     title: '候选人动态',
     component: Layout,
@@ -48,29 +71,6 @@ const recruiter = [
         path: '',
         name: 'interviewRecords',
         component: resolve => require(['../views/interviewRecords/index.vue'], resolve)
-      }
-    ]
-  },
-  {
-    path: '/recruiterIndex',
-    title: '职位管理',
-    component: Layout,
-    meta: {
-      useNav: true,
-      module: 'recruiterResource',
-      icon: 'iconfont icon-zhiwei'
-    },
-    children: [
-      {
-        path: '',
-        name: 'recruiterIndex',
-        component: resolve => require(['../views/recruiter/recruiter.vue'], resolve)
-      },
-      {
-        path: 'postJob',
-        title: '操作职位',
-        name: 'postJob',
-        component: resolve => require(['../views/postJob/postJob.vue'], resolve)
       }
     ]
   },
