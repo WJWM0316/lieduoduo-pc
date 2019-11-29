@@ -137,11 +137,14 @@ export default {
   box-shadow: $shadow-1;
   margin-right: 20px;
   .resume-update-time {
-    padding: 30px 0 0px 46px;
+    padding: 30px 0 36px 46px;
     font-size: 12px;
     color: $font-color-10;
 
   }
+}
+.base-scroll /deep/ .resume-wrapper-item{
+  padding-top: 0;
 }
 .resume-wrapper /deep/ {
   .c-btn {

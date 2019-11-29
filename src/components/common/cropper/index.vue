@@ -322,7 +322,7 @@ export default class ComponentCropper extends Vue {
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 90;
+    z-index: 100;
     background: rgba(black, 0.5);
     visibility: hidden;
     height: 0;

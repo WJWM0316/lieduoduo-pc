@@ -1267,7 +1267,6 @@ export default class CourseList extends Vue {
               &.false {
                 cursor: inherit;
                 line-height: 38px;
-                color: rgba(146,146,146,1);
               }
             }
           }

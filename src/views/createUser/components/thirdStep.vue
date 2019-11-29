@@ -199,15 +199,6 @@ export default class resumeThirdPost extends Vue {
 .el-input__suffix{
     display: none;
   }
-  .defalut-position {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    right: 20px;
-    color: #CDCBCF;
-    transition: all ease .3s;
-    z-index: 222
-  }
   .icon_active{
     transform: translateY(-50%) rotate(180deg);
   }
