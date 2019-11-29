@@ -1,7 +1,7 @@
 <template>
   <div class="index-wrapper">
     <login-banner :banner="loginBannerList" :total="total"></login-banner>
-    <search-wrapper></search-wrapper>
+    <search-wrapper  :banner="loginBannerList"></search-wrapper>
     <div class="position-wrapper main-center">
       <div class="index-part-1">
         <position-name :list="positionData"></position-name>
@@ -22,7 +22,7 @@ import LoginBanner from './components/loginBanner'
 import SearchWrapper from './components/indexSearch'
 // 职位类型列表
 import PositionName from './components/postionName'
-import IndexBanner from './components/indexBanner'
+// import IndexBanner from './components/indexBanner'
 import Active from './components/24Active'
 import IndexBanner3 from './components/indexBanner3'
 
@@ -39,7 +39,7 @@ export default {
     LoginBanner,
     SearchWrapper,
     PositionName,
-    IndexBanner,
+    // IndexBanner,
     Active,
     HotCity,
     HotCompany,
@@ -74,15 +74,11 @@ export default {
       getBanners({
         location: 'jobhunter_pc_index_head,jobhunter_pc_index_middle'
       }).then(({ data }) => {
-        const { jobhunterPcIndexHead, jobhunterPcIndexMiddle } = data.data
+        // , jobhunterPcIndexMiddle
+        const { jobhunterPcIndexHead } = data.data
         this.loginBannerList = jobhunterPcIndexHead || []
-        const bannerLists = jobhunterPcIndexMiddle || []
-        this.bannerLists = bannerLists.filter(val => {
-          if (val.name === 'createUser' && this.isJobhunter) {
-            return false
-          }
-          return true
-        })
+        // const bannerLists = jobhunterPcIndexMiddle || []
+        // this.bannerLists = bannerLists.filter(val => !(val.name === 'createUser' && this.isJobhunter))
         // if (this.bannerLists.length > 1) {
         //   this.$nextTick(() => {
         //     this.$refs.indexBanner.autoplay()

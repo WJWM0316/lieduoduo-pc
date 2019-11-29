@@ -2,7 +2,7 @@
   <div class="main-center resume-wrapper">
     <!-- 简历内容 -->
     <div class="resume-content">
-      <p class="resume-update-time">最后更新 {{resume.resumeUpdateTime}}</p>
+      <p class="resume-update-time" v-if="resume.resumeUpdateTime !== '0000-00-00 00:00:00'">最后更新 {{resume.resumeUpdateTime}}</p>
       <base-info class="base-scroll" prop-class="base-scroll" :resume="resume" />
       <desc-info class="desc-scroll" prop-class="desc-scroll" :resume="resume" />
       <proposal class="proposal-scroll" prop-class="proposal-scroll" :resume="resume" />
@@ -133,12 +133,13 @@ export default {
 }
 .resume-content {
   width: 882px;
+  padding-top: 30px;
   box-sizing: border-box;
   background: #fff;
   box-shadow: $shadow-1;
   margin-right: 20px;
   .resume-update-time {
-    padding: 30px 0 36px 46px;
+    padding: 0px 0 36px 46px;
     font-size: 12px;
     color: $font-color-10;
 

@@ -18,7 +18,7 @@ img {
 .positionDetail {
 	width: 100%;
 	background: #fff;
-	padding-bottom: 63px;
+	padding-bottom: 40px;
 	
 	.header {
 		width: 100%;
@@ -280,8 +280,9 @@ img {
 							.little-box {
 								width:24px;
 								height:24px;
+								font-weight: 700;
 								background: #fff;
-								border-radius:2px;
+								border-radius:4px;
 								line-height: 24px;
 								text-align: center;
 								font-size:16px;
@@ -324,7 +325,7 @@ img {
 						.botBtn {
 							color: #fff;
 							&.cur .icon{
-								color: $sub-color-1;
+								color: #fff;
 							}
 						}
 					}
@@ -353,7 +354,7 @@ img {
 		}
 	}
 	.content {
-		padding-top: 28px;
+		padding-top: 36px;
 		overflow: hidden;
 		.content-article {
 			width: $content-left;
