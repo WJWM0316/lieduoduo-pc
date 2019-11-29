@@ -1600,6 +1600,10 @@ export default class CourseList extends Vue {
             }
             let applylists = res.data.data.data
             applylists.map((v, k) => {
+              if (v.positionId === 0) {
+                v.positionName = '直接与我约面'
+              }
+              v.hascur = false
               v.boxshow = false
             })
             this.applyrecordList = applylists

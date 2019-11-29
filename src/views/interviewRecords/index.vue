@@ -45,7 +45,9 @@
           </div>
           <div :class="['countdown', vo.status >= 51 ? 'bg' : '']">
             <i class="iconfont iconshijian time"></i>
-            <span v-if="tablist[0].cur">{{vo.arrangementInfo.appointment}}</span>
+            <span v-if="tablist[0].cur">
+              {{(vo.arrangementInfo.appointmentTime)*1000 | date('YYYY-MM-DD HH:mm:ss') }}
+              </span>
             <span v-else>{{vo.arrangementInfo.appointment.substring(5)}}</span>
           </div>
           </div>
@@ -1064,6 +1066,7 @@ export default {
                 v.positionName = '直接与我约面'
               }
               v.hascur = false
+              v.boxshow = false
             })
             this.applyrecordList = applylists
           } else {
