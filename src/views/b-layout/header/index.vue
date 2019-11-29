@@ -68,10 +68,10 @@ export default {
     handleClick (e) {
       switch (e) {
         case 'logout':
-          this.$store.dispatch('logoutApi')
+          this.$store.dispatch('logoutApi', {curPage: 2})
           break
         case 'toggleIdentity':
-          this.$store.commit('switchIdentity')
+          this.$store.commit('switchIdentity', {toSiutchRole: 1})
           break
         case 'perfectauth':
           this.$router.push({ name: 'perfectauth' })

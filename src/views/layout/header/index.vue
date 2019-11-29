@@ -133,7 +133,7 @@ export default {
     handleClick (e) {
       switch (e) {
         case 'logout':
-          this.$store.dispatch('logoutApi').then(() => {
+          this.$store.dispatch('logoutApi', {curPage: 1}).then(() => {
             this.$store.commit('removeResume')
           })
 
@@ -142,7 +142,7 @@ export default {
           this.$router.push('/position')
           break
         case 'toggleIdentity':
-          this.$store.commit('switchIdentity')
+          this.$store.commit('switchIdentity', {toSiutchRole: 2})
       }
     },
     handleToLogin (type) {
