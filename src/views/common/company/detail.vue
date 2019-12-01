@@ -272,7 +272,13 @@ export default class companyDetail extends Vue {
     if (!this.companyInformation.albumInfo && this.$refs.photo && this.companyInformation.albumInfo.length <= 1) return
     var translateWidths = 0; var timeOut
     var timer = () => {
-      translateWidths = ++translateWidths
+      translateWidths = translateWidths + 2
+      console.log(translateWidths % 298 === 0)
+      if (translateWidths % 298 === 0) {
+        return setTimeout(() => {
+          timer()
+        }, 3000)
+      }
       if (translateWidths >= this.companyInformation.albumInfo.length * 298) {
         translateWidths = 0
       }
