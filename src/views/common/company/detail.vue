@@ -476,7 +476,7 @@ $sizing: border-box;
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1111;
+  z-index: 10;
   .inner_ScrollY{
     height: 135px;
     padding-top: 21px;
