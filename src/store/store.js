@@ -246,6 +246,8 @@ export default new Vuex.Store({
           store.commit('LOGOUT', data)
           // 在C端页面退登
           if (data.curPage === 1) {
+						
+						
             if (router.history.current.name === 'cresume') {
               router.replace({ path: '/index' })
             } else {

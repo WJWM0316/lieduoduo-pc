@@ -1307,12 +1307,13 @@ export default {
       .logo{
         width:64px;
         height:64px;
-        overflow: hidden;
-        border-radius:4px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         cursor: pointer;
         img{
-          width: 100%;
-          height: 100%;
+          max-width: 64px;
+          max-height:64px;
         }
       }
     }

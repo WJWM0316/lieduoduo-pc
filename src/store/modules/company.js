@@ -1,10 +1,8 @@
 import { getSearchCollect } from 'API/common'
-
+import router from '@/router/index'
 const GET_SEARCH_COLLECT = 'GET_SEARCH_COLLECT'
 const UPDATE_SEARCH_COLLECT = 'UPDATE_SEARCH_COLLECT'
 const UPDATE_SEARCH_COLLECT_MUTIPLE = 'UPDATE_SEARCH_COLLECT_MUTIPLE'
-const UrlParams = new URLSearchParams(window.location.search)
-
 const state = {
   searchCollect: {
     area: [],
@@ -16,6 +14,7 @@ const state = {
 
 const mutations = {
   [GET_SEARCH_COLLECT] (state, infos) {
+		let UrlParams = router.history.current.query
     if (UrlParams.get('cityNums')) {
       let cityNumsArr = UrlParams.get('cityNums').split(',')
       infos.area.map(v => {
