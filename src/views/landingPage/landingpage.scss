@@ -1391,10 +1391,11 @@
                 width: 262px;
                 height: 38px;
                 line-height: 38px;
-                color: #606266;
+                color: #333;
                 overflow: hidden;
                 padding-left: 16px;
-                border:1px solid rgba(235,235,235,1);
+                border: 1px solid #DCDFE6;
+                border-radius: 4px;
               }
               .el-select{
                 width: 100%;
@@ -1554,6 +1555,7 @@
             font-size:14px;
             color:rgba(92,86,93,1);
             text-align: center;
+            margin-bottom: 30px;
           }
         }
         .intertime{
@@ -1564,16 +1566,18 @@
             font-size:14px;
             font-weight: bold;
           }
+          .time_list{
+            margin-bottom: 6px;
+          }
           .time_row{
-            height: 30px;
-            line-height: 30px;
+            margin-top: 16px;
             cursor: pointer;
             position: relative;
             font-size: 14px;
             color: #5C565D;
             i{
               margin-right: 10px;
-              color: red;
+              color: #ED5C5C;
             }
             .circle{
               border: 1px solid #dcdfe6;

@@ -4,7 +4,9 @@
       <div class="inner inner_ScrollY">
         <div class="header-left">
           <div class="header-left-top" v-if="companyInformation.logoInfo">
-            <img class="company-logo logo_ScrollY" :src = companyInformation.logoInfo.middleUrl />
+            <div class="company-logo-wrap logo_ScrollY">
+              <img class="company-logo" :src = companyInformation.logoInfo.middleUrl />
+            </div>
             <div class="header-left-text text_ScrollY">
               <p class="header-companyShortname companyShortname_ScrollY">{{companyInformation.companyShortname}}</p>
               <p class="header-financingInfo financingInfo_ScrollY">{{companyInformation.financingInfo}}·{{companyInformation.employeesInfo}}·{{companyInformation.industry}}</p>
@@ -70,7 +72,9 @@
             <div class="product" v-if="companyInformation.product && companyInformation.product.length">
               <p class="product-title">公司产品</p>
               <div class="product-box"  v-for="(item, index) in companyInformation.product" :key="index">
-                <img :src="item.logoInfo.middleUrl" class="product-img"/>
+                <div class="product-img-wrap">
+                  <img :src="item.logoInfo.middleUrl" class="product-img"/>
+                </div>
                 <div class="product-text">
                   <p class="product-text-top">{{ item.productName }} | {{ item.slogan }}</p>
                   <p class="product-text-middle">{{ item.lightspot }}</p>
@@ -366,12 +370,20 @@ $sizing: border-box;
       .header-left-top{
         display: flex;
         @include flex-v-center;
-
-        .company-logo{
-          background: #FFFFFF;
+        .company-logo-wrap{
           width: 106px;
           height: 106px;
           border-radius: 16px;
+          overflow: hidden;
+          background: #FFFFFF;
+          position: relative;
+          .company-logo{
+            max-width: 100%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+          }
         }
 
         .header-left-text{
@@ -543,6 +555,11 @@ to {top:0px;}
 
 
         .hot-positionName{
+          display: inline-block;
+          width: 190px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
           font-size: 16px;
           font-weight: 500;
           color: $font-color-3;
@@ -611,13 +628,22 @@ to {top:0px;}
           margin-bottom: 24px;
           position: relative;
 
-          .product-img{
-          position: absolute;
-          left: 0;
-          top: 0;
-          width: 77px;
-          height: 77px;
-          border-radius: 8px;
+          .product-img-wrap{
+            background: #FFFFFF;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 77px;
+            height: 77px;
+            border-radius: 8px;
+            overflow: hidden;
+              .product-img{
+                max-width: 100%;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+              }
           }
           .product-text{
             padding: 6px 0 5px 0;
@@ -715,8 +741,6 @@ to {top:0px;}
             }
             .recruitmentTeam-text-buttom{
               width: 100%;
-              white-space: nowrap;
-              text-overflow: ellipsis;
               margin-top: 4px;
               color: $font-color-6;
               overflow: hidden;

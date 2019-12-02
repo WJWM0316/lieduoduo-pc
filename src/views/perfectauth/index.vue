@@ -7,7 +7,8 @@
       </div>
     </div>
     <div class="info">
-      <template v-if="!haveIdentity.identityAuth && (haveIdentity.identityStatus !== 0 && haveIdentity.identityStatus !== 1 && haveIdentity.identityStatus !== 2)">
+      <!-- v-if="!haveIdentity.identityAuth && (haveIdentity.identityStatus !== 0 && haveIdentity.identityStatus !== 1 && haveIdentity.identityStatus !== 2)" -->
+      <template v-if="1">
       <div class="authtitle">
         完善身份信息
       </div>
@@ -181,9 +182,9 @@ export default {
     },
     getCompanyIdentityInfos () {
       getCompanyIdentityInfosApi().then(res => {
-        if (res.data.data.status === 1) {
-          this.$router.push({ path: '/candidateType' })
-        }
+        // if (res.data.data.status === 1) {
+        //   this.$router.push({ path: '/candidateType' })
+        // }
         this.companyInfo = res.data.data
         this.info = res.data.data
       })
@@ -265,18 +266,19 @@ export default {
       .updata{
         width:140px;
         height:85px;
-        border-radius:6px;
       }
       .upimages{
         width:112px;
         height:85px;
         cursor: pointer;
         overflow: hidden;
-        border-radius:6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         position: relative;
         img{
-         max-width: 100%;
-         max-height: 100%;
+          max-width:140px;
+          max-height:85px;
         }
         .hasupdata{
           bottom: -10px;

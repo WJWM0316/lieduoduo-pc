@@ -754,7 +754,7 @@ right: -40px;
             background:rgba(255,255,255,1);
             position: absolute;
             top: 26px;
-            left: -179px;
+            left: -137px;
             z-index: 1;
             border-radius: 4px;
             box-shadow:0px 0px 26px 0px rgba(22,39,77,0.12);
@@ -960,7 +960,7 @@ right: -40px;
             margin-left: 23px;
             font-size: 14px;
             color: #42334d;
-            margin-bottom: 17px;
+            margin-bottom: 18px;
             font-weight: 700;
           }
           .noUpload {
@@ -972,7 +972,7 @@ right: -40px;
             margin-left: 23px;
             color: #5C565D;
             font-size: 14px;
-            margin-bottom: 18px;
+            margin-bottom: 14px;
             i{
               color: #BCBCBC;
               font-size: 14px;
@@ -993,7 +993,7 @@ right: -40px;
             font-size: 14px;
             font-weight: 700;
             color: #42334d;
-            margin-bottom: 10px;
+            margin-bottom: 18px;
           }
           .Contact {
             width: 100px;
@@ -1095,27 +1095,27 @@ right: -40px;
               padding-right: 28px;
               .basemsg {
                 display: flex;
-                justify-content: space-between;
+                // justify-content: space-between;
                 align-items: baseline;
                 .realName {
                   font-size: 22px;
                   font-weight: 700;
                   color: #42334d;
-                  width: 153px;
+                  max-width: 153px;
                   white-space: nowrap;
+                  margin-right: 24px;
                   overflow: hidden;
                   text-overflow: ellipsis;
                   display: inline-block;
                 }
                 .lebalList {
                   display: inline-block;
-                  margin-left: 20px;
                   overflow: hidden;
                   text-align: right;
                   height: 19px;
                   .lebalItem {
                     display: inline-block;
-                    margin-left: 24px;
+                    margin-right: 24px;
                     height: 23px;
                     overflow: 19px;
                     &:nth-child(1) {
@@ -1302,6 +1302,7 @@ right: -40px;
           align-items: flex-start;
           flex-wrap: wrap;
           padding-bottom: 160px;
+          margin-top: 10px;
           img {
             width: 86px;
             height: 86px;
@@ -1636,10 +1637,11 @@ right: -40px;
               width: 262px;
               height: 38px;
               line-height: 38px;
-              color: #606266;
+              color: #333;
               overflow: hidden;
               padding-left: 16px;
-              border:1px solid rgba(235,235,235,1);
+              border: 1px solid #DCDFE6;
+              border-radius: 4px;
             }
             .el-select{
               width: 100%;
@@ -1908,6 +1910,7 @@ right: -40px;
           font-size:14px;
           color:rgba(92,86,93,1);
           text-align: center;
+          margin-bottom: 30px;
         }
       }
       .intertime{
@@ -1918,16 +1921,18 @@ right: -40px;
           font-size:14px;
           font-weight: bold;
         }
+        .time_list{
+          margin-bottom: 6px;
+        }
         .time_row{
-          height: 30px;
-          line-height: 30px;
           cursor: pointer;
           position: relative;
           font-size: 14px;
+          margin-top: 16px;
           color: #5C565D;
           i{
             margin-right: 10px;
-            color: red;
+            color: #ED5C5C;
           }
           .circle{
             border: 1px solid #dcdfe6;
