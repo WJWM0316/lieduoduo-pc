@@ -1765,6 +1765,14 @@ export default class CourseList extends Vue {
       this.pop.isShow = false
     }
   }
+  toAddJob () {
+    this.$router.push({
+      name: 'postJob',
+      query: {
+        type: 'add'
+      }
+    })
+  }
   backhandler () {
     if (this.pop.type === 'address') {
       this.pop = {

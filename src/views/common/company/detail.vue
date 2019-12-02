@@ -529,6 +529,7 @@ to {top:0px;}
     .hotPosition-buttom{
 
       .hotPosition-box{
+        vertical-align: top;
         padding: 24px 24px;
         width: 390px;
         height: 110px;
@@ -538,6 +539,7 @@ to {top:0px;}
         cursor: pointer;
         display: inline-block;
         margin-left: 15px;
+
 
         .hot-positionName{
           font-size: 16px;
