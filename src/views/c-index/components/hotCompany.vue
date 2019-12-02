@@ -78,6 +78,11 @@ export default {
         this.$router.push('/company')
       }
     }
+  },
+  watch: {
+    cityid (value) {
+      this.getCompanyList()
+    }
   }
 }
 </script>
