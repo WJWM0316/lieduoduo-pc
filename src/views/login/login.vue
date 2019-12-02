@@ -46,7 +46,7 @@ export default class login extends Vue {
   height: 100vh;
   box-sizing: border-box;
   width: 100%;
-  background: #652791 url(#{$image-cdn-url}/images/bg_loginpage.png) no-repeat;
+  background: #00C4CD url(#{$image-cdn-url}/images/bg_loginpage.png) no-repeat;
   background-size: 100% auto;
   background-position: center;
   display: flex;
