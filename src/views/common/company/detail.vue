@@ -96,12 +96,12 @@
                 公司环境
               </p>
               <div class="surroundings-container">
-                <div class="photo" ref="photo">
-                  <div v-for="(item, index) in companyInformation.albumInfo" :key="index" :style="'background: url(' + item.middleUrl + ')'">
-                  </div>
-                  <div :style="'background: url(' + companyInformation.albumInfo[0].middleUrl + ')'">
-                  </div>
-                </div>
+                  <el-carousel indicator-position="none" height="147px">
+                    <el-carousel-item v-for="(item, index) in companyInformation.albumInfo" :key="index">
+                      <div class="el-carousel-surroundings" :style="'background: url(' + item.middleUrl + ')'">
+                      </div>
+                    </el-carousel-item>
+                  </el-carousel>
               </div>
             </div>
             <div class="recruitmentTeam">
@@ -701,18 +701,9 @@ to {top:0px;}
           width: 298px;
           height: 160px;
           overflow: hidden;
-          .photo{
-            @include clearfix;
-            width: 8888px;
-            div{
-              width: 298px;
-              height: 147px;
-              display: block;
-              float: left;
-              background-repeat: no-repeat;
-              background-position: center;
-              background-size: cover;
-            }
+          .el-carousel-surroundings{
+            width: 298px;
+            height: 160px;
           }
         }
       }
@@ -735,7 +726,7 @@ to {top:0px;}
             position: absolute;
 						top: 50%;
             left: 0;
-            transform: translateY(-50%);
+            transform: translateY(-50%)
           }
           .recruitmentTeam-text{
             height: 44px;
