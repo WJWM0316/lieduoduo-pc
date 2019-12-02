@@ -70,6 +70,7 @@ export default {
 
   methods: {
     handleSearch (page) {
+      scrollTo(0, 260)
       this.page = page
       this.getCompanysPositionList()
     },
