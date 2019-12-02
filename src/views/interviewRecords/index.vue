@@ -2781,7 +2781,7 @@ export default {
       .intention {
         text-align: left;
         padding-top: 28px;
-        padding-bottom: 48px;
+        padding-bottom: 38px;
         display: flex;
         justify-content: flex-start;
         align-items: baseline;
@@ -2827,7 +2827,7 @@ export default {
         display: flex;
         justify-content: flex-start;
         align-items: baseline;
-        margin-bottom: 28px;
+        margin-bottom: 38px;
         .title {
           font-size: 14px;
           font-weight: 700;
