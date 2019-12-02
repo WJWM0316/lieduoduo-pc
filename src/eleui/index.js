@@ -53,8 +53,8 @@ import {
   // Rate,
   // Steps,
   // Step,
-  // Carousel,
-  // CarouselItem,
+  Carousel,
+  CarouselItem,
   Collapse,
   CollapseItem,
   Cascader,
@@ -132,8 +132,8 @@ Vue.use(Progress)
 // Vue.use(Rate);
 // Vue.use(Steps);
 // Vue.use(Step);
-// Vue.use(Carousel);
-// Vue.use(CarouselItem);
+Vue.use(Carousel)
+Vue.use(CarouselItem)
 Vue.use(Collapse)
 Vue.use(CollapseItem)
 Vue.use(Cascader)
