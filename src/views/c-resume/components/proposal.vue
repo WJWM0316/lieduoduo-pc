@@ -51,7 +51,7 @@
                 :limit="3"
                 title="期望行业"
                 type="field"
-                :default-value="form.fields"
+                :default-value="labelIds"
                 @on-selected="handleSelectLabeld" />
             </el-form-item>
           </div>
@@ -91,6 +91,9 @@ export default {
     list () {
       const { expects } = this.resume
       return JSON.parse(JSON.stringify(expects || []))
+    },
+    labelIds () {
+      return this.labels.map(val => val.labelId)
     }
   },
   data () {

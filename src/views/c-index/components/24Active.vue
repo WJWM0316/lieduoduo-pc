@@ -279,7 +279,10 @@ $position-process-bg-color: #99e7e8;
   .list-position-name {
     color: $title-color-1;
     font-size: 18px;
+    display: inline-block;
     font-weight: bold;
+    max-width: 190px;
+    @include ellipsis;
   }
   .list-pay {
     color: $error-color-1;

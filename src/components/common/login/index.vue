@@ -230,7 +230,7 @@ export default class loginForm extends Component {
     }).then(res => {
       if (res.data.data && res.data.data.id) {
         clearInterval(this.timer)
-        this.$store.commit('LOGINCALLBACK', res.data.data)
+        this.$store.dispatch('scanLogin', res.data.data)
       }
     })
   }

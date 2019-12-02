@@ -9,23 +9,23 @@
       <div class="registerBox" v-show="!$route.query.page" @click="closeMsg($event)">
         <div class="box-title">填写个人信息</div>
         <el-form :model="ruleForm" :rules="rules" :status-icon="false" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-          <el-form-item label="真实姓名" prop="real_name">
+          <el-form-item label="真实姓名" prop="real_name" class="formitem">
             <el-input :value="ruleForm.real_name" placeholder="请填写真实姓名" @input="bindInput($event, 'real_name')"></el-input>
           </el-form-item>
-          <el-form-item label="公司全称" prop="company_name" class="cpname">
+          <el-form-item label="公司全称" prop="company_name" class="formitem">
             <el-input :value="ruleForm.company_name" placeholder="请填写公司全称" @input="bindInput($event, 'company_name')"></el-input>
             <option-list :option="companylist" :visible="companyshow" @selectchange="changecompany"></option-list>
           </el-form-item>
-          <el-form-item label="职位所属类型" prop="position_name">
+          <el-form-item label="职位所属类型" prop="position_name" class="formitem">
             <select-position-type
             @on-selected="selectedPosition">
             <el-input :value="ruleForm.position_name" placeholder="请选择职位所属类型" @input="bindInput($event, 'position_name')"></el-input>
           </select-position-type>
           </el-form-item>
-          <el-form-item label="担任的职务" prop="user_position">
+          <el-form-item label="担任的职务" prop="user_position" class="formitem">
             <el-input :value="ruleForm.user_position" placeholder="请填写担任的职务" @input="bindInput($event, 'user_position')"></el-input>
           </el-form-item>
-          <el-form-item label="邮箱地址" prop="user_email">
+          <el-form-item label="邮箱地址" prop="user_email" class="formitem">
             <el-input :value="ruleForm.user_email" placeholder="请输入公司邮箱地址" @input="bindInput($event, 'user_email')"></el-input>
           </el-form-item>
         </el-form>

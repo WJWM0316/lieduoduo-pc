@@ -231,6 +231,7 @@
         <div class="null-text">链接已过期，无法支持在线预览（预览有效期14天）</div>
       </div>
     </div>
+    <loginPop ref="loginPop"></loginPop>
   </div>
 </template>
 <script>
@@ -240,6 +241,7 @@ import { getshareResumeVkeyApi } from 'API/userJobhunter'
 import { shareResumeApi } from 'API/forward'
 import { getAccessToken } from 'API/cacheService'
 import { createonlinepdf, createonlineword } from 'API/common'
+import loginPop from '@/components/common/loginPop'
 
   @Component({
     name: 'landingpage',
@@ -247,6 +249,7 @@ import { createonlinepdf, createonlineword } from 'API/common'
     },
     computed: {},
     components: {
+      loginPop
     }
   })
 export default class CourseList extends Vue {
@@ -281,7 +284,8 @@ export default class CourseList extends Vue {
       this.$router.push({ name: 'index' })
     }
     login () {
-      this.$router.push({ name: 'login' })
+      this.$refs.loginPop.showLoginPop = true
+      // this.$router.push({ name: 'login' })
     }
     onloadfile (type) {
       this.loadingshow = true
