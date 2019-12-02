@@ -53,7 +53,7 @@
               <span class="hot-positionName">{{item.positionName}}</span>
               <span
                 class="hot-annualSalaryDesc"
-              >{{item.emolumentMin}}k-{{item.emolumentMax}}k·{{item.annualSalaryDesc}}</span>
+              >{{item.emolumentMin}}k-{{item.emolumentMax}}k{{ item.annualSalary > 12 ? '·' + item.annualSalaryDesc : ''}}</span>
               <p class="hot-text">
                 {{item.province}}{{item.city}}{{item.district}} | {{item.workExperienceName}} |
                 {{item.educationName}}
@@ -265,12 +265,13 @@ export default class companyDetail extends Vue {
   }
 
   toJobDetails (item, index) {
-    this.$router.push({
+    let toPositionDetail = this.$router.resolve({
       name: 'positionDetail',
       query: {
         positionId: item.id
       }
     })
+    window.open(toPositionDetail.href, '_blank')
   }
   photoAnimation () {
     if (!this.companyInformation.albumInfo && this.$refs.photo && this.companyInformation.albumInfo.length <= 1) return
