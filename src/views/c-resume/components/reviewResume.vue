@@ -10,8 +10,8 @@
       :visible.sync="reviewStatus"
       top="49px"
       :lock-scroll="true"
-      width="770px">
-      <div class="resume-content">
+      width="794px">
+      <div class="warpper-scroll resume-content">
         <base-info :resume="resume" prop-class="base-scroll" status="view"/>
         <desc-info :resume="resume" status="view" />
         <proposal :resume="resume" status="view"/>
@@ -54,7 +54,6 @@
         </el-popover>
       </div>
     </el-dialog>
-
   </div>
 </template>
 <script>
@@ -140,8 +139,11 @@ export default {
     padding: 0;
     height: calc(100vh - 49px - 30px);
     position: relative;
-    width: 770px;
+    width: 794px;
     overflow: hidden;
+  }
+  & /deep/ .avatar:hover::after {
+    background: transparent;
   }
 }
 .resume-review-btn-wrapper {
@@ -175,10 +177,18 @@ export default {
   .resume-share {
     padding: 20px 17px;
     font-size: 14px;
-    background: $bg-color-5;
+    background: $bg-color-7;
     color: $title-color-2;
     cursor: pointer;
     border-radius:0px 4px 4px 0px;
+  }
+  .resume-share:focus {
+    color: $main-color-1;
+    font-weight: bold;
+    background: $bg-color-5;
+    .iconfont {
+      color: $main-color-1;
+    }
   }
   .iconfont {
     font-size: 14px;

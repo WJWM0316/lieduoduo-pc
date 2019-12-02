@@ -181,6 +181,7 @@ export default {
           duty: item.duty
         })
         this.labels = item.technicalLabels
+        this.jsonFormString = JSON.stringify(this.form)
       } else if (type === 'save') {
         this.$refs.form.validate(valid => {
           if (valid) {
