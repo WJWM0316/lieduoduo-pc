@@ -714,7 +714,7 @@ to {top:0px;}
               color: $font-color-3;
             }
             .recruitmentTeam-text-buttom{
-              width: 298px;
+              width: 100%;
               white-space: nowrap;
               text-overflow: ellipsis;
               margin-top: 4px;
