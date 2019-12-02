@@ -320,6 +320,10 @@ export default {
       left: 0;
     }
   }
+  & /deep/ .drop-down-header {
+    line-height: inherit;
+    vertical-align: top;
+  }
   &>div {
     min-width: 168px;
     margin-right: 40px;

@@ -130,6 +130,7 @@ export default {
       this.getLoading = true
       if (!this.isGetSearchType) {
         this.getSearchType()
+        return
       }
       getSearchCompanys(this.params).then(({ data }) => {
         this.getLoading = false
@@ -174,7 +175,13 @@ export default {
           this.isGetSearchType = true
           this.recommended = data.data.recommended
           // 如果还在获取列表状态中
-          if (this.getLoading) this.getPositionList()
+          if (this.getLoading) {
+            if (this.currentType === 'position') {
+              this.getPositionList()
+            } else {
+              this.getCompanysList()
+            }
+          }
         }
       })
     }

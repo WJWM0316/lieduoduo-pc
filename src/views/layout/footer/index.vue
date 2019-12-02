@@ -6,7 +6,8 @@
              <img class="ft_logo" :src="cdnPath + 'logo.png'" />
           </div>
           <p class="tips">BOSS直聘战略投资  高端人才招聘平台</p>
-          <p class="gray"><a href="http://www.beian.miit.gov.cn" target="_blank">Copyright ©老虎科技 粤ICP备16060093号-4</a></p>
+          <!-- http://www.beian.miit.gov.cn -->
+          <p class="gray">Copyright ©老虎科技 粤ICP备16060093号-4</p>
         </div>
         <div class="footer_center">
             <div class="footer-header-title">
