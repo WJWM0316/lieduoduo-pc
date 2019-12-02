@@ -1,10 +1,8 @@
 import { getSearchCollect } from 'API/common'
-
+import router from '@/router/index'
 const GET_SEARCH_COLLECT = 'GET_SEARCH_COLLECT'
 const UPDATE_SEARCH_COLLECT = 'UPDATE_SEARCH_COLLECT'
 const UPDATE_SEARCH_COLLECT_MUTIPLE = 'UPDATE_SEARCH_COLLECT_MUTIPLE'
-const UrlParams = new URLSearchParams(window.location.search)
-
 const state = {
   searchCollect: {
     area: [],
@@ -16,7 +14,8 @@ const state = {
 
 const mutations = {
   [GET_SEARCH_COLLECT] (state, infos) {
-    if (UrlParams.get('cityNums')) {
+		let UrlParams = router.history.current.query
+    if (UrlParams.cityNums) {
       let cityNumsArr = UrlParams.get('cityNums').split(',')
       infos.area.map(v => {
         v.checked = false
@@ -27,7 +26,7 @@ const mutations = {
     } else {
       infos.area.map((v, i) => v.checked = !i ? true : false)
     }
-    if (UrlParams.get('industryIds')) {
+    if (UrlParams.industryIds) {
       let industryIdsArr = UrlParams.get('industryIds').split(',')
       infos.industry.map(v => {
         v.checked = false
@@ -38,7 +37,7 @@ const mutations = {
     } else {
       infos.industry.map((v, i) => v.checked = !i ? true : false)
     }
-    if (UrlParams.get('financingIds')) {
+    if (UrlParams.financingIds) {
       let financingIdsArr = UrlParams.get('financingIds').split(',')
       infos.financing.map(v => {
         v.checked = false
@@ -49,7 +48,7 @@ const mutations = {
     } else {
       infos.financing.map((v, i) => v.checked = !i ? true : false)
     }
-    if (UrlParams.get('employeeIds')) {
+    if (UrlParams.employeeIds) {
       let employeeIdsArr = UrlParams.get('employeeIds').split(',')
       infos.employee.map(v => {
         v.checked = false
@@ -173,6 +172,7 @@ const actions = {
       store.commit(GET_SEARCH_COLLECT, res.data.data)
       return res
     }).catch(err => {
+      console.log(err)
       return Promise.reject(err.data.data || {})
     })
   },

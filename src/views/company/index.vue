@@ -98,7 +98,7 @@ export default {
       'updateSearchCollectMutipleApi'
     ]),
     getLogoListsLists () {
-      getLogoListsListsApi().then(({ data }) => (this.companyLogoLists = data.data))
+      getLogoListsListsApi({count: 24}).then(({ data }) => (this.companyLogoLists = data.data))
     },
     handleSearch () {
       this.getLists()

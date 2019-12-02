@@ -467,13 +467,13 @@ export default class loginForm extends Component {
         vertical-align: middle;
       }
       .login-img {
-        width: 83px;
-        height: 83px;
+        width: 86px;
+        height: 86px;
         cursor: pointer;
         display: inline-block;
         vertical-align: top;
         img {
-          width: 83px;
+          width: 86px;
         }
       }
     }
@@ -708,6 +708,7 @@ export default class loginForm extends Component {
       text-align: left;
       line-height: 46px;
       font-size: 0;
+      position: relative;
       .input_img {
         margin: 0 12px 0 29px;
         font-size: 18px;
@@ -750,13 +751,14 @@ export default class loginForm extends Component {
         color: $main-color-1;
         font-weight: 700;
         font-size: 16px;
-        line-height: 48px;
+        line-height: 1;
         display: inline-block;
-        float: right;
         cursor: pointer;
-        margin-right: 26px;
+        position: absolute;
+        top: 50%;
+        right: 26px;
+        transform: translateY(-50%);
       }
-
       .imgcode {
         width: 102px;
         height: 41px;
@@ -926,9 +928,10 @@ export default class loginForm extends Component {
             width: 200px;
             height: 44px;
             color: $title-color-1;
+            display: inline-block;
+            vertical-align: top;
           }
           .msgText{
-            margin-right: 15px;
             font-size: 14px;
           }
         }

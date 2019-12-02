@@ -48,9 +48,10 @@ export default class login extends Vue {
   width: 100%;
   background: #00C4CD url(#{$image-cdn-url}/images/bg_loginpage.png) no-repeat;
   background-size: 100% auto;
-  background-position: center;
+  background-position: bottom;
   display: flex;
   align-items: center;
+  /*background-attachment:fixed;*/
   .loginBox {
     width: 1200px;
     padding: 0 10px;
@@ -58,8 +59,8 @@ export default class login extends Vue {
     overflow: hidden;
     margin: 0 auto;
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    padding-top: 50px;
     .login_left{
       width: 539px;
       cursor: pointer;
