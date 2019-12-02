@@ -1,7 +1,7 @@
 <template>
   <div class="block-overflow">
     <p class="introduction-text" ref="text" :class="{ introduction_viewAll: viewAllText }">{{ text }}<el-button v-if="isIntroductionButtom" type="text" class="introduction-left-buttom" :class="{ buttom_viewAll: viewAllText }" @click="viewAll">{{ this.viewAllText ? '收起' :'展开'}}</el-button></p>
-
+		
   </div>
 </template>
 <script>
@@ -57,6 +57,7 @@ export default {
   position: relative;
 }
 .introduction-left-buttom{
+  background: url('../../../assets/images/cover.png');
   background: #ffffff;
   line-height: 26px;
   padding: 0 0 0 72px;

@@ -67,7 +67,7 @@
               <p class="introduction-title">公司介绍</p>
               <block-overflow ref="blockOverflow" :text="companyInformation.intro"></block-overflow>
             </div>
-            <div class="product" v-if="companyInformation.product">
+            <div class="product" v-if="companyInformation.product && companyInformation.product.length">
               <p class="product-title">公司产品</p>
               <div class="product-box"  v-for="(item, index) in companyInformation.product" :key="index">
                 <img :src="item.logoInfo.middleUrl" class="product-img"/>
@@ -80,7 +80,7 @@
                 </div>
               </div>
             </div>
-            <div class="address" v-if="companyInformation.address">
+            <div class="address" v-if="companyInformation.address && companyInformation.address.length">
               <p class="address-title">公司地址</p>
               <map-pop :companyAddress = companyInformation.address></map-pop>
             </div>
@@ -202,7 +202,7 @@ export default class companyDetail extends Vue {
         item.siteUrl = item.siteUrl.indexOf('http') !== -1 ? item.siteUrl : 'http://' + item.siteUrl
       })
       this.$nextTick(() => {
-        this.$refs.blockOverflow.updateTextHeigth()
+        if (this.$refs.blockOverflow) this.$refs.blockOverflow.updateTextHeigth()
       })
     })
   }
@@ -368,6 +368,7 @@ $sizing: border-box;
         @include flex-v-center;
 
         .company-logo{
+          background: #FFFFFF;
           width: 106px;
           height: 106px;
           border-radius: 16px;
@@ -689,30 +690,31 @@ to {top:0px;}
         .recruitmentTeam-title{
           @extend %introductionTitle;
         }
-        .recruitmentTeam-mian{
-          margin-top: -13px;
-        }
         .recruitmentTeam-box{
-          height: 99px;
-          display: flex;
+					margin-bottom: 10px;
+          height: 60px;
+					padding-left: 74px;
+					position: relative;
           @include flex-v-center;
           img{
             width: 60px;
             height: 60px;
             border-radius: 50%;
+						top: 0;
+						left: 0;
+						position: absolute;
           }
           .recruitmentTeam-text{
             height: 44px;
-            margin-left: 14px;
             font-weight: 400;
             font-size: 14px;
             line-height: 20px;
-
+						width: 100%;
             .recruitmentTeam-text-top{
               color: $font-color-3;
             }
             .recruitmentTeam-text-buttom{
-              width: 298px;
+              width: 100%;
               white-space: nowrap;
               text-overflow: ellipsis;
               margin-top: 4px;
