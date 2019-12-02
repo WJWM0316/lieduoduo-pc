@@ -240,7 +240,7 @@ export default class InterviewBtn extends Component {
       color: #fff;
     }
     &.scheduling.specailBtn {
-      background: $main-color-2;
+      background: $bg-color-4;
       color: #fff;
     }
     &.canView.specailBtn {
