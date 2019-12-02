@@ -138,7 +138,7 @@ export default {
 		width:120px;
 		height:120px;
 		border-radius:4px;
-		background: rgba(0,0,0,.02);
+		background: white;
 		position: relative;
 		overflow: hidden;
 	}
