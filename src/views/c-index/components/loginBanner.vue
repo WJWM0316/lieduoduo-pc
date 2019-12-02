@@ -1,5 +1,5 @@
 <template>
-  <div class="index-login" :class="{'is-index-login': isLogin, 'no-banner': !banner[0]}">
+  <div class="index-login" :class="{'is-index-login': isLogin, 'no-banner': isLogin && !banner[0]}">
     <div class="login-bg" v-if="!isLogin">
       <div class="main-center index-login-wrapper">
         <p class="position-number">
