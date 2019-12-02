@@ -333,7 +333,7 @@
                   <div class="p_l">
                     <i class="iconfont icon-pdf" style="color: #FA3939"></i>
                   </div>
-                  <div class="p_c">PDF格式</div>
+                  <div class="p_c">PDF文件</div>
                   <div class="p_r">
                     <a @click="onloadfile('pdf')"><i class="iconfont icon-xiazai selected"></i></a>
                   </div>
@@ -342,7 +342,7 @@
                   <div class="p_l">
                     <i class="iconfont icon-word" style="color: rgb(74, 144, 226)"></i>
                   </div>
-                  <div class="p_c">Word格式</div>
+                  <div class="p_c">Word文档</div>
                   <div class="p_r">
                     <a @click="onloadfile('doc')"><i class="iconfont icon-xiazai selected"></i></a>
                   </div>
@@ -1544,7 +1544,7 @@ export default {
       if (type === 'pdf') {
         createonlinepdf(params).then((res) => {
           this.loadingshow = false
-          this.$util.downFile(res.data, this.nowResumeMsg.name + '.pdf')
+          this.$util.downFile(res.data, this.nowResumeMsg.name + '-' + this.nowResumeMsg.expects[0].position + '.pdf')
         }).catch((e) => {
           this.loadingshow = false
         })
@@ -1552,7 +1552,7 @@ export default {
       if (type === 'doc') {
         createonlineword(params).then((res) => {
           this.loadingshow = false
-          this.$util.downFile(res.data, this.nowResumeMsg.name + '.docx')
+          this.$util.downFile(res.data, this.nowResumeMsg.name + '-' + this.nowResumeMsg.expects[0].position + '.docx')
         }).catch((e) => {
           this.loadingshow = false
         })
