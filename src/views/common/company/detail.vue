@@ -715,8 +715,6 @@ to {top:0px;}
             }
             .recruitmentTeam-text-buttom{
               width: 100%;
-              white-space: nowrap;
-              text-overflow: ellipsis;
               margin-top: 4px;
               color: $font-color-6;
               overflow: hidden;

@@ -12,7 +12,7 @@
       <div class="inner">
         <div class="list" v-loading="getLoading">
           <no-found v-if="!getLoading && !PositionList.length" :max-width="400"></no-found>
-          <positionItem v-for="(item, index) in PositionList" :key="index" :item = item></positionItem>
+          <positionItem showCompanyInfo=false v-for="(item, index) in PositionList" :key="index" :item = item></positionItem>
           <div class="pagination" v-if="total > 20">
             <el-pagination
               background
