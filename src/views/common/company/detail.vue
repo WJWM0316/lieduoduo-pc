@@ -414,12 +414,12 @@ $sizing: border-box;
             min-width: 80px;
             height: 24px;
             box-sizing: $sizing;
-            border: 1px solid $font-color-temp4;
+            border: 1px solid $main-color-2;
             border-radius: 18px;
             text-align: center;
             vertical-align: middle;
             margin-right: 14px;
-            color: $font-color-temp4;
+            color: $main-color-2;
             line-height: 24px;
           }
         }
@@ -439,9 +439,9 @@ $sizing: border-box;
         }
         //点击激活样式
         .activation{
-          color: $font-color-temp4;
+          color: $main-color-2;
           font-weight: 500;
-          border-bottom: 4px solid $font-color-temp4;
+          border-bottom: 4px solid $main-color-2;
         }
       }
     }
@@ -574,7 +574,7 @@ to {top:0px;}
         .hot-text{
           font-size: 14px;
           font-weight: 400;
-          color: $font-color-temp2;
+          color: $font-color-6;
           margin-top: 20px;
         }
       }
