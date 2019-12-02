@@ -45,6 +45,11 @@
   background: $bg-color-5 !important;
 }
 
+/**折叠面板**/
+.el-collapse-item__content{
+  padding-bottom: 0 !important;
+}
+
 .el-dialog__wrapper .bpp-dialog.el-dialog{
   border-radius: 8px;
   .el-dialog__header{
