@@ -82,6 +82,7 @@ export default {
       if (type === 'edit') {
         this.isAdd = false
         Object.assign(this.form, this.info)
+        this.jsonFormString = JSON.stringify(this.form)
       } else if (type === 'save') {
         const { imgs, introduce } = this.form
         if (!imgs.length && !introduce) {
@@ -133,15 +134,15 @@ export default {
     flex-wrap: wrap;
   }
   .image-wrapper {
-    @include img-radius(94px, 94px, 4px);
+    @include img-radius(96px, 96x, 4px);
     margin-bottom: 10px;
   }
   .image-wrapper{
-    margin-left: 10px;
+    margin-right: 10px;
   }
-  // .image-wrapper:nth-child(5n) {
-  //   margin-left: 0px;
-  // }
+  .image-wrapper:nth-child(5n) {
+    margin-right: 0px;
+  }
 }
 .form-titl-tips {
   font-size: 12px;

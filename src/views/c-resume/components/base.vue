@@ -205,6 +205,7 @@ export default {
         Object.assign(this.form, this.info)
         this.form.birth = this.info.birthDesc
         this.form.startWorkYear = this.info.startWorkYear * 1000
+        this.jsonFormString = JSON.stringify(this.form)
       } else if (type === 'save') {
         this.$refs.form.validate(valid => {
           if (valid) {
@@ -258,6 +259,9 @@ export default {
         // 将内容写入到vuex 中
         this.$store.commit('overwriteResume', data.data || {})
       })
+    },
+    validFormData () {
+      return this.jsonFormString === JSON.stringify(this.form)
     }
   }
 }

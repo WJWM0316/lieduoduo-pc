@@ -61,7 +61,7 @@ export default {
         { value: 1, title: '基本信息', icon: 'icon-jibenxinxishenfenyanzheng', container: '.base-scroll' },
         { value: 2, title: '自我描述', icon: 'icon-ziwomiaoshu-', container: '.desc-scroll' },
         { value: 3, title: '求职意向', icon: 'icon-qiuzhiyixiang', container: '.proposal-scroll' },
-        { value: 4, title: '工作经历', icon: 'icon-zhiweiguanli', container: '.experience-scroll' },
+        { value: 4, title: '工作经历', icon: 'icon-zhiwei', container: '.experience-scroll' },
         { value: 5, title: '项目经验', icon: 'icon-rongzi', container: '.project-scroll' },
         { value: 6, title: '教育经历', icon: 'icon-jiaoyu', container: '.education-scroll' },
         { value: 7, title: '更多介绍', icon: 'icon-gongsileixing', container: '.more-scroll' }
@@ -192,7 +192,7 @@ export default {
     margin-top: 14px;
     .form-label {
       padding: 5px 14px;
-      border-radius:30px;
+      border-radius: 30px;
       font-size: 12px;
       color: $main-color-1;
       display: inline-block;
@@ -228,13 +228,17 @@ export default {
   }
   .resume-hr {
     width: 100%;
-    display: inline-block;
+    display: block;
     padding: 0 46px;
     box-sizing: border-box;
+    height: 6px;
+    line-height: 6px;
   }
   .resume-hr span{
     width: 100%;
-    height: 6px;
+    height: 100%;
+    vertical-align: top;
+    padding: 0;
     background-image: url('../../assets/images/separator.png');
     background-size: auto 100%;
     background-repeat: repeat;

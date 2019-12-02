@@ -125,6 +125,7 @@ export default {
         })
         this.currentId = item.id
         this.isAdd = false
+        this.jsonFormString = JSON.stringify(this.form)
       } else if (type === 'save') {
         this.$refs.form.validate(valid => {
           if (valid) {

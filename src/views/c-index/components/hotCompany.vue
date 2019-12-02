@@ -53,7 +53,7 @@ export default {
   methods: {
     // 获取热门公司类型信息
     async getTypes () {
-      await getHotCompanyTypes().then(({ data }) => {
+      await getHotCompanyTypes({ city: this.cityid }).then(({ data }) => {
         this.typeList = data.data || []
         this.currentId = this.typeList[0] && this.typeList[0].id
       })
@@ -81,7 +81,9 @@ export default {
   },
   watch: {
     cityid (value) {
-      this.getCompanyList()
+      this.getTypes().then(() => {
+        this.getCompanyList()
+      })
     }
   }
 }

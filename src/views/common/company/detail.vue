@@ -111,7 +111,11 @@
                   <img :src="item.avatar.smallUrl"/>
                   <div class="recruitmentTeam-text">
                     <p class="recruitmentTeam-text-top">{{ item.name }} | {{ item.position }}</p>
-                    <p class="recruitmentTeam-text-buttom">{{item.positionName === 0 ? '正在招聘0个职位' : '正在招聘' + '&quot;' + item.positionName + '&quot;' + '等' + item.positionNum+ '个职位'}}</p>
+                    <p class="recruitmentTeam-text-buttom">
+                      <span>{{ '正在招聘' }}</span>
+                      <span class="recruitmentTeam-positionName">{{ item.positionName === 0 ?item.positionName : '&quot;' + item.positionName + '&quot;' }}</span>
+                      <span>{{ item.positionName === 0 ? '' : '等' }}{{ item.positionNum+ '个职位' }}</span>
+                    </p>
                   </div>
                 </div>
                 <el-button @click="activationType" class="recruitmentTeam-buttom" plain>
@@ -718,18 +722,20 @@ to {top:0px;}
           @extend %introductionTitle;
         }
         .recruitmentTeam-box{
-					margin-bottom: 10px;
+					padding: 19px 0 20px 0;
           height: 60px;
 					padding-left: 74px;
 					position: relative;
           @include flex-v-center;
+          border-top: 1px solid $--input-disabled-border;
           img{
             width: 60px;
             height: 60px;
             border-radius: 50%;
-						top: 0;
-						left: 0;
-						position: absolute;
+            position: absolute;
+						top: 50%;
+            left: 0;
+            transform: translateY(-50%);
           }
           .recruitmentTeam-text{
             height: 44px;
@@ -744,11 +750,22 @@ to {top:0px;}
               width: 100%;
               margin-top: 4px;
               color: $font-color-6;
-              overflow: hidden;
-              white-space: nowrap;
-              text-overflow: ellipsis;
+              span{
+                vertical-align: middle;
+              }
+              .recruitmentTeam-positionName{
+                display: inline-block;
+                max-width: 86px;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                vertical-align: middle;
+              }
             }
           }
+        }
+        .recruitmentTeam-box:first-of-type{
+          border-top: 0 !important;
         }
         .recruitmentTeam-buttom{
           margin-top: 10px;
