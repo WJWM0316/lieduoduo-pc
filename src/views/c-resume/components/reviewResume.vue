@@ -159,7 +159,7 @@ export default {
   height: 100%;
   width: 100%;
   overflow-y: auto;
-  & /deep/ .proposal-warpper .list-item {
+  & /deep/ .proposal-warpper .list-item:first-child {
     margin-top: 0;
   }
 }

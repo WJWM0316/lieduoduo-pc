@@ -258,6 +258,10 @@ export default {
     & /deep/ .drop-down-wrapper {
       margin-top: 16px;
     }
+    & /deep/ .drop-down-header {
+      line-height: inherit;
+      vertical-align: top;
+    }
   }
   .search-location::after {
     content: "";

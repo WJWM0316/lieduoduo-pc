@@ -1,7 +1,7 @@
 <template>
   <div class="block-overflow">
-    <p class="introduction-text" ref="text" :class="{ introduction_viewAll: viewAllText }">{{ text }}</p>
-    <el-button v-if="isIntroductionButtom" type="text" class="introduction-left-buttom" @click="viewAll">{{ this.viewAllText ? '收起' :'查看全部'}}</el-button>
+    <p class="introduction-text" ref="text" :class="{ introduction_viewAll: viewAllText }">{{ text }}<el-button v-if="isIntroductionButtom" type="text" class="introduction-left-buttom" :class="{ buttom_viewAll: viewAllText }" @click="viewAll">{{ this.viewAllText ? '收起' :'展开'}}</el-button></p>
+
   </div>
 </template>
 <script>
@@ -42,7 +42,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .block-overflow {
-  position: relative;
+
 }
 .introduction-text{
   font-size: 14px;
@@ -54,14 +54,21 @@ export default {
   white-space: pre-wrap;
   word-wrap: break-word;
   word-break: break-all;
+  position: relative;
 }
 .introduction-left-buttom{
-  background: #ffffff;
+  background: url('../../../assets/images/cover.png');
+  line-height: 26px;
+  padding: 0 0 0 72px;
   position: absolute;
-  right: 12px;
-  bottom: -5px;
+  right: 0;
+  bottom: 0;
 }
 .introduction_viewAll{
+  overflow: visible;
   max-height: none;
+}
+.buttom_viewAll{
+  bottom: -26px;
 }
 </style>

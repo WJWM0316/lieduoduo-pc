@@ -14,7 +14,7 @@
           }"
           @on-select="changeLocation">
           <span class="iconfont icon-dizhi" />
-          <span class="change-address">{{addressName}}【切换城市】</span>
+          <span class="change-address"><b>{{addressName}}</b>【切换城市】</span>
         </drop-down>
       </div>
       <ul class="header-nav">
@@ -227,6 +227,10 @@ $header-height-1: $page-header-height;
   span:first-child {
     color: $nav-color-hover;
     padding-right: 16px;
+  }
+  .change-address b{
+    font-weight: normal;
+    color: $nav-color-hover;
   }
   span.iconfont {
     font-size: 14px;
