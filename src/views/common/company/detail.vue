@@ -4,7 +4,9 @@
       <div class="inner inner_ScrollY">
         <div class="header-left">
           <div class="header-left-top" v-if="companyInformation.logoInfo">
-            <img class="company-logo logo_ScrollY" :src = companyInformation.logoInfo.middleUrl />
+            <div>
+              <img class="company-logo logo_ScrollY" :src = companyInformation.logoInfo.middleUrl />
+            </div>
             <div class="header-left-text text_ScrollY">
               <p class="header-companyShortname companyShortname_ScrollY">{{companyInformation.companyShortname}}</p>
               <p class="header-financingInfo financingInfo_ScrollY">{{companyInformation.financingInfo}}·{{companyInformation.employeesInfo}}·{{companyInformation.industry}}</p>
@@ -543,6 +545,11 @@ to {top:0px;}
 
 
         .hot-positionName{
+          display: inline-block;
+          width: 190px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
           font-size: 16px;
           font-weight: 500;
           color: $font-color-3;
