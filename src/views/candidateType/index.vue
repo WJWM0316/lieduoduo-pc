@@ -155,11 +155,11 @@
         background
         v-if="form.total > 20"
         layout="prev, pager, next, slot"
-        :total="form.total"
-        :page-size="form.count"
+        :total="Number(form.total)"
+        :page-size="Number(form.count)"
         prev-text="上一页"
         next-text="下一页"
-        :current-page="form.page"
+        :current-page="Number(form.page)"
         @current-change="handleCurrentPageChange"
       >
         <span class="total">共{{ Math.ceil(form.totalPage) }}页, {{form.total}}条记录</span>
@@ -569,7 +569,7 @@
           </div>
           <div class="item" v-if="jobhunterInfo.positionName">
             <div class="icon">
-              <i class="iconfont icon-zhiwei"></i>
+              <i class="iconfont icon-zhiwei1"></i>
             </div>
             <div class="text">{{jobhunterInfo.positionName}}</div>
           </div>

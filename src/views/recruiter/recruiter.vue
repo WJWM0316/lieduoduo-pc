@@ -165,17 +165,14 @@ import {
   name: 'lighthouse-list',
   methods: {},
   computed: {},
-  created () {
-    this.init()
-  },
-  /* watch: {
+  watch: {
     '$route': {
       handler () {
         this.init()
       },
       immediate: true
     }
-  }, */
+  },
   components: { MessageDiggle }
 })
 export default class CourseList extends Vue {
@@ -381,21 +378,21 @@ export default class CourseList extends Vue {
   // 开放职位
   openposition (id) {
     openPositionApi({ id: id })
-    .then(() => {
-      this.$message({
-        type: 'success',
-        message: '成功!'
+      .then(() => {
+        this.$message({
+          type: 'success',
+          message: '成功!'
+        })
+        this.pop = {
+          isShow: false,
+          type: ''
+        }
+        this.getStatusTotal()
+        this.getPositionList()
       })
-      this.pop = {
-        isShow: false,
-        type: ''
-      }
-      this.getStatusTotal()
-      this.getPositionList()
-    })
-    .catch(e => {
-      this.$message.error(e.data.msg)
-    })
+      .catch(e => {
+        this.$message.error(e.data.msg)
+      })
   }
 
   msgcancel () {

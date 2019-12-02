@@ -216,11 +216,11 @@
         background
         v-if="form.total > 20"
         layout="prev, pager, next, slot"
-        :total="form.total"
-        :page-size="form.count"
+        :total="Number(form.total)"
+        :page-size="Number(form.count)"
         prev-text="上一页"
         next-text="下一页"
-        :current-page="form.page"
+        :current-page="Number(form.page)"
         @current-change="handleCurrentPageChange"
       >
         <span class="total">共{{ Math.ceil(form.totalPage) }}页, {{form.total}}条记录</span>
@@ -420,7 +420,7 @@
               <p class="title">更多介绍</p>
               <div class="workList">
                 <pre v-if="nowResumeMsg.moreIntroduce.introduce">{{nowResumeMsg.moreIntroduce.introduce}}</pre>
-               <div class="imgList">
+               <div class="imgList" v-if="nowResumeMsg.moreIntroduce.imgs.length > 0">
                   <div style="position:relative" :key="index" v-for="(item, index) in nowResumeMsg.moreIntroduce.imgs">
                   <img
                     :src="item.url"
@@ -633,7 +633,7 @@
           </div>
           <div class="item" v-if="jobhunterInfo.positionName">
             <div class="icon">
-              <i class="iconfont icon-zhiwei"></i>
+              <i class="iconfont icon-zhiwei1"></i>
             </div>
             <div class="text">{{jobhunterInfo.positionName}}</div>
           </div>
@@ -952,6 +952,7 @@ export default class CourseList extends Vue {
   form = {
     page: 1,
     count: 20,
+    total: 0,
     status: 0,
     position_type_id: '', // 状态
     created_start_time: null,
