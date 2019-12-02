@@ -202,7 +202,7 @@ export default class companyDetail extends Vue {
         item.siteUrl = item.siteUrl.indexOf('http') !== -1 ? item.siteUrl : 'http://' + item.siteUrl
       })
       this.$nextTick(() => {
-        this.$refs.blockOverflow.updateTextHeigth()
+        if (this.$refs.blockOverflow) this.$refs.blockOverflow.updateTextHeigth()
       })
     })
   }
@@ -689,25 +689,26 @@ to {top:0px;}
         .recruitmentTeam-title{
           @extend %introductionTitle;
         }
-        .recruitmentTeam-mian{
-          margin-top: -13px;
-        }
         .recruitmentTeam-box{
-          height: 99px;
-          display: flex;
+					margin-bottom: 10px;
+          height: 60px;
+					padding-left: 74px;
+					position: relative;
           @include flex-v-center;
           img{
             width: 60px;
             height: 60px;
             border-radius: 50%;
+						top: 0;
+						left: 0;
+						position: absolute;
           }
           .recruitmentTeam-text{
             height: 44px;
-            margin-left: 14px;
             font-weight: 400;
             font-size: 14px;
             line-height: 20px;
-
+						width: 100%;
             .recruitmentTeam-text-top{
               color: $font-color-3;
             }
