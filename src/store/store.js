@@ -109,32 +109,32 @@ export default new Vuex.Store({
       state.guideQrcodePop = data
     },
     switchIdentity (state, data) {
-			let todo = () => {
-				if (data.toSiutchRole === 1) {
-					if (state.roleInfos.isJobhunter) {
+      let todo = () => {
+        if (data.toSiutchRole === 1) {
+          if (state.roleInfos.isJobhunter) {
 					  router.replace({ path: '/index' })
-					} else {
+          } else {
 					  router.replace({ path: '/createUser' })
-					}
-				} else {
-					if (state.roleInfos.isRecruiter) {
+          }
+        } else {
+          if (state.roleInfos.isRecruiter) {
 					  router.replace({ path: '/candidate' })
-					} else {
+          } else {
 					  router.replace({ path: '/register' })
-					}
-				}
-			}
-			if (data.toSiutchRole) {
-				// 当前身份 跟 需要切换的身份一致，则不需要切换身份
-				if (data.toSiutchRole === state.userIdentity) {
-					todo()
-				} else {
-					switchRoleApi().then(res => {
+          }
+        }
+      }
+      if (data.toSiutchRole) {
+        // 当前身份 跟 需要切换的身份一致，则不需要切换身份
+        if (data.toSiutchRole === state.userIdentity) {
+          todo()
+        } else {
+          switchRoleApi().then(res => {
 					  state.userIdentity = res.data.data.curInUseRole
 					  todo()
-					})
-				}
-			}
+          })
+        }
+      }
     }
   },
   // 借助actions的手去 执行 mutations ， 通过  this.$store.dispatch 的方式调用
@@ -152,7 +152,7 @@ export default new Vuex.Store({
         Vue.message.error('手机号码格式不正确')
         return
       }
-      return new Promise((resolve, reject) => {
+      return new Promise(async (resolve, reject) => {
         loginPutInApipc(data).then(res => {
           let loginData = {
             ...res.data.data,
@@ -201,21 +201,59 @@ export default new Vuex.Store({
         })
       })
     },
+    scanLogin (store, loginData) {
+      store.commit('LOGINCALLBACK', loginData)
+      // 获取用户角色信息
+      const { state } = store
+      getUserRoleInfoApi().then(({ data }) => {
+        const result = data.data || {}
+        store.commit('setRoleInfos', result)
+        // 引导创建用户
+        if (state.userIdentity === 1 && !result.isJobhunter) {
+          router.replace({ path: '/createUser' })
+          return
+        }
+        if (state.userIdentity === 2 && !result.isRecruiter) {
+          // store.commit('setCreateRecruiter', true)
+          router.replace({ path: '/register' })
+          return
+        }
 
+        if (loginData.refresh) {
+          window.location.reload()
+        } else if (loginData.needBack) {
+          router.go(-1)
+        } else {
+          let userIdentity = state.userIdentity
+          userIdentity === 1 ? router.replace({ path: '/index' }) : router.replace({ path: '/candidate' })
+        }
+
+        // 如果是求职者
+        if (state.userIdentity === 1 && result.isJobhunter) {
+          // 获取简历信息
+          store.dispatch('getMyResume')
+        }
+        if (result.isRecruiter) {
+          perfectauthDetail().then((res) => {
+            store.commit('setRecruiterinfo', res.data.data)
+          })
+        }
+      })
+    },
     logoutApi (store, data) {
       return logoutApi()
         .then(res => {
           store.commit('LOGOUT', data)
-					// 在C端页面退登
-					if (data.curPage === 1) {
-						if (router.history.current.name === 'cresume') {
-							router.replace({ path: '/index' })
-						} else {
-							window.location.href = window.location.href
-						}
-					} else {
-						router.replace({ path: '/login', query: { type: 'msgLogin' } })
-					}
+          // 在C端页面退登
+          if (data.curPage === 1) {
+            if (router.history.current.name === 'cresume') {
+              router.replace({ path: '/index' })
+            } else {
+              window.location.href = window.location.href
+            }
+          } else {
+            router.replace({ path: '/login', query: { type: 'msgLogin' } })
+          }
           return res
         })
     },

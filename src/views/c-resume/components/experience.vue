@@ -73,7 +73,7 @@
                 :valid-filter="true"
                 valid-filter-text="请选择职位类别"
                 :limit="3"
-                :default-value="form.technicalLabelIds"
+                :default-value="labelIds"
                 :filter="form.positionTopid"
                 title="技能标签"
                 type="position"
@@ -117,6 +117,9 @@ export default {
   computed: {
     list () {
       return this.resume.careers || []
+    },
+    labelIds () {
+      return this.labels.map(val => val.labelId)
     }
   },
   data () {
