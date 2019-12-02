@@ -96,12 +96,13 @@
                 公司环境
               </p>
               <div class="surroundings-container">
-                  <el-carousel indicator-position="none" height="147px">
-                    <el-carousel-item v-for="(item, index) in companyInformation.albumInfo" :key="index">
-                      <div class="el-carousel-surroundings" :style="'background: url(' + item.middleUrl + ')'">
-                      </div>
-                    </el-carousel-item>
-                  </el-carousel>
+                <el-carousel v-if="companyInformation.albumInfo.length > 1" indicator-position="none" height="147px">
+                  <el-carousel-item v-for="(item, index) in companyInformation.albumInfo" :key="index">
+                    <div class="el-carousel-surroundings" :style="'background: url(' + item.middleUrl + ')'">
+                    </div>
+                  </el-carousel-item>
+                </el-carousel>
+                <div  v-if="companyInformation.albumInfo.length === 1" class="surroundings-container" :style="'background: url(' + companyInformation.albumInfo[0].middleUrl + ')'"></div>
               </div>
             </div>
             <div class="recruitmentTeam">
