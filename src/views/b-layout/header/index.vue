@@ -96,17 +96,17 @@ $header-height-1: $page-b-header-height;
   @include flex-v-center;
   justify-content: flex-end;
   padding: 0 20px;
-  // height: 60px;
-  // background: #fff;
-  // text-align: right;
-  // font-size: 14px;
-  // -webkit-box-shadow: 0 1px 0 0 rgba(29,45,53,.06);
-  // box-shadow: 0 1px 0 0 rgba(29,45,53,.06);
-  // position: fixed;
-  // top: 0;
-  // left: 0;
-  // right: 0;
-  // z-index: 3;
+  height: 60px;
+  background: #fff;
+  text-align: right;
+  font-size: 14px;
+  -webkit-box-shadow: 0 1px 0 0 rgba(29,45,53,.06);
+  box-shadow: 0 1px 0 0 rgba(29,45,53,.06);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
 }
 .page-header {
   height: $header-height-1;

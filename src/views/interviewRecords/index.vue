@@ -601,6 +601,7 @@
                 </div>
                 <div class="status-text2" v-show="jobhunterInfo.status === 59">
                   <p class="p1">候选人没来</p>
+                  <p class="p2">挥别错的才能和对的相逢~</p>
                 </div>
               </div>
               </div>
@@ -616,7 +617,7 @@
         </ul>
           <el-button type="text" class="add_time" v-if="model.dateLists.length < 3">
           <i class="iconfont icon-tianjiashijian bgcolor" style="font-size:12px"></i>
-          <span :style="'margin-left:8px;line-height:14px'">添加时间</span>
+          <span :style="'margin-left:16px;line-height:14px'">添加时间</span>
           <el-date-picker
             v-model="form.date1"
             type="datetime"
@@ -732,7 +733,11 @@ export default {
   },
   watch: {
     'pop.isShow': function (n) {
+      if (n) {
+        document.body.style.overflow = 'hidden'
+      }
       if (!n) {
+        document.body.style.overflow = 'unset'
         this.hasonload = false
       }
     }
@@ -2297,7 +2302,7 @@ export default {
               background:rgba(255,255,255,1);
               position: absolute;
               top: 26px;
-              left: -179px;
+              left: -137px;
               z-index: 1;
               border-radius: 4px;
               box-shadow:0px 0px 26px 0px rgba(22,39,77,0.12);
@@ -2503,7 +2508,7 @@ export default {
               margin-left: 23px;
               font-size: 14px;
               color: #42334d;
-              margin-bottom: 10px;
+              margin-bottom: 18px;
               font-weight: 700;
             }
             .noUpload {
@@ -2515,7 +2520,7 @@ export default {
               margin-left: 23px;
               color: #5C565D;
               font-size: 14px;
-              margin-bottom: 18px;
+              margin-bottom: 14px;
               i{
                 color: #BCBCBC;
                 font-size: 14px;
@@ -2536,7 +2541,7 @@ export default {
               font-size: 14px;
               font-weight: 700;
               color: #42334d;
-              margin-bottom: 10px;
+              margin-bottom: 18px;
             }
             .Contact {
               width: 100px;
@@ -2638,27 +2643,27 @@ export default {
                 padding-right: 28px;
                 .basemsg {
                   display: flex;
-                  justify-content: space-between;
+                  // justify-content: space-between;
                   align-items: baseline;
                   .realName {
                     font-size: 22px;
                     font-weight: 700;
                     color: #42334d;
-                    width: 153px;
+                    max-width: 153px;
                     white-space: nowrap;
+                    margin-right: 24px;
                     overflow: hidden;
                     text-overflow: ellipsis;
                     display: inline-block;
                   }
                   .lebalList {
                     display: inline-block;
-                    margin-left: 20px;
                     overflow: hidden;
                     text-align: right;
                     height: 19px;
                     .lebalItem {
                       display: inline-block;
-                      margin-left: 24px;
+                      margin-right: 24px;
                       height: 23px;
                       overflow: 19px;
                       &:nth-child(1) {
@@ -2842,6 +2847,7 @@ export default {
             justify-content: flex-start;
             align-items: flex-start;
             flex-wrap: wrap;
+            margin-top: 10px;
             padding-bottom: 160px;
             img {
               width: 86px;
@@ -3157,10 +3163,11 @@ export default {
                 width: 262px;
                 height: 38px;
                 line-height: 38px;
-                color: #606266;
+                color: #333;
                 overflow: hidden;
                 padding-left: 16px;
-                border:1px solid rgba(235,235,235,1);
+                border: 1px solid #DCDFE6;
+                border-radius: 4px;
               }
               .el-select{
                 width: 100%;
@@ -3429,6 +3436,7 @@ export default {
             font-size:14px;
             color:rgba(92,86,93,1);
             text-align: center;
+            margin-bottom: 30px;
           }
         }
         .intertime{
@@ -3439,14 +3447,18 @@ export default {
             font-size:14px;
             font-weight: bold;
           }
+          .time_list{
+            margin-bottom: 6px;
+          }
           .time_row{
-            height: 30px;
-            line-height: 30px;
+             margin-top: 16px;
             cursor: pointer;
             position: relative;
+            font-size: 14px;
+            color: #5C565D;
             i{
               margin-right: 10px;
-              color: red;
+              color: #ED5C5C;
             }
             .circle{
               border: 1px solid #dcdfe6;

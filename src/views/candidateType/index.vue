@@ -176,7 +176,7 @@
           </div>
       </div>
     </div>
-    <div class="pop" v-if="pop.isShow" @click="closeMsg($event)">
+    <div class="pop" v-show="pop.isShow" @click="closeMsg($event)">
       <div class="xcxPicBox" v-if="pop.type==='clickPic'">
         <img class="clo" src="~IMAGES/clo.png">
         <div class="main_tit">查看简历详情</div>
@@ -611,7 +611,7 @@
         </ul>
           <el-button type="text" class="add_time" v-if="model.dateLists.length < 3">
           <i class="iconfont icon-tianjiashijian bgcolor" style="font-size:12px"></i>
-          <span :style="'margin-left:8px;line-height:14px'">添加时间</span>
+          <span :style="'margin-left:16px;line-height:14px'">添加时间</span>
           <el-date-picker
             v-model="form.date1"
             type="datetime"
@@ -765,7 +765,11 @@ import { applyInterviewApi } from 'API/interview'
         immediate: true
       },
       'pop.isShow': function (n) {
+        if (n) {
+          document.body.style.overflow = 'hidden'
+        }
         if (!n) {
+          document.body.style.overflow = 'unset'
           this.hasonload = false
         }
       }

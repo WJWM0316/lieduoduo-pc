@@ -136,15 +136,14 @@
                 <Picture
                 :value.sync="authForm.business_license_url"
                 attach-type="img"
-                class="updataimg oneimg"
                 @before="businessLoading = true"
                 @fail="businessLoading = false"
                 @change="handleChangeBusiness"
                 v-loading="businessLoading">
-                <div class="updataimg oneimg" v-if="!authForm.business_license_url">
+                <div v-if="!authForm.business_license_url">
                   <img src="@/assets/images/business.png" alt="">
                 </div>
-                <div class="updataimg oneimg" v-else>
+                <div v-else>
                 <img :src="authForm.business_license_url" alt="">
               </div>
               </Picture>
@@ -159,15 +158,14 @@
                 <Picture
                 :value.sync="authForm.on_job_url"
                 attach-type="img"
-                class="updataimg"
                 @before="onjobLoading = true"
                 @fail="onjobLoading = false"
                 @change="handleChangeOnjob"
                 v-loading="onjobLoading">
-                <div class="updataimg" v-if="!authForm.on_job_url">
+                <div v-if="!authForm.on_job_url">
                   <img src="@/assets/images/identitycard.png" alt="">
                 </div>
-                <div class="updataimg" v-else>
+                <div v-else>
                 <img :src="authForm.on_job_url" alt="">
               </div>
               </Picture>
@@ -1265,22 +1263,12 @@ export default {
             width:172px;
             height:120px;
             cursor: pointer;
-            border-radius:4px;
-            .updataimg{
-              float: left;
-              width:172px;
-              margin-top: 26px;
-              height:120px;
-              overflow: hidden;
-              cursor: pointer;
-              border-radius:4px;
-            }
-            .oneimg{
-              margin-top: 17px;
-            }
+            justify-content: center;
+            align-items: center;
+            display: flex;
             img{
-              max-width: 100%;
-              max-height: 100%;
+              max-width: 172px;
+              max-height: 120px;
             }
           }
           .con-r{
@@ -1319,6 +1307,7 @@ export default {
       .logo{
         width:64px;
         height:64px;
+        overflow: hidden;
         border-radius:4px;
         cursor: pointer;
         img{
