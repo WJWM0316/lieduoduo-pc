@@ -41,8 +41,6 @@ export const getRecruiterQrcodeApi = (data) => {
   })
 }
 
-
-
 // 生成自定义二维码
 export const getMyQrcodeApi = (data) => {
   return request({

@@ -11,7 +11,7 @@
             :to="{ path: item.path}"
             v-if="item.meta && item.meta.useNav"
             :key="index">
-            <i :class="item.meta.icon"></i>
+            <i :class="[item.meta.icon, item.title === '面试日程' ? 'kk' : '']"></i>
             <span>{{ item.title }}</span>
           </router-link>
         </template>
@@ -34,10 +34,13 @@ $company-msg-height: 60px;
   width: $page-b-side-width;
   background: $page-b-bg-color;
   color: #fff;
-  height: 100vh;
-  float: left;
-  position: relative;
   z-index: 10;
+  width: 200px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 1000;
 }
 .logo {
   height: $logo-wrapper-height;
@@ -67,6 +70,9 @@ $company-msg-height: 60px;
     }
     i,span {
       vertical-align: middle;
+    }
+    .kk{
+      font-size: 12px;
     }
   }
   li:hover {

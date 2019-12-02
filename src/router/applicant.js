@@ -8,7 +8,7 @@ const applicant = [
       {
         path: '',
         name: 'index',
-        component: resolve => require(['../views/index'], resolve)
+        component: resolve => require(['../views/c-index'], resolve)
       }
     ]
   },
@@ -19,8 +19,8 @@ const applicant = [
     children: [
       {
         path: '',
-        name: 'position',
-        component: resolve => require(['../views/position'], resolve)
+        name: 'position', // 公司 职位搜索
+        component: resolve => require(['../views/c-position'], resolve)
       },
       {
         path: 'details',
@@ -31,6 +31,18 @@ const applicant = [
     ]
   },
   {
+    path: '/cresume',
+    title: '简历',
+    component: Layout,
+    children: [
+      {
+        path: '',
+        name: 'cresume',
+        component: resolve => require(['../views/c-resume/index.vue'], resolve)
+      }
+    ]
+  },
+  /* {
     path: '/applyIndex',
     title: '简历上传',
     component: Layout,
@@ -41,7 +53,7 @@ const applicant = [
         component: resolve => require(['../views/apply/apply.vue'], resolve)
       }
     ]
-  },
+  }, */
   {
     path: '/createUser',
     name: 'createUser',

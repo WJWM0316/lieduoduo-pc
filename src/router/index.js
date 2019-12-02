@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+import company from './company.js'
 import applicant from './applicant.js'
 import recruiter from './recruiter.js'
 import common from './common.js'
@@ -16,16 +17,20 @@ let routes = [
   ...recruiter,
   ...common,
   ...other,
-  ...login
+  ...login,
+  ...company
 ]
 Vue.use(Router)
-
+// const originalPush = Router.prototype.push
+// Router.prototype.push = function push (location) {
+//   return originalPush.call(this, location).catch(err => err)
+// }
 const router = new Router({
   mode: 'history',
-  routes,
-  scrollBehavior (to, from, savedPosition) {
-    return savedPosition || { x: 0, y: 0 }
-  }
+  routes
+  // scrollBehavior (to, from, savedPosition) {
+  //   return savedPosition || { x: 0, y: 0 }
+  // }
 })
 let getUserInfo = () => {
   return getUserInfosApi().then(res => {
@@ -48,4 +53,5 @@ router.beforeEach((to, from, next) => {
   }
   next(true)
 })
+
 export default router

@@ -36,7 +36,6 @@ import Component from 'vue-class-component'
 })
 export default class SearchBar extends Vue {
   keyword = ''
-
   /**
    * 搜索
    */

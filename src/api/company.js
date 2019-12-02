@@ -68,7 +68,7 @@ export const identityFailApi = (id, data) => request({
 })
 /* 填写公司信息 */
 export const setCompanyInfoApi = data => request({
-  url: `/company`,
+  url: '/company',
   method: 'post',
   params: data,
   config: { host: 'zhaopin' }
@@ -76,7 +76,7 @@ export const setCompanyInfoApi = data => request({
 
 /* 填写人员认证信息 */
 export const setIdentityInfoApi = data => request({
-  url: `/identity`,
+  url: '/identity',
   method: 'post',
   params: data,
   config: { host: 'zhaopin' }
@@ -108,7 +108,7 @@ export const deleteCompanyAdressApi = data => request({
 
 /* 添加地址 */
 export const addCompanyAdressApi = data => request({
-  url: `/company/position/address`,
+  url: '/company/position/address',
   method: 'put',
   params: data,
   config: { host: 'zhaopin' }
@@ -116,14 +116,14 @@ export const addCompanyAdressApi = data => request({
 
 /* 分页获取地址列表 */
 export const getAdressListApi = data => request({
-  url: `/company/position/simplepage/addresses`,
+  url: '/company/position/simplepage/addresses',
   method: 'get',
   params: data,
   config: { host: 'zhaopin' }
 })
 /* 获取录入公司列表 */
 export const getCompanyListApi = data => request({
-  url: `/company/list`,
+  url: '/company/list',
   method: 'get',
   params: data,
   config: { host: 'zhaopin' }
@@ -186,8 +186,87 @@ export const delCompanyAddressApi = (id, data) => request({
 
 /* 城市标签 */
 export const getCityApi = (data) => request({
-  url: `/area?level=3`,
+  url: '/area?level=3',
   method: 'get',
   params: data,
   config: { host: 'zhaopin' }
+})
+
+/* 获取公司的热招职位 */
+export const getCompanyHotApi = (data) => request({
+  url: `/company/web/hot_positions/${data.vkey}`,
+  method: 'get',
+  params: data,
+  config: { host: 'qiuzhi' }
+})
+
+/* 获取公司信息 */
+export const getCompanyApi = (data) => request({
+  url: `/company/${data.id}`,
+  method: 'get',
+  params: data,
+  config: { host: 'qiuzhi' }
+})
+
+/* 获取热门公司类型 */
+export const getHotCompanyTypes = (data) => request({
+  url: '/hotCompany/type/lists',
+  method: 'get',
+  params: data,
+  config: { host: 'qiuzhi' }
+})
+
+/* 获取热门公司 */
+export const getHotCompanys = (data) => request({
+  url: '/hotCompany/lists',
+  method: 'get',
+  params: data,
+  config: { host: 'qiuzhi' }
+})
+
+/* 公司搜索 */
+export const getSearchCompanys = data => request({
+  url: '/companies/sch',
+  method: 'get',
+  params: data,
+  config: { host: 'qiuzhi' }
+})
+
+/* 获取公司招聘团队 */
+export const getCompanysTeamApi = (data) => request({
+  url: `/company/web/recruiters/${data.vkey}`,
+  method: 'get',
+  params: data,
+  config: { host: 'qiuzhi' }
+})
+
+/* 获取公司职位类型 */
+export const getCompanysPositionApi = (data) => request({
+  url: `/company/web/onlinePositionType/${data.vkey}`,
+  method: 'get',
+  params: data,
+  config: { host: 'qiuzhi' }
+})
+
+/* 获取公司职位类型列表 */
+export const getCompanysPositionListApi = (data) => request({
+  url: '/position/list',
+  method: 'get',
+  params: data,
+  config: { host: 'qiuzhi' }
+})
+/* 酷公司logo列表 */
+export const getLogoListsListsApi = (data) => request({
+  url: '/surfaceRapidlyCompany/logoLists',
+  method: 'get',
+  params: data,
+  config: { host: 'qiuzhi' }
+})
+
+/* 获取公司信息 */
+export const getVkeyCompanyApi = (data) => request({
+  url: `/company/detail/${data.vkey}`,
+  method: 'get',
+  params: data,
+  config: { host: 'qiuzhi' }
 })

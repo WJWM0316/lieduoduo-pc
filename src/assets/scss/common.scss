@@ -1,0 +1,17 @@
+/** 滚动条样式 */
+.warpper-scroll::-webkit-scrollbar {
+  width: 4px;
+  height: 10px;
+  background-clip: padding-box;
+}
+.warpper-scroll::-webkit-scrollbar-thumb {
+  background-color: $scroll-bar-color;
+  border-radius: 4px;
+}
+
+/** 模拟表单的占位符样式 */
+.input-placeholder-span {
+  color: $--color-text-placeholder !important;
+  font-size: 14px;
+}
+

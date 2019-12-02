@@ -76,18 +76,18 @@
 
 </template>
 <script>
-  import Vue from 'vue'
-  import Component from 'vue-class-component'
-  import {schoolNameReg, majorNameReg} from '@/util/fieldRegular.js'
-  import {
-    getDegreeAllListsApi,
-    getResumeThirdStepApi,
-    setResumeThirdApi
-  } from '@/api/putIn'
+import Vue from 'vue'
+import Component from 'vue-class-component'
+import { schoolNameReg, majorNameReg } from '@/util/fieldRegular.js'
+import {
+  getDegreeAllListsApi,
+  getResumeThirdStepApi,
+  setResumeThirdApi
+} from '@/api/putIn'
   @Component({
     name: 'resumeThirdPost'
   })
-  export default class resumeThirdPost extends Vue {
+export default class resumeThirdPost extends Vue {
     pickerOptions = {
       shortcuts: [
         {
@@ -106,12 +106,12 @@
       educations: []
     }
     degreeAllLists = []
-    getDegreeAllLists() {
-      return getDegreeAllListsApi().then(res => this.degreeAllLists = res.data.data)
+    getDegreeAllLists () {
+      return getDegreeAllListsApi().then(res => (this.degreeAllLists = res.data.data))
     }
 
     // 返回上一步
-    lastStep() {
+    lastStep () {
       this.$parent.step--
     }
 
@@ -124,12 +124,12 @@
         let educations = res.data.data.educations
         let internships = res.data.data.internships
         educations.map(field => {
-          if(field.startTime) {
+          if (field.startTime) {
             field.startTime = new Date(field.startTime * 1000)
           } else {
             field.startTime = new Date()
           }
-          if(field.endTime) {
+          if (field.endTime) {
             field.endTime = new Date(field.endTime * 1000)
           } else {
             field.endTime = new Date()
@@ -137,23 +137,23 @@
         })
         this.internships = internships
         this.educations = educations
-        if(educations.length) {
+        if (educations.length) {
           this.form.school = educations[0].school
           this.form.major = educations[0].major
           this.form.degree = educations[0].degree
           this.form.startTime = educations[0].startTime
-          this.form.endTime = educations[0].endTime 
+          this.form.endTime = educations[0].endTime
         }
       })
     }
 
-    submit() {
+    submit () {
       let item = {
         school: this.form.school,
         major: this.form.major,
         degree: this.form.degree,
-        startTime: Date.parse(this.form.startTime)/1000,
-        endTime: this.form.endTime ? Date.parse(this.form.endTime)/1000 : 0
+        startTime: Date.parse(this.form.startTime) / 1000,
+        endTime: this.form.endTime ? Date.parse(this.form.endTime) / 1000 : 0
       }
       let title = ''
       if (!item.school) {
@@ -187,26 +187,17 @@
         this.$parent.step++
       })
     }
-    focus(dom){
+    focus (dom) {
       document.querySelector(dom).className = 'el-icon-caret-bottom defalut-position icon_active'
     }
-    blur(dom) {
+    blur (dom) {
       document.querySelector(dom).className = 'el-icon-caret-bottom defalut-position'
     }
   }
 </script>
-<style lang="less">
+<style lang="scss">
 .el-input__suffix{
     display: none;
-  }
-  .defalut-position {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    right: 20px;
-    color: #CDCBCF;
-    transition: all ease .3s;
-    z-index: 222
   }
   .icon_active{
     transform: translateY(-50%) rotate(180deg);
@@ -235,15 +226,14 @@
     box-sizing: border-box;
     background:rgba(255,255,255,1);
     box-shadow:0px 3px 20px 2px rgba(0,0,0,0.09);
-    border-radius:16px;
+    border-radius: 8px;
     border:1px solid rgba(255,255,255,1);
     margin: 0 auto;
     position: relative;
     .formItem {
       height:46px;
-      background:rgba(251,249,252,0.8);
-      border-radius:23px;
-      border:1px solid rgba(242,237,245,1);
+      background:$bg-color-1;
+      border-radius: 4px;
       margin-bottom: 20px;
       position: relative;
       .el-input__inner {
@@ -307,9 +297,8 @@
       .start-time{
         width:176px;
         height:46px;
-        background:rgba(251,249,252,0.8);
-        border-radius:23px;
-        border:1px solid rgba(242,237,245,1);
+        background:$bg-color-1;
+        border-radius: 4px;
         display: inline-block;
         overflow: hidden;
         box-sizing: border-box;
@@ -320,9 +309,8 @@
       .end-time{
         width:176px;
         height:46px;
-        background:rgba(251,249,252,0.8);
-        border-radius:23px;
-        border:1px solid rgba(242,237,245,1);
+        background:$bg-color-1;
+        border-radius: 4px;
         display: inline-block;
         overflow: hidden;
         box-sizing: border-box;
@@ -337,50 +325,6 @@
         right: 0;
         bottom: 0;
         opacity: 0;
-      }
-    }
-    .btn-box{
-      height:50px;
-      line-height: 50px;
-      font-size:16px;
-      font-weight:700;
-      cursor: pointer;
-      position: relative;
-      margin-top: 48px;
-      .btn-pre{
-        width:126px;
-        height:50px;
-        background:rgba(255,255,255,1);
-        border-radius:100px 0px 0px 100px;
-        border:1px solid rgba(101,39,145,1);
-        box-sizing: border-box;
-        display: inline-block;
-        color:rgba(101,39,145,1);
-        vertical-align: middle;
-      }
-      .btn-confirm{
-        width:240px;
-        height:50px;
-        background:rgba(101,39,145,1);
-        border-radius:0px 25px 25px 0px;
-        box-sizing: border-box;
-        display: inline-block;
-        color: white;
-        vertical-align: middle;
-      }
-      .over-lay{
-        position: relative;
-        z-index: 2;
-      }
-      .mask{
-        width:360px;
-        height:50px;
-        border-radius:25px;
-        border:1px solid rgba(101,39,145,1);
-        position: absolute;
-        top: 4px;
-        z-index: 1;
-        left: 8px;
       }
     }
     input::-webkit-input-placeholder {

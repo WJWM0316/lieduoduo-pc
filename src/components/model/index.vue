@@ -16,7 +16,7 @@
       </div>
       <div class="pop_right">
         <div class="search-box">
-          <input type="text" v-model="keyword" />
+          <input type="text" @input="handleSearch" placeholder="请输入职位关键字" v-model="keyword" />
           <i class="el-icon-search" @click="handleSearch"></i>
         </div>
         <i class="el-icon-close" @click="close"></i>
@@ -28,7 +28,7 @@
             :key="index"
           >
             <i
-              class="el-icon-circle-plus-outline classily_icon"
+              class="iconfont icon-tianjia classily_icon"
               v-if="!item.active"
               style="color: #5C565D;"
             ></i>
@@ -49,15 +49,15 @@
   </div>
 </template>
 <script>
-import Component from "vue-class-component";
-import Vue from "vue";
+import Component from 'vue-class-component'
+import Vue from 'vue'
 
-import { getLabelPositionListApi } from "@/api/putIn";
+import { getLabelPositionListApi } from '@/api/putIn'
 
-import { searchPositionApi } from "@/api/position";
+import { searchPositionApi } from '@/api/position'
 
 @Component({
-  name: "MyModel",
+  name: 'MyModel',
   props: {
     // 是否显示
     show: {
@@ -71,50 +71,39 @@ import { searchPositionApi } from "@/api/position";
     }
   },
   model: {
-    prop: "show",
-    event: "close"
+    prop: 'show',
+    event: 'close'
   },
   watch: {
     show: {
-      handler(val) {
-        this.visiable = val;
+      handler (val) {
+        this.visiable = val
       },
       immediate: true
     },
     visiable: {
-      handler(visiable) {
+      handler (visiable) {
         if (!visiable) {
-          this.$emit("close");
+          this.$emit('close')
         }
       },
       immediate: true
     },
     data: {
-      handler(arr) {
+      handler (arr) {
         if (arr.length) {
-          let positionList = this.positionList;
-          positionList.map(
-            field =>
-              (field.active = field.labelId === this.data[0] ? true : false)
-          );
+          let positionList = this.positionList
+          positionList.map(field => (field.active = field.labelId === this.data[0]))
 
-          let secondPositionList = positionList.find(field => field.active)
-            .children;
-          secondPositionList.map(
-            field =>
-              (field.active = field.labelId === this.data[1] ? true : false)
-          );
+          let secondPositionList = positionList.find(field => field.active).children
+          secondPositionList.map(field => (field.active = field.labelId === this.data[1]))
 
-          let thirdPositionList = secondPositionList.find(field => field.active)
-            .children;
-          thirdPositionList.map(
-            field =>
-              (field.active = field.labelId === this.data[2] ? true : false)
-          );
+          let thirdPositionList = secondPositionList.find(field => field.active).children
+          thirdPositionList.map(field => (field.active = field.labelId === this.data[2]))
 
-          this.positionList = positionList;
-          this.secondPositionList = secondPositionList;
-          this.thirdPositionList = thirdPositionList;
+          this.positionList = positionList
+          this.secondPositionList = secondPositionList
+          this.thirdPositionList = thirdPositionList
         }
       },
       immediate: true
@@ -126,64 +115,64 @@ export default class MyModel extends Vue {
   secondPositionList = [];
   thirdPositionList = [];
   visiable = false;
-  keyword = "";
-  close() {
-    this.visiable = false;
+  keyword = '';
+  close () {
+    this.visiable = false
   }
-  getLabelPositionList() {
+  getLabelPositionList () {
     return getLabelPositionListApi().then(
       res => (this.positionList = res.data.data)
-    );
+    )
   }
-  selectPosition(index) {
+  selectPosition (index) {
     if (!this.positionList[index].active) {
       this.positionList.map((item, index2) => {
         if (index2 === index) {
-          item.active = true;
+          item.active = true
           item.children.map(item2 => {
-            item2.active = false;
-            this.thirdPositionList = item2.children;
-          });
-          this.secondPositionList = item.children;
+            item2.active = false
+            this.thirdPositionList = item2.children
+          })
+          this.secondPositionList = item.children
         } else {
-          item.active = false;
+          item.active = false
         }
-      });
+      })
     }
-    this.thirdPositionList = [];
+    this.thirdPositionList = []
   }
-  selectSecondPosition(index) {
+  selectSecondPosition (index) {
     if (!this.secondPositionList[index].active) {
       this.secondPositionList.map((item, index2) => {
         if (index2 === index) {
-          item.active = true;
-          this.thirdPositionList = item.children;
+          item.active = true
+          this.thirdPositionList = item.children
         } else {
-          item.active = false;
+          item.active = false
         }
-      });
+      })
     } else {
-      this.secondPositionList[index].active = false;
-      this.thirdPositionList = [];
+      this.secondPositionList[index].active = false
+      this.thirdPositionList = []
     }
   }
-  thirdSecondPosition(item) {
-    this.$emit("resultEvent", item);
-    this.keyword = "";
-    this.secondPositionList = [];
-    this.thirdPositionList = [];
+  thirdSecondPosition (item) {
+    this.$emit('resultEvent', item)
+    this.keyword = ''
+    this.secondPositionList = []
+    this.thirdPositionList = []
   }
-  handleSearch() {
-    if (!this.keyword.trim()) return;
+  handleSearch () {
+    if (!this.keyword.trim()) return
     searchPositionApi({
       name: this.keyword
     }).then(res => {
-      this.secondPositionList = [];
-      this.thirdPositionList = res.data.data;
-    });
+      this.secondPositionList = []
+      this.thirdPositionList = res.data.data
+    })
   }
-  mounted() {
-    this.getLabelPositionList();
+  mounted () {
+    this.getLabelPositionList()
     // alert()
   }
 }
@@ -293,6 +282,8 @@ export default class MyModel extends Vue {
     .classily_icon {
       display: inline-block;
       font-size: 16px;
+      color: #652791;
+      font-weight: bold;
     }
     .el-icon-close {
       position: absolute;

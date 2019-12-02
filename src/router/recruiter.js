@@ -1,32 +1,11 @@
 import Layout from '@/views/b-layout'
 const recruiter = [
   {
-    path: '/candidate',
-    title: '候选人',
-    component: Layout,
-    meta: {
-      // 一级路由需要设置， 是否在侧边栏显示
-      useNav: true,
-      // 当前所属的模块
-      module: 'recruiterResource',
-      icon: 'iconfont icon-zhaopintuandui'
-    },
-    children: [
-      {
-        path: '',
-        name: 'candidate',
-        component: resolve => require(['../views/candidate/candidate.vue'], resolve)
-      }
-    ]
-  },
-  {
     path: '/recruiterIndex',
     title: '职位管理',
     component: Layout,
     meta: {
-      // 一级路由需要设置， 是否在侧边栏显示
       useNav: true,
-      // 当前所属的模块
       module: 'recruiterResource',
       icon: 'iconfont icon-zhiwei'
     },
@@ -45,10 +24,88 @@ const recruiter = [
     ]
   },
   {
+    path: '/candidateType',
+    title: '候选人动态',
+    component: Layout,
+    meta: {
+      useNav: true,
+      module: 'recruiterResource',
+      icon: 'iconfont icon-houxuanrendongtai'
+    },
+    children: [
+      {
+        path: '',
+        name: 'candidatetype',
+        component: resolve => require(['../views/candidateType/index.vue'], resolve)
+      }
+    ]
+  },
+  {
+    path: '/candidate',
+    title: '候选人库',
+    component: Layout,
+    meta: {
+      useNav: true,
+      module: 'recruiterResource',
+      icon: 'iconfont icon-houxuanrenku'
+    },
+    children: [
+      {
+        path: '',
+        name: 'candidate',
+        component: resolve => require(['../views/candidate/index.vue'], resolve)
+      }
+    ]
+  },
+  {
+    path: '/interviewRecords',
+    title: '面试日程',
+    component: Layout,
+    meta: {
+      useNav: true,
+      module: 'recruiterResource',
+      icon: 'iconfont icon-mianshiguanli'
+    },
+    children: [
+      {
+        path: '',
+        name: 'interviewRecords',
+        component: resolve => require(['../views/interviewRecords/index.vue'], resolve)
+      }
+    ]
+  },
+  {
     path: '/issueRule',
     name: 'issueRule',
     title: '发布规则',
     component: resolve => require(['../views/issueRule/issueRule.vue'], resolve)
+  },
+  {
+    path: '/landingPage',
+    name: 'landingPage',
+    title: '简历',
+    component: resolve => require(['../views/landingPage/index.vue'], resolve)
+  },
+  {
+    path: '/register',
+    name: 'register',
+    title: '注册',
+    component: resolve => require(['../views/registerCompany/index.vue'], resolve)
+  },
+  {
+    path: '/perfectauth',
+    title: '身份认证',
+    component: Layout,
+    meta: {
+      useNav: false
+    },
+    children: [
+      {
+        path: '',
+        name: 'perfectauth',
+        component: resolve => require(['../views/perfectauth/index.vue'], resolve)
+      }
+    ]
   }
 ]
 export default recruiter

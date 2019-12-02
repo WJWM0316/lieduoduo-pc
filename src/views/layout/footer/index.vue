@@ -1,14 +1,12 @@
 <template>
-  <footer id="page-footer" class="page-footer" :class="{'isFixed': shouldFixed(), 'blackBg' : blackBg()}">
-    <section>
+  <footer id="page-footer" class="page-footer" :class="{'isFixed': shouldFixed()}">
+    <section :class="{'minn-footer': miniFooter}">
         <div class="footer_left">
           <div class="footer-header-title">
-             <img class="ft_logo" :src="blackBg() ? cdnPath + 'logo_white.png' : cdnPath + 'logo.png'" />
+             <img class="ft_logo" :src="cdnPath + 'logo.png'" />
           </div>
-          <p class="left_p">
-            <span><a class="black" href="https://www.lieduoduo.com/web/CompanyRelated" target="_blank">关于我们</a></span><span><a class="black" href="https://www.lieduoduo.com/userAgreement" target="_blank">用户协议</a></span>
-          </p>
-          <p class="gray"><a href="http://www.beian.miit.gov.cn" target="_blank">Copyright © 老虎科技 粤ICP备16060093号-4</a></p>
+          <p class="tips">BOSS直聘战略投资  高端人才招聘平台</p>
+          <p class="gray"><a href="http://www.beian.miit.gov.cn" target="_blank">Copyright ©老虎科技 粤ICP备16060093号-4</a></p>
         </div>
         <div class="footer_center">
             <div class="footer-header-title">
@@ -16,6 +14,11 @@
             </div>
             <p class="black center_p">全国咨询热线：400-065-5788</p>
             <p class="black">邮箱：kefu@lieduoduo.com</p>
+            <p class="center-bottom">
+              <span><a class="black" href="https://www.lieduoduo.com/web/CompanyRelated" target="_blank">关于我们</a></span>
+              <span>|</span>
+              <span><a class="black" href="https://www.lieduoduo.com/userAgreement" target="_blank">用户协议</a></span>
+            </p>
         </div>
         <div class="footer_right">
           <div class="right_code_blo">
@@ -53,91 +56,107 @@ export default PageFooter
     height: 100%;
     width: $page-width;
     display: flex;
-    flex-direction: row;
-    align-items: center;
+    align-items: flex-start;
     margin: 0 auto;
-    justify-content: space-between;
-    .footer_right {
-      display: flex;
-      flex-direction: row;
-      .right_code_blo {
-        margin-left: 40px;
-        text-align: center;
-        .code {
-          width:86px;
-          height:86px;
-          // background:#fff;
-          overflow: hidden;
-        }
+    height: 112px;
+    margin-top: 44px;
+  }
+  section.minn-footer {
+    width: 1000px;
+    .footer_center {
+      margin-left: 84px;
+    }
+  }
+  .footer_center {
+    flex:1;
+    margin-left: 155px;
+    .footer-header-title {
+      height: 24px;
+      padding-bottom: 9px;
+    }
+    .center-bottom {
+      font-size: 14px;
+      color: $title-color-2;
+      margin-top: 17px;
+      span + span {
+        cursor: pointer;
+        margin-left: 20px;
       }
-      p.black {
-        font-size: 14px;
-        color: $title-color-1;
-        margin-top: 0px;
-
+      span {
+        color: $border-color-1;
+      }
+      a {
+        color: $title-color-2;
+      }
+      a:hover {
+        color: $main-color-1;
       }
     }
-    .relation {
-      font-size:16px;
-      color:$font-color-1;
+    .center_p {
+      margin-bottom: 10px;
     }
-  }
-  .footer_left .left_p {
-    font-size: 14px;
-    color: $title-color-1;
-    margin-bottom: 12px;
-    span + span {
-      cursor: pointer;
-      margin-left: 44px;
+    p {
+      color: $title-color-3;
+      font-size: 13px;
     }
-    a {
-      color: $title-color-1;
-    }
-  }
-  .footer_center .center_p {
-    margin-bottom: 12px;
-  }
-  .footer_center p {
-    color: $font-color-10;
   }
   .footer-header-title {
-    height: 30px;
-    line-height: 30px;
-    margin-bottom: 20px;
+    position: relative;
     img {
       height: 100%;
       width: auto;
       margin: 0;
     }
     h3 {
+      font-size: 16px;
       color: $title-color-1;
     }
   }
-  .gray, .gray a {
-    font-size: 14px;
-    color: $font-color-10;
+  .footer_left {
+    .footer-header-title {
+      padding-bottom: 13px;
+      height: 36px;
+      margin-bottom: 9px;
+    }
+    .tips {
+      color: $title-color-1;
+      // font-weight: 300;
+      font-size: 12px;
+      margin-bottom: 20px;
+    }
   }
-  &.blackBg {
-    background: $font-color-3;
-    .footer_left {
-      .left_p {
-        color: #fff;
-        a {
-          color: #fff;
-        }
-      }
-      .gray {
-        color: #A29CA6;
+  .footer_right {
+    display: flex;
+    .right_code_blo {
+      text-align: center;
+      .code {
+        width:86px;
+        height:86px;
+        // background:#fff;
+        overflow: hidden;
       }
     }
-    .footer_center {
-      .relation {
-        color: #fff;
-      }
+    .right_code_blo + .right_code_blo  {
+      margin-left: 58px;
     }
-    .footer_right p.black{
-      color: #fff;
+    p.black {
+      font-size: 14px;
+      color: $title-color-1;
+      margin-top: 8px;
     }
+  }
+  .footer_left .footer-header-title::after {
+    content: "";
+    position: absolute;
+    width: 39px;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: rgba($bg-color-4, 0.27);
+  }
+  .gray, .gray a {
+    font-size: 12px;
+    color: $font-color-10;
   }
   &.isFixed {
     position: fixed;

@@ -76,6 +76,17 @@ class Util {
     return result
   }
 
+  downFile(content, filename) {
+    var eleLink = document.createElement('a')
+    eleLink.download = filename
+    eleLink.style.display = 'none'
+    var blob = new Blob([content]);
+    eleLink.href = URL.createObjectURL(blob)
+    document.body.appendChild(eleLink)
+    eleLink.click()
+    document.body.removeChild(eleLink)
+  }
+
   /**
    * 根据键值从源对象中抽取对象
    * @param {Object} source 源对象
@@ -256,20 +267,20 @@ class Util {
    * @returns {Object}
    */
   setTimeDown(endDateStr) {
-    if(endDateStr) endDateStr = endDateStr.replace(/-/g, '/')
+    if (endDateStr) endDateStr = endDateStr.replace(/-/g, '/')
     //结束时间
     var endDate = new Date(endDateStr)
     //当前时间
     var nowDate = new Date()
     //相差的总秒数
     var totalSeconds = parseInt((endDate - nowDate) / 1000);
-    if(!totalSeconds || totalSeconds <= 0) {
+    if (!totalSeconds || totalSeconds <= 0) {
       return {
         days: 0,
         hours: '00',
         mins: '00',
         seconds: '00'
-      } 
+      }
     }
     //天数
     var days = Math.floor(totalSeconds / (60 * 60 * 24));

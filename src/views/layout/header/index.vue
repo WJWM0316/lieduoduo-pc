@@ -13,8 +13,8 @@
             label: 'name'
           }"
           @on-select="changeLocation">
-          <span class="iconfont icon-dizhi">{{addressName}}</span>
-          <span class="change-address">【切换城市】</span>
+          <span class="iconfont icon-dizhi" />
+          <span class="change-address">{{addressName}}【切换城市】</span>
         </drop-down>
       </div>
       <ul class="header-nav">
@@ -44,8 +44,13 @@
       </ul>
       <div class="header-user-info">
         <div class="system">
-          <template v-if="userInfo.id">
-            <router-link tag="span" class="resume" to="/applyIndex">简历</router-link>
+          <template v-if="headerInfo.id">
+            <router-link tag="span" to="/cresume" class="resume" v-slot="{ href, isActive, isExactActive }">
+              <span
+                class="router-link"
+                :class="[isActive && 'router-link-active', isExactActive && 'router-link-exact-active']"
+                @click="handeToResume">简历</span>
+            </router-link>
           </template>
           <template v-else>
             <div>
@@ -55,12 +60,12 @@
           </template>
         </div>
         <div class="header-info">
-          <template v-if="userInfo.id">
+          <template v-if="headerInfo.id">
             <el-dropdown trigger="click" placement="bottom-start" @command="handleClick">
               <div>
-                <span class="user-name">{{userInfo.realname}}</span>
+                <span class="user-name">{{headerInfo.realname}}</span>
                 <div class="user-avatar">
-                  <img :src="userInfo.avatarInfo && userInfo.avatarInfo.smallUrl" alt="">
+                  <img :src="headerInfo.avatarInfo && headerInfo.avatarInfo.smallUrl" alt="">
                 </div>
               </div>
               <el-dropdown-menu slot="dropdown" class="header-dorpdown-wrapper">
@@ -94,7 +99,7 @@ export default {
       addressId: 0,
       navList: [
         { name: '首页', url: '/index', type: 'link' },
-        { name: '职位', url: '/position', type: 'link' },
+        { name: '公司', url: '/company', type: 'link' },
         { name: 'APP', url: app_qrcode, type: 'hover' },
         { name: '小程序', url: mp_qrcode, type: 'hover' },
         { name: '公众号', url: wx_qrcode, type: 'hover' }
@@ -105,27 +110,39 @@ export default {
     this.getHotAreas()
     this.addressId = this.$store.getters.cityId
   },
-  /* watch: {
-    '$store.state.userInfo': function (val) {}
-  }, */
   computed: {
     ...mapState({
       roleInfos: state => state.roleInfos,
-      userInfo: state => state.userInfo,
-      cityList: state => state.areaList
-    })
+      cityList: state => state.areaList,
+      cityId: state => state.cityId
+    }),
+    headerInfo () {
+      // 有加载简历就用简历里面的 没有就用登陆携带回来的信息
+      const { userInfo, resume: { myResume } } = this.$store.state
+      if (myResume.uid) {
+        return {
+          id: userInfo.id,
+          realname: myResume.name,
+          avatarInfo: myResume.avatar
+        }
+      }
+      return userInfo || {}
+    }
   },
   methods: {
     handleClick (e) {
       switch (e) {
         case 'logout':
-          this.$store.dispatch('logoutApi')
+          this.$store.dispatch('logoutApi', { curPage: 1 }).then(() => {
+            this.$store.commit('removeResume')
+          })
+
           break
         case 'usercenter':
           this.$router.push('/position')
           break
         case 'toggleIdentity':
-          this.$store.commit('switchIdentity')
+          this.$store.commit('switchIdentity', { toSiutchRole: 2 })
       }
     },
     handleToLogin (type) {
@@ -142,6 +159,14 @@ export default {
         path: item.url
       })
     },
+    // 是否可以进入简历页面
+    handeToResume () {
+      if (this.roleInfos.isJobhunter !== 1) {
+        this.$router.push({ path: '/createuser' })
+      } else {
+        this.$router.push({ path: '/cresume' })
+      }
+    },
     changeLocation (item) {
       this.addressName = item.name
       this.$store.commit('setCityId', item.areaId)
@@ -153,6 +178,13 @@ export default {
         this.$store.commit('setAreas', areas)
       })
     }
+  },
+  watch: {
+    cityId (value) {
+      if (!isNaN(value)) {
+        this.addressId = value
+      }
+    }
   }
 }
 </script>
@@ -160,8 +192,8 @@ export default {
 $header-height-1: $page-header-height;
 .page-header {
   height: $header-height-1;
-  background: $bg-color-2;
-   min-width: $page-width;
+  background: $nav-color-bg-color;
+  min-width: $page-width;
   &.fixed {
     position: fixed;
     top: 0;
@@ -183,7 +215,7 @@ $header-height-1: $page-header-height;
   font-size: 20px;
   color: #fff;
   height: 20px;
-  margin-right: 70px;
+  margin-right: 58px;
   img {
     max-height: 100%;
   }
@@ -193,13 +225,15 @@ $header-height-1: $page-header-height;
   margin-right: 70px;
   color: $nav-color-default;
   span:first-child {
-    color: $sub-color-1;
+    color: $nav-color-hover;
     padding-right: 16px;
   }
-  .iconfont {
+  span.iconfont {
     font-size: 14px;
+    padding-right: 9px;
   }
   & /deep/ .drop-down-header {
+    width: 150px;
     height: $header-height-1;
     line-height: $header-height-1;
   }
@@ -239,16 +273,22 @@ $header-height-1: $page-header-height;
   span {
     cursor: pointer;
   }
+  .resume.router-link-active {
+    color: $nav-color-hover;
+  }
 }
 .system {
   div {
-    padding-right: 24px;
+    padding-right: 20px;
   }
   span ~ span {
     padding-left: 24px;
   }
   span:hover,.active {
-    color: $sub-color-1;
+    color: $nav-color-hover;
+  }
+  .search-job {
+    color: $nav-color-hover;
   }
 }
 .header-info {
@@ -256,12 +296,15 @@ $header-height-1: $page-header-height;
   .login-btn, .register-btn{
     padding:0 12px 0  12px;
   }
+  .register-btn {
+    padding-right: 0;
+  }
   .iconfont {
     font-size: 14px;
     padding-right: 3px;
   }
   span:hover{
-    color: $sub-color-1;
+    color: $nav-color-hover;
   }
   .user-name {
     color: $nav-color-default;
@@ -271,7 +314,7 @@ $header-height-1: $page-header-height;
     @include img-radius(30px, 30px);
     display: inline-block;
     vertical-align: middle;
-    margin: 0 12px;
+    margin: 0 0 0 12px;
   }
 }
 </style>

@@ -23,7 +23,6 @@ const other = [
       module: '404'
     }
   },
-  
   {
     path: '/putIn',
     name: 'putIn',

@@ -92,11 +92,11 @@ export const resetPasswordApi = data => request({
 })
 
 // 上传文件
-export const uploadApi = data => request({
+export const uploadApi = (data, cb = () => {}) => request({
   url: '/attaches',
   method: 'post',
   params: data,
-  config: { host: 'pub' }
+  config: { host: 'pub', onUploadProgress: cb }
 })
 
 // 下载文件

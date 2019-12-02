@@ -10,7 +10,7 @@
         @success="imageUploadSuccess"
         @fail="imageUploadFail"></myCropper>
       <img v-if="imageUrl" :src="imageUrl" class="avatar">
-      <img v-else  class="avatar-uploader-icon" src="../../../assets/images/activity/putIn/btn_pic.png" />
+      <span v-else  class="iconfont icon-xiangji avatar-uploader-icon" />
     </div>
     <div class="formItem">
       <input placeholder="请输入真实姓名" v-model="formData.name" class="default" maxlength="10" />
@@ -54,7 +54,12 @@
       ></el-date-picker>
       <i class="el-icon-caret-bottom defalut-position" id="startWorkYearDom"></i>
     </div>
-    <div class="submit" @click="submit(1)">继续</div>
+    <div class="btn-box" @click="submit(1)">
+      <div class="over-lay">
+        <div class="btn-confirm full">继续</div>
+      </div>
+      <div class="mask"></div>
+    </div>
   </div>
 </div>
 
@@ -64,7 +69,7 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import { setResumeFirstApi, getResumeFirstApi } from '@/api/putIn'
 import MyCropper from '@/components/common/cropper'
-import {userNameReg} from '@/util/fieldRegular.js'
+import { userNameReg } from '@/util/fieldRegular.js'
 @Component({
   name: 'resumeFirstPost',
   components: {
@@ -180,7 +185,7 @@ export default class CourseList extends Vue {
     blur (dom) {
       document.querySelector(dom).className = 'el-icon-caret-bottom defalut-position'
     }
-  }
+}
 </script>
 <style lang="scss" scoped>
 .resumeOpFirstMain {
@@ -188,7 +193,7 @@ export default class CourseList extends Vue {
   height:471px;
   background:rgba(255,255,255,1);
   box-shadow:0px 3px 20px 2px rgba(0,0,0,0.09);
-  border-radius:8px;
+  border-radius: 8px;
   border:1px solid rgba(255,255,255,1);
   margin: 0 auto;
   padding: 95px 40px 0 40px;
@@ -197,7 +202,7 @@ export default class CourseList extends Vue {
   .formPic {
     width:106px;
     height:106px;
-    background:rgba(239,232,243,1);
+    background: $bg-color-6;
     border:4px solid rgba(255,255,255,1);
     border-radius: 50%;
     position: absolute;
@@ -219,7 +224,7 @@ export default class CourseList extends Vue {
     }
     .avatar-uploader-icon {
       font-size: 28px;
-      color: #8c939d;
+      color: $main-color-1;
       width:40px;
       height:auto;
       line-height: 100%;
@@ -236,9 +241,8 @@ export default class CourseList extends Vue {
   .formItem {
     width:370px;
     height:46px;
-    background:rgba(251,249,252,0.8);
-    border-radius:23px;
-    border:1px solid rgba(242,237,245,1);
+    background:$bg-color-1;
+    border-radius: 4px;
     box-sizing: border-box;
     margin-bottom: 20px;
     position: relative;
@@ -273,15 +277,14 @@ export default class CourseList extends Vue {
       .el-radio {
         width:180px;
         height:46px;
-        background:rgba(251,249,252,0.8);
-        border-radius:23px;
-        border:1px solid rgba(242,237,245,1);
+        background:$bg-color-1;
+        border-radius:4px;
         display: flex;
         align-items: center;
         justify-content: center;
 
         &.is-checked {
-          border: 1px solid #8351A7;
+          border: 1px solid $bg-color-5;
         }
       }
     }
@@ -292,10 +295,8 @@ export default class CourseList extends Vue {
     line-height: 46px;
     display: flex;
     color: #666666;
-    margin-bottom: 20px;
-    background:rgba(251,249,252,0.8);
-    border-radius:23px;
-    border:1px solid rgba(242,237,245,1);
+    background:$bg-color-1;
+    border-radius: 4px;
     display: inline-block;
     overflow: hidden;
     box-sizing: border-box;
@@ -322,19 +323,8 @@ export default class CourseList extends Vue {
       opacity: 0;
     }
   }
-  .submit {
-    width:260px;
-    height:50px;
-    line-height:50px;
-    background:rgba(101,39,145,1);
-    border-radius:25px;
-    margin: 0 auto;
-    line-height: 50px;
-    text-align: center;
-    margin-top: 30px;
-    font-size:16px;
-    font-weight:600;
-    color:rgba(255,255,255,1);
+  .formTimeItem + .formTimeItem {
+    margin-top: 20px;
   }
 }
 .el-dropdown-menu {

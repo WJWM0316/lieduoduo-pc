@@ -1,21 +1,21 @@
 <template>
  <div class="wrap">
- 	<my-header ref="header" v-if="hasRequest"></my-header>
- 	<div class="resumePost">
- 		<div class="middle">
- 			<div class="contain">
-	      <h3 class="title"><span>3分钟</span>创建微简历，<span>1000+名企</span>高薪职位任你选</h3>
-	      <img class="slogon-box" v-if="step === 1" :src="cdnPath + 'img_sentence_01@2x.png'"/>
-				<img class="slogon-box" v-if="step === 2" :src="cdnPath + 'img_sentence_02@2x.png'"/>
-				<img class="slogon-box" v-if="step === 3" :src="cdnPath + 'img_sentence_03@2x.png'"/>
-				<img class="slogon-box" v-if="step === 4" :src="cdnPath + 'img_sentence_04@2x.png'"/>
-	      <first-step  v-if="step === 1"></first-step>
-	      <second-step v-if="step === 2"></second-step>
-	      <third-step v-if="step === 3"></third-step>
-	      <fourth-step v-if="step === 4"></fourth-step>
-	    </div>
- 		</div>
- 	</div>
+   <my-header ref="header" v-if="hasRequest"></my-header>
+   <div class="resumePost">
+     <div class="middle">
+       <div class="contain">
+        <h3 class="title"><span>3分钟</span>创建微简历，<span>1000+名企</span>高薪职位任你选</h3>
+        <img class="slogon-box c-first-create-resume" v-if="step === 1" :src="cdnPath + 'img_sentence_01.png'"/>
+        <img class="slogon-box" v-if="step === 2" :src="cdnPath + 'img_sentence_02.png'"/>
+        <img class="slogon-box" v-if="step === 3" :src="cdnPath + 'img_sentence_03.png'"/>
+        <img class="slogon-box" v-if="step === 4" :src="cdnPath + 'img_sentence_04.png'"/>
+        <first-step  v-if="step === 1"></first-step>
+        <second-step v-if="step === 2"></second-step>
+        <third-step v-if="step === 3"></third-step>
+        <fourth-step v-if="step === 4"></fourth-step>
+      </div>
+     </div>
+   </div>
  </div>
 </template>
 <script>
@@ -39,99 +39,101 @@ import { searchResumeStepApi } from '@/api/putIn'
   }
 })
 export default class createUser extends Vue {
-	cdnPath = `${this.$cdnPath}/images/`
-	hasRequest = false
-	step = 1 // 创建步数
-	created () {
-		this.getStep()
-	}
-	getStep () {
-		searchResumeStepApi().then(res => {
-			this.hasRequest = true
-			let stepData = res.data.data
-			let userInfo = this.$store.getters.userInfo
-			userInfo.name = stepData.card.name
-			userInfo.avatar = stepData.card.avatar
-			this.$store.dispatch('setUserInfo', userInfo)
-		})
-	}
+  cdnPath = `${this.$cdnPath}/images/`
+  hasRequest = false
+  step = 1 // 创建步数
+  created () {
+    this.getStep()
+  }
+  getStep () {
+    searchResumeStepApi().then(res => {
+      this.hasRequest = true
+      let stepData = res.data.data
+      let userInfo = this.$store.getters.userInfo
+      userInfo.name = stepData.card.name
+      userInfo.avatar = stepData.card.avatar
+      this.$store.dispatch('setUserInfo', userInfo)
+    })
+  }
 }
 
 </script>
 <style lang="scss" scoped>
 .wrap {
-	width: 100%;
-	.resumePost {
-		padding: 64px 0 100px 0;
-	  height: 100vh;
-	  min-height: 900px;
-	  box-sizing: border-box;
-	  background: url(#{$image-cdn-url}/images/bg_createjl.png) 100% repeat #652791;
-	  .defalut-position{
-	    position: absolute;
-	    top: 50%;
-	    transform: translateY(-50%);
-	    right: 25px;
-	    color: #CDCBCF;
-	    transition: all ease .3s;
-	    z-index: 222
-	  }
-	  .icon_active{
-	    transform: translateY(-50%) rotate(180deg);
-	  }
-	  .middle {
-	    position: relative;
-	    background-repeat: no-repeat;
-	    background-position: bottom;
-	    text-align: center;
-	    width: 100%;
-	    background-size: auto 112px;
-	    .formHint {
-	      height:60px;
-	      background:rgba(255,244,244,1);
-	      border-radius:4px;
-	      padding: 0 27px;
-	      position: absolute;
-	      left: 50%;
-	      top: 0px;
-	      transform: translate(-50%,0);
-	      display: flex;
-	      justify-content: center;
-	      align-items: center;
-	      font-size:14px;
-	      font-family:PingFangSC;
-	      font-weight:400;
-	      color:rgba(237,92,92,1);
-	      white-space:nowrap;
-	      z-index: 100;
-	      &.two {
-	        height:34px;
-	      }
-	      img {
-	        width: 14px;
-	        height: 14px;
-	        margin-right: 8px;
-	        display: block;
-	      }
-	    }
-	  }
-	  .title {
-	    font-size:22px;
-	    font-family:PingFangSC;
-	    font-weight:700;
-	    color:#fff;
-	    line-height:32px;
-	    padding-top: 48px;
-	    span {
-	      color:#FFDC29;
-	    }
-	  }
-	  .slogon-box{
-	    width:450px;
-	    height:auto;
-	    margin: 38px auto 50px;
-	  }
-	}
+  width: 100%;
+  .resumePost {
+    padding: 64px 0 100px 0;
+    height: 100vh;
+    min-height: 900px;
+    box-sizing: border-box;
+    background: url('../../assets/images/create_bg.jpg') repeat $bg-color-4;
+    background-size: 30%;
+    & /deep/ .defalut-position{
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 25px;
+      color: #CDCBCF;
+      transition: all ease .3s;
+      z-index: 1;
+    }
+    .icon_active{
+      transform: translateY(-50%) rotate(180deg);
+    }
+    .middle {
+      position: relative;
+      background-repeat: no-repeat;
+      background-position: bottom;
+      text-align: center;
+      width: 100%;
+      background-size: auto 112px;
+      .formHint {
+        height:60px;
+        background:rgba(255,244,244,1);
+        border-radius:4px;
+        padding: 0 27px;
+        position: absolute;
+        left: 50%;
+        top: 0px;
+        transform: translate(-50%,0);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size:14px;
+        font-family:PingFangSC;
+        font-weight:400;
+        color:rgba(237,92,92,1);
+        white-space:nowrap;
+        z-index: 100;
+        &.two {
+          height:34px;
+        }
+        img {
+          width: 14px;
+          height: 14px;
+          margin-right: 8px;
+          display: block;
+        }
+      }
+    }
+    .title {
+      font-size:22px;
+      font-weight:700;
+      color:#fff;
+      line-height:32px;
+      padding-top: 48px;
+      span {
+        color: $sub-color-1;
+      }
+    }
+    .c-first-create-resume.slogon-box {
+      margin: 38px auto 50px;
+    }
+    .slogon-box{
+      width:450px;
+      height:auto;
+      margin: 38px auto 20px;
+    }
+  }
 }
-
 </style>

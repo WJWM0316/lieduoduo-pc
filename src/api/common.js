@@ -1,13 +1,21 @@
 /**
  * 公共模块API
  */
-import {
-  request
-} from './index.js'
+import { request } from './index.js'
 
 // 获取banner 图
 export const getBanners = data => request({
   url: '/banner',
+  method: 'get',
+  params: data,
+  config: {
+    host: 'qiuzhi'
+  }
+})
+
+// 获取友情链接
+export const getLinks = data => request({
+  url: '/link/lists',
   method: 'get',
   params: data,
   config: {
@@ -62,5 +70,63 @@ export const getSearchCollect = data => request({
   params: data,
   config: {
     host: 'qiuzhi'
+  }
+})
+
+// 获取招聘官详情
+// export const recruiterDetail = data => request('/recruiter/detail', 'get', data)
+export const recruiterDetail = data => request({
+  url: '/recruiter/detail',
+  method: 'get',
+  params: data,
+  config: {
+    host: 'zhaopin'
+  }
+})
+// 获取身份是否认证信息
+export const perfectauthDetail = data => request({
+  url: 'recruiter/mine/extra',
+  method: 'get',
+  params: data,
+  config: {
+    host: 'zhaopin'
+  }
+})
+
+export const createonlinepdf = data => request({
+  url: `/jobhunter/auto_resume/pdf/${data.jobhunterVkey}`,
+  method: 'get',
+  params: data,
+  config: {
+    host: 'zhaopin',
+		responseType: 'blob'
+  }
+})
+export const createonlineword = data => request({
+  url: `/jobhunter/auto_resume/word/${data.jobhunterVkey}`,
+  method: 'get',
+  params: data,
+  config: {
+    host: 'zhaopin',
+		responseType: 'blob'
+  }
+})
+
+export const downloadPDF = data => request({
+  url: `/jobhunter/auto_resume/pdf/${data.vkey}`,
+  method: 'get',
+  params: data,
+  config: {
+    host: 'qiuzhi',
+		responseType: 'blob'
+  }
+})
+export const downloadWord = data => request({
+  url: `/jobhunter/auto_resume/word/${data.vkey}`,
+  method: 'get',
+  params: data,
+  config: {
+    host: 'qiuzhi',
+		responseType: 'blob'
   }
 })

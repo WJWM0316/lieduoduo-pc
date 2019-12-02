@@ -44,7 +44,7 @@ export default class login extends Vue {
   .login, .register {
     width: 222px;
     height:36px;
-    background:$main-color-1;
+    background: $bg-color-4;
     border-radius:4px;
     margin: 0;
     border: none;
@@ -54,8 +54,8 @@ export default class login extends Vue {
       color: #fff;
     }
     &.register {
-      background:$sub-color-1;
-      color: $font-color-3;
+      background: $bg-color-5;
+      color: $main-color-1;
     }
   }
   .login:hover, .register:hover {

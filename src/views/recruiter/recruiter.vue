@@ -2,9 +2,9 @@
   <div id="recruiter">
     <div class="recruiter_cont main-center">
       <div class="header_warp">
-        <h2 class="title">职位管理
+        <div class="title">职位管理
           <div class="addJob" size="small" type="primary" @click="todoAction('addJob')">发布职位</div>
-        </h2>
+        </div>
         <div class="header_navs_wrap">
           <div class="header_navs" :class="searchBarFixed === true ? 'isFixed' :''">
             <ul class="recruiter_classify">
@@ -55,9 +55,9 @@
             <span class="job_op" @click="opJob('close',item.id)" v-if="item.isOnline===1">关闭</span>
             <span
               class="job_op"
-              @click="opJob('open',item.id)"
+              @click="openposition(item.id)"
               v-if="item.isOnline===2 && form.status === '0,1'"
-            >开放</span>
+            >开放职位</span>
             <span class="job_op" @click="todoAction('editJob',item.id)">编辑</span>
           </div>
         </li>
@@ -86,24 +86,6 @@
     >
       <span class="total">共{{ Math.ceil(pageInfo.totalPage) }}页, {{pageInfo.total}}条记录</span>
     </el-pagination>
-
-    <div class="service" @mouseover="isService = true" @mouseout="isService = false">
-      <img class="service_icon" src="../../assets/images/service.png">
-
-      客服咨询
-      <div class="service_pop" v-if="isService">
-        <div class="pop_tit">联系我们</div>
-        <div class="pop_cont">
-          <h3 class="pop_text">请拨打全国咨询热线</h3>
-          <p class="pop_text2">400-065-5788</p>
-          <img class="pop_code" src="../../assets/images/gzh.png">
-          <p class="pop_text3">猎多多公众号</p>
-          <p class="pop_text4">微信扫描二维码，关注官方公众号</p>
-        </div>
-        <!-- <div class="triangle_border_right">
-        </div>-->
-      </div>
-    </div>
 
     <div class="pop" v-if="pop.isShow">
       <div class="share" v-if="pop.type==='share'">
@@ -160,12 +142,16 @@
         </div>
       </div>
     </div>
+    <!-- 提示弹窗 -->
+  <message-diggle :visible="msg.messageshow" @clicksure="msgsure" @clickcancle="msgcancel" :btntitle="'前往认证'" :title="msg.msgtitle" :desc="msg.msgdesc"></message-diggle>
   </div>
 </template>
 <script>
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import { getMyInfoApi } from '../../api/auth'
+import MessageDiggle from '../registerCompany/components/message.vue'
+import { getCompanyIdentityInfosApi } from 'API/register'
 import {
   getMyListApi,
   closePositionApi,
@@ -190,7 +176,7 @@ import {
       immediate: true
     }
   }, */
-  components: {}
+  components: { MessageDiggle }
 })
 export default class CourseList extends Vue {
   userInfo = {};
@@ -200,6 +186,11 @@ export default class CourseList extends Vue {
     count: 20,
     totalPage: 0,
     total: 0
+  };
+  msg = {
+    messageshow: false,
+    msgtitle: '身份认证',
+    msgdesc: '您尚未认证身份，成功认证后即可发布职位。'
   };
   // close关闭，open 开放，审核通过，audit 审核中，fail 审核失败
   recruiterList = [
@@ -314,12 +305,20 @@ export default class CourseList extends Vue {
         }
         break
       case 'addJob':
-        this.$router.push({
-          name: 'postJob',
-          query: {
-            type: 'add'
+        if (!this.$store.state.recruiterinfo.identityAuth) {
+          this.msg = {
+            messageshow: true,
+            msgtitle: '身份认证',
+            msgdesc: '您尚未认证身份，成功认证后即可发布职位。'
           }
-        })
+        } else {
+          this.$router.push({
+            name: 'postJob',
+            query: {
+              type: 'add'
+            }
+          })
+        }
         break
       case 'editJob':
         this.$router.push({
@@ -378,6 +377,34 @@ export default class CourseList extends Vue {
       default:
         break
     }
+  }
+  // 开放职位
+  openposition (id) {
+    openPositionApi({ id: id })
+    .then(() => {
+      this.$message({
+        type: 'success',
+        message: '成功!'
+      })
+      this.pop = {
+        isShow: false,
+        type: ''
+      }
+      this.getStatusTotal()
+      this.getPositionList()
+    })
+    .catch(e => {
+      this.$message.error(e.data.msg)
+    })
+  }
+
+  msgcancel () {
+    this.msg = {
+      messageshow: false
+    }
+  }
+  msgsure () {
+    this.$router.push({ name: 'perfectauth' })
   }
 
   handleScroll () {
@@ -551,6 +578,7 @@ export default class CourseList extends Vue {
   .recruiter_cont {
     background: #ffffff;
     position: relative;
+    border-radius: 8px;
   }
   .header_warp {
     min-height: 222px;
@@ -565,7 +593,9 @@ export default class CourseList extends Vue {
       &.isFixed {
         position: fixed;
         background-color: #fff;
-        top: 60px;
+        top: 0px;
+        width: 1140px;
+        padding-top: 60px;
         z-index: 1;
       }
       .recruiter_classify {
@@ -582,14 +612,15 @@ export default class CourseList extends Vue {
           color: rgba(98, 98, 98, 1);
           margin-right: 40px;
           line-height: 46px;
+          cursor: pointer;
           &.cur {
             font-weight: bold;
             color: rgba(101, 39, 145, 1);
             position: relative;
             &::after {
               content: "\20";
-              width: 48px;
-              height: 2px;
+              width: 100%;
+              height: 4px;
               background: rgba(101, 39, 145, 1);
               position: absolute;
               bottom: -0px;
@@ -674,6 +705,7 @@ export default class CourseList extends Vue {
       font-size: 24px;
       font-weight: bold;
       width: 100%;
+      border-radius: 8px 8px 0px 0px;
       color: #2D2D2D;
       text-align: left;
       position: relative;
@@ -767,6 +799,7 @@ export default class CourseList extends Vue {
           font-weight: 400;
           color: rgba(101, 39, 145, 1);
           margin-right: 38px;
+          cursor: pointer;
         }
       }
     }
@@ -1004,7 +1037,6 @@ export default class CourseList extends Vue {
       }
       .share_help_text {
         font-size: 14px;
-        font-weight: 700;
         color: rgba(101, 39, 145, 1);
         line-height: 22px;
         text-align: center;
@@ -1015,7 +1047,7 @@ export default class CourseList extends Vue {
           display: inline-block;
           margin-left: 6px;
           position: relative;
-          top: -3px;
+          top: 2px;
         }
       }
       .help_icon {

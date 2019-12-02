@@ -73,7 +73,7 @@
               </div>
             </div>
           </div>
-          <el-button class="login_button" @click="logintoo" :loading="loading">{{type === 'register' ? '注册' : type === 'msgLogin' && toggleType ? '登录' : '登录/注册' }}</el-button>
+          <el-button type="primary" class="login_button" @click="logintoo" :loading="loading">{{type === 'register' ? '注册' : type === 'msgLogin' && toggleType ? '登录' : '登录/注册' }}</el-button>
           <div class="bottom_text" v-if="toggleType">
             {{type === 'msgLogin' ? '没有账号' : '已有账号' }}
             <span @click="changetypeto">{{ type === 'msgLogin' ? '立即注册' : '马上登录' }}</span>
@@ -231,6 +231,7 @@ export default class loginForm extends Component {
       if (res.data.data && res.data.data.id) {
 				this.$store.commit('LOGINCALLBACK', res.data.data)
         clearInterval(this.timer)
+        this.$store.dispatch('scanLogin', res.data.data)
       }
     })
   }
@@ -428,7 +429,7 @@ export default class loginForm extends Component {
       height: 22px;
       font-size: 14px;
       font-weight: 400;
-      color: rgba(101, 39, 145, 1);
+      color: $main-color-1;
       line-height: 22px;
       text-align: left;
       margin-top: 24px;
@@ -446,7 +447,7 @@ export default class loginForm extends Component {
     position: relative;
     box-sizing: border-box;
     .login_type {
-      width: 180px;
+      width: 200px;
       position: absolute;
       right: 0;
       height: 83px;
@@ -468,6 +469,7 @@ export default class loginForm extends Component {
       .login-img {
         width: 83px;
         height: 83px;
+        cursor: pointer;
         display: inline-block;
         vertical-align: top;
         img {
@@ -479,7 +481,7 @@ export default class loginForm extends Component {
       font-weight: 400;
       color: #626262;
       span {
-        color: #652791;
+        color: $main-color-1;
         cursor: pointer;
       }
     }
@@ -492,7 +494,7 @@ export default class loginForm extends Component {
       }
       .login_href{
         font-weight: 400;
-        color: #652791;
+        color: $main-color-1;
         cursor: pointer;
         margin-top: 20px;
         text-decoration: underline;
@@ -530,7 +532,7 @@ export default class loginForm extends Component {
         margin: 16px auto 13px auto;
         border: 1px solid rgba(239, 233, 244, 1);
         border-radius: 17px;
-        color: #652791;
+        color: $main-color-1;
         font-size: 14px;
         font-weight: 400;
         div {
@@ -571,7 +573,7 @@ export default class loginForm extends Component {
     .cont_tit {
       font-size: 30px;
       font-weight: 700;
-      color: #652791;
+      color: $main-color-1;
       line-height: 30px;
       padding-top: 50px;
       box-sizing: border-box;
@@ -594,7 +596,7 @@ export default class loginForm extends Component {
       flex-direction: row;
 
       .help {
-        color: rgba(101, 39, 145, 1);
+        color: $main-color-1;
         margin-left: 8px;
         cursor: pointer;
       }
@@ -602,7 +604,7 @@ export default class loginForm extends Component {
         width: 14px;
         height: 14px;
         line-height: 14px;
-        background: rgba(101, 39, 145, 1);
+        background: $bg-color-4;
         color: #fff;
         margin-left: 6px;
         border-radius: 50%;
@@ -615,7 +617,7 @@ export default class loginForm extends Component {
       margin-bottom: 28px;
 
       .cont_help_left {
-        background: #652791;
+        background: $bg-color-4;
         height: 14px;
         width: 14px;
         border-radius: 50%;
@@ -631,7 +633,7 @@ export default class loginForm extends Component {
         }
       }
       .cont_help_right {
-        color: #652791;
+        color: $main-color-1;
         font-size: 14px;
         margin-left: 6px;
         display: inline-block;
@@ -669,19 +671,17 @@ export default class loginForm extends Component {
         flex-direction: column;
         p {
           font-size: 16px;
-          font-family: PingFang-SC-Medium;
           font-weight: 700;
-          color: rgba(101, 39, 145, 1);
+          color: $main-color-1;
           margin-bottom: 33px;
         }
         .pastBtn {
           width: 98px;
           height: 38px;
-          background: rgba(101, 39, 145, 1);
+          background: $bg-color-4;
           border-radius: 19px;
           margin-bottom: 14px;
           font-size: 14px;
-          font-family: PingFang-SC-Medium;
           font-weight: 700;
           color: rgba(255, 255, 255, 1);
           line-height: 38px;
@@ -703,14 +703,15 @@ export default class loginForm extends Component {
       width: 406px;
       height: 50px;
       border-radius: 4px;
-      border: 1px solid #d8dce6;
+      border: 1px solid $border-color-1;
       box-sizing: border-box;
       text-align: left;
       line-height: 46px;
       font-size: 0;
       .input_img {
         margin: 0 12px 0 29px;
-        font-size: 18px
+        font-size: 18px;
+        color: $font-color-10;
       }
       .input_i{
         font-size: 14px !important;
@@ -746,7 +747,7 @@ export default class loginForm extends Component {
         background: none;
       }
       .msgText {
-        color: #652791;
+        color: $main-color-1;
         font-weight: 700;
         font-size: 16px;
         line-height: 48px;
@@ -769,9 +770,6 @@ export default class loginForm extends Component {
     .login_button {
       width: 406px;
       height: 50px;
-      background: #652791;
-      border-radius: 100px;
-      cursor: pointer;
       margin: 0 auto 58px auto;
       color: #fff;
       font-size: 20px;
@@ -797,7 +795,7 @@ export default class loginForm extends Component {
               width: 46px;
           }
           p{
-              color: #652791;
+              color: $main-color-1;
               font-weight: 700;
               margin-top: 13px;
           }
@@ -812,7 +810,7 @@ export default class loginForm extends Component {
           justify-content: space-between;
           i{
               font-size: 16px;
-              color: #652791;
+              color: $main-color-1;
               margin-right: 6px;
           }
           span{
@@ -826,7 +824,7 @@ export default class loginForm extends Component {
         padding: 50px 0 92px 0;
         .after_title{
           font-size: 30px;
-          color: #652791;
+          color: $main-color-1;
           font-weight:700;
         }
         .after_text{
@@ -876,14 +874,14 @@ export default class loginForm extends Component {
         width: 8px;
         height: 8px;
         background: white;
-        border: solid 2px#652791;
+        border: solid 2px $border-color-2;
         border-right: none;
         border-bottom: none;
         transform: rotate(45deg);
       }
       .active {
-        border-color: #652791;
-        color: #652791;
+        border-color: $border-color-2;
+        color: $main-color-1;
         font-weight: 550;
       }
     }
@@ -903,7 +901,7 @@ export default class loginForm extends Component {
           width: 354px;
           height: 46px;
           .input_img{
-            color: #CDCBCF;
+            color: $border-color-1;
             margin-left: 14px;
           }
 

@@ -2,11 +2,14 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { saveAccessToken, removeAccessToken, getAccessToken, getUserInfo, saveUserInfo } from '../api/cacheService'
 import { loginPutInApipc, getUserRoleInfoApi, switchRoleApi } from '@/api/auth'
+import { perfectauthDetail } from 'API/common'
 import router from '@/router/index.js'
 import { mobileReg } from '@/util/fieldRegular.js'
-import { getMyResumeApi } from '@/api/resume.js'
-
 import { logoutApi } from '../api/auth'
+
+// modules
+import resume from './modules/resume'
+import company from './modules/company'
 
 Vue.use(Vuex)
 
@@ -17,6 +20,7 @@ export default new Vuex.Store({
     hasLogin: 0, // 是否登录
     userIdentity: 1, // 1 C端  2 B端
     userInfo: getUserInfo() || {},
+    recruiterinfo: {},
     token: getAccessToken(),
     pageName: '',
     loginValidTime: 60 * 60 * 24 * 7 * 1000,
@@ -28,13 +32,13 @@ export default new Vuex.Store({
       type: 'tocIndex',
       params: ''
     },
-    areaList: [],
-    myResume: {} // 我的简历详情
+    areaList: []
   },
   // 在getters中声明state中变量的计算函数，缓存计算后的数据， 通过 this.$store.getters 调用
   getters: {
     // 接受state作为参数，每次 count发生变化时 ， 都会被调用
     roleInfos: state => state.roleInfos,
+    recruiterinfo: state => state.recruiterinfo,
     pageName: state => state.pageName,
     userIdentity: state => state.userIdentity,
     userInfo: state => state.userInfo,
@@ -57,6 +61,10 @@ export default new Vuex.Store({
       state.userInfo = data
       state.userIdentity = data.curInUseRole
     },
+    // 将用户名称替换为简历姓名
+    setUserRealname: (state, name) => {
+      state.userInfo.realname = name
+    },
     // 登录回调
     LOGINCALLBACK: (state, data) => {
       saveAccessToken(data.token, state.loginValidTime)
@@ -65,45 +73,22 @@ export default new Vuex.Store({
       state.token = data.token
       state.hasLogin = 1
       if (data.curInUseRole) state.userIdentity = data.curInUseRole
-			console.log(111111111)
-      // 获取用户角色信息
-      getUserRoleInfoApi().then(res => {
-        state.roleInfos = res.data.data
-        if (state.userIdentity === 1 && !state.roleInfos.isJobhunter) {
-          router.replace({ path: '/createUser' })
-          return
-        }
-        if (state.userIdentity === 2 && !state.roleInfos.isRecruiter) {
-          state.guideCreateRecruiter = true
-          return
-        }
-        // 登录跳转
-        if (data.refresh) {
-          window.location.reload()
-        } else if (data.needBack) {
-          router.go(-1)
-        } else {
-          let userIdentity = state.userIdentity
-          userIdentity === 1 ? router.replace({ path: '/index' }) : router.replace({ path: '/candidate' })
-        }
-      })
     },
     // 退出登录回调
-    LOGOUT: (state, data) => {
+    LOGOUT: (state) => {
+      // console.log(state.pageName, location)
       state.userInfo = {}
       state.token = null
       removeAccessToken()
-      if (state.userIdentity === 1) {
-        router.replace({ path: '/index', query: { q: Date.now() } })
-      } else {
-        router.replace({ path: '/login', query: { type: 'msgLogin' } })
-      }
-      // setTimeout(() => {
-      //   window.location.reload()
-      // }, 1500)
     },
     setRoleInfos (state, data) {
       state.roleInfos = data
+    },
+    setRecruiterinfo (state, data) {
+      state.recruiterinfo = data
+    },
+    setCreateRecruiter (state, data) {
+      state.guideCreateRecruiter = data
     },
     // 获取用户信息
     GETROLEINFO: (state, data) => {
@@ -123,32 +108,32 @@ export default new Vuex.Store({
     guideQrcodePop (state, data) {
       state.guideQrcodePop = data
     },
-    // 设置我的简历信息
-    setMyResume (state, data) {
-      getMyResumeApi().then(res => {
-        state.myResume = res.data.data
-        if (!state.userInfo.realname) {
-          state.userInfo.realname = state.myResume.name
-          state.userInfo.avatarInfo = state.myResume.avatar
-        }
-      })
-    },
     switchIdentity (state, data) {
-      if (state.userIdentity === 1) {
-        if (state.roleInfos.isRecruiter) {
-          switchRoleApi().then(res => {
-            state.userIdentity = state.userIdentity === 1 ? 2 : 1
-            router.replace({ path: '/candidate' })
-          })
+      let todo = () => {
+        if (data.toSiutchRole === 1) {
+          if (state.roleInfos.isJobhunter) {
+					  router.replace({ path: '/index' })
+          } else {
+					  router.replace({ path: '/createUser' })
+          }
         } else {
-          // 打开引导弹窗
-          state.guideQrcodePop = { switch: true, type: 'tobIndex' }
+          if (state.roleInfos.isRecruiter) {
+					  router.replace({ path: '/candidate' })
+          } else {
+					  router.replace({ path: '/register' })
+          }
         }
-      } else {
-        switchRoleApi().then(res => {
-          state.userIdentity = state.userIdentity === 1 ? 2 : 1
-          router.replace({ path: '/index' })
-        })
+      }
+      if (data.toSiutchRole) {
+        // 当前身份 跟 需要切换的身份一致，则不需要切换身份
+        if (data.toSiutchRole === state.userIdentity) {
+          todo()
+        } else {
+          switchRoleApi().then(res => {
+					  state.userIdentity = res.data.data.curInUseRole
+					  todo()
+          })
+        }
       }
     }
   },
@@ -167,43 +152,118 @@ export default new Vuex.Store({
         Vue.message.error('手机号码格式不正确')
         return
       }
-      return new Promise((resolve, reject) => {
-				if (data.curInUseRole) {
-					data.identity = data.curInUseRole
-				} else {
-					data.identity = 1
-				}
+      return new Promise(async (resolve, reject) => {
         loginPutInApipc(data).then(res => {
           let loginData = {
             ...res.data.data,
             ...data
           }
           store.commit('LOGINCALLBACK', loginData)
+          // 获取用户角色信息
+          const { state } = store
+          getUserRoleInfoApi().then(({ data }) => {
+            const result = data.data || {}
+            store.commit('setRoleInfos', result)
+            // 引导创建用户
+            if (state.userIdentity === 1 && !result.isJobhunter) {
+              router.replace({ path: '/createUser' })
+              return
+            }
+            if (state.userIdentity === 2 && !result.isRecruiter) {
+              // store.commit('setCreateRecruiter', true)
+              router.replace({ path: '/register' })
+              return
+            }
+
+            if (loginData.refresh) {
+              window.location.reload()
+            } else if (loginData.needBack) {
+              router.go(-1)
+            } else {
+              let userIdentity = state.userIdentity
+              userIdentity === 1 ? router.replace({ path: '/index' }) : router.replace({ path: '/candidate' })
+            }
+
+            // 如果是求职者
+            if (state.userIdentity === 1 && result.isJobhunter) {
+              // 获取简历信息
+              store.dispatch('getMyResume')
+            }
+            if (result.isRecruiter) {
+              perfectauthDetail().then((res) => {
+                store.commit('setRecruiterinfo', res.data.data)
+              })
+            }
+          })
           resolve(res)
         }).catch(e => {
           reject(e)
         })
       })
     },
+    scanLogin (store, loginData) {
+      store.commit('LOGINCALLBACK', loginData)
+      // 获取用户角色信息
+      const { state } = store
+      getUserRoleInfoApi().then(({ data }) => {
+        const result = data.data || {}
+        store.commit('setRoleInfos', result)
+        // 引导创建用户
+        if (state.userIdentity === 1 && !result.isJobhunter) {
+          router.replace({ path: '/createUser' })
+          return
+        }
+        if (state.userIdentity === 2 && !result.isRecruiter) {
+          // store.commit('setCreateRecruiter', true)
+          router.replace({ path: '/register' })
+          return
+        }
 
+        if (loginData.refresh) {
+          window.location.reload()
+        } else if (loginData.needBack) {
+          router.go(-1)
+        } else {
+          let userIdentity = state.userIdentity
+          userIdentity === 1 ? router.replace({ path: '/index' }) : router.replace({ path: '/candidate' })
+        }
+
+        // 如果是求职者
+        if (state.userIdentity === 1 && result.isJobhunter) {
+          // 获取简历信息
+          store.dispatch('getMyResume')
+        }
+        if (result.isRecruiter) {
+          perfectauthDetail().then((res) => {
+            store.commit('setRecruiterinfo', res.data.data)
+          })
+        }
+      })
+    },
     logoutApi (store, data) {
       return logoutApi()
         .then(res => {
-          /* Vue.message({
-            message: '退出成功',
-            type: 'success'
-          }) */
           store.commit('LOGOUT', data)
+          // 在C端页面退登
+          if (data.curPage === 1) {
+            if (router.history.current.name === 'cresume') {
+              router.replace({ path: '/index' })
+            } else {
+              window.location.href = window.location.href
+            }
+          } else {
+            router.replace({ path: '/login', query: { type: 'msgLogin' } })
+          }
           return res
         })
     },
 
     setPageName (store, options) {
       store.commit('setPageName', options)
-    },
-    // 获取我的简历详情
-    getMyResume (store, options) {
-      store.commit('setMyResume', options)
     }
+  },
+  modules: {
+    resume,
+    company
   }
 })

@@ -3,7 +3,7 @@
 <div class="putIn">
   <header id="putInHeader" >
     <section>
-      <img class="left_logo" :src=" cdnPath + 'logo_lieduodou@2x.png'" @click="toIndex"/>
+      <img class="left_logo" :src=" cdnPath + 'logo_lieduodou.png'" @click="toIndex"/>
       <div class="headerBtn">
         <span class="btn_blo" @click="openMask('login')">高薪职位</span>
         <div class="btn_blo2" @click="setAnimate">求职者登录</div>
@@ -37,9 +37,9 @@
                 <div class="select_op">
                   <div class="op_left" @click="isShowSelect = false">关闭</div>
                   <div class="op_right" @click="openMask('login')">
-                    查看更多
-                    <span>{{searchJobData.keyword}}</span>岗位
-                    <img class="arrowsR" :src="cdnPath + 'arrowsR.png'" />
+                    查看更多 <span>{{searchJobData.keyword}}</span> 岗位
+                    <!-- <img class="arrowsR" :src="cdnPath + 'arrowsR.png'" /> -->
+                    <span class="iconfont icon-zizhurenzheng arrowsR" />
                   </div>
                 </div>
               </div>
@@ -127,28 +127,28 @@
   <div class="companyBabels">
     <section>
       <div class="babel_blo">
-        <img class="blo_icon" :src="cdnPath + 'icon_jishufankui@2x.png'" />
+        <img class="blo_icon" :src="cdnPath + 'icon_jishufankui.png'" />
         <div class="blo_cont">
           <p class="cont_text">急速反馈</p>
           <p class="cont_text2">24小时急速反馈</p>
         </div>
       </div>
       <div class="babel_blo">
-        <img class="blo_icon" :src="cdnPath + 'icon_kugongsi@2x.png'" />
+        <img class="blo_icon" :src="cdnPath + 'icon_kugongsi.png'" />
         <div class="blo_cont">
           <p class="cont_text">酷公司</p>
           <p class="cont_text2">1000+知名企业</p>
         </div>
       </div>
       <div class="babel_blo">
-        <img class="blo_icon" :src="cdnPath + 'icon_haozhiwei@2x.png'" />
+        <img class="blo_icon" :src="cdnPath + 'icon_haozhiwei.png'" />
         <div class="blo_cont">
           <p class="cont_text">好职位</p>
           <p class="cont_text2">大量精选高薪职位</p>
         </div>
       </div>
       <div class="babel_blo">
-        <img class="blo_icon" :src="cdnPath + 'icon_yuedaka@2x.png'" />
+        <img class="blo_icon" :src="cdnPath + 'icon_yuedaka.png'" />
         <div class="blo_cont">
           <p class="cont_text">约大咖</p>
           <p class="cont_text2">行业大咖在线招聘</p>
@@ -216,10 +216,8 @@
             </div>
           </div>
         </div>
-
         <div class="bottom_hint">
-          注册后可查看更多职位信息
-          <img class="" :src="cdnPath + 'arrowsR.png'" />
+          注册后可查看更多职位信息 <i class="iconfont icon-youyi" />
         </div>
       </div>
     </div>
@@ -232,6 +230,7 @@
       <div class="bloText2">请长按识别二维码，添加微信号</div>
     </div>
   </div>
+  <page-footer />
 </div>
 
 </template>
@@ -240,7 +239,7 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import { loginPutInApi, getCodeApi, getCaptchaApi } from '../../../api/auth'
 import { schJobApi, getPositionTypesApi, getAdvListApi, getUserRoleInfo } from '../../../api/putIn'
-
+import PageFooter from '@/views/layout/footer'
 import { saveAccessToken } from '@/api/cacheService'
 
   @Component({
@@ -256,7 +255,7 @@ import { saveAccessToken } from '@/api/cacheService'
         immediate: true
       }
     },
-    components: {}
+    components: { PageFooter }
   })
 export default class CourseList extends Vue {
     isFocus = false
@@ -475,7 +474,7 @@ export default class CourseList extends Vue {
     }
   }
 </script>
-<style lang="less">
+<style lang="scss" scoped>
 .message {
   position: fixed;
   left: 0;
@@ -490,7 +489,7 @@ export default class CourseList extends Vue {
     top: 50%;
     width:305px;
     height:366px;
-    background:rgba(255,255,255,1);
+    background:#fff;
     border-radius:8px;
     border:2px solid rgba(40,40,40,1);
     margin: -183px 0 0 -153px;
@@ -534,7 +533,7 @@ export default class CourseList extends Vue {
   .company-modal {
     width:564px;
     height:500px;
-    background:rgba(255,255,255,1);
+    background:#fff;
     border-radius:4px;
     position: absolute;
     padding: 40px;
@@ -555,7 +554,7 @@ export default class CourseList extends Vue {
         .company-logo {
           width: 122px;
           padding: 15px 14px;
-          background:rgba(255,255,255,1);
+          background:#fff;
           border-radius:4px;
           border:1px solid rgba(239,233,244,0.8);
           margin-right: 16px;
@@ -576,7 +575,7 @@ export default class CourseList extends Vue {
           }
           .modal-top-emolumentMax{
             font-size: 18px;
-            color: #FF7F4C;
+            color: $sub-color-1;
           }
           .modal-top-des {
             font-size:16px;
@@ -618,7 +617,7 @@ export default class CourseList extends Vue {
             content: '';
             width:4px;
             height:20px;
-            background:rgba(101,39,145,0.8);
+            background:rgba($bg-color-4, 0.8);
             border-radius:2px;
             transform: translateY(-50%);
           }
@@ -648,12 +647,12 @@ export default class CourseList extends Vue {
             margin-right: 10px;
             font-size:14px;
             font-weight:400;
-            color:rgba(101,39,145,1);
+            color: $main-color-1;
             height:28px;
             line-height:28px;
-            background:rgba(255,255,255,1);
+            background:#fff;
             border-radius:56px;
-            border:1px solid rgba(101,39,145,0.8);
+            border:1px solid $border-color-2;
             margin-bottom: 10px;
           }
         }
@@ -669,28 +668,27 @@ export default class CourseList extends Vue {
     .bottom_hint {
       width: 100%;
       height:76px;
-      background:rgba(101,39,145,0.03);
+      background:rgba($bg-color-4, 0.03);
       position: absolute;
       left: 0;
       bottom: 0;
       display: flex;
       justify-content: center;
       align-items: center;
-
       font-size:16px;
       font-weight:400;
-      color:rgba(101,39,145,1);
+      color: $main-color-1;
       line-height:22px;
-      img {
-        display: block;
-        width: 14px;
-        height: auto;
+      i {
+        font-size: 14px;
+        padding-left: 12px;
       }
     }
     .icon-close {
       width: 15px;
       height: 15px;
       display: inline-block;
+      color: $font-color-10;
       background-size: contain;
       position: absolute;
       right: 15px;
@@ -701,7 +699,7 @@ export default class CourseList extends Vue {
   .register-modal {
     width:354px;
     height:176px;
-    background:rgba(255,255,255,1);
+    background:#fff;
     border-radius:4px;
     position: absolute;
     top: 296px;
@@ -713,14 +711,12 @@ export default class CourseList extends Vue {
     flex-direction: column;
     .register-text {
       font-size:22px;
-      font-family:PingFangSC;
       font-weight:600;
-      color:rgba(101,39,145,1);
+      color: $main-color-1;
       line-height:30px;
     }
     .register-text2 {
       font-size:16px;
-      font-family:PingFangSC;
       font-weight:300;
       color:rgba(51,51,51,1);
       line-height:22px;
@@ -729,6 +725,7 @@ export default class CourseList extends Vue {
     .icon-close {
       width: 15px;
       height: 15px;
+      color: $title-color-3;
       display: inline-block;
       background-size: contain;
       position: absolute;
@@ -744,7 +741,7 @@ export default class CourseList extends Vue {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  background: #652791;
+  background: $bg-color-4;
   // background: url(../../../assets/images/bg.png) 100% repeat #652791;
   #putInHeader {
     height:64px;
@@ -772,17 +769,17 @@ export default class CourseList extends Vue {
       .btn_blo {
         font-size:14px;
         font-weight:400;
-        color:rgba(110,31,150,1);
+        color: $main-color-1;
         cursor: pointer;
       }
       .btn_blo2 {
         width:113px;
         height:34px;
-        background:rgba(101,39,145,1);
-        border-radius:84px;
+        background: $bg-color-4;
+        border-radius: 4px;
         font-size:14px;
         font-weight:700;
-        color:rgba(255,255,255,1);
+        color:#fff;
         line-height:34px;
         text-align: center;
         margin-left: 20px;
@@ -800,7 +797,7 @@ export default class CourseList extends Vue {
   .companyBabels {
     height:178px;
     width: 100%;
-    background:rgba(251,251,255,1);
+    background: $bg-color-1;
     section {
       width: 1000px;
       margin: 0 auto;
@@ -872,6 +869,7 @@ export default class CourseList extends Vue {
                   width: 16px;
                   height: 16px;
                   display: block;
+                  color: $font-color-10;
                   margin: 0 11px 0 16px;
                   position: absolute;
               }
@@ -900,11 +898,11 @@ export default class CourseList extends Vue {
               .search-bar-btn {
                 font-size:14px;
                 font-weight:700;
-                color:rgba(255,255,255,1);
+                color:#fff;
                 width:101px;
                 height:40px;
                 line-height:40px;
-                background:rgba(101,39,145,1);
+                background: $bg-color-4;
                 border-radius:4px;
                 cursor: pointer;
                 text-align: center;
@@ -913,11 +911,10 @@ export default class CourseList extends Vue {
             .select-main {
               width:564px;
               height:436px;
-
-              background:rgba(255,255,255,1);
+              background:#fff;
               border-radius:4px;
               position: absolute;
-              top: 65px;
+              top: 64px;
               left: 0;
               z-index: 10;
               .select-none {
@@ -944,26 +941,25 @@ export default class CourseList extends Vue {
                 .empty-icon {
                   font-size: 68px;
                   margin: -30px 0 30px 0;
-                  color: #652791;
+                  color: $main-color-1;
                   cursor: pointer;
                 }
-              }
-              .select-cont {
               }
               .select_list {
                 height: 382px;
                 overflow-y: auto;
+                padding: 9px 0;
+                box-sizing: border-box;
                 .job_blo {
-                  padding: 0 40px;
-                  box-sizing: border-box;
+                  padding: 19px 40px;
+                  cursor: pointer;
                   display: flex;
                   justify-content: space-between;
                   align-items: center;
-                  height: 60px;
-                  border-bottom: 1px solid #E8E9EB;
+                  position: relative;
                   text-align: left;
                   &:hover {
-                    background: rgba(101, 39, 145, 0.1);
+                    background: rgba($bg-color-5, 0.5);
                   }
                   .job_blo_left {
                     width: 160px;
@@ -981,8 +977,18 @@ export default class CourseList extends Vue {
                   .job_blo_right {
                     text-align: right;
                     font-size:18px;
-                    font-weight:400;
-                    color:#FF7F4C;
+                    font-weight: bold;
+                    color:$sub-color-1;
+                  }
+                }
+                .job_blo + .job_blo {
+                  &::after {
+                    content: "";
+                    position: absolute;
+                    top: 0;
+                    height: 1px;
+                    background: rgba($border-color-1, 0.5);
+                    width: 100%;
                   }
                 }
               }
@@ -990,7 +996,7 @@ export default class CourseList extends Vue {
                 padding: 0 40px;
                 box-sizing: border-box;
                 height:54px;
-                background:rgba(101,39,145,0.1);
+                background:rgba($bg-color-4 ,0.1);
                 border-radius:0px 0px 8px 4px;
                 display: flex;
                 justify-content: space-between;
@@ -998,27 +1004,28 @@ export default class CourseList extends Vue {
                 .op_left {
                   font-size:14px;
                   font-weight:400;
-                  color:rgba(101,39,145,1);
+                  color: $main-color-1;
                   cursor: pointer;
                 }
                 .op_right {
                   font-size:14px;
                   font-weight:400;
-                  color:rgba(101,39,145,1);
+                  color: $main-color-1;
                   display: flex;
                   span {
-                    color: #FF7F4C;
-                    margin-right: 5px;
+                    color: $sub-color-1;
+                    margin: 0 5px;
+                  }
+                  .arrowsR {
+                    display: inline-block;
+                    vertical-align: middle;
+                    margin-left: 6px;
+                    font-size: 14px;
+                    position: relative;
+                    color: $main-color-1;
                   }
                 }
-                .arrowsR {
-                  width:16px;
-                  height:16px;
-                  margin-left: 6px;
-                  display: block;
-                  position: relative;
-                  top: -1px;
-                }
+
               }
             }
           }
@@ -1049,8 +1056,8 @@ export default class CourseList extends Vue {
                 font-weight: 400;
                 &.active {
                   font-weight: 600;
-                  color: #fff;
-                  background:rgba(121,84,149,1);
+                  color: $main-color-1;
+                  background: $bg-color-5;
                   border-radius:0px 0px 4px 4px;
                 }
               }
@@ -1065,7 +1072,7 @@ export default class CourseList extends Vue {
               .select_info {
                 width:137px;
                 height:78px;
-                background:rgba(255,255,255,1);
+                background:#fff;
                 border-radius:4px;
                 overflow: hidden;
                 display: flex;
@@ -1076,7 +1083,7 @@ export default class CourseList extends Vue {
                   flex-direction: column;
                   width:184px;
                   height:141px;
-                  background:rgba(255,255,255,1);
+                  background:#fff;
                   border-radius:4px;
                   padding: 0 15px;
                   box-sizing: border-box;
@@ -1088,7 +1095,7 @@ export default class CourseList extends Vue {
                 &.info_type3 {
                   width:279px;
                   height:104px;
-                  background:rgba(255,255,255,1);
+                  background:#fff;
                   border-radius:4px;
                   padding: 15px;
                   box-sizing: border-box;
@@ -1107,21 +1114,18 @@ export default class CourseList extends Vue {
                 .positionName {
                   width: 100%;
                   font-size:16px;
-                  font-family:PingFangSC;
                   font-weight:700;
                   color:rgba(51,51,51,1);
                 }
                 .emolument {
                   width: 100%;
                   font-size:18px;
-                  font-family:PingFangSC;
                   font-weight:700;
-                  color:rgba(255,127,76,1);
+                  color: $sub-color-1;
                   line-height:18px;
                 }
                 .companyInfo {
                   font-size:12px;
-                  font-family:PingFangSC;
                   font-weight:300;
                   color:rgba(92,86,93,1);
                   line-height:17px;
@@ -1192,7 +1196,7 @@ export default class CourseList extends Vue {
           margin-bottom: 47px;
           color: #333333;
           .green {
-            color: #652791;
+            color: $main-color-1;
           }
         }
         .login_btn {
@@ -1201,7 +1205,7 @@ export default class CourseList extends Vue {
           cursor: pointer;
           p{
             text-decoration: underline;
-            color: #652791;
+            color: $main-color-1;
             cursor: pointer;
           }
         }
@@ -1213,7 +1217,7 @@ export default class CourseList extends Vue {
             li {
               width:328px;
               height:50px;
-              background:rgba(255,255,255,1);
+              background:#fff;
               border-radius:4px;
               border:1px solid rgba(216,220,230,1);
               padding: 0 15px;
@@ -1231,6 +1235,7 @@ export default class CourseList extends Vue {
                 height: 18px;
                 display: block;
                 margin-right: 10px;
+                color: $font-color-10;
               }
               .input_icon_sms{
                 font-size: 14px;
@@ -1253,15 +1258,15 @@ export default class CourseList extends Vue {
               line-height: 38px;
               font-size: 14px;
               line-height: 38px;
-              color: #652791;
+              color: $main-color-1;
               text-align: center;
               text-decoration: none;
               border-radius: 3px;
+              font-weight: bold;
               cursor: pointer;
               &.false {
                 cursor: inherit;
                 line-height: 38px;
-                color: rgba(146,146,146,1);
               }
             }
           }
@@ -1273,11 +1278,11 @@ export default class CourseList extends Vue {
             margin-bottom: 16px;
             font-size:18px;
             font-weight:700;
-            color:rgba(255,255,255,1);
+            color:#fff;
             text-align: center;
             width:328px;
-            background:rgba(101,39,145,1);
-            border-radius:100px;
+            background: $bg-color-4;
+            border-radius: 4px;
             cursor: pointer;
           }
           .lp_agreeNotice_box {
@@ -1290,9 +1295,8 @@ export default class CourseList extends Vue {
               color: #999;
               span {
                 color: #555;
-                text-decoration: underline;
                 cursor: pointer;
-                color: #652791;
+                color: $main-color-1;
               }
             }
           }
@@ -1310,7 +1314,6 @@ export default class CourseList extends Vue {
           justify-content: center;
           align-items: center;
           font-size:14px;
-          font-family:PingFangSC;
           font-weight:400;
           color:rgba(237,92,92,1);
           white-space:nowrap;

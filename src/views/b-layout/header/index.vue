@@ -27,6 +27,10 @@
           </div>
         </div>
         <el-dropdown-menu slot="dropdown">
+           <el-dropdown-item command="perfectauth" v-if="haveIdentity.identityAuth !== 1">
+             身份认证
+             <div class="reddot"></div>
+             </el-dropdown-item>
           <el-dropdown-item command="toggleIdentity">切换为求职者</el-dropdown-item>
           <el-dropdown-item command="logout">退出登录</el-dropdown-item>
         </el-dropdown-menu>
@@ -51,25 +55,38 @@ export default {
           desc: '微信扫码打开小程序',
           img: mp_qrcode
         }
-      ]
+      ],
+      haveIdentity: ''
     }
   },
   computed: {
     ...mapState({
-      userInfo: state => state.userInfo
+      userInfo: state => state.userInfo,
+      Identityinfo: state => state.recruiterinfo
     })
+  },
+  watch: {
+    'Identityinfo': function (n) {
+      this.haveIdentity = n
+      console.log(n, '监听到变化了')
+    }
   },
   methods: {
     handleClick (e) {
       switch (e) {
         case 'logout':
-          this.$store.dispatch('logoutApi')
+          this.$store.dispatch('logoutApi', { curPage: 2 })
           break
         case 'toggleIdentity':
-          this.$store.commit('switchIdentity')
+          this.$store.commit('switchIdentity', { toSiutchRole: 1 })
           break
+        case 'perfectauth':
+          this.$router.push({ name: 'perfectauth' })
       }
     }
+  },
+  mounted () {
+    this.haveIdentity = this.$store.state.recruiterinfo
   }
 }
 </script>
@@ -79,6 +96,17 @@ $header-height-1: $page-b-header-height;
   @include flex-v-center;
   justify-content: flex-end;
   padding: 0 20px;
+  // height: 60px;
+  // background: #fff;
+  // text-align: right;
+  // font-size: 14px;
+  // -webkit-box-shadow: 0 1px 0 0 rgba(29,45,53,.06);
+  // box-shadow: 0 1px 0 0 rgba(29,45,53,.06);
+  // position: fixed;
+  // top: 0;
+  // left: 0;
+  // right: 0;
+  // z-index: 3;
 }
 .page-header {
   height: $header-height-1;
@@ -113,5 +141,14 @@ $header-height-1: $page-b-header-height;
     vertical-align: middle;
     margin: 0 12px;
   }
+}
+.reddot{
+  width:6px;
+  height:6px;
+  border-radius: 50%;
+  right: 27px;
+  position: absolute;
+  top: 24px;
+  background:rgba(255,127,76,1);
 }
 </style>

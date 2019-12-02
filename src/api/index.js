@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Loading } from 'element-ui'
+import { Loading, Message } from 'element-ui'
 import router from '../router/index'
 import { getAccessToken, removeAccessToken } from './cacheService'
 import Vue from 'vue'
@@ -12,7 +12,7 @@ const VUE_WEB_QIUZHI_API = process.env.VUE_APP_WEB_QIUZHI_API
 const VUE_WEB_PUB_API = process.env.VUE_APP_WEB_PUB_API
 const VUE_WEB_NODE_API = process.env.VUE_APP_WEB_NODE_API
 
-export const request = ({ url, method, params = {}, config }) => {
+export const request = ({ url, method, params = {}, config = {} }) => {
   if (params && params.globalLoading) counter++
   if (counter === 1) loadingInstance = Loading.service({})
 
@@ -56,19 +56,35 @@ export const request = ({ url, method, params = {}, config }) => {
     }
   }
   return new Promise((resolve, reject) => {
-    axios[method](url, method === 'get' ? { params } : params).then(res => {
+		// 因为axios[method]方式设置的responseType无效，所以换成axios({}),同时保留get请求的参数按json格式传递
+		let axiosFun = null
+		if (config.responseType) {
+			axiosFun = axios({
+				url,
+				method,
+				data: method === 'get' ? { params } : params,
+				responseType: config.responseType
+			})
+		} else {
+			axiosFun = axios[method](url, method === 'get' ? { params } : params)
+		}   
+		axiosFun.then(res => {
       resolve(res)
       loadingBack()
     }).catch(err => {
       if (!config.noCheckLogin && err.response.data.httpStatus !== 200) {
-        Vue.message.error(err.response.data.msg)
+        Message.error(err.response.data.msg || err.response.data.message)
       }
       // 登陆过期或者未登录
       if (!config.noCheckLogin && err.response.data.httpStatus === 401) {
         router.push({ name: 'login', query: { type: 'msgLogin', needBack: true } })
         removeAccessToken()
       }
-      reject(err)
+      // 登陆过期或者未登录
+      if (err.response.data.code === 801) {
+        router.push({ name: 'register' })
+      }
+      reject(err.response)
       loadingBack()
     })
   })

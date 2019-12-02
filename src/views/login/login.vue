@@ -28,7 +28,7 @@ export default class login extends Vue {
   mounted () {
     let query = this.$route.query
     if (query.type) this.loginType = query.type
-    this.loginType
+    // this.loginType
     // 百度统计
     let _hmt = _hmt || [];
     (function () {
@@ -47,7 +47,7 @@ export default class login extends Vue {
   box-sizing: border-box;
   width: 100%;
   background: #652791 url(#{$image-cdn-url}/images/bg_loginpage.png) no-repeat;
-  background-size: auto 100%;
+  background-size: 100% auto;
   background-position: center;
   display: flex;
   align-items: center;

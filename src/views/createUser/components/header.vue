@@ -1,59 +1,59 @@
 <template>
-	<header id="resumeHeader" >
-		<section class="inner">
-	  	<img class="left_logo" :src="cdnPath + 'logo_lieduodou@2x.png'" />
-	    <el-dropdown trigger="click"  @command="handleClick" >
-	      <div class="headerBtn">
-	        <div class="right">
-	          <span class="name">欢迎登录猎多多，{{name}}</span>
-	          <img class="op_icon aaa" :src="cdnPath + 'open.png'" v-if="!avatarUrl" />
-	          <img class="avatar" :src="avatarUrl" v-if="avatarUrl" />
-	        </div>
-	      </div>
-	        <el-dropdown-menu slot="dropdown">
-	          <el-dropdown-item command="out">
-	            <i class="outLogin iconfont icon-tuichudenglu"></i>退出登录
-	          </el-dropdown-item>
-	        </el-dropdown-menu>
-	    </el-dropdown>
+  <header id="resumeHeader" >
+    <section class="inner">
+      <img class="left_logo" :src="cdnPath + 'logo_lieduodou.png'" />
+      <el-dropdown trigger="click"  @command="handleClick" >
+        <div class="headerBtn">
+          <div class="right">
+            <span class="name">欢迎登录猎多多，{{name}}</span>
+            <img class="op_icon aaa" :src="cdnPath + 'open.png'" v-if="!avatarUrl" />
+            <img class="avatar" :src="avatarUrl" v-if="avatarUrl" />
+          </div>
+        </div>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="out">
+              <i class="outLogin iconfont icon-tuichudenglu"></i>退出登录
+            </el-dropdown-item>
+          </el-dropdown-menu>
+      </el-dropdown>
     </section>
-	</header>
+  </header>
 </template>
 <script>
-	export default {
-		data () {
-			return {
-				cdnPath: `${this.$cdnPath}/images/`,
-        name: null,
-        avatarUrl: ''
-			}
-		},
-		computed: {
-			...mapState({
-        userInfo: state => state.userInfo
-      })
-		},
-    watch: {
-      userInfo: {
-        handler(val, oldVal){
-          this.name = val.name
-          this.avatarUrl = val.avatar.middleUrl
-        },
-        deep:true
+export default {
+  data () {
+    return {
+      cdnPath: `${this.$cdnPath}/images/`,
+      name: null,
+      avatarUrl: ''
+    }
+  },
+  computed: {
+    ...mapState({
+      userInfo: state => state.userInfo
+    })
+  },
+  watch: {
+    userInfo: {
+      handler (val, oldVal) {
+        this.name = val.name
+        this.avatarUrl = val.avatar.middleUrl
+      },
+      deep: true
+    }
+  },
+  created () {
+    this.name = this.userInfo.name
+    this.avatarUrl = this.userInfo.avatar.middleUrl
+  },
+  methods: {
+    handleClick (e) {
+      if (e === 'out') {
+        this.$store.dispatch('logoutApi', {curPage: 1})
       }
-    },
-    created () {
-      this.name = this.userInfo.name
-      this.avatarUrl = this.userInfo.avatar.middleUrl
-    },
-		methods: {
-	    handleClick (e) {
-	      if (e === 'out') {
-	        this.$store.dispatch('logoutApi')
-	      }
-	    }
-		}
-	}
+    }
+  }
+}
 </script>
 <style lang="scss">
 #resumeHeader {
@@ -87,7 +87,7 @@
       .name {
         font-size:14px;
         font-weight:400;
-        color:#6E1F96;
+        color: $main-color-1;
       }
       .avatar {
         width:30px;
@@ -104,16 +104,16 @@
     .btn_blo {
       font-size:14px;
       font-weight:400;
-      color:rgba(110,31,150,1);
+      color: $main-color-1;
     }
     .btn_blo2 {
       width:113px;
       height:34px;
-      background:rgba(101,39,145,1);
+      background: $bg-color-4;
       border-radius:84px;
       font-size:14px;
       font-weight:700;
-      color:rgba(255,255,255,1);
+      color:#fff;
       line-height:34px;
       text-align: center;
       margin-left: 20px;
