@@ -1,5 +1,5 @@
 <template>
-  <div class="index-login" :class="{'is-index-login': isLogin}">
+  <div class="index-login" :class="{'is-index-login': isLogin, 'no-banner': !banner[0]}">
     <div class="login-bg" v-if="!isLogin">
       <div class="main-center index-login-wrapper">
         <p class="position-number">
@@ -109,6 +109,9 @@ $index-login-height: 130px;
 }
 .index-login.is-index-login {
   height: 70px;
+}
+.index-login.no-banner {
+  height: 0;
 }
 .login-bg, .is-login-bg {
   margin: 0 auto;
