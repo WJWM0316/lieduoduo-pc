@@ -22,7 +22,7 @@ const Degree = [
 
 const FileType = {
   pdf: { icon: 'icon-pdf', color: '#FA3939', type: 'pdf', title: 'PDF文件' },
-  jpg: { icon: 'icon-jpg', color: '#D53B8F', type: 'jpg', title: 'jpg' },
+  jpg: { icon: 'icon-jpg', color: '#1CA976', type: 'jpg', title: 'jpg' },
   png: { icon: 'icon-png', color: '#8452A7', type: 'png', title: 'png' },
   a4: { icon: 'icon-a', color: '#00C4CD', type: 'a4', title: 'a4' },
   doc: { icon: 'icon-word', color: '#4A90E2', type: 'doc', title: 'Word文档' },

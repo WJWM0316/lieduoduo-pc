@@ -81,7 +81,7 @@
       prev-text="上一页"
       next-text="下一页"
       :current-page="pageInfo.page"
-      v-if="pageInfo.totalPage > pageInfo.page"
+      v-if="pageInfo.total > 2"
       @current-change="handleCurrentPageChange"
     >
       <span class="total">共{{ Math.ceil(pageInfo.totalPage) }}页, {{pageInfo.total}}条记录</span>
@@ -165,17 +165,14 @@ import {
   name: 'lighthouse-list',
   methods: {},
   computed: {},
-  created () {
-    this.init()
-  },
-  /* watch: {
+  watch: {
     '$route': {
       handler () {
         this.init()
       },
       immediate: true
     }
-  }, */
+  },
   components: { MessageDiggle }
 })
 export default class CourseList extends Vue {
@@ -381,21 +378,21 @@ export default class CourseList extends Vue {
   // 开放职位
   openposition (id) {
     openPositionApi({ id: id })
-    .then(() => {
-      this.$message({
-        type: 'success',
-        message: '成功!'
+      .then(() => {
+        this.$message({
+          type: 'success',
+          message: '成功!'
+        })
+        this.pop = {
+          isShow: false,
+          type: ''
+        }
+        this.getStatusTotal()
+        this.getPositionList()
       })
-      this.pop = {
-        isShow: false,
-        type: ''
-      }
-      this.getStatusTotal()
-      this.getPositionList()
-    })
-    .catch(e => {
-      this.$message.error(e.data.msg)
-    })
+      .catch(e => {
+        this.$message.error(e.data.msg)
+      })
   }
 
   msgcancel () {
@@ -474,6 +471,7 @@ export default class CourseList extends Vue {
         this.jobList = [...res.data.data]
         this.pageInfo.totalPage = meta.lastPage
         this.pageInfo.total = meta.total
+        this.pageInfo.page = meta.currentPage
       })
       .catch(e => {
         this.$message.error(e.data.msg)

@@ -183,7 +183,7 @@ export default {
 <style lang="scss" scoped>
 .resume-wrapper-item {
   @include flex-v-top;
-  padding: 36px 46px;
+  padding: 40px 46px;
   .wrapper-content {
     flex: 1;
     @include flex-v-top;

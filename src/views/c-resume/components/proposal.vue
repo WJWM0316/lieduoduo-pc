@@ -136,6 +136,7 @@ export default {
           return val
         })
         this.handleShowForm(false, { salaryFloor, salaryCeil })
+        this.jsonFormString = JSON.stringify(this.form)
       } else if (type === 'save') {
         this.$refs.form.validate(valid => {
           if (valid) {

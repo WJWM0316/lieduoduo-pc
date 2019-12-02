@@ -111,11 +111,11 @@
         background
         v-if="form.total > 20"
         layout="prev, pager, next, slot"
-        :total="form.total"
-        :page-size="form.count"
+        :total="Number(form.total)"
+        :page-size="Number(form.count)"
         prev-text="上一页"
         next-text="下一页"
-        :current-page="form.page"
+        :current-page="Number(form.page)"
         @current-change="handleCurrentPageChange"
       >
         <span class="total">共{{ Math.ceil(form.totalPage) }}页, {{form.total}}条记录</span>
@@ -129,7 +129,7 @@
         </div>
 
       </div>
-      <div class="pop" v-if="pop.isShow" @click="closeMsg($event)">
+      <div class="pop" v-show="pop.isShow" @click="closeMsg($event)">
       <div class="xcxPicBox" v-if="pop.type==='clickPic'">
         <img class="clo" src="~IMAGES/clo.png">
         <div class="main_tit">查看简历详情</div>
@@ -305,11 +305,11 @@
               </div>
             </div>
             <!-- 更多介绍 -->
-            <div class="workExperience" v-if="nowResumeMsg.moreIntroduce.introduce && nowResumeMsg.moreIntroduce.imgs">
+            <div class="workExperience" v-if="nowResumeMsg.moreIntroduce.introduce">
               <p class="title">更多介绍</p>
               <div class="workList">
                 <pre v-if="nowResumeMsg.moreIntroduce.introduce">{{nowResumeMsg.moreIntroduce.introduce}}</pre>
-                <div class="imgList">
+                <div class="imgList" v-if="nowResumeMsg.moreIntroduce.imgs.length > 0">
                   <div style="position:relative" :key="index" v-for="(item, index) in nowResumeMsg.moreIntroduce.imgs">
                   <img
                     :src="item.url"
@@ -517,7 +517,7 @@
             </div>
             <div class="item" v-if="jobhunterInfo.positionName">
               <div class="icon">
-                <i class="iconfont icon-zhiwei"></i>
+                <i class="iconfont icon-zhiwei1"></i>
               </div>
               <div class="text">{{jobhunterInfo.positionName}}</div>
             </div>
@@ -730,6 +730,9 @@ export default {
   components: {
     MapSearch,
     DynamicRecord
+  },
+  destroyed () {
+    document.body.style.overflow = 'unset'
   },
   watch: {
     'pop.isShow': function (n) {
