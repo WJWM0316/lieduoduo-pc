@@ -353,11 +353,11 @@
               </div>
             </div>
             <!-- 更多介绍 -->
-            <div class="workExperience" v-if="nowResumeMsg.moreIntroduce.introduce && nowResumeMsg.moreIntroduce.imgs">
+            <div class="workExperience" v-if="nowResumeMsg.moreIntroduce.introduce">
               <p class="title">更多介绍</p>
               <div class="workList">
                 <pre v-if="nowResumeMsg.moreIntroduce.introduce">{{nowResumeMsg.moreIntroduce.introduce}}</pre>
-                <div class="imgList">
+                <div class="imgList" v-if="nowResumeMsg.moreIntroduce.imgs.length > 0">
                   <div style="position:relative" :key="index" v-for="(item, index) in nowResumeMsg.moreIntroduce.imgs">
                   <img
                     :src="item.url"
@@ -757,6 +757,9 @@ import { applyInterviewApi } from 'API/interview'
     methods: {
     },
     computed: {},
+    destroyed () {
+      document.body.style.overflow = 'unset'
+    },
     watch: {
       '$route': {
         handler () {

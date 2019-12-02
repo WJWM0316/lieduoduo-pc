@@ -129,7 +129,7 @@
         </div>
 
       </div>
-      <div class="pop" v-if="pop.isShow" @click="closeMsg($event)">
+      <div class="pop" v-show="pop.isShow" @click="closeMsg($event)">
       <div class="xcxPicBox" v-if="pop.type==='clickPic'">
         <img class="clo" src="~IMAGES/clo.png">
         <div class="main_tit">查看简历详情</div>
@@ -305,11 +305,11 @@
               </div>
             </div>
             <!-- 更多介绍 -->
-            <div class="workExperience" v-if="nowResumeMsg.moreIntroduce.introduce && nowResumeMsg.moreIntroduce.imgs">
+            <div class="workExperience" v-if="nowResumeMsg.moreIntroduce.introduce">
               <p class="title">更多介绍</p>
               <div class="workList">
                 <pre v-if="nowResumeMsg.moreIntroduce.introduce">{{nowResumeMsg.moreIntroduce.introduce}}</pre>
-                <div class="imgList">
+                <div class="imgList" v-if="nowResumeMsg.moreIntroduce.imgs.length > 0">
                   <div style="position:relative" :key="index" v-for="(item, index) in nowResumeMsg.moreIntroduce.imgs">
                   <img
                     :src="item.url"
@@ -730,6 +730,9 @@ export default {
   components: {
     MapSearch,
     DynamicRecord
+  },
+  destroyed () {
+    document.body.style.overflow = 'unset'
   },
   watch: {
     'pop.isShow': function (n) {

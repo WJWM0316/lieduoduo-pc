@@ -81,7 +81,7 @@
       prev-text="上一页"
       next-text="下一页"
       :current-page="pageInfo.page"
-      v-if="pageInfo.totalPage > pageInfo.page"
+      v-if="pageInfo.total > 2"
       @current-change="handleCurrentPageChange"
     >
       <span class="total">共{{ Math.ceil(pageInfo.totalPage) }}页, {{pageInfo.total}}条记录</span>
@@ -471,6 +471,7 @@ export default class CourseList extends Vue {
         this.jobList = [...res.data.data]
         this.pageInfo.totalPage = meta.lastPage
         this.pageInfo.total = meta.total
+        this.pageInfo.page = meta.currentPage
       })
       .catch(e => {
         this.$message.error(e.data.msg)

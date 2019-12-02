@@ -416,7 +416,7 @@
               </div>
             </div>
             <!-- 更多介绍 -->
-            <div class="workExperience" v-if="nowResumeMsg.moreIntroduce">
+            <div class="workExperience" v-if="nowResumeMsg.moreIntroduce.introduce">
               <p class="title">更多介绍</p>
               <div class="workList">
                 <pre v-if="nowResumeMsg.moreIntroduce.introduce">{{nowResumeMsg.moreIntroduce.introduce}}</pre>
@@ -876,6 +876,9 @@ import {
   name: 'candidate',
   methods: {},
   computed: {},
+  destroyed () {
+    document.body.style.overflow = 'unset'
+  },
   watch: {
     $route: {
       handler () {
