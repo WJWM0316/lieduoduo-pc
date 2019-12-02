@@ -63,7 +63,7 @@
       <div class="introduction-mian">
         <div class="introduction-inner">
           <div class="introduction-left">
-            <div class="introduction-presentation">
+            <div class="introduction-presentation" v-if="companyInformation.intro">
               <p class="introduction-title">公司介绍</p>
               <block-overflow ref="blockOverflow" :text="companyInformation.intro"></block-overflow>
             </div>
@@ -705,6 +705,9 @@ to {top:0px;}
               color: $font-color-3;
             }
             .recruitmentTeam-text-buttom{
+              width: 298px;
+              white-space: nowrap;
+              text-overflow: ellipsis;
               margin-top: 4px;
               color: $font-color-6;
               overflow: hidden;
