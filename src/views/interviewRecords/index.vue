@@ -1245,6 +1245,14 @@ export default {
         this.pop.isShow = false
       }
     },
+    toAddJob () {
+      this.$router.push({
+        name: 'postJob',
+        query: {
+          type: 'add'
+        }
+      })
+    },
     // 选择地址发送
     sendhandler () {
       let arr = []
@@ -3083,6 +3091,35 @@ export default {
           position: absolute;
           right: 16px;
         }
+      }
+      .nullimg{
+        width: 179px;
+        height: 98px;
+        margin: 0 auto;
+        margin-top: 32px;
+        img{
+          width: 100%;
+          height: 100%;
+        }
+      }
+      .noJobText {
+        text-align: center;
+        color:rgba(92,86,93,1);
+        font-size: 14px;
+        margin-top: 22px;
+      }
+      .noJobBtn {
+        width:184px;
+        height:40px;
+        background:rgba(101,39,145,1);
+        border-radius:100px;
+        line-height: 40px;
+        cursor: pointer;
+        margin: 0 auto;
+        margin-top: 38px;
+        color:rgba(255,255,255,1);
+        font-size: 14px;
+        text-align: center;
       }
         .content-info{
           // padding-right: 4px;
