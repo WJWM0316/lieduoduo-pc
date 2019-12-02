@@ -134,7 +134,7 @@ export default {
     flex-wrap: wrap;
   }
   .image-wrapper {
-    @include img-radius(96px, 96x, 4px);
+    @include img-radius(96px, 96px, 4px);
     margin-bottom: 10px;
   }
   .image-wrapper{
