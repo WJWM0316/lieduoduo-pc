@@ -84,6 +84,9 @@ export default {
           this.$router.push({ name: 'perfectauth' })
       }
     }
+  },
+  mounted () {
+    this.haveIdentity = this.$store.state.recruiterinfo
   }
 }
 </script>

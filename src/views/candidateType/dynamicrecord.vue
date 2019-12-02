@@ -382,7 +382,7 @@ export default {
         .code-title{
           color: #333333;
           font-size: 14px;
-          margin-bottom: 4px;
+          margin-bottom: 6px;
         }
         .code-desc{
           color: #42334D;

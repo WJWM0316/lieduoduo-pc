@@ -3,11 +3,11 @@
     <div class="recruiter_main">
       <div class="main_top_warp">
           <div class="main_top" >
-            <div class="topBlo topStatusBlo borright " :class="{'cur':navType==='searchBrowseMyself'}" @click="changeNav('searchBrowseMyself')">
-              <i class="iconfont icon-zhengyan"></i>
+            <div class="topBlo topStatusBlo borright" :class="{'cur':navType==='searchBrowseMyself'}" @click="changeNav('searchBrowseMyself')">
+              <i class="iconfont icon-zhengyan" style="padding-right:0px"></i>
               看过我的({{navNum.browseMyselfCount || 0}})
             </div>
-            <div class="topBlo topStatusBlo borleft "  :class="{'cur':navType==='searchCollect'}" @click="changeNav('searchCollect')">
+            <div class="topBlo topStatusBlo borleft"  :class="{'cur':navType==='searchCollect'}" @click="changeNav('searchCollect')">
               <span class="border"></span>
               <i class="iconfont icon-ganxingqu-"></i>
               对我感兴趣({{navNum.collectMyselfCount || 0}})
@@ -24,7 +24,7 @@
               </div>
 
               <div class="topSelected" @click="screenList(1)" :class="{'selected':selectedScreen.length>0}" v-else>
-                <i class="iconfont icon-shaixuan"></i>
+                <i class="iconfont icon-shaixuan" style="color:#929292"></i>
                 {{selectedScreen.length > 0 ||  (positionTypeList.length > 0 ? positionTypeList[positionTypeList.length-1].active:false) ? '清除筛选' :'高级筛选' }}
               </div>
 
@@ -383,16 +383,16 @@
                   </div>
                   <div class="p_c">PDF格式</div>
                   <div class="p_r">
-                    <a @click="onloadfile('pdf')"><i class="iconfont icon-xiazai"></i></a>
+                    <a @click="onloadfile('pdf')"><i class="iconfont icon-xiazai selected"></i></a>
                   </div>
                 </div>
                 <div class="pdf">
                   <div class="p_l">
-                    <i class="iconfont icon-word" style="color: #2878ff"></i>
+                    <i class="iconfont icon-word" style="color: rgb(74, 144, 226)"></i>
                   </div>
                   <div class="p_c">Word格式</div>
                   <div class="p_r">
-                    <a @click="onloadfile('doc')"><i class="iconfont icon-xiazai"></i></a>
+                    <a @click="onloadfile('doc')"><i class="iconfont icon-xiazai selected"></i></a>
                   </div>
                 </div>
               </div>
@@ -520,7 +520,7 @@
             <div class="edit" @click="editaddress(item)">编辑</div>
           </div>
           <div class="addarea" @click="addaddress()">
-            <div class="add"><i class="iconfont icontianjia1 bgcolor"></i></div>
+            <div class="add"><i class="iconfont icon-tianjiashijian bgcolor" style="font-size:12px"></i></div>
             <div class="add-text">添加地址</div>
           </div>
         </div>
@@ -564,6 +564,7 @@
               <i class="iconfont icon-mianshiguan"></i>
             </div>
             <div class="text">{{jobhunterInfo.arrangementInfo.realname}}</div>
+            <div class="f-line"></div>
             <div class="phone" v-if="jobhunterInfo.arrangementInfo.mobile">{{jobhunterInfo.jobhunterInfo.mobile}}</div>
           </div>
           <div class="item" v-if="jobhunterInfo.positionName">
@@ -609,7 +610,7 @@
           </li>
         </ul>
           <el-button type="text" class="add_time" v-if="model.dateLists.length < 3">
-          <i class="iconfont icontianjia1 bgcolor"></i>
+          <i class="iconfont icon-tianjiashijian bgcolor" style="font-size:12px"></i>
           <span :style="'margin-left:8px;line-height:14px'">添加时间</span>
           <el-date-picker
             v-model="form.date1"
@@ -1955,5 +1956,12 @@ export default class CourseList extends Vue {
   #candidate .pop {
     width: calc(100% + 200px) !important;
   }
+}
+.selected:hover{
+  color: #03B3BB!important;
+}
+.item .el-input .el-input__inner{
+  height: 40px !important;
+  line-height: 40px !important;
 }
 </style>

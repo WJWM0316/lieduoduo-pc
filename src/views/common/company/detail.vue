@@ -272,13 +272,7 @@ export default class companyDetail extends Vue {
     if (!this.companyInformation.albumInfo && this.$refs.photo && this.companyInformation.albumInfo.length <= 1) return
     var translateWidths = 0; var timeOut
     var timer = () => {
-      translateWidths = translateWidths + 2
-      console.log(translateWidths % 298 === 0)
-      if (translateWidths % 298 === 0) {
-        return setTimeout(() => {
-          timer()
-        }, 3000)
-      }
+      translateWidths = ++translateWidths
       if (translateWidths >= this.companyInformation.albumInfo.length * 298) {
         translateWidths = 0
       }
@@ -476,7 +470,7 @@ $sizing: border-box;
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 10;
+  z-index: 1111;
   .inner_ScrollY{
     height: 135px;
     padding-top: 21px;

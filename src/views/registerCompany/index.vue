@@ -162,10 +162,10 @@
                 @fail="onjobLoading = false"
                 @change="handleChangeOnjob"
                 v-loading="onjobLoading">
-                <div class="logo" v-if="!authForm.on_job_url">
+                <div class="updataimg" v-if="!authForm.on_job_url">
                   <img src="@/assets/images/identitycard.png" alt="">
                 </div>
-                <div class="logo" v-else>
+                <div class="updataimg" v-else>
                 <img :src="authForm.on_job_url" alt="">
               </div>
               </Picture>
@@ -1274,6 +1274,7 @@ export default {
               width:172px;
               margin-top: 26px;
               height:120px;
+              overflow: hidden;
               cursor: pointer;
               border-radius:4px;
             }
@@ -1345,6 +1346,7 @@ export default {
       top: -50px;
       padding: 10px;
       line-height: 17px;
+      border-radius: 4px;
       width: 270px;
       color: #6D696E;
       font-size: 12px;
@@ -1358,7 +1360,7 @@ export default {
       height: 0;
       position: absolute;
       border-width: 7px;
-      top: 6px;
+      top: 4px;
       left: 95px;
       border-style: solid;
       border-color: #fff transparent transparent transparent;
@@ -1840,20 +1842,20 @@ export default {
 .registerBox .formitem .el-input__inner::placeholder{
   font-weight: normal;
 }
-.registerBox::-webkit-scrollbar{
-  width: 4px;
+#register textarea::-webkit-scrollbar{
+  display: none;
 }
-.registerBox textarea::-webkit-scrollbar-track{
+/* textarea::-webkit-scrollbar-track{
   background:#fff;
   -webkit-border-radius: 20px;
   -moz-border-radius: 20px;
   border-radius:3px;
   height: 226px;
 }
-.registerBox textarea::-webkit-scrollbar{
+textarea::-webkit-scrollbar{
   background:#EBEBEB;
   -webkit-border-radius: 20px;
   -moz-border-radius: 20px;
   border-radius:3px;
-}
+} */
 </style>

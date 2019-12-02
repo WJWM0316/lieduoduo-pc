@@ -47,7 +47,7 @@
               :class="{'selected':isShowScreen}"
               v-if="isShowScreen"
             >
-              <i class="iconfont icon-shaixuan"></i>
+              <i class="iconfont icon-shaixuan" style="padding-right:3px"></i>
               {{ selectedScreen.length > 0 || (positionTypeList.length > 0 ? positionTypeList[positionTypeList.length-1].active:false) ? '清除筛选' :'高级筛选' }}
             </div>
 
@@ -57,7 +57,7 @@
               :class="{'selected':selectedScreen.length>0}"
               v-else
             >
-              <i class="iconfont icon-shaixuan"></i>
+              <i class="iconfont icon-shaixuan" style="padding-right:3px"></i>
               {{selectedScreen.length > 0 || (positionTypeList.length > 0 ? positionTypeList[positionTypeList.length-1].active:false) ? '清除筛选' :'高级筛选' }}
             </div>
 
@@ -98,7 +98,7 @@
             <div class="topText" v-if="navType === 'apply'">申请面试</div>
 
             <div class="topText topText2" v-if="item.positionId !== 0">
-              【<span v-if="item.address">{{item.address.city}}{{item.address.area}}<span v-show="item.address.city">|</span></span><span v-if="item.positionName">{{item.positionName}} |</span><span v-if="item.emolument">{{item.positionEmolumentMin}}k-{{item.positionEmolumentMax}}K</span>】
+              【<span v-if="item.address">{{item.address.city}}{{item.address.area}}<span v-show="item.address.city">&nbsp;|&nbsp;</span></span><span v-if="item.positionName">{{item.positionName}}&nbsp;|&nbsp;</span><span v-if="item.emolument">{{item.positionEmolumentMin}}k-{{item.positionEmolumentMax}}K</span>】
             </div>
 
             <div class="topText topText2" v-if="item.origin">
@@ -446,16 +446,16 @@
                   </div>
                   <div class="p_c">PDF格式</div>
                   <div class="p_r">
-                    <a @click="onloadfile('pdf')"><i class="iconfont icon-xiazai"></i></a>
+                    <a @click="onloadfile('pdf')"><i class="iconfont icon-xiazai selected"></i></a>
                   </div>
                 </div>
                 <div class="pdf">
                   <div class="p_l">
-                    <i class="iconfont icon-word" style="color: #2878ff"></i>
+                    <i class="iconfont icon-word" style="color: rgb(74, 144, 226)"></i>
                   </div>
                   <div class="p_c">Word格式</div>
                   <div class="p_r">
-                    <a @click="onloadfile('doc')"><i class="iconfont icon-xiazai"></i></a>
+                    <a @click="onloadfile('doc')"><i class="iconfont icon-xiazai selected"></i></a>
                   </div>
                 </div>
               </div>
@@ -584,7 +584,7 @@
             <div class="edit" @click="editaddress(item)">编辑</div>
           </div>
           <div class="addarea" @click="addaddress()">
-            <div class="add"><i class="iconfont icontianjia1 bgcolor"></i></div>
+            <div class="add"><i class="iconfont icon-tianjiashijian bgcolor" style="font-size:12px"></i></div>
             <div class="add-text">添加地址</div>
           </div>
         </div>
@@ -628,6 +628,7 @@
               <i class="iconfont icon-mianshiguan"></i>
             </div>
             <div class="text">{{jobhunterInfo.arrangementInfo.realname}}</div>
+            <div class="f-line"></div>
             <div class="phone" v-if="jobhunterInfo.arrangementInfo.mobile">{{jobhunterInfo.arrangementInfo.mobile}}</div>
           </div>
           <div class="item" v-if="jobhunterInfo.positionName">
@@ -728,7 +729,7 @@
           </li>
         </ul>
           <el-button type="text" class="add_time" v-if="model.dateLists.length < 3">
-          <i class="iconfont icontianjia1 bgcolor"></i>
+          <i class="iconfont icon-tianjiashijian bgcolor" style="font-size:12px"></i>
           <span :style="'margin-left:8px;line-height:14px'">添加时间</span>
           <el-date-picker
             v-model="form.date1"
@@ -2219,5 +2220,12 @@ export default class CourseList extends Vue {
   #candidate .pop {
     width: calc(100% + 200px) !important;
   }
+}
+.selected:hover{
+  color: #03B3BB!important;
+}
+.item .el-input .el-input__inner{
+  height: 40px !important;
+  line-height: 40px !important;
 }
 </style>

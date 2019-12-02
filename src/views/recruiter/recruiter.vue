@@ -2,9 +2,9 @@
   <div id="recruiter">
     <div class="recruiter_cont main-center">
       <div class="header_warp">
-        <h2 class="title">职位管理
+        <div class="title">职位管理
           <div class="addJob" size="small" type="primary" @click="todoAction('addJob')">发布职位</div>
-        </h2>
+        </div>
         <div class="header_navs_wrap">
           <div class="header_navs" :class="searchBarFixed === true ? 'isFixed' :''">
             <ul class="recruiter_classify">
@@ -55,7 +55,7 @@
             <span class="job_op" @click="opJob('close',item.id)" v-if="item.isOnline===1">关闭</span>
             <span
               class="job_op"
-              @click="opJob('open',item.id)"
+              @click="openposition(item.id)"
               v-if="item.isOnline===2 && form.status === '0,1'"
             >开放职位</span>
             <span class="job_op" @click="todoAction('editJob',item.id)">编辑</span>
@@ -378,6 +378,25 @@ export default class CourseList extends Vue {
         break
     }
   }
+  // 开放职位
+  openposition (id) {
+    openPositionApi({ id: id })
+    .then(() => {
+      this.$message({
+        type: 'success',
+        message: '成功!'
+      })
+      this.pop = {
+        isShow: false,
+        type: ''
+      }
+      this.getStatusTotal()
+      this.getPositionList()
+    })
+    .catch(e => {
+      this.$message.error(e.data.msg)
+    })
+  }
 
   msgcancel () {
     this.msg = {
@@ -559,6 +578,7 @@ export default class CourseList extends Vue {
   .recruiter_cont {
     background: #ffffff;
     position: relative;
+    border-radius: 8px;
   }
   .header_warp {
     min-height: 222px;
@@ -599,8 +619,8 @@ export default class CourseList extends Vue {
             position: relative;
             &::after {
               content: "\20";
-              width: 48px;
-              height: 2px;
+              width: 100%;
+              height: 4px;
               background: rgba(101, 39, 145, 1);
               position: absolute;
               bottom: -0px;
@@ -685,6 +705,7 @@ export default class CourseList extends Vue {
       font-size: 24px;
       font-weight: bold;
       width: 100%;
+      border-radius: 8px 8px 0px 0px;
       color: #2D2D2D;
       text-align: left;
       position: relative;
