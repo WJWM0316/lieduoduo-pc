@@ -312,8 +312,8 @@ $position-process-bg-color: #99e7e8;
     width: 100%;
     font-size: 12px;
     min-height: 30px;
-    line-height: 1.6;
-    color: $font-color-10;
+    line-height: 16px;
+    color: $title-color-3;
     @include ellipsis-two;
     -webkit-box-pack: center;
   }

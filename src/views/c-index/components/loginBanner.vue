@@ -92,7 +92,7 @@ export default {
       this.$store.dispatch('login', parmas)
     },
     handleOpenUrl () {
-      window.open(this.banner[0].otherUrl, '_blank')
+      window.open(this.banner[0].targetUrl, '_blank')
     }
   },
   destroyed () {
