@@ -2,13 +2,11 @@
   <div class="company-wrapper">
     <!-- 热门城市 -->
     <div class="header-wrapper">
-      <scroll-pane class="scroll-pane">
-        <ul>
-          <template v-for="item in typeList">
-            <li class="company-name" :class="{active: currentId === item.id}" @click="handleChange(item)" :key="item.id">{{item.title}}</li>
-          </template>
-        </ul>
-      </scroll-pane>
+      <ul>
+        <template v-for="item in typeList">
+          <li class="company-name" :class="{active: currentId === item.id}" @click="handleChange(item)" :key="item.id">{{item.title}}</li>
+        </template>
+      </ul>
     </div>
     <div class="company-lists-wrapper" v-loading="getLoading">
       <!-- 隔离层 防止nth-child 多读取一个div -->
@@ -24,11 +22,12 @@
   </div>
 </template>
 <script>
-import ScrollPane from 'COMPONENTS/scrollPane'
+// import ScrollPane from 'COMPONENTS/scrollPane'
 import { getHotCompanyTypes, getHotCompanys } from 'API/company'
 import CompanyCard from 'COMPONENTS/common/companyCard'
+// ScrollPane,
 export default {
-  components: { ScrollPane, CompanyCard },
+  components: { CompanyCard },
   data () {
     return {
       currentId: 0,
