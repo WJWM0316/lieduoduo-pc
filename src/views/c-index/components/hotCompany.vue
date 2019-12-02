@@ -40,6 +40,9 @@ export default {
   computed: {
     isLogin () {
       return !!this.$store.state.userInfo.id
+    },
+    cityid () {
+      return this.$store.state.cityId || 0
     }
   },
   created () {
@@ -58,7 +61,7 @@ export default {
     // 获取职位列表
     getCompanyList () {
       this.getLoading = true
-      getHotCompanys({ typeId: this.currentId }).then(({ data }) => {
+      getHotCompanys({ typeId: this.currentId, city: this.cityid }).then(({ data }) => {
         this.getLoading = false
         this.listData = data.data.slice(0, 12)
       })
@@ -71,7 +74,8 @@ export default {
       if (!this.isLogin) {
         this.$router.push('/login?type=msgLogin')
       } else {
-        this.$store.commit('guideQrcodePop', { switch: true, type: 'tocIndex' })
+        // this.$store.commit('guideQrcodePop', { switch: true, type: 'tocIndex' })
+        this.$router.push('/company')
       }
     }
   }

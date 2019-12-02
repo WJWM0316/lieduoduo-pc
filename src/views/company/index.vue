@@ -34,16 +34,16 @@
       </div>
     </div>
     <div class="search-lists" ref="search-lists">
-      <template v-for="item in companyLists">
-        <company-card :item="item"  :key="item.id"/>
+      <template v-for="(item, index) in companyLists">
+        <company-card :item="item"  :key="index"/>
       </template>
     </div>
-    <div class="pagination-company" v-if="total > 20">
+    <div class="pagination-company" v-if="total > pagesize">
       <el-pagination
         background
         @current-change="changePage"
         :current-page.sync ="page"
-        :page-size="20"
+        :page-size="pagesize"
         layout="prev, pager, next"
         :total="total">
       </el-pagination>
@@ -75,6 +75,7 @@ export default {
       companyLogoLists: [],
       companyLists: [],
       page: 1,
+      pagesize: 20,
       total: 0,
       height: 0
     }
@@ -97,7 +98,7 @@ export default {
       'updateSearchCollectMutipleApi'
     ]),
     getLogoListsLists () {
-      getLogoListsListsApi().then(({ data }) => this.companyLogoLists = data.data)
+      getLogoListsListsApi().then(({ data }) => (this.companyLogoLists = data.data))
     },
     handleSearch () {
       this.getLists()
@@ -107,7 +108,7 @@ export default {
       let industryIds = this.filterSearchCollect.industry.map(v => v.labelId).join(',')
       let employeeIds = this.filterSearchCollect.employee.map(v => v.value).join(',')
       let financingIds = this.filterSearchCollect.financing.map(v => v.value).join(',')
-      let query = { page: this.page }
+      let query = { page: this.page, q: Date.now() }
       if (cityNums) {
         query = Object.assign(query, { cityNums })
       }
@@ -123,7 +124,7 @@ export default {
       getCompanyListsApi({ ...query, count: 20 }).then(({ data }) => {
         this.$router.push({ query })
         this.companyLists = data.data
-        this.total = data.meta.total
+        this.total = (this.pagesize * 10) < data.meta.total ? this.pagesize * 10 : data.meta.total
       })
     },
     changePage (page) {
