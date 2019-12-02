@@ -166,7 +166,6 @@ export default {
     display: flex;
     .list{
       width: 882px;
-      background: #ffffff;
     }
   }
   .position-right{

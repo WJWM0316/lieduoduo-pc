@@ -67,7 +67,7 @@
               <p class="introduction-title">公司介绍</p>
               <block-overflow ref="blockOverflow" :text="companyInformation.intro"></block-overflow>
             </div>
-            <div class="product" v-if="companyInformation.product">
+            <div class="product" v-if="companyInformation.product && companyInformation.product.length">
               <p class="product-title">公司产品</p>
               <div class="product-box"  v-for="(item, index) in companyInformation.product" :key="index">
                 <img :src="item.logoInfo.middleUrl" class="product-img"/>
@@ -80,7 +80,7 @@
                 </div>
               </div>
             </div>
-            <div class="address" v-if="companyInformation.address">
+            <div class="address" v-if="companyInformation.address && companyInformation.address.length">
               <p class="address-title">公司地址</p>
               <map-pop :companyAddress = companyInformation.address></map-pop>
             </div>
@@ -368,6 +368,7 @@ $sizing: border-box;
         @include flex-v-center;
 
         .company-logo{
+          background: #FFFFFF;
           width: 106px;
           height: 106px;
           border-radius: 16px;
