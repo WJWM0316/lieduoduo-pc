@@ -173,6 +173,7 @@ export default {
 		line-height:24px;
 		text-align: center;
 		padding-top: 30px;
+		cursor: pointer;
 	}
 	.hot {
 		height:24px;
@@ -181,6 +182,7 @@ export default {
 		color:rgba(51,51,51,1);
 		line-height:24px;
 		text-align: center;
+		cursor: pointer;
 	}
 	.company-name{
 		font-size:14px;
