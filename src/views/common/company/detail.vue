@@ -377,19 +377,7 @@ $sizing: border-box;
         display: flex;
         @include flex-v-center;
         .company-logo-wrap{
-          width: 106px;
-          height: 106px;
-          border-radius: 16px;
-          overflow: hidden;
-          background: #FFFFFF;
-          position: relative;
-          .company-logo{
-            max-width: 100%;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%,-50%);
-          }
+          @include img-radius(106px, 106px, 16px, #fff)
         }
 
         .header-left-text{
@@ -635,21 +623,10 @@ to {top:0px;}
           position: relative;
 
           .product-img-wrap{
-            background: #FFFFFF;
+            @include img-radius(77px, 77px, 8px, #fff);
             position: absolute;
             left: 0;
             top: 0;
-            width: 77px;
-            height: 77px;
-            border-radius: 8px;
-            overflow: hidden;
-              .product-img{
-                max-width: 100%;
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-              }
           }
           .product-text{
             padding: 6px 0 5px 0;
