@@ -63,7 +63,7 @@
       <div class="introduction-mian">
         <div class="introduction-inner">
           <div class="introduction-left">
-            <div class="introduction-presentation">
+            <div class="introduction-presentation" v-if="companyInformation.intro">
               <p class="introduction-title">公司介绍</p>
               <block-overflow ref="blockOverflow" :text="companyInformation.intro"></block-overflow>
             </div>
@@ -599,6 +599,7 @@ to {top:0px;}
         }
       }
       .product{
+        width: 750px;
         margin-bottom: 60px;
 
         .product-title{
@@ -606,24 +607,28 @@ to {top:0px;}
         }
 
         .product-box{
-          display: flex;
           margin-bottom: 24px;
+          position: relative;
 
           .product-img{
+          position: absolute;
+          left: 0;
+          top: 0;
           width: 77px;
           height: 77px;
           border-radius: 8px;
           }
           .product-text{
-            margin: 6px 0 0 20px;
+            padding: 6px 0 5px 0;
             height: 66px;
-            @include flex-justify-between;
-            @include flex-direction-column;
             font-weight: 400;
+            margin-left: 97px;
 
             .product-text-top{
               font-size: 14px;
               color: $font-color-3;
+              line-height:18px;
+              margin-bottom: 10px;
             }
             .product-text-middle{
               font-size: 12px;
@@ -631,10 +636,12 @@ to {top:0px;}
               overflow: hidden;
               white-space: nowrap;
               text-overflow: ellipsis;
+              margin-bottom: 12px;
             }
             .product-text-buttom{
               color: $font-color-2;
               font-size: 12px;
+              line-height:12px;
             }
           }
         }
@@ -705,6 +712,9 @@ to {top:0px;}
               color: $font-color-3;
             }
             .recruitmentTeam-text-buttom{
+              width: 298px;
+              white-space: nowrap;
+              text-overflow: ellipsis;
               margin-top: 4px;
               color: $font-color-6;
               overflow: hidden;

@@ -93,7 +93,7 @@ export default {
       return JSON.parse(JSON.stringify(expects || []))
     },
     labelIds () {
-      return this.labels.map(val => val.labelId)
+      return this.labels.map(val => String(val.labelId))
     }
   },
   data () {
