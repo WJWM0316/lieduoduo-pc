@@ -137,7 +137,7 @@ export default {
       line-height: 24px;
     }
     ul{
-      margin-bottom: 5px;
+      padding-bottom: 5px;
       .positionType-buttom{
       padding: 0 10px;
       margin: 0 24px 14px 0;
@@ -148,11 +148,11 @@ export default {
       text-align: center;
       line-height: 32px;
       font-weight: 400;
-      border-radius:2px;
+      border-radius: 2px;
       }
     }
     .activation{
-      color: $main-color-1;
+      color: $main-color-1 !important;
       background: $bg-color-5;
       font-weight: 500;
     }

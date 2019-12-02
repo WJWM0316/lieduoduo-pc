@@ -181,7 +181,7 @@
                   <i class="iconfont icon-pdf" v-if="!isshow" style="color: #926666"></i>
                   <i class="iconfont icon-pdf" v-else style="color: #FA3939"></i>
                 </div>
-                <div class="pdf-c">PDF格式</div>
+                <div class="pdf-c">PDF文件</div>
                 <div class="pdf-r" v-if="!isshow"><a>下载</a></div>
                 <div class="pdf-r" @click="onloadfile('pdf')" v-else><a style="color:#652791">下载</a></div>
               </div>
@@ -190,7 +190,7 @@
                   <i class="iconfont icon-word" v-if="!isshow" style="color: #667c96"></i>
                   <i class="iconfont icon-word" v-else style="color: #4a90e2"></i>
                 </div>
-                <div class="pdf-c">Word格式</div>
+                <div class="pdf-c">Word文档</div>
                 <div class="pdf-r" v-if="!isshow"><a>下载</a></div>
                 <div class="pdf-r" @click="onloadfile('doc')" v-else><a style="color:#652791">下载</a></div>
                 <!-- <a :href="nowResumeMsg.resumeAttach.url" :download="nowResumeMsg.resumeAttach.fileName">下载</a> -->
@@ -289,7 +289,7 @@ export default class CourseList extends Vue {
       if (type === 'pdf') {
         createonlinepdf(params).then((res) => {
           this.loadingshow = false
-          this.$util.downFile(res.data, this.nowResumeMsg.name + '.pdf')
+          this.$util.downFile(res.data, this.nowResumeMsg.name + '-' + this.nowResumeMsg.expects[0].position + '.pdf')
         }).catch((e) => {
           this.loadingshow = false
         })
@@ -297,7 +297,7 @@ export default class CourseList extends Vue {
       if (type === 'doc') {
         createonlineword(params).then((res) => {
           this.loadingshow = false
-          this.$util.downFile(res.data, this.nowResumeMsg.name + '.docx')
+          this.$util.downFile(res.data, this.nowResumeMsg.name + '-' + this.nowResumeMsg.expects[0].position + '.docx')
         }).catch((e) => {
           this.loadingshow = false
         })

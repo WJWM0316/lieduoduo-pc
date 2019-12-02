@@ -8,22 +8,24 @@
       <!-- 创建公司模块 -->
       <div class="registerBox" v-show="!$route.query.page" @click="closeMsg($event)">
         <div class="box-title">填写个人信息</div>
-        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-          <el-form-item label="真实姓名" prop="real_name">
+        <el-form :model="ruleForm" :rules="rules" :status-icon="false" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+          <el-form-item label="真实姓名" prop="real_name" class="formitem">
             <el-input :value="ruleForm.real_name" placeholder="请填写真实姓名" @input="bindInput($event, 'real_name')"></el-input>
           </el-form-item>
-          <el-form-item label="公司全称" prop="company_name" class="cpname">
+          <el-form-item label="公司全称" prop="company_name" class="formitem">
             <el-input :value="ruleForm.company_name" placeholder="请填写公司全称" @input="bindInput($event, 'company_name')"></el-input>
             <option-list :option="companylist" :visible="companyshow" @selectchange="changecompany"></option-list>
           </el-form-item>
-          <el-form-item label="职位所属类型" prop="position_name">
-            <div class="positon-box" @click="selectposition"></div>
+          <el-form-item label="职位所属类型" prop="position_name" class="formitem">
+            <select-position-type
+            @on-selected="selectedPosition">
             <el-input :value="ruleForm.position_name" placeholder="请选择职位所属类型" @input="bindInput($event, 'position_name')"></el-input>
+          </select-position-type>
           </el-form-item>
-          <el-form-item label="担任的职务" prop="user_position">
+          <el-form-item label="担任的职务" prop="user_position" class="formitem">
             <el-input :value="ruleForm.user_position" placeholder="请填写担任的职务" @input="bindInput($event, 'user_position')"></el-input>
           </el-form-item>
-          <el-form-item label="邮箱地址" prop="user_email">
+          <el-form-item label="邮箱地址" prop="user_email" class="formitem">
             <el-input :value="ruleForm.user_email" placeholder="请输入公司邮箱地址" @input="bindInput($event, 'user_email')"></el-input>
           </el-form-item>
         </el-form>
@@ -162,10 +164,10 @@
                 @fail="onjobLoading = false"
                 @change="handleChangeOnjob"
                 v-loading="onjobLoading">
-                <div class="logo" v-if="!authForm.on_job_url">
+                <div class="updataimg" v-if="!authForm.on_job_url">
                   <img src="@/assets/images/identitycard.png" alt="">
                 </div>
-                <div class="logo" v-else>
+                <div class="updataimg" v-else>
                 <img :src="authForm.on_job_url" alt="">
               </div>
               </Picture>
@@ -402,9 +404,6 @@
       </div>
     </div>
   </div>
-  <!-- 职位弹窗 -->
-  <MyModel @resultEvent="resultEvent" v-model="showPositionModel" :data="positiondata"></MyModel>
-  <!-- 提示弹窗 -->
   <message-diggle :visible="msg.messageshow" @clicksure="msgsure" @clickcancle="msgcancel" :title="msg.msgtitle" :desc="msg.msgdesc"></message-diggle>
 </div>
 </template>
@@ -421,6 +420,7 @@ import MessageDiggle from '../registerCompany/components/message.vue'
 import Picture from 'COMPONENTS/common/upload/picture'
 import MyModel from '@/components/model/index.vue'
 import { getLabelFieldListApi } from 'API/putIn'
+import SelectPositionType from 'COMPONENTS/selectPositionType'
 import {
   applyCompanyApi,
   createCompanyApi,
@@ -438,7 +438,8 @@ export default {
     OptionList,
     MyModel,
     Picture,
-    MessageDiggle
+    MessageDiggle,
+    SelectPositionType
   },
   data () {
     var validateRealname = (rule, value, callback) => {
@@ -632,9 +633,6 @@ export default {
       this.companyshow = false
     },
     // 选择职位
-    selectposition () {
-      this.showPositionModel = true
-    },
     // 选择行业
     selectindustry () {
       this.industryshow = !this.industryshow
@@ -672,10 +670,9 @@ export default {
         this.getCompanyIdentityInfos()
       })
     },
-    resultEvent (res) {
+    selectedPosition (res) {
       this.ruleForm.position_type_id = res.labelId
       this.ruleForm.position_name = res.name
-      this.showPositionModel = false
       this.bindButtonStatus()
     },
     bindInput (value, key) {
@@ -1182,8 +1179,8 @@ export default {
   background: url("../../assets/images/register-bg.png") no-repeat;
   z-index: 100;
   display: flex;
+  background-size: 100% auto;
   min-height: 100%;
-  padding-bottom: 30px;
   align-items: center;
   // justify-content: center;
   flex-direction: column;
@@ -1274,6 +1271,7 @@ export default {
               width:172px;
               margin-top: 26px;
               height:120px;
+              overflow: hidden;
               cursor: pointer;
               border-radius:4px;
             }
@@ -1345,6 +1343,7 @@ export default {
       top: -50px;
       padding: 10px;
       line-height: 17px;
+      border-radius: 4px;
       width: 270px;
       color: #6D696E;
       font-size: 12px;
@@ -1358,7 +1357,7 @@ export default {
       height: 0;
       position: absolute;
       border-width: 7px;
-      top: 6px;
+      top: 4px;
       left: 95px;
       border-style: solid;
       border-color: #fff transparent transparent transparent;
@@ -1840,20 +1839,20 @@ export default {
 .registerBox .formitem .el-input__inner::placeholder{
   font-weight: normal;
 }
-.registerBox::-webkit-scrollbar{
-  width: 4px;
+#register textarea::-webkit-scrollbar{
+  display: none;
 }
-.registerBox textarea::-webkit-scrollbar-track{
+/* textarea::-webkit-scrollbar-track{
   background:#fff;
   -webkit-border-radius: 20px;
   -moz-border-radius: 20px;
   border-radius:3px;
   height: 226px;
 }
-.registerBox textarea::-webkit-scrollbar{
+textarea::-webkit-scrollbar{
   background:#EBEBEB;
   -webkit-border-radius: 20px;
   -moz-border-radius: 20px;
   border-radius:3px;
-}
+} */
 </style>

@@ -11,6 +11,7 @@
       :title="title"
       width="650px"
       custom-class="app-dialog"
+      append-to-body
       :visible.sync="showDialog">
       <div class="lists-wrapper">
         <ul class="warpper-scroll lists-left">

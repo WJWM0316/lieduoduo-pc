@@ -333,18 +333,18 @@
                   <div class="p_l">
                     <i class="iconfont icon-pdf" style="color: #FA3939"></i>
                   </div>
-                  <div class="p_c">PDF格式</div>
+                  <div class="p_c">PDF文件</div>
                   <div class="p_r">
-                    <a @click="onloadfile('pdf')"><i class="iconfont icon-xiazai"></i></a>
+                    <a @click="onloadfile('pdf')"><i class="iconfont icon-xiazai selected"></i></a>
                   </div>
                 </div>
                 <div class="pdf">
                   <div class="p_l">
-                    <i class="iconfont icon-word" style="color: #2878ff"></i>
+                    <i class="iconfont icon-word" style="color: rgb(74, 144, 226)"></i>
                   </div>
-                  <div class="p_c">Word格式</div>
+                  <div class="p_c">Word文档</div>
                   <div class="p_r">
-                    <a @click="onloadfile('doc')"><i class="iconfont icon-xiazai"></i></a>
+                    <a @click="onloadfile('doc')"><i class="iconfont icon-xiazai selected"></i></a>
                   </div>
                 </div>
               </div>
@@ -468,7 +468,7 @@
             <div class="edit" @click="editaddress(item)">编辑</div>
           </div>
           <div class="addarea" @click="addaddress()">
-            <div class="add"><i class="iconfont icontianjia1 bgcolor"></i></div>
+            <div class="add"><i class="iconfont icon-tianjiashijian bgcolor" style="font-size:12px"></i></div>
             <div class="add-text">添加地址</div>
           </div>
         </div>
@@ -512,6 +512,7 @@
                 <i class="iconfont icon-mianshiguan"></i>
               </div>
               <div class="text">{{jobhunterInfo.arrangementInfo.realname}}</div>
+              <div class="f-line"></div>
               <div class="phone" v-if="jobhunterInfo.arrangementInfo.mobile">{{jobhunterInfo.arrangementInfo.mobile}}</div>
             </div>
             <div class="item" v-if="jobhunterInfo.positionName">
@@ -614,7 +615,7 @@
           </li>
         </ul>
           <el-button type="text" class="add_time" v-if="model.dateLists.length < 3">
-          <i class="iconfont icontianjia1 bgcolor"></i>
+          <i class="iconfont icon-tianjiashijian bgcolor" style="font-size:12px"></i>
           <span :style="'margin-left:8px;line-height:14px'">添加时间</span>
           <el-date-picker
             v-model="form.date1"
@@ -1543,7 +1544,7 @@ export default {
       if (type === 'pdf') {
         createonlinepdf(params).then((res) => {
           this.loadingshow = false
-          this.$util.downFile(res.data, this.nowResumeMsg.name + '.pdf')
+          this.$util.downFile(res.data, this.nowResumeMsg.name + '-' + this.nowResumeMsg.expects[0].position + '.pdf')
         }).catch((e) => {
           this.loadingshow = false
         })
@@ -1551,7 +1552,7 @@ export default {
       if (type === 'doc') {
         createonlineword(params).then((res) => {
           this.loadingshow = false
-          this.$util.downFile(res.data, this.nowResumeMsg.name + '.docx')
+          this.$util.downFile(res.data, this.nowResumeMsg.name + '-' + this.nowResumeMsg.expects[0].position + '.docx')
         }).catch((e) => {
           this.loadingshow = false
         })
@@ -1716,6 +1717,7 @@ export default {
     width: 100%;
     position: relative;
     height: 155px;
+    border-radius: 8px;
     background: #fff;
     margin-bottom: 16px;
     .title{
@@ -2289,6 +2291,7 @@ export default {
               top: 26px;
               left: -179px;
               z-index: 1;
+              border-radius: 4px;
               box-shadow:0px 0px 26px 0px rgba(22,39,77,0.12);
               .title{
                 font-size: 14px;
@@ -2334,7 +2337,7 @@ export default {
                   margin-top: 11px;
                   i{
                     font-size: 14px;
-                    color: #652791;
+                    color: #CDCBCF;
                     vertical-align: super
                   }
                 }
@@ -2823,6 +2826,7 @@ export default {
             text-align: left;
             white-space: pre-wrap;
             font-size: 13px;
+            line-height: 22px;
             color: #929292;
           }
           .imgList {
@@ -2836,6 +2840,7 @@ export default {
               height: 86px;
               margin-right: 6px;
               margin-bottom: 6px;
+              border-radius: 4px;
               &:nth-child(6n + 6) {
                 margin-right: 0px;
               }
@@ -2895,6 +2900,7 @@ export default {
                   font-size: 13px;
                   color: #929292;
                   width: 545px;
+                  line-height: 22px;
                   white-space: pre-wrap;
                   margin: 0px;
                 }
@@ -3208,7 +3214,7 @@ export default {
           padding: 0 38px;
           margin-top: 4px;
           .item{
-            line-height: 17px;
+            line-height: 22px;
             color:rgba(40,40,40,1);
             font-size:14px;
             display: flex;
@@ -3226,9 +3232,15 @@ export default {
               float: left;
               padding-left: 18px;
             }
+            .f-line{
+              float: left;
+              width:2px;
+              height:12px;
+              margin: 5px 7px;
+              background: #E8E9EB;
+            }
             .phone{
               float: left;
-              padding-left: 16px;
               color:rgba(101,39,145,1);
             }
           }
@@ -3273,7 +3285,7 @@ export default {
                   background:rgba(92,86,93,1);
                   float:left;
                   border-radius: 50%;
-                  margin-top: 9px;
+                  margin-top: 5px;
                   margin-right: 5px;
                 }
                 .tex{
@@ -3460,20 +3472,18 @@ export default {
             border-bottom:1px solid #E8E9EB;
             position: relative;
             .position{
-              height:14px;
-              line-height: 14px;
+              height:27px;
               width: 100%;
-              margin-bottom: 12px;
               .close{
-                width:36px;
-                height:20px;
+                width:56px;
+                height:18px;
                 background:rgba(255,255,255,1);
                 border-radius:2px;
                 color:rgba(237,92,92,1);
                 font-size: 12px;
                 float: left;
                 text-align: center;
-                line-height: 20px;
+                line-height: 18px;
                 margin-right: 10px;
                 border:1px solid rgba(237,92,92,1);
               }
@@ -3482,6 +3492,7 @@ export default {
                 font-weight: bold;
                 font-size: 14px;
                 float: left;
+                line-height: 20px;
                 max-width:227px;
                 white-space: nowrap;
                 overflow: hidden;
@@ -3492,6 +3503,7 @@ export default {
                 float: left;
                 color:rgba(255,127,76,1);
                 font-weight: bold;
+                line-height: 20px;
                 font-size: 14px;
               }
               .hui{
@@ -3505,7 +3517,7 @@ export default {
               .address{
                 float: left;
                 background:rgba(248,248,248,1);
-                padding: 0 6px;
+                padding: 4px 6px;
                 text-align: center;
                 margin-right: 8px;
               }
@@ -3513,10 +3525,12 @@ export default {
                 float: left;
                 background:rgba(248,248,248,1);
                 margin-right: 8px;
+                padding: 4px 6px;
               }
               .benke{
                 float: left;
                 background:rgba(248,248,248,1);
+                padding: 4px 6px;
               }
               .hui{
                 color:rgba(188,188,188,1);
@@ -3526,6 +3540,7 @@ export default {
               position: absolute;
               width:20px;
               height:20px;
+              color: #BCBCBC;
               top: 20px;
               right: 0px;
               .bg{
@@ -3583,6 +3598,7 @@ export default {
           .explaintitle{
             color:rgba(92,86,93,1);
             margin-bottom: 12px;
+            font-weight: bold;
           }
           .text{
             width:328px;
@@ -3611,7 +3627,7 @@ export default {
           .cancel{
             width:78px;
             height:30px;
-            border-radius:49px;
+            border-radius:4px;
             color:rgba(146,146,146,1);
             font-size: 14px;
             text-align: center;
@@ -3625,7 +3641,7 @@ export default {
             width:108px;
             height:32px;
             background:rgba(101,39,145,1);
-            border-radius:100px;
+            border-radius:4px;
             text-align: center;
             color:rgba(255,255,255,1);
             float: right;
@@ -3647,5 +3663,12 @@ export default {
   .interviewrecords .pop {
     width: calc(100% + 200px) !important;
   }
+}
+.selected:hover{
+  color: #03B3BB!important;
+}
+.item .el-input .el-input__inner{
+  height: 40px !important;
+  line-height: 40px !important;
 }
 </style>
