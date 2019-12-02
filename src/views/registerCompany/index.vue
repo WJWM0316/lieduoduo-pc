@@ -8,7 +8,7 @@
       <!-- 创建公司模块 -->
       <div class="registerBox" v-show="!$route.query.page" @click="closeMsg($event)">
         <div class="box-title">填写个人信息</div>
-        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+        <el-form :model="ruleForm" :rules="rules" :status-icon="false" ref="ruleForm" label-width="100px" class="demo-ruleForm">
           <el-form-item label="真实姓名" prop="real_name">
             <el-input :value="ruleForm.real_name" placeholder="请填写真实姓名" @input="bindInput($event, 'real_name')"></el-input>
           </el-form-item>
@@ -17,8 +17,10 @@
             <option-list :option="companylist" :visible="companyshow" @selectchange="changecompany"></option-list>
           </el-form-item>
           <el-form-item label="职位所属类型" prop="position_name">
-            <div class="positon-box" @click="selectposition"></div>
+            <select-position-type
+            @on-selected="selectedPosition">
             <el-input :value="ruleForm.position_name" placeholder="请选择职位所属类型" @input="bindInput($event, 'position_name')"></el-input>
+          </select-position-type>
           </el-form-item>
           <el-form-item label="担任的职务" prop="user_position">
             <el-input :value="ruleForm.user_position" placeholder="请填写担任的职务" @input="bindInput($event, 'user_position')"></el-input>
@@ -402,9 +404,6 @@
       </div>
     </div>
   </div>
-  <!-- 职位弹窗 -->
-  <MyModel @resultEvent="resultEvent" v-model="showPositionModel" :data="positiondata"></MyModel>
-  <!-- 提示弹窗 -->
   <message-diggle :visible="msg.messageshow" @clicksure="msgsure" @clickcancle="msgcancel" :title="msg.msgtitle" :desc="msg.msgdesc"></message-diggle>
 </div>
 </template>
@@ -421,6 +420,7 @@ import MessageDiggle from '../registerCompany/components/message.vue'
 import Picture from 'COMPONENTS/common/upload/picture'
 import MyModel from '@/components/model/index.vue'
 import { getLabelFieldListApi } from 'API/putIn'
+import SelectPositionType from 'COMPONENTS/selectPositionType'
 import {
   applyCompanyApi,
   createCompanyApi,
@@ -438,7 +438,8 @@ export default {
     OptionList,
     MyModel,
     Picture,
-    MessageDiggle
+    MessageDiggle,
+    SelectPositionType
   },
   data () {
     var validateRealname = (rule, value, callback) => {
@@ -632,9 +633,6 @@ export default {
       this.companyshow = false
     },
     // 选择职位
-    selectposition () {
-      this.showPositionModel = true
-    },
     // 选择行业
     selectindustry () {
       this.industryshow = !this.industryshow
@@ -672,10 +670,9 @@ export default {
         this.getCompanyIdentityInfos()
       })
     },
-    resultEvent (res) {
+    selectedPosition (res) {
       this.ruleForm.position_type_id = res.labelId
       this.ruleForm.position_name = res.name
-      this.showPositionModel = false
       this.bindButtonStatus()
     },
     bindInput (value, key) {
