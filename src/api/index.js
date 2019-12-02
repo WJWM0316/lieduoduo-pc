@@ -72,8 +72,19 @@ export const request = ({ url, method, params = {}, config = {} }) => {
       resolve(res)
       loadingBack()
     }).catch(err => {
+			// if (err instanceof 'blob') {
+			// 	var reader = new FileReader();
+			// 	reader.readAsText(err, 'utf-8');
+			// 	reader.onload = function () {
+			// 		err = JSON.parse(reader.result);
+			// 	}
+			// }
+			// console.log(err, 111111111111)
       if (!config.noCheckLogin && err.response.data.httpStatus !== 200) {
-        Message.error(err.response.data.msg || err.response.data.message)
+				Message({
+					type: 'error',
+					message: err.response.data.msg || err.response.data.message
+				})
       }
       // 登陆过期或者未登录
       if (!config.noCheckLogin && err.response.data.httpStatus === 401) {
