@@ -13,7 +13,7 @@
       </p>
       <p>
         <span class="company-params"><span>{{item.financingInfo}}</span><span class="spc">|</span><span>{{item.employeesInfo}}</span><span class="spc">|</span><span>{{item.industry}}</span></span>
-        <span class="company-count"><span><b>{{item.onlinePositions}}</b>个热招职位</span><span class="spc">|</span><span>{{item.numOfVisitors}}人浏览</span></span>
+        <span class="company-count"><span><b>{{item.positionNum}}</b>个热招职位</span><span class="spc">|</span><span>{{item.numOfVisitors}}人浏览</span></span>
       </p>
     </div>
     <div class="company-operate">

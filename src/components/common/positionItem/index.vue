@@ -19,8 +19,10 @@
       </p>
     </div>
     <div class="company-info" v-if="item.companyInfo">
-      <p class="company-name">{{item.companyInfo.companyShortname}}</p>
-      <p class="company-details"><span>{{item.companyInfo.financingInfo}}</span>|<span>{{item.companyInfo.employeesInfo}}</span>|<span>{{item.companyInfo.industry}}</span></p>
+      <template v-if="showCompanyInfo">
+        <p class="company-name">{{item.companyInfo.companyShortname}}</p>
+        <p class="company-details"><span>{{item.companyInfo.financingInfo}}</span>|<span>{{item.companyInfo.employeesInfo}}</span>|<span>{{item.companyInfo.industry}}</span></p>
+      </template>
     </div>
     <div class="recruiter-info" v-if="item.recruiterInfo">
       <div class="recruiter-base-info">
@@ -40,6 +42,10 @@ export default {
     item: {
       type: Object,
       default: () => ({})
+    },
+    showCompanyInfo: {
+      type: Boolean,
+      default: true
     }
   }
 }
