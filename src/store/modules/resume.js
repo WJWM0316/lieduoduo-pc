@@ -6,6 +6,7 @@ export default {
     eidtStatus: false, // 是否是编辑状态
     calculateClick: 0, // 记录点击编辑图标的次数，数值更新触发滚动条滚动
     propClass: '',
+    loaded: false,
     isFourResume: {}
   },
   getters: {},
@@ -32,6 +33,10 @@ export default {
     // 清空简历信息
     removeResume (state) {
       state.myResume = {}
+    },
+    // 是否请求成功
+    setLoaded (state, status) {
+      state.loaded = status
     }
   },
   actions: {
@@ -42,7 +47,10 @@ export default {
         getMyResumeApi().then(({ data }) => {
           const res = data || {}
           store.commit('setMyResume', res)
+          store.commit('setLoaded', data.httpStatus === 200)
           reslove(res)
+        }).catch(() => {
+          store.commit('setLoaded', false)
         })
       })
     }

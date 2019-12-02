@@ -28,7 +28,7 @@
                 title="职业标签"
                 type="skills"
                 @on-selected="(val) => handleSelectLabel(val, 'positionLabels')"
-                :default-value="info.positionIds"
+                :default-value="positionIds"
                 :filter="expectId"
                 :multiple-config.sync="positionLabelsConfig" />
             </el-form-item>
@@ -40,7 +40,7 @@
                 v-model="form.life"
                 title="生活标签"
                 :multiple="true"
-                :default-value="info.lifeIds"
+                :default-value="lifeIds"
                 @on-selected="(val) => handleSelectLabel(val, 'lifeLabels')"
                 :multiple-config.sync="listLabelsConfig"
                 type="life" />
@@ -99,17 +99,20 @@ export default {
       const { signature, personalizedLabels } = this.resume
       const labelLabes = personalizedLabels ? personalizedLabels.filter(val => val.type === 'label_life') : []
       const positionLabels = personalizedLabels ? personalizedLabels.filter(val => val.type === 'label_professional_literacy' || val.type === 'label_professional_skills') : []
-      // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-      this.lifeLabels = labelLabes
-      // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-      this.positionLabels = positionLabels
       return {
         signature,
-        lifeIds: labelLabes.map(val => val.labelId),
-        positionIds: positionLabels.map(val => val.labelId),
         life: labelLabes,
         position: positionLabels
       }
+    },
+    loaded () {
+      return this.$store.state.resume.loaded
+    },
+    lifeIds () {
+      return this.lifeLabels.map(val => val.labelId)
+    },
+    positionIds () {
+      return this.positionLabels.map(val => val.labelId)
     },
     isEmpty () {
       return !this.resume.signature
@@ -171,6 +174,21 @@ export default {
     },
     validFormData () {
       return this.jsonFormString === JSON.stringify(this.form)
+    }
+  },
+  mounted () {
+    this.lifeLabels = this.info.life || []
+    this.positionLabels = this.info.position || []
+  },
+  watch: {
+    loaded: {
+      handler (value) {
+        if (value) {
+          this.lifeLabels = this.info.life || []
+          this.positionLabels = this.info.position || []
+        }
+      },
+      immediate: true
     }
   }
 }
