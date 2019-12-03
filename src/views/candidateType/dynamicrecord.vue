@@ -241,6 +241,7 @@ export default {
         background:rgba(255,255,255,1);
         border-radius:4px;
         position: relative;
+        white-space: nowrap;
         padding-left: 14px;
         border:1px solid rgba(222,218,224,1);
         .url{
