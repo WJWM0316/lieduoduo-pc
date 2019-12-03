@@ -49,7 +49,7 @@ export default {
     },
     size: { // 限制上传文件的大小 单位M
       type: Number,
-      default: 5
+      default: 10
     },
     accept: { // 限制上传文件的格式
       type: String,

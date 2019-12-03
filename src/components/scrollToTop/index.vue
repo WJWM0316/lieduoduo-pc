@@ -75,7 +75,7 @@ export default {
   z-index: 99;
   position: fixed;
   right: 54px;
-  bottom: 100px;
+  bottom: 172px;
   transition: color 0.4s;
   cursor: pointer;
   text-align: center;
