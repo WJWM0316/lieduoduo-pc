@@ -35,8 +35,10 @@
           <div class="list-footer">
             <div class="count-down">
               <span>还剩</span>
-              <span class="list-day">{{listCountDown[index].days}}</span>
-              <span>天</span>
+              <template v-if="listCountDown[index].days > 0">
+                <span class="list-day">{{listCountDown[index].days}}</span>
+                <span>天</span>
+              </template>
               <span class="list-hour">{{listCountDown[index].hours}}</span>:<span class="list-mins">{{listCountDown[index].mins}}</span>:<span class="list-second">{{listCountDown[index].seconds}}</span>
             </div>
             <div class="position-count">
@@ -244,7 +246,8 @@ $position-process-bg-color: #99e7e8;
     color: $font-color-6;
     border-bottom: 1px dashed $border-color-1;
     .list-image {
-      @include img-radius(28px, 28px)
+      @include img-radius(28px, 28px);
+      border: 1px solid $border-color-8;
     }
     .list-company {
       font-size: 14px;
@@ -344,12 +347,12 @@ $position-process-bg-color: #99e7e8;
     margin: 0 3px;
   }
   .el-button {
-    margin-left: auto;
+    margin-left: 15px;
     padding: 0;
     height: 34px;
   }
   .position-count {
-    margin-left: 13px;
+    margin-left: auto;
     p {
       font-size: 12px;
       font-weight: 300;

@@ -331,9 +331,9 @@ img {
 		}
 		&.isRapidly .inner-bg {
 			padding: 34px 0 30px;
-			width: 1200px;
+			width: 1440px;
 			background: url(#{$image-cdn-url}/images/24h.png);
-			background-position: right 120%;
+			background-position: right 125%;
 			margin: 0 auto;
 			background-repeat: no-repeat;
 		}
@@ -437,6 +437,9 @@ img {
 		.content-aside {
 			width: $content-right;
 			float: right;
+			.position-guide-login {
+				margin-bottom: 40px;
+			}
 			.companyInfos {
 				margin-bottom: 34px;
 				.title {
@@ -578,12 +581,8 @@ img {
 }
 @media screen and (max-width: 1440px)  {
   .positionDetail .header.isRapidly .inner-bg {
-    width: 100%;
-	}
-}
-@media screen and (max-width: 1200px)  {
-  .positionDetail .header.isRapidly .inner-bg {
-    background-position-x: 914px;
+		width: 100%;
+		background-position-x: 1152px;
 	}
 }
   

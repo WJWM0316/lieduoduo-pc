@@ -822,6 +822,7 @@
           border-right: 1px solid #ededed;
           overflow-y: scroll;
           display: inline-block;
+          box-sizing: border-box;
           &::-webkit-scrollbar {
             display: none;
           }
@@ -1605,6 +1606,8 @@
           .add_time{
             position: relative;
             overflow: hidden;
+            padding: 12px 0;
+            color: #03b3bb;
             .el-date-editor{
               position: absolute;
               left: 0;

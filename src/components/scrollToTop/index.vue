@@ -25,18 +25,8 @@ export default {
         let top = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
         let to = 0
         let duration = 500
-        if (!window.requestAnimationFrame) {
-          window.requestAnimationFrame =
-            window.webkitRequestAnimationFrame ||
-            window.mozRequestAnimationFrame ||
-            window.msRequestAnimationFrame ||
-            function (callback) {
-              return window.setTimeout(callback, 1000 / 60)
-            }
-        }
         const s = Math.abs(top - to)
         const v = Math.ceil((s / duration) * 50)
-
         // eslint-disable-next-line no-inner-declarations
         function scroll (start, end, step) {
           if (start === end) return
@@ -49,8 +39,6 @@ export default {
           window.requestAnimationFrame(() => scroll(d, end, step))
         }
         scroll(s, to, v)
-      } else {
-        this.tableDom.scrollTop = 0
       }
     },
     handleScroll () {
@@ -75,7 +63,7 @@ export default {
   z-index: 99;
   position: fixed;
   right: 54px;
-  bottom: 100px;
+  bottom: 172px;
   transition: color 0.4s;
   cursor: pointer;
   text-align: center;

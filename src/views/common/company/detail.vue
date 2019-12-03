@@ -483,6 +483,7 @@ $sizing: border-box;
   top: 0;
   left: 0;
   z-index: 10;
+  animation: mymove .3s ease-in forwards;
   .inner_ScrollY{
     height: 135px;
     padding-top: 21px;

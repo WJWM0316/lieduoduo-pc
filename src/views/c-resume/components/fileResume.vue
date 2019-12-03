@@ -7,7 +7,7 @@
       </p>
       <upload-file
         @change="uploadSuccess"
-        :size="8"
+        :size="10"
         :showTips="true"
         :value="attach">
         <div class="c-btn resume-add-btn">{{attach.id ? '重新上传附件简历' : '上传附件简历'}}</div>

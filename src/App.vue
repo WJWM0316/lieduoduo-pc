@@ -56,6 +56,7 @@ export default class APP extends Vue {
 }
 body, html{
   height: 100%;
+  background: #F8FAFA;
 }
 .hidden {
   display: none;

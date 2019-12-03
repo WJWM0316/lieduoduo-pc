@@ -216,6 +216,9 @@ export default {
     box-sizing: border-box;
     overflow-y: auto;
     background-color: $bg-color-1;
+    & /deep/ .el-input__validateIcon {
+      display: none;
+    }
   }
 }
 .lists-items, .lists-selected {

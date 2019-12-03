@@ -26,12 +26,14 @@ $--button-small-height: 32px;
 $--tooltip-fill: #fff;
 
 $--input-hover-border: #00C4CD;
+$--select-border-color-hover: #00C4CD;
 $--input-font-color: #333;
 $--color-text-placeholder: #92929b;
 $--input-disabled-fill: #F0F3F5;
 $--input-disabled-border : #DDE1E0;
 $--input-disabled-color: #99999e;
 
+$--msgbox-border-radius: 8px;
 
 // 高亮字体颜色
 $lightFont-color-orange: #FF9E40;
@@ -64,6 +66,7 @@ $barder-color-4: #CDCBCF;
 $border-color-5: #BCBCBC;
 $border-color-6: #DCDCDC;
 $border-color-7: #66666E;
+$border-color-8: #EDF1F0;
 // scroll bar 滚动条配置
 $scroll-bar-color: #EBEBEB;
 
@@ -85,7 +88,7 @@ $title-color-3: $font-color-9;
 
 // 导航颜色
 $nav-color-hover: #4CD5DB;
-$nav-color-default: $font-color-10;
+$nav-color-default: rgba(#fff, .58);
 $nav-color-bg-color: $bg-color-2;
 
 // 阴影
