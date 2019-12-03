@@ -296,9 +296,6 @@ export default {
     max-height: 100%;
   }
 }
-.el-button {
-  border: 1px solid rgba(101, 39, 145, 1);
-}
 .image-tip {
   color: #bcbcbc;
   font-size: 12px !important;
