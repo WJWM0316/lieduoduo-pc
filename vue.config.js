@@ -16,6 +16,7 @@ module.exports = {
         'axios',
         'vuex'
       ],
+			app: ["babel-polyfill", resolve('src/main.js')],
       eleui: [resolve('src/eleui/index.js')]
     },
     resolve: {

@@ -235,7 +235,7 @@
         </div>
       </div>
 
-    <div class="pop" v-if="pop.isShow" @click="closeMsg($event)">
+    <div class="pop" v-show="pop.isShow" @click="closeMsg($event)">
       <div class="xcxPicBox" v-if="pop.type==='clickPic'">
         <img class="clo" src="~IMAGES/clo.png" />
         <div class="main_tit">查看简历详情</div>
@@ -416,11 +416,11 @@
               </div>
             </div>
             <!-- 更多介绍 -->
-            <div class="workExperience" v-if="nowResumeMsg.moreIntroduce.introduce">
+            <div class="workExperience" v-if="nowResumeMsg.moreIntroduce && nowResumeMsg.moreIntroduce.introduce">
               <p class="title">更多介绍</p>
               <div class="workList">
-                <pre v-if="nowResumeMsg.moreIntroduce.introduce">{{nowResumeMsg.moreIntroduce.introduce}}</pre>
-               <div class="imgList" v-if="nowResumeMsg.moreIntroduce.imgs.length > 0">
+                <pre>{{nowResumeMsg.moreIntroduce.introduce}}</pre>
+               <div class="imgList" v-if="nowResumeMsg.moreIntroduce && nowResumeMsg.moreIntroduce.imgs && nowResumeMsg.moreIntroduce.imgs.length > 0">
                   <div style="position:relative" :key="index" v-for="(item, index) in nowResumeMsg.moreIntroduce.imgs">
                   <img
                     :src="item.url"
@@ -871,6 +871,13 @@ import {
   improperMarkingApi,
   confirmInterviewApi,
   addressListApi, interviewRetract, addCompanyAdressApi, editCompanyAdressApi, setInterviewInfoApi, setCommentApi, setAttendApi, emailtoforword, manyrecordstatus } from 'API/candidateType'
+const debounce = (() => {
+  let timer = 0
+  return (callback, ms) => {
+    clearTimeout(timer)
+    timer = setTimeout(callback, ms)
+  }
+})()
 
 @Component({
   name: 'candidate',
@@ -899,7 +906,8 @@ import {
   components: { MapSearch, DynamicRecord }
 })
 export default class CourseList extends Vue {
-  userInfo = {};
+  userInfo = {}
+  selectBlo = {}
   showResume = false
   hasonload = false
   loadingshow = false
@@ -919,6 +927,7 @@ export default class CourseList extends Vue {
     doorplate: '',
     address: ''
   }
+  arrangeobj = ''
   arrangementInfo = {
     interviewId: '',
     realname: '',
@@ -981,7 +990,11 @@ export default class CourseList extends Vue {
   navNum = {}; // nav 数量
   listType = 0;
   typeList = [];
-  nowResumeMsg = {};
+  nowResumeMsg = {
+    interviewInfo: {
+      data: {}
+    }
+  };
   shareResumeImg = '' // 简历二维码
   positionList = [{}];
   selectPosition = 0;
@@ -1301,10 +1314,7 @@ export default class CourseList extends Vue {
 
   // 意向列表
   getInviteList () {
-    // let otherActive = this.getOtherActive()
-    console.log(this.selectedScreen, '1')
     this.form.position_type_id = this.selectedScreen.join()
-    // this.form.position_type_id = otherActive ? '0' : this.selectedScreen.join()
     getInviteListApi(this.form)
       .then(res => {
         let msg = res.data.data
@@ -1322,9 +1332,6 @@ export default class CourseList extends Vue {
   }
   // 邀请
   getApplyList () {
-    // let otherActive = this.getOtherActive()
-    console.log(this.selectedScreen, '2')
-    // this.form.position_type_id = otherActive ? '0' : this.selectedScreen.join()
     this.form.position_type_id = this.selectedScreen.join()
     getApplyListApi(this.form)
       .then(res => {
@@ -1628,6 +1635,7 @@ export default class CourseList extends Vue {
           } else {
             confirmInterviewApi({ interviewId: this.interviewId }).then((res) => {
               this.$message.success('约面成功')
+              this.getResume(this.jobuid)
               this.init()
             })
           }
@@ -1642,6 +1650,7 @@ export default class CourseList extends Vue {
           type: 'setinterinfo'
         }
         watchInvitationAPi({ interviewId: this.interviewId }).then((res) => {
+          this.arrangeobj = res.data.data
           this.arrangementInfo.interviewId = res.data.data.interviewId
           this.arrangementInfo.realname = res.data.data.arrangementInfo.realname
           this.arrangementInfo.mobile = res.data.data.arrangementInfo.mobile
@@ -1681,6 +1690,9 @@ export default class CourseList extends Vue {
                   hasOnline.push(v)
                 }
               })
+              if (this.arrangeobj.positionStatus === 0 && this.arrangeobj.positionId !== 0) {
+                hasOnline.push({ id: this.arrangeobj.positionId, positionName: this.arrangeobj.positionName })
+              }
               this.positionOption = hasOnline
             })
           }

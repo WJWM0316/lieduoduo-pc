@@ -1394,6 +1394,7 @@ export default {
       justify-content: center;
       align-items: center;
       color: #652791;
+      height: 20px;
       margin-top: 40px;
       font-size: 14px;
       cursor: pointer;
@@ -1413,12 +1414,13 @@ export default {
       line-height: 26px;
       font-weight: bold;
       text-align: center;
-      margin-bottom: 10px;
+      margin-bottom: 14px;
       width: 100%;
     }
     .sub-desc{
       font-size: 16px;
       color: #333333;
+      height: 16px;
       margin-bottom: 10px;
     }
     .authentication{
@@ -1430,7 +1432,7 @@ export default {
         color: #6D696E;
         font-size: 14px;
         text-align: center;
-        padding: 20px 0 24px 0px;
+        padding: 22px 0 28px 0px;
       }
       .center{
         font-size: 14px;
@@ -1442,7 +1444,7 @@ export default {
           span{
             display: block;
             width: 100%;
-            margin-bottom: 12px;
+            margin-bottom: 17px;
           }
         }
         .center-r{
