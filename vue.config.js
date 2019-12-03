@@ -8,6 +8,9 @@ let resolve = dir => { return path.join(__dirname, dir) }
 module.exports = {
   lintOnSave: true,
   productionSourceMap: false,
+	entry: {
+		app: ["babel-polyfill", resolve('src/main.js')],
+	},
   configureWebpack: {
     entry: {
       vendors: [

@@ -66,7 +66,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .address-text{
   font-size: 14px;
   color: $font-color-2;
@@ -80,5 +80,24 @@ export default {
 }
 .mapImg{
   cursor: pointer;
+}
+
+.el-dialog__wrapper .bpp-dialog.el-dialog{
+  border-radius: 8px;
+  .el-dialog__header{
+    font-size: 14px;
+    padding: 0;
+    line-height: 50px;
+    height: 50px;
+    color: $border-color-7;
+    .el-dialog__headerbtn{
+      font-size: 20px;
+      position: absolute;
+      top: 14px;
+    }
+  }
+  .el-dialog__body {
+    padding: 0px;
+  }
 }
 </style>
