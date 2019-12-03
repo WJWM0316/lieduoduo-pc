@@ -359,7 +359,7 @@ $sizing: border-box;
 
 .header {
   @extend %wrap-width;
-  background: $font-color-temp3;
+  background: $bg-color-12;
 
   .inner {
     width: $page-width;
@@ -464,7 +464,7 @@ $sizing: border-box;
           line-height:14px;
         }
         .header-right-resume{
-          color: $font-color-temp1;
+          color: $sub-color-1;
           font-size: 14px;
           font-weight: 400;
           line-height:20px;
@@ -561,7 +561,7 @@ to {top:0px;}
         .hot-annualSalaryDesc{
           font-size: 18px;
           font-weight: 500;
-          color: $font-color-temp1;
+          color: $sub-color-1;
           display: block;
           float: right;
         }
