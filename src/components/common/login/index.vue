@@ -229,7 +229,7 @@ export default class loginForm extends Component {
       uuid: this.codeData.uuid
     }).then(res => {
       if (res.data.data && res.data.data.id) {
-				this.$store.commit('LOGINCALLBACK', res.data.data)
+        this.$store.commit('LOGINCALLBACK', res.data.data)
         clearInterval(this.timer)
         this.$store.dispatch('scanLogin', res.data.data)
       }
@@ -458,13 +458,25 @@ export default class loginForm extends Component {
         color: #929292;
         width: 86px;
         height: 20px;
+        border-radius: 2px;
         background: #f6f6f6;
         line-height: 20px;
-        border-radius: 8px;
         margin-top: 15px;
         display: inline-block;
         text-align: center;
         vertical-align: middle;
+        position: relative;
+        &::after{
+          content: '';
+          position: absolute;
+          left: 86px;
+          top: 6px;
+          width: 0px;
+          height: 0px;
+          border-width: 4px;
+          border-style: solid;
+          border-color: transparent transparent transparent #F6F6F6;
+        }
       }
       .login-img {
         width: 86px;
@@ -544,7 +556,7 @@ export default class loginForm extends Component {
           cursor: pointer;
         }
         .helptype {
-          background: #efe9f4;
+          background: $bg-color-5;
         }
       }
 

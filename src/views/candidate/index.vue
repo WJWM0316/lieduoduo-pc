@@ -265,16 +265,12 @@
             <div class="base">
               <div class="message">
                 <div class="msgUrl">
-                  <img :src="nowResumeMsg.avatar.url" alt v-if="nowResumeMsg.avatar" />
-                  <!-- <img class="gender" src="~IMAGES/girl.png" v-if="item.resume.gender===2" />
-                  <img class="gender" src="~IMAGES/boy.png" v-else />-->
+                  <img class="magimg" :src="nowResumeMsg.avatar.url" alt v-if="nowResumeMsg.avatar" />
                   <span class="gender" v-show="nowResumeMsg.gender===2">
-                    <img v-show="nowResumeMsg.gender===2" src="~IMAGES/girl.png" />
-                    <!-- <i v-show="nowResumeMsg.gender===1" class="icon iconfont iconicon_boy"></i> -->
+                    <img class="genderimg1" v-show="nowResumeMsg.gender===2" src="~IMAGES/girl.png" />
                   </span>
                   <span class="gender2" v-show="nowResumeMsg.gender===1">
-                    <img src="~IMAGES/boy.png" v-show="nowResumeMsg.gender===1" />
-                    <!-- <i v-show="nowResumeMsg.gender===2" class="icon iconfont iconicon_girl"></i> -->
+                      <img class="genderimg2" src="~IMAGES/boy.png" v-show="nowResumeMsg.gender===1">
                   </span>
                 </div>
                 <div class="msgUserInfo">
@@ -728,7 +724,7 @@
             {{item.appointment}}
           </li>
         </ul>
-          <el-button type="text" class="add_time" v-if="model.dateLists.length < 3">
+          <div class="add_time" v-if="model.dateLists.length < 3">
           <i class="iconfont icon-tianjiashijian bgcolor" style="font-size:12px"></i>
           <span :style="'margin-left:16px;line-height:14px'">添加时间</span>
           <el-date-picker
@@ -738,7 +734,7 @@
             value-format="yyyy-MM-dd HH:mm:ss"
             placeholder="选择日期时间">
           </el-date-picker>
-        </el-button>
+          </div>
         </div>
         <div class="selectposition" v-show="pop.type === 'selectposition'">
           <div class="selectitem" v-for="(item, i) in positionLists" :key="i" @click="selectposition(item)">
@@ -871,34 +867,20 @@ import {
   improperMarkingApi,
   confirmInterviewApi,
   addressListApi, interviewRetract, addCompanyAdressApi, editCompanyAdressApi, setInterviewInfoApi, setCommentApi, setAttendApi, emailtoforword, manyrecordstatus } from 'API/candidateType'
-const debounce = (() => {
-  let timer = 0
-  return (callback, ms) => {
-    clearTimeout(timer)
-    timer = setTimeout(callback, ms)
-  }
-})()
 
 @Component({
   name: 'candidate',
   methods: {},
   computed: {},
-  destroyed () {
-    document.body.style.overflow = 'unset'
-  },
   watch: {
-    $route: {
+    '$route': {
       handler () {
         this.init()
       },
       immediate: true
     },
     'pop.isShow': function (n) {
-      if (n) {
-        document.body.style.overflow = 'hidden'
-      }
       if (!n) {
-        document.body.style.overflow = 'unset'
         this.hasonload = false
       }
     }

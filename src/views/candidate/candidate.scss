@@ -689,9 +689,9 @@ right: -40px;
       display: flex;
       justify-content: flex-start;
       align-items: flex-start;
+      height: 100%;
       .Code {
         width: 198px;
-        // border-left: 1px solid #ededed;
         display: inline-block;
         .msgCode {
           display: flex;
@@ -755,8 +755,8 @@ right: -40px;
             position: absolute;
             top: 26px;
             left: -137px;
-            z-index: 1;
             border-radius: 4px;
+            z-index: 1;
             box-shadow:0px 0px 26px 0px rgba(22,39,77,0.12);
             .title{
               font-size: 14px;
@@ -1018,10 +1018,25 @@ right: -40px;
         width: 742px;
         height: 926px;
         border-right: 1px solid #ededed;
-        overflow-y: scroll;
+        overflow-y: auto;
         display: inline-block;
+        padding-bottom: 48px;
+        height: 100%;
+        box-sizing: border-box;
         &::-webkit-scrollbar {
-          display: none;
+          width: 4px;
+        }
+        &::-webkit-scrollbar-track {
+          background:#fff;
+          -webkit-border-radius: 20px;
+          -moz-border-radius: 20px;
+          border-radius:20px;
+        }
+        &::-webkit-scrollbar-thumb {
+          background:#BCBCBC;
+          -webkit-border-radius: 20px;
+          -moz-border-radius: 20px;
+          border-radius:20px;
         }
         .base {
           padding-bottom: 20px;
@@ -1035,6 +1050,13 @@ right: -40px;
               width: 88px;
               height: 88px;
               position: relative;
+              .magimg {
+                width: 88px;
+                height: 88px;
+                border: 2px solid rgba(232, 233, 235, 1);
+                border-radius: 50%;
+                vertical-align: middle;
+              }
               .gender2 {
                 width: 26px;
                 height: 26px;
@@ -1045,7 +1067,7 @@ right: -40px;
                 right: -6px;
                 bottom: -9px;
                 text-align: center;
-                img{
+                .genderimg2{
                   width: 100%;
                   height: 100%;
                 }
@@ -1066,7 +1088,7 @@ right: -40px;
                 right: -6px;
                 bottom: -9px;
                 text-align: center;
-                img{
+                .genderimg1{
                   width: 100%;
                   height: 100%;
                 }
@@ -1076,13 +1098,6 @@ right: -40px;
                   font-size: 12px;
                   text-align: center;
                 }
-              }
-              img {
-                width: 88px;
-                height: 88px;
-                border: 2px solid rgba(232, 233, 235, 1);
-                border-radius: 50%;
-                vertical-align: middle;
               }
             }
 
@@ -1111,7 +1126,7 @@ right: -40px;
                 .lebalList {
                   display: inline-block;
                   overflow: hidden;
-                  text-align: left;
+                  text-align: right;
                   height: 19px;
                   .lebalItem {
                     display: inline-block;
@@ -1327,7 +1342,7 @@ right: -40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 15px 10px 0px;
+            padding: 10px 0px 10px 0px;
             width: 545px;
             span {
               font-size: 14px;
@@ -1957,6 +1972,8 @@ right: -40px;
         .add_time{
           position: relative;
           overflow: hidden;
+          padding: 12px 0;
+          color: #03b3bb;
           .el-date-editor{
             position: absolute;
             left: 0;
