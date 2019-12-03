@@ -1,11 +1,29 @@
 <template>
   <div class="positionDetail" v-if="infos.id">
-    <header ref="header" class="header" :class="{'isRapidly' : infos.isRapidly === 1, 'headerFloat' : headerFloat}">
+		<header ref="header" class="header" :class="{'isRapidly' : infos.isRapidly === 1, 'headerFloat' : headerFloat}" v-show="headerFloat">
+			<div class="inner-bg">
+			  <div class="inner">
+					<div class="header-content">
+						<div class="title">
+						  <span v-if="infos.isUrgency === 1" class="icon jipin"></span>
+						  <span class="name">{{infos.positionName}}</span>
+						  <span class="salary">{{infos.emolumentMin}}~{{infos.emolumentMax}}K<span v-if="infos.annualSalary > 12">·{{infos.annualSalary}}<span class="unit">薪</span></span></span>
+						</div>
+					</div>
+					<div class="aside">
+						<div class="operBox">
+						  <interviewBtn ref="interviewBtn" :infos="infos" type="position" @init="init"></interviewBtn>
+						</div>
+					</div>
+			  </div>
+			</div>
+		</header>
+    <header ref="header" class="header" :class="{'isRapidly' : infos.isRapidly === 1}">
       <!-- 设置1440位置的banner -->
       <div class="inner-bg">
         <div class="inner">
           <div class="header-content">
-            <div v-show="!headerFloat">
+            <div>
               <div class="title">
                 <span v-if="infos.isUrgency === 1" class="icon jipin"></span>
                 <span class="name">{{infos.positionName}}</span>
@@ -19,11 +37,6 @@
               <div class="labels">
                 <span class="label-item" v-for="n in infos.lightspotInfo" :key="n">{{n}}</span>
               </div>
-            </div>
-            <div class="title" v-show="headerFloat">
-              <span v-if="infos.isUrgency === 1" class="icon jipin"></span>
-              <span class="name">{{infos.positionName}}</span>
-              <span class="salary">{{infos.emolumentMin}}~{{infos.emolumentMax}}K<span v-if="infos.annualSalary > 12">·{{infos.annualSalary}}<span class="unit">薪</span></span></span>
             </div>
           </div>
           <div class="aside">
@@ -72,7 +85,6 @@
         </div>
       </div>
     </header>
-    <div :style="'height:' + headerH + 'px'" v-show="headerFloat"></div>
     <poster @closePoster="closePoster" :showPoster.sync="showPoster" :params='posterParmas'></poster>
     <div class="content">
       <div class="inner">
