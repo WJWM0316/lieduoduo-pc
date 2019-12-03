@@ -65,6 +65,7 @@ $barder-color-4: #CDCBCF;
 $border-color-5: #BCBCBC;
 $border-color-6: #DCDCDC;
 $border-color-7: #66666E;
+$border-color-8: #EDF1F0;
 // scroll bar 滚动条配置
 $scroll-bar-color: #EBEBEB;
 
@@ -86,7 +87,7 @@ $title-color-3: $font-color-9;
 
 // 导航颜色
 $nav-color-hover: #4CD5DB;
-$nav-color-default: $font-color-10;
+$nav-color-default: rgba(#fff, .58);
 $nav-color-bg-color: $bg-color-2;
 
 // 阴影
