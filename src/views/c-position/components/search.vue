@@ -17,7 +17,7 @@
             <span class="address-name">{{address}}</span>
           </drop-down>
           <el-autocomplete
-            placeholder="搜索职位"
+            placeholder="搜索职位、公司"
             v-model="params.keyword"
             @keyup.native.enter="handleSelect()"
             :maxlength="50"

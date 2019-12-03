@@ -8,7 +8,7 @@
         <el-autocomplete
           v-model="searchValue"
           :fetch-suggestions="querySearchAsync"
-          placeholder="搜索职位"
+          placeholder="搜索职位、公司"
           @select="handleSelect"
           @keyup.native.enter="handleSelect()"
           :maxlength="50">
