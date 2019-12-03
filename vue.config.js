@@ -8,9 +8,6 @@ let resolve = dir => { return path.join(__dirname, dir) }
 module.exports = {
   lintOnSave: true,
   productionSourceMap: false,
-	entry: {
-		app: ["babel-polyfill", resolve('src/main.js')],
-	},
   configureWebpack: {
     entry: {
       vendors: [
@@ -19,6 +16,7 @@ module.exports = {
         'axios',
         'vuex'
       ],
+			app: ["babel-polyfill", resolve('src/main.js')],
       eleui: [resolve('src/eleui/index.js')]
     },
     resolve: {
