@@ -111,7 +111,7 @@
           </section>
         </article>
         <aside class="content-aside">
-          <guideLogin v-if="!hasLogin"></guideLogin>
+          <guideLogin v-if="!hasLogin" class="position-guide-login"></guideLogin>
           <div class="companyInfos">
             <p class="title">公司基本信息</p>
             <div class="details">

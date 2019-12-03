@@ -6,6 +6,8 @@
           v-if="status !== 'view'"
           :value.sync="info.avatarUrl"
           attach-type="avatar"
+          :cropper="true"
+          cropper-radius="50%"
           @before="avatarLoading = true"
           @fail="avatarLoading = false"
           @change="handleChangeAvatar"

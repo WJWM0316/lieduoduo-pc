@@ -433,6 +433,9 @@ img {
 		.content-aside {
 			width: $content-right;
 			float: right;
+			.position-guide-login {
+				margin-bottom: 40px;
+			}
 			.companyInfos {
 				margin-bottom: 34px;
 				.title {
