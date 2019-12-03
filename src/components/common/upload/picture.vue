@@ -81,7 +81,7 @@ export default {
     },
     accept: {
       type: String,
-      default: 'image/png,image/jpg,image/gif,image/png'
+      default: 'image/*'
     },
     limit: { // 限制上传数量
       type: Number,
