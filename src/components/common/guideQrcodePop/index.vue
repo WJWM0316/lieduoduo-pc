@@ -2,7 +2,7 @@
   <div class="qrCodePop" v-if="guideQrcodePop.switch" @click="close($event)">
     <div class="inner">
       <p class="title">{{title}}<br>{{qrcodeTxt}}</p>
-      <el-image class="qrcode" :src="qrCodeUrl" alt=""></el-image>
+      <el-image class="qrcode" :class="qrClass" :src="qrCodeUrl" alt=""></el-image>
       <i class="close iconfont icon-xiantiaoguanbi" @click="hidePop"></i>
     </div>
   </div>
@@ -14,6 +14,7 @@ export default {
     return {
       cdnPath: `${this.$cdnPath}/images/`,
       qrcodeTxt: '',
+      qrClass: '',
       qrCodeUrl: '' // 二维码
     }
   },
@@ -48,8 +49,10 @@ export default {
             this.qrcodeTxt = '解锁更多职位'
             break
           case 'to24Hours':
-            this.qrCodeUrl = `${this.cdnPath}24hoursyuemian.jpg`
+            // ${this.cdnPath}24hoursyuemian.jpg
+            this.qrCodeUrl = `${this.cdnPath}uploadAPP.png`
             this.title = '微信扫一扫'
+            this.qrClass = 'no-radius'
             this.qrcodeTxt = '解锁更多急速约面职位'
             break
         }
@@ -108,16 +111,8 @@ export default {
         position: relative;
         border:1px solid rgba(239,233,244,1);
       }
-      .qrcode::after {
-        content: "";
-        background-image: url("../../../assets/images/qrcode_placeholder.png");
-        position: absolute;
-        background-size: cover;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 58px;
-        height: 58px;
+      .qrcode.no-radius {
+        border-radius: 4px;
       }
       .close {
         font-size: 12px;

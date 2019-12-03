@@ -609,7 +609,7 @@
             {{item.appointment}}
           </li>
         </ul>
-          <el-button type="text" class="add_time" v-if="model.dateLists.length < 3">
+        <div class="add_time" v-if="model.dateLists.length < 3">
           <i class="iconfont icon-tianjiashijian bgcolor" style="font-size:12px"></i>
           <span :style="'margin-left:16px;line-height:14px'">添加时间</span>
           <el-date-picker
@@ -619,7 +619,7 @@
             value-format="yyyy-MM-dd HH:mm:ss"
             placeholder="选择日期时间">
           </el-date-picker>
-        </el-button>
+          </div>
         </div>
         <div style="padding-right:4px">
         <div class="selectposition" v-show="pop.type === 'selectposition'">
@@ -757,9 +757,6 @@ import { applyInterviewApi } from 'API/interview'
     methods: {
     },
     computed: {},
-    destroyed () {
-      document.body.style.overflow = 'unset'
-    },
     watch: {
       '$route': {
         handler () {
@@ -768,11 +765,7 @@ import { applyInterviewApi } from 'API/interview'
         immediate: true
       },
       'pop.isShow': function (n) {
-        if (n) {
-          document.body.style.overflow = 'hidden'
-        }
         if (!n) {
-          document.body.style.overflow = 'unset'
           this.hasonload = false
         }
       }

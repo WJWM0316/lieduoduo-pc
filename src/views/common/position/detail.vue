@@ -44,7 +44,7 @@
               <img class="logo" :src="cdnPath + 'tag_24hour.png'" alt="">
               <div class="number"><span class="num">{{remainingSeats}}</span>个<p class="desc">约面席位</p></div>
               <div class="timeBox">
-                <div class="time">还剩<span class="little-box">{{remainingTime.day}}</span>天<span class="little-box">{{remainingTime.hour}}</span>:<span class="little-box">{{remainingTime.minute}}</span>:<span class="little-box">{{remainingTime.second}}</span></div>
+                <div class="time">还剩<template v-if="remainingTime.day > 0"><span class="little-box">{{remainingTime.day}}</span>天</template><span class="little-box">{{remainingTime.hour}}</span>:<span class="little-box">{{remainingTime.minute}}</span>:<span class="little-box">{{remainingTime.second}}</span></div>
                 <p class="desc">{{chatDesc}}<el-tooltip class="item" popper-class="tooltip" effect="light"  placement="bottom-end">
                   <p slot="content">1.抢占约面席位后将享【急速反馈服务】。<br>
                     2.急速约面服务<br>
