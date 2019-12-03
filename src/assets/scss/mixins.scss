@@ -95,3 +95,15 @@
     max-height: 100%;
   }
 }
+
+// bg image radius
+@mixin bg-image-radius($height, $width, $radius:50%, $bgcolor: #fff) {
+  width: $width;
+  height: $height;
+  background-size: cover; 
+  border-radius: $radius;
+  overflow: hidden;
+  background-repeat: no-repeat; 
+  background-position: center center;
+  background-color: #fff;
+}

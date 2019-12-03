@@ -7,7 +7,12 @@
           </div>
           <p class="tips">BOSS直聘战略投资  高端人才招聘平台</p>
           <!-- http://www.beian.miit.gov.cn -->
-          <p class="gray">Copyright ©老虎科技 粤ICP备16060093号-4</p>
+          <p class="gray">
+            <a target="_blank" href="http://www.beian.miit.gov.cn">Copyright ©老虎科技 粤ICP备16060093号-4</a>
+          </p>
+          <p class="gray-down">
+            <a target="_blank" href="http://www.beian.miit.gov.cn"><img src="../../../assets/images/record.png"/><p>粤公网安备 44010602007389号</p></a>
+          </p>
         </div>
         <div class="footer_center">
             <div class="footer-header-title">
@@ -158,6 +163,28 @@ export default PageFooter
   .gray, .gray a {
     font-size: 12px;
     color: $font-color-10;
+  }
+  .gray-down{
+    width: 300px;
+    margin: 0 auto;
+    padding: 20px 0;
+    a{
+      display:inline-block;
+      text-decoration:none;
+      height:20px;
+      line-height:20px;
+      img{
+        float: left;
+      }
+      p{
+        float: left;
+        height: 20px;
+        line-height: 20px;
+        margin: 0px 0px 0px 5px;
+        color: #939393;
+        cursor: pointer;
+      }
+    }
   }
   &.isFixed {
     position: fixed;
