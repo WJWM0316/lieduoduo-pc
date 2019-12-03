@@ -13,7 +13,7 @@
           </span>
           <span class="resume-list-time">{{row.startTimeDesc | date('YYYY.MM')}}-{{row.endTimeDesc | date('YYYY.MM')}}</span>
         </p>
-        <div class="resume-list-desc">{{row.experience}}</div>
+        <div class="resume-list-desc" v-if="row.experience">{{row.experience}}</div>
       </template>
       <template slot="bottom">
         <div class="c-btn resume-add-btn" @click="handleShowForm(true)"><i class="el-icon-plus" /> 添加教育经历</div>

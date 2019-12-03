@@ -759,6 +759,7 @@ export default {
       nowResumeMsg: {},
       hasonload: false,
       showResume: false,
+      arrangeobj: '',
       arrangementInfo: {
         interviewId: '',
         realname: '',
@@ -1095,6 +1096,7 @@ export default {
             type: 'setinterinfo'
           }
           watchInvitationAPi({ interviewId: this.interviewId }).then((res) => {
+            this.arrangeobj = res.data.data
             this.arrangementInfo.interviewId = res.data.data.interviewId
             this.arrangementInfo.realname = res.data.data.arrangementInfo.realname
             this.arrangementInfo.mobile = res.data.data.arrangementInfo.mobile
@@ -1132,6 +1134,9 @@ export default {
                     hasOnline.push(v)
                   }
                 })
+                if (this.arrangeobj.positionStatus === 0 && this.arrangeobj.positionId !== 0) {
+                  hasOnline.push({ id: this.arrangeobj.positionId, positionName: this.arrangeobj.positionName })
+                }
                 this.positionOption = hasOnline
               })
             }

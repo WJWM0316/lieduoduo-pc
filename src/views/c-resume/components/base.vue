@@ -15,18 +15,14 @@
               <img :src="info.avatarUrl" />
               <span class="iconfont icon-xiangji"></span>
             </div>
-            <span class="user-gender" :class="info.gender == 1 ? 'male' : 'female'" >
-              <i class="iconfont" :class="info.gender == 1 ? 'icon-nan' : 'icon-nvsheng'"></i>
-            </span>
+            <span class="user-gender" :class="info.gender == 1 ? 'male' : 'female'" ></span>
           </div>
         </Picture>
         <div class="avatar-wrapper" v-else>
           <div class="avatar">
             <img :src="info.avatarUrl" />
           </div>
-          <span class="user-gender" :class="info.gender == 1 ? 'male' : 'female'" >
-            <i class="iconfont" :class="info.gender == 1 ? 'icon-nan' : 'icon-nvsheng'"></i>
-          </span>
+          <span class="user-gender" :class="info.gender == 1 ? 'male' : 'female'" ></span>
         </div>
       </template>
       <template slot="content">
@@ -289,17 +285,16 @@ $image-wrapper: 112px;
     height: 27px;
     width: 27px;
     line-height: 28px;
+    display: inline-block;
     border-radius: 50%;
     text-align: center;
+    background-size: 100% 100%;
   }
   .user-gender.male {
-    background: #2778FF;
+    background-image: url('../../../assets/images/boy.png');
   }
   .user-gender.female {
-    background: #FF6796;
-  }
-  .iconfont {
-    font-size: 28px;
+    background-image: url('../../../assets/images/girl.png');
   }
 }
 .avatar {
@@ -373,17 +368,17 @@ $image-wrapper: 112px;
   .user-company span.ellipsis,.user-name {
     @include ellipsis;
   }
-  .user-name {
-    max-width: 200px;
-    margin-bottom: 13px;
-  }
   .user-company span.ellipsis {
     max-width: 180px;
   }
 
   .user-company,.user-name {
     color: $title-color-1;
-    font-weight: normal;
+  }
+  .user-name {
+    max-width: 200px;
+    margin-bottom: 13px;
+    font-weight: 500;
   }
   i.iconfont {
     color: $font-color-12;

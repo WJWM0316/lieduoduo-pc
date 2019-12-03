@@ -5,8 +5,10 @@
       <template slot="content">
         <div class="resume-list-desc" v-if="info.introduce">{{info.introduce}}</div>
         <div class="resume-images">
-          <div class="image-wrapper" v-for="item in info.imgs" :key="item.id">
-            <img :src="item.smallUrl" alt="">
+          <div class="image-wrapper"
+            v-for="item in info.imgs" :key="item.id"
+            :style="{'background-image': `url(${item.smallUrl})`}">
+            <!-- <img :src="item.smallUrl" alt=""> -->
           </div>
         </div>
       </template>
@@ -134,11 +136,11 @@ export default {
     flex-wrap: wrap;
   }
   .image-wrapper {
-    @include img-radius(96px, 96px, 4px);
-    margin-bottom: 10px;
+    @include bg-image-radius(96px, 96px, 4px);
   }
   .image-wrapper{
     margin-right: 10px;
+    margin-top: 10px;
   }
   .image-wrapper:nth-child(5n) {
     margin-right: 0px;

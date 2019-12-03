@@ -797,12 +797,14 @@ export default class CourseList extends Vue {
       recordtext: '确认选择后，候选人多条申请将合并为一条面试记录；面试最终确认前，可随时沟通更新面试职位；',
       type: 'clickPic'
     }
+    Multipleclicks = false
     jobuid = ''
     jobhunterInfo = ''
     addressobj = {
       doorplate: '',
       address: ''
     }
+    arrangeobj = ''
     arrangementInfo = {
       interviewId: '',
       realname: '',
@@ -1055,6 +1057,7 @@ export default class CourseList extends Vue {
             } else {
               confirmInterviewApi({ interviewId: this.interviewId }).then((res) => {
                 this.$message.success('约面成功')
+                this.getResume(this.jobuid)
                 this.init()
               })
             }
@@ -1069,6 +1072,7 @@ export default class CourseList extends Vue {
             type: 'setinterinfo'
           }
           watchInvitationAPi({ interviewId: this.interviewId }).then((res) => {
+            this.arrangeobj = res.data.data
             this.arrangementInfo.interviewId = res.data.data.interviewId
             this.arrangementInfo.realname = res.data.data.arrangementInfo.realname
             this.arrangementInfo.mobile = res.data.data.arrangementInfo.mobile
@@ -1108,10 +1112,12 @@ export default class CourseList extends Vue {
                     hasOnline.push(v)
                   }
                 })
+                if (this.arrangeobj.positionStatus === 0 && this.arrangeobj.positionId !== 0) {
+                  hasOnline.push({ id: this.arrangeobj.positionId, positionName: this.arrangeobj.positionName })
+                }
                 this.positionOption = hasOnline
               })
             }
-            // this.arrangementInfo.interviewTime = res.data.data.createdAtTime
           })
           break
         case 'interview-retract':
@@ -1455,12 +1461,18 @@ export default class CourseList extends Vue {
           this.$message.error('请至少添加一个约面时间')
           return
         }
+        if (this.Multipleclicks) {
+          return false
+        }
+        this.Multipleclicks = true
         this.arrangementInfo.interviewTime = timearr.join(',')
         setInterviewInfoApi(this.arrangementInfo).then((res) => {
           this.$message.success('安排面试成功')
           this.init()
           this.pop.isShow = false
+          this.Multipleclicks = false
         }).catch(err => {
+          this.Multipleclicks = false
           console.log(err)
           // this.$message.error(err.data.msg)
         })

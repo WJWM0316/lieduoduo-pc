@@ -114,8 +114,8 @@
                     <p class="recruitmentTeam-text-top">{{ item.name }} | {{ item.position }}</p>
                     <p class="recruitmentTeam-text-buttom">
                       <span>{{ '正在招聘' }}</span>
-                      <span class="recruitmentTeam-positionName">{{ item.positionName === 0 ?item.positionName : '&quot;' + item.positionName + '&quot;' }}</span>
-                      <span>{{ item.positionName === 0 ? '' : '等' }}{{ item.positionNum+ '个职位' }}</span>
+                      <span class="recruitmentTeam-positionName">{{ item.positionName === 0 ? item.positionName : '&quot;' + item.positionName + '&quot;' }}</span>
+                      <span>{{ item.positionName === 0 ? '个职位' : '等' + item.positionNum + '个职位' }}</span>
                     </p>
                   </div>
                 </div>
@@ -359,7 +359,7 @@ $sizing: border-box;
 
 .header {
   @extend %wrap-width;
-  background: $font-color-temp3;
+  background: $bg-color-12;
 
   .inner {
     width: $page-width;
@@ -377,19 +377,7 @@ $sizing: border-box;
         display: flex;
         @include flex-v-center;
         .company-logo-wrap{
-          width: 106px;
-          height: 106px;
-          border-radius: 16px;
-          overflow: hidden;
-          background: #FFFFFF;
-          position: relative;
-          .company-logo{
-            max-width: 100%;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%,-50%);
-          }
+          @include img-radius(106px, 106px, 16px, #fff)
         }
 
         .header-left-text{
@@ -476,7 +464,7 @@ $sizing: border-box;
           line-height:14px;
         }
         .header-right-resume{
-          color: $font-color-temp1;
+          color: $sub-color-1;
           font-size: 14px;
           font-weight: 400;
           line-height:20px;
@@ -573,7 +561,7 @@ to {top:0px;}
         .hot-annualSalaryDesc{
           font-size: 18px;
           font-weight: 500;
-          color: $font-color-temp1;
+          color: $sub-color-1;
           display: block;
           float: right;
         }
@@ -635,21 +623,10 @@ to {top:0px;}
           position: relative;
 
           .product-img-wrap{
-            background: #FFFFFF;
+            @include img-radius(77px, 77px, 8px, #fff);
             position: absolute;
             left: 0;
             top: 0;
-            width: 77px;
-            height: 77px;
-            border-radius: 8px;
-            overflow: hidden;
-              .product-img{
-                max-width: 100%;
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-              }
           }
           .product-text{
             padding: 6px 0 5px 0;
@@ -737,14 +714,18 @@ to {top:0px;}
 						width: 100%;
             .recruitmentTeam-text-top{
               color: $font-color-3;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+              overflow: hidden;
+              max-width: 192px;
             }
             .recruitmentTeam-text-buttom{
               width: 100%;
               margin-top: 4px;
               color: $font-color-6;
-              span{
-                vertical-align: middle;
-              }
+              // span{
+              //   vertical-align: middle;
+              // }
               .recruitmentTeam-positionName{
                 display: inline-block;
                 max-width: 86px;
