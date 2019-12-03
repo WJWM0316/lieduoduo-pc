@@ -797,6 +797,7 @@ export default class CourseList extends Vue {
       recordtext: '确认选择后，候选人多条申请将合并为一条面试记录；面试最终确认前，可随时沟通更新面试职位；',
       type: 'clickPic'
     }
+    Multipleclicks = false
     jobuid = ''
     jobhunterInfo = ''
     addressobj = {
@@ -1460,12 +1461,18 @@ export default class CourseList extends Vue {
           this.$message.error('请至少添加一个约面时间')
           return
         }
+        if (this.Multipleclicks) {
+          return false
+        }
+        this.Multipleclicks = true
         this.arrangementInfo.interviewTime = timearr.join(',')
         setInterviewInfoApi(this.arrangementInfo).then((res) => {
           this.$message.success('安排面试成功')
           this.init()
           this.pop.isShow = false
+          this.Multipleclicks = false
         }).catch(err => {
+          this.Multipleclicks = false
           console.log(err)
           // this.$message.error(err.data.msg)
         })

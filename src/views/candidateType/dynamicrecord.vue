@@ -166,12 +166,10 @@ export default {
   width: 100%;
   height: 100%;
   z-index: 1;
-  // background:rgba(0,0,0,0.6);
   .noJobBox {
     width:612px;
     overflow-y: scroll;
     max-height: 578px;
-    padding-bottom: 32px;
     background:rgba(255,255,255,1);
     box-shadow:0px 6px 14px 2px rgba(0,0,0,0.2);
     border-radius:8px;
@@ -372,6 +370,7 @@ export default {
       background:rgba(101,39,145,1);
       border-radius:4px;
       margin-top: 30px;
+      margin-bottom: 32px;
       cursor: pointer;
     }
     .con-r{
