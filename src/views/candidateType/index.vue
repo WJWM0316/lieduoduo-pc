@@ -803,6 +803,7 @@ export default class CourseList extends Vue {
       doorplate: '',
       address: ''
     }
+    arrangeobj = ''
     arrangementInfo = {
       interviewId: '',
       realname: '',
@@ -1055,6 +1056,7 @@ export default class CourseList extends Vue {
             } else {
               confirmInterviewApi({ interviewId: this.interviewId }).then((res) => {
                 this.$message.success('约面成功')
+                this.getResume(this.jobuid)
                 this.init()
               })
             }
@@ -1069,6 +1071,7 @@ export default class CourseList extends Vue {
             type: 'setinterinfo'
           }
           watchInvitationAPi({ interviewId: this.interviewId }).then((res) => {
+            this.arrangeobj = res.data.data
             this.arrangementInfo.interviewId = res.data.data.interviewId
             this.arrangementInfo.realname = res.data.data.arrangementInfo.realname
             this.arrangementInfo.mobile = res.data.data.arrangementInfo.mobile
@@ -1108,10 +1111,12 @@ export default class CourseList extends Vue {
                     hasOnline.push(v)
                   }
                 })
+                if (this.arrangeobj.positionStatus === 0 && this.arrangeobj.positionId !== 0) {
+                  hasOnline.push({ id: this.arrangeobj.positionId, positionName: this.arrangeobj.positionName })
+                }
                 this.positionOption = hasOnline
               })
             }
-            // this.arrangementInfo.interviewTime = res.data.data.createdAtTime
           })
           break
         case 'interview-retract':
