@@ -337,6 +337,10 @@ img {
 			margin: 0 auto;
 			background-repeat: no-repeat;
 		}
+		&.hidden {
+			top: -90px;
+			transition: all 1s;
+		}
 		&.headerFloat {
 			position: fixed;
 			left: 0;

@@ -8,7 +8,7 @@
             <div class="url-toword">
               <div class="u-title">链接转发</div>
               <div class="u-input">
-                {{forwordurl}}
+                <input class="urlInput" :value="forwordurl" disabled/>
                 <div class="url" @click="copy()">复制</div>
               </div>
               <div class="u-desc">可将链接转发给同事，对方即可查看简历</div>
@@ -244,6 +244,10 @@ export default {
         white-space: nowrap;
         padding-left: 14px;
         border:1px solid rgba(222,218,224,1);
+				.urlInput {
+					width: 70%;
+					background: none;
+				}
         .url{
           position: absolute;
           right: -1px;
