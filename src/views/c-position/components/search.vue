@@ -40,13 +40,13 @@
             v-model="params.emolumentIds"
             :items="emolumentList"
             :showArrow="true"
-            :all-value="0"
+            :all-value="1"
             :props="{
               value: 'id',
               label: 'text'
             }"
             @on-select="handleSelect">
-            <span class="filter-name">薪资范围 <span>{{params.emolumentIds !== '' ? '(1)' : '' }}</span></span>
+            <span class="filter-name">薪资范围 <span>{{params.emolumentIds && params.emolumentIds !== 1 ? '(1)' : '' }}</span></span>
           </drop-down>
           <drop-down
             v-model="params.financingIds"
@@ -60,7 +60,7 @@
               label: 'text'
             }"
             @on-select="handleSelect">
-            <span class="filter-name">融资规模 <span v-if="params.financingIds.length">({{params.financingIds.length}})</span></span>
+            <span class="filter-name">融资规模 <span v-if="params.financingIds.length && params.financingIds[0] !== 0">({{params.financingIds.length}})</span></span>
           </drop-down>
           <drop-down
             v-model="params.employeeIds"
@@ -74,7 +74,7 @@
               label: 'text'
             }"
             @on-select="handleSelect">
-            <span class="filter-name">人员规模 <span v-if="params.employeeIds.length">({{params.employeeIds.length}})</span></span>
+            <span class="filter-name">人员规模 <span v-if="params.employeeIds.length && params.employeeIds[0] !== 0">({{params.employeeIds.length}})</span></span>
           </drop-down>
           <drop-down
             v-model="params.industryIds"
@@ -89,7 +89,7 @@
               label: 'name'
             }"
             @on-select="handleSelect">
-            <span class="filter-name">行业领域 <span v-if="params.industryIds.length">({{params.industryIds.length}})</span></span>
+            <span class="filter-name">行业领域 <span v-if="params.industryIds.length  && params.industryIds[0] !== 0">({{params.industryIds.length}})</span></span>
           </drop-down>
           <span class="filter-remove" @click="handleRemove">清空筛选条件</span>
         </div>

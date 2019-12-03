@@ -45,7 +45,7 @@ class WS {
         // evt.data如果等于a为心跳检测值，不需要转化成json格式
         let data = evt.data !== 'a' ? JSON.parse(evt.data) : evt.data
         // 自定义一个接收监听事件，暴露出去接收信息
-        this.event = new CustomEvent('wsOnMessage', {detail: data})
+        this.event = new CustomEvent('wsOnMessage', { detail: data })
         window.dispatchEvent(this.event)
         switch (data.cmd) {
           case 'login.token': // 登录处理
