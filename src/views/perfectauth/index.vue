@@ -7,8 +7,7 @@
       </div>
     </div>
     <div class="info">
-      <!-- v-if="!haveIdentity.identityAuth && (haveIdentity.identityStatus !== 0 && haveIdentity.identityStatus !== 1 && haveIdentity.identityStatus !== 2)" -->
-      <template v-if="1">
+      <template v-if="!haveIdentity.identityAuth && (haveIdentity.identityStatus !== 0 && haveIdentity.identityStatus !== 1 && haveIdentity.identityStatus !== 2)">
       <div class="authtitle">
         完善身份信息
       </div>
@@ -182,9 +181,9 @@ export default {
     },
     getCompanyIdentityInfos () {
       getCompanyIdentityInfosApi().then(res => {
-        // if (res.data.data.status === 1) {
-        //   this.$router.push({ path: '/candidateType' })
-        // }
+        if (res.data.data.status === 1) {
+          this.$router.push({ path: '/candidateType' })
+        }
         this.companyInfo = res.data.data
         this.info = res.data.data
       })
