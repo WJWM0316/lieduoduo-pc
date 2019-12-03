@@ -87,6 +87,7 @@
       <span class="total">共{{ Math.ceil(pageInfo.totalPage) }}页, {{pageInfo.total}}条记录</span>
     </el-pagination>
 
+
     <div class="pop" v-if="pop.isShow">
       <div class="share" v-if="pop.type==='share'">
         <div class="share_blo">
@@ -331,7 +332,7 @@ export default class CourseList extends Vue {
           .then(() => {
             this.$message({
               type: 'success',
-              message: '成功!'
+              message: '职位已关闭'
             })
 
             this.pop = {
@@ -341,16 +342,13 @@ export default class CourseList extends Vue {
             this.getStatusTotal()
             this.getPositionList()
           })
-          .catch(e => {
-            this.$message.error(e.data.msg)
-          })
         break
       case 'openJob':
         openPositionApi({ id: this.jobSelectId })
           .then(() => {
             this.$message({
               type: 'success',
-              message: '成功!'
+              message: '职位已开放'
             })
             this.pop = {
               isShow: false,
@@ -358,9 +356,6 @@ export default class CourseList extends Vue {
             }
             this.getStatusTotal()
             this.getPositionList()
-          })
-          .catch(e => {
-            this.$message.error(e.data.msg)
           })
         break
 
@@ -381,7 +376,7 @@ export default class CourseList extends Vue {
       .then(() => {
         this.$message({
           type: 'success',
-          message: '成功!'
+          message: '职位已开放'
         })
         this.pop = {
           isShow: false,
@@ -389,9 +384,6 @@ export default class CourseList extends Vue {
         }
         this.getStatusTotal()
         this.getPositionList()
-      })
-      .catch(e => {
-        this.$message.error(e.data.msg)
       })
   }
 
@@ -822,47 +814,47 @@ export default class CourseList extends Vue {
       height: 120px;
     }
   }
-  .pagination {
-    height: 102px;
-    background: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    .number {
-      height: 30px;
-      box-sizing: border-box;
-      border: 1px solid rgba(220, 220, 220, 1);
-      color: rgba(101, 39, 145, 1);
-      background: #fff;
-      &.active {
-        color: rgba(102, 102, 102, 1);
-        background: none;
-        border: none;
-      }
-    }
-    span {
-      height: 30px;
-      padding: 0px 11px;
-      line-height: 30px;
-      box-sizing: border-box;
-    }
-    .total {
-      font-size: 12px;
-      font-weight: 400;
-      color: rgba(102, 102, 102, 1);
-    }
-    button {
-      height: 30px;
-      box-sizing: border-box;
-      span {
-        height: 30px;
-        color: rgba(101, 39, 145, 1);
-        background: #fff;
-        border: 1px solid rgba(220, 220, 220, 1);
-        box-sizing: border-box;
-      }
-    }
-  }
+  // .pagination {
+  //   height: 102px;
+  //   background: #fff;
+  //   display: flex;
+  //   justify-content: center;
+  //   align-items: center;
+  //   .number {
+  //     height: 30px;
+  //     box-sizing: border-box;
+  //     border: 1px solid rgba(220, 220, 220, 1);
+  //     color: rgba(101, 39, 145, 1);
+  //     background: #fff;
+  //     &.active {
+  //       color: rgba(102, 102, 102, 1);
+  //       background: none;
+  //       border: none;
+  //     }
+  //   }
+  //   span {
+  //     height: 30px;
+  //     padding: 0px 11px;
+  //     line-height: 30px;
+  //     box-sizing: border-box;
+  //   }
+  //   .total {
+  //     font-size: 12px;
+  //     font-weight: 400;
+  //     color: rgba(102, 102, 102, 1);
+  //   }
+  //   button {
+  //     height: 30px;
+  //     box-sizing: border-box;
+  //     span {
+  //       height: 30px;
+  //       color: rgba(101, 39, 145, 1);
+  //       background: #fff;
+  //       border: 1px solid rgba(220, 220, 220, 1);
+  //       box-sizing: border-box;
+  //     }
+  //   }
+  // }
   .toTop {
     position: fixed;
     right: 50%;
@@ -896,11 +888,11 @@ export default class CourseList extends Vue {
     margin-top: -20px;
   }
 
-  .pagination {
-    width: 100%;
-    margin: 0 auto;
-    box-sizing: border-box;
-  }
+  // .pagination {
+  //   width: 100%;
+  //   margin: 0 auto;
+  //   box-sizing: border-box;
+  // }
 }
 
 .messageBox {

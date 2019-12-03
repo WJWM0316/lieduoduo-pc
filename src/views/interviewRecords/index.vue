@@ -2,7 +2,7 @@
   <div class="interviewrecords">
         <div id="box" class="main_cont">
           <div class="screen">
-        <div class="title">面试管理</div>
+        <div class="title">面试日程</div>
         <div class="select" v-if="tablist.length > 0 && tablist[0].cur">
           <el-select
             v-model="form.position_label_id"
@@ -615,7 +615,7 @@
             {{item.appointment}}
           </li>
         </ul>
-          <el-button type="text" class="add_time" v-if="model.dateLists.length < 3">
+          <div class="add_time" v-if="model.dateLists.length < 3">
           <i class="iconfont icon-tianjiashijian bgcolor" style="font-size:12px"></i>
           <span :style="'margin-left:16px;line-height:14px'">添加时间</span>
           <el-date-picker
@@ -625,7 +625,7 @@
             value-format="yyyy-MM-dd HH:mm:ss"
             placeholder="选择日期时间">
           </el-date-picker>
-        </el-button>
+          </div>
         </div>
         <div class="selectposition" v-show="pop.type === 'selectposition'">
           <div class="selectitem" v-for="(item, i) in positionLists" :key="i" @click="selectposition(item)">
@@ -731,16 +731,9 @@ export default {
     MapSearch,
     DynamicRecord
   },
-  destroyed () {
-    document.body.style.overflow = 'unset'
-  },
   watch: {
     'pop.isShow': function (n) {
-      if (n) {
-        document.body.style.overflow = 'hidden'
-      }
       if (!n) {
-        document.body.style.overflow = 'unset'
         this.hasonload = false
       }
     }
@@ -2241,13 +2234,13 @@ export default {
           font-size: 14px;
         }
       }
-      .resumeLyout {
+.resumeLyout {
         display: flex;
         justify-content: flex-start;
         align-items: flex-start;
-         .Code {
+        height: 100%;
+        .Code {
           width: 198px;
-          // border-left: 1px solid #ededed;
           display: inline-block;
           .msgCode {
             display: flex;
@@ -2311,8 +2304,8 @@ export default {
               position: absolute;
               top: 26px;
               left: -137px;
-              z-index: 1;
               border-radius: 4px;
+              z-index: 1;
               box-shadow:0px 0px 26px 0px rgba(22,39,77,0.12);
               .title{
                 font-size: 14px;
@@ -2574,10 +2567,25 @@ export default {
           width: 742px;
           height: 926px;
           border-right: 1px solid #ededed;
-          overflow-y: scroll;
+          overflow-y: auto;
           display: inline-block;
+          padding-bottom: 48px;
+          height: 100%;
+          box-sizing: border-box;
           &::-webkit-scrollbar {
-            display: none;
+            width: 4px;
+          }
+          &::-webkit-scrollbar-track {
+            background:#fff;
+            -webkit-border-radius: 20px;
+            -moz-border-radius: 20px;
+            border-radius:20px;
+          }
+          &::-webkit-scrollbar-thumb {
+            background:#BCBCBC;
+            -webkit-border-radius: 20px;
+            -moz-border-radius: 20px;
+            border-radius:20px;
           }
           .base {
             padding-bottom: 20px;
@@ -2587,7 +2595,7 @@ export default {
               justify-content: flex-start;
               align-items: flex-start;
               width: 100%;
-                            .msgUrl {
+              .msgUrl {
                 width: 88px;
                 height: 88px;
                 position: relative;
@@ -2881,7 +2889,7 @@ export default {
               display: flex;
               justify-content: space-between;
               align-items: center;
-              padding: 10px 15px 10px 0px;
+              padding: 10px 0px 10px 0px;
               width: 545px;
               span {
                 font-size: 14px;
@@ -3491,6 +3499,8 @@ export default {
           .add_time{
             position: relative;
             overflow: hidden;
+            padding: 12px 0;
+            color: #03b3bb;
             .el-date-editor{
               position: absolute;
               left: 0;

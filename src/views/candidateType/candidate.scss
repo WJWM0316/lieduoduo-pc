@@ -601,19 +601,23 @@
     .resumeBox {
       background: #fff;
       width: 940px;
-      // height: 786px;
-      height: 100%;
-      position: absolute;
+      height: calc(100vh - 60px);
+      position: relative;
+      padding-top: 68px;
+      box-sizing: border-box;
       left: 50%;
       top: 60px;
-      // overflow: scroll;
       transform: translate(-50%, 0%);
       .Numbering {
         padding: 36px 20px 16px 50px;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        position: relative;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        box-sizing: border-box;
         span {
           color: #929292;
           font-size: 14px;
@@ -652,9 +656,9 @@
         display: flex;
         justify-content: flex-start;
         align-items: flex-start;
+        height: 100%;
         .Code {
           width: 198px;
-          // border-left: 1px solid #ededed;
           display: inline-block;
           .msgCode {
             display: flex;
@@ -981,11 +985,26 @@
           width: 742px;
           height: 926px;
           border-right: 1px solid #ededed;
-          overflow-y: scroll;
+          overflow-y: auto;
           display: inline-block;
-          // &::-webkit-scrollbar {
-          //   display: none;
-          // }
+          padding-bottom: 48px;
+          height: 100%;
+          box-sizing: border-box;
+          &::-webkit-scrollbar {
+            width: 4px;
+          }
+          &::-webkit-scrollbar-track {
+            background:#fff;
+            -webkit-border-radius: 20px;
+            -moz-border-radius: 20px;
+            border-radius:20px;
+          }
+          &::-webkit-scrollbar-thumb {
+            background:#BCBCBC;
+            -webkit-border-radius: 20px;
+            -moz-border-radius: 20px;
+            border-radius:20px;
+          }
           .base {
             padding-bottom: 20px;
             padding-left: 50px;
@@ -1264,7 +1283,6 @@
             justify-content: flex-start;
             align-items: flex-start;
             flex-wrap: wrap;
-            padding-bottom: 160px;
             margin-top: 10px;
             img {
               width: 86px;
@@ -1290,7 +1308,7 @@
               display: flex;
               justify-content: space-between;
               align-items: center;
-              padding: 10px 15px 10px 0px;
+              padding: 10px 0px 10px 0px;
               width: 545px;
               span {
                 font-size: 14px;
@@ -1820,6 +1838,8 @@
           .add_time{
             position: relative;
             overflow: hidden;
+            padding: 12px 0;
+            color: #03b3bb;
             .el-date-editor{
               position: absolute;
               left: 0;
