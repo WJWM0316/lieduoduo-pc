@@ -114,8 +114,8 @@
                     <p class="recruitmentTeam-text-top">{{ item.name }} | {{ item.position }}</p>
                     <p class="recruitmentTeam-text-buttom">
                       <span>{{ '正在招聘' }}</span>
-                      <span class="recruitmentTeam-positionName">{{ item.positionName === 0 ?item.positionName : '&quot;' + item.positionName + '&quot;' }}</span>
-                      <span>{{ item.positionName === 0 ? '' : '等' }}{{ item.positionNum+ '个职位' }}</span>
+                      <span class="recruitmentTeam-positionName">{{ item.positionName === 0 ? item.positionName : '&quot;' + item.positionName + '&quot;' }}</span>
+                      <span>{{ item.positionName === 0 ? '个职位' : '等' + item.positionNum + '个职位' }}</span>
                     </p>
                   </div>
                 </div>
@@ -714,14 +714,18 @@ to {top:0px;}
 						width: 100%;
             .recruitmentTeam-text-top{
               color: $font-color-3;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+              overflow: hidden;
+              max-width: 192px;
             }
             .recruitmentTeam-text-buttom{
               width: 100%;
               margin-top: 4px;
               color: $font-color-6;
-              span{
-                vertical-align: middle;
-              }
+              // span{
+              //   vertical-align: middle;
+              // }
               .recruitmentTeam-positionName{
                 display: inline-block;
                 max-width: 86px;
