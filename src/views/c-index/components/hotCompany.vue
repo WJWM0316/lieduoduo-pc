@@ -24,7 +24,7 @@
 <script>
 // import ScrollPane from 'COMPONENTS/scrollPane'
 import { getHotCompanyTypes, getHotCompanys } from 'API/company'
-import CompanyCard from 'COMPONENTS/common/companyCard'
+import CompanyCard from 'COMPONENTS/common/company'
 // ScrollPane,
 export default {
   components: { CompanyCard },

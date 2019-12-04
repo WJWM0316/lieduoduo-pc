@@ -54,7 +54,7 @@
 </template>
 <script>
 import Swiper from './components/swiper/index.vue'
-import CompanyCard from 'COMPONENTS/common/companyCard'
+import CompanyCard from 'COMPONENTS/common/company'
 import Search from './components/searchBar/index.vue'
 import NoFound from 'COMPONENTS/noFound'
 import { getLogoListsListsApi } from 'API/company'
@@ -98,7 +98,7 @@ export default {
       'updateSearchCollectMutipleApi'
     ]),
     getLogoListsLists () {
-      getLogoListsListsApi({count: 24}).then(({ data }) => (this.companyLogoLists = data.data))
+      getLogoListsListsApi({ count: 24 }).then(({ data }) => (this.companyLogoLists = data.data))
     },
     handleSearch () {
       this.getLists()
