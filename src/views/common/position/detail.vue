@@ -1,6 +1,6 @@
 <template>
   <div class="positionDetail" v-if="infos.id">
-		<header ref="header" class="header" :class="{'isRapidly' : infos.isRapidly === 1, 'headerFloat' : headerFloat}" v-show="headerFloat">
+		<header ref="header" class="header hidden" :class="{'isRapidly' : infos.isRapidly === 1, 'headerFloat' : headerFloat}">
 			<div class="inner-bg">
 			  <div class="inner">
 					<div class="header-content">

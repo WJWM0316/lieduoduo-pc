@@ -280,7 +280,7 @@
             </div>
             <div class="contact-btn" @click="showourbox = true">联系体验</div>
           </div>
-          <div class="gotoqiuzhi" @click="gotowhere('qiuzhi')">前往求职</div>
+          <div class="gotoqiuzhi" @click="gotowhere('qiuzhi')">前往求职端</div>
           </div>
         </template>
         <template v-if="$route.query.from === 'join'">

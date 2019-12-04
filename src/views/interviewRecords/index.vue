@@ -733,7 +733,11 @@ export default {
   },
   watch: {
     'pop.isShow': function (n) {
+      if (n) {
+        document.body.style.overflow = 'hidden'
+      }
       if (!n) {
+        document.body.style.overflow = 'auto'
         this.hasonload = false
       }
     }
@@ -1716,6 +1720,9 @@ export default {
         this.info = res.data.data
       })
     }
+  },
+  destroyed () {
+    document.body.style.overflow = 'auto'
   },
   mounted () {
     this.ManageList()
