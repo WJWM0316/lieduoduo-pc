@@ -76,7 +76,7 @@ export default mapSearch
         text-align: left;
         float: left;
         span{
-          color: #929292;
+          color: #92929B;;
         }
       }
       .doorplate {

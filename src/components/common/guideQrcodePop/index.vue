@@ -116,7 +116,7 @@ export default {
       }
       .close {
         font-size: 12px;
-        color: #BCBCBC;
+        color: #BCBEC0;;
         padding: 16px;
         position: absolute;
         top: 0;

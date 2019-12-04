@@ -120,13 +120,13 @@
     text-align: center;
     font-size: 20px;
     margin-bottom: 50px;
-    color:rgba(40,40,40,1);
+    color:#333333;
   }
   .ag_row {
     font-size:14px;
     font-family:PingFangSC;
     font-weight:400;
-    color:rgba(40,40,40,1);
+    color:#333333;
     line-height:22px;
     margin-bottom: 10px;
     text-indent: 2rem;
@@ -135,7 +135,7 @@
     font-size:18px;
     font-family:PingFangSC;
     font-weight:700;
-    color:rgba(40,40,40,1);
+    color:#333333;
     line-height:22px;
     margin-bottom: 10px;
     margin-top: 30px;

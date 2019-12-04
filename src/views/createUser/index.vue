@@ -73,7 +73,7 @@ export default class createUser extends Vue {
       top: 50%;
       transform: translateY(-50%);
       right: 25px;
-      color: #CDCBCF;
+      color: #BCBEC0;;
       transition: all ease .3s;
       z-index: 1;
     }
