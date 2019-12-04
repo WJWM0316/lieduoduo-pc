@@ -9,7 +9,7 @@
 
         <template v-else>
           <el-button @click="todoAction('job-hunting-chat')" class="canView specailBtn" v-if="infos.isRapidly === 1 && !interviewInfos.applied && infos.rapidlyInfo.seatsNum - infos.rapidlyInfo.applyNum - infos.rapidlyInfo.natureApplyNum > 0" :loading="btnLoad">马上抢</el-button>
-          <el-button @click="todoAction('job-hunting-chat')" :loading="btnLoad" class="canView" :class="{'specailBtn' : infos.isRapidly === 1}"  v-else>开撩约面</el-button>
+          <el-button @click="todoAction('job-hunting-chat')" :loading="btnLoad" class="canView" :class="{'specailBtn' : infos.isRapidly === 1}"  v-else>一键申请</el-button>
         </template>
       </template>
       <!-- 求职者还没有发起开撩动作 职位详情 start-->
