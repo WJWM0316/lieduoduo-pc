@@ -1087,7 +1087,6 @@
             justify-content: flex-start;
             align-items: flex-start;
             flex-wrap: wrap;
-            // padding-bottom: 160px;
 						padding-top: 10px;
 						div {
 							margin-right: 9px;
@@ -1282,26 +1281,6 @@
           align-items: center;
           justify-content: center;
           padding: 0;
-        }
-        .btn_submit {
-          width:80px;
-          height:32px;
-          background:rgba(101,39,145,1);
-          border-radius:16px;
-          box-sizing: border-box;
-          border:1px solid rgba(101,39,145,1);
-          font-size:14px;
-          font-family:PingFangSC-Regular;
-          font-weight:400;
-          color:rgba(255,255,255,1);
-          margin-left: 16px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: 0;
-          span {
-            color: #fff;
-          }
         }
       }
     }

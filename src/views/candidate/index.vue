@@ -61,9 +61,12 @@
               {{selectedScreen.length > 0 || (positionTypeList.length > 0 ? positionTypeList[positionTypeList.length-1].active:false) ? '清除筛选' :'高级筛选' }}
             </div>
 
-            <div class="topSelected2" @click="screenList(2)">
-              <i class="iconfont icon-jiantou"></i>
-            </div>
+            <div class="topSelected2" @click="screenList(2)" v-if="isShowScreen">
+                <i class="iconfont icon-jiantou" style="color: #00C4CD"></i>
+              </div>
+              <div class="topSelected2" @click="screenList(2)" v-else>
+                <i class="iconfont icon-jiantou"></i>
+              </div>
 
             <div class="screenBox" v-if="isShowScreen">
               <div class="triangle_border_top"></div>
@@ -433,7 +436,7 @@
               <div class="onload" @click="hasonload = !hasonload">
                 <i class="iconfont icon-xiazai"></i>
               </div>
-              <div class="onloadselect" v-loading="loadingshow" v-show="hasonload" ref="queryBox">
+              <div class="onloadselect"  v-loading="loadingshow" v-show="hasonload" ref="queryBox">
                 <div class="title">下载简历</div>
                 <div class="select">请选择下载格式:</div>
                 <div class="pdf">
@@ -479,17 +482,16 @@
 
               <div class="btn2" @click.stop="setJob(nowResumeMsg.uid, 'inappropriate', nowResumeMsg, 2)" v-if="nowResumeMsg.interviewInfo.data.haveInterview && !nowResumeMsg.interviewInfo.data.hasUnsuitRecord">不合适</div>
               <div class="btn2" @click.stop="setJob(nowResumeMsg.uid, 'watch-reson', nowResumeMsg, 2)"  v-if="!nowResumeMsg.interviewInfo.data.haveInterview && nowResumeMsg.interviewInfo.data.hasUnsuitRecord">查看原因</div>
-
             </div>
             <div class="like_user" @click.stop="ownerOp(true,nowResumeMsg.uid)" v-if="nowResumeMsg.interested">
-                <img class="like" src="../../assets/images/like.png"/>
+                <i class="iconfont icon-yishoucang img"></i>
                 取消感兴趣
               </div>
               <div class="like_user" @click.stop="ownerOp(false,nowResumeMsg.uid)" v-else >
-                <img class="like" src="../../assets/images/like_no.png"/>
+                <i class="iconfont icon-shoucang img"></i>
                   对Ta感兴趣
               </div>
-            <div class="msgCode" v-if="shareResumeImg">
+            <div class="msgCode"  v-if="shareResumeImg">
               <img :src="shareResumeImg" />
               <span>扫码分享</span>
             </div>
@@ -506,7 +508,7 @@
                 </div>
               </div>
             </div>
-            <div class="seefujian" v-if="nowResumeMsg.resumeAttach">
+             <div class="seefujian" v-if="nowResumeMsg.resumeAttach">
               <div class="title">附件简历:</div>
               <div class="seebtn" v-if="nowResumeMsg.resumeAttach.extension === 'doc'"><a :href="'https://view.officeapps.live.com/op/view.aspx?src=' + nowResumeMsg.resumeAttach.url" :download="nowResumeMsg.resumeAttach.fileName" target="_blank">查看附件</a></div>
               <div class="seebtn" v-else><a :href="nowResumeMsg.resumeAttach.url" :download="nowResumeMsg.resumeAttach.fileName" target="_blank">查看附件</a></div>

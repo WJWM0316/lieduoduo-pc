@@ -28,7 +28,10 @@
                 {{selectedScreen.length > 0 ||  (positionTypeList.length > 0 ? positionTypeList[positionTypeList.length-1].active:false) ? '清除筛选' :'高级筛选' }}
               </div>
 
-              <div class="topSelected2" @click="screenList(2)">
+              <div class="topSelected2" @click="screenList(2)" v-if="isShowScreen">
+                <i class="iconfont icon-jiantou" style="color: #00C4CD"></i>
+              </div>
+              <div class="topSelected2" @click="screenList(2)" v-else>
                 <i class="iconfont icon-jiantou"></i>
               </div>
 
@@ -422,11 +425,11 @@
               <div class="btn2" @click.stop="setJob(nowResumeMsg.uid, 'watch-reson', nowResumeMsg, 2)"  v-if="!nowResumeMsg.interviewInfo.data.haveInterview && nowResumeMsg.interviewInfo.data.hasUnsuitRecord">查看原因</div>
             </div>
             <div class="like_user" @click.stop="ownerOp(true,nowResumeMsg.uid)" v-if="nowResumeMsg.interested">
-                <img class="like" src="../../assets/images/like.png"/>
+                <i class="iconfont icon-yishoucang img"></i>
                 取消感兴趣
               </div>
               <div class="like_user" @click.stop="ownerOp(false,nowResumeMsg.uid)" v-else >
-                <img class="like" src="../../assets/images/like_no.png"/>
+                <i class="iconfont icon-shoucang img"></i>
                   对Ta感兴趣
               </div>
             <div class="msgCode"  v-if="shareResumeImg">

@@ -97,7 +97,8 @@
           <img class="code" :src="shareSelectItem.qrCodeUrl">
           <p class="share_help_text" @mouseover="isHelpShow = true" @mouseout="isHelpShow = false">
             分享帮助
-            <img class="ques_icon" src="../../assets/images/question-circle2.png">
+            <i class="iconfont icon-question-circle"></i>
+            <!-- <img class="ques_icon" src="../../assets/images/question-circle2.png"> -->
           </p>
         </div>
 
@@ -605,13 +606,13 @@ export default class CourseList extends Vue {
           cursor: pointer;
           &.cur {
             font-weight: bold;
-            color: rgba(101, 39, 145, 1);
+            color: #03B3BB;
             position: relative;
             &::after {
               content: "\20";
               width: 100%;
               height: 4px;
-              background: rgba(101, 39, 145, 1);
+              background:#00C4CD;
               position: absolute;
               bottom: -0px;
               left: 0px;
@@ -679,7 +680,7 @@ export default class CourseList extends Vue {
               cursor: pointer;
             }
             &.slet {
-              background: rgba(132, 82, 167, 1);
+              background: #00C4CD;
               color: rgba(255, 255, 255, 1);
             }
           }
@@ -704,8 +705,8 @@ export default class CourseList extends Vue {
       width: 124px;
       height: 40px;
       line-height: 40px;
-      background: rgba(101, 39, 145, 1);
-      border-radius: 20px;
+      background: #00C4CD;
+      border-radius: 4px;
       position: absolute;
       right: 56px;
       top: 36px;
@@ -787,7 +788,7 @@ export default class CourseList extends Vue {
         .job_op {
           font-size: 14px;
           font-weight: 400;
-          color: rgba(101, 39, 145, 1);
+          color: #03B3BB;
           margin-right: 38px;
           cursor: pointer;
         }
@@ -961,15 +962,15 @@ export default class CourseList extends Vue {
       width: 80px;
       height: 32px;
       background: rgba(255, 255, 255, 1);
-      border-radius: 16px;
+      border-radius: 4px;
       border: 1px solid rgba(220, 220, 220, 1);
       color: rgba(53, 64, 72, 1);
     }
     .true {
       width: 80px;
       height: 32px;
-      background: rgba(101, 39, 145, 1);
-      border-radius: 16px;
+      background: #00C4CD;
+      border-radius: 4px;
       color: rgba(255, 255, 255, 1);
       margin-left: 16px;
     }
@@ -1027,17 +1028,14 @@ export default class CourseList extends Vue {
       }
       .share_help_text {
         font-size: 14px;
-        color: rgba(101, 39, 145, 1);
+        color: #03B3BB;
         line-height: 22px;
         text-align: center;
         cursor: pointer;
-        .ques_icon {
-          width: 14px;
-          height: 14px;
+        i{
+          font-size: 14px;
           display: inline-block;
           margin-left: 6px;
-          position: relative;
-          top: 2px;
         }
       }
       .help_icon {

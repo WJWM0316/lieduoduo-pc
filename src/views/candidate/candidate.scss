@@ -59,7 +59,7 @@
           height:22px;
           background:rgba(239,233,244,1);
           border-radius:4px;
-          color:rgba(101,39,145,1);
+          color:#00C4CD;
           text-align: center;
           line-height: 22px;
           margin-left: 4px;
@@ -71,9 +71,8 @@
       }
       .status{
         float: right;
-        font-size:14px;
-        padding-right: 8px;
-        color:rgba(40,40,40,1);
+        color:#66666E;
+        font-size: 14px;
       }
     }
     .bloCont {
@@ -219,7 +218,7 @@
           align-items: center;
           flex-direction: row;
           font-size: 14px;
-          color: #652791;
+          color: #00C4CD;
           cursor: pointer;
           img {
             margin-right: 7px;
@@ -228,15 +227,13 @@
           }
         }
         .btn {
-          width:108px;
-          height:38px;
-          line-height:38px;
-          background:rgba(255,220,41,1);
-          border-radius:30px;
+          width:112px;
+          height:40px;
+          line-height:40px;
+          background:#00C4CD;
+          border-radius:4px;
           font-size:14px;
-          font-family:PingFangSC-Regular;
-          font-weight:400;
-          color:rgba(40,40,40,1);
+          color:#fff;
           text-align: center;
           margin-left: 24px;
           cursor: pointer;
@@ -293,9 +290,9 @@
       justify-content: center;
       align-items: center;
       text-align: center;
-      color:rgba(101,39,145,1);
+      color:#00C4CD;
       line-height: 40px;
-      border:1px solid rgba(101,39,145,1);
+      border:1px solid #00C4CD;
     }
   }
   // p {
@@ -376,12 +373,12 @@ height:100%;
     top: 12px;
   }
   &.cur {
-    color: #652791;
+    color: #00C4CD;
     &::after {
       content: '';
       width: 80%;
       height: 2px;
-      background: #652791;
+      background: #00C4CD;
       position: absolute;
       left: 10%;
       bottom: 0px;
@@ -440,8 +437,8 @@ height:100%;
         &.cur {
           height:28px;
           background:rgba(255,255,255,1);
-          border:1px solid rgba(101,39,145,1);
-          color:rgba(101,39,145,1);
+          border:1px solid #00C4CD;
+          color:#00C4CD;
         }
       }
     }
@@ -464,7 +461,7 @@ height:100%;
         text-align: center;
         box-sizing: border-box;
         &.true {
-          background:rgba(101,39,145,1);
+          background:#00C4CD;
           border: none;
           color: #fff;
           margin-right: 16px;
@@ -487,13 +484,14 @@ height:100%;
   border-top-right-radius: inherit;
   border-bottom-right-radius: inherit;
   &.selected {
-    color: #652791;
+    color: #00C4CD;
   }
 }
 .topSelected2 {
   width:40px;
   height:40px;
-  display: flex;
+  color: #66666E;
+  display: -webkit-box;
   justify-content: center;
   align-items:center;
   background:rgba(255,255,255,1);
@@ -503,7 +501,6 @@ height:100%;
   border-bottom-left-radius: inherit;
   border-left: none;
   i{
-    color: #652791;
     font-size: 24px;
   }
   img {
@@ -831,7 +828,7 @@ right: -40px;
           }
           i{
             font-size: 18px;
-            color: #8452A7;
+            color: #00C4CD;
           }
         }
         .btnstatus{
@@ -848,7 +845,7 @@ right: -40px;
             font-family:PingFangSC-Medium,PingFangSC;
             font-weight:500;
             color:rgba(255,255,255,1);
-            background:rgba(101,39,145,1);
+            background:#00C4CD;
             border-radius:4px;
             cursor: pointer;
             margin-bottom: 12px;
@@ -884,13 +881,11 @@ right: -40px;
           justify-content: center;
           align-items: center;
           flex-direction: row;
-          color: #652791;
+          color: $main-color-1;
           cursor: pointer;
           height: 42px;
-          img {
+          .img {
             margin-right: 7px;
-            position: relative;
-            top: -2px;
           }
         }
         .TabSelect {
@@ -948,9 +943,9 @@ right: -40px;
             font-size: 14px;
             line-height: 40px;
             display:block;
-            color: #652791;
+            color: #00C4CD;
             text-align: center;
-            border:1px solid rgba(132,82,167,1);  
+            border:1px solid #00C4CD;  
           }
         }
         .ContactInformation {
@@ -1001,7 +996,7 @@ right: -40px;
             border-radius: 4px;
             border: 1px solid rgba(101, 39, 145, 1);
             font-size: 14px;
-            color: #652791;
+            color: #00C4CD;
             line-height: 30px;
             margin: 0 auto;
             cursor: pointer;
@@ -1166,7 +1161,7 @@ right: -40px;
               .status {
                 padding: 5px 9px 5px 10px;
                 background: #efe9f4;
-                color: #652791;
+                color: #00C4CD;
                 vertical-align: middle;
                 box-sizing: border-box;
                 font-size: 14px;
@@ -1226,7 +1221,7 @@ right: -40px;
                 border-radius: 30px;
                 margin-right: 6px;
                 vertical-align: middle;
-                color: #652791;
+                color: #00C4CD;
                 margin-bottom: 8px;
                 font-weight: 300;
                 height: 22px;
@@ -1316,7 +1311,6 @@ right: -40px;
           justify-content: flex-start;
           align-items: flex-start;
           flex-wrap: wrap;
-          padding-bottom: 160px;
           margin-top: 10px;
           img {
             width: 86px;
@@ -1360,7 +1354,7 @@ right: -40px;
               background: rgba(239, 233, 244, 1);
               padding: 2px 8px;
               text-align: center;
-              color: #652791;
+              color: #00C4CD;
               font-size: 12px;
               margin-right: 10px;
               border-radius: 5px;
@@ -1513,26 +1507,6 @@ right: -40px;
         justify-content: center;
         padding: 0;
       }
-      .btn_submit {
-        width:80px;
-        height:32px;
-        background:rgba(101,39,145,1);
-        border-radius:16px;
-        box-sizing: border-box;
-        border:1px solid rgba(101,39,145,1);
-        font-size:14px;
-        font-family:PingFangSC-Regular;
-        font-weight:400;
-        color:rgba(255,255,255,1);
-        margin-left: 16px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0;
-        span {
-          color: #fff;
-        }
-      }
     }
   }
   .noJobBox {
@@ -1607,7 +1581,7 @@ right: -40px;
     .noJobBtn {
       width:184px;
       height:40px;
-      background:rgba(101,39,145,1);
+      background:#00C4CD;
       border-radius:100px;
       line-height: 40px;
       cursor: pointer;
@@ -1697,7 +1671,7 @@ right: -40px;
             margin-top: 21px;
             margin-right: 12px;
             .bg{
-              color:rgba(101,39,145,1);
+              color:#00C4CD;
             }
           }
           .center{
@@ -1719,7 +1693,7 @@ right: -40px;
             font-size: 14px;
             cursor: pointer;
             margin-top: 23px;
-            color:rgba(101,39,145,1);
+            color:#00C4CD;
           }
         }
         .addarea{
@@ -1732,14 +1706,14 @@ right: -40px;
             float: left;
             margin-right: 8px;
             .bgcolor{
-              color:#652791;
+              color:#00C4CD;
             }
           }
           .add-text{
             float: left;
             line-height: 16px;
             font-size:14px;
-            color:#652791;
+            color:#00C4CD;
           }
         }
       }
@@ -1774,7 +1748,7 @@ right: -40px;
           }
           .phone{
             float: left;
-            color:rgba(101,39,145,1);
+            color:#00C4CD;
           }
         }
         .detail{
@@ -2057,7 +2031,7 @@ right: -40px;
                 width:60px;
                 text-align: center;
                 height:24px;
-                background:rgba(101,39,145,1);
+                background:#00C4CD;
                 border-radius:2px;
                 color: #fff;
                 float: right;
@@ -2182,8 +2156,8 @@ right: -40px;
           text-align: center;
         }
         .resoncur{
-          border-color: #652791;
-          color: #652791;
+          border-color: #00C4CD;
+          color: #00C4CD;
         }
       }
       .explain{
@@ -2233,7 +2207,7 @@ right: -40px;
         .save{
           width:108px;
           height:32px;
-          background:rgba(101,39,145,1);
+          background:#00C4CD;
           border-radius:4px;
           text-align: center;
           color:rgba(255,255,255,1);
@@ -2278,7 +2252,7 @@ align-items: center;
     width:17.5px;
     height:17.5px;
     background:rgba(220,220,220,1);
-    border:1.5px solid rgba(101,39,145,1);
+    border:1.5px solid #00C4CD;
     border-radius:50%;
     &.is-active {
       background:rgba(255,220,41,1);

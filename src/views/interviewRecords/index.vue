@@ -326,7 +326,7 @@
               <div class="onload" @click="hasonload = !hasonload">
                 <i class="iconfont icon-xiazai"></i>
               </div>
-              <div class="onloadselect" v-loading="loadingshow" v-show="hasonload" ref="queryBox">
+              <div class="onloadselect"  v-loading="loadingshow" v-show="hasonload" ref="queryBox">
                 <div class="title">下载简历</div>
                 <div class="select">请选择下载格式:</div>
                 <div class="pdf">
@@ -374,11 +374,11 @@
               <div class="btn2" @click.stop="setJob(nowResumeMsg.uid, 'watch-reson', nowResumeMsg, 2)"  v-if="!nowResumeMsg.interviewInfo.data.haveInterview && nowResumeMsg.interviewInfo.data.hasUnsuitRecord">查看原因</div>
             </div>
             <div class="like_user" @click.stop="ownerOp(true,nowResumeMsg.uid)" v-if="nowResumeMsg.interested">
-                <img class="like" src="../../assets/images/like.png"/>
+                <i class="iconfont icon-yishoucang img"></i>
                 取消感兴趣
               </div>
               <div class="like_user" @click.stop="ownerOp(false,nowResumeMsg.uid)" v-else >
-                <img class="like" src="../../assets/images/like_no.png"/>
+                <i class="iconfont icon-shoucang img"></i>
                   对Ta感兴趣
               </div>
             <div class="msgCode"  v-if="shareResumeImg">
@@ -1782,12 +1782,12 @@ export default {
       text-align: center;
     }
     .active{
-      color:rgba(101,39,145,1);
+      color:#00C4CD;
       font-size: 16px;
       line-height: 46px;
       font-weight: bold;
       height: 46px;
-      border-bottom: 2px solid #652791;
+      border-bottom: 2px solid #00C4CD;
     }
   }
   }
@@ -2028,7 +2028,7 @@ export default {
             justify-content: center;
             align-items: center;
             flex-direction: row;
-            color: #652791;
+            color: #00C4CD;
             cursor: pointer;
             font-size: 14px;
             margin-right: 75px;
@@ -2046,7 +2046,7 @@ export default {
             border-radius:30px;
             font-size:14px;
             font-weight:400;
-            color:rgba(107,48,149,1);
+            color:#00C4CD;
             padding-right: 32px;
             cursor: pointer;
           }
@@ -2243,7 +2243,7 @@ export default {
           font-size: 14px;
         }
       }
-.resumeLyout {
+      .resumeLyout {
         display: flex;
         justify-content: flex-start;
         align-items: flex-start;
@@ -2389,7 +2389,7 @@ export default {
             }
             i{
               font-size: 18px;
-              color: #8452A7;
+              color: #00C4CD;
             }
           }
           .btnstatus{
@@ -2406,7 +2406,7 @@ export default {
               font-family:PingFangSC-Medium,PingFangSC;
               font-weight:500;
               color:rgba(255,255,255,1);
-              background:rgba(101,39,145,1);
+              background:#00C4CD;
               border-radius:4px;
               cursor: pointer;
               margin-bottom: 12px;
@@ -2442,13 +2442,11 @@ export default {
             justify-content: center;
             align-items: center;
             flex-direction: row;
-            color: #652791;
+            color: $main-color-1;
             cursor: pointer;
             height: 42px;
-            img {
+            .img {
               margin-right: 7px;
-              position: relative;
-              top: -2px;
             }
           }
           .TabSelect {
@@ -2506,9 +2504,9 @@ export default {
               font-size: 14px;
               line-height: 40px;
               display:block;
-              color: #652791;
+              color: #00C4CD;
               text-align: center;
-              border:1px solid rgba(132,82,167,1);
+              border:1px solid #00C4CD;  
             }
           }
           .ContactInformation {
@@ -2559,7 +2557,7 @@ export default {
               border-radius: 4px;
               border: 1px solid rgba(101, 39, 145, 1);
               font-size: 14px;
-              color: #652791;
+              color: #00C4CD;
               line-height: 30px;
               margin: 0 auto;
               cursor: pointer;
@@ -2724,7 +2722,7 @@ export default {
                 .status {
                   padding: 5px 9px 5px 10px;
                   background: #efe9f4;
-                  color: #652791;
+                  color: #00C4CD;
                   vertical-align: middle;
                   box-sizing: border-box;
                   font-size: 14px;
@@ -2784,7 +2782,7 @@ export default {
                   border-radius: 30px;
                   margin-right: 6px;
                   vertical-align: middle;
-                  color: #652791;
+                  color: #00C4CD;
                   margin-bottom: 8px;
                   font-weight: 300;
                   height: 22px;
@@ -2873,7 +2871,6 @@ export default {
             align-items: flex-start;
             flex-wrap: wrap;
             margin-top: 10px;
-            padding-bottom: 160px;
             img {
               width: 86px;
               height: 86px;
@@ -2916,7 +2913,7 @@ export default {
                 background: rgba(239, 233, 244, 1);
                 padding: 2px 8px;
                 text-align: center;
-                color: #652791;
+                color: #00C4CD;
                 font-size: 12px;
                 margin-right: 10px;
                 border-radius: 5px;
@@ -3076,25 +3073,6 @@ export default {
           align-items: center;
           justify-content: center;
           padding: 0;
-        }
-        .btn_submit {
-          width:80px;
-          height:32px;
-          background:rgba(101,39,145,1);
-          border-radius:16px;
-          box-sizing: border-box;
-          border:1px solid rgba(101,39,145,1);
-          font-size:14px;
-          font-weight:400;
-          color:rgba(255,255,255,1);
-          margin-left: 16px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: 0;
-          span {
-            color: #fff;
-          }
         }
       }
     }
@@ -3267,14 +3245,14 @@ export default {
               float: left;
               margin-right: 8px;
               .bgcolor{
-                color:#652791;
+                color:#00C4CD;
               }
             }
             .add-text{
               float: left;
               line-height: 16px;
               font-size:14px;
-              color:#652791;
+              color:#00C4CD;
             }
           }
         }
@@ -3663,8 +3641,8 @@ export default {
             text-align: center;
           }
           .resoncur{
-            border-color: #652791;
-            color: #652791;
+            border-color: #00C4CD;
+            color: #00C4CD;
           }
         }
         .explain{
