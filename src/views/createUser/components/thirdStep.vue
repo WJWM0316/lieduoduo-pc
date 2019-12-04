@@ -171,7 +171,7 @@ export default class resumeThirdPost extends Vue {
       } else if (!item.endTime && item.endTime !== 0) {
         title = '请选择结束时间'
       } else if (item.startTime > item.endTime && item.endTime !== 0) {
-        title = '结束时间不能小于开始时间'
+        title = '结束时间不能早于开始时间'
       }
       if (title) {
         this.$message.error(title)

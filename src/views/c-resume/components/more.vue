@@ -140,7 +140,7 @@ export default {
   }
   .image-wrapper{
     margin-right: 10px;
-    margin-top: 10px;
+    margin-bottom: 10px;
   }
   .image-wrapper:nth-child(5n) {
     margin-right: 0px;

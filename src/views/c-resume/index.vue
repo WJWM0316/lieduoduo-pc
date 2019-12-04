@@ -211,7 +211,7 @@ export default {
     color: $title-color-1;
   }
   .form-labels-wrapper {
-    margin-top: 14px;
+    margin-top: 6px;
     .form-label {
       padding: 5px 14px;
       border-radius: 30px;
@@ -219,7 +219,7 @@ export default {
       color: $main-color-1;
       display: inline-block;
       margin-right: 12px;
-      margin-bottom: 8px;
+      margin-top: 8px;
       border: 1px solid $border-color-2;
     }
   }
@@ -241,7 +241,7 @@ export default {
     }
   }
   .resume-list-desc {
-    padding: 16px 0 0;
+    padding: 12px 0 0;
     line-height: 22px;
     color: $title-color-2;
     white-space: pre-wrap;

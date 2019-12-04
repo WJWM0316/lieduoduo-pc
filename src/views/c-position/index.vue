@@ -47,7 +47,7 @@ import NoFound from 'COMPONENTS/noFound'
 import adpostion from 'COMPONENTS/common/adpostion'
 import GuideLogin from 'COMPONENTS/common/guideLogin'
 import PositionItem from 'COMPONENTS/common/positionItem'
-import CompanyItem from 'COMPONENTS/common/companyCard/item'
+import CompanyItem from 'COMPONENTS/common/company/item'
 export default {
   components: {
     Search,
