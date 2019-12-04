@@ -162,8 +162,7 @@ export default {
           confirmButtonText: '马上上传',
           confirmButtonClass: 'alert button',
           dangerouslyUseHTMLString: true,
-          customClass: 'file-alert',
-          center: true
+          customClass: 'file-alert'
         }).then(() => {
           this.$refs[this.eventKey].click()
         })
@@ -223,17 +222,21 @@ export default {
 <style lang="scss">
 .file-alert .el-message-box__header {
   padding-top: 44px;
+  text-align: center !important;
 }
 .file-alert .el-message-box__title{
   font-size: 14px;
   color: $title-color-1;
+  text-align: center;
 }
 .file-alert .el-message-box__btns {
-  padding: 42px 0 0px !important;
+  text-align: center !important;
+  padding: 42px 0 24px !important;
 }
 .file-alert p.alert-content {
   color: $sub-color-1;
   line-height: 1;
+  text-align: center;
 }
 .alert.button {
   width: 258px !important;

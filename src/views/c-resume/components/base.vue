@@ -356,7 +356,7 @@ $image-wrapper: 112px;
     vertical-align: middle;
   }
   p {
-    color: $font-color-2;
+    color: $title-color-1;
     font-size: 14px;
     line-height: 1.4;
     span + span {

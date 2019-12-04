@@ -87,7 +87,8 @@ export default {
       this.$confirm('删除后，内容将不可恢复，确定删除吗？', '温馨提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
-        type: 'warning'
+        type: 'warning',
+        center: true
       }).then(() => {
         this.$emit('command', {
           type: 'delete',
@@ -114,7 +115,8 @@ export default {
       this.$confirm('确定退出，更新的内容将不被保存', '有编辑中内容尚未保存，确定退出编辑吗?', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
-        type: 'warning'
+        type: 'warning',
+        center: true
       }).then(() => {
         this.$store.commit('setEditStatus', { status: false })
         this.unshowEdit = true
@@ -144,7 +146,8 @@ export default {
         this.$confirm('确定退出，更新的内容将不被保存', '有编辑中内容尚未保存，确定退出编辑吗?', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
-          type: 'warning'
+          type: 'warning',
+          center: true
         }).then(() => {
           this.$store.commit('setEditStatus', { status: false })
           this.$nextTick(() => {
