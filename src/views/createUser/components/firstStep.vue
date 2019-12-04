@@ -35,6 +35,7 @@
         value-format="timestamp"
         @focus="focus('#birthDom')"
         @blur="blur('#birthDom')"
+        :picker-options="{disabledDate}"
       ></el-date-picker>
       <div v-if="!formData.birth">选择你的出生年月</div>
       <div v-else>{{formData.birth | date('YYYY-MM-DD')}}</div>
@@ -166,6 +167,12 @@ export default class CourseList extends Vue {
           this.$parent.step++
         })
       })
+    }
+    disabledDate (time) {
+      let timeNow = Date.now()
+      let frontTime = timeNow - (65 * 12 * 30 * 24 * 60 * 60 * 1000)
+      let rearTime = timeNow - (15 * 12 * 30 * 24 * 60 * 60 * 1000)
+      return time.getTime() < frontTime || time.getTime() > rearTime
     }
 
     transformData () {
