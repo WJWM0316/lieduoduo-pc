@@ -90,17 +90,17 @@ export default {
       const dom = document.querySelector(item.container)
       if (dom) {
         const domBounding = dom.getBoundingClientRect()
-        const { y } = domBounding
-        if (y === 0) return
-        let top = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-        let to = document.documentElement.scrollTop + y
+        const { top } = domBounding
+        if (top === 0) return
+        let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+        let to = top + scrollTop
         let duration = 500
-        const s = Math.abs(top - to)
+        const s = Math.abs(scrollTop - to)
         const v = Math.ceil((s / duration) * 50)
         // eslint-disable-next-line no-inner-declarations
         function scroll (start, end, step) {
           if (start === end) return
-
+          // console.log(start, end)
           let d = start + step > end ? end : start + step
           if (start > end) {
             d = start - step < end ? end : start - step
@@ -108,7 +108,7 @@ export default {
           window.scrollTo(0, d)
           window.requestAnimationFrame(() => scroll(d, end, step))
         }
-        scroll(top, to, v)
+        scroll(scrollTop, to, v)
         /* window.scrollTo({
           top: end, // 滚动终点y的位置
           left: 0, // 滚动终点x的位置
@@ -170,6 +170,9 @@ export default {
 .resume-wrapper /deep/ {
   .c-btn {
     width: 100%;
+  }
+  .wrapper-info .c-btn {
+    width: 520px;
   }
   .el-form {
     display: flex;
