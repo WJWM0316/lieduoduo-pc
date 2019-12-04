@@ -765,7 +765,11 @@ import { applyInterviewApi } from 'API/interview'
         immediate: true
       },
       'pop.isShow': function (n) {
+        if (n) {
+          document.body.style.overflow = 'hidden'
+        }
         if (!n) {
+          document.body.style.overflow = 'auto'
           this.hasonload = false
         }
       }
@@ -879,8 +883,12 @@ export default class CourseList extends Vue {
     nowResumeMsg = {}
     shareResumeImg = '' // 简历二维码
     positionList = []
+    interviewNum = ''
     changeJobId = ''
     changeResumeId = ''
+    destroyed () {
+      document.body.style.overflow = 'auto'
+    }
     init () {
       this.form = Object.assign(this.form, this.$route.query || {})
       this.userInfo = this.$store.state.userInfo
@@ -1138,6 +1146,7 @@ export default class CourseList extends Vue {
         case 'inappropriate':
           let status2 = { vkey: vo.resume ? vo.resume.vkey : vo.vkey, type: 'resume' }
           manyrecordstatus(status2).then((res) => {
+            this.interviewNum = res.data.data
             if (res.data.data.data.length > 1) {
               this.pop = {
                 isShow: true,
@@ -1367,13 +1376,23 @@ export default class CourseList extends Vue {
                 btntext: '保存',
                 type: 'inappropriate'
               }
-              getCommentReasonApi().then((res) => {
-                let arr = res.data.data
-                arr.map((v, k) => {
-                  v.cur = false
+              if (this.interviewNum.interviewStatus === 58 || this.interviewNum.interviewStatus === 59) {
+                getCommentReasonApi().then((res) => {
+                  let arr = res.data.data
+                  arr.map((v, k) => {
+                    v.cur = false
+                  })
+                  this.reasonlist = arr
                 })
-                this.reasonlist = arr
-              })
+              } else {
+                getloadingReasonApi().then((res) => {
+                  let arr = res.data.data
+                  arr.map((v, k) => {
+                    v.cur = false
+                  })
+                  this.reasonlist = arr
+                })
+              }
             }
           }
         }
