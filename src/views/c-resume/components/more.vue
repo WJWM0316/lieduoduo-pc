@@ -90,6 +90,7 @@ export default {
         if (!imgs.length && !introduce) {
           this.$alert('文字和图片至少一个不为空哦', '温馨提示', {
             confirmButtonText: '好的',
+            center: true,
             type: 'warning'
           })
           // eslint-disable-next-line standard/no-callback-literal
