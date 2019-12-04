@@ -209,7 +209,7 @@ export default {
   }
   .wrapper-info {
     flex: 1;
-    max-width: 520px;
+    // max-width: 520px;
   }
   .wrapper-operate {
     width: 100px;
