@@ -609,12 +609,14 @@
 
           <div class="intertime" v-show="pop.type === 'setinterinfo'">
           <div class="intertime_title">约面时间</div>
-          <ul class="time_list" v-if="model.dateLists.length">
-          <li class="time_row" v-for="(item, index) in model.dateLists" :key="index">
-            <i class="el-icon-remove" @click="deleteTime(index)"></i>
-            {{item.appointment}}
-          </li>
-        </ul>
+          <div>
+            <ul class="time_list" v-if="model.dateLists.length">
+            <li class="time_row" v-for="(item, index) in model.dateLists" :key="index">
+              <i class="el-icon-remove" @click="deleteTime(index)"></i>
+              {{item.appointment}}
+            </li>
+          </ul>
+          </div>
           <div class="add_time" v-if="model.dateLists.length < 3">
           <i class="iconfont icon-tianjiashijian bgcolor" style="font-size:12px"></i>
           <span :style="'margin-left:16px;line-height:14px'">添加时间</span>
