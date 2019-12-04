@@ -455,7 +455,7 @@ export default class loginForm extends Component {
       vertical-align: top;
       .login_text {
         font-size: 12px;
-        color: #929292;
+        color: #92929B;;
         width: 86px;
         height: 20px;
         border-radius: 2px;
@@ -871,7 +871,7 @@ export default class loginForm extends Component {
         width: 203px;
         height: 40px;
         font-size: 20px;
-        color: #929292;
+        color: #92929B;;
         font-weight: 400;
         font-family: PingFangSC-Regular, PingFang SC;
         border-bottom: 2px solid #e8e9eb;

@@ -31,7 +31,7 @@
     </div>
     <div class="formItem2">
       <div class="start-time">
-        <div v-if="!form.startTime" style="padding-left: 30px; color: #929292; font-weight: 300;">请选择开始时间</div>
+        <div v-if="!form.startTime" style="padding-left: 30px; color: #92929B;; font-weight: 300;">请选择开始时间</div>
         <div v-else style="padding-left: 30px; color: #282828">{{form.startTime | date('YYYY-MM-DD')}}</div>
         <i class="el-icon-caret-bottom defalut-position" id="startTime"></i>
         <el-date-picker
@@ -43,7 +43,7 @@
         </el-date-picker>
       </div>～ &nbsp;&nbsp;
       <div class="end-time">
-        <div v-if="!form.endTime" style="padding-left: 30px; color: #929292; font-weight: 300;">
+        <div v-if="!form.endTime" style="padding-left: 30px; color: #92929B;; font-weight: 300;">
           <template v-if="form.endTime === ''">
             请选择结束时间
           </template>
@@ -237,7 +237,7 @@ export default class resumeThirdPost extends Vue {
       margin-bottom: 20px;
       position: relative;
       .el-input__inner {
-        color:rgba(40,40,40,1);
+        color:#333333;
         font-size:14px;
         font-weight:400;
       }
@@ -248,7 +248,7 @@ export default class resumeThirdPost extends Vue {
         background: transparent;
         box-sizing: border-box;
         padding: 0 100px 0 30px;
-        color:rgba(40,40,40,1);
+        color:#333333;
         font-size:14px;
         font-weight:400;
       }
@@ -259,7 +259,7 @@ export default class resumeThirdPost extends Vue {
         transform: translateY(-50%);
         font-size:14px;
         font-weight:300;
-        color:rgba(146,146,146,1);
+        color:#92929B;
       }
     }
     .el-select{
@@ -328,22 +328,22 @@ export default class resumeThirdPost extends Vue {
       }
     }
     input::-webkit-input-placeholder {
-      color: #929292;
+      color: #92929B;;
       font-size: 14px;
       font-weight: 300;
     }
     input::-moz-placeholder {
-      color: #929292;
+      color: #92929B;;
       font-size: 14px;
       font-weight: 300;
     }
     input::-ms-input-placeholder {
-      color: #929292;
+      color: #92929B;;
       font-size: 14px;
       font-weight: 300;
     }
     input::input-placeholder {
-      color: #929292;
+      color: #92929B;;
       font-size: 14px;
       font-weight: 300;
     }
@@ -356,7 +356,7 @@ export default class resumeThirdPost extends Vue {
         display: inline-block;
         // float: left;
         font-weight:700;
-        color:rgba(40,40,40,1);
+        color:#333333;
         font-size:24px;
       }
       .add-btn{

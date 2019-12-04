@@ -37,7 +37,7 @@
         </div>
         <div class="formItem2">
           <div class="start-time">
-            <div v-if="!formData.startTime" style="padding-left: 30px; color: #929292; font-weight: 300;">请选择开始时间</div>
+            <div v-if="!formData.startTime" style="padding-left: 30px; color: #92929B;; font-weight: 300;">请选择开始时间</div>
             <div v-else style="padding-left: 30px; color: #282828">{{formData.startTime | date('YYYY-MM-DD')}}</div>
             <i class="el-icon-caret-bottom defalut-position" id="startTime"></i>
             <el-date-picker
@@ -51,7 +51,7 @@
             </el-date-picker>
           </div>～ &nbsp;&nbsp;
           <div class="end-time">
-            <div v-if="!formData.endTime" style="padding-left: 30px; color: #929292; font-weight: 300;">
+            <div v-if="!formData.endTime" style="padding-left: 30px; color: #92929B;; font-weight: 300;">
               <template v-if="formData.endTime === ''">
                 请选择结束时间
               </template>
@@ -272,22 +272,22 @@ export default class CourseList extends Vue {
   box-sizing: border-box;
   position: relative;
   input::-webkit-input-placeholder {
-    color: #929292;
+    color: #92929B;;
     font-size: 14px;
     font-weight: 300;
   }
   input::-moz-placeholder {
-    color: #929292;
+    color: #92929B;;
     font-size: 14px;
     font-weight: 300;
   }
   input::-ms-input-placeholder {
-    color: #929292;
+    color: #92929B;;
     font-size: 14px;
     font-weight: 300;
   }
   input::input-placeholder {
-    color: #929292;
+    color: #92929B;;
     font-size: 14px;
     font-weight: 300;
   }
@@ -295,7 +295,7 @@ export default class CourseList extends Vue {
     font-size:24px;
     font-family:PingFangSC;
     font-weight:700;
-    color:rgba(40,40,40,1);
+    color:#333333;
     line-height:33px;
     text-align: center;
     margin-bottom: 40px;
@@ -314,7 +314,7 @@ export default class CourseList extends Vue {
       background: transparent;
       box-sizing: border-box;
       padding: 0 100px 0 30px;
-      color:rgba(40,40,40,1);
+      color:#333333;
       font-size:14px;
       font-weight:400;
     }
@@ -325,7 +325,7 @@ export default class CourseList extends Vue {
       transform: translateY(-50%);
       font-size:14px;
       font-weight:300;
-      color:rgba(146,146,146,1);
+      color:#92929B;
     }
     .el-cascader{
       width: 100%;
@@ -418,7 +418,7 @@ export default class CourseList extends Vue {
         font-size:16px;
         font-family:PingFangSC;
         font-weight:700;
-        color:rgba(40,40,40,1);
+        color:#333333;
         line-height:22px;
         margin-bottom: 18px;
       }
@@ -442,7 +442,7 @@ export default class CourseList extends Vue {
         &.cancle {
           width:88px;
           height:40px;
-          color:#929292;
+          color:#92929B;;
           border:1px solid rgba(220,220,220,1);
           margin-right: 16px;
         }

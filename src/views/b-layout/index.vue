@@ -8,7 +8,7 @@
       </div>
     </div>
     <div class="service" @mouseover="isService = true" @mouseout="isService = false">
-      <img class="service_icon" src="../../assets/images/service.png">
+      <i class="iconfont icon-kefu service_icon"></i>
       客服咨询
       <div class="service_pop" v-if="isService">
         <div class="pop_tit">联系我们</div>

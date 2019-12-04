@@ -2,7 +2,7 @@
   <aside class="page-aside">
     <section>
       <div class="logo">
-        <img src="../../../assets/images/logo_white.png" class="avatar">
+        <img src="../../../assets/images/logo.png" class="avatar">
       </div>
       <ul class="aside-nav">
         <template v-for="(item, index) in routes">
@@ -32,7 +32,7 @@ $logo-wrapper-height: 160px;
 $company-msg-height: 60px;
 .page-aside {
   width: $page-b-side-width;
-  background: $page-b-bg-color;
+  background: $bg-color-2;
   color: #fff;
   z-index: 10;
   width: 200px;
@@ -79,11 +79,11 @@ $company-msg-height: 60px;
     color: #fff;
   }
   li.router-link-active{
-    background: #544362;
+    background: $bg-color-3;
     color: #fff;
   }
   li.router-link-active::before {
-    background: #ffdc29;
+    background: #00C4CD;
     content: "";
     display: block;
     left: 0;
@@ -101,7 +101,7 @@ $company-msg-height: 60px;
     transform: translateY(-50%);
     border-width: 10px;
     border-style: solid;
-    border-color: transparent transparent transparent #ffe266;
+    border-color: transparent transparent transparent #00C4CD;
     display: block;
     content: "";
   }
