@@ -40,7 +40,7 @@
           @show="handleShowPopover('endTime')"
           trigger="click">
           <div class="popover-date-picker">
-            <ul class="date-years" :ref="refKeys.endTime">
+            <ul class="warpper-scroll date-years" :ref="refKeys.endTime">
               <li :class="{active: endTimeValue.now}" @click="handleChangeYear('endTime')">{{textValue}}</li>
               <template v-for="item in years">
                 <li :key="item" @click="handleChangeYear('endTime', item)" :class="{active: endTimeValue.year == item}">{{item}}</li>
