@@ -54,7 +54,7 @@ export default class login extends Vue {
         position: absolute;
         top: 0;
         right: 0;
-        color: #BCBCBC;
+        color: #BCBEC0;;
         padding: 16px;
         cursor: pointer;
       }

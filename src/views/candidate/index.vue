@@ -191,7 +191,7 @@
                   去评价
                 </div>
                 <div class="like_user" @click.stop="" v-show="item.status === 60 || item.status === 61">
-                  <span :style="'color: #929292'">已评价</span>
+                  <span :style="'color: #92929B;'">已评价</span>
                 </div>
               <div class="btn" @click.stop="setJob(item.jobhunterUid, 'confirm-interview', item, 1)" v-if="item.status === 11">查看联系</div>
               <div class="btn" @click.stop="setJob(item.jobhunterUid, 'check-invitation', item, 1)" v-if="item.status === 12">查看邀约</div>

@@ -412,7 +412,7 @@ export default {
   }
 }
 .image-tip {
-  color: #bcbcbc;
+  color: #BCBEC0;;
   font-size: 12px !important;
   line-height: 25px !important;
 }

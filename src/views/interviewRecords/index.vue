@@ -99,7 +99,7 @@
                   去评价
                 </div>
                 <div class="like_user" @click.stop="" v-show="vo.status === 60 || vo.status === 61">
-                  <span :style="'color: #929292'">已评价</span>
+                  <span :style="'color: #92929B;'">已评价</span>
                 </div>
               <div class="btn" @click.stop="setJob(vo.jobhunterUid, 'check-invitation', vo, 1)">查看面试详情</div>
             </div>
@@ -1744,7 +1744,7 @@ export default {
     background: #fff;
     margin-bottom: 16px;
     .title{
-      color:rgba(40,40,40,1);
+      color:#333333;
       font-size: 24px;
       margin-top: 39px;
       font-weight: bold;
@@ -1811,7 +1811,7 @@ export default {
         padding: 0 29px 0px 24px;
         font-size:12px;
         font-weight:400;
-        color:rgba(146,146,146,1);
+        color:#92929B;
         box-sizing: border-box;
         overflow: hidden;
         .timer1 {
@@ -1820,7 +1820,7 @@ export default {
         }
         .timer2 {
           float: left;
-          color:rgba(40,40,40,1);
+          color:#333333;
           font-size:12px;
           font-weight: 400;
         }
@@ -1857,7 +1857,7 @@ export default {
           position: relative;
           z-index: 0;
           // width: 108px;
-          color:rgba(40,40,40,1);
+          color:#333333;
           background:rgba(255,220,41,1);
           text-align: center;
           display: flex;
@@ -1871,7 +1871,7 @@ export default {
           }
           span{
             font-weight: bold;
-            color:rgba(40,40,40,1);
+            color:#333333;
             font-size: 16px;
           }
         }
@@ -1932,7 +1932,7 @@ export default {
                 .infoName {
                   font-size:20px;
                   font-weight:600;
-                  color:rgba(40,40,40,1);
+                  color:#333333;
                   line-height:28px;
                   margin-bottom: 6px;
                 }
@@ -1949,7 +1949,7 @@ export default {
                     margin-right: 8px;
                     font-size:12px;
                     font-weight:400;
-                    color:rgba(40,40,40,1);
+                    color:#333333;
                   }
                 }
               }
@@ -1958,7 +1958,7 @@ export default {
               height:20px;
               font-size:14px;
               font-weight:400;
-              color: #5C565D;
+              color: #66666E;;
               line-height:20px;
               text-align: left;
               margin-top: 12px;
@@ -1985,7 +1985,7 @@ export default {
             width: 285px;
             font-size:14px;
             font-weight:400;
-            color:rgba(146,146,146,1);
+            color:#92929B;
             line-height:22px;
             text-align: left;
             padding-top: 10px;
@@ -2010,7 +2010,7 @@ export default {
               margin-bottom: 8px;
             }
             .experienceText {
-              color:rgba(40,40,40,1);
+              color:#333333;
               margin-bottom: 8px;
             }
           }
@@ -2136,7 +2136,7 @@ export default {
           }
         }
         .null-text{
-          color:rgba(146,146,146,1);
+          color:#92929B;
           font-size: 14px;
           text-align: center;
           margin-top: 20px;
@@ -2190,7 +2190,7 @@ export default {
       .main_tit {
         font-size:22px;
         font-weight:500;
-        color:rgba(40,40,40,1);
+        color:#333333;
         line-height:26px;
       }
       .xcx_main {
@@ -2239,7 +2239,7 @@ export default {
         align-items: center;
         position: relative;
         span {
-          color: #929292;
+          color: #92929B;;
           font-size: 14px;
         }
       }
@@ -2360,7 +2360,7 @@ export default {
                   margin-top: 11px;
                   i{
                     font-size: 14px;
-                    color: #CDCBCF;
+                    color: #BCBEC0;;
                     vertical-align: super
                   }
                 }
@@ -2429,12 +2429,12 @@ export default {
               height:40px;
               line-height: 40px;
               font-weight:400;
-              color:rgba(146,146,146,1);
+              color:#92929B;
               text-align: center;
               border-radius:4px;
               margin-bottom: 12px;
               cursor: pointer;
-              border:1px solid rgba(205,203,207,1);
+              border:1px solid #BCBEC0;
             }
           }
           .like_user {
@@ -2464,7 +2464,7 @@ export default {
               }
               .tabItem {
                 padding: 5px 10px;
-                border: 1px solid #929292;
+                border: 1px solid #92929B;;
                 border-radius: 4px;
                 display: inline-block;
                 margin-bottom: 8px;
@@ -2522,15 +2522,15 @@ export default {
             .noUpload {
               text-align: center;
               font-size: 13px;
-              color: #929292;
+              color: #92929B;;
             }
             .Contact {
               margin-left: 23px;
-              color: #5C565D;
+              color: #66666E;;
               font-size: 14px;
               margin-bottom: 14px;
               i{
-                color: #BCBCBC;
+                color: #BCBEC0;;
                 font-size: 14px;
                 margin-right: 7px;
               }
@@ -2541,7 +2541,7 @@ export default {
             .noUpload {
               text-align: center;
               font-size: 13px;
-              color: #929292;
+              color: #92929B;;
             }
             .contactTitle {
               text-align: left;
@@ -2589,7 +2589,7 @@ export default {
             border-radius:20px;
           }
           &::-webkit-scrollbar-thumb {
-            background:#BCBCBC;
+            background:#BCBEC0;;
             -webkit-border-radius: 20px;
             -moz-border-radius: 20px;
             border-radius:20px;
@@ -2710,7 +2710,7 @@ export default {
                       }
                       i {
                         margin-right: 7px;
-                        color: #cdcbcf;
+                        color: #BCBEC0;;
                       }
                       span {
                         font-size: 14px;
@@ -2756,7 +2756,7 @@ export default {
             .description {
               margin-top: 20px;
               text-align: left;
-              color: #929292;
+              color: #92929B;;
               font-size: 13px;
               .msg {
                 span {
@@ -2828,7 +2828,7 @@ export default {
               display: inline-block;
               span {
                 font-size: 14px;
-                color: #5c565d;
+                color: #66666E;;
               }
               // margin-right: 20px;
             }
@@ -2863,7 +2863,7 @@ export default {
             white-space: pre-wrap;
             font-size: 13px;
             line-height: 22px;
-            color: #929292;
+            color: #92929B;;
           }
           .imgList {
             display: flex;
@@ -2899,9 +2899,9 @@ export default {
               width: 545px;
               span {
                 font-size: 14px;
-                color: #929292;
+                color: #92929B;;
                 &:nth-child(1) {
-                  color: #5c565d;
+                  color: #66666E;;
                 }
               }
             }
@@ -2931,10 +2931,10 @@ export default {
               .duties {
                 text-align: left;
                 font-size: 13px;
-                color: #929292;
+                color: #92929B;;
                 pre {
                   font-size: 13px;
-                  color: #929292;
+                  color: #92929B;;
                   width: 545px;
                   line-height: 22px;
                   white-space: pre-wrap;
@@ -2959,7 +2959,7 @@ export default {
           text-align: left;
           margin-bottom: 20px;
           font-size: 14px;
-          color: #5c565d;
+          color: #66666E;;
           // font-weight: 700;
           line-height: 20px;
           i {
@@ -3095,7 +3095,7 @@ export default {
         height: 26px;
         i{
           font-size: 10px;
-          color: #BCBCBC;
+          color: #BCBEC0;;
           margin-top: 16px;
           position: absolute;
           right: 16px;
@@ -3113,7 +3113,7 @@ export default {
       }
       .noJobText {
         text-align: center;
-        color:rgba(92,86,93,1);
+        color:#66666E;
         font-size: 14px;
         margin-top: 22px;
       }
@@ -3136,7 +3136,7 @@ export default {
           font-size:16px;
           font-weight: bold;
           width: 100%;
-          color:rgba(40,40,40,1);
+          color:#333333;
           padding: 4px 38px 20px 38px;
         }
         .arrange{
@@ -3146,7 +3146,7 @@ export default {
             height: 40px;
             margin-bottom: 10px;
             .name{
-              color:rgba(92,86,93,1);
+              color:#66666E;
               font-size: 12px;
               width: 60px;
               text-align: right;
@@ -3160,7 +3160,7 @@ export default {
               height: 38px;
               font-size:14px;
               // padding-left: 16px;
-              color:rgba(40,40,40,1);
+              color:#333333;
               // border:1px solid rgba(235,235,235,1);
               .info-select{
                 width: 262px;
@@ -3196,7 +3196,7 @@ export default {
             border-radius:20px;
             }
             &::-webkit-scrollbar-thumb {
-             background:#BCBCBC;
+             background:#BCBEC0;;
             -webkit-border-radius: 20px;
             -moz-border-radius: 20px;
             border-radius:20px;
@@ -3223,7 +3223,7 @@ export default {
               align-items: center;
               word-break: break-all;
               font-weight:400;
-              color:rgba(40,40,40,1);
+              color:#333333;
             }
             .edit{
               float: right;
@@ -3262,7 +3262,7 @@ export default {
           margin-top: 4px;
           .item{
             line-height: 22px;
-            color:rgba(40,40,40,1);
+            color:#333333;
             font-size:14px;
             display: flex;
             margin-bottom: 20px;
@@ -3298,11 +3298,11 @@ export default {
             .detailtitle{
               font-size:18px;
               font-weight:bold;
-              color:rgba(40,40,40,1);
+              color:#333333;
             }
             .desc{
               font-weight:400;
-              color:rgba(92,86,93,1);
+              color:#66666E;
               font-size: 14px;
               margin-top: 5px;
             }
@@ -3329,14 +3329,14 @@ export default {
                 .dian{
                   width:4px;
                   height:4px;
-                  background:rgba(92,86,93,1);
+                  background:#66666E;
                   float:left;
                   border-radius: 50%;
                   margin-top: 5px;
                   margin-right: 5px;
                 }
                 .tex{
-                  color:rgba(92,86,93,1);
+                  color:#66666E;
                   font-size: 14px;
                   float: left;
                   font-weight: normal;
@@ -3369,7 +3369,7 @@ export default {
                     margin-left: 56px;
                     margin-top: 13px;
                     font-size: 14px;
-                    color: #5C565D;
+                    color: #66666E;;
                   }
                 }
               }
@@ -3394,7 +3394,7 @@ export default {
                 float: left;
                 margin-top: 26px;
                 .p1{
-                  color:rgba(40,40,40,1);
+                  color:#333333;
                   font-weight: bold;
                   font-size:16px;
                 }
@@ -3402,14 +3402,14 @@ export default {
                   font-weight:300;
                   font-size:14px;
                   margin-top: 6px;
-                  color:rgba(146,146,146,1);
+                  color:#92929B;
                 }
               }
               .status-text2{
                 margin-top: 34px;
                 float: left;
                 .p1{
-                  color:rgba(40,40,40,1);
+                  color:#333333;
                   font-weight: bold;
                   font-size:16px;
                 }
@@ -3437,7 +3437,7 @@ export default {
           }
           .wait_time{
             font-size:14px;
-            color:rgba(92,86,93,1);
+            color:#66666E;
             text-align: center;
             margin-bottom: 30px;
           }
@@ -3446,7 +3446,7 @@ export default {
           margin-top: 34px;
           padding: 0 38px;
           .intertime_title{
-            color:rgba(40,40,40,1);
+            color:#333333;
             font-size:14px;
             font-weight: bold;
           }
@@ -3458,7 +3458,7 @@ export default {
             cursor: pointer;
             position: relative;
             font-size: 14px;
-            color: #5C565D;
+            color: #66666E;;
             i{
               margin-right: 10px;
               color: #ED5C5C;
@@ -3512,13 +3512,13 @@ export default {
             border-radius:20px;
             }
             &::-webkit-scrollbar-thumb {
-             background:#BCBCBC;
+             background:#BCBEC0;;
             -webkit-border-radius: 20px;
             -moz-border-radius: 20px;
             border-radius:20px;
             }
           .applytext{
-            color:rgba(146,146,146,1);
+            color:#92929B;
           }
           .selectitem{
             height:69px;
@@ -3561,7 +3561,7 @@ export default {
                 font-size: 14px;
               }
               .hui{
-                color:rgba(188,188,188,1);
+                color:#BCBEC0;
               }
             }
             .info{
@@ -3587,14 +3587,14 @@ export default {
                 padding: 4px 6px;
               }
               .hui{
-                color:rgba(188,188,188,1);
+                color:#BCBEC0;
               }
             }
             .selectcur{
               position: absolute;
               width:20px;
               height:20px;
-              color: #BCBCBC;
+              color: #BCBEC0;;
               top: 20px;
               right: 0px;
               .bg{
@@ -3604,7 +3604,7 @@ export default {
                 width:14px;
                 height:14px;
                 background: #ecebeb;
-                border: 1px solid #BCBCBC;
+                border: 1px solid #BCBEC0;;
                 border-radius: 50%;
               }
             }
@@ -3624,7 +3624,7 @@ export default {
             float: left;
             margin-right: 8px;
             margin-bottom: 10px;
-            color:rgba(146,146,146,1);
+            color:#92929B;
             border:1px solid rgba(232,233,235,1);
           }
           .wachitem{
@@ -3632,7 +3632,7 @@ export default {
             height:32px;
             background:rgba(248,245,250,1);
             border-radius:16px;
-            color:rgba(92,86,93,1);
+            color:#66666E;
             font-size: 14px;
             float: left;
             margin-right: 8px;
@@ -3650,7 +3650,7 @@ export default {
           padding: 0 38px;
           margin-top: 14px;
           .explaintitle{
-            color:rgba(92,86,93,1);
+            color:#66666E;
             margin-bottom: 12px;
             font-weight: bold;
           }
@@ -3666,7 +3666,7 @@ export default {
               width: 100%;
               height: 100%;
               &::placeholder{
-                color:#BCBCBC;
+                color:#BCBEC0;;
               }
             }
           }
@@ -3682,12 +3682,12 @@ export default {
             width:78px;
             height:30px;
             border-radius:4px;
-            color:rgba(146,146,146,1);
+            color:#92929B;
             font-size: 14px;
             text-align: center;
             line-height: 32px;
             margin-right: 16px;
-            border:1px solid rgba(205,203,207,1);
+            border:1px solid #BCBEC0;
             float: right;
             cursor: pointer;
           }

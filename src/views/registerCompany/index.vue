@@ -1323,7 +1323,7 @@ export default {
       font-size: 14px;
       cursor: pointer;
       top: 0px;
-      color: #CDCBCF;
+      color: #BCBEC0;;
       z-index: 999;
     }
     .icontipbox{
@@ -1659,7 +1659,7 @@ export default {
           float: left;
         }
         .admin{
-          color: #5C565D;
+          color: #66666E;;
           line-height: 52px;
           float: left;
           font-size: 12px;
@@ -1680,7 +1680,7 @@ export default {
         }
         .default{
           background:rgba(232,233,235,1);
-          color: #929292;
+          color: #92929B;;
         }
       }
     }
@@ -1747,7 +1747,7 @@ export default {
       height: 50px;
       i{
         font-size: 10px;
-        color: #BCBCBC;
+        color: #BCBEC0;;
         margin-top: 16px;
         cursor: pointer;
         position: absolute;

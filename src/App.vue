@@ -130,7 +130,7 @@ body, html{
       .pop_text2 {
         font-size:24px;
         font-weight:bold;
-        color:rgba(40,40,40,1);
+        color:#333333;
       }
       .pop_text3 {
         font-size:18px;

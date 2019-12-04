@@ -19,7 +19,7 @@
       font-size:12px;
       font-family:PingFangSC-Regular;
       font-weight:400;
-      color:rgba(146,146,146,1);
+      color:#92929B;
       box-sizing: border-box;
       overflow: hidden;
       position: relative;
@@ -28,7 +28,7 @@
         margin-right: 36px;
         font-weight:400;
         font-size:14px;
-        color:rgba(92,86,93,1);
+        color:#66666E;
       }
       .redot{
         position: absolute;
@@ -51,7 +51,7 @@
           float: left;
           font-size:12px;
           margin-left: 30px;
-          color:rgba(146,146,146,1);
+          color:#92929B;
         }
         .origin{
           float: left;
@@ -116,7 +116,7 @@
                 font-size:20px;
                 font-family:PingFangSC-Semibold;
                 font-weight:600;
-                color:rgba(40,40,40,1);
+                color:#333333;
                 line-height:28px;
                 margin-bottom: 6px;
               }
@@ -135,7 +135,7 @@
                   font-size:12px;
                   font-family:PingFangSC-Regular;
                   font-weight:400;
-                  color:rgba(40,40,40,1);
+                  color:#333333;
                 }
               }
             }
@@ -145,7 +145,7 @@
             font-size:14px;
             font-family:PingFangSC-Regular;
             font-weight:400;
-            color: #5C565D;
+            color: #66666E;;
             line-height:20px;
             text-align: left;
             margin-top: 12px;
@@ -173,7 +173,7 @@
           font-size:14px;
           font-family:PingFangSC-Regular;
           font-weight:400;
-          color:rgba(146,146,146,1);
+          color:#92929B;
           line-height:22px;
           text-align: left;
           padding-top: 10px;
@@ -198,7 +198,7 @@
             margin-bottom: 8px;
           }
           .experienceText {
-            color:rgba(40,40,40,1);
+            color:#333333;
             margin-bottom: 8px;
           }
         }
@@ -275,7 +275,7 @@
       }
     }
     .null-text{
-      color:rgba(146,146,146,1);
+      color:#92929B;
       font-size: 14px;
       text-align: center;
       margin-top: 20px;
@@ -299,7 +299,7 @@
   //   font-size:14px;
   //   font-family:PingFangSC-Regular;
   //   font-weight:400;
-  //   color:rgba(146,146,146,1);
+  //   color:#92929B;
   //   line-height:20px;
   // }
   // img {
@@ -313,7 +313,7 @@
   font-size:14px;
   font-family:PingFangSC-Regular;
   font-weight:400;
-  color:#bcbcbc;
+  color:#BCBEC0;;
   line-height:20px;
   text-align: center;
   margin-top: 40px;
@@ -337,7 +337,7 @@ height:100%;
   font-size:14px;
   font-family:PingFangSC-Regular;
   font-weight:400;
-  color:rgba(92,86,93,1);
+  color:#66666E;
   height:40px;
   white-space: nowrap;
   background:rgba(255,255,255,1);
@@ -410,7 +410,7 @@ height:100%;
       font-size:14px;
       font-family:PingFangSC-Medium;
       font-weight:500;
-      color:rgba(40,40,40,1);
+      color:#333333;
       line-height:24px;
       text-align: left;
       margin-bottom: 16px;
@@ -423,7 +423,7 @@ height:100%;
         height:28px;
         background:rgba(248,248,248,1);
         border-radius:4px;
-        color: #5C565D;
+        color: #66666E;;
         text-align: center;
         line-height: 28px;
         font-size:14px;
@@ -453,11 +453,11 @@ height:100%;
         line-height:32px;
         background:rgba(255,255,255,1);
         border-radius:4px;
-        border:1px solid rgba(205,203,207,1);
+        border:1px solid #BCBEC0;
         font-size:14px;
         font-family:PingFangSC-Regular;
         font-weight:400;
-        color:rgba(92,86,93,1);
+        color:#66666E;
         text-align: center;
         box-sizing: border-box;
         &.true {
@@ -566,7 +566,7 @@ right: -40px;
     font-size:14px;
     font-family:PingFangSC-Regular;
     font-weight:400;
-    color:rgba(92,86,93,1);
+    color:#66666E;
     line-height:22px;
   }
 }
@@ -628,7 +628,7 @@ right: -40px;
       font-size:22px;
       font-family:PingFangSC-Medium;
       font-weight:500;
-      color:rgba(40,40,40,1);
+      color:#333333;
       line-height:26px;
     }
     .xcx_main {
@@ -678,7 +678,7 @@ right: -40px;
       align-items: center;
       position: relative;
       span {
-        color: #929292;
+        color: #92929B;;
         font-size: 14px;
       }
     }
@@ -799,7 +799,7 @@ right: -40px;
                 margin-top: 11px;
                 i{
                   font-size: 14px;
-                  color: #CDCBCF;
+                  color: #BCBEC0;;
                   vertical-align: super
                 }
               }
@@ -868,12 +868,12 @@ right: -40px;
             height:40px;
             line-height: 40px;
             font-weight:400;
-            color:rgba(146,146,146,1);
+            color:#92929B;
             text-align: center;
             border-radius:4px;
             margin-bottom: 12px;
             cursor: pointer;
-            border:1px solid rgba(205,203,207,1);
+            border:1px solid #BCBEC0;
           }
         }
         .like_user {
@@ -903,7 +903,7 @@ right: -40px;
             }
             .tabItem {
               padding: 5px 10px;
-              border: 1px solid #929292;
+              border: 1px solid #92929B;;
               border-radius: 4px;
               display: inline-block;
               margin-bottom: 8px;
@@ -961,15 +961,15 @@ right: -40px;
           .noUpload {
             text-align: center;
             font-size: 13px;
-            color: #929292;
+            color: #92929B;;
           }
           .Contact {
             margin-left: 23px;
-            color: #5C565D;
+            color: #66666E;;
             font-size: 14px;
             margin-bottom: 14px;
             i{
-              color: #BCBCBC;
+              color: #BCBEC0;;
               font-size: 14px;
               margin-right: 7px;
             }
@@ -980,7 +980,7 @@ right: -40px;
           .noUpload {
             text-align: center;
             font-size: 13px;
-            color: #929292;
+            color: #92929B;;
           }
           .contactTitle {
             text-align: left;
@@ -1028,7 +1028,7 @@ right: -40px;
           border-radius:20px;
         }
         &::-webkit-scrollbar-thumb {
-          background:#BCBCBC;
+          background:#BCBEC0;;
           -webkit-border-radius: 20px;
           -moz-border-radius: 20px;
           border-radius:20px;
@@ -1149,7 +1149,7 @@ right: -40px;
                     }
                     i {
                       margin-right: 7px;
-                      color: #cdcbcf;
+                      color: #BCBEC0;;
                     }
                     span {
                       font-size: 14px;
@@ -1195,7 +1195,7 @@ right: -40px;
           .description {
             margin-top: 20px;
             text-align: left;
-            color: #929292;
+            color: #92929B;;
             font-size: 13px;
             .msg {
               span {
@@ -1269,7 +1269,7 @@ right: -40px;
             display: inline-block;
             span {
               font-size: 14px;
-              color: #5c565d;
+              color: #66666E;;
             }
             // margin-right: 20px;
           }
@@ -1304,7 +1304,7 @@ right: -40px;
           white-space: pre-wrap;
           font-size: 13px;
           line-height: 22px;
-          color: #929292;
+          color: #92929B;;
         }
         .imgList {
           display: flex;
@@ -1340,9 +1340,9 @@ right: -40px;
             width: 545px;
             span {
               font-size: 14px;
-              color: #929292;
+              color: #92929B;;
               &:nth-child(1) {
-                color: #5c565d;
+                color: #66666E;;
               }
             }
           }
@@ -1372,10 +1372,10 @@ right: -40px;
             .duties {
               text-align: left;
               font-size: 13px;
-              color: #929292;
+              color: #92929B;;
               pre {
                 font-size: 13px;
-                color: #929292;
+                color: #92929B;;
                 font-family: PingFangSC-Regular;
                 width: 545px;
                 line-height: 22px;
@@ -1401,7 +1401,7 @@ right: -40px;
         text-align: left;
         margin-bottom: 20px;
         font-size: 14px;
-        color: #5c565d;
+        color: #66666E;;
         // font-weight: 700;
         line-height: 20px;
         i {
@@ -1556,7 +1556,7 @@ right: -40px;
       height: 26px;
       i{
         font-size: 10px;
-        color: #BCBCBC;
+        color: #BCBEC0;;
         margin-top: 16px;
         position: absolute;
         right: 16px;
@@ -1574,7 +1574,7 @@ right: -40px;
     }
     .noJobText {
       text-align: center;
-      color:rgba(92,86,93,1);
+      color:#66666E;
       font-size: 14px;
       margin-top: 22px;
     }
@@ -1597,7 +1597,7 @@ right: -40px;
         font-size:16px;
         font-weight: bold;
         width: 100%;
-        color:rgba(40,40,40,1);
+        color:#333333;
         padding: 4px 0px 20px 38px;
       }
       .arrange{
@@ -1606,7 +1606,7 @@ right: -40px;
           height: 40px;
           margin-bottom: 10px;
           .name{
-            color:rgba(92,86,93,1);
+            color:#66666E;
             font-size: 14px;
             width: 70px;
             text-align: left;
@@ -1620,7 +1620,7 @@ right: -40px;
             height: 38px;
             font-size:14px;
             // padding-left: 16px;
-            color:rgba(40,40,40,1);
+            color:#333333;
             // border:1px solid rgba(235,235,235,1);
             .info-select{
               width: 262px;
@@ -1656,7 +1656,7 @@ right: -40px;
           border-radius:20px;
           }
           &::-webkit-scrollbar-thumb {
-            background:#BCBCBC;
+            background:#BCBEC0;;
           -webkit-border-radius: 20px;
           -moz-border-radius: 20px;
           border-radius:20px;
@@ -1684,7 +1684,7 @@ right: -40px;
             word-break: break-all;
             font-family:PingFangSC-Regular,PingFangSC;
             font-weight:400;
-            color:rgba(40,40,40,1);
+            color:#333333;
           }
           .edit{
             float: right;
@@ -1722,7 +1722,7 @@ right: -40px;
         margin-top: 4px;
         .item{
           line-height: 22px;
-          color:rgba(40,40,40,1);
+          color:#333333;
           font-size:14px;
           display: flex;
           margin-bottom: 20px;
@@ -1758,11 +1758,11 @@ right: -40px;
           .detailtitle{
             font-size:18px;
             font-weight:bold;
-            color:rgba(40,40,40,1);
+            color:#333333;
           }
           .desc{
             font-weight:400;
-            color:rgba(92,86,93,1);
+            color:#66666E;
             font-size: 14px;
             margin-top: 5px;
           }
@@ -1789,14 +1789,14 @@ right: -40px;
               .dian{
                 width:4px;
                 height:4px;
-                background:rgba(92,86,93,1);
+                background:#66666E;
                 float:left;
                 border-radius: 50%;
                 margin-top: 5px;
                 margin-right: 5px;
               }
               .tex{
-                color:rgba(92,86,93,1);
+                color:#66666E;
                 font-size: 14px;
                 float: left;
                 font-weight: normal;
@@ -1829,7 +1829,7 @@ right: -40px;
                   margin-left: 56px;
                   margin-top: 13px;
                   font-size: 14px;
-                  color: #5C565D;
+                  color: #66666E;;
                 }
               }
             }
@@ -1854,7 +1854,7 @@ right: -40px;
               float: left;
               margin-top: 26px;
               .p1{
-                color:rgba(40,40,40,1);
+                color:#333333;
                 font-weight: bold;
                 font-size:16px;
               }
@@ -1862,14 +1862,14 @@ right: -40px;
                 font-weight:300;
                 font-size:14px;
                 margin-top: 6px;
-                color:rgba(146,146,146,1);
+                color:#92929B;
               }
             }
             .status-text2{
               margin-top: 34px;
               float: left;
               .p1{
-                color:rgba(40,40,40,1);
+                color:#333333;
                 font-weight: bold;
                 font-size:16px;
               }
@@ -1897,7 +1897,7 @@ right: -40px;
         }
         .wait_time{
           font-size:14px;
-          color:rgba(92,86,93,1);
+          color:#66666E;
           text-align: center;
           margin-bottom: 30px;
         }
@@ -1906,7 +1906,7 @@ right: -40px;
         margin-top: 34px;
         padding: 0 38px;
         .intertime_title{
-          color:rgba(40,40,40,1);
+          color:#333333;
           font-size:14px;
           font-weight: bold;
         }
@@ -1918,7 +1918,7 @@ right: -40px;
           position: relative;
           font-size: 14px;
           margin-top: 16px;
-          color: #5C565D;
+          color: #66666E;;
           i{
             margin-right: 10px;
             color: #ED5C5C;
@@ -1971,13 +1971,13 @@ right: -40px;
         border-radius:20px;
         }
         &::-webkit-scrollbar-thumb {
-          background:#BCBCBC;
+          background:#BCBEC0;;
         -webkit-border-radius: 20px;
         -moz-border-radius: 20px;
         border-radius:20px;
         }
         .applytext{
-          color:rgba(146,146,146,1);
+          color:#92929B;
         }
         .selectitem{
           height:69px;
@@ -2019,7 +2019,7 @@ right: -40px;
                 width:60px;
                 height:24px;
                 border-radius:2px;
-                color: #929292;
+                color: #92929B;;
                 text-align: center;
                 margin-right: 12px;
                 float: right;
@@ -2077,7 +2077,7 @@ right: -40px;
               font-size: 14px;
             }
             .hui{
-              color:rgba(188,188,188,1);
+              color:#BCBEC0;
             }
           }
           .info{
@@ -2103,14 +2103,14 @@ right: -40px;
               padding: 4px 6px;
             }
             .hui{
-              color:rgba(188,188,188,1);
+              color:#BCBEC0;
             }
           }
           .selectcur{
             position: absolute;
             width:20px;
             height:20px;
-            color: #BCBCBC;
+            color: #BCBEC0;;
             top: 20px;
             right: 0px;
             .bg{
@@ -2120,7 +2120,7 @@ right: -40px;
               width:14px;
               height:14px;
               background: #ecebeb;
-              border: 1px solid #BCBCBC;
+              border: 1px solid #BCBEC0;;
               border-radius: 50%;
             }
           }
@@ -2139,7 +2139,7 @@ right: -40px;
           float: left;
           margin-right: 8px;
           margin-bottom: 10px;
-          color:rgba(146,146,146,1);
+          color:#92929B;
           border:1px solid rgba(232,233,235,1);
         }
         .wachitem{
@@ -2147,7 +2147,7 @@ right: -40px;
           height:32px;
           background:rgba(248,245,250,1);
           border-radius:16px;
-          color:rgba(92,86,93,1);
+          color:#66666E;
           font-size: 14px;
           float: left;
           margin-right: 8px;
@@ -2164,7 +2164,7 @@ right: -40px;
         padding: 0 38px;
         margin-top: 14px;
         .explaintitle{
-          color:rgba(92,86,93,1);
+          color:#66666E;
           margin-bottom: 12px;
           font-weight: bold;
         }
@@ -2180,7 +2180,7 @@ right: -40px;
             width: 100%;
             height: 100%;
             &::placeholder{
-              color:#BCBCBC;
+              color:#BCBEC0;;
             }
           }
         }
@@ -2195,12 +2195,12 @@ right: -40px;
           width:78px;
           height:30px;
           border-radius:4px;
-          color:rgba(146,146,146,1);
+          color:#92929B;
           font-size: 14px;
           text-align: center;
           line-height: 32px;
           margin-right: 16px;
-          border:1px solid rgba(205,203,207,1);
+          border:1px solid #BCBEC0;
           float: right;
           cursor: pointer;
         }
