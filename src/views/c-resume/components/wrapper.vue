@@ -192,7 +192,10 @@ export default {
     width: 100%;
     @include flex-v-top;
   }
-  .list-item+.list-item, .list-item ~ .list-item-buttom {
+  .list-item+.list-item {
+    margin-top: 40px;
+  }
+  .list-item ~ .list-item-buttom {
     margin-top: 42px;
   }
   .wrapper-list-content {

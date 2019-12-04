@@ -221,6 +221,9 @@ export default {
 }
 </style>
 <style lang="scss">
+.file-alert .el-message-box__header {
+  padding-top: 44px;
+}
 .file-alert .el-message-box__title{
   font-size: 14px;
   color: $title-color-1;
@@ -228,8 +231,9 @@ export default {
 .file-alert .el-message-box__btns {
   padding: 42px 0 0px !important;
 }
-.alert-content {
+.file-alert p.alert-content {
   color: $sub-color-1;
+  line-height: 1;
 }
 .alert.button {
   width: 258px !important;

@@ -301,6 +301,7 @@ $image-wrapper: 112px;
 }
 .avatar {
   @include img-radius($image-wrapper, $base-warpper-height);
+  border: 1px solid $border-color-8;
   position: relative;
   cursor: pointer;
   color: #fff;
@@ -379,8 +380,9 @@ $image-wrapper: 112px;
   }
   .user-name {
     max-width: 200px;
-    margin-bottom: 13px;
+    margin-bottom: 17px;
     font-weight: 500;
+    line-height: 1;
   }
   i.iconfont {
     color: $font-color-12;
@@ -389,13 +391,13 @@ $image-wrapper: 112px;
     vertical-align: middle;
   }
   .user-company {
-    margin-bottom: 20px;
+    margin-bottom: 17px;
   }
   .user-phone {
-    margin-top: 24px;
+    margin-top: 20px;
   }
   .user-wechat {
-    margin-top: 20px;
+    margin-top: 17px;
   }
   .user-name {
     font-size: 26px;
