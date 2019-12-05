@@ -1,5 +1,5 @@
 <template>
-  <div class="positionDetail" v-if="infos.id">
+  <div class="positionDetail" :class="{'overflow' : showPoster}" v-if="infos.id">
 		<header ref="header" class="header hidden" :class="{'isRapidly' : infos.isRapidly === 1, 'headerFloat' : headerFloat}">
 			<div class="inner-bg">
 			  <div class="inner">
@@ -193,6 +193,7 @@ let that = null
 })
 export default class PositionDetail extends Vue {
   cdnPath = `${this.$cdnPath}/images/`
+	overflow = false // 是否去掉滚动条
   headerFloat = false
   verticalLogo = false // 是否竖版图片， 控制logo展示格式
   showShareQrcode = false // 分享二维码

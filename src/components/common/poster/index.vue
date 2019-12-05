@@ -1,19 +1,18 @@
 <template>
   <div class="wrap" v-show="showPop">
     <div class="bg"></div>
-    <div class="inner">
-      <div class="posterUrl">
-        <el-image class="img" fit='contain' :src="posterUrl" alt="">
+    <div class="inner"  @click="oper('close', $event)">
+				<img class="posterUrl" :src="posterUrl" />
+        <!-- <el-image class="img" fit='contain' :src="posterUrl" alt="">
           <div slot="error" class="image-slot">
             <i class="el-icon-picture-outline"></i>
           </div>
-        </el-image>
-      </div>
-    </div>
-    <div class="operBox">
-      <div class="btn" @click="oper('download')"><i class="icon iconfont icon-xiazai"></i>下载</div>
-      <div class="btn copy" @click="oper('copy')"><i class="icon iconfont icon-fuzhi"></i>复制</div>
-      <div class="btn" @click="oper('close')"><i class="icon iconfont icon-xiantiaoguanbi"></i>关闭</div>
+        </el-image> -->
+				<div class="operBox">
+					<div class="btn" @click="oper('download')"><i class="icon iconfont icon-xiazai"></i>下载</div>
+					<div class="btn copy" @click="oper('copy')"><i class="icon iconfont icon-fuzhi"></i>复制</div>
+					<div class="btn" @click="oper('close')"><i class="icon iconfont icon-xiantiaoguanbi"></i>关闭</div>
+				</div>
     </div>
   </div>
 </template>
@@ -52,9 +51,10 @@ export default class poster extends Component {
   created () {
     this.getPosterinit()
   }
-  oper (type) {
+  oper (type, e) {
     switch (type) {
       case 'close':
+				if (e && e.target.className !== 'inner') return
         this.showPop = false
         this.$emit('closePoster')
         break
@@ -158,47 +158,44 @@ export default class poster extends Component {
     .inner {
       position: relative;
       z-index: 2;
+			width: 100vw;
       height: 100vh;
       display: block;
-      padding: $page-header-height 0 $page-footer-height;
       box-sizing: border-box;
-      text-align: center;
-      .posterUrl {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-      }
-    }
-    .operBox {
-      position: absolute;
-      width:480px;
-      height:46px;
-      background:rgba(0,0,0,0.5);
-      border-radius:8px;
-      left: 50%;
-      margin-left: -240px;
-      transform: translate3d(0, -20px, 0);
-      bottom: $page-footer-height;
-      box-sizing: border-box;
-      z-index: 2;
       display: flex;
-      color: #fff;
-      .btn {
-        line-height: 46px;
-        flex: 1;
-        text-align: center;
-        cursor: pointer;
-        font-size: 14px;
-        .icon {
-          font-size: 16px;
-          margin-right: 3px;
-          display: inline-block;
-        }
-        &:last-child .icon {
-          font-size: 14px;
-        }
+      justify-content: center;
+			align-items: center;
+			flex-direction: column;
+      .posterUrl {
+        width: auto;
+				height: 77%;
       }
+			.operBox {
+				margin-top: 20px;
+			  width:480px;
+			  height:46px;
+			  background:rgba(0,0,0,0.5);
+			  border-radius:8px;
+			  box-sizing: border-box;
+			  z-index: 2;
+			  display: flex;
+			  color: #fff;
+			  .btn {
+			    line-height: 46px;
+			    flex: 1;
+			    text-align: center;
+			    cursor: pointer;
+			    font-size: 14px;
+			    .icon {
+			      font-size: 16px;
+			      margin-right: 3px;
+			      display: inline-block;
+			    }
+			    &:last-child .icon {
+			      font-size: 14px;
+			    }
+			  }
+			}
     }
   }
 </style>

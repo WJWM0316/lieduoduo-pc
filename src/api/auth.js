@@ -133,7 +133,7 @@ export const deleteFileMsgApi = data => request({
 
 // 招聘官-我的信息(“我的”页面)
 export const getMyInfoApi = data => request({
-  url: `/recruiter/myInfo`,
+  url: '/recruiter/myInfo',
   method: 'get',
   params: data,
   config: { host: 'zhaopin' }
@@ -141,7 +141,7 @@ export const getMyInfoApi = data => request({
 
 // 获取用户信息
 export const getUserInfosApi = (data) => request({
-  url: `/cur/user_info`,
+  url: '/cur/user_info',
   method: 'get',
   params: data,
   config: { host: 'qiuzhi', noCheckLogin: true }
@@ -149,7 +149,7 @@ export const getUserInfosApi = (data) => request({
 
 // 获取用户角色信息
 export const getUserRoleInfoApi = (data) => request({
-  url: `/user/roleinfo`,
+  url: '/user/roleinfo',
   method: 'get',
   params: data,
   config: { host: 'qiuzhi' }
