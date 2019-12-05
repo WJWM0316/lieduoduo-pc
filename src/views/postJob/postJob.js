@@ -249,7 +249,7 @@ export default class CommunityEdit extends Vue {
         }
 
         form.emolument_min = data.data.emolumentMin < 10 ? 10 : data.data.emolumentMin
-        form.emolument_max = data.data.emolumentMax < 10 ? '' : data.data.emolumentMax
+        form.emolument_max = data.data.emolumentMax <= 10 ? '' : data.data.emolumentMax
         this.setEmolumentMax(form.emolument_min)
         this.form = form
         this.getAdressList()
