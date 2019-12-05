@@ -937,10 +937,7 @@ export default class CourseList extends Vue {
 
     toAddJob () {
       this.$router.push({
-        name: 'postJob',
-        query: {
-          type: 'add'
-        }
+        name: 'recruiterIndex'
       })
     }
 

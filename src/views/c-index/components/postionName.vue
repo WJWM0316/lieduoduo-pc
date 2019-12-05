@@ -112,6 +112,7 @@ $position-details-width: 528px;
   width: $position-width;
   box-shadow: $shadow-1;
   background: #fff;
+  min-height: 414px;
 }
 .list-item, .list-more {
   position: relative;

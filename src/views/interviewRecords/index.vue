@@ -1259,10 +1259,7 @@ export default {
     },
     toAddJob () {
       this.$router.push({
-        name: 'postJob',
-        query: {
-          type: 'add'
-        }
+        name: 'recruiterIndex'
       })
     },
     // 选择地址发送
@@ -2506,7 +2503,7 @@ export default {
               display:block;
               color: #00C4CD;
               text-align: center;
-              border:1px solid #00C4CD;  
+              border:1px solid #00C4CD;
             }
           }
           .ContactInformation {
