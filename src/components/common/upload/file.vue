@@ -92,7 +92,7 @@ export default {
       if (!file) return
       // 判断大小
       if (file.size / 1024 / 1024 > this.size) {
-        this.$message.warning('上传的图片大小是5MB~')
+        this.$message.warning(`上传的文件大小是${this.size}MB~`)
         return
       }
       this.tempFile = {
