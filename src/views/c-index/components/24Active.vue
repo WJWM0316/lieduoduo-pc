@@ -8,7 +8,7 @@
          <p ref="bubble">{{bubbleList[bubbleIndex]}}</p>
       </div>
     </div>
-    <div class="active-list">
+    <div class="active-list" v-loading="!listData.length">
       <template v-for="(item,index) in listData">
         <router-link target="_blank" :to="`/position/details?positionId=${item.id}`" class="active-list-wrapper" :key="item.lableId">
           <div class="list-header">
@@ -225,6 +225,7 @@ $position-process-bg-color: #99e7e8;
   width: 100%;
   overflow: hidden;
   margin-bottom: 20px;
+  min-height: 300px;
   .active-list-wrapper {
     width: 386px;
     overflow: hidden;
