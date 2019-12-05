@@ -59,8 +59,18 @@ export const request = ({ url, method, params = {}, config = {} }) => {
   return new Promise((resolve, reject) => {
     // 因为axios[method]方式设置的responseType无效，所以换成axios({}),同时保留get请求的参数按json格式传递
     let axiosFun = null
+    if (config.responseType) {
+      axiosFun = axios({
+        url,
+        method,
+        data: method === 'get' ? { params } : params,
+        responseType: config.responseType
+      })
+    } else {
+      axiosFun = axios[method](url, method === 'get' ? { params } : params, config)
+    }
     // config配置内容参见[https://www.kancloud.cn/yunye/axios/234845]
-    axiosFun = axios[method](url, method === 'get' ? { params } : params, config)
+    axiosFun = axios[method](url, method === 'get' ? { params } : params)
     axiosFun.then(res => {
       resolve(res)
       loadingBack()

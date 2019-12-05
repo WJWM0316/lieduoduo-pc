@@ -98,22 +98,6 @@ class Util {
     }
   }
   /**
-   * 下载远程资源 
-   * @param {String} link 下载内容的链接
-   * @param {String}  filename 下载文件的名称
-   */
-  downLinkFile (link, filename) {
-    var ajax = new XMLHttpRequest();
-    ajax.open('get', link, true);
-    ajax.responseType = 'blob';
-    ajax.onload = function (e) {
-        this.downFile(e.target.response, filename);
-    };
-    setTimeout(function () {
-        ajax.send();
-    }, 0);
-  }
-  /**
    * 根据键值从源对象中抽取对象
    * @param {Object} source 源对象
    * @param {Array} keys 键值数组

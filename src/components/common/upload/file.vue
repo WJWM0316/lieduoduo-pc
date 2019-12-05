@@ -2,11 +2,14 @@
 <!-- 上传附件简历 -->
   <div>
     <template v-if="showUploadDetails">
-      <div class="file-wrapper" v-if="value.id || tempFile.id">
+      <div class="file-wrapper"
+        v-if="value.id || tempFile.id"
+        v-loading="downLoading"
+        @click="downLoadFile">
         <span class="file-icon">
           <i class="iconfont" :class="fileTypeStyle.icon" :style="{'color': fileTypeStyle.color}"></i>
         </span>
-        <div class="file-content" @click="downLoadFile">
+        <div class="file-content">
           <span class="file-name">{{tempFile.fileName || value.fileName}}</span>
           <div class="file-process" v-if="uploadLoading || tempFile.id">
             <div :style="{width: precent + '%'}" class="file-processing"></div>
@@ -31,7 +34,7 @@
   </div>
 </template>
 <script>
-import { uploadApi } from 'API/auth'
+import { uploadApi, downApi } from 'API/auth'
 import { FileType } from '@/config/vars'
 export default {
   props: {
@@ -81,6 +84,7 @@ export default {
   data () {
     return {
       uploadLoading: false, // 禁止用户重复提交
+      downLoading: false,
       precent: 0,
       fileName: '',
       tempFile: {}
@@ -173,8 +177,14 @@ export default {
     },
     downLoadFile () {
       const { url, fileName } = this.value
-      if (!this.uploadLoading && url) {
-        this.$util.downLinkFile(url, fileName)
+      if (!this.uploadLoading && url && !this.downLoading) {
+        this.downLoading = true
+        downApi(this.value.vkey).then(({ data }) => {
+          this.downLoading = false
+          this.$util.downFile(data, fileName)
+        }).catch(() => {
+          this.downLoading = true
+        })
       }
     }
   }
@@ -187,8 +197,9 @@ export default {
   .file-icon {
     min-width: 44px;
     margin-right: 8px;
+    margin-left: 1px;
     i {
-      font-size: 43px;
+      font-size: 42px;
     }
   }
   .file-content {
