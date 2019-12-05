@@ -103,8 +103,10 @@ export const uploadApi = (data, cb = () => {}) => request({
 export const downApi = data => request({
   url: `/attaches/download/${data}`,
   method: 'get',
-  params: data,
-  config: { host: 'pub' }
+  config: {
+    host: 'pub',
+    responseType: 'blob'
+  }
 })
 
 // 保存附件简历
