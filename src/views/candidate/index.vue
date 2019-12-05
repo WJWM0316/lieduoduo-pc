@@ -61,9 +61,12 @@
               {{selectedScreen.length > 0 || (positionTypeList.length > 0 ? positionTypeList[positionTypeList.length-1].active:false) ? '清除筛选' :'高级筛选' }}
             </div>
 
-            <div class="topSelected2" @click="screenList(2)">
-              <i class="iconfont icon-jiantou"></i>
-            </div>
+            <div class="topSelected2" @click="screenList(2)" v-if="isShowScreen">
+                <i class="iconfont icon-jiantou" style="color: #00C4CD"></i>
+              </div>
+              <div class="topSelected2" @click="screenList(2)" v-else>
+                <i class="iconfont icon-jiantou"></i>
+              </div>
 
             <div class="screenBox" v-if="isShowScreen">
               <div class="triangle_border_top"></div>
@@ -188,7 +191,7 @@
                   去评价
                 </div>
                 <div class="like_user" @click.stop="" v-show="item.status === 60 || item.status === 61">
-                  <span :style="'color: #929292'">已评价</span>
+                  <span :style="'color: #92929B;'">已评价</span>
                 </div>
               <div class="btn" @click.stop="setJob(item.jobhunterUid, 'confirm-interview', item, 1)" v-if="item.status === 11">查看联系</div>
               <div class="btn" @click.stop="setJob(item.jobhunterUid, 'check-invitation', item, 1)" v-if="item.status === 12">查看邀约</div>
@@ -433,7 +436,7 @@
               <div class="onload" @click="hasonload = !hasonload">
                 <i class="iconfont icon-xiazai"></i>
               </div>
-              <div class="onloadselect" v-loading="loadingshow" v-show="hasonload" ref="queryBox">
+              <div class="onloadselect"  v-loading="loadingshow" v-show="hasonload" ref="queryBox">
                 <div class="title">下载简历</div>
                 <div class="select">请选择下载格式:</div>
                 <div class="pdf">
@@ -479,17 +482,16 @@
 
               <div class="btn2" @click.stop="setJob(nowResumeMsg.uid, 'inappropriate', nowResumeMsg, 2)" v-if="nowResumeMsg.interviewInfo.data.haveInterview && !nowResumeMsg.interviewInfo.data.hasUnsuitRecord">不合适</div>
               <div class="btn2" @click.stop="setJob(nowResumeMsg.uid, 'watch-reson', nowResumeMsg, 2)"  v-if="!nowResumeMsg.interviewInfo.data.haveInterview && nowResumeMsg.interviewInfo.data.hasUnsuitRecord">查看原因</div>
-
             </div>
             <div class="like_user" @click.stop="ownerOp(true,nowResumeMsg.uid)" v-if="nowResumeMsg.interested">
-                <img class="like" src="../../assets/images/like.png"/>
+                <i class="iconfont icon-yishoucang img"></i>
                 取消感兴趣
               </div>
               <div class="like_user" @click.stop="ownerOp(false,nowResumeMsg.uid)" v-else >
-                <img class="like" src="../../assets/images/like_no.png"/>
+                <i class="iconfont icon-shoucang img"></i>
                   对Ta感兴趣
               </div>
-            <div class="msgCode" v-if="shareResumeImg">
+            <div class="msgCode"  v-if="shareResumeImg">
               <img :src="shareResumeImg" />
               <span>扫码分享</span>
             </div>
@@ -506,7 +508,7 @@
                 </div>
               </div>
             </div>
-            <div class="seefujian" v-if="nowResumeMsg.resumeAttach">
+             <div class="seefujian" v-if="nowResumeMsg.resumeAttach">
               <div class="title">附件简历:</div>
               <div class="seebtn" v-if="nowResumeMsg.resumeAttach.extension === 'doc'"><a :href="'https://view.officeapps.live.com/op/view.aspx?src=' + nowResumeMsg.resumeAttach.url" :download="nowResumeMsg.resumeAttach.fileName" target="_blank">查看附件</a></div>
               <div class="seebtn" v-else><a :href="nowResumeMsg.resumeAttach.url" :download="nowResumeMsg.resumeAttach.fileName" target="_blank">查看附件</a></div>
@@ -718,12 +720,14 @@
         </div>
         <div class="intertime" v-show="pop.type === 'setinterinfo'">
           <div class="intertime_title">约面时间</div>
+          <div>
           <ul class="time_list" v-if="model.dateLists.length">
           <li class="time_row" v-for="(item, index) in model.dateLists" :key="index">
             <i class="el-icon-remove" @click="deleteTime(index)"></i>
             {{item.appointment}}
           </li>
         </ul>
+        </div>
           <div class="add_time" v-if="model.dateLists.length < 3">
           <i class="iconfont icon-tianjiashijian bgcolor" style="font-size:12px"></i>
           <span :style="'margin-left:16px;line-height:14px'">添加时间</span>
@@ -880,7 +884,11 @@ import {
       immediate: true
     },
     'pop.isShow': function (n) {
+      if (n) {
+        document.body.style.overflow = 'hidden'
+      }
       if (!n) {
+        document.body.style.overflow = 'auto'
         this.hasonload = false
       }
     }
@@ -979,6 +987,7 @@ export default class CourseList extends Vue {
   };
   shareResumeImg = '' // 简历二维码
   positionList = [{}];
+  interviewNum = ''
   selectPosition = 0;
   invitenum = 0;
   applynum = 0;
@@ -1070,6 +1079,10 @@ export default class CourseList extends Vue {
     }
     this.form.page = 1
     this.getList()
+  }
+
+  destroyed () {
+    document.body.style.overflow = 'auto'
   }
 
   init () {
@@ -1424,10 +1437,11 @@ export default class CourseList extends Vue {
   }
 
   getTime (e) {
+    let thisTime = e.replace(/-/g, '/')
     this.model.dateLists.push({
       appointment: e,
       active: false,
-      appointmentTime: Date.parse(new Date(e)) / 1000
+      appointmentTime: Date.parse(new Date(thisTime)) / 1000
     })
   }
 
@@ -1643,6 +1657,7 @@ export default class CourseList extends Vue {
           }
           this.arrangementInfo.addressId = res.data.data.addressId
           this.arrangementInfo.addressName = res.data.data.address
+          console.log(res.data.data.arrangementInfo.appointmentList)
           if (res.data.data.arrangementInfo.appointmentList) {
             this.model.dateLists = res.data.data.arrangementInfo.appointmentList
           } else {
@@ -1706,6 +1721,7 @@ export default class CourseList extends Vue {
       case 'inappropriate':
         let status2 = { vkey: vo.resume ? vo.resume.vkey : vo.vkey, type: 'resume' }
         manyrecordstatus(status2).then((res) => {
+          this.interviewNum = res.data.data
           if (res.data.data.data.length > 1) {
             this.pop = {
               isShow: true,
@@ -1913,13 +1929,23 @@ export default class CourseList extends Vue {
               btntext: '保存',
               type: 'inappropriate'
             }
-            getCommentReasonApi().then((res) => {
-              let arr = res.data.data
-              arr.map((v, k) => {
-                v.cur = false
+            if (this.interviewNum.interviewStatus === 58 || this.interviewNum.interviewStatus === 59) {
+              getCommentReasonApi().then((res) => {
+                let arr = res.data.data
+                arr.map((v, k) => {
+                  v.cur = false
+                })
+                this.reasonlist = arr
               })
-              this.reasonlist = arr
-            })
+            } else {
+              getloadingReasonApi().then((res) => {
+                let arr = res.data.data
+                arr.map((v, k) => {
+                  v.cur = false
+                })
+                this.reasonlist = arr
+              })
+            }
           }
         }
       }
@@ -1993,6 +2019,7 @@ export default class CourseList extends Vue {
         return
       }
       let timearr = []
+      console.log(this.model.dateLists)
       this.model.dateLists.map((v, k) => {
         timearr.push(v.appointmentTime)
       })

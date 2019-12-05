@@ -173,7 +173,7 @@ export default {
       // 判断大小
       for (let item = 0; item < files.length; item++) {
         if (files[item].size / 1024 / 1024 > this.size) {
-          this.$message.error('上传的图片大小是5MB~')
+          this.$message.error(`上传的图片大小是${this.size}MB~`)
           return
         } else {
           uploadFile.push(files[item])
@@ -412,7 +412,7 @@ export default {
   }
 }
 .image-tip {
-  color: #bcbcbc;
+  color: #BCBEC0;;
   font-size: 12px !important;
   line-height: 25px !important;
 }

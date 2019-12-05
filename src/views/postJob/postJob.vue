@@ -31,7 +31,7 @@
               {{ item.label }}
             </div>
             <div class="address_line cur textEllipsis" v-else>
-              <img class="add_icon" src="../../assets/images/add_icon.png" />
+              <i class="iconfont icon-tianjia add_icon"></i>
               {{ item.label }}
             </div>
           </el-option>

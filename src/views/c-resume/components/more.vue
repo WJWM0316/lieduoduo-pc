@@ -90,6 +90,7 @@ export default {
         if (!imgs.length && !introduce) {
           this.$alert('文字和图片至少一个不为空哦', '温馨提示', {
             confirmButtonText: '好的',
+            center: true,
             type: 'warning'
           })
           // eslint-disable-next-line standard/no-callback-literal
@@ -140,7 +141,7 @@ export default {
   }
   .image-wrapper{
     margin-right: 10px;
-    margin-top: 10px;
+    margin-bottom: 10px;
   }
   .image-wrapper:nth-child(5n) {
     margin-right: 0px;

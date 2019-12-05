@@ -238,6 +238,8 @@ export default {
   font-size: 14px;
   margin-top: 10px;
   color: $title-color-2;
+  word-wrap: break-word;
+  word-break: break-all;
   span {
     color: $main-color-1;
     cursor: pointer;

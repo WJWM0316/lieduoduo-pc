@@ -24,11 +24,14 @@
               </div>
 
               <div class="topSelected" @click="screenList(1)" :class="{'selected':selectedScreen.length>0}" v-else>
-                <i class="iconfont icon-shaixuan" style="color:#929292"></i>
+                <i class="iconfont icon-shaixuan" style="color:#92929B;"></i>
                 {{selectedScreen.length > 0 ||  (positionTypeList.length > 0 ? positionTypeList[positionTypeList.length-1].active:false) ? '清除筛选' :'高级筛选' }}
               </div>
 
-              <div class="topSelected2" @click="screenList(2)">
+              <div class="topSelected2" @click="screenList(2)" v-if="isShowScreen">
+                <i class="iconfont icon-jiantou" style="color: #00C4CD"></i>
+              </div>
+              <div class="topSelected2" @click="screenList(2)" v-else>
                 <i class="iconfont icon-jiantou"></i>
               </div>
 
@@ -422,11 +425,11 @@
               <div class="btn2" @click.stop="setJob(nowResumeMsg.uid, 'watch-reson', nowResumeMsg, 2)"  v-if="!nowResumeMsg.interviewInfo.data.haveInterview && nowResumeMsg.interviewInfo.data.hasUnsuitRecord">查看原因</div>
             </div>
             <div class="like_user" @click.stop="ownerOp(true,nowResumeMsg.uid)" v-if="nowResumeMsg.interested">
-                <img class="like" src="../../assets/images/like.png"/>
+                <i class="iconfont icon-yishoucang img"></i>
                 取消感兴趣
               </div>
               <div class="like_user" @click.stop="ownerOp(false,nowResumeMsg.uid)" v-else >
-                <img class="like" src="../../assets/images/like_no.png"/>
+                <i class="iconfont icon-shoucang img"></i>
                   对Ta感兴趣
               </div>
             <div class="msgCode"  v-if="shareResumeImg">
@@ -603,12 +606,14 @@
         </div>
         <div class="intertime" v-show="pop.type === 'setinterinfo'">
           <div class="intertime_title">约面时间</div>
+          <div>
           <ul class="time_list" v-if="model.dateLists.length">
           <li class="time_row" v-for="(item, index) in model.dateLists" :key="index">
             <i class="el-icon-remove" @click="deleteTime(index)"></i>
             {{item.appointment}}
           </li>
         </ul>
+          </div>
         <div class="add_time" v-if="model.dateLists.length < 3">
           <i class="iconfont icon-tianjiashijian bgcolor" style="font-size:12px"></i>
           <span :style="'margin-left:16px;line-height:14px'">添加时间</span>
@@ -765,7 +770,11 @@ import { applyInterviewApi } from 'API/interview'
         immediate: true
       },
       'pop.isShow': function (n) {
+        if (n) {
+          document.body.style.overflow = 'hidden'
+        }
         if (!n) {
+          document.body.style.overflow = 'auto'
           this.hasonload = false
         }
       }
@@ -879,8 +888,12 @@ export default class CourseList extends Vue {
     nowResumeMsg = {}
     shareResumeImg = '' // 简历二维码
     positionList = []
+    interviewNum = ''
     changeJobId = ''
     changeResumeId = ''
+    destroyed () {
+      document.body.style.overflow = 'auto'
+    }
     init () {
       this.form = Object.assign(this.form, this.$route.query || {})
       this.userInfo = this.$store.state.userInfo
@@ -932,10 +945,11 @@ export default class CourseList extends Vue {
     }
 
     getTime (e) {
+      let thisTime = e.replace(/-/g, '/')
       this.model.dateLists.push({
         appointment: e,
         active: false,
-        appointmentTime: Date.parse(new Date(e)) / 1000
+        appointmentTime: Date.parse(new Date(thisTime)) / 1000
       })
     }
 
@@ -1138,6 +1152,7 @@ export default class CourseList extends Vue {
         case 'inappropriate':
           let status2 = { vkey: vo.resume ? vo.resume.vkey : vo.vkey, type: 'resume' }
           manyrecordstatus(status2).then((res) => {
+            this.interviewNum = res.data.data
             if (res.data.data.data.length > 1) {
               this.pop = {
                 isShow: true,
@@ -1367,13 +1382,23 @@ export default class CourseList extends Vue {
                 btntext: '保存',
                 type: 'inappropriate'
               }
-              getCommentReasonApi().then((res) => {
-                let arr = res.data.data
-                arr.map((v, k) => {
-                  v.cur = false
+              if (this.interviewNum.interviewStatus === 58 || this.interviewNum.interviewStatus === 59) {
+                getCommentReasonApi().then((res) => {
+                  let arr = res.data.data
+                  arr.map((v, k) => {
+                    v.cur = false
+                  })
+                  this.reasonlist = arr
                 })
-                this.reasonlist = arr
-              })
+              } else {
+                getloadingReasonApi().then((res) => {
+                  let arr = res.data.data
+                  arr.map((v, k) => {
+                    v.cur = false
+                  })
+                  this.reasonlist = arr
+                })
+              }
             }
           }
         }

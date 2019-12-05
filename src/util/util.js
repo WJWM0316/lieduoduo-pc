@@ -77,14 +77,25 @@ class Util {
   }
 
   downFile(content, filename) {
-    var eleLink = document.createElement('a')
-    eleLink.download = filename
-    eleLink.style.display = 'none'
-    var blob = new Blob([content]);
-    eleLink.href = URL.createObjectURL(blob)
-    document.body.appendChild(eleLink)
-    eleLink.click()
-    document.body.removeChild(eleLink)
+    if(window.navigator.msSaveBlob){
+      // for ie 10 and later
+      try{
+        var blobObject = new Blob([content]); 
+        window.navigator.msSaveBlob(blobObject, filename); 
+      }
+      catch(e){
+        alert('当前浏览器不支持下载功能')
+      }
+    }else {
+      var eleLink = document.createElement('a')
+      eleLink.download = filename
+      eleLink.style.display = 'none'
+      var blob = new Blob([content]);
+      eleLink.href = URL.createObjectURL(blob)
+      document.body.appendChild(eleLink)
+      eleLink.click()
+      document.body.removeChild(eleLink)
+    }
   }
 
   /**

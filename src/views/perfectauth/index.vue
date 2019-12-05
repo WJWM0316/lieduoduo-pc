@@ -253,7 +253,7 @@ export default {
     }
     .desc{
       font-size:14px;
-      color: #5C565D;
+      color: #66666E;;
       height: 22px;
       padding-left: 64px;
       margin-bottom: 48px;

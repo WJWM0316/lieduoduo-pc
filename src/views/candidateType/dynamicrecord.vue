@@ -187,7 +187,7 @@ export default {
       border-radius:20px;
     }
     &::-webkit-scrollbar-thumb {
-      background:#BCBCBC;
+      background:#BCBEC0;;
       -webkit-border-radius: 20px;
       -moz-border-radius: 20px;
       border-radius:20px;
@@ -197,7 +197,7 @@ export default {
       position: relative;
       i{
         font-size: 10px;
-        color: #BCBCBC;
+        color: #BCBEC0;;
         margin-top: 16px;
         position: absolute;
         right: 16px;

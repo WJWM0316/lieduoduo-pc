@@ -491,7 +491,7 @@ export default class CourseList extends Vue {
     height:366px;
     background:#fff;
     border-radius:8px;
-    border:2px solid rgba(40,40,40,1);
+    border:2px solid #333333;
     margin: -183px 0 0 -153px;
     text-align: center;
     padding-top: 30px;
@@ -499,14 +499,14 @@ export default class CourseList extends Vue {
     .bloTit {
       font-size:20px;
       font-weight:600;
-      color:rgba(40,40,40,1);
+      color:#333333;
       line-height:28px;
     }
     .bloText {
       width: 236px;
       font-size:14px;
       font-weight:400;
-      color:rgba(40,40,40,1);
+      color:#333333;
       line-height:20px;
       margin: 8px auto 20px auto;
     }
@@ -970,7 +970,7 @@ export default class CourseList extends Vue {
                   .job_blo_center {
                     font-size:14px;
                     font-weight:400;
-                    color:rgba(92,86,93,1);
+                    color:#66666E;
                     flex: 1;
                     margin-right: 20px;
                   }
@@ -1127,7 +1127,7 @@ export default class CourseList extends Vue {
                 .companyInfo {
                   font-size:12px;
                   font-weight:300;
-                  color:rgba(92,86,93,1);
+                  color:#66666E;
                   line-height:17px;
                   margin-top: 12px;
                 }
