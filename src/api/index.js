@@ -69,8 +69,6 @@ export const request = ({ url, method, params = {}, config = {} }) => {
     } else {
       axiosFun = axios[method](url, method === 'get' ? { params } : params, config)
     }
-    // config配置内容参见[https://www.kancloud.cn/yunye/axios/234845]
-    axiosFun = axios[method](url, method === 'get' ? { params } : params)
     axiosFun.then(res => {
       resolve(res)
       loadingBack()
