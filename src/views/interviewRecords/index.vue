@@ -1259,10 +1259,7 @@ export default {
     },
     toAddJob () {
       this.$router.push({
-        name: 'postJob',
-        query: {
-          type: 'add'
-        }
+        name: 'recruiterIndex'
       })
     },
     // 选择地址发送

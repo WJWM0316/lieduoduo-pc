@@ -1,7 +1,9 @@
 <template>
   <section id="b-app" class="c-app">
     <page-header />
-    <router-view class="pages" />
+    <div class="pages">
+      <router-view />
+    </div>
     <page-footer />
     <guide-qrcode-pop></guide-qrcode-pop>
   </section>

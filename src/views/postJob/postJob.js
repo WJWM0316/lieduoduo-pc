@@ -1,20 +1,21 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
 // import config from '@/configs'
-import { professionalSkillsApi, closePositionApi, getLabelPositionListApi, searchPositionApi, getBtermPositionApi, editPositionApi, addPositionApi } from '@/api/position'
+import { professionalSkillsApi, closePositionApi, getBtermPositionApi, editPositionApi, addPositionApi } from '@/api/position'
 import { getAdressListApi, addCompanyAdressApi } from '@/api/company'
 import { baseUrl } from '../../../config.js'
 import { getMyInfoApi } from '../../api/auth'
 
 import SearchBar from '@/components/searchBar'
-import MapSearch from '@/components/common/map'
+import MapSearch from '@/components/map'
+import SelectPositionType from '@/components/selectPositionType'
 
-var geocoder = {}
 @Component({
   name: 'community-edit',
   components: {
     SearchBar,
-    MapSearch
+    MapSearch,
+    SelectPositionType
   },
 
   filters: {
@@ -36,69 +37,42 @@ export default class CommunityEdit extends Vue {
   currentLabels = [] // 当前职能
   labelsList = [] // 职能列表
   // 职位类别
-  typeList = [
+  typeList = []
+  // 年薪范围
+  annualSalaryLists = [
+    { value: 12, label: '12薪' },
+    { value: 13, label: '13薪' },
+    { value: 14, label: '14薪' },
+    { value: 15, label: '15薪' },
+    { value: 16, label: '16薪' },
+    { value: 17, label: '17薪' },
+    { value: 18, label: '18薪' },
+    { value: 19, label: '19薪' },
+    { value: 20, label: '20薪' },
+    { value: 21, label: '21薪' },
+    { value: 22, label: '22薪' },
+    { value: 23, label: '23薪' },
+    { value: 24, label: '24薪' }
   ]
   // 学历
   educationList = [
-    {
-      value: 5,
-      label: '初中及以下'
-    },
-    {
-      value: 10,
-      label: '中专/中技'
-    },
-    {
-      value: 15,
-      label: '高中'
-    },
-    {
-      value: 20,
-      label: '大专'
-    },
-    {
-      value: 25,
-      label: '本科'
-    },
-    {
-      value: 30,
-      label: '硕士'
-    },
-    {
-      value: 35,
-      label: '博士'
-    }
+    { value: 5, label: '初中及以下' },
+    { value: 10, label: '中专/中技' },
+    { value: 15, label: '高中' },
+    { value: 20, label: '大专' },
+    { value: 25, label: '本科' },
+    { value: 30, label: '硕士' },
+    { value: 35, label: '博士' }
   ]
   // 经验要求
   experienceList = [
-    {
-      value: '1',
-      label: '不限'
-    },
-    {
-      value: '2',
-      label: '应届生'
-    },
-    {
-      value: '3',
-      label: '1年以内'
-    },
-    {
-      value: '4',
-      label: '1-3年'
-    },
-    {
-      value: '5',
-      label: '3-5年'
-    },
-    {
-      value: '6',
-      label: '5-10年'
-    },
-    {
-      value: '7',
-      label: '10年以上'
-    }
+    { value: '1', label: '不限' },
+    { value: '2', label: '应届生' },
+    { value: '3', label: '1年以内' },
+    { value: '4', label: '1-3年' },
+    { value: '5', label: '3-5年' },
+    { value: '6', label: '5-10年' },
+    { value: '7', label: '10年以上' }
   ]
   // 公司地址
   addressList = [
@@ -116,16 +90,17 @@ export default class CommunityEdit extends Vue {
     company_id: '', // 公司ID
     position_name: '', // 职位名称
     type: '', // 职位类型
+    positionTypeName: '',
     address_id: '', // 选择的公司地址ID
     // area_id: '', // 区域ID(省，市，区的ID，级别最小的)
     lng: '', // 经度
     lat: '', // 纬度
     address: '', // 工作地址
-
     doorplate: '', // 工作地址-门牌
     labels: [], // 技能标签json数组[{’id’:1,’is_diy’:0},{’d’:12,’is_diy’:1}]
     emolument_min: '', // 薪资范围起点
     emolument_max: '', // 薪资范围终点
+    annual_salary: 12, // 年薪
     work_experience: '', // integer(formData) 经验要求,1:不限, 2:应届生 , 3:一年以内, 4:1-3年, 5:3-5年, 6:5-10年, 7 10年以上
     education: '', // 学历要求,5 ：初中及以下，10： 中专 ，15：高中, 20: 大专, 25: 本科， 30: 硕士, 35：博士
     describe: '' // 职位描述
@@ -150,10 +125,6 @@ export default class CommunityEdit extends Vue {
       { required: true, type: 'number', message: '请选择社区分类', trigger: 'change' }
     ]
   }
-
-  positionList = []
-  secondPositionList = []
-  thirdPositionList = []
   searchPosition = ''
   adressInput = ''
   adress_id_Input = ''
@@ -182,7 +153,6 @@ export default class CommunityEdit extends Vue {
     lng: '',
     lat: ''
   }
-
   isEdit = false // 是否编辑
   isOnline = false // 编辑是否在线
   mounted () {
@@ -206,7 +176,6 @@ export default class CommunityEdit extends Vue {
    */
   async init () {
     await this.getProfessionalSkills()
-    await this.getLabelPositionList()
     try {
       // 如果有id，则为编辑
       if (this.$route.query.id) {
@@ -221,8 +190,8 @@ export default class CommunityEdit extends Vue {
           this.isOnline = true
         }
         form.position_name = data.data.positionName
-        form.type = data.data.typeName
-
+        form.type = data.data.type
+        form.positionTypeName = data.data.typeName
         form.address_id = data.data.addressId
         form.lng = data.data.lng
         form.lat = data.data.lat
@@ -233,7 +202,6 @@ export default class CommunityEdit extends Vue {
         form.education = data.data.education
         form.describe = data.data.describe
 
-        form.type = data.data.type
         this.selectPositionItem = {
           name: data.data.typeName,
           typeId: data.data.type
@@ -248,26 +216,21 @@ export default class CommunityEdit extends Vue {
           label: data.data.address
         }
 
-        form.emolument_min = data.data.emolumentMin
-        form.emolument_max = data.data.emolumentMax
-        this.setEmolumentMax(data.data.emolumentMin)
+        form.emolument_min = data.data.emolumentMin < 10 ? 10 : data.data.emolumentMin
+        form.emolument_max = data.data.emolumentMax <= 10 ? '' : data.data.emolumentMax
+        form.annual_salary = data.data.annualSalary
+        this.setEmolumentMax(form.emolument_min)
         this.form = form
         this.getAdressList()
       } else {
-        // const res = await getCreateCommunityData({
-        //   globalLoading: true
-        // })
-        // this.tags = reshaol
+        //
       }
     } catch (error) {
-      console.log(error)
-      // this.is_course = true;
-      // this.$message.error(error.message)
+      //
     }
   }
-
   /**
-   * 保存社区
+   * 保存职位
    */
   async savePosition () {
     try {
@@ -325,11 +288,11 @@ export default class CommunityEdit extends Vue {
 
   setEmolumentMin () {
     let max = 250
-    let i = 0
+    let i = 9
     let list = []
 
     while (i < max) {
-      if (i < 30) {
+      if (i < 30 && i >= 9) {
         i++
       } else if (i < 100) {
         i += 5
@@ -377,12 +340,6 @@ export default class CommunityEdit extends Vue {
     this.emolumentMaxList = list
   }
 
-  querySearch (queryString) {
-    if (queryString.length > 0) {
-      geocoder.getLocation(queryString)
-    }
-  }
-
   // 编辑标题
   get editTitle () {
     return this.$route.query.type !== 'add' ? '编辑职位' : '添加职位'
@@ -397,16 +354,9 @@ export default class CommunityEdit extends Vue {
     })
   }
 
-  // 搜索职位
-  handleSearch (e) {
-    searchPositionApi({
-      name: e,
-      page: 1,
-      count: 20
-    }).then(res => {
-      this.secondPositionList = []
-      this.thirdPositionList = res.data.data
-    })
+  setCurrentLabels (topPid) {
+    const currentLabels = this.labelsList.find(val => val.labelId === topPid)
+    this.currentLabels = (currentLabels && currentLabels.children) || []
   }
 
   // 添加工作地点
@@ -427,60 +377,6 @@ export default class CommunityEdit extends Vue {
     })
   }
 
-  selectPosition (index) {
-    if (!this.positionList[index].active) {
-      this.positionList.map((item, index2) => {
-        if (index2 === index) {
-          item.active = true
-          item.children.map((item2) => {
-            item2.active = false
-            this.thirdPositionList = item2.children
-          })
-          this.secondPositionList = item.children
-        } else {
-          item.active = false
-        }
-      })
-    }
-    this.thirdPositionList = []
-  }
-
-  selectSecondPosition (index) {
-    if (!this.secondPositionList[index].active) {
-      this.secondPositionList.map((item, index2) => {
-        if (index2 === index) {
-          item.active = true
-          this.thirdPositionList = item.children
-        } else {
-          item.active = false
-        }
-      })
-    } else {
-      this.secondPositionList[index].active = false
-      this.thirdPositionList = []
-    }
-  }
-  thirdSecondPosition (item) {
-    this.pop.isShow = false
-    this.selectPositionItem = {
-      name: item.name,
-      typeId: item.labelId,
-      topPid: item.topPid
-    }
-    this.form.labels = []
-    this.form.type = item.labelId
-    this.setCurrentLabels(item.topPid)
-  }
-  setCurrentLabels (topPid) {
-    const currentLabels = this.labelsList.find(val => val.labelId === topPid)
-    this.currentLabels = (currentLabels && currentLabels.children) || []
-  }
-  changePosition () {
-    this.pop = {
-      isShow: true,
-      type: 'position'
-    }
-  }
   // 工作地点选择
   changeAdress (e) {
     // this.form.address_id = 1
@@ -492,20 +388,6 @@ export default class CommunityEdit extends Vue {
       this.form.address_id = ''
     }
     return false
-  }
-
-  async getLabelPositionList () {
-    await getLabelPositionListApi().then(res => {
-      res.data.data.map((item, index) => {
-        if (index === 0) {
-          item.active = true
-          this.secondPositionList = item.children
-        } else {
-          item.active = false
-        }
-      })
-      this.positionList = res.data.data
-    })
   }
 
   /**
@@ -574,13 +456,6 @@ export default class CommunityEdit extends Vue {
     })
   }
 
-  popCancel (type) {
-    if (type === 'name') {
-      this.selectPositionItem.name = ''
-    }
-    this.pop.isShow = false
-  }
-
   /**
    * 点击取消
    */
@@ -607,6 +482,13 @@ export default class CommunityEdit extends Vue {
     a.dispatchEvent(event)
   }
 
+  popCancel (type) {
+    if (type === 'name') {
+      this.selectPositionItem.name = ''
+    }
+    this.pop.isShow = false
+  }
+
   cloJob () {
     closePositionApi({ id: this.$route.query.id }).then(() => {
       this.$message({
@@ -620,5 +502,10 @@ export default class CommunityEdit extends Vue {
     }).catch(e => {
       this.$message.error(e.data.msg)
     })
+  }
+
+  selectedPosition (item) {
+    this.form.positionTypeName = item.name
+    this.setCurrentLabels(item.topPid)
   }
 }

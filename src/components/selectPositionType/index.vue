@@ -2,7 +2,7 @@
   <div class="position-type">
     <div @click="handleShowDialog">
       <slot>
-        <div class="el-input" >
+        <div class="el-input" :class="{'is-disabled': disabled}">
           <div class="el-input__inner"><span v-if="!label"  class="input-placeholder-span">{{title}}</span>{{label}}</div>
         </div>
       </slot>
@@ -66,6 +66,10 @@ export default {
   props: {
     value: [String, Array, Number],
     label: String,
+    disabled: {
+      type: Boolean,
+      default: false
+    },
     title: {
       type: String,
       default: '请选择期望职位'
@@ -93,6 +97,7 @@ export default {
       })
     },
     handleShowDialog () {
+      if (this.disabled) return
       this.showDialog = true
       this.getLists()
     },

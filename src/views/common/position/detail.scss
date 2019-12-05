@@ -341,15 +341,14 @@ img {
 			margin: 0 auto;
 			background-repeat: no-repeat;
 		}
-		&.hidden {
-			top: -90px;
+		&.positionDetail-hidden {
+			top: -114px;
 			transition: all 1s;
+			position: fixed;
+			z-index: 11;
 		}
 		&.headerFloat {
-			position: fixed;
-			left: 0;
 			top: 0;
-			z-index: 11;
 			&.isRapidly {
 				background-position: right 40%;
 			}

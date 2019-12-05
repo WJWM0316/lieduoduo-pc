@@ -5,7 +5,7 @@
       <div class="banner-title">精选酷公司</div>
       <Swiper :list="companyLogoLists" v-if="companyLogoLists.length" />
     </div>
-    <div class="bank-type-box">
+    <div class="bank-type-box" v-if="searchCollect && searchCollect.area.length">
       <div class="bank-type">
         <div class="type-item">
           <div class="type-filter">公司地点：</div>
@@ -48,7 +48,7 @@
         :total="total">
       </el-pagination>
     </div>
-    <div v-if="!total"><no-found :max-width="300" :tipText="'没有符合筛选条件的公司，放宽筛选条件试试？'"/></div>
+    <div v-if="!total && isNoFound"><no-found :max-width="300" :tipText="'没有符合筛选条件的公司，放宽筛选条件试试？'"/></div>
     <loginPop ref="loginPop"></loginPop>
   </div>
 </template>
@@ -77,7 +77,8 @@ export default {
       page: 1,
       pagesize: 20,
       total: 0,
-      height: 0
+      height: 0,
+      isNoFound: false
     }
   },
   computed: {
@@ -125,6 +126,7 @@ export default {
         this.$router.push({ query })
         this.companyLists = data.data
         this.total = (this.pagesize * 10) < data.meta.total ? this.pagesize * 10 : data.meta.total
+        this.isNoFound = true
       })
     },
     changePage (page) {
