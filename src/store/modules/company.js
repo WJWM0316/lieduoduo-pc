@@ -11,12 +11,16 @@ const state = {
     financing: []
   }
 }
+let UrlParams = location.search
+    .split('&')
+    .map((query) => query.split('='))
+    .reduce((params, pairs) => (params[pairs[0]] = pairs[1] || '', params), {})
 
 const mutations = {
   [GET_SEARCH_COLLECT] (state, infos) {
-		let UrlParams = router.history.current.query
+		
     if (UrlParams.cityNums) {
-      let cityNumsArr = UrlParams.get('cityNums').split(',')
+      let cityNumsArr = UrlParams.cityNums.split(',')
       infos.area.map(v => {
         v.checked = false
         if (cityNumsArr.includes(String(v.areaId))) {
@@ -27,7 +31,7 @@ const mutations = {
       infos.area.map((v, i) => v.checked = !i ? true : false)
     }
     if (UrlParams.industryIds) {
-      let industryIdsArr = UrlParams.get('industryIds').split(',')
+      let industryIdsArr = UrlParams.industryIds.split(',')
       infos.industry.map(v => {
         v.checked = false
         if (industryIdsArr.includes(String(v.labelId))) {
@@ -38,7 +42,7 @@ const mutations = {
       infos.industry.map((v, i) => v.checked = !i ? true : false)
     }
     if (UrlParams.financingIds) {
-      let financingIdsArr = UrlParams.get('financingIds').split(',')
+      let financingIdsArr = UrlParams.financingIds.split(',')
       infos.financing.map(v => {
         v.checked = false
         if (financingIdsArr.includes(String(v.value))) {
@@ -49,7 +53,7 @@ const mutations = {
       infos.financing.map((v, i) => v.checked = !i ? true : false)
     }
     if (UrlParams.employeeIds) {
-      let employeeIdsArr = UrlParams.get('employeeIds').split(',')
+      let employeeIdsArr = UrlParams.employeeIds.split(',')
       infos.employee.map(v => {
         v.checked = false
         if (employeeIdsArr.includes(String(v.value))) {
