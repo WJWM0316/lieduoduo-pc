@@ -132,7 +132,7 @@
           <div class="updata-item">
             <div class="title">上传营业执照</div>
             <div class="content">
-              <div class="con-l">
+              <div :class="['con-l', authForm.business_license_url ? 'resetbg' : '']">
                 <Picture
                 :value.sync="authForm.business_license_url"
                 attach-type="img"
@@ -140,8 +140,12 @@
                 @fail="businessLoading = false"
                 @change="handleChangeBusiness"
                 v-loading="businessLoading">
-                <div v-if="!authForm.business_license_url">
+                <div class="defaultimg" v-if="!authForm.business_license_url">
                   <img src="@/assets/images/business.png" alt="">
+                  <div class="defaulttext">
+                    <i class="iconfont icon-tianjiashijian"></i>
+                    <span>点击上传</span>
+                  </div>
                 </div>
                 <div v-else>
                 <img :src="authForm.business_license_url" alt="">
@@ -154,7 +158,7 @@
           <div class="updata-item">
             <div class="title">上传工牌/名片/在职证明（三选一）</div>
             <div class="content">
-              <div class="con-l">
+                <div :class="['con-l', authForm.on_job_url ? 'resetbg' : '']">
                 <Picture
                 :value.sync="authForm.on_job_url"
                 attach-type="img"
@@ -162,8 +166,12 @@
                 @fail="onjobLoading = false"
                 @change="handleChangeOnjob"
                 v-loading="onjobLoading">
-                <div v-if="!authForm.on_job_url">
+                <div class="defaultimg" v-if="!authForm.on_job_url">
                   <img src="@/assets/images/identitycard.png" alt="">
+                  <div class="defaulttext">
+                    <i class="iconfont icon-tianjiashijian"></i>
+                    <span>点击上传</span>
+                  </div>
                 </div>
                 <div v-else>
                 <img :src="authForm.on_job_url" alt="">
@@ -253,7 +261,7 @@
             <div class="apply-info">
               <div class="info-item">
                 <span style="color:#333333;font-size:16px;font-weight:bold;">您的申请</span>
-                <span style="color:#652791;cursor: pointer;" @click="gotowhere('resetedit')">申请信息有误？去更改</span>
+                <span style="color:#03B3BB;cursor: pointer;" @click="gotowhere('resetedit')">申请信息有误？去更改</span>
               </div>
               <div class="info-item">
                 <span>公司全称</span>
@@ -348,7 +356,7 @@
             <div class="apply-info">
               <div class="info-item">
                <span style="color:#333333;font-size:16px;font-weight:bold;">您的申请</span>
-                <span style="color:#652791;cursor: pointer;" @click="gotowhere('resetedit')">申请信息有误？去更改</span>
+                <span style="color:#03B3BB;cursor: pointer;" @click="gotowhere('resetedit')">申请信息有误？去更改</span>
               </div>
               <div class="info-item">
                 <span>公司全称</span>
@@ -1266,10 +1274,39 @@ export default {
             justify-content: center;
             align-items: center;
             display: flex;
+            background: #f8fafa;
+            .defaultimg{
+              width: 86px;
+              height: 62px;
+              margin: 0 auto;
+              margin-bottom: 27px;
+              img{
+                width: 100%;
+                height: 100%;
+              }
+              .defaulttext{
+                margin-top: 10px;
+                display: flex;
+                line-height: 12px;
+                font-size: 12px;
+                justify-content: center;
+                i{
+                  color: #00C4CD;
+                  font-size: 12px;
+                  margin-right: 6px;
+                }
+                span{
+                  color: #03B3BB;
+                }
+              }
+            }
             img{
               max-width: 172px;
               max-height: 120px;
             }
+          }
+          .resetbg{
+            background: #fff;
           }
           .con-r{
             float: right;
@@ -1378,7 +1415,7 @@ export default {
     .nextstep{
       width:418px;
       height:50px;
-      background:rgba(222,218,224,1);
+      background:rgba(0,196,205,0.3);
       border-radius:4px;
       font-size: 18px;
       text-align: center;
@@ -1387,13 +1424,13 @@ export default {
       margin-top: 20px;
     }
     .cansubmit{
-      background: #652791;
+      background: #00C4CD;
     }
     .handler{
       display: flex;
       justify-content: center;
       align-items: center;
-      color: #652791;
+      color: #03B3BB;
       height: 20px;
       margin-top: 40px;
       font-size: 14px;
@@ -1403,7 +1440,7 @@ export default {
       .line{
         height: 15px;
         width: 1px;
-        background: #652791;
+        background: #03B3BB;
         margin: 0px 10px;
       }
     }
@@ -1436,7 +1473,7 @@ export default {
       }
       .center{
         font-size: 14px;
-        color: #652791;
+        color: #03B3BB;
         .center-l{
           float: left;
           width:106px;
@@ -1463,12 +1500,13 @@ export default {
     .auth-btn{
       width:355px;
       height:50px;
-      background:rgba(101,39,145,1);
+      background:#00C4CD;
       border-radius:4px;
       display: flex;
       color: #fff;
       margin-top: 40px;
       font-size: 14px;
+      cursor: pointer;
       line-height: 50px;
       justify-content: center;
       align-items: center;
@@ -1482,7 +1520,7 @@ export default {
       }
     }
     .status-title{
-      color: #652791;
+      color: #03B3BB;
       font-size: 26px;
       font-weight: bold;
       padding: 25px 0 10px 0px;
@@ -1498,12 +1536,12 @@ export default {
             height:2px;
             float: left;
             margin-top: 10px;
-            background: #652791;
+            background: #92929B;
           }
           .tips-box{
             width:6px;
             height:6px;
-            background:rgba(101,39,145,1);
+            background:#BCBEC0;
             float: left;
             margin-top: 8px;
             transform: rotate(225deg);
@@ -1515,7 +1553,7 @@ export default {
           font-size:16px;
           float: left;
           margin: 0 20px;
-          color:rgba(101,39,145,1);
+          color:#333333;
           line-height:22px;
         }
         .tips-r{
@@ -1525,12 +1563,12 @@ export default {
             height:2px;
             float: left;
             margin-top: 10px;
-            background: #652791;
+            background: #92929B;
           }
           .tips-box{
             width:6px;
             height:6px;
-            background:rgba(101,39,145,1);
+            background:#BCBEC0;
             float: left;
             margin-top: 8px;
             transform: rotate(225deg);
@@ -1560,7 +1598,7 @@ export default {
           .text{
             font-size: 14px;
             margin-left: 79px;
-            color: #652791;
+            color: #03B3BB;
           }
           .marleft{
             margin-left: 73px;
@@ -1580,7 +1618,7 @@ export default {
         text-align: center;
         height:50px;
         cursor: pointer;
-        background:rgba(101,39,145,1);
+        background:#00C4CD;
         border-radius:4px;
       }
     }
@@ -1604,7 +1642,7 @@ export default {
         }
         .chongxin{
           float: right;
-          color: #652791;
+          color: #03B3BB;
           cursor: pointer;
         }
       }
@@ -1668,7 +1706,7 @@ export default {
         .notice{
           width:110px;
           height:32px;
-          background:rgba(101,39,145,1);
+          background:#00C4CD;
           border-radius:4px;
           line-height: 32px;
           color: #fff;
@@ -1697,11 +1735,11 @@ export default {
         height:32px;
         line-height: 32px;
         text-align: center;
-        color: #333333;
+        color: #03B3BB;
         margin-top: 14px;
         cursor: pointer;
         font-size: 14px;
-        background:rgba(255,220,41,1);
+        background:#E5F9FA;
         border-radius:4px;
       }
       .title{
@@ -1717,7 +1755,7 @@ export default {
     .gotoqiuzhi{
       margin-top: 56px;
       font-size: 14px;
-      color: #652791;
+      color: #03B3BB;
       cursor: pointer;
       text-align: center;
     }
@@ -1783,7 +1821,7 @@ export default {
         margin-bottom: 10px;
       }
       .s-phone{
-        color: #652791;
+        color: #03B3BB;
         font-size: 30px;
         font-weight: bold;
       }

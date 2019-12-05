@@ -1,13 +1,18 @@
 <template>
   <div id="candidate">
     <div class="pop">
+      <div class="headimg">
+        <div class="headcenter">
+          <img src="@/assets/images/landinglogo.png" alt="" @click="tobackB()">
+        </div>
+      </div>
       <div class="resumeBox" v-if="hasonline">
         <div class="head">
           <div class="back" v-if="isshow" @click="toback()">
             <i class="iconfont icon-right"></i>
             <span>返回PC端</span>
           </div>
-          <div class="welcome" v-if="nowResumeMsg.sendInfo">
+          <div class="welcome" v-if="nowResumeMsg.sendInfo && isshow">
             <div class="welimg"><img :src="nowResumeMsg.sendInfo.avatarInfo.smallUrl" alt v-if="nowResumeMsg.sendInfo" /></div>
             <span>{{nowResumeMsg.sendInfo.realname}} 将这封简历共享给你</span>
           </div>
@@ -178,22 +183,19 @@
               <div class="select">请选择下载格式：</div>
               <div class="pdf">
                 <div class="pdf_l">
-                  <i class="iconfont icon-pdf" v-if="!isshow" style="color: #926666"></i>
-                  <i class="iconfont icon-pdf" v-else style="color: #FA3939"></i>
+                  <i class="iconfont icon-pdf" style="color: #FA3939"></i>
                 </div>
                 <div class="pdf-c">PDF文件</div>
                 <div class="pdf-r" v-if="!isshow"><a>下载</a></div>
-                <div class="pdf-r" @click="onloadfile('pdf')" v-else><a style="color:#652791">下载</a></div>
+                <div class="pdf-r" @click="onloadfile('pdf')" v-else><a style="color:#00C4CD">下载</a></div>
               </div>
               <div class="pdf">
                 <div class="pdf_l">
-                  <i class="iconfont icon-word" v-if="!isshow" style="color: #667c96"></i>
-                  <i class="iconfont icon-word" v-else style="color: #4a90e2"></i>
+                  <i class="iconfont icon-word" style="color: #4a90e2"></i>
                 </div>
                 <div class="pdf-c">Word文档</div>
                 <div class="pdf-r" v-if="!isshow"><a>下载</a></div>
-                <div class="pdf-r" @click="onloadfile('doc')" v-else><a style="color:#652791">下载</a></div>
-                <!-- <a :href="nowResumeMsg.resumeAttach.url" :download="nowResumeMsg.resumeAttach.fileName">下载</a> -->
+                <div class="pdf-r" @click="onloadfile('doc')" v-else><a style="color:#00C4CD">下载</a></div>
               </div>
             </div>
             <div class="haslogin" v-if="!isshow">
@@ -224,7 +226,7 @@
           </div>
         </div>
       </div>
-      <div class="resumeBox" v-else>
+      <div class="resumeBox" v-else style="height:817px">
         <div class="null-img">
           <img src="@/assets/images/fly.png" />
         </div>
@@ -285,6 +287,9 @@ export default class CourseList extends Vue {
     }
     toback () {
       this.$router.push({ name: 'index' })
+    }
+    tobackB () {
+      this.$router.push({ name: 'candidatetype' })
     }
     login () {
       this.$refs.loginPop.showLoginPop = true

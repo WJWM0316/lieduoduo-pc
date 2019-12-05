@@ -86,7 +86,7 @@ export default {
     .sure{
       width:116px;
       height:36px;
-      background:rgba(101,39,145,1);
+      background:#00C4CD;
       border-radius:4px;
       line-height: 36px;
       text-align: center;

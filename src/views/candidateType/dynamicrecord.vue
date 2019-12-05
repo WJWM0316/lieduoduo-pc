@@ -259,7 +259,7 @@ export default {
           font-size: 14px;
           text-align: center;
           color: #fff;
-          background:rgba(101,39,145,1);
+          background:#00C4CD;
           border-radius:0px 4px 4px 0px;
         }
       }
@@ -283,7 +283,7 @@ export default {
         .add{
           float: right;
           font-size: 12px;
-          color: #652791;
+          color: #00C4CD;
           cursor: pointer;
         }
       }
@@ -349,17 +349,17 @@ export default {
             padding-left: 13px;
             color: #606266;
             &:hover{
-              color:#652791;
+              color:#03B3BB;
               font-weight: bold;
               font-size: 14px;
-              background:#EFE9F4;
+              background:#E5F9FA;
             }
           }
           .active{
-            color:#652791;
+            color:#03B3BB;
             font-weight: bold;
             font-size: 14px;
-            background:#EFE9F4;
+            background:#E5F9FA;
           }
         }
       }
@@ -372,7 +372,7 @@ export default {
       color: #fff;
       margin-left: 1px;
       text-align: center;
-      background:rgba(101,39,145,1);
+      background:#00C4CD;
       border-radius:4px;
       margin-top: 30px;
       margin-bottom: 32px;

@@ -55,17 +55,17 @@ export default {
     padding-left: 13px;
     color: #606266;
     &:hover{
-      color:#652791;
+      color:#03B3BB;
       font-weight: bold;
       font-size: 14px;
-      background:#EFE9F4;
+      background:#E5F9FA;
     }
   }
   .active{
-    color:#652791;
+    color:#03B3BB;
     font-weight: bold;
     font-size: 14px;
-    background:#EFE9F4;
+    background:#E5F9FA;
   }
 }
 </style>

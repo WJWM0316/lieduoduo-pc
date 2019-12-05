@@ -26,7 +26,6 @@
               v-loading="frontLoading">
             <div class="upimages" v-if="!ruleForm.passport_front_url">
                 <img src="@/assets/images/userauth.png" alt="">
-                <div class="hasupdata">点击上传</div>
               </div>
             <div class="upimages" v-else>
               <img :src="ruleForm.passport_front_url" alt="">
@@ -227,7 +226,7 @@ export default {
     }
     .active{
       background: #fff;
-      color: #652791;
+      color: #00C4CD;
     }
     .scroll_bar{
       position: absolute;
@@ -235,7 +234,7 @@ export default {
       top: 0px;
       width:4px;
       height:58px;
-      background:#652791;
+      background:#00C4CD;
     }
   }
   .info{
@@ -279,13 +278,6 @@ export default {
           max-width:140px;
           max-height:85px;
         }
-        .hasupdata{
-          bottom: -10px;
-          left: 27px;
-          font-size: 14px;
-          color:#fff;
-          position: absolute;
-        }
       }
       .updata-text{
         color: #A29CA6;
@@ -295,7 +287,7 @@ export default {
     .submit{
       width:124px;
       height:40px;
-      background:rgba(101,39,145,1);
+      background:#00C4CD;
       border-radius:4px;
       font-size: 16px;
       color: #fff;
@@ -319,7 +311,7 @@ export default {
         }
       }
       .status-text{
-        color: #652791;
+        color: #00C4CD;
         font-size: 26px;
         line-height:26px;
         height: 26px;
@@ -355,7 +347,7 @@ export default {
             font-size: 16px;
           }
           .active{
-            color: #652791;
+            color: #00C4CD;
             cursor: pointer;
           }
           .text{
@@ -377,7 +369,7 @@ export default {
         .cxtitle{
           font-weight: normal;
           font-size: 14px;
-          color: #652791;
+          color: #00C4CD;
           cursor: pointer;
           float: right;
           padding-right: 21px;
