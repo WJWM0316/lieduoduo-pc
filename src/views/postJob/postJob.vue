@@ -9,14 +9,21 @@
       </el-form-item>
 
       <el-form-item label="职位类别" prop="type" style="width: 450px;">
-        <el-select :disabled="isEdit" v-model="selectPositionItem.name" placeholder="点击选择职位类别" @focus="changePosition" style="width: 382px;">
+        <!-- <el-select :disabled="isEdit" v-model="selectPositionItem.name" placeholder="点击选择职位类别"  style="width: 382px;">
           <el-option
             v-for="item in typeList"
             :key="item.value"
             :label="item.label"
             :value="item.value">
           </el-option>
-        </el-select>
+        </el-select> -->
+        <select-position-type
+          style="width: 382px;"
+          v-model.number="form.type"
+          :disabled="isEdit"
+          :label="form.positionTypeName"
+          @on-selected="selectedPosition">
+        </select-position-type>
       </el-form-item>
 
       <el-form-item label="工作地点" prop="address_id" style="width: 450px;">
@@ -64,8 +71,8 @@
       </el-form-item>
 
       <el-form-item class="emolument" label="薪酬范围" prop="emolument_min" style="width: 450px;">
-        <div class="emolument_cont">
-          <el-select v-model="form.emolument_min" placeholder="选择薪资范围" @change="changeEmolumentMin"  style="width: 130px;">
+        <div class="emolument_cont" style="width: 382px;">
+          <el-select v-model="form.emolument_min" placeholder="薪资范围" @change="changeEmolumentMin"  style="width: 120px;">
             <el-option
               v-for="item in emolumentMinList"
               :key="item.value"
@@ -74,7 +81,7 @@
             </el-option>
           </el-select>
           <span class="emolument_line">-</span>
-          <el-select v-model="form.emolument_max" placeholder="选择薪资范围"  style="width: 130px;">
+          <el-select v-model="form.emolument_max" placeholder="薪资范围"  style="width: 120px;">
             <el-option
               v-for="item in emolumentMaxList"
               :key="item.value"
@@ -82,8 +89,16 @@
               :value="item.value">
             </el-option>
           </el-select>
+          <span class="emolument_line">-</span>
+          <el-select v-model.number="form.annual_salary" placeholder="年薪"  style="width: 120px;">
+            <el-option
+              v-for="item in annualSalaryLists"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
         </div>
-
       </el-form-item>
 
       <el-form-item label="技能要求" prop="skill_tag" style="width: 450px;">
@@ -124,31 +139,7 @@
       </div>
 
       <div class="pop" v-if="pop.isShow">
-        <div class="jobSelectPop" v-if="pop.type==='position'">
-          <div class="pop_left">
-            <div class="pop_tit">请选择职位类别</div>
-            <ul class="pop_classily" >
-              <li class="" :class="{'cur': item.active}" v-for="(item,index) in positionList" @click="selectPosition(index)" :key="index">{{item.name}}</li>
-            </ul>
-          </div>
-          <div class="pop_right">
-            <img class="clo" src="../../assets/images/clo.png" @click="popCancel('name')" />
-            <search-bar class="f-float-left" @search="handleSearch" :width="'200'" v-model="searchPosition" placeholder="请输入职位关键词" style="margin-top: 12px;"></search-bar>
-            <ul class="job_classily">
-              <li v-for="(item,index) in secondPositionList" @click="selectSecondPosition(index)" :key="index">
-                <img class="classily_icon classily_open" src="../../assets/images/add_icon.png" v-if="!item.active" />
-                <img class="classily_icon classily_close" src="../../assets/images/close_icon.png" v-else />
-                {{item.name}}
-              </li>
-            </ul>
-
-            <ul class="open_jobs" v-if="thirdPositionList.length>0">
-              <li  v-for="(item,index) in thirdPositionList" @click="thirdSecondPosition(item)" :key="index"> {{item.name}}</li>
-            </ul>
-          </div>
-        </div>
         <map-search v-if="pop.type==='addAdress'" @popCancel="popCancel" @addAdress="addAdress"></map-search>
-
         <div class="addAdressPop" v-if="pop.type==='addAdress2'">
           <img class="clo" src="../../assets/images/clo.png" @click="popCancel" />
           <h3 class="">添加新的公司地址</h3>
