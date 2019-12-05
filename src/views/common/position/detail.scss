@@ -19,7 +19,11 @@ img {
 	width: 100%;
 	background: #fff;
 	padding-bottom: 40px;
-	
+	&.overflow {
+		overflow: hidden;
+		height: calc(100vh - #{$page-header-height} - #{$page-footer-height});
+		box-sizing: border-box;
+	}
 	.header {
 		width: 100%;
 		padding: 34px 0 30px;
