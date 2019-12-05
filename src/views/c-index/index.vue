@@ -4,7 +4,7 @@
     <search-wrapper  :banner="loginBannerList"></search-wrapper>
     <div class="position-wrapper main-center">
       <div class="index-part-1">
-        <position-name :list="positionData"></position-name>
+        <position-name :list="positionData" v-loading="!positionData.length"></position-name>
         <!-- <index-banner :items="bannerLists" ref="indexBanner"></index-banner> -->
         <IndexBanner3 />
       </div>
