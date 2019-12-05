@@ -1,5 +1,5 @@
 <template>
-  <div class="companyDetail" v-if="companyInformation.id">
+  <div class="companyDetail" :class="{ opacity : companyInformation.id }">
     <header class="header" :class="{ headerScrollY: isHeader }">
       <div class="inner inner_ScrollY">
         <div class="header-left">
@@ -357,6 +357,9 @@ export default class companyDetail extends Vue {
 
 $sizing: border-box;
 
+.companyDetail {
+  opacity: 0;
+}
 .header {
   @extend %wrap-width;
   background: $bg-color-12;
