@@ -32,7 +32,7 @@
             </div>
             <div class="address_line cur textEllipsis" v-else>
               <i class="iconfont icon-tianjia add_icon"></i>
-              {{ item.label }}
+              <span>{{ item.label }}</span>
             </div>
           </el-option>
         </el-select>
@@ -174,7 +174,7 @@ import PostJob from './postJob'
 export default PostJob
 </script>
 
-<style lang="less" scoped>
-@import "./postJob.less";
+<style lang="scss" scoped>
+@import "./postJob.scss";
 
 </style>

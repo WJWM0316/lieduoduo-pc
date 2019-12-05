@@ -248,9 +248,9 @@ export default class CommunityEdit extends Vue {
           label: data.data.address
         }
 
-        form.emolument_min = data.data.emolumentMin
-        form.emolument_max = data.data.emolumentMax
-        this.setEmolumentMax(data.data.emolumentMin)
+        form.emolument_min = data.data.emolumentMin < 10 ? 10 : data.data.emolumentMin
+        form.emolument_max = data.data.emolumentMax < 10 ? '' : data.data.emolumentMax
+        this.setEmolumentMax(form.emolument_min)
         this.form = form
         this.getAdressList()
       } else {
@@ -325,11 +325,11 @@ export default class CommunityEdit extends Vue {
 
   setEmolumentMin () {
     let max = 250
-    let i = 0
+    let i = 9
     let list = []
 
     while (i < max) {
-      if (i < 30) {
+      if (i < 30 && i >= 9) {
         i++
       } else if (i < 100) {
         i += 5

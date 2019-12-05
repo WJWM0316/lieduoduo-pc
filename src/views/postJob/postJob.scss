@@ -401,6 +401,9 @@
   }
   &.cur {
     color: #03B3BB;
+    .iconfont {
+      top: 0;
+    }
   }
 }
 

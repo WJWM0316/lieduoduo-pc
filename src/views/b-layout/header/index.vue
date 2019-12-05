@@ -68,7 +68,6 @@ export default {
   watch: {
     'Identityinfo': function (n) {
       this.haveIdentity = n
-      console.log(n, '监听到变化了')
     }
   },
   methods: {

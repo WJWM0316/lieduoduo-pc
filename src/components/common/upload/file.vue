@@ -6,7 +6,7 @@
         <span class="file-icon">
           <i class="iconfont" :class="fileTypeStyle.icon" :style="{'color': fileTypeStyle.color}"></i>
         </span>
-        <div class="file-content">
+        <div class="file-content" @click="downLoadFile">
           <span class="file-name">{{tempFile.fileName || value.fileName}}</span>
           <div class="file-process" v-if="uploadLoading || tempFile.id">
             <div :style="{width: precent + '%'}" class="file-processing"></div>
@@ -154,6 +154,7 @@ export default {
       }
       return 'doc'
     },
+    // 唤起系统选择文件窗口
     handleClickInput () {
       if (this.disabled || this.uploadLoading) return
       if (!this.islogin) { return }
@@ -169,8 +170,13 @@ export default {
       } else {
         this.$refs[this.eventKey].click()
       }
+    },
+    downLoadFile () {
+      const { url, fileName } = this.value
+      if (!this.uploadLoading && url) {
+        this.$util.downLinkFile(url, fileName)
+      }
     }
-
   }
 }
 </script>

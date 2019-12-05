@@ -97,7 +97,22 @@ class Util {
       document.body.removeChild(eleLink)
     }
   }
-
+  /**
+   * 下载远程资源 
+   * @param {String} link 下载内容的链接
+   * @param {String}  filename 下载文件的名称
+   */
+  downLinkFile (link, filename) {
+    var ajax = new XMLHttpRequest();
+    ajax.open('get', link, true);
+    ajax.responseType = 'blob';
+    ajax.onload = function (e) {
+        this.downFile(e.target.response, filename);
+    };
+    setTimeout(function () {
+        ajax.send();
+    }, 0);
+  }
   /**
    * 根据键值从源对象中抽取对象
    * @param {Object} source 源对象
@@ -233,22 +248,6 @@ class Util {
       floor: 0.1
     }
     return parseInt(num * Math.pow(10, fractionDigits) + offsets[type]) / Math.pow(10, fractionDigits)
-  }
-
-  /**
-   * 下载文件
-   * @param {Blob} fileBlob 文件Blob对象
-   * @param {String} suffix 文件后缀名
-   */
-  downloadFile(fileBlob, filename, suffix = 'xlsx') {
-    const url = URL.createObjectURL(fileBlob)
-    const downloadLink = document.createElement('a')
-    downloadLink.download = `${filename || moment(new Date()).format('YYYY-MM-DD')}.${suffix}`
-    downloadLink.href = url
-    downloadLink.style.display = 'none'
-    document.body.appendChild(downloadLink)
-    downloadLink.click()
-    document.body.removeChild(downloadLink)
   }
 
   // 获取指定Url参数

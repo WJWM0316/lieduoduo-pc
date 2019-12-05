@@ -9,8 +9,8 @@ import other from './other.js'
 import login from './login.js'
 
 import store from '../store/store'
-import { getUserInfosApi } from '@/api/auth.js'
-import { getUserRoleInfoApi } from '@/api/auth'
+// import { getUserInfosApi } from '@/api/auth.js'
+// import { getUserRoleInfoApi } from '@/api/auth'
 
 let routes = [
   ...applicant,
@@ -32,7 +32,7 @@ const router = new Router({
   //   return savedPosition || { x: 0, y: 0 }
   // }
 })
-let getUserInfo = () => {
+/* let getUserInfo = () => {
   return getUserInfosApi().then(res => {
     store.commit('SETLOGIN', 1)
     store.commit('setUserInfo', res.data.data)
@@ -45,7 +45,7 @@ let getUserRoleInfo = () => {
     if (res.data.data.isJobhunter) this.$store.dispatch('getMyResume')
     store.commit('setRoleInfos', res.data.data)
   })
-}
+} */
 router.beforeEach((to, from, next) => {
   store.dispatch('setPageName', { name: to.name })
   if (from.name !== to.name) {
