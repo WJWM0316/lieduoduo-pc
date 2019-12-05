@@ -7,7 +7,7 @@ import { baseUrl } from '../../../config.js'
 import { getMyInfoApi } from '../../api/auth'
 
 import SearchBar from '@/components/searchBar'
-import MapSearch from '@/components/common/map'
+import MapSearch from '@/components/map'
 import SelectPositionType from '@/components/selectPositionType'
 
 @Component({
