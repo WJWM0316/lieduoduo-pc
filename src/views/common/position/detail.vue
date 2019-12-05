@@ -1,6 +1,6 @@
 <template>
   <div class="positionDetail" :class="{'overflow' : showPoster}" v-if="infos.id">
-		<header ref="header" class="header hidden" :class="{'isRapidly' : infos.isRapidly === 1, 'headerFloat' : headerFloat}">
+		<header ref="header" class="header positionDetail-hidden" :class="{'isRapidly' : infos.isRapidly === 1, 'headerFloat' : headerFloat}">
 			<div class="inner-bg">
 			  <div class="inner">
 					<div class="header-content">
