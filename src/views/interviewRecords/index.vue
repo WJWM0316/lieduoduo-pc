@@ -2506,7 +2506,7 @@ export default {
               display:block;
               color: #00C4CD;
               text-align: center;
-              border:1px solid #00C4CD;  
+              border:1px solid #00C4CD;
             }
           }
           .ContactInformation {
@@ -3288,7 +3288,7 @@ export default {
             }
             .phone{
               float: left;
-              color:rgba(101,39,145,1);
+              color:#00C4CD;
             }
           }
           .detail{

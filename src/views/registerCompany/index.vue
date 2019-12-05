@@ -380,7 +380,7 @@
                 </div>
                 <div class="name">{{companyInfo.adminInfo.name}}</div>
                 <div class="admin">{{companyInfo.adminInfo.position}}</div>
-                <div :class="['notice', miniProgramStatus ? 'default' : '']" @click="noticeadmin" v-if="companyInfo.satus === 0">通知管理员</div>
+                <div :class="['notice', companyInfo.status === 0 ? 'default' : '']" @click="noticeadmin(companyInfo.status)">通知管理员</div>
               </div>
           </div>
           <div class="status-line"></div>
@@ -670,11 +670,15 @@ export default {
       this.bindauthButtonStatus()
     },
     // 通知管理员
-    noticeadmin () {
-      notifyadminApi().then((res) => {
-        this.$message.success('成功通知管理员，请耐心等待')
-        this.getCompanyIdentityInfos()
-      })
+    noticeadmin (status) {
+      if (status === 0) {
+        return false
+      } else {
+        notifyadminApi().then((res) => {
+          this.$message.success('成功通知管理员，请耐心等待')
+          this.getCompanyIdentityInfos()
+        })
+      }
     },
     selectedPosition (res) {
       this.ruleForm.position_type_id = res.labelId
@@ -1185,7 +1189,7 @@ export default {
   background: url("../../assets/images/register-bg.png") no-repeat;
   z-index: 100;
   display: flex;
-  background-size: 100% auto;
+  background-size: 100% 100%;
   min-height: 100%;
   align-items: center;
   // justify-content: center;
@@ -1714,10 +1718,11 @@ export default {
           font-size: 14px;
           text-align: center;
           margin-top: 10px;
+          margin-right: 14px;
           float: right;
         }
         .default{
-          background:rgba(232,233,235,1);
+          background:#BCBEC0;
           color: #92929B;;
         }
       }

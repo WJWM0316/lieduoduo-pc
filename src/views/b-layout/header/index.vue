@@ -1,21 +1,6 @@
 <template>
   <div class="page-header">
-    <div class="sc-wrapper">
-      <template v-for="(item,index) in headerDrop">
-        <div :key="index" class="sc-wrapper-item">
-        <el-popover
-          placement="bottom"
-          width="124"
-          trigger="hover">
-          <div class="share-image">
-            <img :src="item.img" />
-            <p>{{item.desc}}</p>
-          </div>
-          <div slot="reference" class="nav-name">{{item.title}}</div>
-        </el-popover>
-        </div>
-      </template>
-    </div>
+    <div class="head-contain">
     <div class="header-dropdown">
       <el-dropdown trigger="click" placement="bottom-start" @command="handleClick">
         <div>
@@ -35,6 +20,23 @@
           <el-dropdown-item command="logout">退出登录</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
+    </div>
+    <div class="sc-wrapper">
+      <template v-for="(item,index) in headerDrop">
+        <div :key="index" class="sc-wrapper-item">
+        <el-popover
+          placement="bottom"
+          width="124"
+          trigger="hover">
+          <div class="share-image">
+            <img :src="item.img" />
+            <p>{{item.desc}}</p>
+          </div>
+          <div slot="reference" class="nav-name">{{item.title}}</div>
+        </el-popover>
+        </div>
+      </template>
+    </div>
     </div>
   </div>
 </template>
@@ -94,8 +96,9 @@ export default {
 $header-height-1: $page-b-header-height;
 .page-header {
   @include flex-v-center;
-  justify-content: flex-end;
-  padding: 0 20px;
+  margin-left: 200px;
+  // justify-content: flex-end;
+  // padding: 0 20px;
   height: 60px;
   background: #fff;
   text-align: right;
@@ -113,12 +116,18 @@ $header-height-1: $page-b-header-height;
   background: #fff;
   box-shadow: 0 1px 0 0 rgba(29,45,53,.06);
 }
+.head-contain{
+  width: 1140px;
+  margin: 0 auto;
+}
 .sc-wrapper {
   color: $font-color-2;
+  float: right;
   .sc-wrapper-item {
     display: inline-block;
     width: 100px;
     vertical-align: middle;
+    margin-top: 6px;
   }
   .sc-wrapper-item + .sc-wrapper-item {
     margin-left: 12px;
@@ -135,11 +144,12 @@ $header-height-1: $page-b-header-height;
 }
 .header-dropdown {
   padding-left: 40px;
+  float: right;
   .user-avatar {
     @include img-radius(30px, 30px);
     display: inline-block;
     vertical-align: middle;
-    margin: 0 12px;
+    margin: 0 0 0 12px;
   }
 }
 .reddot{

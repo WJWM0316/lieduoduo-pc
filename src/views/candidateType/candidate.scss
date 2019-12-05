@@ -1,7 +1,7 @@
 #candidate {
   .recruiter_main {
     i{
-      padding-right: 3px;
+      padding-right: 6px;
     }
 		.urlInput {
 			width: 70%;
@@ -454,7 +454,7 @@
       justify-content: center;
       align-items: center;
       flex-direction: row;
-      color: #282828;
+      color: #66666E;
       border-top-right-radius: inherit;
       border-bottom-right-radius: inherit;
       &.selected {
@@ -475,7 +475,7 @@
       border-bottom-left-radius: inherit;
       border-left: none;
       i{
-        font-size: 24px;
+        font-size: 16px;
       }
       img {
         margin: 0;

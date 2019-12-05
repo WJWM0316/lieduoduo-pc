@@ -95,7 +95,7 @@ body, html{
     height:440px;
     background:rgba(255,255,255,1);
     box-shadow:0px 8px 12px 0px rgba(48,50,51,0.1);
-    border-radius:4px;
+    border-radius:8px;
     position: absolute;
     left: -320px;
     top: 50%;
@@ -105,8 +105,8 @@ body, html{
       text-align: center;
       height:58px;
       line-height:58px;
-      background:rgba(101,39,145,1);
-      border-radius:4px 4px 0px 0px;
+      background:#00C4CD;
+      border-radius:8px 8px 0px 0px;
       font-size:20px;
       font-weight:400;
       color:rgba(255,255,255,1);
@@ -124,24 +124,24 @@ body, html{
       .pop_text {
         font-size:20px;
         font-weight:400;
-        color:rgba(98,98,98,1);
+        color:#333333;
         margin: 48px 0 20px 0;
       }
       .pop_text2 {
         font-size:24px;
         font-weight:bold;
-        color:#333333;
+        color:#00C4CD;;
       }
       .pop_text3 {
         font-size:18px;
         font-weight:400;
-        color:rgba(53,64,72,1);
+        color:#333333;
         margin-bottom: 24px;
       }
       .pop_text4 {
         font-size:14px;
         font-weight:400;
-        color:rgba(98,98,98,1);
+        color:#66666E;
       }
     }
   }

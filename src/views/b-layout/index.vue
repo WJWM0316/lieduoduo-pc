@@ -10,7 +10,7 @@
     <div class="service" @mouseover="isService = true" @mouseout="isService = false">
       <i class="iconfont icon-kefu service_icon"></i>
       客服咨询
-      <div class="service_pop" v-if="isService">
+      <div class="service_pop" v-show="isService">
         <div class="pop_tit">联系我们</div>
         <div class="pop_cont">
           <h3 class="pop_text">请拨打全国咨询热线</h3>

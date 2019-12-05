@@ -338,7 +338,7 @@ height:100%;
   font-family:PingFangSC-Regular;
   font-weight:400;
   color:#66666E;
-  height:40px;
+  height:46px;
   white-space: nowrap;
   background:rgba(255,255,255,1);
   border-radius:4px;
@@ -373,7 +373,7 @@ height:100%;
     top: 12px;
   }
   &.cur {
-    color: #00C4CD;
+    color: #03B3BB;
     &::after {
       content: '';
       width: 80%;
@@ -479,7 +479,7 @@ height:100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #282828;
+  color: #66666E;
   flex-direction: row;
   border-top-right-radius: inherit;
   border-bottom-right-radius: inherit;
@@ -501,7 +501,7 @@ height:100%;
   border-bottom-left-radius: inherit;
   border-left: none;
   i{
-    font-size: 24px;
+    font-size: 16px;
   }
   img {
     margin: 0;

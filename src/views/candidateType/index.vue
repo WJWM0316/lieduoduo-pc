@@ -24,7 +24,7 @@
               </div>
 
               <div class="topSelected" @click="screenList(1)" :class="{'selected':selectedScreen.length>0}" v-else>
-                <i class="iconfont icon-shaixuan" style="color:#92929B;"></i>
+                <i class="iconfont icon-shaixuan" style="color:#66666E"></i>
                 {{selectedScreen.length > 0 ||  (positionTypeList.length > 0 ? positionTypeList[positionTypeList.length-1].active:false) ? '清除筛选' :'高级筛选' }}
               </div>
 
