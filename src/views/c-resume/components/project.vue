@@ -150,6 +150,7 @@ export default {
         })
         this.currentId = item.id
         this.isAdd = false
+        this.jsonFormString = JSON.stringify(this.form)
       } else if (type === 'save') {
         this.$refs.form.validate(valid => {
           if (valid) {
@@ -237,6 +238,8 @@ export default {
   font-size: 14px;
   margin-top: 10px;
   color: $title-color-2;
+  word-wrap: break-word;
+  word-break: break-all;
   span {
     color: $main-color-1;
     cursor: pointer;

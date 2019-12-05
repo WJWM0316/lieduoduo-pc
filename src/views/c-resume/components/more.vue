@@ -5,8 +5,10 @@
       <template slot="content">
         <div class="resume-list-desc" v-if="info.introduce">{{info.introduce}}</div>
         <div class="resume-images">
-          <div class="image-wrapper" v-for="item in info.imgs" :key="item.id">
-            <img :src="item.smallUrl" alt="">
+          <div class="image-wrapper"
+            v-for="item in info.imgs" :key="item.id"
+            :style="{'background-image': `url(${item.smallUrl})`}">
+            <!-- <img :src="item.smallUrl" alt=""> -->
           </div>
         </div>
       </template>
@@ -82,11 +84,13 @@ export default {
       if (type === 'edit') {
         this.isAdd = false
         Object.assign(this.form, this.info)
+        this.jsonFormString = JSON.stringify(this.form)
       } else if (type === 'save') {
         const { imgs, introduce } = this.form
         if (!imgs.length && !introduce) {
           this.$alert('文字和图片至少一个不为空哦', '温馨提示', {
             confirmButtonText: '好的',
+            center: true,
             type: 'warning'
           })
           // eslint-disable-next-line standard/no-callback-literal
@@ -133,15 +137,15 @@ export default {
     flex-wrap: wrap;
   }
   .image-wrapper {
-    @include img-radius(94px, 94px, 4px);
-    margin-bottom: 10px;
+    @include bg-image-radius(96px, 96px, 4px);
   }
   .image-wrapper{
-    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
   }
-  // .image-wrapper:nth-child(5n) {
-  //   margin-left: 0px;
-  // }
+  .image-wrapper:nth-child(5n) {
+    margin-right: 0px;
+  }
 }
 .form-titl-tips {
   font-size: 12px;

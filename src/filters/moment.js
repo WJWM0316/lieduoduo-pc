@@ -10,6 +10,8 @@ moment.locale('zh-cn')
  * 日期过滤
  */
 Vue.filter('date', (value, format = 'YYYY-MM-DD HH:mm:ss') => {
+  // 如果是第一个字是中文不执行时间格式化
+  if (/^[\u4e00-\u9fa5]/.test(value)) return value
   const date = moment(value).format(format)
   // eslint-disable-next-line eqeqeq
   if (date == 'Invalid date') return value

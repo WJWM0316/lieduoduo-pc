@@ -306,7 +306,7 @@ export default class resumeFourthPost extends Vue {
         background: transparent;
         box-sizing: border-box;
         padding: 0 100px 0 30px;
-        color:rgba(40,40,40,1);
+        color:#333333;
         font-size:14px;
         font-weight:400;
       }
@@ -317,7 +317,7 @@ export default class resumeFourthPost extends Vue {
         transform: translateY(-50%);
         font-size:14px;
         font-weight:300;
-        color:rgba(146,146,146,1);
+        color:#92929B;
       }
       .el-cascader__label {
         padding: 0 30px;
@@ -380,27 +380,27 @@ export default class resumeFourthPost extends Vue {
       }
     }
     input::-webkit-input-placeholder {
-      color: #929292;
+      color: #92929B;;
       font-size: 14px;
       font-weight: 300;
     }
     input::-moz-placeholder {
-      color: #929292;
+      color: #92929B;;
       font-size: 14px;
       font-weight: 300;
     }
     input::-ms-input-placeholder {
-      color: #929292;
+      color: #92929B;;
       font-size: 14px;
       font-weight: 300;
     }
     input::input-placeholder {
-      color: #929292;
+      color: #92929B;;
       font-size: 14px;
       font-weight: 300;
     }
     .default-value{
-      color: #929292;
+      color: #92929B;;
       font-size: 14px;
       font-weight: 300;
       height: 48px;
@@ -418,7 +418,7 @@ export default class resumeFourthPost extends Vue {
       text-overflow: ellipsis;
       overflow: hidden;
 
-      color:rgba(40,40,40,1);
+      color:#333333;
       font-size:14px;
       font-weight:400;
     }
@@ -431,7 +431,7 @@ export default class resumeFourthPost extends Vue {
         display: inline-block;
         // float: left;
         font-weight:700;
-        color:rgba(40,40,40,1);
+        color:#333333;
         font-size:24px;
       }
     }

@@ -2,13 +2,11 @@
   <div class="company-wrapper">
     <!-- 热门城市 -->
     <div class="header-wrapper">
-      <scroll-pane class="scroll-pane">
-        <ul>
-          <template v-for="item in typeList">
-            <li class="company-name" :class="{active: currentId === item.id}" @click="handleChange(item)" :key="item.id">{{item.title}}</li>
-          </template>
-        </ul>
-      </scroll-pane>
+      <ul>
+        <template v-for="item in typeList">
+          <li class="company-name" :class="{active: currentId === item.id}" @click="handleChange(item)" :key="item.id">{{item.title}}</li>
+        </template>
+      </ul>
     </div>
     <div class="company-lists-wrapper" v-loading="getLoading">
       <!-- 隔离层 防止nth-child 多读取一个div -->
@@ -24,11 +22,12 @@
   </div>
 </template>
 <script>
-import ScrollPane from 'COMPONENTS/scrollPane'
+// import ScrollPane from 'COMPONENTS/scrollPane'
 import { getHotCompanyTypes, getHotCompanys } from 'API/company'
-import CompanyCard from 'COMPONENTS/common/companyCard'
+import CompanyCard from 'COMPONENTS/common/company'
+// ScrollPane,
 export default {
-  components: { ScrollPane, CompanyCard },
+  components: { CompanyCard },
   data () {
     return {
       currentId: 0,
@@ -40,6 +39,9 @@ export default {
   computed: {
     isLogin () {
       return !!this.$store.state.userInfo.id
+    },
+    cityid () {
+      return this.$store.state.cityId || 0
     }
   },
   created () {
@@ -50,7 +52,7 @@ export default {
   methods: {
     // 获取热门公司类型信息
     async getTypes () {
-      await getHotCompanyTypes().then(({ data }) => {
+      await getHotCompanyTypes({ city: this.cityid }).then(({ data }) => {
         this.typeList = data.data || []
         this.currentId = this.typeList[0] && this.typeList[0].id
       })
@@ -58,7 +60,7 @@ export default {
     // 获取职位列表
     getCompanyList () {
       this.getLoading = true
-      getHotCompanys({ typeId: this.currentId }).then(({ data }) => {
+      getHotCompanys({ typeId: this.currentId, city: this.cityid }).then(({ data }) => {
         this.getLoading = false
         this.listData = data.data.slice(0, 12)
       })
@@ -71,8 +73,16 @@ export default {
       if (!this.isLogin) {
         this.$router.push('/login?type=msgLogin')
       } else {
-        this.$store.commit('guideQrcodePop', { switch: true, type: 'tocIndex' })
+        // this.$store.commit('guideQrcodePop', { switch: true, type: 'tocIndex' })
+        this.$router.push('/company')
       }
+    }
+  },
+  watch: {
+    cityid (value) {
+      this.getTypes().then(() => {
+        this.getCompanyList()
+      })
     }
   }
 }

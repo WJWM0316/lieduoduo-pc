@@ -2,7 +2,7 @@
   <div class="interviewrecords">
         <div id="box" class="main_cont">
           <div class="screen">
-        <div class="title">面试管理</div>
+        <div class="title">面试日程</div>
         <div class="select" v-if="tablist.length > 0 && tablist[0].cur">
           <el-select
             v-model="form.position_label_id"
@@ -99,7 +99,7 @@
                   去评价
                 </div>
                 <div class="like_user" @click.stop="" v-show="vo.status === 60 || vo.status === 61">
-                  <span :style="'color: #929292'">已评价</span>
+                  <span :style="'color: #92929B;'">已评价</span>
                 </div>
               <div class="btn" @click.stop="setJob(vo.jobhunterUid, 'check-invitation', vo, 1)">查看面试详情</div>
             </div>
@@ -111,11 +111,11 @@
         background
         v-if="form.total > 20"
         layout="prev, pager, next, slot"
-        :total="form.total"
-        :page-size="form.count"
+        :total="Number(form.total)"
+        :page-size="Number(form.count)"
         prev-text="上一页"
         next-text="下一页"
-        :current-page="form.page"
+        :current-page="Number(form.page)"
         @current-change="handleCurrentPageChange"
       >
         <span class="total">共{{ Math.ceil(form.totalPage) }}页, {{form.total}}条记录</span>
@@ -129,7 +129,7 @@
         </div>
 
       </div>
-      <div class="pop" v-if="pop.isShow" @click="closeMsg($event)">
+      <div class="pop" v-show="pop.isShow" @click="closeMsg($event)">
       <div class="xcxPicBox" v-if="pop.type==='clickPic'">
         <img class="clo" src="~IMAGES/clo.png">
         <div class="main_tit">查看简历详情</div>
@@ -305,11 +305,11 @@
               </div>
             </div>
             <!-- 更多介绍 -->
-            <div class="workExperience" v-if="nowResumeMsg.moreIntroduce.introduce && nowResumeMsg.moreIntroduce.imgs">
+            <div class="workExperience" v-if="nowResumeMsg.moreIntroduce.introduce">
               <p class="title">更多介绍</p>
               <div class="workList">
                 <pre v-if="nowResumeMsg.moreIntroduce.introduce">{{nowResumeMsg.moreIntroduce.introduce}}</pre>
-                <div class="imgList">
+                <div class="imgList" v-if="nowResumeMsg.moreIntroduce.imgs.length > 0">
                   <div style="position:relative" :key="index" v-for="(item, index) in nowResumeMsg.moreIntroduce.imgs">
                   <img
                     :src="item.url"
@@ -326,7 +326,7 @@
               <div class="onload" @click="hasonload = !hasonload">
                 <i class="iconfont icon-xiazai"></i>
               </div>
-              <div class="onloadselect" v-loading="loadingshow" v-show="hasonload" ref="queryBox">
+              <div class="onloadselect"  v-loading="loadingshow" v-show="hasonload" ref="queryBox">
                 <div class="title">下载简历</div>
                 <div class="select">请选择下载格式:</div>
                 <div class="pdf">
@@ -374,11 +374,11 @@
               <div class="btn2" @click.stop="setJob(nowResumeMsg.uid, 'watch-reson', nowResumeMsg, 2)"  v-if="!nowResumeMsg.interviewInfo.data.haveInterview && nowResumeMsg.interviewInfo.data.hasUnsuitRecord">查看原因</div>
             </div>
             <div class="like_user" @click.stop="ownerOp(true,nowResumeMsg.uid)" v-if="nowResumeMsg.interested">
-                <img class="like" src="../../assets/images/like.png"/>
+                <i class="iconfont icon-yishoucang img"></i>
                 取消感兴趣
               </div>
               <div class="like_user" @click.stop="ownerOp(false,nowResumeMsg.uid)" v-else >
-                <img class="like" src="../../assets/images/like_no.png"/>
+                <i class="iconfont icon-shoucang img"></i>
                   对Ta感兴趣
               </div>
             <div class="msgCode"  v-if="shareResumeImg">
@@ -517,7 +517,7 @@
             </div>
             <div class="item" v-if="jobhunterInfo.positionName">
               <div class="icon">
-                <i class="iconfont icon-zhiwei"></i>
+                <i class="iconfont icon-zhiwei1"></i>
               </div>
               <div class="text">{{jobhunterInfo.positionName}}</div>
             </div>
@@ -601,6 +601,7 @@
                 </div>
                 <div class="status-text2" v-show="jobhunterInfo.status === 59">
                   <p class="p1">候选人没来</p>
+                  <p class="p2">挥别错的才能和对的相逢~</p>
                 </div>
               </div>
               </div>
@@ -608,15 +609,17 @@
 
           <div class="intertime" v-show="pop.type === 'setinterinfo'">
           <div class="intertime_title">约面时间</div>
-          <ul class="time_list" v-if="model.dateLists.length">
-          <li class="time_row" v-for="(item, index) in model.dateLists" :key="index">
-            <i class="el-icon-remove" @click="deleteTime(index)"></i>
-            {{item.appointment}}
-          </li>
-        </ul>
-          <el-button type="text" class="add_time" v-if="model.dateLists.length < 3">
+          <div>
+            <ul class="time_list" v-if="model.dateLists.length">
+            <li class="time_row" v-for="(item, index) in model.dateLists" :key="index">
+              <i class="el-icon-remove" @click="deleteTime(index)"></i>
+              {{item.appointment}}
+            </li>
+          </ul>
+          </div>
+          <div class="add_time" v-if="model.dateLists.length < 3">
           <i class="iconfont icon-tianjiashijian bgcolor" style="font-size:12px"></i>
-          <span :style="'margin-left:8px;line-height:14px'">添加时间</span>
+          <span :style="'margin-left:16px;line-height:14px'">添加时间</span>
           <el-date-picker
             v-model="form.date1"
             type="datetime"
@@ -624,7 +627,7 @@
             value-format="yyyy-MM-dd HH:mm:ss"
             placeholder="选择日期时间">
           </el-date-picker>
-        </el-button>
+          </div>
         </div>
         <div class="selectposition" v-show="pop.type === 'selectposition'">
           <div class="selectitem" v-for="(item, i) in positionLists" :key="i" @click="selectposition(item)">
@@ -732,7 +735,11 @@ export default {
   },
   watch: {
     'pop.isShow': function (n) {
+      if (n) {
+        document.body.style.overflow = 'hidden'
+      }
       if (!n) {
+        document.body.style.overflow = 'auto'
         this.hasonload = false
       }
     }
@@ -751,6 +758,7 @@ export default {
       nowResumeMsg: {},
       hasonload: false,
       showResume: false,
+      arrangeobj: '',
       arrangementInfo: {
         interviewId: '',
         realname: '',
@@ -1087,6 +1095,7 @@ export default {
             type: 'setinterinfo'
           }
           watchInvitationAPi({ interviewId: this.interviewId }).then((res) => {
+            this.arrangeobj = res.data.data
             this.arrangementInfo.interviewId = res.data.data.interviewId
             this.arrangementInfo.realname = res.data.data.arrangementInfo.realname
             this.arrangementInfo.mobile = res.data.data.arrangementInfo.mobile
@@ -1124,6 +1133,9 @@ export default {
                     hasOnline.push(v)
                   }
                 })
+                if (this.arrangeobj.positionStatus === 0 && this.arrangeobj.positionId !== 0) {
+                  hasOnline.push({ id: this.arrangeobj.positionId, positionName: this.arrangeobj.positionName })
+                }
                 this.positionOption = hasOnline
               })
             }
@@ -1711,6 +1723,9 @@ export default {
       })
     }
   },
+  destroyed () {
+    document.body.style.overflow = 'auto'
+  },
   mounted () {
     this.ManageList()
     this.getScheduleList()
@@ -1729,7 +1744,7 @@ export default {
     background: #fff;
     margin-bottom: 16px;
     .title{
-      color:rgba(40,40,40,1);
+      color:#333333;
       font-size: 24px;
       margin-top: 39px;
       font-weight: bold;
@@ -1767,12 +1782,12 @@ export default {
       text-align: center;
     }
     .active{
-      color:rgba(101,39,145,1);
+      color:#00C4CD;
       font-size: 16px;
       line-height: 46px;
       font-weight: bold;
       height: 46px;
-      border-bottom: 2px solid #652791;
+      border-bottom: 2px solid #00C4CD;
     }
   }
   }
@@ -1796,7 +1811,7 @@ export default {
         padding: 0 29px 0px 24px;
         font-size:12px;
         font-weight:400;
-        color:rgba(146,146,146,1);
+        color:#92929B;
         box-sizing: border-box;
         overflow: hidden;
         .timer1 {
@@ -1805,7 +1820,7 @@ export default {
         }
         .timer2 {
           float: left;
-          color:rgba(40,40,40,1);
+          color:#333333;
           font-size:12px;
           font-weight: 400;
         }
@@ -1842,7 +1857,7 @@ export default {
           position: relative;
           z-index: 0;
           // width: 108px;
-          color:rgba(40,40,40,1);
+          color:#333333;
           background:rgba(255,220,41,1);
           text-align: center;
           display: flex;
@@ -1856,7 +1871,7 @@ export default {
           }
           span{
             font-weight: bold;
-            color:rgba(40,40,40,1);
+            color:#333333;
             font-size: 16px;
           }
         }
@@ -1917,7 +1932,7 @@ export default {
                 .infoName {
                   font-size:20px;
                   font-weight:600;
-                  color:rgba(40,40,40,1);
+                  color:#333333;
                   line-height:28px;
                   margin-bottom: 6px;
                 }
@@ -1934,7 +1949,7 @@ export default {
                     margin-right: 8px;
                     font-size:12px;
                     font-weight:400;
-                    color:rgba(40,40,40,1);
+                    color:#333333;
                   }
                 }
               }
@@ -1943,7 +1958,7 @@ export default {
               height:20px;
               font-size:14px;
               font-weight:400;
-              color: #5C565D;
+              color: #66666E;;
               line-height:20px;
               text-align: left;
               margin-top: 12px;
@@ -1970,7 +1985,7 @@ export default {
             width: 285px;
             font-size:14px;
             font-weight:400;
-            color:rgba(146,146,146,1);
+            color:#92929B;
             line-height:22px;
             text-align: left;
             padding-top: 10px;
@@ -1995,7 +2010,7 @@ export default {
               margin-bottom: 8px;
             }
             .experienceText {
-              color:rgba(40,40,40,1);
+              color:#333333;
               margin-bottom: 8px;
             }
           }
@@ -2013,7 +2028,7 @@ export default {
             justify-content: center;
             align-items: center;
             flex-direction: row;
-            color: #652791;
+            color: #00C4CD;
             cursor: pointer;
             font-size: 14px;
             margin-right: 75px;
@@ -2031,7 +2046,7 @@ export default {
             border-radius:30px;
             font-size:14px;
             font-weight:400;
-            color:rgba(107,48,149,1);
+            color:#00C4CD;
             padding-right: 32px;
             cursor: pointer;
           }
@@ -2121,7 +2136,7 @@ export default {
           }
         }
         .null-text{
-          color:rgba(146,146,146,1);
+          color:#92929B;
           font-size: 14px;
           text-align: center;
           margin-top: 20px;
@@ -2175,7 +2190,7 @@ export default {
       .main_tit {
         font-size:22px;
         font-weight:500;
-        color:rgba(40,40,40,1);
+        color:#333333;
         line-height:26px;
       }
       .xcx_main {
@@ -2224,7 +2239,7 @@ export default {
         align-items: center;
         position: relative;
         span {
-          color: #929292;
+          color: #92929B;;
           font-size: 14px;
         }
       }
@@ -2232,9 +2247,9 @@ export default {
         display: flex;
         justify-content: flex-start;
         align-items: flex-start;
-         .Code {
+        height: 100%;
+        .Code {
           width: 198px;
-          // border-left: 1px solid #ededed;
           display: inline-block;
           .msgCode {
             display: flex;
@@ -2297,9 +2312,9 @@ export default {
               background:rgba(255,255,255,1);
               position: absolute;
               top: 26px;
-              left: -179px;
-              z-index: 1;
+              left: -137px;
               border-radius: 4px;
+              z-index: 1;
               box-shadow:0px 0px 26px 0px rgba(22,39,77,0.12);
               .title{
                 font-size: 14px;
@@ -2345,7 +2360,7 @@ export default {
                   margin-top: 11px;
                   i{
                     font-size: 14px;
-                    color: #CDCBCF;
+                    color: #BCBEC0;;
                     vertical-align: super
                   }
                 }
@@ -2374,7 +2389,7 @@ export default {
             }
             i{
               font-size: 18px;
-              color: #8452A7;
+              color: #00C4CD;
             }
           }
           .btnstatus{
@@ -2391,7 +2406,7 @@ export default {
               font-family:PingFangSC-Medium,PingFangSC;
               font-weight:500;
               color:rgba(255,255,255,1);
-              background:rgba(101,39,145,1);
+              background:#00C4CD;
               border-radius:4px;
               cursor: pointer;
               margin-bottom: 12px;
@@ -2414,12 +2429,12 @@ export default {
               height:40px;
               line-height: 40px;
               font-weight:400;
-              color:rgba(146,146,146,1);
+              color:#92929B;
               text-align: center;
               border-radius:4px;
               margin-bottom: 12px;
               cursor: pointer;
-              border:1px solid rgba(205,203,207,1);
+              border:1px solid #BCBEC0;
             }
           }
           .like_user {
@@ -2427,13 +2442,11 @@ export default {
             justify-content: center;
             align-items: center;
             flex-direction: row;
-            color: #652791;
+            color: $main-color-1;
             cursor: pointer;
             height: 42px;
-            img {
+            .img {
               margin-right: 7px;
-              position: relative;
-              top: -2px;
             }
           }
           .TabSelect {
@@ -2451,7 +2464,7 @@ export default {
               }
               .tabItem {
                 padding: 5px 10px;
-                border: 1px solid #929292;
+                border: 1px solid #92929B;;
                 border-radius: 4px;
                 display: inline-block;
                 margin-bottom: 8px;
@@ -2491,9 +2504,9 @@ export default {
               font-size: 14px;
               line-height: 40px;
               display:block;
-              color: #652791;
+              color: #00C4CD;
               text-align: center;
-              border:1px solid rgba(132,82,167,1);
+              border:1px solid #00C4CD;  
             }
           }
           .ContactInformation {
@@ -2503,21 +2516,21 @@ export default {
               margin-left: 23px;
               font-size: 14px;
               color: #42334d;
-              margin-bottom: 10px;
+              margin-bottom: 18px;
               font-weight: 700;
             }
             .noUpload {
               text-align: center;
               font-size: 13px;
-              color: #929292;
+              color: #92929B;;
             }
             .Contact {
               margin-left: 23px;
-              color: #5C565D;
+              color: #66666E;;
               font-size: 14px;
-              margin-bottom: 18px;
+              margin-bottom: 14px;
               i{
-                color: #BCBCBC;
+                color: #BCBEC0;;
                 font-size: 14px;
                 margin-right: 7px;
               }
@@ -2528,7 +2541,7 @@ export default {
             .noUpload {
               text-align: center;
               font-size: 13px;
-              color: #929292;
+              color: #92929B;;
             }
             .contactTitle {
               text-align: left;
@@ -2536,7 +2549,7 @@ export default {
               font-size: 14px;
               font-weight: 700;
               color: #42334d;
-              margin-bottom: 10px;
+              margin-bottom: 18px;
             }
             .Contact {
               width: 100px;
@@ -2544,7 +2557,7 @@ export default {
               border-radius: 4px;
               border: 1px solid rgba(101, 39, 145, 1);
               font-size: 14px;
-              color: #652791;
+              color: #00C4CD;
               line-height: 30px;
               margin: 0 auto;
               cursor: pointer;
@@ -2561,10 +2574,25 @@ export default {
           width: 742px;
           height: 926px;
           border-right: 1px solid #ededed;
-          overflow-y: scroll;
+          overflow-y: auto;
           display: inline-block;
+          padding-bottom: 48px;
+          height: 100%;
+          box-sizing: border-box;
           &::-webkit-scrollbar {
-            display: none;
+            width: 4px;
+          }
+          &::-webkit-scrollbar-track {
+            background:#fff;
+            -webkit-border-radius: 20px;
+            -moz-border-radius: 20px;
+            border-radius:20px;
+          }
+          &::-webkit-scrollbar-thumb {
+            background:#BCBEC0;;
+            -webkit-border-radius: 20px;
+            -moz-border-radius: 20px;
+            border-radius:20px;
           }
           .base {
             padding-bottom: 20px;
@@ -2574,7 +2602,7 @@ export default {
               justify-content: flex-start;
               align-items: flex-start;
               width: 100%;
-                            .msgUrl {
+              .msgUrl {
                 width: 88px;
                 height: 88px;
                 position: relative;
@@ -2638,27 +2666,27 @@ export default {
                 padding-right: 28px;
                 .basemsg {
                   display: flex;
-                  justify-content: space-between;
+                  // justify-content: space-between;
                   align-items: baseline;
                   .realName {
                     font-size: 22px;
                     font-weight: 700;
                     color: #42334d;
-                    width: 153px;
+                    max-width: 153px;
                     white-space: nowrap;
+                    margin-right: 24px;
                     overflow: hidden;
                     text-overflow: ellipsis;
                     display: inline-block;
                   }
                   .lebalList {
                     display: inline-block;
-                    margin-left: 20px;
                     overflow: hidden;
                     text-align: right;
                     height: 19px;
                     .lebalItem {
                       display: inline-block;
-                      margin-left: 24px;
+                      margin-right: 24px;
                       height: 23px;
                       overflow: 19px;
                       &:nth-child(1) {
@@ -2682,7 +2710,7 @@ export default {
                       }
                       i {
                         margin-right: 7px;
-                        color: #cdcbcf;
+                        color: #BCBEC0;;
                       }
                       span {
                         font-size: 14px;
@@ -2694,7 +2722,7 @@ export default {
                 .status {
                   padding: 5px 9px 5px 10px;
                   background: #efe9f4;
-                  color: #652791;
+                  color: #00C4CD;
                   vertical-align: middle;
                   box-sizing: border-box;
                   font-size: 14px;
@@ -2728,7 +2756,7 @@ export default {
             .description {
               margin-top: 20px;
               text-align: left;
-              color: #929292;
+              color: #92929B;;
               font-size: 13px;
               .msg {
                 span {
@@ -2754,7 +2782,7 @@ export default {
                   border-radius: 30px;
                   margin-right: 6px;
                   vertical-align: middle;
-                  color: #652791;
+                  color: #00C4CD;
                   margin-bottom: 8px;
                   font-weight: 300;
                   height: 22px;
@@ -2773,7 +2801,7 @@ export default {
       .intention {
         text-align: left;
         padding-top: 28px;
-        padding-bottom: 48px;
+        padding-bottom: 38px;
         display: flex;
         justify-content: flex-start;
         align-items: baseline;
@@ -2800,7 +2828,7 @@ export default {
               display: inline-block;
               span {
                 font-size: 14px;
-                color: #5c565d;
+                color: #66666E;;
               }
               // margin-right: 20px;
             }
@@ -2819,7 +2847,7 @@ export default {
         display: flex;
         justify-content: flex-start;
         align-items: baseline;
-        margin-bottom: 28px;
+        margin-bottom: 38px;
         .title {
           font-size: 14px;
           font-weight: 700;
@@ -2835,14 +2863,14 @@ export default {
             white-space: pre-wrap;
             font-size: 13px;
             line-height: 22px;
-            color: #929292;
+            color: #92929B;;
           }
           .imgList {
             display: flex;
             justify-content: flex-start;
             align-items: flex-start;
             flex-wrap: wrap;
-            padding-bottom: 160px;
+            margin-top: 10px;
             img {
               width: 86px;
               height: 86px;
@@ -2867,13 +2895,13 @@ export default {
               display: flex;
               justify-content: space-between;
               align-items: center;
-              padding: 10px 15px 10px 0px;
+              padding: 10px 0px 10px 0px;
               width: 545px;
               span {
                 font-size: 14px;
-                color: #929292;
+                color: #92929B;;
                 &:nth-child(1) {
-                  color: #5c565d;
+                  color: #66666E;;
                 }
               }
             }
@@ -2885,7 +2913,7 @@ export default {
                 background: rgba(239, 233, 244, 1);
                 padding: 2px 8px;
                 text-align: center;
-                color: #652791;
+                color: #00C4CD;
                 font-size: 12px;
                 margin-right: 10px;
                 border-radius: 5px;
@@ -2903,10 +2931,10 @@ export default {
               .duties {
                 text-align: left;
                 font-size: 13px;
-                color: #929292;
+                color: #92929B;;
                 pre {
                   font-size: 13px;
-                  color: #929292;
+                  color: #92929B;;
                   width: 545px;
                   line-height: 22px;
                   white-space: pre-wrap;
@@ -2931,7 +2959,7 @@ export default {
           text-align: left;
           margin-bottom: 20px;
           font-size: 14px;
-          color: #5c565d;
+          color: #66666E;;
           // font-weight: 700;
           line-height: 20px;
           i {
@@ -3046,25 +3074,6 @@ export default {
           justify-content: center;
           padding: 0;
         }
-        .btn_submit {
-          width:80px;
-          height:32px;
-          background:rgba(101,39,145,1);
-          border-radius:16px;
-          box-sizing: border-box;
-          border:1px solid rgba(101,39,145,1);
-          font-size:14px;
-          font-weight:400;
-          color:rgba(255,255,255,1);
-          margin-left: 16px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: 0;
-          span {
-            color: #fff;
-          }
-        }
       }
     }
 
@@ -3086,7 +3095,7 @@ export default {
         height: 26px;
         i{
           font-size: 10px;
-          color: #BCBCBC;
+          color: #BCBEC0;;
           margin-top: 16px;
           position: absolute;
           right: 16px;
@@ -3104,7 +3113,7 @@ export default {
       }
       .noJobText {
         text-align: center;
-        color:rgba(92,86,93,1);
+        color:#66666E;
         font-size: 14px;
         margin-top: 22px;
       }
@@ -3127,7 +3136,7 @@ export default {
           font-size:16px;
           font-weight: bold;
           width: 100%;
-          color:rgba(40,40,40,1);
+          color:#333333;
           padding: 4px 38px 20px 38px;
         }
         .arrange{
@@ -3137,7 +3146,7 @@ export default {
             height: 40px;
             margin-bottom: 10px;
             .name{
-              color:rgba(92,86,93,1);
+              color:#66666E;
               font-size: 12px;
               width: 60px;
               text-align: right;
@@ -3151,16 +3160,17 @@ export default {
               height: 38px;
               font-size:14px;
               // padding-left: 16px;
-              color:rgba(40,40,40,1);
+              color:#333333;
               // border:1px solid rgba(235,235,235,1);
               .info-select{
                 width: 262px;
                 height: 38px;
                 line-height: 38px;
-                color: #606266;
+                color: #333;
                 overflow: hidden;
                 padding-left: 16px;
-                border:1px solid rgba(235,235,235,1);
+                border: 1px solid #DCDFE6;
+                border-radius: 4px;
               }
               .el-select{
                 width: 100%;
@@ -3186,7 +3196,7 @@ export default {
             border-radius:20px;
             }
             &::-webkit-scrollbar-thumb {
-             background:#BCBCBC;
+             background:#BCBEC0;;
             -webkit-border-radius: 20px;
             -moz-border-radius: 20px;
             border-radius:20px;
@@ -3213,7 +3223,7 @@ export default {
               align-items: center;
               word-break: break-all;
               font-weight:400;
-              color:rgba(40,40,40,1);
+              color:#333333;
             }
             .edit{
               float: right;
@@ -3235,14 +3245,14 @@ export default {
               float: left;
               margin-right: 8px;
               .bgcolor{
-                color:#652791;
+                color:#00C4CD;
               }
             }
             .add-text{
               float: left;
               line-height: 16px;
               font-size:14px;
-              color:#652791;
+              color:#00C4CD;
             }
           }
         }
@@ -3252,7 +3262,7 @@ export default {
           margin-top: 4px;
           .item{
             line-height: 22px;
-            color:rgba(40,40,40,1);
+            color:#333333;
             font-size:14px;
             display: flex;
             margin-bottom: 20px;
@@ -3288,11 +3298,11 @@ export default {
             .detailtitle{
               font-size:18px;
               font-weight:bold;
-              color:rgba(40,40,40,1);
+              color:#333333;
             }
             .desc{
               font-weight:400;
-              color:rgba(92,86,93,1);
+              color:#66666E;
               font-size: 14px;
               margin-top: 5px;
             }
@@ -3319,14 +3329,14 @@ export default {
                 .dian{
                   width:4px;
                   height:4px;
-                  background:rgba(92,86,93,1);
+                  background:#66666E;
                   float:left;
                   border-radius: 50%;
                   margin-top: 5px;
                   margin-right: 5px;
                 }
                 .tex{
-                  color:rgba(92,86,93,1);
+                  color:#66666E;
                   font-size: 14px;
                   float: left;
                   font-weight: normal;
@@ -3359,7 +3369,7 @@ export default {
                     margin-left: 56px;
                     margin-top: 13px;
                     font-size: 14px;
-                    color: #5C565D;
+                    color: #66666E;;
                   }
                 }
               }
@@ -3384,7 +3394,7 @@ export default {
                 float: left;
                 margin-top: 26px;
                 .p1{
-                  color:rgba(40,40,40,1);
+                  color:#333333;
                   font-weight: bold;
                   font-size:16px;
                 }
@@ -3392,14 +3402,14 @@ export default {
                   font-weight:300;
                   font-size:14px;
                   margin-top: 6px;
-                  color:rgba(146,146,146,1);
+                  color:#92929B;
                 }
               }
               .status-text2{
                 margin-top: 34px;
                 float: left;
                 .p1{
-                  color:rgba(40,40,40,1);
+                  color:#333333;
                   font-weight: bold;
                   font-size:16px;
                 }
@@ -3427,26 +3437,31 @@ export default {
           }
           .wait_time{
             font-size:14px;
-            color:rgba(92,86,93,1);
+            color:#66666E;
             text-align: center;
+            margin-bottom: 30px;
           }
         }
         .intertime{
           margin-top: 34px;
           padding: 0 38px;
           .intertime_title{
-            color:rgba(40,40,40,1);
+            color:#333333;
             font-size:14px;
             font-weight: bold;
           }
+          .time_list{
+            margin-bottom: 6px;
+          }
           .time_row{
-            height: 30px;
-            line-height: 30px;
+             margin-top: 16px;
             cursor: pointer;
             position: relative;
+            font-size: 14px;
+            color: #66666E;;
             i{
               margin-right: 10px;
-              color: red;
+              color: #ED5C5C;
             }
             .circle{
               border: 1px solid #dcdfe6;
@@ -3471,6 +3486,8 @@ export default {
           .add_time{
             position: relative;
             overflow: hidden;
+            padding: 12px 0;
+            color: #03b3bb;
             .el-date-editor{
               position: absolute;
               left: 0;
@@ -3495,13 +3512,13 @@ export default {
             border-radius:20px;
             }
             &::-webkit-scrollbar-thumb {
-             background:#BCBCBC;
+             background:#BCBEC0;;
             -webkit-border-radius: 20px;
             -moz-border-radius: 20px;
             border-radius:20px;
             }
           .applytext{
-            color:rgba(146,146,146,1);
+            color:#92929B;
           }
           .selectitem{
             height:69px;
@@ -3544,7 +3561,7 @@ export default {
                 font-size: 14px;
               }
               .hui{
-                color:rgba(188,188,188,1);
+                color:#BCBEC0;
               }
             }
             .info{
@@ -3570,14 +3587,14 @@ export default {
                 padding: 4px 6px;
               }
               .hui{
-                color:rgba(188,188,188,1);
+                color:#BCBEC0;
               }
             }
             .selectcur{
               position: absolute;
               width:20px;
               height:20px;
-              color: #BCBCBC;
+              color: #BCBEC0;;
               top: 20px;
               right: 0px;
               .bg{
@@ -3587,7 +3604,7 @@ export default {
                 width:14px;
                 height:14px;
                 background: #ecebeb;
-                border: 1px solid #BCBCBC;
+                border: 1px solid #BCBEC0;;
                 border-radius: 50%;
               }
             }
@@ -3607,7 +3624,7 @@ export default {
             float: left;
             margin-right: 8px;
             margin-bottom: 10px;
-            color:rgba(146,146,146,1);
+            color:#92929B;
             border:1px solid rgba(232,233,235,1);
           }
           .wachitem{
@@ -3615,7 +3632,7 @@ export default {
             height:32px;
             background:rgba(248,245,250,1);
             border-radius:16px;
-            color:rgba(92,86,93,1);
+            color:#66666E;
             font-size: 14px;
             float: left;
             margin-right: 8px;
@@ -3624,8 +3641,8 @@ export default {
             text-align: center;
           }
           .resoncur{
-            border-color: #652791;
-            color: #652791;
+            border-color: #00C4CD;
+            color: #00C4CD;
           }
         }
         .explain{
@@ -3633,7 +3650,7 @@ export default {
           padding: 0 38px;
           margin-top: 14px;
           .explaintitle{
-            color:rgba(92,86,93,1);
+            color:#66666E;
             margin-bottom: 12px;
             font-weight: bold;
           }
@@ -3649,7 +3666,7 @@ export default {
               width: 100%;
               height: 100%;
               &::placeholder{
-                color:#BCBCBC;
+                color:#BCBEC0;;
               }
             }
           }
@@ -3665,12 +3682,12 @@ export default {
             width:78px;
             height:30px;
             border-radius:4px;
-            color:rgba(146,146,146,1);
+            color:#92929B;
             font-size: 14px;
             text-align: center;
             line-height: 32px;
             margin-right: 16px;
-            border:1px solid rgba(205,203,207,1);
+            border:1px solid #BCBEC0;
             float: right;
             cursor: pointer;
           }

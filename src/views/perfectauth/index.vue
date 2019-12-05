@@ -253,7 +253,7 @@ export default {
     }
     .desc{
       font-size:14px;
-      color: #5C565D;
+      color: #66666E;;
       height: 22px;
       padding-left: 64px;
       margin-bottom: 48px;
@@ -265,18 +265,19 @@ export default {
       .updata{
         width:140px;
         height:85px;
-        border-radius:6px;
       }
       .upimages{
         width:112px;
         height:85px;
         cursor: pointer;
         overflow: hidden;
-        border-radius:6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         position: relative;
         img{
-         max-width: 100%;
-         max-height: 100%;
+          max-width:140px;
+          max-height:85px;
         }
         .hasupdata{
           bottom: -10px;

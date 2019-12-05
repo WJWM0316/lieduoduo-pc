@@ -8,11 +8,10 @@
         <el-autocomplete
           v-model="searchValue"
           :fetch-suggestions="querySearchAsync"
-          placeholder="搜索职位"
+          placeholder="搜索职位、公司"
           @select="handleSelect"
           @keyup.native.enter="handleSelect()"
-          :maxlength="50"
-          clearable>
+          :maxlength="50">
           <i slot="prefix" class="el-input__icon iconfont icon-sousuo"></i>
         </el-autocomplete>
         <el-button class="el-button-h46" type="primary" @click="handleToSearch">搜索</el-button>

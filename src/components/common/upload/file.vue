@@ -49,7 +49,7 @@ export default {
     },
     size: { // 限制上传文件的大小 单位M
       type: Number,
-      default: 5
+      default: 10
     },
     accept: { // 限制上传文件的格式
       type: String,
@@ -92,7 +92,7 @@ export default {
       if (!file) return
       // 判断大小
       if (file.size / 1024 / 1024 > this.size) {
-        this.$message.warning('上传的图片大小是5MB~')
+        this.$message.warning(`上传的文件大小是${this.size}MB~`)
         return
       }
       this.tempFile = {
@@ -162,8 +162,7 @@ export default {
           confirmButtonText: '马上上传',
           confirmButtonClass: 'alert button',
           dangerouslyUseHTMLString: true,
-          customClass: 'file-alert',
-          center: true
+          customClass: 'file-alert'
         }).then(() => {
           this.$refs[this.eventKey].click()
         })
@@ -221,15 +220,23 @@ export default {
 }
 </style>
 <style lang="scss">
+.file-alert .el-message-box__header {
+  padding-top: 44px;
+  text-align: center !important;
+}
 .file-alert .el-message-box__title{
   font-size: 14px;
   color: $title-color-1;
+  text-align: center;
 }
 .file-alert .el-message-box__btns {
-  padding: 42px 0 0px !important;
+  text-align: center !important;
+  padding: 42px 0 24px !important;
 }
-.alert-content {
+.file-alert p.alert-content {
   color: $sub-color-1;
+  line-height: 1;
+  text-align: center;
 }
 .alert.button {
   width: 258px !important;

@@ -6,6 +6,8 @@
           v-if="status !== 'view'"
           :value.sync="info.avatarUrl"
           attach-type="avatar"
+          :cropper="true"
+          cropper-radius="50%"
           @before="avatarLoading = true"
           @fail="avatarLoading = false"
           @change="handleChangeAvatar"
@@ -15,18 +17,14 @@
               <img :src="info.avatarUrl" />
               <span class="iconfont icon-xiangji"></span>
             </div>
-            <span class="user-gender" :class="info.gender == 1 ? 'male' : 'female'" >
-              <i class="iconfont" :class="info.gender == 1 ? 'icon-nan' : 'icon-nvsheng'"></i>
-            </span>
+            <span class="user-gender" :class="info.gender == 1 ? 'male' : 'female'" ></span>
           </div>
         </Picture>
         <div class="avatar-wrapper" v-else>
           <div class="avatar">
             <img :src="info.avatarUrl" />
           </div>
-          <span class="user-gender" :class="info.gender == 1 ? 'male' : 'female'" >
-            <i class="iconfont" :class="info.gender == 1 ? 'icon-nan' : 'icon-nvsheng'"></i>
-          </span>
+          <span class="user-gender" :class="info.gender == 1 ? 'male' : 'female'" ></span>
         </div>
       </template>
       <template slot="content">
@@ -205,6 +203,7 @@ export default {
         Object.assign(this.form, this.info)
         this.form.birth = this.info.birthDesc
         this.form.startWorkYear = this.info.startWorkYear * 1000
+        this.jsonFormString = JSON.stringify(this.form)
       } else if (type === 'save') {
         this.$refs.form.validate(valid => {
           if (valid) {
@@ -258,6 +257,9 @@ export default {
         // 将内容写入到vuex 中
         this.$store.commit('overwriteResume', data.data || {})
       })
+    },
+    validFormData () {
+      return this.jsonFormString === JSON.stringify(this.form)
     }
   }
 }
@@ -285,21 +287,21 @@ $image-wrapper: 112px;
     height: 27px;
     width: 27px;
     line-height: 28px;
+    display: inline-block;
     border-radius: 50%;
     text-align: center;
+    background-size: 100% 100%;
   }
   .user-gender.male {
-    background: #2778FF;
+    background-image: url('../../../assets/images/boy.png');
   }
   .user-gender.female {
-    background: #FF6796;
-  }
-  .iconfont {
-    font-size: 28px;
+    background-image: url('../../../assets/images/girl.png');
   }
 }
 .avatar {
   @include img-radius($image-wrapper, $base-warpper-height);
+  border: 1px solid $border-color-8;
   position: relative;
   cursor: pointer;
   color: #fff;
@@ -354,7 +356,7 @@ $image-wrapper: 112px;
     vertical-align: middle;
   }
   p {
-    color: $font-color-2;
+    color: $title-color-1;
     font-size: 14px;
     line-height: 1.4;
     span + span {
@@ -369,17 +371,18 @@ $image-wrapper: 112px;
   .user-company span.ellipsis,.user-name {
     @include ellipsis;
   }
-  .user-name {
-    max-width: 200px;
-    margin-bottom: 13px;
-  }
   .user-company span.ellipsis {
     max-width: 180px;
   }
 
   .user-company,.user-name {
     color: $title-color-1;
-    font-weight: normal;
+  }
+  .user-name {
+    max-width: 200px;
+    margin-bottom: 17px;
+    font-weight: 500;
+    line-height: 1;
   }
   i.iconfont {
     color: $font-color-12;
@@ -388,13 +391,13 @@ $image-wrapper: 112px;
     vertical-align: middle;
   }
   .user-company {
-    margin-bottom: 20px;
+    margin-bottom: 17px;
   }
   .user-phone {
-    margin-top: 24px;
+    margin-top: 20px;
   }
   .user-wechat {
-    margin-top: 20px;
+    margin-top: 17px;
   }
   .user-name {
     font-size: 26px;

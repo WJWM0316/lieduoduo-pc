@@ -229,6 +229,7 @@ export default class loginForm extends Component {
       uuid: this.codeData.uuid
     }).then(res => {
       if (res.data.data && res.data.data.id) {
+        this.$store.commit('LOGINCALLBACK', res.data.data)
         clearInterval(this.timer)
         this.$store.dispatch('scanLogin', res.data.data)
       }
@@ -454,25 +455,37 @@ export default class loginForm extends Component {
       vertical-align: top;
       .login_text {
         font-size: 12px;
-        color: #929292;
+        color: #92929B;;
         width: 86px;
         height: 20px;
+        border-radius: 2px;
         background: #f6f6f6;
         line-height: 20px;
-        border-radius: 8px;
         margin-top: 15px;
         display: inline-block;
         text-align: center;
         vertical-align: middle;
+        position: relative;
+        &::after{
+          content: '';
+          position: absolute;
+          left: 86px;
+          top: 6px;
+          width: 0px;
+          height: 0px;
+          border-width: 4px;
+          border-style: solid;
+          border-color: transparent transparent transparent #F6F6F6;
+        }
       }
       .login-img {
-        width: 83px;
-        height: 83px;
+        width: 86px;
+        height: 86px;
         cursor: pointer;
         display: inline-block;
         vertical-align: top;
         img {
-          width: 83px;
+          width: 86px;
         }
       }
     }
@@ -543,7 +556,7 @@ export default class loginForm extends Component {
           cursor: pointer;
         }
         .helptype {
-          background: #efe9f4;
+          background: $bg-color-5;
         }
       }
 
@@ -707,6 +720,7 @@ export default class loginForm extends Component {
       text-align: left;
       line-height: 46px;
       font-size: 0;
+      position: relative;
       .input_img {
         margin: 0 12px 0 29px;
         font-size: 18px;
@@ -749,13 +763,14 @@ export default class loginForm extends Component {
         color: $main-color-1;
         font-weight: 700;
         font-size: 16px;
-        line-height: 48px;
+        line-height: 1;
         display: inline-block;
-        float: right;
         cursor: pointer;
-        margin-right: 26px;
+        position: absolute;
+        top: 50%;
+        right: 26px;
+        transform: translateY(-50%);
       }
-
       .imgcode {
         width: 102px;
         height: 41px;
@@ -856,7 +871,7 @@ export default class loginForm extends Component {
         width: 203px;
         height: 40px;
         font-size: 20px;
-        color: #929292;
+        color: #92929B;;
         font-weight: 400;
         font-family: PingFangSC-Regular, PingFang SC;
         border-bottom: 2px solid #e8e9eb;
@@ -925,9 +940,10 @@ export default class loginForm extends Component {
             width: 200px;
             height: 44px;
             color: $title-color-1;
+            display: inline-block;
+            vertical-align: top;
           }
           .msgText{
-            margin-right: 15px;
             font-size: 14px;
           }
         }

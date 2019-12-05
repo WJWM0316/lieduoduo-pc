@@ -229,6 +229,9 @@
           <img src="@/assets/images/fly.png" />
         </div>
         <div class="null-text">链接已过期，无法支持在线预览（预览有效期14天）</div>
+        <div class="null-text" @click="toback">
+          <div class="null-btn">返回首页</div>
+          </div>
       </div>
     </div>
     <loginPop ref="loginPop"></loginPop>

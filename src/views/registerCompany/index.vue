@@ -136,15 +136,14 @@
                 <Picture
                 :value.sync="authForm.business_license_url"
                 attach-type="img"
-                class="updataimg oneimg"
                 @before="businessLoading = true"
                 @fail="businessLoading = false"
                 @change="handleChangeBusiness"
                 v-loading="businessLoading">
-                <div class="updataimg oneimg" v-if="!authForm.business_license_url">
+                <div v-if="!authForm.business_license_url">
                   <img src="@/assets/images/business.png" alt="">
                 </div>
-                <div class="updataimg oneimg" v-else>
+                <div v-else>
                 <img :src="authForm.business_license_url" alt="">
               </div>
               </Picture>
@@ -159,15 +158,14 @@
                 <Picture
                 :value.sync="authForm.on_job_url"
                 attach-type="img"
-                class="updataimg"
                 @before="onjobLoading = true"
                 @fail="onjobLoading = false"
                 @change="handleChangeOnjob"
                 v-loading="onjobLoading">
-                <div class="updataimg" v-if="!authForm.on_job_url">
+                <div v-if="!authForm.on_job_url">
                   <img src="@/assets/images/identitycard.png" alt="">
                 </div>
-                <div class="updataimg" v-else>
+                <div v-else>
                 <img :src="authForm.on_job_url" alt="">
               </div>
               </Picture>
@@ -282,7 +280,7 @@
             </div>
             <div class="contact-btn" @click="showourbox = true">联系体验</div>
           </div>
-          <div class="gotoqiuzhi" @click="gotowhere('qiuzhi')">前往求职</div>
+          <div class="gotoqiuzhi" @click="gotowhere('qiuzhi')">前往求职端</div>
           </div>
         </template>
         <template v-if="$route.query.from === 'join'">
@@ -1265,22 +1263,12 @@ export default {
             width:172px;
             height:120px;
             cursor: pointer;
-            border-radius:4px;
-            .updataimg{
-              float: left;
-              width:172px;
-              margin-top: 26px;
-              height:120px;
-              overflow: hidden;
-              cursor: pointer;
-              border-radius:4px;
-            }
-            .oneimg{
-              margin-top: 17px;
-            }
+            justify-content: center;
+            align-items: center;
+            display: flex;
             img{
-              max-width: 100%;
-              max-height: 100%;
+              max-width: 172px;
+              max-height: 120px;
             }
           }
           .con-r{
@@ -1319,11 +1307,13 @@ export default {
       .logo{
         width:64px;
         height:64px;
-        border-radius:4px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         cursor: pointer;
         img{
-          width: 100%;
-          height: 100%;
+          max-width: 64px;
+          max-height:64px;
         }
       }
     }
@@ -1333,7 +1323,7 @@ export default {
       font-size: 14px;
       cursor: pointer;
       top: 0px;
-      color: #CDCBCF;
+      color: #BCBEC0;;
       z-index: 999;
     }
     .icontipbox{
@@ -1404,6 +1394,7 @@ export default {
       justify-content: center;
       align-items: center;
       color: #652791;
+      height: 20px;
       margin-top: 40px;
       font-size: 14px;
       cursor: pointer;
@@ -1423,12 +1414,13 @@ export default {
       line-height: 26px;
       font-weight: bold;
       text-align: center;
-      margin-bottom: 10px;
+      margin-bottom: 14px;
       width: 100%;
     }
     .sub-desc{
       font-size: 16px;
       color: #333333;
+      height: 16px;
       margin-bottom: 10px;
     }
     .authentication{
@@ -1440,7 +1432,7 @@ export default {
         color: #6D696E;
         font-size: 14px;
         text-align: center;
-        padding: 20px 0 24px 0px;
+        padding: 22px 0 28px 0px;
       }
       .center{
         font-size: 14px;
@@ -1452,7 +1444,7 @@ export default {
           span{
             display: block;
             width: 100%;
-            margin-bottom: 12px;
+            margin-bottom: 17px;
           }
         }
         .center-r{
@@ -1667,7 +1659,7 @@ export default {
           float: left;
         }
         .admin{
-          color: #5C565D;
+          color: #66666E;;
           line-height: 52px;
           float: left;
           font-size: 12px;
@@ -1688,7 +1680,7 @@ export default {
         }
         .default{
           background:rgba(232,233,235,1);
-          color: #929292;
+          color: #92929B;;
         }
       }
     }
@@ -1755,7 +1747,7 @@ export default {
       height: 50px;
       i{
         font-size: 10px;
-        color: #BCBCBC;
+        color: #BCBEC0;;
         margin-top: 16px;
         cursor: pointer;
         position: absolute;

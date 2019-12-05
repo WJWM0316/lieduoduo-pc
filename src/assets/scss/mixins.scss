@@ -30,12 +30,6 @@
   justify-content: space-between;
 }
 
-// 两端对齐
-@mixin flex-between() {
-  display: flex;
-  justify-content: space-between;
-}
-
 // 主轴的项目两侧的间隔相等
 @mixin flex-justify-around() {
   display: flex;
@@ -83,8 +77,27 @@
   background: $bgcolor;
   overflow: hidden;
   text-align: center;
-  img {
-    max-width: 100%;
-    min-height: 100%;
+  &::after {
+    content: "";
+    height: 100%;
+    display: inline-block;
+    vertical-align: middle;
   }
+  img {
+   vertical-align: middle;
+    max-width: 100%;
+    max-height: 100%;
+  }
+}
+
+// bg image radius
+@mixin bg-image-radius($height, $width, $radius:50%, $bgcolor: #fff) {
+  width: $width;
+  height: $height;
+  background-size: cover; 
+  border-radius: $radius;
+  overflow: hidden;
+  background-repeat: no-repeat; 
+  background-position: center center;
+  background-color: #fff;
 }

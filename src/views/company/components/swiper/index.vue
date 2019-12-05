@@ -25,7 +25,7 @@
 </template>
 <script>
 export default {
-	props: {
+  props: {
     slidesPerView: {
       type: Number,
       default: 6
@@ -36,58 +36,58 @@ export default {
     },
     list: {
       type: Array,
-      default() {
+      default () {
         return []
       }
     }
   },
-	data() {
-		return {
-			index: 0,
-			xPox: 0
-		}
-	},
-	methods: {
-		move (x) {
-			let swiper = document.querySelector('#swiper1');
-			swiper.style.transform = `translateX(${x}px)`
-		},
-		init (scroll, swiper, itemWidth) {
-			if (this.index === 0) {
-				this.xPox = this.index * itemWidth
-				this.move(-this.xPox)
-			}
-			if (this.index === Math.ceil(this.list.length / this.slidesPerView) - 1) {
-				this.xPox = this.index * itemWidth
-				this.move(-this.xPox)
-			}
-			scroll.style.width = `${this.slidesPerView * itemWidth + this.offset * 2 * this.slidesPerView}px`
-		}
-	},
-	mounted() {
-		let scroll = document.querySelector('.scroll');
-		let swiper = document.querySelector('#swiper1');
-		let liItem = swiper.querySelector('.item');
-		let boxWidth = swiper.offsetWidth;
-		let itemWidth = liItem.offsetWidth + this.offset * 2;
-		let btnPrev = document.querySelector('.prev');
-		let btnNext = document.querySelector('.next');
-		this.init(scroll, swiper, liItem.offsetWidth)
-		btnPrev.onclick = () => {
-			if(this.index > 0){
-				this.index--
-				this.xPox = this.index * itemWidth * this.slidesPerView
-				this.move(-this.xPox)
-			}
-		}
-		btnNext.onclick = () => {
-			if(this.index < Math.ceil(this.list.length / this.slidesPerView) - 1) {
-				this.index++
-				this.xPox = this.index * itemWidth * this.slidesPerView
-				this.move(-this.xPox)
-			}
-		}
-	}
+  data () {
+    return {
+      index: 0,
+      xPox: 0
+    }
+  },
+  methods: {
+    move (x) {
+      let swiper = document.querySelector('#swiper1')
+      swiper.style.transform = `translateX(${x}px)`
+    },
+    init (scroll, swiper, itemWidth) {
+      if (this.index === 0) {
+        this.xPox = this.index * itemWidth
+        this.move(-this.xPox)
+      }
+      if (this.index === Math.ceil(this.list.length / this.slidesPerView) - 1) {
+        this.xPox = this.index * itemWidth
+        this.move(-this.xPox)
+      }
+      scroll.style.width = `${this.slidesPerView * itemWidth + this.offset * 2 * this.slidesPerView}px`
+    }
+  },
+  mounted () {
+    let scroll = document.querySelector('.scroll')
+    let swiper = document.querySelector('#swiper1')
+    let liItem = swiper.querySelector('.item')
+    let boxWidth = swiper.offsetWidth
+    let itemWidth = liItem.offsetWidth + this.offset * 2
+    let btnPrev = document.querySelector('.prev')
+    let btnNext = document.querySelector('.next')
+    this.init(scroll, swiper, liItem.offsetWidth)
+    btnPrev.onclick = () => {
+      if (this.index > 0) {
+        this.index--
+        this.xPox = this.index * itemWidth * this.slidesPerView
+        this.move(-this.xPox)
+      }
+    }
+    btnNext.onclick = () => {
+      if (this.index < Math.ceil(this.list.length / this.slidesPerView) - 1) {
+        this.index++
+        this.xPox = this.index * itemWidth * this.slidesPerView
+        this.move(-this.xPox)
+      }
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>
@@ -138,7 +138,7 @@ export default {
 		width:120px;
 		height:120px;
 		border-radius:4px;
-		background: rgba(0,0,0,.02);
+		background: white;
 		position: relative;
 		overflow: hidden;
 	}
@@ -251,9 +251,9 @@ export default {
 			}
 		};
 	}
-	.btn-disabled{
+	/* .btn-disabled{
 		display: none;
-	}
+	} */
 	.iconfont{
 		font-size: 30px;
 		color: rgba(255,255,255,.5);

@@ -4,7 +4,9 @@
       <div class="inner inner_ScrollY">
         <div class="header-left">
           <div class="header-left-top" v-if="companyInformation.logoInfo">
-            <img class="company-logo logo_ScrollY" :src = companyInformation.logoInfo.middleUrl />
+            <div class="company-logo-wrap logo_ScrollY">
+              <img class="company-logo" :src = companyInformation.logoInfo.middleUrl />
+            </div>
             <div class="header-left-text text_ScrollY">
               <p class="header-companyShortname companyShortname_ScrollY">{{companyInformation.companyShortname}}</p>
               <p class="header-financingInfo financingInfo_ScrollY">{{companyInformation.financingInfo}}·{{companyInformation.employeesInfo}}·{{companyInformation.industry}}</p>
@@ -51,7 +53,7 @@
               <span class="hot-positionName">{{item.positionName}}</span>
               <span
                 class="hot-annualSalaryDesc"
-              >{{item.emolumentMin}}k-{{item.emolumentMax}}k·{{item.annualSalaryDesc}}</span>
+              >{{item.emolumentMin}}k-{{item.emolumentMax}}k{{ item.annualSalary > 12 ? '·' + item.annualSalaryDesc : ''}}</span>
               <p class="hot-text">
                 {{item.province}}{{item.city}}{{item.district}} | {{item.workExperienceName}} |
                 {{item.educationName}}
@@ -67,10 +69,12 @@
               <p class="introduction-title">公司介绍</p>
               <block-overflow ref="blockOverflow" :text="companyInformation.intro"></block-overflow>
             </div>
-            <div class="product" v-if="companyInformation.product">
+            <div class="product" v-if="companyInformation.product && companyInformation.product.length">
               <p class="product-title">公司产品</p>
               <div class="product-box"  v-for="(item, index) in companyInformation.product" :key="index">
-                <img :src="item.logoInfo.middleUrl" class="product-img"/>
+                <div class="product-img-wrap">
+                  <img :src="item.logoInfo.middleUrl" class="product-img"/>
+                </div>
                 <div class="product-text">
                   <p class="product-text-top">{{ item.productName }} | {{ item.slogan }}</p>
                   <p class="product-text-middle">{{ item.lightspot }}</p>
@@ -80,7 +84,7 @@
                 </div>
               </div>
             </div>
-            <div class="address" v-if="companyInformation.address">
+            <div class="address" v-if="companyInformation.address && companyInformation.address.length">
               <p class="address-title">公司地址</p>
               <map-pop :companyAddress = companyInformation.address></map-pop>
             </div>
@@ -92,12 +96,13 @@
                 公司环境
               </p>
               <div class="surroundings-container">
-                <div class="photo" ref="photo">
-                  <div v-for="(item, index) in companyInformation.albumInfo" :key="index" :style="'background: url(' + item.middleUrl + ')'">
-                  </div>
-                  <div :style="'background: url(' + companyInformation.albumInfo[0].middleUrl + ')'">
-                  </div>
-                </div>
+                <el-carousel v-if="companyInformation.albumInfo.length > 1" indicator-position="none" height="147px">
+                  <el-carousel-item v-for="(item, index) in companyInformation.albumInfo" :key="index">
+                    <div class="el-carousel-surroundings" :style="'background: url(' + item.middleUrl + ')'">
+                    </div>
+                  </el-carousel-item>
+                </el-carousel>
+                <div  v-if="companyInformation.albumInfo.length === 1" class="surroundings-container" :style="'background: url(' + companyInformation.albumInfo[0].middleUrl + ')'"></div>
               </div>
             </div>
             <div class="recruitmentTeam">
@@ -107,7 +112,11 @@
                   <img :src="item.avatar.smallUrl"/>
                   <div class="recruitmentTeam-text">
                     <p class="recruitmentTeam-text-top">{{ item.name }} | {{ item.position }}</p>
-                    <p class="recruitmentTeam-text-buttom">{{item.positionName === 0 ? '正在招聘0个职位' : '正在招聘' + '&quot;' + item.positionName + '&quot;' + '等' + item.positionNum+ '个职位'}}</p>
+                    <p class="recruitmentTeam-text-buttom">
+                      <span>{{ '正在招聘' }}</span>
+                      <span class="recruitmentTeam-positionName">{{ item.positionName === 0 ? item.positionName : '&quot;' + item.positionName + '&quot;' }}</span>
+                      <span>{{ item.positionName === 0 ? '个职位' : '等' + item.positionNum + '个职位' }}</span>
+                    </p>
                   </div>
                 </div>
                 <el-button @click="activationType" class="recruitmentTeam-buttom" plain>
@@ -202,7 +211,7 @@ export default class companyDetail extends Vue {
         item.siteUrl = item.siteUrl.indexOf('http') !== -1 ? item.siteUrl : 'http://' + item.siteUrl
       })
       this.$nextTick(() => {
-        this.$refs.blockOverflow.updateTextHeigth()
+        if (this.$refs.blockOverflow) this.$refs.blockOverflow.updateTextHeigth()
       })
     })
   }
@@ -261,12 +270,13 @@ export default class companyDetail extends Vue {
   }
 
   toJobDetails (item, index) {
-    this.$router.push({
+    let toPositionDetail = this.$router.resolve({
       name: 'positionDetail',
       query: {
         positionId: item.id
       }
     })
+    window.open(toPositionDetail.href, '_blank')
   }
   photoAnimation () {
     if (!this.companyInformation.albumInfo && this.$refs.photo && this.companyInformation.albumInfo.length <= 1) return
@@ -349,7 +359,7 @@ $sizing: border-box;
 
 .header {
   @extend %wrap-width;
-  background: $font-color-temp3;
+  background: $bg-color-12;
 
   .inner {
     width: $page-width;
@@ -366,11 +376,8 @@ $sizing: border-box;
       .header-left-top{
         display: flex;
         @include flex-v-center;
-
-        .company-logo{
-          width: 106px;
-          height: 106px;
-          border-radius: 16px;
+        .company-logo-wrap{
+          @include img-radius(106px, 106px, 16px, #fff)
         }
 
         .header-left-text{
@@ -401,12 +408,12 @@ $sizing: border-box;
             min-width: 80px;
             height: 24px;
             box-sizing: $sizing;
-            border: 1px solid $font-color-temp4;
+            border: 1px solid $main-color-2;
             border-radius: 18px;
             text-align: center;
             vertical-align: middle;
             margin-right: 14px;
-            color: $font-color-temp4;
+            color: $main-color-2;
             line-height: 24px;
           }
         }
@@ -426,9 +433,9 @@ $sizing: border-box;
         }
         //点击激活样式
         .activation{
-          color: $font-color-temp4;
+          color: $main-color-2;
           font-weight: 500;
-          border-bottom: 4px solid $font-color-temp4;
+          border-bottom: 4px solid $main-color-2;
         }
       }
     }
@@ -457,7 +464,7 @@ $sizing: border-box;
           line-height:14px;
         }
         .header-right-resume{
-          color: $font-color-temp1;
+          color: $sub-color-1;
           font-size: 14px;
           font-weight: 400;
           line-height:20px;
@@ -476,6 +483,7 @@ $sizing: border-box;
   top: 0;
   left: 0;
   z-index: 10;
+  animation: mymove .3s ease-in forwards;
   .inner_ScrollY{
     height: 135px;
     padding-top: 21px;
@@ -542,6 +550,11 @@ to {top:0px;}
 
 
         .hot-positionName{
+          display: inline-block;
+          width: 190px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
           font-size: 16px;
           font-weight: 500;
           color: $font-color-3;
@@ -549,14 +562,14 @@ to {top:0px;}
         .hot-annualSalaryDesc{
           font-size: 18px;
           font-weight: 500;
-          color: $font-color-temp1;
+          color: $sub-color-1;
           display: block;
           float: right;
         }
         .hot-text{
           font-size: 14px;
           font-weight: 400;
-          color: $font-color-temp2;
+          color: $font-color-6;
           margin-top: 20px;
         }
       }
@@ -610,13 +623,11 @@ to {top:0px;}
           margin-bottom: 24px;
           position: relative;
 
-          .product-img{
-          position: absolute;
-          left: 0;
-          top: 0;
-          width: 77px;
-          height: 77px;
-          border-radius: 8px;
+          .product-img-wrap{
+            @include img-radius(77px, 77px, 8px, #fff);
+            position: absolute;
+            left: 0;
+            top: 0;
           }
           .product-text{
             padding: 6px 0 5px 0;
@@ -669,18 +680,9 @@ to {top:0px;}
           width: 298px;
           height: 160px;
           overflow: hidden;
-          .photo{
-            @include clearfix;
-            width: 8888px;
-            div{
-              width: 298px;
-              height: 147px;
-              display: block;
-              float: left;
-              background-repeat: no-repeat;
-              background-position: center;
-              background-size: cover;
-            }
+          .el-carousel-surroundings{
+            width: 298px;
+            height: 160px;
           }
         }
       }
@@ -689,39 +691,55 @@ to {top:0px;}
         .recruitmentTeam-title{
           @extend %introductionTitle;
         }
-        .recruitmentTeam-mian{
-          margin-top: -13px;
-        }
         .recruitmentTeam-box{
-          height: 99px;
-          display: flex;
+					padding: 19px 0 20px 0;
+          height: 60px;
+					padding-left: 74px;
+					position: relative;
           @include flex-v-center;
+          border-top: 1px solid $--input-disabled-border;
           img{
             width: 60px;
             height: 60px;
             border-radius: 50%;
+            position: absolute;
+						top: 50%;
+            left: 0;
+            transform: translateY(-50%)
           }
           .recruitmentTeam-text{
             height: 44px;
-            margin-left: 14px;
             font-weight: 400;
             font-size: 14px;
             line-height: 20px;
-
+						width: 100%;
             .recruitmentTeam-text-top{
               color: $font-color-3;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+              overflow: hidden;
+              max-width: 192px;
             }
             .recruitmentTeam-text-buttom{
-              width: 298px;
-              white-space: nowrap;
-              text-overflow: ellipsis;
+              width: 100%;
               margin-top: 4px;
               color: $font-color-6;
-              overflow: hidden;
-              white-space: nowrap;
-              text-overflow: ellipsis;
+              // span{
+              //   vertical-align: middle;
+              // }
+              .recruitmentTeam-positionName{
+                display: inline-block;
+                max-width: 86px;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                vertical-align: middle;
+              }
             }
           }
+        }
+        .recruitmentTeam-box:first-of-type{
+          border-top: 0 !important;
         }
         .recruitmentTeam-buttom{
           margin-top: 10px;

@@ -57,7 +57,7 @@ export default {
   position: relative;
 }
 .introduction-left-buttom{
-  background: #ffffff;
+  background: url('../../../assets/images/cover.png');
   line-height: 26px;
   padding: 0 0 0 72px;
   position: absolute;

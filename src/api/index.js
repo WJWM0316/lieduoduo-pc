@@ -4,7 +4,8 @@ import router from '../router/index'
 import { getAccessToken, removeAccessToken } from './cacheService'
 import Vue from 'vue'
 import Util from '../util/util'
-
+// 定义错误提示窗口
+window.messagequeue = {}
 let loadingInstance = null
 let counter = 0
 const VUE_WEB_ZHAOPIN_API = process.env.VUE_APP_WEB_ZHAOPIN_API
@@ -30,6 +31,7 @@ export const request = ({ url, method, params = {}, config = {} }) => {
   switch (config.host) {
     case 'pub':
       if (axios.defaults.baseURL !== VUE_WEB_PUB_API) axios.defaults.baseURL = VUE_WEB_PUB_API
+      if (params.identity) axios.defaults.headers.common['Source'] = params.identity === 1 ? 'web_c' : 'web_b'
       break
     case 'qiuzhi':
       if (axios.defaults.baseURL !== VUE_WEB_QIUZHI_API) axios.defaults.baseURL = VUE_WEB_QIUZHI_API
@@ -55,36 +57,52 @@ export const request = ({ url, method, params = {}, config = {} }) => {
     }
   }
   return new Promise((resolve, reject) => {
-		// 因为axios[method]方式设置的responseType无效，所以换成axios({}),同时保留get请求的参数按json格式传递
-		let axiosFun = null
-		if (config.responseType) {
-			axiosFun = axios({
-				url,
-				method,
-				data: method === 'get' ? { params } : params,
-				responseType: config.responseType
-			})
-		} else {
-			axiosFun = axios[method](url, method === 'get' ? { params } : params)
-		}   
-		axiosFun.then(res => {
+    // 因为axios[method]方式设置的responseType无效，所以换成axios({}),同时保留get请求的参数按json格式传递
+    let axiosFun = null
+    // config配置内容参见[https://www.kancloud.cn/yunye/axios/234845]
+    axiosFun = axios[method](url, method === 'get' ? { params } : params, config)
+    axiosFun.then(res => {
       resolve(res)
       loadingBack()
     }).catch(err => {
-      if (!config.noCheckLogin && err.response.data.httpStatus !== 200) {
-        Message.error(err.response.data.msg || err.response.data.message)
+      let catchFun = (err) => {
+        if (!config.noCheckLogin && err.response.data.httpStatus !== 200) {
+          // 相同提示不重复提示
+          let message = err.response.data.msg || err.response.data.message
+          if (window.messagequeue[message]) return
+          window.messagequeue[message] = 1
+          Message({
+            type: 'error',
+            message: message,
+            onClose: () => {
+              // 移除队列
+              window.messagequeue[message] = 0
+              delete window.messagequeue[message]
+            }
+          })
+        }
+        // 登陆过期或者未登录
+        if (!config.noCheckLogin && err.response.data.httpStatus === 401) {
+          router.replace({ name: 'login', query: { type: 'msgLogin', needBack: true } })
+          removeAccessToken()
+        }
+        // 登陆过期或者未登录
+        if (err.response.data.code === 801) {
+          router.push({ name: 'register' })
+        }
+        reject(err.response)
+        loadingBack()
       }
-      // 登陆过期或者未登录
-      if (!config.noCheckLogin && err.response.data.httpStatus === 401) {
-        router.push({ name: 'login', query: { type: 'msgLogin', needBack: true } })
-        removeAccessToken()
+      if (err.response.data instanceof Blob) {
+        var reader = new FileReader()
+        reader.readAsText(err.response.data, 'utf-8')
+        reader.onload = function () {
+          err.response.data = JSON.parse(reader.result)
+          catchFun(err)
+        }
+      } else {
+        catchFun(err)
       }
-      // 登陆过期或者未登录
-      if (err.response.data.code === 801) {
-        router.push({ name: 'register' })
-      }
-      reject(err.response)
-      loadingBack()
     })
   })
 }

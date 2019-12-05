@@ -9,7 +9,7 @@
 
         <template v-else>
           <el-button @click="todoAction('job-hunting-chat')" class="canView specailBtn" v-if="infos.isRapidly === 1 && !interviewInfos.applied && infos.rapidlyInfo.seatsNum - infos.rapidlyInfo.applyNum - infos.rapidlyInfo.natureApplyNum > 0" :loading="btnLoad">马上抢</el-button>
-          <el-button @click="todoAction('job-hunting-chat')" :loading="btnLoad" class="canView" :class="{'specailBtn' : infos.isRapidly === 1}"  v-else>开撩约面</el-button>
+          <el-button @click="todoAction('job-hunting-chat')" :loading="btnLoad" class="canView" :class="{'specailBtn' : infos.isRapidly === 1}"  v-else>一键申请</el-button>
         </template>
       </template>
       <!-- 求职者还没有发起开撩动作 职位详情 start-->
@@ -205,7 +205,7 @@ export default class InterviewBtn extends Component {
   .forbid, .canView, .scheduling, .button-box {
     width:298px;
     height:36px;
-    background:$btn-forbid;
+    background: $btn-forbid;
     border-radius:4px;
     font-size:14px;
     font-weight:400;
@@ -240,7 +240,7 @@ export default class InterviewBtn extends Component {
       color: #fff;
     }
     &.scheduling.specailBtn {
-      background: $main-color-2;
+      background: $bg-color-4;
       color: #fff;
     }
     &.canView.specailBtn {

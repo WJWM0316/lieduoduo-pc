@@ -12,7 +12,6 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import loginForm from '@/components/common/login'
-
 @Component({
   name: 'login',
   components: {
@@ -47,11 +46,12 @@ export default class login extends Vue {
   height: 100vh;
   box-sizing: border-box;
   width: 100%;
-  background: $bg-color-4 url("https://lieduoduo-uploads-test.oss-cn-shenzhen.aliyuncs.com/front-assets/web/images/bg_loginpage.png") no-repeat;
-  background-size: auto 100%;
-  background-position: center;
+  background: #00C4CD url(#{$image-cdn-url}/images/bg_loginpage.png) no-repeat;
+  background-size: 100% auto;
+  background-position: bottom;
   display: flex;
   align-items: center;
+  /*background-attachment:fixed;*/
   .loginBox {
     width: 1200px;
     padding: 0 10px;
@@ -59,8 +59,8 @@ export default class login extends Vue {
     overflow: hidden;
     margin: 0 auto;
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    padding-top: 50px;
     .login_left{
       width: 539px;
       cursor: pointer;

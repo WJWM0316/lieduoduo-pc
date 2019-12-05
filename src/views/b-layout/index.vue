@@ -8,14 +8,14 @@
       </div>
     </div>
     <div class="service" @mouseover="isService = true" @mouseout="isService = false">
-      <img class="service_icon" src="../../assets/images/service.png">
+      <i class="iconfont icon-kefu service_icon"></i>
       客服咨询
       <div class="service_pop" v-if="isService">
         <div class="pop_tit">联系我们</div>
         <div class="pop_cont">
           <h3 class="pop_text">请拨打全国咨询热线</h3>
           <p class="pop_text2">400-065-5788</p>
-          <img class="pop_code" src="../../assets/images/gzh.png">
+          <img class="pop_code" src="@/assets/images/qrcode.png" alt="">
           <p class="pop_text3">猎多多公众号</p>
           <p class="pop_text4">微信扫描二维码，关注官方公众号</p>
         </div>
@@ -93,6 +93,7 @@ export default class App extends Vue {
 }
 .contain{
   margin: 0 auto;
+  padding-top: 60px;
   min-width: 960px;
   max-width: 1200px;
 }

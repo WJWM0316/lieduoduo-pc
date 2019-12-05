@@ -41,6 +41,7 @@ export default {
     margin-bottom: 20px;
     .company-image {
       @include img-radius(66px, 66px, 8px);
+      border: 1px solid $border-color-8;
     }
     .company-info {
       flex: 1;

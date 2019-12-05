@@ -87,7 +87,8 @@ export default {
       this.$confirm('删除后，内容将不可恢复，确定删除吗？', '温馨提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
-        type: 'warning'
+        type: 'warning',
+        center: true
       }).then(() => {
         this.$emit('command', {
           type: 'delete',
@@ -114,7 +115,8 @@ export default {
       this.$confirm('确定退出，更新的内容将不被保存', '有编辑中内容尚未保存，确定退出编辑吗?', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
-        type: 'warning'
+        type: 'warning',
+        center: true
       }).then(() => {
         this.$store.commit('setEditStatus', { status: false })
         this.unshowEdit = true
@@ -144,7 +146,8 @@ export default {
         this.$confirm('确定退出，更新的内容将不被保存', '有编辑中内容尚未保存，确定退出编辑吗?', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
-          type: 'warning'
+          type: 'warning',
+          center: true
         }).then(() => {
           this.$store.commit('setEditStatus', { status: false })
           this.$nextTick(() => {
@@ -183,7 +186,7 @@ export default {
 <style lang="scss" scoped>
 .resume-wrapper-item {
   @include flex-v-top;
-  padding: 36px 46px;
+  padding: 40px 46px;
   .wrapper-content {
     flex: 1;
     @include flex-v-top;
@@ -192,7 +195,10 @@ export default {
     width: 100%;
     @include flex-v-top;
   }
-  .list-item+.list-item, .list-item ~ .list-item-buttom {
+  .list-item+.list-item {
+    margin-top: 40px;
+  }
+  .list-item ~ .list-item-buttom {
     margin-top: 42px;
   }
   .wrapper-list-content {
@@ -209,7 +215,7 @@ export default {
   }
   .wrapper-info {
     flex: 1;
-    max-width: 520px;
+    // max-width: 520px;
   }
   .wrapper-operate {
     width: 100px;

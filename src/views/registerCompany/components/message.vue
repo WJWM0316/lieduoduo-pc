@@ -74,7 +74,7 @@ export default {
     padding: 32px 0 6px 0;
   }
   .desc{
-    color: #5C565D;
+    color: #66666E;;
     font-size: 14px;
     margin-bottom: 52px;
     line-height: 20px;
@@ -104,8 +104,8 @@ export default {
       margin-right: 16px;
       cursor: pointer;
       border-radius:4px;
-      color: #929292;
-      border:1px solid rgba(146,146,146,1);
+      color: #92929B;;
+      border:1px solid #92929B;
     }
   }
 }

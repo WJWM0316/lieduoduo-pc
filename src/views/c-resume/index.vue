@@ -9,7 +9,6 @@
       <experience class="experience-scroll" prop-class="experience-scroll" :resume="resume" />
       <project class="project-scroll" prop-class="project-scroll" :resume="resume" />
       <education class="education-scroll" prop-class="education-scroll" :resume="resume" />
-      <!-- <span class="resume-hr"><span></span></span> -->
       <more class="more-scroll" prop-class="more-scroll" :resume="resume" />
     </div>
     <!-- 简历配置 -->
@@ -61,7 +60,7 @@ export default {
         { value: 1, title: '基本信息', icon: 'icon-jibenxinxishenfenyanzheng', container: '.base-scroll' },
         { value: 2, title: '自我描述', icon: 'icon-ziwomiaoshu-', container: '.desc-scroll' },
         { value: 3, title: '求职意向', icon: 'icon-qiuzhiyixiang', container: '.proposal-scroll' },
-        { value: 4, title: '工作经历', icon: 'icon-zhiweiguanli', container: '.experience-scroll' },
+        { value: 4, title: '工作经历', icon: 'icon-zhiwei', container: '.experience-scroll' },
         { value: 5, title: '项目经验', icon: 'icon-rongzi', container: '.project-scroll' },
         { value: 6, title: '教育经历', icon: 'icon-jiaoyu', container: '.education-scroll' },
         { value: 7, title: '更多介绍', icon: 'icon-gongsileixing', container: '.more-scroll' }
@@ -91,10 +90,30 @@ export default {
       const dom = document.querySelector(item.container)
       if (dom) {
         const domBounding = dom.getBoundingClientRect()
-        const { y } = domBounding
-        if (y === 0) return
-        // util(document.documentElement, dom)
-        window.scrollTo(0, document.documentElement.scrollTop + y)
+        const { top } = domBounding
+        if (top === 0) return
+        let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+        let to = top + scrollTop
+        let duration = 500
+        const s = Math.abs(scrollTop - to)
+        const v = Math.ceil((s / duration) * 50)
+        // eslint-disable-next-line no-inner-declarations
+        function scroll (start, end, step) {
+          if (start === end) return
+          // console.log(start, end)
+          let d = start + step > end ? end : start + step
+          if (start > end) {
+            d = start - step < end ? end : start - step
+          }
+          window.scrollTo(0, d)
+          window.requestAnimationFrame(() => scroll(d, end, step))
+        }
+        scroll(scrollTop, to, v)
+        /* window.scrollTo({
+          top: end, // 滚动终点y的位置
+          left: 0, // 滚动终点x的位置
+          behavior: 'smooth' // 平滑滚动
+        }) */
       }
     },
     handleScroll () {
@@ -152,6 +171,9 @@ export default {
   .c-btn {
     width: 100%;
   }
+  .wrapper-info .c-btn {
+    width: 520px;
+  }
   .el-form {
     display: flex;
     width: 100%;
@@ -189,15 +211,15 @@ export default {
     color: $title-color-1;
   }
   .form-labels-wrapper {
-    margin-top: 14px;
+    margin-top: 6px;
     .form-label {
       padding: 5px 14px;
-      border-radius:30px;
+      border-radius: 30px;
       font-size: 12px;
       color: $main-color-1;
       display: inline-block;
       margin-right: 12px;
-      margin-bottom: 8px;
+      margin-top: 8px;
       border: 1px solid $border-color-2;
     }
   }
@@ -219,7 +241,7 @@ export default {
     }
   }
   .resume-list-desc {
-    padding: 16px 0 0;
+    padding: 12px 0 0;
     line-height: 22px;
     color: $title-color-2;
     white-space: pre-wrap;
@@ -228,13 +250,17 @@ export default {
   }
   .resume-hr {
     width: 100%;
-    display: inline-block;
+    display: block;
     padding: 0 46px;
     box-sizing: border-box;
+    height: 6px;
+    line-height: 6px;
   }
   .resume-hr span{
     width: 100%;
-    height: 6px;
+    height: 100%;
+    vertical-align: top;
+    padding: 0;
     background-image: url('../../assets/images/separator.png');
     background-size: auto 100%;
     background-repeat: repeat;

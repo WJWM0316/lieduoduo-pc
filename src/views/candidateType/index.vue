@@ -24,11 +24,14 @@
               </div>
 
               <div class="topSelected" @click="screenList(1)" :class="{'selected':selectedScreen.length>0}" v-else>
-                <i class="iconfont icon-shaixuan" style="color:#929292"></i>
+                <i class="iconfont icon-shaixuan" style="color:#92929B;"></i>
                 {{selectedScreen.length > 0 ||  (positionTypeList.length > 0 ? positionTypeList[positionTypeList.length-1].active:false) ? '清除筛选' :'高级筛选' }}
               </div>
 
-              <div class="topSelected2" @click="screenList(2)">
+              <div class="topSelected2" @click="screenList(2)" v-if="isShowScreen">
+                <i class="iconfont icon-jiantou" style="color: #00C4CD"></i>
+              </div>
+              <div class="topSelected2" @click="screenList(2)" v-else>
                 <i class="iconfont icon-jiantou"></i>
               </div>
 
@@ -155,11 +158,11 @@
         background
         v-if="form.total > 20"
         layout="prev, pager, next, slot"
-        :total="form.total"
-        :page-size="form.count"
+        :total="Number(form.total)"
+        :page-size="Number(form.count)"
         prev-text="上一页"
         next-text="下一页"
-        :current-page="form.page"
+        :current-page="Number(form.page)"
         @current-change="handleCurrentPageChange"
       >
         <span class="total">共{{ Math.ceil(form.totalPage) }}页, {{form.total}}条记录</span>
@@ -176,7 +179,7 @@
           </div>
       </div>
     </div>
-    <div class="pop" v-if="pop.isShow" @click="closeMsg($event)">
+    <div class="pop" v-show="pop.isShow" @click="closeMsg($event)">
       <div class="xcxPicBox" v-if="pop.type==='clickPic'">
         <img class="clo" src="~IMAGES/clo.png">
         <div class="main_tit">查看简历详情</div>
@@ -353,11 +356,11 @@
               </div>
             </div>
             <!-- 更多介绍 -->
-            <div class="workExperience" v-if="nowResumeMsg.moreIntroduce.introduce && nowResumeMsg.moreIntroduce.imgs">
+            <div class="workExperience" v-if="nowResumeMsg.moreIntroduce.introduce">
               <p class="title">更多介绍</p>
               <div class="workList">
                 <pre v-if="nowResumeMsg.moreIntroduce.introduce">{{nowResumeMsg.moreIntroduce.introduce}}</pre>
-                <div class="imgList">
+                <div class="imgList" v-if="nowResumeMsg.moreIntroduce.imgs.length > 0">
                   <div style="position:relative" :key="index" v-for="(item, index) in nowResumeMsg.moreIntroduce.imgs">
                   <img
                     :src="item.url"
@@ -422,11 +425,11 @@
               <div class="btn2" @click.stop="setJob(nowResumeMsg.uid, 'watch-reson', nowResumeMsg, 2)"  v-if="!nowResumeMsg.interviewInfo.data.haveInterview && nowResumeMsg.interviewInfo.data.hasUnsuitRecord">查看原因</div>
             </div>
             <div class="like_user" @click.stop="ownerOp(true,nowResumeMsg.uid)" v-if="nowResumeMsg.interested">
-                <img class="like" src="../../assets/images/like.png"/>
+                <i class="iconfont icon-yishoucang img"></i>
                 取消感兴趣
               </div>
               <div class="like_user" @click.stop="ownerOp(false,nowResumeMsg.uid)" v-else >
-                <img class="like" src="../../assets/images/like_no.png"/>
+                <i class="iconfont icon-shoucang img"></i>
                   对Ta感兴趣
               </div>
             <div class="msgCode"  v-if="shareResumeImg">
@@ -569,7 +572,7 @@
           </div>
           <div class="item" v-if="jobhunterInfo.positionName">
             <div class="icon">
-              <i class="iconfont icon-zhiwei"></i>
+              <i class="iconfont icon-zhiwei1"></i>
             </div>
             <div class="text">{{jobhunterInfo.positionName}}</div>
           </div>
@@ -603,15 +606,17 @@
         </div>
         <div class="intertime" v-show="pop.type === 'setinterinfo'">
           <div class="intertime_title">约面时间</div>
+          <div>
           <ul class="time_list" v-if="model.dateLists.length">
           <li class="time_row" v-for="(item, index) in model.dateLists" :key="index">
             <i class="el-icon-remove" @click="deleteTime(index)"></i>
             {{item.appointment}}
           </li>
         </ul>
-          <el-button type="text" class="add_time" v-if="model.dateLists.length < 3">
+          </div>
+        <div class="add_time" v-if="model.dateLists.length < 3">
           <i class="iconfont icon-tianjiashijian bgcolor" style="font-size:12px"></i>
-          <span :style="'margin-left:8px;line-height:14px'">添加时间</span>
+          <span :style="'margin-left:16px;line-height:14px'">添加时间</span>
           <el-date-picker
             v-model="form.date1"
             type="datetime"
@@ -619,7 +624,7 @@
             value-format="yyyy-MM-dd HH:mm:ss"
             placeholder="选择日期时间">
           </el-date-picker>
-        </el-button>
+          </div>
         </div>
         <div style="padding-right:4px">
         <div class="selectposition" v-show="pop.type === 'selectposition'">
@@ -765,7 +770,11 @@ import { applyInterviewApi } from 'API/interview'
         immediate: true
       },
       'pop.isShow': function (n) {
+        if (n) {
+          document.body.style.overflow = 'hidden'
+        }
         if (!n) {
+          document.body.style.overflow = 'auto'
           this.hasonload = false
         }
       }
@@ -790,12 +799,14 @@ export default class CourseList extends Vue {
       recordtext: '确认选择后，候选人多条申请将合并为一条面试记录；面试最终确认前，可随时沟通更新面试职位；',
       type: 'clickPic'
     }
+    Multipleclicks = false
     jobuid = ''
     jobhunterInfo = ''
     addressobj = {
       doorplate: '',
       address: ''
     }
+    arrangeobj = ''
     arrangementInfo = {
       interviewId: '',
       realname: '',
@@ -877,8 +888,12 @@ export default class CourseList extends Vue {
     nowResumeMsg = {}
     shareResumeImg = '' // 简历二维码
     positionList = []
+    interviewNum = ''
     changeJobId = ''
     changeResumeId = ''
+    destroyed () {
+      document.body.style.overflow = 'auto'
+    }
     init () {
       this.form = Object.assign(this.form, this.$route.query || {})
       this.userInfo = this.$store.state.userInfo
@@ -930,10 +945,11 @@ export default class CourseList extends Vue {
     }
 
     getTime (e) {
+      let thisTime = e.replace(/-/g, '/')
       this.model.dateLists.push({
         appointment: e,
         active: false,
-        appointmentTime: Date.parse(new Date(e)) / 1000
+        appointmentTime: Date.parse(new Date(thisTime)) / 1000
       })
     }
 
@@ -1048,6 +1064,7 @@ export default class CourseList extends Vue {
             } else {
               confirmInterviewApi({ interviewId: this.interviewId }).then((res) => {
                 this.$message.success('约面成功')
+                this.getResume(this.jobuid)
                 this.init()
               })
             }
@@ -1062,6 +1079,7 @@ export default class CourseList extends Vue {
             type: 'setinterinfo'
           }
           watchInvitationAPi({ interviewId: this.interviewId }).then((res) => {
+            this.arrangeobj = res.data.data
             this.arrangementInfo.interviewId = res.data.data.interviewId
             this.arrangementInfo.realname = res.data.data.arrangementInfo.realname
             this.arrangementInfo.mobile = res.data.data.arrangementInfo.mobile
@@ -1101,10 +1119,12 @@ export default class CourseList extends Vue {
                     hasOnline.push(v)
                   }
                 })
+                if (this.arrangeobj.positionStatus === 0 && this.arrangeobj.positionId !== 0) {
+                  hasOnline.push({ id: this.arrangeobj.positionId, positionName: this.arrangeobj.positionName })
+                }
                 this.positionOption = hasOnline
               })
             }
-            // this.arrangementInfo.interviewTime = res.data.data.createdAtTime
           })
           break
         case 'interview-retract':
@@ -1132,6 +1152,7 @@ export default class CourseList extends Vue {
         case 'inappropriate':
           let status2 = { vkey: vo.resume ? vo.resume.vkey : vo.vkey, type: 'resume' }
           manyrecordstatus(status2).then((res) => {
+            this.interviewNum = res.data.data
             if (res.data.data.data.length > 1) {
               this.pop = {
                 isShow: true,
@@ -1361,13 +1382,23 @@ export default class CourseList extends Vue {
                 btntext: '保存',
                 type: 'inappropriate'
               }
-              getCommentReasonApi().then((res) => {
-                let arr = res.data.data
-                arr.map((v, k) => {
-                  v.cur = false
+              if (this.interviewNum.interviewStatus === 58 || this.interviewNum.interviewStatus === 59) {
+                getCommentReasonApi().then((res) => {
+                  let arr = res.data.data
+                  arr.map((v, k) => {
+                    v.cur = false
+                  })
+                  this.reasonlist = arr
                 })
-                this.reasonlist = arr
-              })
+              } else {
+                getloadingReasonApi().then((res) => {
+                  let arr = res.data.data
+                  arr.map((v, k) => {
+                    v.cur = false
+                  })
+                  this.reasonlist = arr
+                })
+              }
             }
           }
         }
@@ -1448,12 +1479,18 @@ export default class CourseList extends Vue {
           this.$message.error('请至少添加一个约面时间')
           return
         }
+        if (this.Multipleclicks) {
+          return false
+        }
+        this.Multipleclicks = true
         this.arrangementInfo.interviewTime = timearr.join(',')
         setInterviewInfoApi(this.arrangementInfo).then((res) => {
           this.$message.success('安排面试成功')
           this.init()
           this.pop.isShow = false
+          this.Multipleclicks = false
         }).catch(err => {
+          this.Multipleclicks = false
           console.log(err)
           // this.$message.error(err.data.msg)
         })

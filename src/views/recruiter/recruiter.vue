@@ -81,11 +81,12 @@
       prev-text="上一页"
       next-text="下一页"
       :current-page="pageInfo.page"
-      v-if="pageInfo.totalPage > pageInfo.page"
+      v-if="pageInfo.total > 2"
       @current-change="handleCurrentPageChange"
     >
       <span class="total">共{{ Math.ceil(pageInfo.totalPage) }}页, {{pageInfo.total}}条记录</span>
     </el-pagination>
+
 
     <div class="pop" v-if="pop.isShow">
       <div class="share" v-if="pop.type==='share'">
@@ -96,7 +97,8 @@
           <img class="code" :src="shareSelectItem.qrCodeUrl">
           <p class="share_help_text" @mouseover="isHelpShow = true" @mouseout="isHelpShow = false">
             分享帮助
-            <img class="ques_icon" src="../../assets/images/question-circle2.png">
+            <i class="iconfont icon-question-circle"></i>
+            <!-- <img class="ques_icon" src="../../assets/images/question-circle2.png"> -->
           </p>
         </div>
 
@@ -165,17 +167,14 @@ import {
   name: 'lighthouse-list',
   methods: {},
   computed: {},
-  created () {
-    this.init()
-  },
-  /* watch: {
+  watch: {
     '$route': {
       handler () {
         this.init()
       },
       immediate: true
     }
-  }, */
+  },
   components: { MessageDiggle }
 })
 export default class CourseList extends Vue {
@@ -334,7 +333,7 @@ export default class CourseList extends Vue {
           .then(() => {
             this.$message({
               type: 'success',
-              message: '成功!'
+              message: '职位已关闭'
             })
 
             this.pop = {
@@ -344,16 +343,13 @@ export default class CourseList extends Vue {
             this.getStatusTotal()
             this.getPositionList()
           })
-          .catch(e => {
-            this.$message.error(e.data.msg)
-          })
         break
       case 'openJob':
         openPositionApi({ id: this.jobSelectId })
           .then(() => {
             this.$message({
               type: 'success',
-              message: '成功!'
+              message: '职位已开放'
             })
             this.pop = {
               isShow: false,
@@ -361,9 +357,6 @@ export default class CourseList extends Vue {
             }
             this.getStatusTotal()
             this.getPositionList()
-          })
-          .catch(e => {
-            this.$message.error(e.data.msg)
           })
         break
 
@@ -381,21 +374,18 @@ export default class CourseList extends Vue {
   // 开放职位
   openposition (id) {
     openPositionApi({ id: id })
-    .then(() => {
-      this.$message({
-        type: 'success',
-        message: '成功!'
+      .then(() => {
+        this.$message({
+          type: 'success',
+          message: '职位已开放'
+        })
+        this.pop = {
+          isShow: false,
+          type: ''
+        }
+        this.getStatusTotal()
+        this.getPositionList()
       })
-      this.pop = {
-        isShow: false,
-        type: ''
-      }
-      this.getStatusTotal()
-      this.getPositionList()
-    })
-    .catch(e => {
-      this.$message.error(e.data.msg)
-    })
   }
 
   msgcancel () {
@@ -474,6 +464,7 @@ export default class CourseList extends Vue {
         this.jobList = [...res.data.data]
         this.pageInfo.totalPage = meta.lastPage
         this.pageInfo.total = meta.total
+        this.pageInfo.page = meta.currentPage
       })
       .catch(e => {
         this.$message.error(e.data.msg)
@@ -615,13 +606,13 @@ export default class CourseList extends Vue {
           cursor: pointer;
           &.cur {
             font-weight: bold;
-            color: rgba(101, 39, 145, 1);
+            color: #03B3BB;
             position: relative;
             &::after {
               content: "\20";
               width: 100%;
               height: 4px;
-              background: rgba(101, 39, 145, 1);
+              background:#00C4CD;
               position: absolute;
               bottom: -0px;
               left: 0px;
@@ -689,7 +680,7 @@ export default class CourseList extends Vue {
               cursor: pointer;
             }
             &.slet {
-              background: rgba(132, 82, 167, 1);
+              background: #00C4CD;
               color: rgba(255, 255, 255, 1);
             }
           }
@@ -714,8 +705,8 @@ export default class CourseList extends Vue {
       width: 124px;
       height: 40px;
       line-height: 40px;
-      background: rgba(101, 39, 145, 1);
-      border-radius: 20px;
+      background: #00C4CD;
+      border-radius: 4px;
       position: absolute;
       right: 56px;
       top: 36px;
@@ -797,7 +788,7 @@ export default class CourseList extends Vue {
         .job_op {
           font-size: 14px;
           font-weight: 400;
-          color: rgba(101, 39, 145, 1);
+          color: #03B3BB;
           margin-right: 38px;
           cursor: pointer;
         }
@@ -824,47 +815,47 @@ export default class CourseList extends Vue {
       height: 120px;
     }
   }
-  .pagination {
-    height: 102px;
-    background: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    .number {
-      height: 30px;
-      box-sizing: border-box;
-      border: 1px solid rgba(220, 220, 220, 1);
-      color: rgba(101, 39, 145, 1);
-      background: #fff;
-      &.active {
-        color: rgba(102, 102, 102, 1);
-        background: none;
-        border: none;
-      }
-    }
-    span {
-      height: 30px;
-      padding: 0px 11px;
-      line-height: 30px;
-      box-sizing: border-box;
-    }
-    .total {
-      font-size: 12px;
-      font-weight: 400;
-      color: rgba(102, 102, 102, 1);
-    }
-    button {
-      height: 30px;
-      box-sizing: border-box;
-      span {
-        height: 30px;
-        color: rgba(101, 39, 145, 1);
-        background: #fff;
-        border: 1px solid rgba(220, 220, 220, 1);
-        box-sizing: border-box;
-      }
-    }
-  }
+  // .pagination {
+  //   height: 102px;
+  //   background: #fff;
+  //   display: flex;
+  //   justify-content: center;
+  //   align-items: center;
+  //   .number {
+  //     height: 30px;
+  //     box-sizing: border-box;
+  //     border: 1px solid rgba(220, 220, 220, 1);
+  //     color: rgba(101, 39, 145, 1);
+  //     background: #fff;
+  //     &.active {
+  //       color: rgba(102, 102, 102, 1);
+  //       background: none;
+  //       border: none;
+  //     }
+  //   }
+  //   span {
+  //     height: 30px;
+  //     padding: 0px 11px;
+  //     line-height: 30px;
+  //     box-sizing: border-box;
+  //   }
+  //   .total {
+  //     font-size: 12px;
+  //     font-weight: 400;
+  //     color: rgba(102, 102, 102, 1);
+  //   }
+  //   button {
+  //     height: 30px;
+  //     box-sizing: border-box;
+  //     span {
+  //       height: 30px;
+  //       color: rgba(101, 39, 145, 1);
+  //       background: #fff;
+  //       border: 1px solid rgba(220, 220, 220, 1);
+  //       box-sizing: border-box;
+  //     }
+  //   }
+  // }
   .toTop {
     position: fixed;
     right: 50%;
@@ -898,11 +889,11 @@ export default class CourseList extends Vue {
     margin-top: -20px;
   }
 
-  .pagination {
-    width: 100%;
-    margin: 0 auto;
-    box-sizing: border-box;
-  }
+  // .pagination {
+  //   width: 100%;
+  //   margin: 0 auto;
+  //   box-sizing: border-box;
+  // }
 }
 
 .messageBox {
@@ -971,15 +962,15 @@ export default class CourseList extends Vue {
       width: 80px;
       height: 32px;
       background: rgba(255, 255, 255, 1);
-      border-radius: 16px;
+      border-radius: 4px;
       border: 1px solid rgba(220, 220, 220, 1);
       color: rgba(53, 64, 72, 1);
     }
     .true {
       width: 80px;
       height: 32px;
-      background: rgba(101, 39, 145, 1);
-      border-radius: 16px;
+      background: #00C4CD;
+      border-radius: 4px;
       color: rgba(255, 255, 255, 1);
       margin-left: 16px;
     }
@@ -1037,17 +1028,14 @@ export default class CourseList extends Vue {
       }
       .share_help_text {
         font-size: 14px;
-        color: rgba(101, 39, 145, 1);
+        color: #03B3BB;
         line-height: 22px;
         text-align: center;
         cursor: pointer;
-        .ques_icon {
-          width: 14px;
-          height: 14px;
+        i{
+          font-size: 14px;
           display: inline-block;
           margin-left: 6px;
-          position: relative;
-          top: 2px;
         }
       }
       .help_icon {

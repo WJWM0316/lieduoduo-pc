@@ -8,7 +8,7 @@
             <div class="url-toword">
               <div class="u-title">链接转发</div>
               <div class="u-input">
-                {{forwordurl}}
+                <input class="urlInput" :value="forwordurl" disabled/>
                 <div class="url" @click="copy()">复制</div>
               </div>
               <div class="u-desc">可将链接转发给同事，对方即可查看简历</div>
@@ -166,12 +166,10 @@ export default {
   width: 100%;
   height: 100%;
   z-index: 1;
-  // background:rgba(0,0,0,0.6);
   .noJobBox {
     width:612px;
     overflow-y: scroll;
     max-height: 578px;
-    padding-bottom: 32px;
     background:rgba(255,255,255,1);
     box-shadow:0px 6px 14px 2px rgba(0,0,0,0.2);
     border-radius:8px;
@@ -189,7 +187,7 @@ export default {
       border-radius:20px;
     }
     &::-webkit-scrollbar-thumb {
-      background:#BCBCBC;
+      background:#BCBEC0;;
       -webkit-border-radius: 20px;
       -moz-border-radius: 20px;
       border-radius:20px;
@@ -199,7 +197,7 @@ export default {
       position: relative;
       i{
         font-size: 10px;
-        color: #BCBCBC;
+        color: #BCBEC0;;
         margin-top: 16px;
         position: absolute;
         right: 16px;
@@ -243,8 +241,13 @@ export default {
         background:rgba(255,255,255,1);
         border-radius:4px;
         position: relative;
+        white-space: nowrap;
         padding-left: 14px;
         border:1px solid rgba(222,218,224,1);
+				.urlInput {
+					width: 70%;
+					background: none;
+				}
         .url{
           position: absolute;
           right: -1px;
@@ -372,6 +375,7 @@ export default {
       background:rgba(101,39,145,1);
       border-radius:4px;
       margin-top: 30px;
+      margin-bottom: 32px;
       cursor: pointer;
     }
     .con-r{

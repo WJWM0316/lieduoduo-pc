@@ -165,8 +165,8 @@ $index-login-height: 130px;
   width:152px;
   margin: 0 15px 0 6px;
   .code-span {
-    padding:0 8px 0 3px;
-    line-height: 36px;
+    padding:0px 8px 0 3px;
+    line-height: 40px;
     height: 100%;
     background: #fff;
     cursor: pointer;

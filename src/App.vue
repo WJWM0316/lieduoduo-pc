@@ -56,6 +56,7 @@ export default class APP extends Vue {
 }
 body, html{
   height: 100%;
+  background: #F8FAFA;
 }
 .hidden {
   display: none;
@@ -70,7 +71,7 @@ body, html{
 .service {
   font-size:16px;
   font-weight:700;
-  color:rgba(101,39,145,1);
+  color:#03B3BB;
   line-height:18px;
   position: fixed;
   top: 50%;
@@ -79,15 +80,14 @@ body, html{
   right: 0;
   width:36px;
   height:120px;
-  background:rgba(239,233,244,1);
+  background:#E5F9FA;
   border-radius:4px 0px 0px 4px;
   box-sizing: border-box;
   padding: 10px;
   cursor: pointer;
   z-index: 100;
   .service_icon {
-    width:16px;
-    height:16px;
+    display: block;
     margin-bottom: 8px;
   }
   .service_pop {
@@ -130,7 +130,7 @@ body, html{
       .pop_text2 {
         font-size:24px;
         font-weight:bold;
-        color:rgba(40,40,40,1);
+        color:#333333;
       }
       .pop_text3 {
         font-size:18px;

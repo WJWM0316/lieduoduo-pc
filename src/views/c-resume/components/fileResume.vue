@@ -7,7 +7,7 @@
       </p>
       <upload-file
         @change="uploadSuccess"
-        :size="8"
+        :size="10"
         :showTips="true"
         :value="attach">
         <div class="c-btn resume-add-btn">{{attach.id ? '重新上传附件简历' : '上传附件简历'}}</div>
@@ -51,7 +51,8 @@ export default {
       this.$confirm('确定删除该附件简历吗？删除后面试官将无法接收你的附件简历', '温馨提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
-        type: 'warning'
+        type: 'warning',
+        center: true
       }).then(() => {
         deleteResumeAttach().then(({ data }) => {
           if (data.httpStatus === 200) {

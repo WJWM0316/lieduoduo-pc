@@ -71,7 +71,7 @@ export default class CourseList extends Vue {
         font-size:14px;
         font-family:PingFangSC-Regular;
         font-weight:400;
-        color:rgba(40,40,40,1);
+        color:#333333;
         line-height:38px;
         box-sizing: border-box;
         text-align: center;

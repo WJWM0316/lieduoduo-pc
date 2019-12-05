@@ -10,7 +10,7 @@ $sub-color-1: #FF9E40;
 // $sub-color-1: $main-color-1;
 
 // 按钮禁止点击
-$btn-forbid: #E6E6E6;
+$btn-forbid: #F8FAFA;
 
 // 警告颜色
 $error-color-1: #FF9E40;
@@ -26,19 +26,21 @@ $--button-small-height: 32px;
 $--tooltip-fill: #fff;
 
 $--input-hover-border: #00C4CD;
+$--select-border-color-hover: #00C4CD;
 $--input-font-color: #333;
 $--color-text-placeholder: #92929b;
 $--input-disabled-fill: #F0F3F5;
 $--input-disabled-border : #DDE1E0;
 $--input-disabled-color: #99999e;
 
+$--msgbox-border-radius: 8px;
 
 // 高亮字体颜色
 $lightFont-color-orange: #FF9E40;
 $lightFont-color-purple: $main-color-1;
 
 // 图标颜色
-$iconFont-gray: #CDCBCF;
+$iconFont-gray: #BCBEC0;;
 
 // 背景颜色
 $bg-color-1: #F8FAFA;
@@ -53,17 +55,18 @@ $bg-color-8: #F8F8F8;
 $bg-color-9: $sub-color-1;
 $bg-color-10: #FFDC2A;
 $bg-color-11: #F4F7F7;
-
+$bg-color-12: #363A3C;
 
 // 线条颜色
 // $border-color-1: #E8E9EB;
 $border-color-1: #DDE1E0;
 $border-color-2: #00C4CD; // (主题色)
 $border-color-3: #F1F2F2;
-$barder-color-4: #CDCBCF;
-$border-color-5: #BCBCBC;
+$barder-color-4: #BCBEC0;;
+$border-color-5: #BCBEC0;;
 $border-color-6: #DCDCDC;
 $border-color-7: #66666E;
+$border-color-8: #EDF1F0;
 // scroll bar 滚动条配置
 $scroll-bar-color: #EBEBEB;
 
@@ -75,12 +78,8 @@ $font-color-5: #5C565D;
 $font-color-6: #66666E;
 $font-color-9: #92929B;
 $font-color-10: #BCBEC0;
-$font-color-12: #CDCBCF;
-//
-$font-color-temp1: #FF9E40;
-$font-color-temp2: #66666E;
-$font-color-temp3: #363A3C;
-$font-color-temp4: #35E5ED;
+$font-color-12: #BCBEC0;;
+
 
 // 标题颜色
 $title-color-1: $font-color-3;
@@ -89,7 +88,7 @@ $title-color-3: $font-color-9;
 
 // 导航颜色
 $nav-color-hover: #4CD5DB;
-$nav-color-default: $font-color-10;
+$nav-color-default: rgba(#fff, .58);
 $nav-color-bg-color: $bg-color-2;
 
 // 阴影
