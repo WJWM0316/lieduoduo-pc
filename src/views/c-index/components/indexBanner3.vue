@@ -25,40 +25,40 @@
 </template>
 <script>
 export default {
-	data () {
-		return {
-			banner: [
-				{
-					vkey: '2ha5usmh',
-					src: '../../../assets/random_images/img0.jpg'
-				},
-				{
-					vkey: '8sdlelbu',
-					src: '../../../assets/random_images/img1.jpg'
-				},
-				{
-					vkey: 'inxwzsxe',
-					src: '../../../assets/random_images/img2.jpg'
-				},
-				{
-					vkey: 'kkwrgd1m',
-					src: '../../../assets/random_images/img3.jpg'
-				},
-				{
-					vkey: 'enbqgvgx',
-					src: '../../../assets/random_images/img4.jpg'
-				},
-				{
-					vkey: '4utnb5ri',
-					src: '../../../assets/random_images/img5.jpg'
-				},
-				{
-					vkey: 'dcrjn1kv',
-					src: '../../../assets/random_images/img6.jpg'
-				}
-			]
-		}
-	}
+  data () {
+    return {
+      banner: [
+        {
+          vkey: '2ha5usmh',
+          src: '../../../assets/random_images/img0.jpg'
+        },
+        {
+          vkey: '8sdlelbu',
+          src: '../../../assets/random_images/img1.jpg'
+        },
+        {
+          vkey: 'inxwzsxe',
+          src: '../../../assets/random_images/img2.jpg'
+        },
+        {
+          vkey: 'kkwrgd1m',
+          src: '../../../assets/random_images/img3.jpg'
+        },
+        {
+          vkey: 'enbqgvgx',
+          src: '../../../assets/random_images/img4.jpg'
+        },
+        {
+          vkey: '4utnb5ri',
+          src: '../../../assets/random_images/img5.jpg'
+        },
+        {
+          vkey: 'dcrjn1kv',
+          src: '../../../assets/random_images/img6.jpg'
+        }
+      ]
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>
