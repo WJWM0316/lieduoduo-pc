@@ -99,8 +99,8 @@
             </el-option>
           </el-select>
         </div>
+        <p class="hint" style="margin: 0">注：猎多多专注高端人才招聘，薪资范围不得低于10K</p>
       </el-form-item>
-
       <el-form-item label="技能要求" prop="skill_tag" style="width: 450px;">
         <el-select
           style="width: 382px;"
