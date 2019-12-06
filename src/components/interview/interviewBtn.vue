@@ -4,7 +4,7 @@
     <section class="position" v-if="type === 'position'">
       <template v-if="type === 'position' && (!interviewInfos.haveInterview || interviewInfos.interviewStatus === 51 || interviewInfos.interviewStatus === 54 || interviewInfos.interviewStatus === 52 || interviewInfos.interviewStatus === 55 || interviewInfos.interviewStatus === 58)">
         <template v-if="infos.isOnline === 2 && (infos.status === 0 || infos.status === 1 || infos.status === 3 || infos.status === 4)">
-          <el-button class="forbid"> 职位已关闭 </el-button>
+          <el-button class="forbid" disabled> 职位已关闭 </el-button>
         </template>
 
         <template v-else>
@@ -16,7 +16,7 @@
 
       <!-- 求职者已经发起开撩动作 start-->
       <template v-else-if="interviewInfos.interviewStatus === 11">
-        <el-button class="forbid">
+        <el-button class="forbid" disabled>
           <template v-if="interviewInfos.interviewType === 2 && !interviewInfos.serviceEndTimeDesc">面试官将于24h内反馈</template>
           <template v-else-if="interviewInfos.interviewType === 2 && interviewInfos.serviceEndTimeDesc">面试官最迟将于{{interviewInfos.serviceEndTimeDesc}}反馈</template>
           <template v-else>已申请面试</template>
@@ -26,7 +26,7 @@
 
       <!-- 求职者等待招聘官安排面试 start-->
       <template v-else-if="interviewInfos.interviewStatus === 21 || interviewInfos.interviewStatus === 32 ">
-        <el-button class="forbid" @click="todoAction('job-hunting-applyed')">待安排面试</el-button>
+        <el-button class="forbid" @click="todoAction('job-hunting-applyed')" disabled>待安排面试</el-button>
       </template>
       <!-- 求职者等待招聘官安排面试 end-->
 

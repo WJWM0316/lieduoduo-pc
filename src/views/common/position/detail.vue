@@ -1,29 +1,12 @@
 <template>
   <div class="positionDetail" :class="{'overflow' : showPoster}" v-if="infos.id">
-		<header ref="header" class="header positionDetail-hidden" :class="{'isRapidly' : infos.isRapidly === 1, 'headerFloat' : headerFloat}">
-			<div class="inner-bg">
-			  <div class="inner">
-					<div class="header-content">
-						<div class="title">
-						  <span v-if="infos.isUrgency === 1" class="icon jipin"></span>
-						  <span class="name">{{infos.positionName}}</span>
-						  <span class="salary">{{infos.emolumentMin}}~{{infos.emolumentMax}}K<span v-if="infos.annualSalary > 12">·{{infos.annualSalary}}<span class="unit">薪</span></span></span>
-						</div>
-					</div>
-					<div class="aside">
-						<div class="operBox">
-						  <interviewBtn ref="interviewBtn" :infos="infos" type="position" @init="init"></interviewBtn>
-						</div>
-					</div>
-			  </div>
-			</div>
-		</header>
-    <header ref="header" class="header" :class="{'isRapidly' : infos.isRapidly === 1}">
+		<div style="height: 194px" v-if="headerFloat"></div>
+    <header ref="header" class="header" :class="{'isRapidly' : infos.isRapidly === 1, 'positionDetail-hidden headerFloat' : headerFloat}">
       <!-- 设置1440位置的banner -->
       <div class="inner-bg">
         <div class="inner">
           <div class="header-content">
-            <div>
+            <div  v-if="!headerFloat">
               <div class="title">
                 <span v-if="infos.isUrgency === 1" class="icon jipin"></span>
                 <span class="name">{{infos.positionName}}</span>
@@ -38,6 +21,11 @@
                 <span class="label-item" v-for="n in infos.lightspotInfo" :key="n">{{n}}</span>
               </div>
             </div>
+						<div v-else class="title">
+						  <span v-if="infos.isUrgency === 1" class="icon jipin"></span>
+						  <span class="name">{{infos.positionName}}</span>
+						  <span class="salary">{{infos.emolumentMin}}~{{infos.emolumentMax}}K<span v-if="infos.annualSalary > 12">·{{infos.annualSalary}}<span class="unit">薪</span></span></span>
+						</div>
           </div>
           <div class="aside">
             <div v-if="infos.isRapidly === 1" class="icon yuemian24" v-show="!headerFloat">
