@@ -56,6 +56,8 @@
       title="裁剪图片"
       custom-class="app-dialog"
       width="612px"
+      @close="handleCrpperClose"
+      append-to-body
       :visible.sync="cropperDialog">
       <div class="cropper-image-container">
         <div class="cropper-wrapper">
@@ -301,11 +303,12 @@ export default {
       }
     },
     handleCrpperClose () {
-      URL.revokeObjectURL(this.cropperImage)
-      this.cropperImage = ''
       this.cropperFile = null
       this.cropperDialog = false
+      if (this.cropperObj) this.cropperObj.destroy()
       this.cropperObj = null
+      URL.revokeObjectURL(this.cropperImage)
+      this.cropperImage = ''
     }
   },
   destroyed () {
