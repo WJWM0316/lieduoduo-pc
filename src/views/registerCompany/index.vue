@@ -84,7 +84,7 @@
               <div class="logo" v-if="!authForm.logourl">
                 <img src="@/assets/images/cp_logo.png" alt="">
               </div>
-              <div class="logo" v-else>
+              <div class="logo hasboder" v-else>
               <img :src="authForm.logourl" alt="">
             </div>
             </Picture>
@@ -1333,7 +1333,7 @@ export default {
       .text{
         float: left;
         font-size: 14px;
-        color: #333333;
+        color: #66666E;
         padding-left: 20px;
         line-height: 98px;
       }
@@ -1356,6 +1356,10 @@ export default {
           max-width: 64px;
           max-height:64px;
         }
+      }
+      .hasboder{
+        border: 1px solid #EDF1F0;
+        border-radius: 4px;
       }
     }
     .icontip{
@@ -1467,7 +1471,7 @@ export default {
     .authentication{
       width:355px;
       height:140px;
-      background:rgba(251,251,255,1);
+      background: #F8FAFA;
       border-radius:4px;
       .head{
         color: #6D696E;
@@ -1845,6 +1849,7 @@ export default {
   text-align: left;
   line-height: 50px;
   z-index: 1;
+  color: #66666E;
 }
 .registerBox .el-form-item__label::before{
   color: #FF7F4C!important;
@@ -1862,9 +1867,6 @@ export default {
   height: 50px;
   line-height: 50px;
 }
-.registerBox .el-input .el-input__inner::placeholder{
-  color: #A29CA6;
-}
 </style>
 <style>
 .registerBox .formitem .el-input__inner{
@@ -1877,17 +1879,4 @@ export default {
 #register textarea::-webkit-scrollbar{
   display: none;
 }
-/* textarea::-webkit-scrollbar-track{
-  background:#fff;
-  -webkit-border-radius: 20px;
-  -moz-border-radius: 20px;
-  border-radius:3px;
-  height: 226px;
-}
-textarea::-webkit-scrollbar{
-  background:#EBEBEB;
-  -webkit-border-radius: 20px;
-  -moz-border-radius: 20px;
-  border-radius:3px;
-} */
 </style>

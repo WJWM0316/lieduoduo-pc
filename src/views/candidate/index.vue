@@ -147,6 +147,7 @@
                   >{{item.resume.expect.city}}</span>&nbsp;·&nbsp;
                   <span
                     class="intentionText intentionTextWidth2 textEllipsis"
+                    style="color:#333"
                   >{{item.resume.expect.position}}</span>&nbsp;·&nbsp;
                   <span
                     class="intentionText2"
@@ -221,8 +222,6 @@
         layout="prev, pager, next, slot"
         :total="Number(form.total)"
         :page-size="Number(form.count)"
-        prev-text="上一页"
-        next-text="下一页"
         :current-page="Number(form.page)"
         @current-change="handleCurrentPageChange"
       >
