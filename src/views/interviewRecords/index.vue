@@ -2909,7 +2909,7 @@ export default {
               margin-top: 12px;
               span {
                 display: inline-block;
-                background: rgba(239, 233, 244, 1);
+                background: #E5F9FA;
                 padding: 2px 8px;
                 text-align: center;
                 color: #00C4CD;
