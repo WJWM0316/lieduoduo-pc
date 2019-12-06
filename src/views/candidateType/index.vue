@@ -106,8 +106,8 @@
                     </ul>
                   </div>
                 </div>
-                <div class="intention" v-if="item.expects.length>0">求职意向：<span class="intentionText intentionTextWidth textEllipsis"> {{item.expects[0].city}} </span> ·
-                  <span class="intentionText intentionTextWidth2 textEllipsis">{{item.expects[0].position}}</span> ·
+                <div class="intention" v-if="item.expects.length>0">求职意向：<span class="intentionText intentionTextWidth textEllipsis"> {{item.expects[0].city}} </span>&nbsp;·&nbsp;
+                  <span class="intentionText intentionTextWidth2 textEllipsis" style="color:#333">{{item.expects[0].position}}</span>&nbsp;·&nbsp;
                   <span class="intentionText2">{{item.expects[0].salaryFloor}}k~{{item.expects[0].salaryCeil}}k</span>
                 </div>
                 <div class="intention" v-else>求职意向：暂无求职意向</div>
@@ -160,8 +160,6 @@
         layout="prev, pager, next, slot"
         :total="Number(form.total)"
         :page-size="Number(form.count)"
-        prev-text="上一页"
-        next-text="下一页"
         :current-page="Number(form.page)"
         @current-change="handleCurrentPageChange"
       >

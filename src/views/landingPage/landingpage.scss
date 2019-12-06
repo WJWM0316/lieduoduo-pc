@@ -20,7 +20,7 @@
           height: 48px;
           line-height: 48px;
           border-bottom: 1px solid #E8E9EB;
-          padding: 0 32px 0px 24px;
+          padding: 0 32px 0 24px;
           font-size:12px;
           font-family:PingFangSC-Regular;
           font-weight:400;
@@ -94,16 +94,14 @@
                       display: inline-block;
                       height:20px;
                       line-height: 20px;
-                      background:rgba(245,244,247,1);
                       border-radius:2px;
                       padding: 0 6px;
                       box-sizing: border-box;
                       margin-right: 8px;
-
                       font-size:12px;
-                      font-family:PingFangSC-Regular;
                       font-weight:400;
-                      color:#333333;
+                      color:#66666E;
+                      background:#F4F7F7;
                     }
                   }
                 }
@@ -207,7 +205,7 @@
               font-weight:400;
               color:#333333;
               text-align: center;
-              margin-left: 24px;
+              margin-left: 40px;
               cursor: pointer;
             }
             .btn-disable{
@@ -218,7 +216,7 @@
               background: #807d7d;
               color: #ccc;
               text-align: center;
-              margin-left: 24px;
+              margin-left: 40px;
               cursor: not-allowed;
             }
           }
@@ -283,14 +281,13 @@
     
     .topBlo {
       font-size:14px;
-      font-family:PingFangSC-Regular;
       font-weight:400;
       color:#66666E;
       height:40px;
       line-height: 40px;
       background:rgba(255,255,255,1);
       border-radius:4px;
-      border:1px solid rgba(232,233,235,1);
+      border:1px solid #DDE1E0;
       box-sizing: border-box;
       display: flex;
       flex-direction: row;
@@ -423,7 +420,7 @@
       height:40px;
       background:rgba(255,255,255,1);
       border-radius:4px;
-      border:1px solid rgba(232,233,235,1);
+      border:1px solid #DDE1E0;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -443,7 +440,7 @@
       align-items:center;
       background:rgba(255,255,255,1);
       border-radius:4px;
-      border:1px solid rgba(232,233,235,1);
+      border:1px solid #DDE1E0;
       border-top-left-radius: inherit;
       border-bottom-left-radius: inherit;
       border-left: none;
@@ -1249,12 +1246,11 @@
         .job_info {
           span {
             font-size: 12px;
-            font-family: PingFang-SC-Regular;
             font-weight: 400;
-            color: rgba(98, 98, 98, 1);
+            color: #66666E;
             padding: 1px 6px;
             margin-right: 8px;
-            background: rgba(248, 248, 248, 1);
+            background: #F4F7F7;
             border-radius: 2px;
             display: inline-block;
           }

@@ -78,8 +78,6 @@
       layout="prev, pager, next, slot"
       :total="pageInfo.total"
       :page-size="pageInfo.count"
-      prev-text="上一页"
-      next-text="下一页"
       :current-page="pageInfo.page"
       v-if="pageInfo.total > 2"
       @current-change="handleCurrentPageChange"
@@ -758,10 +756,10 @@ export default class CourseList extends Vue {
           span {
             font-size: 12px;
             font-weight: 400;
-            color: rgba(98, 98, 98, 1);
+            color: #66666E;
             padding: 1px 6px;
             margin-right: 8px;
-            background: rgba(248, 248, 248, 1);
+            background: #F4F7F7;
             border-radius: 2px;
             display: inline-block;
           }
@@ -782,7 +780,7 @@ export default class CourseList extends Vue {
         font-size: 14px;
         text-align: center;
         font-weight: 400;
-        color: rgba(146, 146, 146, 1);
+        color: #92929B;
       }
       .blo_right {
         .job_op {
@@ -815,47 +813,6 @@ export default class CourseList extends Vue {
       height: 120px;
     }
   }
-  // .pagination {
-  //   height: 102px;
-  //   background: #fff;
-  //   display: flex;
-  //   justify-content: center;
-  //   align-items: center;
-  //   .number {
-  //     height: 30px;
-  //     box-sizing: border-box;
-  //     border: 1px solid rgba(220, 220, 220, 1);
-  //     color: rgba(101, 39, 145, 1);
-  //     background: #fff;
-  //     &.active {
-  //       color: rgba(102, 102, 102, 1);
-  //       background: none;
-  //       border: none;
-  //     }
-  //   }
-  //   span {
-  //     height: 30px;
-  //     padding: 0px 11px;
-  //     line-height: 30px;
-  //     box-sizing: border-box;
-  //   }
-  //   .total {
-  //     font-size: 12px;
-  //     font-weight: 400;
-  //     color: rgba(102, 102, 102, 1);
-  //   }
-  //   button {
-  //     height: 30px;
-  //     box-sizing: border-box;
-  //     span {
-  //       height: 30px;
-  //       color: rgba(101, 39, 145, 1);
-  //       background: #fff;
-  //       border: 1px solid rgba(220, 220, 220, 1);
-  //       box-sizing: border-box;
-  //     }
-  //   }
-  // }
   .toTop {
     position: fixed;
     right: 50%;
@@ -888,12 +845,6 @@ export default class CourseList extends Vue {
     top: 50%;
     margin-top: -20px;
   }
-
-  // .pagination {
-  //   width: 100%;
-  //   margin: 0 auto;
-  //   box-sizing: border-box;
-  // }
 }
 
 .messageBox {

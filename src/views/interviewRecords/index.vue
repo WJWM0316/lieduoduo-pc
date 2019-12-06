@@ -44,7 +44,8 @@
             <div class="topText topText2">
           </div>
           <div :class="['countdown', vo.status >= 51 ? 'bg' : '']">
-            <i class="iconfont iconshijian time"></i>
+            <i class="iconfont icon-shijian time" v-if="vo.status >= 51"></i>
+            <i class="iconfont icon-shijian time2" v-else></i>
             <span v-if="tablist[0].cur">
               {{(vo.arrangementInfo.appointmentTime)*1000 | date('YYYY-MM-DD HH:mm') }}
               </span>
@@ -73,8 +74,8 @@
                     </ul>
                   </div>
                 </div>
-              <div class="intention" v-if="vo.resume.expect">求职意向：<span class="intentionText intentionTextWidth textEllipsis"> {{vo.resume.expect.city}} </span> ·
-                  <span class="intentionText intentionTextWidth2 textEllipsis">{{vo.resume.expect.position}}</span> ·
+              <div class="intention" v-if="vo.resume.expect">求职意向：<span class="intentionText intentionTextWidth textEllipsis"> {{vo.resume.expect.city}} </span>&nbsp;·&nbsp;
+                  <span class="intentionText intentionTextWidth2 textEllipsis" style="color:#333">{{vo.resume.expect.position}}</span>&nbsp;·&nbsp;
                   <span class="intentionText2">{{vo.resume.expect.salaryFloor}}k~{{vo.resume.expect.salaryCeil}}k</span>
                 </div>
                 <div class="intention" v-else>求职意向：暂无求职意向</div>
@@ -113,8 +114,6 @@
         layout="prev, pager, next, slot"
         :total="Number(form.total)"
         :page-size="Number(form.count)"
-        prev-text="上一页"
-        next-text="下一页"
         :current-page="Number(form.page)"
         @current-change="handleCurrentPageChange"
       >
@@ -1793,7 +1792,7 @@ export default {
       height: 196px;
       background: rgba(255,255,255,1);
       border-radius: 8px;
-      border: 1px solid rgba(232,233,235,1);
+      border: 1px solid#DDE1E0;
       margin-bottom: 15px;
       box-sizing: border-box;
       cursor: pointer;
@@ -1804,8 +1803,8 @@ export default {
       .bloTop {
         height: 48px;
         line-height: 48px;
-        border-bottom: 1px solid #E8E9EB;
-        padding: 0 29px 0px 24px;
+        border-bottom: 1px solid #DDE1E0;
+        padding: 0 32px 0 24px;
         font-size:12px;
         font-weight:400;
         color:#92929B;
@@ -1848,34 +1847,36 @@ export default {
           float: right;
           height: 32px;
           padding: 0 24px;
-          // border:1px solid #ccc;
           border-radius: 4px;
           margin-top: 7px;
           position: relative;
           z-index: 0;
-          // width: 108px;
-          color:#333333;
-          background:rgba(255,220,41,1);
+          color:#03B3BB;
+          background:#E5F9FA;
           text-align: center;
           display: flex;
           align-items: center;
           justify-content: center;
           font-size: 16px;
           .time{
-            color: #282828;
-            font-size: 14px;
+            font-size: 15px;
+            margin-right: 6px;
+            color: #66666E;
+          }
+          .time2{
+            font-size: 15px;
             margin-right: 6px;
           }
           span{
             font-weight: bold;
-            color:#333333;
             font-size: 16px;
           }
         }
         .bg{
-          background:rgba(232,233,235,1);
+          background:#fff;
           font-size: 14px;
-          color: #282828;
+          color: #66666E;
+          padding: 0;
         }
       }
       .bloCont {
@@ -1939,14 +1940,14 @@ export default {
                     display: inline-block;
                     height:20px;
                     line-height: 20px;
-                    background:rgba(245,244,247,1);
                     border-radius:2px;
                     padding: 0 6px;
                     box-sizing: border-box;
                     margin-right: 8px;
                     font-size:12px;
                     font-weight:400;
-                    color:#333333;
+                    color:#66666E;
+                    background:#F4F7F7;
                   }
                 }
               }
@@ -2025,7 +2026,7 @@ export default {
             justify-content: center;
             align-items: center;
             flex-direction: row;
-            color: #00C4CD;
+            color: #03B3BB;
             cursor: pointer;
             font-size: 14px;
             margin-right: 75px;
@@ -2043,7 +2044,7 @@ export default {
             border-radius:30px;
             font-size:14px;
             font-weight:400;
-            color:#00C4CD;
+            color: #03B3BB;
             padding-right: 32px;
             cursor: pointer;
           }
@@ -3027,10 +3028,10 @@ export default {
           span {
             font-size: 12px;
             font-weight: 400;
-            color: rgba(98, 98, 98, 1);
+            color: #66666E;
             padding: 1px 6px;
             margin-right: 8px;
-            background: rgba(248, 248, 248, 1);
+            background: #F4F7F7;
             border-radius: 2px;
             display: inline-block;
           }
@@ -3307,7 +3308,7 @@ export default {
               font-weight:500;
               font-size:28px;
               margin-top: 24px;
-              color:rgba(101,38,145,1);
+              color:#03B3BB;
             }
             .end-time{
               width: 100%;
