@@ -66,12 +66,12 @@ export default {
     padding: 0 40px;
   }
   .title{
-    height:24px;
-    line-height: 24px;
     font-size: 16px;
     font-weight: bold;
-    color: #282828;
-    padding: 32px 0 6px 0;
+    height: 24px;
+    line-height: 24px;
+    color: #333333;
+    margin: 32px 0 20px 38px;
   }
   .desc{
     color: #66666E;;

@@ -677,7 +677,7 @@
             </div>
           </div>
 
-          <div class="selectposition" v-show="pop.type === 'applyrecord'">
+          <div class="selectposition fbiaoti" v-show="pop.type === 'applyrecord'">
             <div class="applytext">{{pop.recordtext}}</div>
           <div class="selectitem" v-for="(item, i) in applyrecordList" :key="i" @click="selectapply(item, i)">
             <div class="position">
@@ -1774,7 +1774,7 @@ export default {
       line-height: 46px;
       float: left;
       margin: 0 32px;
-      color:rgba(98,98,98,1);
+      color: #626262;
       text-align: center;
     }
     .active{
@@ -1841,7 +1841,7 @@ export default {
           margin-left: 8px;
         }
         .topText2 {
-          color: #282828;
+          color: #333333;
         }
         .countdown{
           float: right;
@@ -1968,10 +1968,10 @@ export default {
                 max-width: 125px;
               }
               .intentionText {
-                color: #282828;
+                color: #333333;
               }
               .intentionText {
-                color: #282828;
+                color: #333333;
               }
               .intentionText2 {
                 color: #FF7F4C;
@@ -2214,7 +2214,7 @@ export default {
         }
         p {
           font-size:16px;
-          color:rgba(98,98,98,1);
+          color: #626262;
           line-height:22px;
         }
       }
@@ -2231,7 +2231,7 @@ export default {
       top: 60px;
       transform: translate(-50%, 0%);
       .Numbering {
-        padding: 36px 20px 30px 50px;
+        padding: 28px 20px 30px 50px;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -2265,6 +2265,7 @@ export default {
               color: #42334d;
               width: 72px;
               height: 26px;
+              border-radius: 2px;
               background: rgba(237, 237, 237, 1);
               line-height: 26px;
               position: relative;
@@ -2491,7 +2492,7 @@ export default {
             padding-left: 22px;
             .title{
               font-size: 14px;
-              color: #282828;
+              color: #333333;
               margin-bottom: 16px;;
               font-weight: bold;
             }
@@ -2587,7 +2588,7 @@ export default {
             border-radius:20px;
           }
           &::-webkit-scrollbar-thumb {
-            background:#BCBEC0;;
+            background:#DDE1E0;
             -webkit-border-radius: 20px;
             -moz-border-radius: 20px;
             border-radius:20px;
@@ -2607,7 +2608,7 @@ export default {
                 .magimg {
                   width: 88px;
                   height: 88px;
-                  border: 2px solid rgba(232, 233, 235, 1);
+                  border: 2px solid #EDF1F0;
                   border-radius: 50%;
                   vertical-align: middle;
                 }
@@ -2718,13 +2719,13 @@ export default {
                 }
 
                 .status {
-                  padding: 5px 9px 5px 10px;
-                  background: #efe9f4;
-                  color: #00C4CD;
+                  padding: 3px 10px;
+                  background: #E5F9FA;
+                  color: #03B3BB;
                   vertical-align: middle;
                   box-sizing: border-box;
                   font-size: 14px;
-                  line-height: 14px;
+                  line-height: 23px;
                   height: 23px;
                 }
 
@@ -2756,6 +2757,7 @@ export default {
               text-align: left;
               color: #92929B;;
               font-size: 13px;
+              line-height: 21px;
               .msg {
                 span {
                   font-size: 13px;
@@ -2775,14 +2777,14 @@ export default {
                 align-items: flex-start;
                 flex-wrap: wrap;
                 .iconItem {
-                  border: 1px solid rgba(230, 226, 237, 1);
+                  border: 1px solid #00C4CD;
                   background: #fff;
                   border-radius: 30px;
                   margin-right: 6px;
                   vertical-align: middle;
                   color: #00C4CD;
                   margin-bottom: 8px;
-                  font-weight: 300;
+                  font-weight: 400;
                   height: 22px;
                   padding: 1px 12px;
                   text-align: center;
@@ -2972,7 +2974,7 @@ export default {
     height: 42px;
     color: #fff;
     right: -79px;
-    top: 29px;
+    top: 19px;
     i{
       font-size: 30px!important;
     }
@@ -3090,13 +3092,15 @@ export default {
       .close{
         width: 100%;
         position: relative;
-        height: 26px;
+        height: 32px;
         i{
           font-size: 10px;
-          color: #BCBEC0;;
-          margin-top: 16px;
+          transform: scale(0.8);
+          color: #BCBEC0;
           position: absolute;
-          right: 16px;
+          right: 20px;
+          top: 20px;
+          cursor: pointer;
         }
       }
       .nullimg{
@@ -3129,17 +3133,16 @@ export default {
         text-align: center;
       }
         .content-info{
-          // padding-right: 4px;
         .title{
-          font-size:16px;
+          font-size: 16px;
           font-weight: bold;
-          width: 100%;
-          color:#333333;
-          padding: 4px 38px 20px 38px;
+          height: 24px;
+          line-height: 24px;
+          color: #333333;
+          margin: 0 0 20px 40px;
         }
         .arrange{
-          // width: 100%;
-          padding: 0 38px;
+          padding: 0 40px;
           .item{
             height: 40px;
             margin-bottom: 10px;
@@ -3161,7 +3164,7 @@ export default {
               color:#333333;
               // border:1px solid rgba(235,235,235,1);
               .info-select{
-                width: 262px;
+                width: 254px;
                 height: 38px;
                 line-height: 38px;
                 color: #333;
@@ -3179,9 +3182,11 @@ export default {
             }
           }
         }
+        .fbiaoti{
+          margin-top: -18px;
+        }
         .selectaddress{
-          // width: 100%;
-          padding: 0 38px;
+          padding: 0 40px;
           max-height: 425px;
           overflow-y: scroll;
           &::-webkit-scrollbar {
@@ -3194,7 +3199,7 @@ export default {
             border-radius:20px;
             }
             &::-webkit-scrollbar-thumb {
-             background:#BCBEC0;;
+             background:#DDE1E0;
             -webkit-border-radius: 20px;
             -moz-border-radius: 20px;
             border-radius:20px;
@@ -3256,7 +3261,7 @@ export default {
         }
         .arrangeinfo{
           // width: 100%;
-          padding: 0 38px;
+          padding: 0 40px;
           margin-top: 4px;
           .item{
             line-height: 22px;
@@ -3269,7 +3274,7 @@ export default {
               height: 14px;
               float: left;
               i{
-                color: #CED7DC;
+                color: #BCBEC0;
                 font-size: 14px;
               }
             }
@@ -3291,7 +3296,7 @@ export default {
           }
           .detail{
             width: 100%;
-            margin-top: 48px;
+            margin-top: 36px;
             text-align: center;
             .detailtitle{
               font-size:18px;
@@ -3350,8 +3355,9 @@ export default {
                   cursor: pointer;
                   background:rgba(248,245,250,1);
                   border-radius:21px;
-                  margin-right: 18px;
+                  margin-right: 16px;
                   margin-top: 16px;
+                  margin-bottom: 10px;
                   .icon{
                     width:42px;
                     height:42px;
@@ -3378,6 +3384,7 @@ export default {
               margin-top: 16px;
               background:rgba(251,250,252,1);
               border-radius:8px;
+              margin-bottom: 10px;
               .status-icon{
                 width: 64px;
                 height: 64px;
@@ -3442,7 +3449,7 @@ export default {
         }
         .intertime{
           margin-top: 34px;
-          padding: 0 38px;
+          padding: 0 40px;
           .intertime_title{
             color:#333333;
             font-size:14px;
@@ -3495,9 +3502,11 @@ export default {
             }
           }
         }
+        .fbiaoti{
+          margin-top: -18px;
+        }
         .selectposition{
-          // width: 100%;
-          padding: 0 38px;
+          padding: 0 40px;
           max-height: 425px;
           overflow-y: scroll;
           &::-webkit-scrollbar {
@@ -3510,13 +3519,16 @@ export default {
             border-radius:20px;
             }
             &::-webkit-scrollbar-thumb {
-             background:#BCBEC0;;
+             background:#DDE1E0;
             -webkit-border-radius: 20px;
             -moz-border-radius: 20px;
             border-radius:20px;
             }
           .applytext{
             color:#92929B;
+            display: block;
+            height: 20px;
+            line-height: 20px;
           }
           .selectitem{
             height:69px;
@@ -3564,24 +3576,24 @@ export default {
             }
             .info{
               width: 100%;
-              color:rgba(98,98,98,1);
+              color: #66666E;
               font-size:12px;
               .address{
                 float: left;
-                background:rgba(248,248,248,1);
+                background: #F4F7F7;
                 padding: 4px 6px;
                 text-align: center;
                 margin-right: 8px;
               }
               .year{
                 float: left;
-                background:rgba(248,248,248,1);
+                background: #F4F7F7;
                 margin-right: 8px;
                 padding: 4px 6px;
               }
               .benke{
                 float: left;
-                background:rgba(248,248,248,1);
+                background: #F4F7F7;
                 padding: 4px 6px;
               }
               .hui{
@@ -3610,19 +3622,19 @@ export default {
         }
         .inappropriate{
           // width: 100%;
-          padding: 0 38px;
+          padding: 0 40px;
           .resonitem{
-            width:108px;
+            width:107px;
             height:30px;
             line-height: 30px;
             font-size:14px;
             text-align: center;
-            background:rgba(255,255,255,1);
+            background:#F4F7F7;
+            color:#66666E;
             border-radius:16px;
             float: left;
             margin-right: 8px;
             margin-bottom: 10px;
-            color:#92929B;
             border:1px solid rgba(232,233,235,1);
           }
           .wachitem{
@@ -3645,7 +3657,7 @@ export default {
         }
         .explain{
           // width: 100%;
-          padding: 0 38px;
+          padding: 0 40px;
           margin-top: 14px;
           .explaintitle{
             color:#66666E;
@@ -3658,7 +3670,7 @@ export default {
             padding: 10px 14px;
             background:rgba(255,255,255,1);
             border-radius:4px;
-            color:#282828;
+            color:#333333;
             border:1px solid rgba(239,233,244,1);
             textarea{
               width: 100%;
@@ -3673,8 +3685,7 @@ export default {
           }
         }
         .handler{
-          // width: 100%;
-          padding: 0 38px;
+          padding: 0 48px;
           margin-top: 52px;
           .cancel{
             width:78px;

@@ -675,7 +675,7 @@
             </div>
           </div>
           <div style="padding-right:4px">
-        <div class="selectposition" v-show="pop.type === 'applyrecord'">
+        <div class="selectposition fbiaoti" v-show="pop.type === 'applyrecord'">
             <div class="applytext">{{pop.recordtext}}</div>
             <div class="selectitem" v-for="(item, i) in applyrecordList" :key="i" @click="selectapply(item, i)">
             <div class="position">
