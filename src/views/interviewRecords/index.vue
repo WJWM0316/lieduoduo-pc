@@ -1797,7 +1797,6 @@ export default {
       box-sizing: border-box;
       cursor: pointer;
       &:hover{
-        border: none;
         box-shadow:0px 10px 20px 0px rgba(0,0,0,0.1);
       }
       .bloTop {
