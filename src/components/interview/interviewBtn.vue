@@ -205,7 +205,6 @@ export default class InterviewBtn extends Component {
   .forbid, .canView, .scheduling, .button-box {
     width:298px;
     height:36px;
-    background: $btn-forbid;
     border-radius:4px;
     font-size:14px;
     font-weight:400;
@@ -234,7 +233,6 @@ export default class InterviewBtn extends Component {
         margin: 0;
       }
     }
-
     &.canView {
       background: $bg-color-4;
       color: #fff;
