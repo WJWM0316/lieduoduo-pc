@@ -136,3 +136,8 @@ div.el-message {
   padding: 10px 16px;
   min-width: auto;
 }
+
+/** el date */
+.el-date-editor span.el-range-separator{
+  line-height: $--input-height - 8px;
+}
