@@ -1960,7 +1960,7 @@ export default class CourseList extends Vue {
         this.toworddiggle = false
         this.$message({
           type: 'success',
-          message: '转发成功成功!'
+          message: '转发成功!'
         })
       })
     }
