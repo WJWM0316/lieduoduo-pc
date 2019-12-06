@@ -20,14 +20,23 @@ $--color-primary: $main-color-1;
 $--color-warning: $error-color-1;
 $--button-primary-background-color: #00C4CD;
 $--button-primary-border-color: #00C4CD;
-$--input-height: 46px;
-$--input-medium-height: 40px;
 $--button-small-height: 32px;
+
+/// color||Color|0
+$--button-disabled-font-color: #929292;
+/// color||Color|0
+$--button-disabled-background-color: #E9EAEA;
+/// color||Color|0
+$--button-disabled-border-color: #E9EAEA;
+
 $--tooltip-fill: #fff;
 
+$--input-height: 46px;
+$--input-medium-height: 40px;
+$--border-color-base: #DDE1E0;
 $--input-hover-border: #00C4CD;
-$--select-border-color-hover: #00C4CD;
 $--input-font-color: #333;
+$--select-border-color-hover: #00C4CD;
 $--color-text-placeholder: #BCBEC0;
 $--input-disabled-fill: #F8FAFA;
 $--input-disabled-border : #DDE1E0;
@@ -35,6 +44,7 @@ $--input-disabled-color: #99999e;
 
 $--msgbox-border-radius: 8px;
 $--scrollbar-background-color:#DDE1E0;
+
 
 // 高亮字体颜色
 $lightFont-color-orange: #FF9E40;

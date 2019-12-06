@@ -342,30 +342,35 @@ img {
 			background-repeat: no-repeat;
 		}
 		&.positionDetail-hidden {
-			top: -114px;
-			transition: all 1s;
+			top: -90px;
+			transition: all 0.3s;
 			position: fixed;
 			z-index: 11;
-		}
-		&.headerFloat {
-			top: 0;
+			padding: 0;
 			&.isRapidly {
 				background-position: right 40%;
 			}
-			.inner {
-				.salary {
-					margin-left: 14px;
-					font-size:30px;
-					line-height: 1;
-				}
-				.aside {
-					padding-top: 0;
+			.inner-bg {
+				background-position: right -50%;
+				height: 90px;
+				line-height: 90px;
+				padding: 0;
+				.inner {
+					display: flex;
+					align-items: center;
+					.salary {
+						margin-left: 14px;
+						font-size:30px;
+						line-height: 1;
+					}
+					.aside {
+						padding-top: 0;
+					}
 				}
 			}
 		}
-		&.headerFloat .inner-bg {
-			padding: 27px 0;
-			background-position: right -50%;
+		&.headerFloat {
+			top: 0;
 		}
 	}
 	.content {
