@@ -1101,7 +1101,6 @@ right: -40px;
               padding-right: 28px;
               .basemsg {
                 display: flex;
-                // justify-content: space-between;
                 align-items: baseline;
                 .realName {
                   font-size: 22px;
@@ -1116,14 +1115,11 @@ right: -40px;
                 }
                 .lebalList {
                   display: inline-block;
-                  overflow: hidden;
                   text-align: left;
-                  height: 19px;
                   .lebalItem {
                     display: inline-block;
                     margin-right: 24px;
                     height: 23px;
-                    overflow: 19px;
                     &:nth-child(1) {
                       span {
                         font-weight: 300;

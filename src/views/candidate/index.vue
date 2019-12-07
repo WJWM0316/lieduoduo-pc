@@ -111,7 +111,7 @@
 
             <div class="status">
               <div class="like_user">
-                <span :style="'color: #FF9E40'" v-if="item.redDot">{{item.statusDesc}}</span>
+                <span :style="'color: #FF9E40'" v-if="item.statusDesc === '未处理'">{{item.statusDesc}}</span>
                 <span v-else>{{item.statusDesc}}</span>
               </div>
               </div>

@@ -2664,74 +2664,71 @@ export default {
                 margin-left: 30px;
                 flex: 1;
                 padding-right: 28px;
-                .basemsg {
-                  display: flex;
-                  // justify-content: space-between;
-                  align-items: baseline;
-                  .realName {
-                    font-size: 22px;
-                    font-weight: 700;
-                    color: #42334d;
-                    max-width: 153px;
-                    white-space: nowrap;
+            .basemsg {
+                display: flex;
+                align-items: baseline;
+                .realName {
+                  font-size: 22px;
+                  font-weight: 700;
+                  color: #42334d;
+                  max-width: 153px;
+                  white-space: nowrap;
+                  margin-right: 24px;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  display: inline-block;
+                }
+                .lebalList {
+                  display: inline-block;
+                  text-align: left;
+                  .lebalItem {
+                    display: inline-block;
                     margin-right: 24px;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    display: inline-block;
-                  }
-                  .lebalList {
-                    display: inline-block;
-                    overflow: hidden;
-                    text-align: right;
-                    height: 19px;
-                    .lebalItem {
-                      display: inline-block;
-                      margin-right: 24px;
-                      height: 23px;
-                      overflow: 19px;
-                      &:nth-child(1) {
-                        span {
-                          font-weight: 300;
-                        }
-                      }
-                      &:nth-child(2) {
-                        span {
-                          font-weight: 300;
-                        }
-                      }
-                      &:nth-child(3) {
-                        span {
-                          font-weight: 300;
-                        }
-                      }
-                      &:nth-child(4) {
-                        height: 0px;
-                        margin-right: 0px;
-                      }
-                      i {
-                        margin-right: 7px;
-                        color: #BCBEC0;;
-                      }
+                    height: 23px;
+                    overflow: 19px;
+                    &:nth-child(1) {
                       span {
-                        font-size: 14px;
+                        font-weight: 300;
                       }
+                    }
+                    &:nth-child(2) {
+                      span {
+                        font-weight: 300;
+                      }
+                    }
+                    &:nth-child(3) {
+                      span {
+                        font-weight: 300;
+                      }
+                    }
+                    &:nth-child(4) {
+                      height: 0px;
+                      margin-right: 0px;
+                    }
+                    i {
+                      margin-right: 7px;
+                      color: #BCBEC0;;
+                    }
+                    span {
+                      font-size: 14px;
                     }
                   }
                 }
-                .basecenter{
-                  margin-top: 33px;
-                }
+              }
+              .basecenter{
+                margin-top: 33px;
+              }
 
-                .status {
-                  padding: 3px 10px;
-                  background: #E5F9FA;
-                  color: #03B3BB;
-                  vertical-align: middle;
-                  box-sizing: border-box;
-                  font-size: 14px;
-                  line-height: 23px;
-                  height: 23px;
-                }
+              .status {
+                padding: 3px 10px;
+                background: #E5F9FA;
+                color: #03B3BB;
+                vertical-align: middle;
+                box-sizing: border-box;
+                font-size: 14px;
+                line-height: 23px;
+                height: 23px;
+              }
 
                 .nowWorking {
                   margin-top: 10px;
