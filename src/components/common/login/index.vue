@@ -92,7 +92,7 @@
             </div>
             <div class="text_wrap">
                 <div class="guide_text">
-                    <i class="iconfont icon-zhiwei"></i>
+                    <i class="iconfont icon-zhiwei zhiwei"></i>
                     <span>找高薪</span>
                 </div>
                 <div class="guide_text">
@@ -842,6 +842,9 @@ export default class loginForm extends Component {
               color: $border-color-7;
               font-weight: 400;
               line-height: 16px;
+            }
+            .zhiwei{
+              font-size: 15px;
             }
           }
         }
