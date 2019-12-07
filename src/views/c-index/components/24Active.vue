@@ -30,7 +30,9 @@
                 <span><i class="iconfont icon-jiaoyu"></i>{{item.educationName}}</span>
               </div>
             </div>
-            <div class="list-details" v-if="item.companyInfo.oneSentenceIntro">{{item.companyInfo.oneSentenceIntro}}</div>
+            <div class="list-details" v-if="item.companyInfo.oneSentenceIntro">
+              <span>{{item.companyInfo.oneSentenceIntro}}</span>
+            </div>
           </div>
           <div class="list-footer">
             <div class="count-down">
@@ -317,9 +319,13 @@ $position-process-bg-color: #99e7e8;
     font-size: 12px;
     min-height: 30px;
     line-height: 16px;
-    color: $title-color-3;
-    @include ellipsis-two;
-    -webkit-box-pack: center;
+    span {
+      display: inline-block;
+      color: $title-color-3;
+      @include ellipsis-two;
+      -webkit-box-pack: center;
+    }
+
   }
   .list-footer {
     @include flex-v-center;
