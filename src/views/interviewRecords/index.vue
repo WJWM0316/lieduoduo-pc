@@ -1673,19 +1673,19 @@ export default {
     },
     // 点击不合适
     selereson () {
-      this.pop = {
-        isShow: true,
-        Interview: true,
-        InterviewTitle: '选择不合适原因',
-        btntext: '保存',
-        type: 'inappropriate'
-      }
       getCommentReasonApi().then((res) => {
         let arr = res.data.data
         arr.map((v, k) => {
           v.cur = false
         })
         this.reasonlist = arr
+        this.pop = {
+          isShow: true,
+          Interview: true,
+          InterviewTitle: '选择不合适原因',
+          btntext: '保存',
+          type: 'inappropriate'
+        }
       })
     },
     ownerOp (status, uid) {

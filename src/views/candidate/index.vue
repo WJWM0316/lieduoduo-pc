@@ -1744,13 +1744,6 @@ export default class CourseList extends Vue {
             })
             this.applyrecordList = applylists
           } else {
-            this.pop = {
-              isShow: true,
-              Interview: true,
-              InterviewTitle: '选择不合适原因',
-              btntext: '保存',
-              type: 'inappropriate'
-            }
             // 大于61是结束后不满意
             if (res.data.data.interviewStatus === 58 || res.data.data.interviewStatus === 59) {
               getCommentReasonApi().then((res) => {
@@ -1759,6 +1752,13 @@ export default class CourseList extends Vue {
                   v.cur = false
                 })
                 this.reasonlist = arr
+                this.pop = {
+                  isShow: true,
+                  Interview: true,
+                  InterviewTitle: '选择不合适原因',
+                  btntext: '保存',
+                  type: 'inappropriate'
+                }
               })
             } else {
               getloadingReasonApi().then((res) => {
@@ -1767,6 +1767,13 @@ export default class CourseList extends Vue {
                   v.cur = false
                 })
                 this.reasonlist = arr
+                this.pop = {
+                  isShow: true,
+                  Interview: true,
+                  InterviewTitle: '选择不合适原因',
+                  btntext: '保存',
+                  type: 'inappropriate'
+                }
               })
             }
           }

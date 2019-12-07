@@ -92,7 +92,8 @@
           <div class="pop_tit">分享职位</div>
           <img class="clo" src="../../assets/images/clo.png" @click="todoAction('cloPop2')">
           <p class="share_txt">使用「微信」扫描小程序码分享职位</p>
-          <img class="code" :src="shareSelectItem.qrCodeUrl">
+          <img class="code" :src="shareSelectItem.qrCodeUrl" v-if="shareSelectItem.qrCodeUrl">
+          <img class="code" src="@/assets/images/Floorplan.png" v-else>
           <p class="share_help_text" @mouseover="isHelpShow = true" @mouseout="isHelpShow = false">
             分享帮助
             <i class="iconfont icon-question-circle"></i>
@@ -661,19 +662,18 @@ export default class CourseList extends Vue {
       box-sizing: border-box;
       border-bottom: 1px solid #f5f4f7;
       .blo_left {
-        max-width: 500px;
         text-align: left;
         line-height: 24px;
         font-size: 16px;
         font-weight: 700;
-        width: 254px;
+        width: 408px;
         .job_top {
           color: rgba(53, 64, 72, 1);
           margin-bottom: 8px;
           line-height: 24px;
         }
         .job_name {
-          max-width: 220px;
+          max-width: 260px;
           text-overflow: ellipsis;
           white-space: nowrap;
           overflow: hidden;
@@ -682,6 +682,10 @@ export default class CourseList extends Vue {
         .job_emolument {
           display: inline-block;
           margin-left: 8px;
+          max-width: 140px;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
         }
         .job_info {
           span {
