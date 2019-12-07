@@ -366,7 +366,6 @@
       flex: 1;
       .screenBox {
         width:432px;
-        // height:248px;
         background:rgba(255,255,255,1);
         box-shadow:0px 0px 20px 0px rgba(0,0,0,0.15);
         position: absolute;
@@ -374,7 +373,7 @@
         right: -50px;
         padding: 26px ;
         box-sizing: border-box;
-        z-index: 1000;
+        z-index: 1;
         border-radius: 4px;
         .screen_tit {
           font-size:14px;
@@ -903,14 +902,14 @@
             }
             a{
               width:152px;
-              height:40px;
+              height:38px;
               border-radius:4px;
               font-size: 14px;
-              line-height: 40px;
+              line-height: 38px;
               display:block;
               color: #00C4CD;
               text-align: center;
-              border:1px solid #00C4CD;  
+              border:1px solid #00C4CD;   
             }
           }
           .ContactInformation {
@@ -1070,7 +1069,6 @@
                 padding-right: 28px;
                 .basemsg {
                   display: flex;
-                  // justify-content: space-between;
                   align-items: baseline;
                   .realName {
                     font-size: 22px;
@@ -1085,14 +1083,13 @@
                   }
                   .lebalList {
                     display: inline-block;
-                    overflow: hidden;
                     text-align: right;
-                    height: 19px;
+                    height: 25px;
                     .lebalItem {
                       display: inline-block;
                       margin-right: 24px;
-                      height: 23px;
-                      overflow: 19px;
+                      height: 25px;
+                      line-height: 25px;
                       &:nth-child(1) {
                         span {
                           font-weight: 300;
@@ -1108,10 +1105,6 @@
                           font-weight: 300;
                         }
                       }
-                      &:nth-child(4) {
-                        height: 0px;
-                        margin-right: 0px;
-                      }
                       i {
                         margin-right: 7px;
                         color: #BCBEC0;;
@@ -1122,16 +1115,15 @@
                     }
                   }
                 }
+                .basecenter{
+                  margin-top: 33px;
+                }
 
                 .status {
-                  padding: 3px 10px;
+                  padding: 4px 10px;
                   background: #E5F9FA;
                   color: #03B3BB;
-                  vertical-align: middle;
-                  box-sizing: border-box;
-                  font-size: 14px;
-                  line-height: 23px;
-                  height: 23px;
+                  border-radius: 2px;
                 }
 
                 .nowWorking {
@@ -1209,11 +1201,9 @@
         padding-bottom: 38px;
         display: flex;
         justify-content: flex-start;
-        align-items: baseline;
         margin-left: 82px;
         .title {
           font-size: 14px;
-          font-family: PingFangSC-Medium;
           font-weight: 700;
           color: #42334d;
           display: inline-block;
@@ -1221,12 +1211,19 @@
         .intentList {
           display: inline-block;
           margin-left: 30px;
+          width: 545px;
           .intentionItem {
             width: 100%;
             text-align: left;
             padding-bottom: 20px;
+            .whitesize{
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              width: 460px;
+              float: left;
+            }
             .position {
-              font-family: PingFangSC-Regular;
               font-size: 14px;
               color: rgba(92, 86, 93, 1);
               margin-right: 10px;
@@ -1237,13 +1234,13 @@
                 font-size: 14px;
                 color: #66666E;;
               }
-              // margin-right: 20px;
             }
             .price {
               font-size: 14px;
               color: #FF9E40;
               font-weight: 700;
               margin-left: 30px;
+              float: right;
             }
           }
         }
@@ -1316,14 +1313,13 @@
               text-align: left;
               margin-top: 12px;
               span {
-                display: inline-block;
                 background: #E5F9FA;
                 padding: 2px 8px;
                 text-align: center;
                 color: #00C4CD;
                 font-size: 12px;
                 margin-right: 10px;
-                border-radius: 5px;
+                border-radius: 2px;
                 font-weight: 300;
               }
             }

@@ -340,7 +340,6 @@
       flex: 1;
       .screenBox {
         width:432px;
-        // height:248px;
         background:rgba(255,255,255,1);
         box-shadow:0px 0px 20px 0px rgba(0,0,0,0.15);
         position: absolute;
@@ -348,7 +347,7 @@
         right: -50px;
         padding: 26px ;
         box-sizing: border-box;
-        z-index: 1000;
+        z-index: 1;
         border-radius: 4px;
         .screen_tit {
           font-size:14px;
@@ -951,10 +950,10 @@
 										font-size: 14px;
 										border-radius: 2px;
 									}
-								}
-
-                
-
+                }
+                .basecenter{
+                  margin-top: 33px;
+                }
                 .nowWorking {
                   margin-top: 10px;
                   font-size: 15px;
@@ -1023,18 +1022,15 @@
           }
         }
       }
-
       .intention {
         text-align: left;
         padding-top: 28px;
-        padding-bottom: 48px;
+        padding-bottom: 38px;
         display: flex;
         justify-content: flex-start;
-        align-items: baseline;
-        margin-left: 88px;
+        margin-left: 82px;
         .title {
           font-size: 14px;
-          font-family: PingFangSC-Medium;
           font-weight: 700;
           color: #42334d;
           display: inline-block;
@@ -1042,13 +1038,19 @@
         .intentList {
           display: inline-block;
           margin-left: 30px;
+          width: 545px;
           .intentionItem {
-            overflow: hidden;
-            height: 20px;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+            width: 100%;
+            text-align: left;
+            padding-bottom: 20px;
+            .whitesize{
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              width: 460px;
+              float: left;
+            }
             .position {
-              font-family: PingFangSC-Regular;
               font-size: 14px;
               color: rgba(92, 86, 93, 1);
               margin-right: 10px;
@@ -1063,7 +1065,9 @@
             .price {
               font-size: 14px;
               color: #FF9E40;
+              font-weight: 700;
               margin-left: 30px;
+              float: right;
             }
           }
         }
@@ -1137,11 +1141,11 @@
               text-align: left;
               margin-top: 12px;
               span {
-                display: inline-block;
                 background: #E5F9FA;
                 padding: 0 8px;
                 text-align: center;
                 color: #00C4CD;
+                border-radius: 2px;
                 font-size: 12px;
                 margin-right: 10px;
 								line-height: 20px;
@@ -1710,7 +1714,7 @@
               top: 20px;
               right: 0px;
               .bg{
-                color: #6E2296;
+                color: #00C4CD;
               }
               .circel{
                 width:14px;

@@ -167,7 +167,7 @@
                   </span>
                 </div>
                 <div class="msgUserInfo">
-                  <div class="basemsg">
+                  <div :class="['basemsg', nowResumeMsg.signature ? '' : 'basecenter']">
                     <span class="realName">{{nowResumeMsg.name}}</span>
                     <div class="lebalList">
                       <div class="lebalItem">
@@ -218,12 +218,14 @@
                   :key="item.position"
                   :style="index===nowResumeMsg.expects.length-1?'padding-bottom:0px;':''"
                 >
+                <div class="whitesize">
                   <span class="position">{{item.position}}&nbsp;|&nbsp;{{item.city}}</span>
                   <span v-if="item.fields.length>0">|</span>
                   <div style="margin-left:9px;display:inline-block;">
                     <div class="fields" v-for="(item1,index1) in item.fields" :key="index1">
                       <span>{{item1.field}}&nbsp;&nbsp;</span>
                     </div>
+                  </div>
                   </div>
                   <span class="price">{{item.salaryFloor}}k-{{item.salaryCeil}}k</span>
                 </div>
@@ -2497,14 +2499,14 @@ export default {
             }
             a{
               width:152px;
-              height:40px;
+              height:38px;
               border-radius:4px;
               font-size: 14px;
-              line-height: 40px;
+              line-height: 38px;
               display:block;
               color: #00C4CD;
               text-align: center;
-              border:1px solid #00C4CD;
+              border:1px solid #00C4CD; 
             }
           }
           .ContactInformation {
@@ -2716,6 +2718,9 @@ export default {
                     }
                   }
                 }
+                .basecenter{
+                  margin-top: 33px;
+                }
 
                 .status {
                   padding: 3px 10px;
@@ -2797,49 +2802,56 @@ export default {
         }
       }
 
-      .intention {
-        text-align: left;
-        padding-top: 28px;
-        padding-bottom: 38px;
-        display: flex;
-        justify-content: flex-start;
-        align-items: baseline;
-        margin-left: 82px;
-        .title {
-          font-size: 14px;
-          font-weight: 700;
-          color: #42334d;
-          display: inline-block;
-        }
-        .intentList {
-          display: inline-block;
-          margin-left: 30px;
-          .intentionItem {
-            width: 100%;
-            text-align: left;
-            padding-bottom: 20px;
-            .position {
+    .intention {
+      text-align: left;
+      padding-top: 28px;
+      padding-bottom: 38px;
+      display: flex;
+      justify-content: flex-start;
+      margin-left: 82px;
+      .title {
+        font-size: 14px;
+        font-weight: 700;
+        color: #42334d;
+        display: inline-block;
+      }
+      .intentList {
+        display: inline-block;
+        margin-left: 30px;
+        width: 545px;
+        .intentionItem {
+          width: 100%;
+          text-align: left;
+          padding-bottom: 20px;
+          .whitesize{
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 460px;
+            float: left;
+          }
+          .position {
+            font-size: 14px;
+            color: rgba(92, 86, 93, 1);
+            margin-right: 10px;
+          }
+          .fields {
+            display: inline-block;
+            span {
               font-size: 14px;
-              color: rgba(92, 86, 93, 1);
-              margin-right: 10px;
+              color: #66666E;;
             }
-            .fields {
-              display: inline-block;
-              span {
-                font-size: 14px;
-                color: #66666E;;
-              }
-              // margin-right: 20px;
-            }
-            .price {
-              font-size: 14px;
-              color: #FF9E40;
-              font-weight: 700;
-              margin-left: 30px;
-            }
+          }
+          .price {
+            font-size: 14px;
+            color: #FF9E40;
+            font-weight: 700;
+            margin-left: 30px;
+            float: right;
           }
         }
       }
+    }
 
       .workExperience {
         margin-left: 82px;
@@ -2908,14 +2920,13 @@ export default {
               text-align: left;
               margin-top: 12px;
               span {
-                display: inline-block;
                 background: #E5F9FA;
                 padding: 2px 8px;
                 text-align: center;
                 color: #00C4CD;
                 font-size: 12px;
                 margin-right: 10px;
-                border-radius: 5px;
+                border-radius: 2px;
                 font-weight: 300;
               }
             }
@@ -3608,7 +3619,7 @@ export default {
               top: 20px;
               right: 0px;
               .bg{
-                color: #6E2296;
+                color: #00C4CD;
               }
               .circel{
                 width:14px;

@@ -32,7 +32,7 @@
                   </span>
                 </div>
                 <div class="msgUserInfo">
-                  <div class="basemsg">
+                  <div :class="['basemsg', nowResumeMsg.signature ? '' : 'basecenter']">
                     <span class="realName">{{nowResumeMsg.name}}</span>
                     <div class="lebalList">
                       <div class="lebalItem">
@@ -77,12 +77,14 @@
                   :key="item.position"
                   :style="index===nowResumeMsg.expects.length-1?'padding-bottom:0px;':''"
                 >
+                <div class="whitesize">
                   <span class="position">{{item.position}}&nbsp;|&nbsp;{{item.city}}</span>
                   <span v-if="item.fields.length>0">|</span>
                   <div style="margin-left:9px;display:inline-block;">
                     <div class="fields" v-for="(item1,index1) in item.fields" :key="index1">
                       <span>{{item1.field}}&nbsp;&nbsp;</span>
                     </div>
+                  </div>
                   </div>
                   <span class="price">{{item.salaryFloor}}k-{{item.salaryCeil}}k</span>
                 </div>
