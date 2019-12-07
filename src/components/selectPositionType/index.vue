@@ -4,6 +4,11 @@
       <slot>
         <div class="el-input" :class="{'is-disabled': disabled}">
           <div class="el-input__inner"><span v-if="!label"  class="input-placeholder-span">{{title}}</span>{{label}}</div>
+          <span class="el-input__suffix">
+            <span class="el-input__suffix-inner">
+              <i class="el-select__caret el-input__icon el-icon-arrow-down"></i>
+            </span>
+          </span>
         </div>
       </slot>
     </div>

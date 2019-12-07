@@ -134,7 +134,7 @@ export default class CourseList extends Vue {
     }
     formData = {
       company: '',
-      positionTypeId: 0,
+      positionTypeId: null,
       position: '',
       duty: '',
       startTime: '',

@@ -53,40 +53,49 @@
 
 
 .btn-box{
-  height:50px;
+  height: 50px;
   line-height: 50px;
-  font-size:16px;
-  font-weight:700;
+  font-size: 16px;
+  font-weight: 700;
   cursor: pointer;
   position: relative;
   margin-top: 48px;
-  .btn-pre{
-    width:126px;
-    height:50px;
-    background:rgba(255,255,255,1);
-    border-radius:4px 0px 0px 4px;
-    border:1px solid $bg-color-4;
+  text-align: center;
+  .btn-pre, .btn-confirm {
     box-sizing: border-box;
     display: inline-block;
-    color: $main-color-1;
     vertical-align: middle;
+    height: 50px;
+  }
+  .btn-pre{
+    width: 126px;
+    border-radius: 4px 0px 0px 4px;
+  }
+  .btn-pre.is-plain:hover, .btn-pre.is-plain {
+    background: #fff;
+    color: $main-color-1;
+    border-color: $border-color-2;
   }
   .btn-confirm{
-    width:240px;
-    height:50px;
-    background: $bg-color-4;
+    width: 240px;
     border-radius:0px 4px 4px 0px;
-    box-sizing: border-box;
-    display: inline-block;
-    color: white;
-    vertical-align: middle;
   }
-  .btn-confirm.full {
-    width: 100%;
+  .el-button {
+    padding: 16px 20px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  .el-button.full {
     border-radius: 4px;
+    margin-right: 8px;
+    width:366px;
+  }
+  .el-button+.el-button {
+    margin-left: 0;
   }
   .over-lay{
     position: relative;
+    display: flex;
     z-index: 2;
   }
   .mask{

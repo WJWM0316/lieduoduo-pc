@@ -133,6 +133,7 @@ export default {
       default: false
     },
     multipleBtn: Boolean, // multiple 类型的时候，显示按钮 | card 按钮
+    beforeTips: Boolean,
     cropper: {
       type: Boolean,
       default: false
@@ -247,7 +248,17 @@ export default {
       if (this.disabled) return
       if (this.multiple && this.multipleLading) return
       // console.log(this.$refs[this.eventKey])
-      this.$refs[this.eventKey].click()
+      if (this.beforeTips) {
+        this.$alert(`支持JPG、JPEG、GIF、PNG格式，文件小于${this.size}M`, '温馨提示', {
+          confirmButtonText: '确定',
+          type: 'warning',
+          center: true
+        }).then(() => {
+          this.$refs[this.eventKey].click()
+        })
+      } else {
+        this.$refs[this.eventKey].click()
+      }
     },
     // 生成本地图片链接
     renderImage (file) {
