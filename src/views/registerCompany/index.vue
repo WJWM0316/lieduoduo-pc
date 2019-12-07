@@ -1186,13 +1186,12 @@ export default {
 }
 #register {
   padding: 0;
-  background: url("../../assets/images/register-bg.png") no-repeat;
+  background: #00C4CD url("../../assets/images/register-bg.png") no-repeat center;
   z-index: 100;
   display: flex;
-  background-size: 100% 100%;
+  background-size: auto 100%;
   min-height: 100%;
   align-items: center;
-  // justify-content: center;
   flex-direction: column;
   .register {
     cursor: pointer;
@@ -1312,7 +1311,7 @@ export default {
           }
           .resetbg{
             background: #fff;
-            border: 1px solid #DDE1E0;
+            border: 1px solid #EDF1F0;
             width: 170px;
           }
           .con-r{

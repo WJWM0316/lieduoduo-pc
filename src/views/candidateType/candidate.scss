@@ -1594,14 +1594,13 @@
               color:#333333;
               // border:1px solid rgba(235,235,235,1);
               .info-select{
-                width: 254px;
                 height: 38px;
                 line-height: 38px;
                 color: #333;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
-                padding-left: 16px;
+                padding: 0px 14px;
                 border: 1px solid #DCDFE6;
                 border-radius: 4px;
               }
