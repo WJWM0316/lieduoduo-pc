@@ -120,7 +120,7 @@ $header-height-1: $page-b-header-height;
   margin: 0 auto;
 }
 .sc-wrapper {
-  color: $font-color-2;
+  color: #333333;
   float: right;
   .sc-wrapper-item {
     display: inline-block;
@@ -150,6 +150,9 @@ $header-height-1: $page-b-header-height;
     vertical-align: middle;
     margin: 0 0 0 12px;
   }
+  span{
+    color: #92929B;
+  }
 }
 .reddot{
   width:6px;
@@ -159,5 +162,12 @@ $header-height-1: $page-b-header-height;
   position: absolute;
   top: 24px;
   background:rgba(255,127,76,1);
+}
+</style>
+<style>
+@media screen and (max-width: 1400px) {
+  .page-header .head-contain {
+    padding-right: 30px;
+  }
 }
 </style>

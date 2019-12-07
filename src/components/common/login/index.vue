@@ -384,7 +384,7 @@ export default class loginForm extends Component {
       position: relative;
     }
     .el-icon-warning {
-      color: #ff7f4c;
+      color: #FF9E40;
       position: absolute;
       left: -24px;
       top: 50%;
@@ -576,7 +576,7 @@ export default class loginForm extends Component {
       h3 {
         font-size: 20px;
         font-weight: Medium;
-        color: #282828;
+        color: #333333;
         line-height: 28px;
         margin-top: 50px;
         margin-bottom: 16px;

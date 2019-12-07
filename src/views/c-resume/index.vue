@@ -69,10 +69,16 @@ export default {
   },
   mounted () {
     window.addEventListener('scroll', this.handleScroll)
+    if (!this.resume.uid && this.role.isJobhunter) {
+      this.$store.dispatch('getMyResume')
+    }
   },
   computed: {
     resume () {
       return this.$store.state.resume.myResume || {}
+    },
+    role () {
+      return this.$store.state.roleInfos || {}
     },
     // 记录到点击事件更新
     count () {

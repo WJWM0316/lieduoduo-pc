@@ -187,7 +187,7 @@ export default {
       border-radius:20px;
     }
     &::-webkit-scrollbar-thumb {
-      background:#BCBEC0;;
+      background:#DDE1E0;
       -webkit-border-radius: 20px;
       -moz-border-radius: 20px;
       border-radius:20px;
@@ -198,9 +198,9 @@ export default {
       i{
         font-size: 10px;
         color: #BCBEC0;;
-        margin-top: 16px;
+        top: 20px;
         position: absolute;
-        right: 16px;
+        right: 20px;
         cursor: pointer;
         transform: scale(0.8);
       }
@@ -235,7 +235,7 @@ export default {
         height:38px;
         line-height: 38px;
         font-size: 14px;
-        color: #282828;
+        color: #333333;
         overflow: hidden;
         margin-bottom:10px;
         background:rgba(255,255,255,1);
@@ -294,7 +294,7 @@ export default {
         border-radius:4px;
         padding-left: 14px;
         margin-bottom: 10px;
-        color: #282828;
+        color: #333333;
         position: relative;
         border:1px solid rgba(222,218,224,1);
         input{

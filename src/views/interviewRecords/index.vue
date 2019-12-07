@@ -167,7 +167,7 @@
                   </span>
                 </div>
                 <div class="msgUserInfo">
-                  <div class="basemsg">
+                  <div :class="['basemsg', nowResumeMsg.signature ? '' : 'basecenter']">
                     <span class="realName">{{nowResumeMsg.name}}</span>
                     <div class="lebalList">
                       <div class="lebalItem">
@@ -218,12 +218,14 @@
                   :key="item.position"
                   :style="index===nowResumeMsg.expects.length-1?'padding-bottom:0px;':''"
                 >
+                <div class="whitesize">
                   <span class="position">{{item.position}}&nbsp;|&nbsp;{{item.city}}</span>
-                  <span v-if="item.fields.length>0">|</span>
+                  <span v-if="item.fields.length>0" style="color:#5c565d">|</span>
                   <div style="margin-left:9px;display:inline-block;">
                     <div class="fields" v-for="(item1,index1) in item.fields" :key="index1">
                       <span>{{item1.field}}&nbsp;&nbsp;</span>
                     </div>
+                  </div>
                   </div>
                   <span class="price">{{item.salaryFloor}}k-{{item.salaryCeil}}k</span>
                 </div>
@@ -419,6 +421,7 @@
         <div class="close"><i @click="cancelshow()" class="iconfont icon-danchuang-guanbi"></i></div>
          <div class="content-info">
           <div class="title">{{pop.InterviewTitle}}</div>
+          <div class="applytext" v-show="pop.type === 'applyrecord'">{{pop.recordtext}}</div>
           <!-- 面试安排 -->
         <div class="arrange" v-if="pop.type === 'setinterinfo'">
           <div class="item">
@@ -671,14 +674,13 @@
           </div>
           <div class="explain" v-if="resonword">
               <div class="explaintitle">补充说明</div>
-              <div :class="['text', resonword ? 'noallow' : '']">
-                <input type="text" v-model="resonword" placeholder="请填写原因"/>
+              <div class="text">
+                <textarea :disabled="resonword" v-model="resonword" placeholder="请填写原因"></textarea>
               </div>
             </div>
           </div>
 
           <div class="selectposition" v-show="pop.type === 'applyrecord'">
-            <div class="applytext">{{pop.recordtext}}</div>
           <div class="selectitem" v-for="(item, i) in applyrecordList" :key="i" @click="selectapply(item, i)">
             <div class="position">
               <div class="close" v-show="item.isOnline === 2">关闭</div>
@@ -1671,19 +1673,19 @@ export default {
     },
     // 点击不合适
     selereson () {
-      this.pop = {
-        isShow: true,
-        Interview: true,
-        InterviewTitle: '选择不合适原因',
-        btntext: '保存',
-        type: 'inappropriate'
-      }
       getCommentReasonApi().then((res) => {
         let arr = res.data.data
         arr.map((v, k) => {
           v.cur = false
         })
         this.reasonlist = arr
+        this.pop = {
+          isShow: true,
+          Interview: true,
+          InterviewTitle: '选择不合适原因',
+          btntext: '保存',
+          type: 'inappropriate'
+        }
       })
     },
     ownerOp (status, uid) {
@@ -1774,7 +1776,7 @@ export default {
       line-height: 46px;
       float: left;
       margin: 0 32px;
-      color:rgba(98,98,98,1);
+      color: #626262;
       text-align: center;
     }
     .active{
@@ -1797,7 +1799,6 @@ export default {
       box-sizing: border-box;
       cursor: pointer;
       &:hover{
-        border: none;
         box-shadow:0px 10px 20px 0px rgba(0,0,0,0.1);
       }
       .bloTop {
@@ -1841,7 +1842,7 @@ export default {
           margin-left: 8px;
         }
         .topText2 {
-          color: #282828;
+          color: #333333;
         }
         .countdown{
           float: right;
@@ -1968,13 +1969,13 @@ export default {
                 max-width: 125px;
               }
               .intentionText {
-                color: #282828;
+                color: #333333;
               }
               .intentionText {
-                color: #282828;
+                color: #333333;
               }
               .intentionText2 {
-                color: #FF7F4C;
+                color: #FF9E40;
               }
             }
           }
@@ -2214,7 +2215,7 @@ export default {
         }
         p {
           font-size:16px;
-          color:rgba(98,98,98,1);
+          color: #626262;
           line-height:22px;
         }
       }
@@ -2231,7 +2232,7 @@ export default {
       top: 60px;
       transform: translate(-50%, 0%);
       .Numbering {
-        padding: 36px 20px 30px 50px;
+        padding: 28px 20px 30px 50px;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -2265,6 +2266,7 @@ export default {
               color: #42334d;
               width: 72px;
               height: 26px;
+              border-radius: 2px;
               background: rgba(237, 237, 237, 1);
               line-height: 26px;
               position: relative;
@@ -2491,20 +2493,20 @@ export default {
             padding-left: 22px;
             .title{
               font-size: 14px;
-              color: #282828;
+              color: #333333;
               margin-bottom: 16px;;
               font-weight: bold;
             }
             a{
               width:152px;
-              height:40px;
+              height:38px;
               border-radius:4px;
               font-size: 14px;
-              line-height: 40px;
+              line-height: 38px;
               display:block;
               color: #00C4CD;
               text-align: center;
-              border:1px solid #00C4CD;
+              border:1px solid #00C4CD; 
             }
           }
           .ContactInformation {
@@ -2587,7 +2589,7 @@ export default {
             border-radius:20px;
           }
           &::-webkit-scrollbar-thumb {
-            background:#BCBEC0;;
+            background:#DDE1E0;
             -webkit-border-radius: 20px;
             -moz-border-radius: 20px;
             border-radius:20px;
@@ -2607,7 +2609,7 @@ export default {
                 .magimg {
                   width: 88px;
                   height: 88px;
-                  border: 2px solid rgba(232, 233, 235, 1);
+                  border: 2px solid #EDF1F0;
                   border-radius: 50%;
                   vertical-align: middle;
                 }
@@ -2716,15 +2718,18 @@ export default {
                     }
                   }
                 }
+                .basecenter{
+                  margin-top: 33px;
+                }
 
                 .status {
-                  padding: 5px 9px 5px 10px;
-                  background: #efe9f4;
-                  color: #00C4CD;
+                  padding: 3px 10px;
+                  background: #E5F9FA;
+                  color: #03B3BB;
                   vertical-align: middle;
                   box-sizing: border-box;
                   font-size: 14px;
-                  line-height: 14px;
+                  line-height: 23px;
                   height: 23px;
                 }
 
@@ -2756,6 +2761,7 @@ export default {
               text-align: left;
               color: #92929B;;
               font-size: 13px;
+              line-height: 21px;
               .msg {
                 span {
                   font-size: 13px;
@@ -2775,14 +2781,14 @@ export default {
                 align-items: flex-start;
                 flex-wrap: wrap;
                 .iconItem {
-                  border: 1px solid rgba(230, 226, 237, 1);
+                  border: 1px solid #00C4CD;
                   background: #fff;
                   border-radius: 30px;
                   margin-right: 6px;
                   vertical-align: middle;
                   color: #00C4CD;
                   margin-bottom: 8px;
-                  font-weight: 300;
+                  font-weight: 400;
                   height: 22px;
                   padding: 1px 12px;
                   text-align: center;
@@ -2796,49 +2802,56 @@ export default {
         }
       }
 
-      .intention {
-        text-align: left;
-        padding-top: 28px;
-        padding-bottom: 38px;
-        display: flex;
-        justify-content: flex-start;
-        align-items: baseline;
-        margin-left: 82px;
-        .title {
-          font-size: 14px;
-          font-weight: 700;
-          color: #42334d;
-          display: inline-block;
-        }
-        .intentList {
-          display: inline-block;
-          margin-left: 30px;
-          .intentionItem {
-            width: 100%;
-            text-align: left;
-            padding-bottom: 20px;
-            .position {
+    .intention {
+      text-align: left;
+      padding-top: 28px;
+      padding-bottom: 38px;
+      display: flex;
+      justify-content: flex-start;
+      margin-left: 82px;
+      .title {
+        font-size: 14px;
+        font-weight: 700;
+        color: #42334d;
+        display: inline-block;
+      }
+      .intentList {
+        display: inline-block;
+        margin-left: 30px;
+        width: 545px;
+        .intentionItem {
+          width: 100%;
+          text-align: left;
+          padding-bottom: 20px;
+          .whitesize{
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 460px;
+            float: left;
+          }
+          .position {
+            font-size: 14px;
+            color: rgba(92, 86, 93, 1);
+            margin-right: 10px;
+          }
+          .fields {
+            display: inline-block;
+            span {
               font-size: 14px;
-              color: rgba(92, 86, 93, 1);
-              margin-right: 10px;
+              color: #66666E;;
             }
-            .fields {
-              display: inline-block;
-              span {
-                font-size: 14px;
-                color: #66666E;;
-              }
-              // margin-right: 20px;
-            }
-            .price {
-              font-size: 14px;
-              color: #ff7f4c;
-              font-weight: 700;
-              margin-left: 30px;
-            }
+          }
+          .price {
+            font-size: 14px;
+            color: #FF9E40;
+            font-weight: 700;
+            margin-left: 30px;
+            float: right;
           }
         }
       }
+    }
 
       .workExperience {
         margin-left: 82px;
@@ -2907,14 +2920,13 @@ export default {
               text-align: left;
               margin-top: 12px;
               span {
-                display: inline-block;
-                background: rgba(239, 233, 244, 1);
+                background: #E5F9FA;
                 padding: 2px 8px;
                 text-align: center;
                 color: #00C4CD;
                 font-size: 12px;
                 margin-right: 10px;
-                border-radius: 5px;
+                border-radius: 2px;
                 font-weight: 300;
               }
             }
@@ -2972,7 +2984,7 @@ export default {
     height: 42px;
     color: #fff;
     right: -79px;
-    top: 29px;
+    top: 19px;
     i{
       font-size: 30px!important;
     }
@@ -3090,13 +3102,15 @@ export default {
       .close{
         width: 100%;
         position: relative;
-        height: 26px;
+        height: 32px;
         i{
           font-size: 10px;
-          color: #BCBEC0;;
-          margin-top: 16px;
+          transform: scale(0.8);
+          color: #BCBEC0;
           position: absolute;
-          right: 16px;
+          right: 20px;
+          top: 20px;
+          cursor: pointer;
         }
       }
       .nullimg{
@@ -3129,17 +3143,24 @@ export default {
         text-align: center;
       }
         .content-info{
-          // padding-right: 4px;
         .title{
-          font-size:16px;
+          font-size: 16px;
           font-weight: bold;
-          width: 100%;
-          color:#333333;
-          padding: 4px 38px 20px 38px;
+          height: 24px;
+          line-height: 24px;
+          color: #333333;
+          margin: 0 0 20px 40px;
+        }
+        .applytext{
+          color:#92929B;
+          display: block;
+          line-height: 20px;
+          margin-bottom: 20px;
+          margin-top: -19px;
+          padding: 0 40px;
         }
         .arrange{
-          // width: 100%;
-          padding: 0 38px;
+          padding: 0 40px;
           .item{
             height: 40px;
             margin-bottom: 10px;
@@ -3161,12 +3182,13 @@ export default {
               color:#333333;
               // border:1px solid rgba(235,235,235,1);
               .info-select{
-                width: 262px;
                 height: 38px;
                 line-height: 38px;
                 color: #333;
                 overflow: hidden;
-                padding-left: 16px;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                padding: 0px 14px;
                 border: 1px solid #DCDFE6;
                 border-radius: 4px;
               }
@@ -3180,8 +3202,7 @@ export default {
           }
         }
         .selectaddress{
-          // width: 100%;
-          padding: 0 38px;
+          padding: 0 40px;
           max-height: 425px;
           overflow-y: scroll;
           &::-webkit-scrollbar {
@@ -3194,7 +3215,7 @@ export default {
             border-radius:20px;
             }
             &::-webkit-scrollbar-thumb {
-             background:#BCBEC0;;
+             background:#DDE1E0;
             -webkit-border-radius: 20px;
             -moz-border-radius: 20px;
             border-radius:20px;
@@ -3256,7 +3277,7 @@ export default {
         }
         .arrangeinfo{
           // width: 100%;
-          padding: 0 38px;
+          padding: 0 40px;
           margin-top: 4px;
           .item{
             line-height: 22px;
@@ -3269,7 +3290,7 @@ export default {
               height: 14px;
               float: left;
               i{
-                color: #CED7DC;
+                color: #BCBEC0;
                 font-size: 14px;
               }
             }
@@ -3291,7 +3312,7 @@ export default {
           }
           .detail{
             width: 100%;
-            margin-top: 48px;
+            margin-top: 36px;
             text-align: center;
             .detailtitle{
               font-size:18px;
@@ -3348,10 +3369,11 @@ export default {
                   height:42px;
                   float: left;
                   cursor: pointer;
-                  background:rgba(248,245,250,1);
+                  background: #F8FAFA;
                   border-radius:21px;
-                  margin-right: 18px;
+                  margin-right: 16px;
                   margin-top: 16px;
+                  margin-bottom: 10px;
                   .icon{
                     width:42px;
                     height:42px;
@@ -3376,8 +3398,9 @@ export default {
               width:352px;
               height:88px;
               margin-top: 16px;
-              background:rgba(251,250,252,1);
+              background:#F8FAFA;
               border-radius:8px;
+              margin-bottom: 10px;
               .status-icon{
                 width: 64px;
                 height: 64px;
@@ -3442,7 +3465,7 @@ export default {
         }
         .intertime{
           margin-top: 34px;
-          padding: 0 38px;
+          padding: 0 40px;
           .intertime_title{
             color:#333333;
             font-size:14px;
@@ -3496,9 +3519,8 @@ export default {
           }
         }
         .selectposition{
-          // width: 100%;
-          padding: 0 38px;
-          max-height: 425px;
+          padding: 0 40px;
+          max-height: 335px;
           overflow-y: scroll;
           &::-webkit-scrollbar {
             width: 4px;
@@ -3510,14 +3532,11 @@ export default {
             border-radius:20px;
             }
             &::-webkit-scrollbar-thumb {
-             background:#BCBEC0;;
+             background:#DDE1E0;
             -webkit-border-radius: 20px;
             -moz-border-radius: 20px;
             border-radius:20px;
             }
-          .applytext{
-            color:#92929B;
-          }
           .selectitem{
             height:69px;
             margin-top: 24px;
@@ -3553,7 +3572,7 @@ export default {
               }
               .money{
                 float: left;
-                color:rgba(255,127,76,1);
+                color:#FF9E40;
                 font-weight: bold;
                 line-height: 20px;
                 font-size: 14px;
@@ -3564,25 +3583,28 @@ export default {
             }
             .info{
               width: 100%;
-              color:rgba(98,98,98,1);
+              color: #66666E;
               font-size:12px;
               .address{
                 float: left;
-                background:rgba(248,248,248,1);
+                background: #F4F7F7;
                 padding: 4px 6px;
                 text-align: center;
                 margin-right: 8px;
+                border-radius: 2px;
               }
               .year{
                 float: left;
-                background:rgba(248,248,248,1);
+                background: #F4F7F7;
                 margin-right: 8px;
                 padding: 4px 6px;
+                border-radius: 2px;
               }
               .benke{
                 float: left;
-                background:rgba(248,248,248,1);
+                background: #F4F7F7;
                 padding: 4px 6px;
+                border-radius: 2px;
               }
               .hui{
                 color:#BCBEC0;
@@ -3596,7 +3618,7 @@ export default {
               top: 20px;
               right: 0px;
               .bg{
-                color: #6E2296;
+                color: #00C4CD;
               }
               .circel{
                 width:14px;
@@ -3609,43 +3631,44 @@ export default {
           }
         }
         .inappropriate{
-          // width: 100%;
-          padding: 0 38px;
+          padding: 0 40px;
           .resonitem{
-            width:108px;
-            height:30px;
-            line-height: 30px;
+            width:110px;
+            height:32px;
+            line-height: 32px;
             font-size:14px;
             text-align: center;
-            background:rgba(255,255,255,1);
+            background:#F4F7F7;
+            color:#6D696E;
             border-radius:16px;
             float: left;
-            margin-right: 8px;
+            margin-right: 11px;
             margin-bottom: 10px;
-            color:#92929B;
-            border:1px solid rgba(232,233,235,1);
           }
           .wachitem{
             width:110px;
             height:32px;
-            background:rgba(248,245,250,1);
-            border-radius:16px;
-            color:#66666E;
-            font-size: 14px;
-            float: left;
-            margin-right: 8px;
-            margin-bottom: 10px;
             line-height: 32px;
+            font-size:14px;
             text-align: center;
+            background:#F4F7F7;
+            color:#6D696E;
+            border-radius:16px;
+            float: left;
+            margin-right: 11px;
+            margin-bottom: 10px;
+          }
+          :nth-child(3n){
+            margin-right: 0px;
           }
           .resoncur{
-            border-color: #00C4CD;
-            color: #00C4CD;
+            background: #E5F9FA;
+            color: #03B3BB;
           }
         }
         .explain{
           // width: 100%;
-          padding: 0 38px;
+          padding: 0 40px;
           margin-top: 14px;
           .explaintitle{
             color:#66666E;
@@ -3658,13 +3681,16 @@ export default {
             padding: 10px 14px;
             background:rgba(255,255,255,1);
             border-radius:4px;
-            color:#282828;
+            color:#333333;
             border:1px solid rgba(239,233,244,1);
             textarea{
               width: 100%;
               height: 100%;
               &::placeholder{
                 color:#BCBEC0;;
+              }
+              &:disabled{
+                background: #fff;
               }
             }
           }
@@ -3673,8 +3699,7 @@ export default {
           }
         }
         .handler{
-          // width: 100%;
-          padding: 0 38px;
+          padding: 0 48px;
           margin-top: 52px;
           .cancel{
             width:78px;
@@ -3692,7 +3717,7 @@ export default {
           .save{
             width:108px;
             height:32px;
-            background:rgba(101,39,145,1);
+            background:#00C4CD;
             border-radius:4px;
             text-align: center;
             color:rgba(255,255,255,1);
@@ -3722,5 +3747,8 @@ export default {
 .item .el-input .el-input__inner{
   height: 40px !important;
   line-height: 40px !important;
+}
+.item .el-select .el-input .el-select__caret{
+  line-height: 40px!important;
 }
 </style>

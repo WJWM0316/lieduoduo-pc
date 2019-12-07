@@ -354,7 +354,7 @@ export default class resumeFourthPost extends Vue {
         border: none;
         height: 46px;
         line-height: 46px;
-        color: #282828;
+        color: #333333;
       }
       .start-time{
         width:176px;
