@@ -419,6 +419,7 @@
         <div class="close"><i @click="cancelshow()" class="iconfont icon-danchuang-guanbi"></i></div>
          <div class="content-info">
           <div class="title">{{pop.InterviewTitle}}</div>
+          <div class="applytext" v-show="pop.type === 'applyrecord'">{{pop.recordtext}}</div>
           <!-- 面试安排 -->
         <div class="arrange" v-if="pop.type === 'setinterinfo'">
           <div class="item">
@@ -677,8 +678,7 @@
             </div>
           </div>
 
-          <div class="selectposition fbiaoti" v-show="pop.type === 'applyrecord'">
-            <div class="applytext">{{pop.recordtext}}</div>
+          <div class="selectposition" v-show="pop.type === 'applyrecord'">
           <div class="selectitem" v-for="(item, i) in applyrecordList" :key="i" @click="selectapply(item, i)">
             <div class="position">
               <div class="close" v-show="item.isOnline === 2">关闭</div>
@@ -3140,6 +3140,14 @@ export default {
           color: #333333;
           margin: 0 0 20px 40px;
         }
+        .applytext{
+          color:#92929B;
+          display: block;
+          line-height: 20px;
+          margin-bottom: 20px;
+          margin-top: -19px;
+          padding: 0 40px;
+        }
         .arrange{
           padding: 0 40px;
           .item{
@@ -3168,6 +3176,8 @@ export default {
                 line-height: 38px;
                 color: #333;
                 overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
                 padding-left: 16px;
                 border: 1px solid #DCDFE6;
                 border-radius: 4px;
@@ -3180,9 +3190,6 @@ export default {
               }
             }
           }
-        }
-        .fbiaoti{
-          margin-top: -18px;
         }
         .selectaddress{
           padding: 0 40px;
@@ -3352,7 +3359,7 @@ export default {
                   height:42px;
                   float: left;
                   cursor: pointer;
-                  background:#F4F7F7;
+                  background: #F8FAFA;
                   border-radius:21px;
                   margin-right: 16px;
                   margin-top: 16px;
@@ -3381,7 +3388,7 @@ export default {
               width:352px;
               height:88px;
               margin-top: 16px;
-              background:rgba(251,250,252,1);
+              background:#F8FAFA;
               border-radius:8px;
               margin-bottom: 10px;
               .status-icon{
@@ -3501,12 +3508,9 @@ export default {
             }
           }
         }
-        .fbiaoti{
-          margin-top: -18px;
-        }
         .selectposition{
           padding: 0 40px;
-          max-height: 425px;
+          max-height: 335px;
           overflow-y: scroll;
           &::-webkit-scrollbar {
             width: 4px;
@@ -3523,12 +3527,6 @@ export default {
             -moz-border-radius: 20px;
             border-radius:20px;
             }
-          .applytext{
-            color:#92929B;
-            display: block;
-            height: 20px;
-            line-height: 20px;
-          }
           .selectitem{
             height:69px;
             margin-top: 24px;
@@ -3623,38 +3621,39 @@ export default {
           }
         }
         .inappropriate{
-          // width: 100%;
           padding: 0 40px;
           .resonitem{
-            width:107px;
-            height:30px;
-            line-height: 30px;
+            width:110px;
+            height:32px;
+            line-height: 32px;
             font-size:14px;
             text-align: center;
             background:#F4F7F7;
-            color:#66666E;
+            color:#6D696E;
             border-radius:16px;
             float: left;
-            margin-right: 8px;
+            margin-right: 11px;
             margin-bottom: 10px;
-            border:1px solid rgba(232,233,235,1);
           }
           .wachitem{
             width:110px;
             height:32px;
-            background:#F4F7F7;
-            border-radius:16px;
-            color:#66666E;
-            font-size: 14px;
-            float: left;
-            margin-right: 8px;
-            margin-bottom: 10px;
             line-height: 32px;
+            font-size:14px;
             text-align: center;
+            background:#F4F7F7;
+            color:#6D696E;
+            border-radius:16px;
+            float: left;
+            margin-right: 11px;
+            margin-bottom: 10px;
+          }
+          :nth-child(3n){
+            margin-right: 0px;
           }
           .resoncur{
-            border-color: #00C4CD;
-            color: #00C4CD;
+            background: #E5F9FA;
+            color: #03B3BB;
           }
         }
         .explain{
@@ -3738,5 +3737,8 @@ export default {
 .item .el-input .el-input__inner{
   height: 40px !important;
   line-height: 40px !important;
+}
+.item .el-select .el-input .el-select__caret{
+  line-height: 40px!important;
 }
 </style>

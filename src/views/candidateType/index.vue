@@ -474,6 +474,7 @@
         <div class="close"><i @click="cancelshow()" class="iconfont icon-danchuang-guanbi"></i></div>
         <div class="content-info">
         <div class="title">{{pop.InterviewTitle}}</div>
+        <div class="applytext" v-show="pop.type === 'applyrecord'">{{pop.recordtext}}</div>
         <!-- 面试安排 -->
         <div class="arrange" v-if="pop.type === 'setinterinfo'">
           <div class="item">
@@ -675,8 +676,7 @@
             </div>
           </div>
           <div style="padding-right:4px">
-        <div class="selectposition fbiaoti" v-show="pop.type === 'applyrecord'">
-            <div class="applytext">{{pop.recordtext}}</div>
+        <div class="selectposition" v-show="pop.type === 'applyrecord'">
             <div class="selectitem" v-for="(item, i) in applyrecordList" :key="i" @click="selectapply(item, i)">
             <div class="position">
               <div class="close" v-show="item.positionStatus === 0">关闭</div>
@@ -1995,5 +1995,8 @@ export default class CourseList extends Vue {
 .item .el-input .el-input__inner{
   height: 40px !important;
   line-height: 40px !important;
+}
+.item .el-select .el-input .el-select__caret{
+  line-height: 40px!important;
 }
 </style>
