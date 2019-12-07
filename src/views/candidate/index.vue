@@ -127,7 +127,7 @@
                   <img class="userIcon" :src="item.avatar.middleUrl" />
                   <div class="infoRight">
                     <div class="infoName textEllipsis">
-                      <span>{{item.jobhunterRealname || item.name}}</span>
+                      <span>{{item.jobhunterRealname}}</span>
                       <!-- <img v-else class="invisible2" src="https://attach.lieduoduo.ziwork.com/front-assets/images/invisible2.png"> -->
                     </div>
 
