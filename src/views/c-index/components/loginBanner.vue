@@ -3,8 +3,8 @@
     <div class="login-bg" v-if="!isLogin">
       <div class="main-center index-login-wrapper">
         <p class="position-number">
-          <span class="banner-text">高薪工作，就在猎多多</span>
-          <span class="banner-number"><span>{{total.coolCompanyNum}} 酷公司</span><span>{{total.goodChanceNum}} 好机会</span></span>
+          <span class="banner-text">{{total.coolCompanyNum}} 酷公司</span>
+          <span class="banner-number">{{total.goodChanceNum}} 好机会</span>
         </p>
         <div class="login-wrapper">
           <el-input class="login-phone-input el-input-radius2px" maxlength="11" placeholder="请输入手机号码" v-model="loginForm.mobile" size="medium" />
@@ -142,17 +142,21 @@ $index-login-height: 130px;
   .banner-text,.banner-number {
     text-align: center;
     height: 34px;
+    width: 230px;
     line-height: 34px;
     margin: 20px 0 12px;
   }
   .banner-text {
-    width: 196px;
+    position: relative;
   }
-  .banner-number {
-    width: 258px;
-    span + span {
-      padding-left: 12px;
-    }
+  .banner-text::after {
+    content: "";
+    position: absolute;
+    height: 20px;
+    top: 7px;
+    width: 1px;
+    background-color: #fff;
+    right: 0;
   }
 }
 .el-input /deep/ .el-input__inner {
