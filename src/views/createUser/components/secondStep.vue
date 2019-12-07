@@ -74,7 +74,7 @@
           </div>
         </div>
         <div class="formItem" @click="openMask">
-          <input maxlength="1000" disabled placeholder="请输入工作内容" v-model="formData.duty" />
+          <input maxlength="1000" readonly placeholder="请输入工作内容" v-model="formData.duty" />
           <div class="limit">
             <span>{{formData.duty.length}}</span>/<span>1000</span>
           </div>
