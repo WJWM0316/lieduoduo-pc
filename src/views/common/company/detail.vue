@@ -673,6 +673,7 @@ to {top:0px;}
         margin-bottom: 50px;
       }
       .surroundings{
+        margin-bottom: 50px;
         .surroundings-title{
           @extend %introductionTitle;
         }
@@ -687,7 +688,7 @@ to {top:0px;}
         }
       }
       .recruitmentTeam{
-        margin-top: 50px;
+        
         .recruitmentTeam-title{
           @extend %introductionTitle;
         }
