@@ -88,7 +88,7 @@
         <div class="guide" v-if="!toggleType">
             <div class="guide_header">
                 <img :src="cdnPath + 'guide_logo.png'"/>
-                <p>精英人才求职招聘神器</p>
+                <p>精英人才求职招聘平台</p>
             </div>
             <div class="text_wrap">
                 <div class="guide_text">
@@ -443,7 +443,6 @@ export default class loginForm extends Component {
     width: 560px;
     height: 458px;
     background: #fff;
-    box-shadow: 0px 8px 12px 0px #00B6BE;
     border-radius: 8px;
     position: relative;
     box-sizing: border-box;
@@ -803,7 +802,7 @@ export default class loginForm extends Component {
     .guide{
       width: 179px;
       height: 440px;
-      background: #FBFBFF;
+      background: $bg-color-1;
       position: absolute;
       top:0;
       left: -178px;
