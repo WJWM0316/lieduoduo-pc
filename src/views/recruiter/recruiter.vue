@@ -436,6 +436,7 @@ export default class CourseList extends Vue {
   catchRecruiter (index) {
     let query = {}
     this.jobList = []
+    this.jobNameList = []
     this.recruiterList.map((item, idx) => {
       if (idx === index) {
         item.active = true
