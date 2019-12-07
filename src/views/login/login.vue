@@ -2,9 +2,13 @@
   <div id="login">
     <div class="loginBox">
       <div class="login_left">
-        <img :src=" cdnPath + 'loginpage_left.png'" @click="$router.push('/index')" />
+        <img class="login_left_logo" :src="cdnPath + 'login_left_logo.png'"  @click="$router.push('/index')" />
+        <img class="loginpage_left" :src=" identity === 1 ? cdnPath + 'loginpage_left.png?' : cdnPath + 'loginpage_left_recruiter.png' " />
       </div>
-      <login-form id="loginForm" :loginType="loginType"></login-form>
+      <div class="login_right">
+        <login-form id="loginForm" @login-identity='loginIdentity' :loginType="loginType"></login-form>
+        <p class="loginForm-text">BOSS直聘战略投资 高端人才招聘平台</p>
+      </div>
     </div>
   </div>
 </template>
@@ -25,6 +29,10 @@ import loginForm from '@/components/common/login'
 export default class login extends Vue {
   loginType = 'msgLogin'
   cdnPath = `${process.env.VUE_APP_CDN_PATH}/images/`
+  identity = 1
+  loginIdentity (data) {
+    this.identity = data
+  }
   mounted () {
     let query = this.$route.query
     if (query.type) this.loginType = query.type
@@ -46,27 +54,48 @@ export default class login extends Vue {
   height: 100vh;
   box-sizing: border-box;
   width: 100%;
-  background: #00C4CD url(#{$image-cdn-url}/images/bg_loginpage.png) no-repeat;
-  background-size: 100% auto;
-  background-position: bottom;
+  background: #00C4CD url(#{$image-cdn-url}/images/bg_loginpage.jpg) no-repeat;
+  background-size: 1920px 900px;
+  background-position: center center;
   display: flex;
   align-items: center;
+  background-clip: padding-box;
   /*background-attachment:fixed;*/
   .loginBox {
     width: 1200px;
-    padding: 0 10px;
     box-sizing: border-box;
-    overflow: hidden;
     margin: 0 auto;
     display: flex;
-    justify-content: space-between;
-    padding-top: 50px;
+    justify-content: space-around;
+    align-items: center;
+    position: relative;
     .login_left{
-      width: 539px;
-      cursor: pointer;
-      img{
-        max-width: 100%;
-        max-height: 100%;
+      width: 616px;
+      height: 610px;
+      position: relative;
+      .login_left_logo{
+        cursor: pointer;
+        width: 158px;
+        position: absolute;
+        left: 50%;
+        top: 76px;
+        transform: translateX(-50%);
+      }
+      .loginpage_left{
+        width: 616px;
+      }
+    }
+    .login_right{
+      height: 458px;
+      position: relative;
+      .loginForm-text{
+        font-size: 14px;
+        line-height: 24px;
+        color: #ffffff;
+        position: absolute;
+        left: 50%;
+        bottom: -30px;
+        transform: translateX(-50%);
       }
     }
   }
