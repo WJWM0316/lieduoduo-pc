@@ -71,7 +71,7 @@ export default {
     height: 24px;
     line-height: 24px;
     color: #333333;
-    margin: 32px 0 20px 38px;
+    margin: 32px 0 20px 0px;
   }
   .desc{
     color: #66666E;;
