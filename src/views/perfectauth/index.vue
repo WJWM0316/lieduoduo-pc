@@ -378,7 +378,7 @@ export default {
           max-height:86px;
           background:rgba(255,252,240,1);
           border-radius:4px;
-          color: #FF7F4C;
+          color: #FF9E40;
           font-size: 14px;
           padding-left: 20px;
           padding-top: 14px;

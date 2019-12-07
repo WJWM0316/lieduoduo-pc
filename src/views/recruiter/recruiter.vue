@@ -64,7 +64,7 @@
       </ul>
 
       <div class="job_cont_none" v-else>
-        <img class="hint_icon" src="../../assets/images/ufo.png">
+        <img class="hint_icon" src="../../assets/images/fly.png">
         <div class="none_hint">当前没有招聘中职位~</div>
       </div>
 
@@ -703,7 +703,7 @@ export default class CourseList extends Vue {
         font-weight: 400;
         color: rgba(146, 146, 146, 1);
         &.audit {
-          color: #ff7f4c;
+          color: #FF9E40;
         }
       }
       .blo_center {

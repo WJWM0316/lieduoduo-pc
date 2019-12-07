@@ -1662,7 +1662,7 @@ export default {
         padding: 13px 19px 11px;
         background:rgba(255,252,240,1);
         border-radius:4px;
-        color: #FF7F4C;
+        color: #FF9E40;
         line-height: 1.5;
       }
     }
@@ -1855,7 +1855,7 @@ export default {
   color: #66666E;
 }
 .registerBox .el-form-item__label::before{
-  color: #FF7F4C!important;
+  color: #FF9E40!important;
   vertical-align: sub;
 }
 .registerBox .el-form-item__content{

@@ -671,8 +671,8 @@
           </div>
           <div class="explain" v-if="resonword">
               <div class="explaintitle">补充说明</div>
-              <div :class="['text', resonword ? 'noallow' : '']">
-                <input type="text" v-model="resonword" placeholder="请填写原因"/>
+              <div class="text">
+                <textarea :disabled="resonword" v-model="resonword" placeholder="请填写原因"></textarea>
               </div>
             </div>
           </div>
@@ -1973,7 +1973,7 @@ export default {
                 color: #333333;
               }
               .intentionText2 {
-                color: #FF7F4C;
+                color: #FF9E40;
               }
             }
           }
@@ -2833,7 +2833,7 @@ export default {
             }
             .price {
               font-size: 14px;
-              color: #ff7f4c;
+              color: #FF9E40;
               font-weight: 700;
               margin-left: 30px;
             }
@@ -3352,7 +3352,7 @@ export default {
                   height:42px;
                   float: left;
                   cursor: pointer;
-                  background:rgba(248,245,250,1);
+                  background:#F4F7F7;
                   border-radius:21px;
                   margin-right: 16px;
                   margin-top: 16px;
@@ -3564,7 +3564,7 @@ export default {
               }
               .money{
                 float: left;
-                color:rgba(255,127,76,1);
+                color:#FF9E40;
                 font-weight: bold;
                 line-height: 20px;
                 font-size: 14px;
@@ -3583,17 +3583,20 @@ export default {
                 padding: 4px 6px;
                 text-align: center;
                 margin-right: 8px;
+                border-radius: 2px;
               }
               .year{
                 float: left;
                 background: #F4F7F7;
                 margin-right: 8px;
                 padding: 4px 6px;
+                border-radius: 2px;
               }
               .benke{
                 float: left;
                 background: #F4F7F7;
                 padding: 4px 6px;
+                border-radius: 2px;
               }
               .hui{
                 color:#BCBEC0;
@@ -3639,7 +3642,7 @@ export default {
           .wachitem{
             width:110px;
             height:32px;
-            background:rgba(248,245,250,1);
+            background:#F4F7F7;
             border-radius:16px;
             color:#66666E;
             font-size: 14px;
@@ -3677,6 +3680,9 @@ export default {
               &::placeholder{
                 color:#BCBEC0;;
               }
+              &:disabled{
+                background: #fff;
+              }
             }
           }
           .noallow{
@@ -3702,7 +3708,7 @@ export default {
           .save{
             width:108px;
             height:32px;
-            background:rgba(101,39,145,1);
+            background:#00C4CD;
             border-radius:4px;
             text-align: center;
             color:rgba(255,255,255,1);

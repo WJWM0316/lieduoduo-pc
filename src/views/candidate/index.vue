@@ -111,7 +111,7 @@
 
             <div class="status">
               <div class="like_user">
-                <span :style="'color: #FF7F4C'" v-if="item.redDot">{{item.statusDesc}}</span>
+                <span :style="'color: #FF9E40'" v-if="item.redDot">{{item.statusDesc}}</span>
                 <span v-else>{{item.statusDesc}}</span>
               </div>
               </div>
@@ -780,12 +780,14 @@
               {{item}}
             </div>
           </div>
-          <div class="explain" v-if="resonword">
+
+            <div class="explain" v-if="resonword">
               <div class="explaintitle">补充说明</div>
-              <div :class="['text', resonword ? 'noallow' : '']">
-                <input type="text" v-model="resonword" placeholder="请填写原因"/>
+              <div class="text">
+                <textarea :disabled="resonword" v-model="resonword" placeholder="请填写原因"></textarea>
               </div>
             </div>
+
           </div>
           <div class="selectposition fbiaoti" v-show="pop.type === 'applyrecord'">
             <div class="applytext">{{pop.recordtext}}</div>
