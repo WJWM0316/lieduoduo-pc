@@ -70,12 +70,13 @@ export default {
       this.getCompanyList()
     },
     handleShowMore () {
-      if (!this.isLogin) {
-        this.$router.push('/login?type=msgLogin')
-      } else {
-        // this.$store.commit('guideQrcodePop', { switch: true, type: 'tocIndex' })
-        this.$router.push('/company')
-      }
+      this.$router.push('/company')
+      // if (!this.isLogin) {
+      //   this.$router.push('/login?type=msgLogin')
+      // } else {
+      //   // this.$store.commit('guideQrcodePop', { switch: true, type: 'tocIndex' })
+      //   this.$router.push('/company')
+      // }
     }
   },
   watch: {
