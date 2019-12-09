@@ -98,7 +98,7 @@ export default {
 .tabs-lists {
   border-bottom: 1px solid $border-color-1;
   .tab-item {
-    padding: 8px 16px;
+    padding: 8px 13px;
     background: $bg-color-5;
     color: $main-color-1;
     font-size: 14px;

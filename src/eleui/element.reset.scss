@@ -42,6 +42,7 @@
 .el-select-dropdown__item.hover, 
 .el-select-dropdown__item:hover, 
 .el-cascader-node:hover,
+.el-cascader-node:focus,
 .el-autocomplete-suggestion li:hover {
   background: $bg-color-5 !important;
 }
