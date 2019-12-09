@@ -129,6 +129,19 @@ export default {
           color: $title-color-2;
         }
       }
+      .el-input.input-onlyread {
+        cursor: pointer;
+        overflow: hidden;
+        height: $--input-height;
+        .input-onlyread-text {
+          display: inline-block;
+          @include ellipsis();
+          width: 87%;
+        }
+      }
+      .input-onlyread-form-item .el-form-item__content {
+        height: $--input-height;
+      }
     }
     .middle {
       position: relative;
@@ -157,5 +170,10 @@ export default {
       margin: 38px auto 20px;
     }
   }
+}
+</style>
+<style lang="scss">
+.resume-duty {
+  padding: 0 32px;
 }
 </style>

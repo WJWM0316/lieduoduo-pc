@@ -2,14 +2,17 @@
   <div class="c-resume-tabs">
     <div class="tab-header">
       <div class="tab-header-title" v-show="title">请填写{{title}}</div>
-      <el-button type="primary" plain size="small" :disabled="limit === list" round icon="iconfont icon-tianjiashijian" @click="handleCommand('add')">{{title}}</el-button>
+      <template v-if="additional">
+        <el-button type="primary" plain size="small" :disabled="additionalLimit === total - getListLength" round icon="iconfont icon-tianjiashijian" @click="handleCommand('add', {additional: true})">{{additionalTitle}}</el-button>
+      </template>
+      <el-button type="primary" plain size="small" :disabled="limit === getListLength" round icon="iconfont icon-tianjiashijian" @click="handleCommand('add', {})">{{title}}</el-button>
     </div>
-    <div class="tabs-lists" v-if="list > 1">
+    <div class="tabs-lists" v-if="list.length > 1">
       <template v-for="(item, index) in list">
-        <span class="tab-item" :class="{active: tabIndex === item}" :key="item" @click="hanldeChangeTab(item)">
-          <span><template v-if="tabIndex === item">{{title}}</template>
-          {{item  > 9 ? item  : '0'+ item}}</span>
-          <span class="iconfont icon-shanchu1" @click.stop="handleCommand('delete', item, index)" v-if="tabIndex === item"></span>
+        <span class="tab-item" :class="{active: tabIndex === index}" :key="index" @click="hanldeChangeTab(item , index)">
+          <span><template v-if="tabIndex === index">{{list[index].additional ? additionalTitle : title}}</template>
+          {{index  >= 9 ? index + 1  : '0'+ (index + 1)}}</span>
+          <span class="iconfont icon-shanchu1" @click.stop="handleCommand('delete', item, index)" v-if="tabIndex === index"></span>
         </span>
       </template>
     </div>
@@ -19,10 +22,9 @@
 export default {
   props: {
     title: String,
-
     list: {
-      type: Number,
-      default: 1
+      type: Array,
+      default: () => ([])
     },
     limit: {
       type: Number,
@@ -32,13 +34,31 @@ export default {
       required: true,
       type: Number,
       default: 1
+    },
+    additional: Boolean, // 附加
+    additionalTitle: String,
+    additionalLimit: {
+      type: Number,
+      default: 2
+    }
+  },
+  computed: {
+    getListLength () {
+      if (this.additional) {
+        return this.list.filter(val => !val.additional).length
+      } else {
+        return this.list.length
+      }
+    },
+    total () {
+      return this.list.length
     }
   },
   methods: {
-    hanldeChangeTab (item) {
-      if (this.tabIndex === item) return
-      this.$emit('update:tabIndex', item)
-      this.handleCommand('change', item)
+    hanldeChangeTab (item, index) {
+      if (this.tabIndex === index) return
+      this.$emit('update:tabIndex', index)
+      this.handleCommand('change', item, index)
     },
     handleCommand (type, value, index) {
       this.$emit('command', { type, value, index })

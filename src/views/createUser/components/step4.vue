@@ -4,6 +4,7 @@
     <el-form :model="form" ref="form" :rules="formRules">
       <el-form-item prop="cityNum">
         <el-cascader
+          placeholder="请选择期望城市"
           v-model="form.cityNum"
           :options="areas"
           :props="{

@@ -2,7 +2,7 @@
   <div class="step-wrapper">
     <tabs
       class="resume-tabs-wrapper"
-      :list="formList.length"
+      :list="formList"
       :tab-index.sync="tabIndex"
       @command="handleChangeTab"
       title="工作经历" />
@@ -48,6 +48,7 @@
     </el-form>
     <el-dialog
       title="工作内容"
+      :close-on-click-modal="false"
       custom-class="app-dialog"
       :visible.sync="visibleDialog"
       append-to-body
@@ -86,7 +87,7 @@ export default {
   components: { Tabs, SelectPositionType, DatePicker },
   computed: {
     currentForm () {
-      return this.formList[this.tabIndex - 1] || {}
+      return this.formList[this.tabIndex] || {}
     }
   },
   data () {
@@ -123,7 +124,7 @@ export default {
         labelIds: [{ required: true, message: '请选择职位技能标签', trigger: 'change' }],
         duty: [{ required: true, message: '请填写工作内容', trigger: 'blur' }, { min: 10, message: '工作内容最少输入10字 ，不允许输入超过1000字', trigger: 'blur' }]
       },
-      tabIndex: 1,
+      tabIndex: 0,
       formLoading: false,
       visibleDialog: false,
       loaded: false,
@@ -157,10 +158,10 @@ export default {
         if (results.length) this.formList = results
       })
     },
-    handleChangeTab ({ type, value, index }) {
+    handleChangeTab ({ type, index }) {
       if (type === 'add') {
         this.formList.push(JSON.parse(this.formJson))
-        this.tabIndex = this.formList.length
+        this.tabIndex = this.formList.length - 1
       }
       if (type === 'change') {
         window.clearTimeout(this.formTimer)
@@ -172,7 +173,7 @@ export default {
       }
       if (type === 'delete') {
         this.formList.splice(index, 1)
-        this.tabIndex = 1
+        this.tabIndex = 0
       }
     },
     selectedPosition (item) {
@@ -194,7 +195,7 @@ export default {
       try {
         for (let key in validList) {
           await validList[key].then(async key => {
-            this.tabIndex = Number(key) + 1
+            this.tabIndex = Number(key)
             await this.$nextTick()
             let valid = await this.$refs.form.validate()
             if (!valid) throw new Error('信息未填写完整')
@@ -241,24 +242,5 @@ export default {
 <style lang="scss" scoped>
 .el-form {
   margin-top: 20px;
-}
-.resume-duty {
-  padding: 0 32px;
-}
-
-.el-input.input-onlyread {
-  cursor: pointer;
-  overflow: hidden;
-  height: $--input-height;
-  .input-onlyread-text {
-    display: inline-block;
-    @include ellipsis();
-    width: 87%;
-  }
-}
-.input-onlyread-form-item {
-  & /deep/ .el-form-item__content {
-    height: $--input-height;
-  }
 }
 </style>
