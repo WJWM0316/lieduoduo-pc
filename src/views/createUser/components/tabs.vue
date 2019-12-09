@@ -78,7 +78,7 @@ export default {
 .tab-header {
   display: flex;
   align-items: flex-end;
-  margin-bottom: 18px;
+  padding-bottom: 18px;
   overflow: hidden;
   .tab-header-title {
     font-size: 24px;
