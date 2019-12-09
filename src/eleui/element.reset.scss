@@ -142,3 +142,12 @@ div.el-message {
 .el-date-editor span.el-range-separator{
   line-height: $--input-height - 8px;
 }
+
+/** el tag */
+.el-select__tags .el-tag.el-tag--info .el-tag__close{
+  color: #fff;
+}
+.el-select__tags .el-tag.el-tag--info .el-tag__close:hover {
+  color: #fff;
+  background-color: #BCBEC0;
+}

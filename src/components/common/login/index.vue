@@ -4,7 +4,7 @@
       <div class="login_cont" :class="{ toggleType: !toggleType}">
         <!-- 切换登录方式type -->
         <div class="login_type" v-if="toggleType && (type === 'msgLogin' || type === 'qrcodeLogin')" v-show="!guideCreateRecruiter">
-          <div class="login_text" @click="changetype">{{type === 'msgLogin' ? '二维码登录' : '短信验证登录'}}</div>
+          <div class="login_text" @click="changetype">{{type === 'msgLogin' ? '扫码登录' : '短信验证登录'}}</div>
           <div class="login-img">
             <img :src="cdnPath + (type === 'msgLogin' ? 'loginimg.png': 'loginimg_sms.png')" @click="changetype" />
           </div>
@@ -68,7 +68,7 @@
               </div>
               <div class="input_box">
                 <i class="input_img input_i iconfont icon-duanxinyanzheng" />
-                <input placeholder="请输入短信验证码" maxlength="4" v-model="cValue" />
+                <input placeholder="请输入短信验证码" v-model="cValue" />
                 <span class="msgText" @click="sms">{{text + (text !== '发送验证码' ? ' s' : '') }}</span>
               </div>
             </div>
@@ -88,20 +88,20 @@
         <div class="guide" v-if="!toggleType">
             <div class="guide_header">
                 <img :src="cdnPath + 'guide_logo.png'"/>
-                <p>精英人才招聘神器</p>
+                <p>精英人才求职招聘平台</p>
             </div>
             <div class="text_wrap">
                 <div class="guide_text">
-                    <i class="iconfont icon-haojihui"></i>
-                    <span>100000+好机会</span>
+                    <i class="iconfont icon-zhiwei zhiwei"></i>
+                    <span>找高薪</span>
                 </div>
                 <div class="guide_text">
-                    <i class="iconfont icon-qiye"></i>
-                    <span>4000+知名企业</span>
+                    <i class="iconfont icon-haojihui"></i>
+                    <span>约BOSS</span>
                 </div>
                 <div class="guide_text">
                     <i class="iconfont icon-weixin" style="font-size: 14px;"></i>
-                    <span>一键约面，急速入职</span>
+                    <span>直接面谈</span>
                 </div>
             </div>
         </div>
@@ -269,6 +269,7 @@ export default class loginForm extends Component {
   // 注册角色切换type
   toggle (type) {
     this.identity = type
+    this.$emit('login-identity', this.identity) // 将注册身份传递给父组件
   }
   checkMobile () {
     if (!mobileReg.test(this.mobile)) {
@@ -384,7 +385,7 @@ export default class loginForm extends Component {
       position: relative;
     }
     .el-icon-warning {
-      color: #ff7f4c;
+      color: #FF9E40;
       position: absolute;
       left: -24px;
       top: 50%;
@@ -442,7 +443,6 @@ export default class loginForm extends Component {
     width: 560px;
     height: 458px;
     background: #fff;
-    box-shadow: 0px 8px 12px 0px rgba(40, 40, 40, 0.2);
     border-radius: 8px;
     position: relative;
     box-sizing: border-box;
@@ -455,37 +455,42 @@ export default class loginForm extends Component {
       vertical-align: top;
       .login_text {
         font-size: 12px;
-        color: #92929B;;
-        width: 86px;
-        height: 20px;
+        color: $font-color-9;
+        padding: 0 6px 0 6px;
+        height: 24px;
         border-radius: 2px;
         background: #f6f6f6;
-        line-height: 20px;
-        margin-top: 15px;
+        line-height: 24px;
         display: inline-block;
         text-align: center;
         vertical-align: middle;
         position: relative;
+        top: 20px;
+        left: 12px;
+        border: 1px solid $border-color-1;
         &::after{
+          display: inline-block;
+          background: #f6f6f6;
           content: '';
           position: absolute;
-          left: 86px;
-          top: 6px;
-          width: 0px;
-          height: 0px;
-          border-width: 4px;
-          border-style: solid;
-          border-color: transparent transparent transparent #F6F6F6;
+          left: calc(100% - 2.5px);
+          top: 50%;
+          width: 5px;
+          height: 5px;
+          transform: translateY(-50%) rotate(45deg);
+          border: 1px solid $border-color-1;
+          border-left: 0;
+          border-bottom: 0;
         }
       }
       .login-img {
-        width: 86px;
-        height: 86px;
+        width: 112px;
+        height: 112px;
         cursor: pointer;
         display: inline-block;
         vertical-align: top;
         img {
-          width: 86px;
+          width: 112px;
         }
       }
     }
@@ -576,7 +581,7 @@ export default class loginForm extends Component {
       h3 {
         font-size: 20px;
         font-weight: Medium;
-        color: #282828;
+        color: #333333;
         line-height: 28px;
         margin-top: 50px;
         margin-bottom: 16px;
@@ -797,7 +802,7 @@ export default class loginForm extends Component {
     .guide{
       width: 179px;
       height: 440px;
-      background: #FBFBFF;
+      background: $bg-color-1;
       position: absolute;
       top:0;
       left: -178px;
@@ -817,19 +822,30 @@ export default class loginForm extends Component {
       .text_wrap{
           width: 146px;
           height: 104px;
-          margin-left: 26px;
+          margin-left: 42px;
           text-align: left;
           display: flex;
           flex-direction: column;
           justify-content: space-between;
-          i{
+          .guide_text{
+            height: 16px;
+            vertical-align: middle;
+            i{
               font-size: 16px;
               color: $main-color-1;
-              margin-right: 6px;
-          }
-          span{
+              margin-right: 10px;
+              line-height: 16px;
+              vertical-align: bottom;
+            }
+            span{
               font-size: 12px;
-              color: #6D696E;
+              color: $border-color-7;
+              font-weight: 400;
+              line-height: 16px;
+            }
+            .zhiwei{
+              font-size: 15px;
+            }
           }
         }
       }

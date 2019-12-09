@@ -32,7 +32,7 @@
     <div class="formItem2">
       <div class="start-time">
         <div v-if="!form.startTime" style="padding-left: 30px; color: #92929B;; font-weight: 300;">请选择开始时间</div>
-        <div v-else style="padding-left: 30px; color: #282828">{{form.startTime | date('YYYY-MM-DD')}}</div>
+        <div v-else style="padding-left: 30px; color: #333333">{{form.startTime | date('YYYY-MM-DD')}}</div>
         <i class="el-icon-caret-bottom defalut-position" id="startTime"></i>
         <el-date-picker
           v-model="form.startTime"
@@ -51,7 +51,7 @@
             至今
           </template>
         </div>
-        <div v-else style="padding-left: 30px; color: #282828">{{form.endTime | date('YYYY-MM-DD')}}</div>
+        <div v-else style="padding-left: 30px; color: #333333">{{form.endTime | date('YYYY-MM-DD')}}</div>
         <i class="el-icon-caret-bottom defalut-position" id="endTime"></i>
 
         <el-date-picker

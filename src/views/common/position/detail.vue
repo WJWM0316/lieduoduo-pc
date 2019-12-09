@@ -172,7 +172,8 @@ let that = null
           {
             address: this.infos.address,
             lat: this.infos.lat,
-            lng: this.infos.lng
+            lng: this.infos.lng,
+            doorplate: this.infos.doorplate
           }
         ]
       }

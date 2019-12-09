@@ -8,7 +8,7 @@
 						<img :src="item.logoInfo.smallUrl" alt="loading" class="logo">
 					</div>
 					<div class="frontend">
-						<p class="company-name">{{item.companyName}}</p>
+						<p class="company-name">{{item.companyShortname}}</p>
 					</div>
 					<div class="backend">
 						<div class="top">

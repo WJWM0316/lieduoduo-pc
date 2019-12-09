@@ -111,7 +111,7 @@
 
             <div class="status">
               <div class="like_user">
-                <span :style="'color: #FF7F4C'" v-if="item.redDot">{{item.statusDesc}}</span>
+                <span :style="'color: #FF9E40'" v-if="item.statusDesc === '未处理'">{{item.statusDesc}}</span>
                 <span v-else>{{item.statusDesc}}</span>
               </div>
               </div>
@@ -276,7 +276,7 @@
                   </span>
                 </div>
                 <div class="msgUserInfo">
-                  <div class="basemsg">
+                  <div :class="['basemsg', nowResumeMsg.signature ? '' : 'basecenter']">
                     <span class="realName">{{nowResumeMsg.name}}</span>
                     <div class="lebalList">
                       <div class="lebalItem">
@@ -328,12 +328,14 @@
                   :key="item.position"
                   :style="index===nowResumeMsg.expects.length-1?'padding-bottom:0px;':''"
                 >
+                <div class="whitesize">
                   <span class="position">{{item.position}}&nbsp;|&nbsp;{{item.city}}</span>
-                  <span v-if="item.fields.length>0">|</span>
+                  <span v-if="item.fields.length>0" style="color:#5c565d">|</span>
                   <div style="margin-left:9px;display:inline-block;">
                     <div class="fields" v-for="(item1,index1) in item.fields" :key="index1">
                       <span>{{item1.field}}&nbsp;&nbsp;</span>
                     </div>
+                  </div>
                   </div>
                   <span class="price">{{item.salaryFloor}}k-{{item.salaryCeil}}k</span>
                 </div>
@@ -534,6 +536,7 @@
         <div class="close"><i @click="cancelshow()" class="iconfont icon-danchuang-guanbi"></i></div>
         <div class="content-info">
         <div class="title">{{pop.InterviewTitle}}</div>
+        <div class="applytext" v-show="pop.type === 'applyrecord'">{{pop.recordtext}}</div>
         <!-- 面试安排 -->
         <div class="arrange" v-if="pop.type === 'setinterinfo'">
           <div class="item">
@@ -780,15 +783,16 @@
               {{item}}
             </div>
           </div>
-          <div class="explain" v-if="resonword">
+
+            <div class="explain" v-if="resonword">
               <div class="explaintitle">补充说明</div>
-              <div :class="['text', resonword ? 'noallow' : '']">
-                <input type="text" v-model="resonword" placeholder="请填写原因"/>
+              <div class="text">
+                <textarea :disabled="resonword" v-model="resonword" placeholder="请填写原因"></textarea>
               </div>
             </div>
+
           </div>
           <div class="selectposition" v-show="pop.type === 'applyrecord'">
-            <div class="applytext">{{pop.recordtext}}</div>
             <div class="selectitem" v-for="(item, i) in applyrecordList" :key="i" @click="selectapply(item, i)">
             <div class="position">
               <div class="close" v-show="item.positionStatus === 0">关闭</div>
@@ -1740,13 +1744,6 @@ export default class CourseList extends Vue {
             })
             this.applyrecordList = applylists
           } else {
-            this.pop = {
-              isShow: true,
-              Interview: true,
-              InterviewTitle: '选择不合适原因',
-              btntext: '保存',
-              type: 'inappropriate'
-            }
             // 大于61是结束后不满意
             if (res.data.data.interviewStatus === 58 || res.data.data.interviewStatus === 59) {
               getCommentReasonApi().then((res) => {
@@ -1755,6 +1752,13 @@ export default class CourseList extends Vue {
                   v.cur = false
                 })
                 this.reasonlist = arr
+                this.pop = {
+                  isShow: true,
+                  Interview: true,
+                  InterviewTitle: '选择不合适原因',
+                  btntext: '保存',
+                  type: 'inappropriate'
+                }
               })
             } else {
               getloadingReasonApi().then((res) => {
@@ -1763,6 +1767,13 @@ export default class CourseList extends Vue {
                   v.cur = false
                 })
                 this.reasonlist = arr
+                this.pop = {
+                  isShow: true,
+                  Interview: true,
+                  InterviewTitle: '选择不合适原因',
+                  btntext: '保存',
+                  type: 'inappropriate'
+                }
               })
             }
           }
@@ -2260,5 +2271,8 @@ export default class CourseList extends Vue {
 .item .el-input .el-input__inner{
   height: 40px !important;
   line-height: 40px !important;
+}
+.item .el-select .el-input .el-select__caret{
+  line-height: 40px!important;
 }
 </style>

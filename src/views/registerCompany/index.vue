@@ -1186,13 +1186,12 @@ export default {
 }
 #register {
   padding: 0;
-  background: url("../../assets/images/register-bg.png") no-repeat;
+  background: #00C4CD url("../../assets/images/register-bg.png") no-repeat center;
   z-index: 100;
   display: flex;
-  background-size: 100% 100%;
+  background-size: auto 100%;
   min-height: 100%;
   align-items: center;
-  // justify-content: center;
   flex-direction: column;
   .register {
     cursor: pointer;
@@ -1243,7 +1242,7 @@ export default {
     align-items: center;
     .box-title{
       font-size: 26px;
-      color: #282828;
+      color: #333333;
       height: 26px;
       line-height: 26px;
       font-weight: bold;
@@ -1279,24 +1278,25 @@ export default {
             align-items: center;
             display: flex;
             background: #f8fafa;
+            border-radius: 4px;
             .defaultimg{
               width: 86px;
               height: 62px;
               margin: 0 auto;
               margin-bottom: 27px;
               img{
-                width: 100%;
-                height: 100%;
+                max-width: 100%;
+                max-height: 100%;
               }
               .defaulttext{
                 margin-top: 10px;
                 display: flex;
                 line-height: 12px;
-                font-size: 12px;
+                font-size: 14px;
                 justify-content: center;
                 i{
                   color: #00C4CD;
-                  font-size: 12px;
+                  font-size: 14px;
                   margin-right: 6px;
                 }
                 span{
@@ -1311,6 +1311,8 @@ export default {
           }
           .resetbg{
             background: #fff;
+            border: 1px solid #EDF1F0;
+            width: 170px;
           }
           .con-r{
             float: right;
@@ -1454,7 +1456,7 @@ export default {
     }
     .auth-title{
       font-size: 26px;
-      color: #282828;
+      color: #333333;
       height: 26px;
       line-height: 26px;
       font-weight: bold;
@@ -1659,7 +1661,7 @@ export default {
         padding: 13px 19px 11px;
         background:rgba(255,252,240,1);
         border-radius:4px;
-        color: #FF7F4C;
+        color: #FF9E40;
         line-height: 1.5;
       }
     }
@@ -1669,7 +1671,7 @@ export default {
       background: #E8E9EB;
     }
     .apply-info{
-      padding: 14px 0px;
+      padding: 14px 0px 4px 0px;
       width: 418px;
       .info-item{
         font-size: 14px;
@@ -1698,7 +1700,7 @@ export default {
           }
         }
         .name{
-          color: #282828;
+          color: #333333;
           line-height: 52px;
           font-size: 14px;
           margin-left: 8px;
@@ -1804,7 +1806,7 @@ export default {
     .content-all{
       text-align: center;
       .title{
-        color: #282828;
+        color: #333333;
         font-size: 26px;
         font-weight: bold;
         margin-bottom: 30px;
@@ -1825,7 +1827,7 @@ export default {
         }
       }
       .s-desc{
-        color: #282828;
+        color: #333333;
         font-size: 14px;
         margin-bottom: 10px;
       }
@@ -1852,7 +1854,7 @@ export default {
   color: #66666E;
 }
 .registerBox .el-form-item__label::before{
-  color: #FF7F4C!important;
+  color: #FF9E40!important;
   vertical-align: sub;
 }
 .registerBox .el-form-item__content{

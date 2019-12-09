@@ -222,7 +222,7 @@ export default {
       font-weight:400;
       text-align: center;
       line-height: 58px;
-      color:#282828;
+      color:#333333;
     }
     .active{
       background: #fff;
@@ -244,7 +244,7 @@ export default {
     float: left;
     .authtitle{
       font-size: 24px;
-      color: #282828;
+      color: #333333;
       font-weight: bold;
       height: 32px;
       line-break: 32px;
@@ -378,7 +378,7 @@ export default {
           max-height:86px;
           background:rgba(255,252,240,1);
           border-radius:4px;
-          color: #FF7F4C;
+          color: #FF9E40;
           font-size: 14px;
           padding-left: 20px;
           padding-top: 14px;

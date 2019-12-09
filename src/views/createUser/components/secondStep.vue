@@ -38,7 +38,7 @@
         <div class="formItem2">
           <div class="start-time">
             <div v-if="!formData.startTime" style="padding-left: 30px; color: #92929B;; font-weight: 300;">请选择开始时间</div>
-            <div v-else style="padding-left: 30px; color: #282828">{{formData.startTime | date('YYYY-MM-DD')}}</div>
+            <div v-else style="padding-left: 30px; color: #333333">{{formData.startTime | date('YYYY-MM-DD')}}</div>
             <i class="el-icon-caret-bottom defalut-position" id="startTime"></i>
             <el-date-picker
               v-model="formData.startTime"
@@ -59,7 +59,7 @@
                 至今
               </template>
             </div>
-            <div v-else style="padding-left: 30px; color: #282828">{{formData.endTime | date('YYYY-MM-DD')}}</div>
+            <div v-else style="padding-left: 30px; color: #333333">{{formData.endTime | date('YYYY-MM-DD')}}</div>
             <i class="el-icon-caret-bottom defalut-position" id="endTime"></i>
             <el-date-picker
               v-model="formData.endTime"
@@ -74,7 +74,7 @@
           </div>
         </div>
         <div class="formItem" @click="openMask">
-          <input maxlength="1000" disabled placeholder="请输入工作内容" v-model="formData.duty" />
+          <input maxlength="1000" readonly placeholder="请输入工作内容" v-model="formData.duty" />
           <div class="limit">
             <span>{{formData.duty.length}}</span>/<span>1000</span>
           </div>

@@ -64,7 +64,7 @@
       </ul>
 
       <div class="job_cont_none" v-else>
-        <img class="hint_icon" src="../../assets/images/ufo.png">
+        <img class="hint_icon" src="../../assets/images/fly.png">
         <div class="none_hint">当前没有招聘中职位~</div>
       </div>
 
@@ -92,11 +92,11 @@
           <div class="pop_tit">分享职位</div>
           <img class="clo" src="../../assets/images/clo.png" @click="todoAction('cloPop2')">
           <p class="share_txt">使用「微信」扫描小程序码分享职位</p>
-          <img class="code" :src="shareSelectItem.qrCodeUrl">
+          <img class="code" :src="shareSelectItem.qrCodeUrl" v-if="shareSelectItem.qrCodeUrl">
+          <img class="code" src="@/assets/images/Floorplan.png" v-else>
           <p class="share_help_text" @mouseover="isHelpShow = true" @mouseout="isHelpShow = false">
             分享帮助
             <i class="iconfont icon-question-circle"></i>
-            <!-- <img class="ques_icon" src="../../assets/images/question-circle2.png"> -->
           </p>
         </div>
 
@@ -105,40 +105,6 @@
           <p class="share_txt">扫码 > 点击分享按钮</p>
           <img class="help_icon" src="../../assets/images/pic_share_help.png">
           <span class="triangle_border_left"></span>
-        </div>
-      </div>
-
-      <div class="messageBox" v-if="pop.type==='openJob'">
-        <img class="clo" src="../../assets/images/clo.png" @click="todoAction('cloPop')">
-        <div class="mb_main">
-          <div class="mb_head">
-            <img class="hint" src="../../assets/images/exclamation-circle.png">
-            <h3 class="mb_tit">二次确认提醒</h3>
-          </div>
-          <div class="mb_cont">
-            <p>确定重新开放该职位吗？</p>
-          </div>
-        </div>
-        <div class="btns">
-          <div class="btn cancel" @click="todoAction('cloPop')">取消</div>
-          <div class="btn true" @click="todoAction('openJob')">确定</div>
-        </div>
-      </div>
-
-      <div class="messageBox" v-if="pop.type==='closeJob'">
-        <img class="clo" src="../../assets/images/clo.png" @click="todoAction('cloPop')">
-        <div class="mb_main">
-          <div class="mb_head">
-            <img class="hint" src="../../assets/images/exclamation-circle.png">
-            <h3 class="mb_tit">确认提醒</h3>
-          </div>
-          <div class="mb_cont">
-            <p>关闭职位后，此职位不可被就职者查看和发起约面， 确认关闭吗？</p>
-          </div>
-        </div>
-        <div class="btns">
-          <div class="btn cancel" @click="todoAction('cloPop')">取消</div>
-          <div class="btn true" @click="todoAction('closeJob')">确定</div>
         </div>
       </div>
     </div>
@@ -151,7 +117,6 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import { getMyInfoApi } from '../../api/auth'
 import MessageDiggle from '../registerCompany/components/message.vue'
-import { getCompanyIdentityInfosApi } from 'API/register'
 import {
   getMyListApi,
   closePositionApi,
@@ -245,20 +210,21 @@ export default class CourseList extends Vue {
   isShowClassily = false; // 分类更多
   isShowTop = false; //
   opJob (type, id) {
-    this.pop.isShow = true
-    if (type === 'close') {
-      this.pop.type = 'closeJob'
-    } else if (type === 'open') {
-      this.pop.type = 'openJob'
-    }
-
-    this.jobSelectId = id
-  }
-  mounted () {
-    window.addEventListener('scroll', this.handleScroll)
-  }
-  destroyed () {
-    window.removeEventListener('scroll', this.handleScroll)
+    this.$confirm('关闭职位后，此职位不可被就职者查看和发起约面， 确认关闭吗？', '确认提醒', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning',
+      center: true
+    }).then(() => {
+      closePositionApi({ id: id }).then(() => {
+        this.$message({
+          type: 'success',
+          message: '职位已关闭'
+        })
+        this.getStatusTotal()
+        this.getPositionList()
+      })
+    }).catch(() => {})
   }
   init () {
     this.form = Object.assign(this.form, this.$route.query || {})
@@ -326,22 +292,6 @@ export default class CourseList extends Vue {
           }
         })
         break
-      case 'closeJob':
-        closePositionApi({ id: this.jobSelectId })
-          .then(() => {
-            this.$message({
-              type: 'success',
-              message: '职位已关闭'
-            })
-
-            this.pop = {
-              isShow: false,
-              type: ''
-            }
-            this.getStatusTotal()
-            this.getPositionList()
-          })
-        break
       case 'openJob':
         openPositionApi({ id: this.jobSelectId })
           .then(() => {
@@ -395,21 +345,6 @@ export default class CourseList extends Vue {
     this.$router.push({ name: 'perfectauth' })
   }
 
-  handleScroll () {
-    var scrollTop =
-      window.pageYOffset ||
-      document.documentElement.scrollTop ||
-      document.body.scrollTop
-    if (scrollTop > 155) {
-      this.searchBarFixed = true
-      if (scrollTop > 1500) {
-        this.isShowTop = true
-      }
-    } else {
-      this.searchBarFixed = false
-      this.isShowTop = false
-    }
-  }
   /**
    * 初始化表单、分页页面数据
    */
@@ -500,6 +435,8 @@ export default class CourseList extends Vue {
 
   catchRecruiter (index) {
     let query = {}
+    this.jobList = []
+    this.jobNameList = []
     this.recruiterList.map((item, idx) => {
       if (idx === index) {
         item.active = true
@@ -544,10 +481,6 @@ export default class CourseList extends Vue {
         item.active = false
       }
     })
-  }
-
-  toTop () {
-    document.documentElement.scrollTop = 0
   }
 
   openShare (index, id) {
@@ -625,7 +558,7 @@ export default class CourseList extends Vue {
         .job_classify {
           width: 100%;
           min-height: 62px;
-          background: rgba(248, 248, 248, 1);
+          background: #F8FAFA;
           padding: 20px 56px 5px 56px;
           display: flex;
           flex-direction: row;
@@ -636,7 +569,7 @@ export default class CourseList extends Vue {
           position: relative;
           &.job_classify2 {
             height: auto;
-            background: rgba(248, 248, 248, 1);
+            background: #F8FAFA;
             //padding-right: 100px;
             display: flex;
             flex-direction: row;
@@ -668,6 +601,7 @@ export default class CourseList extends Vue {
             white-space: nowrap;
             line-height: 20px;
             height: 20px;
+            border-radius: 2px;
             margin-bottom: 15px;
             &.more {
               position: absolute;
@@ -730,19 +664,18 @@ export default class CourseList extends Vue {
       box-sizing: border-box;
       border-bottom: 1px solid #f5f4f7;
       .blo_left {
-        max-width: 500px;
         text-align: left;
         line-height: 24px;
         font-size: 16px;
         font-weight: 700;
-        width: 254px;
+        width: 408px;
         .job_top {
           color: rgba(53, 64, 72, 1);
           margin-bottom: 8px;
           line-height: 24px;
         }
         .job_name {
-          max-width: 220px;
+          max-width: 260px;
           text-overflow: ellipsis;
           white-space: nowrap;
           overflow: hidden;
@@ -751,6 +684,10 @@ export default class CourseList extends Vue {
         .job_emolument {
           display: inline-block;
           margin-left: 8px;
+          max-width: 140px;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
         }
         .job_info {
           span {
@@ -772,7 +709,7 @@ export default class CourseList extends Vue {
         font-weight: 400;
         color: rgba(146, 146, 146, 1);
         &.audit {
-          color: #ff7f4c;
+          color: #FF9E40;
         }
       }
       .blo_center {

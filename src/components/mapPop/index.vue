@@ -5,7 +5,7 @@
         <template slot="title">
           <p class="address-text">
             <i class="iconfont icon-dizhi"></i>
-            <span>{{ item.address }}</span>
+            <span>{{ item.address }} {{ item.doorplate }}</span>
           </p>
         </template>
         <img class="mapImg" v-if="item.lat" :src="'https://apis.map.qq.com/ws/staticmap/v2/?size=750*147&center=' + item.lat + ',' + item.lng + '&zoom=15&key=TMZBZ-S72K6-66ISB-ES3XG-CVJC6-HKFZG&maptype=roadmap&markers=size:large|color:blue|'+ item.lat + ',' + item.lng" @click="addressAlert"/>
@@ -16,7 +16,7 @@
       <template slot="title">
         <p class="address-text">
           <i class="iconfont icon-dizhi"></i>
-          <span v-if="dialogVisible && activeName !== ''">{{ companyAddress[activeName].address }}</span>
+          <span v-if="dialogVisible && activeName !== ''">{{ companyAddress[activeName].address }} {{ companyAddress[activeName].doorplate }}</span>
         </p>
       </template>
       <div id="map" v-if="dialogVisible" style="width: 662px; height: 450px; border-radius: 0 0 8px 8px"></div>

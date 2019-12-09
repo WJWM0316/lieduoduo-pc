@@ -89,6 +89,7 @@ export default {
         })
     },
     TypeClick (item, index) {
+      if (this.typeActivation === index) return
       this.typeId = item.id
       this.page = 1
       this.typeActivation = index

@@ -105,7 +105,7 @@
                 <div  v-if="companyInformation.albumInfo.length === 1" class="surroundings-container" :style="'background: url(' + companyInformation.albumInfo[0].middleUrl + ')'"></div>
               </div>
             </div>
-            <div class="recruitmentTeam">
+            <div :class="['recruitmentTeam', companyInformation.albumInfo.length === 0 ? 'resetmar' : '']">
               <p class="recruitmentTeam-title">招聘团队</p>
               <div class="recruitmentTeam-mian">
                 <div class="recruitmentTeam-box" v-for="(item, index) in getCompanysTeamText" :key="index">
@@ -673,6 +673,7 @@ to {top:0px;}
         margin-bottom: 50px;
       }
       .surroundings{
+        margin-bottom: 50px;
         .surroundings-title{
           @extend %introductionTitle;
         }
@@ -687,7 +688,7 @@ to {top:0px;}
         }
       }
       .recruitmentTeam{
-        margin-top: 50px;
+        
         .recruitmentTeam-title{
           @extend %introductionTitle;
         }
@@ -753,6 +754,9 @@ to {top:0px;}
             font-size: 14px;
           }
         }
+      }
+      .resetmar{
+        margin-top: 0px;
       }
     }
   }
