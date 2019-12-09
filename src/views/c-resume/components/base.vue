@@ -380,7 +380,7 @@ $image-wrapper: 112px;
     @include ellipsis;
   }
   .user-company span.ellipsis {
-    max-width: 180px;
+    max-width: 150px;
   }
 
   .user-company,.user-name {
