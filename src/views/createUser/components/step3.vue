@@ -14,13 +14,13 @@
     <el-form :model="currentForm" ref="form" v-loading="formLoading" :rules="formRules">
       <template v-if="!currentForm.additional">
         <el-form-item prop="school">
-          <el-input maxlength="20" placeholder="请输入学校名称" v-model="currentForm.school">
+          <el-input maxlength="50" placeholder="请输入学校名称" v-model="currentForm.school">
             <span slot="suffix" class="input-value-length"><i>{{currentForm.school.length}}</i>/50</span>
           </el-input>
         </el-form-item>
         <el-form-item prop="major">
-          <el-input maxlength="20"  placeholder="请输入专业名称" v-model="currentForm.major">
-            <span slot="suffix" class="input-value-length"><i>{{currentForm.major.length}}</i>/20</span>
+          <el-input maxlength="50"  placeholder="请输入专业名称" v-model="currentForm.major">
+            <span slot="suffix" class="input-value-length"><i>{{currentForm.major.length}}</i>/50</span>
           </el-input>
         </el-form-item>
         <el-form-item prop="degree">
