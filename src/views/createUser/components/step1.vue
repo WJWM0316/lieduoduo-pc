@@ -131,6 +131,7 @@ export default {
               this.$emit('update:step', datas.startWorkYear === 0 ? 3 : 2)
             }
           }).catch(() => {
+            this.saveLoading = false
             this.avatarLoading = false
           })
         }
