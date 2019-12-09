@@ -37,7 +37,7 @@ export default {
     return {
       cdnPath: `${this.$cdnPath}/images/`,
       hasRequest: false,
-      step: 1 // 创建步数
+      step: 0 // 创建步数
     }
   },
   computed: {
@@ -113,6 +113,16 @@ export default {
           i {
             color: $main-color-1;
           }
+        }
+        .el-input__inner, .c-button-radio {
+          border: none !important;
+          background: $bg-color-1 !important;
+        }
+        .c-button-radio.active {
+          background: $bg-color-5 !important;
+        }
+        .separator, .c-picker-separator {
+          color: $title-color-2;
         }
       }
     }

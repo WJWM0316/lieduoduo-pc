@@ -32,7 +32,7 @@
           <div class="el-input__inner"><span class="input-placeholder-span" v-if="!currentForm.duty">请输入职位名称</span> <span class="input-onlyread-text">{{currentForm.duty}}</span></div>
             <span class="el-input__suffix input-onlyread__suffix">
               <span class="el-input__suffix-inner">
-                <span class="el-input__count input-value-length"><span class="el-input__count-inner"><i>{{currentForm.duty.length}}</i>/1000</span></span>
+                <span class="el-input__count input-value-length"><i>{{currentForm.duty.length}}</i>/1000</span>
               </span>
             </span>
           </div>
@@ -63,7 +63,7 @@
       </div>
       <div slot="footer">
         <el-button type="default" size="small" @click="visibleDialog = false">取消</el-button>
-        <el-button type="primary" size="small"  @click="visibleDialog = false; currentForm.duty = dialogText">保存</el-button>
+        <el-button type="primary" size="small"  @click="handleSaveDuty">保存</el-button>
       </div>
     </el-dialog>
   </div>
@@ -217,6 +217,14 @@ export default {
       } catch (e) {
         // console.log(e)
       }
+    },
+    handleSaveDuty () {
+      if (this.dialogText.length < 10) {
+        this.$message.warning('最少输入10字')
+        return
+      }
+      this.visibleDialog = false
+      this.currentForm.duty = this.dialogText
     }
   }
 }

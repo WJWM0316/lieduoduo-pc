@@ -95,7 +95,7 @@ export default {
           gender,
           avatar: avatarId,
           avatarUrl: avatar.smallUrl,
-          startWorkYear: !isNaN(startWorkYear) ? startWorkYear * 1000 : '',
+          startWorkYear: !isNaN(startWorkYear) && startWorkYear !== null ? startWorkYear * 1000 : '',
           birth: birth ? birth * 1000 : ''
         })
       })
@@ -157,7 +157,7 @@ export default {
 }
 .create-resume-radio /deep/ {
   .c-button-radio {
-    width: 172px;
+    width: 175px;
   }
 }
 .avater-empty .iconfont {

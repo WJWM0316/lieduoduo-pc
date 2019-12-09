@@ -277,6 +277,9 @@ export default {
     min-width: 100px;
     width: 100%;
   }
+  .el-input__inner, .el-input:focus {
+    outline: none;
+  }
 }
 </style>
 <style lang="scss">

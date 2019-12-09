@@ -147,6 +147,7 @@ export default {
         for (let key in validList) {
           await validList[key].then(async key => {
             this.tabIndex = Number(key) + 1
+            await this.$nextTick()
             let valid = await this.$refs.form.validate()
             if (!valid) throw new Error('信息未填写完整')
           })
