@@ -92,7 +92,7 @@ export default {
         const { startWorkYear, birth, avatar, avatarId, gender, name } = data.data
         Object.assign(this.form, {
           name,
-          gender,
+          gender: gender || 1,
           avatar: avatarId,
           avatarUrl: avatar.smallUrl,
           startWorkYear: !isNaN(startWorkYear) && startWorkYear !== null ? startWorkYear * 1000 : '',

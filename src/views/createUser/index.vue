@@ -93,12 +93,13 @@ export default {
       .step-wrapper {
         width: 450px;
         background: #fff;
-        border-radius: 8px;
+        border-radius: 16px;
         padding: 50px 40px 40px;
         box-sizing: border-box;
         position: absolute;
         left: 50%;
         transform: translateX(-50%);
+        box-shadow: $shadow-3;
         .el-form {
           position: relative;
           width: 100%;
