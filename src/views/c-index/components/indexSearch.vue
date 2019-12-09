@@ -74,7 +74,7 @@ export default {
           const reslutes = data.data || []
           cb(reslutes.map((val, index) => ({ value: val, id: index })))
         })
-      }, 50)
+      }, 200)
     },
     // 选择查询到的数据
     handleSelect (value) {

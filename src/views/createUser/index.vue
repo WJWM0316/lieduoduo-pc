@@ -69,10 +69,10 @@ export default {
       searchResumeStepApi().then(({ data }) => {
         this.hasRequest = true
         let stepData = data.data || {}
-        let userInfo = this.$store.getters.userInfo
         const { card: { name, avatar, startWorkYear }, step } = stepData
-        userInfo.name = name
-        userInfo.avatar = avatar
+        let userInfo = this.$store.getters.userInfo
+        userInfo.realname = name
+        userInfo.avatarInfo = avatar
         this.$store.dispatch('setUserInfo', userInfo)
         if (step > 4) {
           this.$router.replace('/index')

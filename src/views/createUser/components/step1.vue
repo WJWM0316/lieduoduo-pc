@@ -127,6 +127,11 @@ export default {
           setResumeFirstApi(datas).then(({ data }) => {
             this.saveLoading = false
             if (data.httpStatus === 200) {
+              let userInfo = this.$store.getters.userInfo
+              userInfo.realname = datas.name
+              userInfo.avatarId = datas.avatar
+              userInfo.avatarInfo.smallUrl = datas.avatarUrl
+              this.$store.dispatch('setUserInfo', userInfo)
               this.$emit('update:skip', datas.startWorkYear === 0 ? 2 : null)
               this.$emit('update:step', datas.startWorkYear === 0 ? 3 : 2)
             }

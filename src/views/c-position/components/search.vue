@@ -159,7 +159,7 @@ export default {
           const reslutes = data.data || []
           cb(reslutes.map((val, index) => ({ value: val, id: index })))
         })
-      }, 50)
+      }, 200)
     },
     handleScroll () {
       // 得到页面滚动的距离
