@@ -66,9 +66,14 @@ export default {
 .el-button--primary.is-plain {
   background: #fff;
 }
-.el-button--primary.is-plain:hover {
+.el-button--primary.is-plain:hover, .el-button--primary.is-plain:focus {
   background: $bg-color-5;
   color: $main-color-1;
+}
+.el-button--primary.is-plain.is-disabled:hover  {
+  color: #66dce1;
+  background: #fff;
+  border-color: #ccf3f5;
 }
 .tab-header {
   display: flex;

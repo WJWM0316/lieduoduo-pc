@@ -2,7 +2,7 @@
   <div class="c-date-picker" :class="{'c-date-multiple': !single}">
     <div class="el-select">
       <el-popover
-        placement="bottom"
+        placement="bottom-start"
         width="324"
         popper-class="popover-date"
         v-model="startTimePopStatus"
@@ -33,7 +33,7 @@
       <span class="c-picker-separator">{{separator}}</span>
       <div class="el-select">
         <el-popover
-          placement="bottom"
+          placement="bottom-start"
           width="324"
           v-model="endTimePopStatus"
           popper-class="popover-date"
