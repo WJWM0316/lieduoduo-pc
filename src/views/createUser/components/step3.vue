@@ -10,7 +10,7 @@
     <el-form :model="currentForm" ref="form" v-loading="formLoading" :rules="formRules">
       <el-form-item prop="school">
         <el-input maxlength="20" placeholder="请输入学校名称" v-model="currentForm.school">
-          <span slot="suffix" class="input-value-length"><i>{{currentForm.school.length}}</i>/20</span>
+          <span slot="suffix" class="input-value-length"><i>{{currentForm.school.length}}</i>/50</span>
         </el-input>
       </el-form-item>
       <el-form-item prop="major">
@@ -29,7 +29,7 @@
         </el-select>
       </el-form-item>
       <el-form-item prop="times">
-        <date-picker v-model="currentForm.times" separator="~" :single="false" placeholder="开始日期" end-placeholder="结束日期"  />
+        <date-picker v-model="currentForm.times" separator="~" :single="false" placeholder="请选择开始时间" end-placeholder="请选择结束时间"  />
       </el-form-item>
       <div class="btn-box">
         <div class="over-lay">
@@ -45,12 +45,14 @@
 import Tabs from './tabs'
 import DatePicker from '@/views/c-resume/components/datePicker'
 import { getDegreeAllListsApi, getResumeThirdStepApi, setResumeThirdApi } from '@/api/putIn'
+import { schoolNameReg } from '@/util/fieldRegular.js'
 export default {
   props: {
     step: {
       type: Number,
-      default: 2
-    }
+      default: 3
+    },
+    skip: Number
   },
   components: { Tabs, DatePicker },
   computed: {
@@ -59,19 +61,26 @@ export default {
     }
   },
   data () {
+    const schoolNameValidate = (rule, value, callback) => {
+      if (schoolNameReg.test(value)) {
+        callback()
+      } else {
+        callback(new Error('学校名称需为2-50个字'))
+      }
+    }
     return {
       formList: [
         {
           school: '',
           times: [],
           major: '',
-          degree: '',
+          degree: 25,
           startTime: '',
           endTime: ''
         }
       ],
       formRules: {
-        school: [{ required: true, message: '请填写学校名称', trigger: 'blur' }],
+        school: [{ required: true, message: '请填写学校名称', trigger: 'blur' }, { validator: schoolNameValidate, trigger: 'blur' }],
         degree: [{ required: true, type: 'number', message: '请填写学历', trigger: 'blur' }],
         times: [{ required: true, type: 'array', message: '请选择持续时间段', trigger: 'change' }],
         major: [{ required: true, message: '请填写专业信息', trigger: 'blur' }]
@@ -135,7 +144,7 @@ export default {
       getDegreeAllListsApi().then(res => (this.degreeAllLists = res.data.data))
     },
     handlePrev () {
-      this.$emit('update:step', 2)
+      this.$emit('update:step', this.skip === 2 ? 1 : 2)
     },
     async handleSubmit () {
       if (!this.loaded) return

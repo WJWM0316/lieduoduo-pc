@@ -79,6 +79,7 @@ import Wrapper from './wrapper'
 import { Degree } from '@/config/vars'
 import DatePicker from './datePicker'
 import { addEducation, setEducation, getAllEducation, deleteEducation } from 'API/resume'
+import { schoolNameReg } from '@/util/fieldRegular.js'
 export default {
   components: { Wrapper, DatePicker },
   props: {
@@ -95,6 +96,13 @@ export default {
     }
   },
   data () {
+    const schoolNameValidate = (rule, value, callback) => {
+      if (schoolNameReg.test(value)) {
+        callback()
+      } else {
+        callback(new Error('学校名称需为2-50个字'))
+      }
+    }
     return {
       isAdd: true,
       degree: Degree,
@@ -106,7 +114,7 @@ export default {
         experience: ''
       },
       formRules: {
-        school: [{ required: true, message: '请填写学校名称', trigger: 'blur' }],
+        school: [{ required: true, message: '请填写学校名称', trigger: 'blur' }, { validator: schoolNameValidate, trigger: 'blur' }],
         degree: [{ required: true, type: 'number', message: '请填写学历', trigger: 'blur' }],
         times: [{ required: true, type: 'array', message: '请选择持续时间段', trigger: 'change' }],
         major: [{ required: true, message: '请填写专业信息', trigger: 'blur' }]

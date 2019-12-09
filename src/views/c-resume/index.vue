@@ -206,6 +206,9 @@ export default {
     margin-bottom: 8px;
     color: $title-color-1;
   }
+  .el-input.is-disabled .el-input__inner {
+    background: #F0F3F5;
+  }
   span.ellipsis {
     display: inline-block;
     max-width: 180px;

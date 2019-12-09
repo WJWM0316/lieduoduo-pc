@@ -23,8 +23,8 @@
         </c-picture>
       </el-form-item>
       <el-form-item prop="name" style="padding-top: 26px;">
-        <el-input placeholder="请输入真实姓名" v-model="form.name" class="default" maxlength="10">
-          <span slot="suffix" class="input-value-length"><i>{{form.name.length}}</i>/10</span>
+        <el-input placeholder="请输入真实姓名" v-model="form.name" class="default" maxlength="20">
+          <span slot="suffix" class="input-value-length"><i>{{form.name.length}}</i>/20</span>
         </el-input>
       </el-form-item>
       <el-form-item prop="gender">
@@ -51,15 +51,24 @@ import DatePicker from '@/views/c-resume/components/datePicker'
 import ButtonRadio from '@/views/c-resume/components/buttonRadio'
 import { Gender } from '@/config/vars'
 import { setResumeFirstApi, getResumeFirstApi } from '@/api/putIn'
+import { userNameReg } from '@/util/fieldRegular.js'
 export default {
   props: {
     step: {
       type: Number,
       default: 1
-    }
+    },
+    skip: Number
   },
   components: { CPicture, DatePicker, ButtonRadio },
   data () {
+    const userNameValidate = (rule, value, callback) => {
+      if (userNameReg.test(value)) {
+        callback()
+      } else {
+        callback(new Error('姓名需为2-20个汉字或英文'))
+      }
+    }
     return {
       form: {
         avatar: null,
@@ -74,7 +83,7 @@ export default {
       loaded: false,
       gender: Gender,
       formRules: {
-        name: [{ required: true, message: '请填写姓名', trigger: 'blur' }],
+        name: [{ required: true, message: '请填写姓名', trigger: 'blur' }, { validator: userNameValidate, trigger: 'blur' }],
         gender: [{ required: true, type: 'number', message: '请选择性别', trigger: 'change' }],
         birth: [{ required: true, message: '请选择出生年月', trigger: 'change' }],
         startWorkYear: [{ required: true, message: '请选择工作年份', trigger: 'change' }]
@@ -117,7 +126,10 @@ export default {
           this.saveLoading = true
           setResumeFirstApi(datas).then(({ data }) => {
             this.saveLoading = false
-            if (data.httpStatus === 200) this.$emit('update:step', 2)
+            if (data.httpStatus === 200) {
+              this.$emit('update:skip', datas.startWorkYear === 0 ? 2 : null)
+              this.$emit('update:step', datas.startWorkYear === 0 ? 3 : 2)
+            }
           }).catch(() => {
             this.avatarLoading = false
           })

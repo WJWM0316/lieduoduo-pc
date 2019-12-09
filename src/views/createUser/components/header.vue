@@ -49,7 +49,7 @@ export default {
   methods: {
     handleClick (e) {
       if (e === 'out') {
-        this.$store.dispatch('logoutApi', {curPage: 1})
+        this.$store.dispatch('logoutApi', { curPage: 0 })
       }
     }
   }

@@ -140,6 +140,7 @@ import DatePicker from './datePicker'
 import Wrapper from './wrapper'
 import ButtonRadio from './buttonRadio'
 import { JobStatus, Gender } from '@/config/vars'
+import { userNameReg } from '@/util/fieldRegular.js'
 export default {
   props: {
     propClass: String,
@@ -168,6 +169,13 @@ export default {
     }
   },
   data () {
+    const userNameValidate = (rule, value, callback) => {
+      if (userNameReg.test(value)) {
+        callback()
+      } else {
+        callback(new Error('姓名需为2-20个汉字或英文'))
+      }
+    }
     return {
       form: {
         avatarUrl: '',
@@ -186,7 +194,7 @@ export default {
         lastPosition: ''
       },
       formRules: {
-        name: [{ required: true, message: '请填写姓名', trigger: 'blur' }],
+        name: [{ required: true, message: '请填写姓名', trigger: 'blur' }, { validator: userNameValidate, trigger: 'blur' }],
         gender: [{ required: true, type: 'number', message: '请选择性别', trigger: 'change' }],
         birth: [{ required: true, message: '请选择出生年月', trigger: 'change' }],
         startWorkYear: [{ required: true, message: '请选择工作年份', trigger: 'change' }],

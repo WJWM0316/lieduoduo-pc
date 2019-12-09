@@ -8,28 +8,29 @@
       title="工作经历" />
     <el-form :model="currentForm" ref="form" :rules="formListRules" v-loading="formLoading">
       <el-form-item prop="company">
-        <el-input maxlength="20" placeholder="请输入公司名称" v-model="currentForm.company">
-          <span slot="suffix" class="input-value-length"><i>{{currentForm.company.length}}</i>/20</span>
+        <el-input maxlength="50" placeholder="请输入公司名称" v-model="currentForm.company">
+          <span slot="suffix" class="input-value-length"><i>{{currentForm.company.length}}</i>/50</span>
         </el-input>
       </el-form-item>
       <el-form-item prop="positionTypeId">
         <select-position-type
+          title="请选择职位类型"
           v-model.number="currentForm.positionTypeId"
           :label="currentForm.positionType"
           @on-selected="selectedPosition">
         </select-position-type>
       </el-form-item>
-      <el-form-item prop="position">
+      <el-form-item ref="positionForm" prop="position">
         <el-input maxlength="20" placeholder="请输入职位名称" v-model="currentForm.position">
           <span slot="suffix" class="input-value-length"><i>{{currentForm.position.length}}</i>/20</span>
         </el-input>
       </el-form-item>
        <el-form-item prop="times">
-        <date-picker v-model="currentForm.times" separator="~" :single="false" placeholder="开始日期" end-placeholder="结束日期"  />
+        <date-picker v-model="currentForm.times" separator="~" :single="false" placeholder="请选择开始时间" end-placeholder="请选择结束时间"  />
       </el-form-item>
-      <el-form-item prop="duty" class="input-onlyread-form-item">
+      <el-form-item prop="duty" class="input-onlyread-form-item" ref="dutyForm">
         <div class="el-input input-onlyread" @click="visibleDialog = true; dialogText = currentForm.duty ">
-          <div class="el-input__inner"><span class="input-placeholder-span" v-if="!currentForm.duty">请输入职位名称</span> <span class="input-onlyread-text">{{currentForm.duty}}</span></div>
+          <div class="el-input__inner"><span class="input-placeholder-span" v-if="!currentForm.duty">请输入工作内容</span> <span class="input-onlyread-text">{{currentForm.duty}}</span></div>
             <span class="el-input__suffix input-onlyread__suffix">
               <span class="el-input__suffix-inner">
                 <span class="el-input__count input-value-length"><i>{{currentForm.duty.length}}</i>/1000</span>
@@ -79,7 +80,8 @@ export default {
     step: {
       type: Number,
       default: 2
-    }
+    },
+    skip: Number
   },
   components: { Tabs, SelectPositionType, DatePicker },
   computed: {
@@ -175,6 +177,10 @@ export default {
     },
     selectedPosition (item) {
       this.currentForm.positionType = item.name
+      this.currentForm.position = this.currentForm.position || item.name
+      if (this.$refs.positionForm) {
+        this.$refs.positionForm.$emit('el.form.blur', item.name)
+      }
     },
     handlePrev () {
       this.$emit('update:step', 1)
@@ -225,6 +231,9 @@ export default {
       }
       this.visibleDialog = false
       this.currentForm.duty = this.dialogText
+      if (this.$refs.dutyForm) {
+        this.$refs.dutyForm.$emit('el.form.blur', this.dialogText)
+      }
     }
   }
 }

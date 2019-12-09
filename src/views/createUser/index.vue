@@ -12,7 +12,7 @@
       </div>
      </div>
      <keep-alive>
-        <component :is="activeComponent" :step.sync="step" />
+        <component :is="activeComponent" :step.sync="step" :skip.sync="skipStep"/>
       </keep-alive>
    </div>
  </div>
@@ -37,7 +37,8 @@ export default {
     return {
       cdnPath: `${this.$cdnPath}/images/`,
       hasRequest: false,
-      step: 0 // 创建步数
+      step: 0, // 创建步数
+      skipStep: null // 需要跳过的步数
     }
   },
   computed: {
@@ -67,12 +68,14 @@ export default {
     getStep () {
       searchResumeStepApi().then(({ data }) => {
         this.hasRequest = true
-        let stepData = data.data
+        let stepData = data.data || {}
         let userInfo = this.$store.getters.userInfo
-        userInfo.name = stepData.card.name
-        userInfo.avatar = stepData.card.avatar
+        const { card: { name, avatar, startWorkYear }, step } = stepData
+        userInfo.name = name
+        userInfo.avatar = avatar
         this.$store.dispatch('setUserInfo', userInfo)
-        this.step = stepData.step >= 4 ? 4 : stepData.step
+        this.step = step >= 4 ? 4 : step === 2 && startWorkYear === 0 ? 3 : step
+        this.skipStep = startWorkYear === 0 ? 2 : null
       })
     }
   }
