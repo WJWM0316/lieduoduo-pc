@@ -88,7 +88,7 @@ export default {
   }
   .el-button {
     margin-left: auto;
-    padding: 7px 15px;
+    padding: 7px 13px;
     & /deep/ .iconfont {
       font-size: 13px;
       padding-right: 4px;
@@ -98,7 +98,7 @@ export default {
 .tabs-lists {
   border-bottom: 1px solid $border-color-1;
   .tab-item {
-    padding: 8px 13px;
+    padding: 8px 16px;
     background: $bg-color-5;
     color: $main-color-1;
     font-size: 14px;
