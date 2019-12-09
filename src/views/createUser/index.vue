@@ -74,7 +74,7 @@ export default {
         userInfo.name = name
         userInfo.avatar = avatar
         this.$store.dispatch('setUserInfo', userInfo)
-        if (step >= 4) {
+        if (step > 4) {
           this.$router.replace('/index')
         } else {
           this.step = step >= 4 ? 4 : step === 2 && startWorkYear === 0 ? 3 : step

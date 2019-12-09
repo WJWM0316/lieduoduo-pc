@@ -44,11 +44,7 @@ export default {
   },
   computed: {
     getListLength () {
-      if (this.additional) {
-        return this.list.filter(val => !val.additional).length
-      } else {
-        return this.list.length
-      }
+      return this.list.filter(val => !val.additional).length
     },
     total () {
       return this.list.length
