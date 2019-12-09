@@ -126,14 +126,17 @@ export default {
           border: none !important;
           background: $bg-color-1 !important;
         }
+        .el-input__suffix {
+          right: 15px;
+        }
         .el-input--suffix .el-input__inner {
-          padding-right: 45px;
+          padding-right: 55px;
         }
         .c-button-radio.active {
           background: $bg-color-5 !important;
         }
         .separator, .c-picker-separator {
-          color: $title-color-2;
+          color: $title-color-3;
         }
       }
       .el-input.input-onlyread {

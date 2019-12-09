@@ -63,6 +63,13 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.el-button--primary.is-plain {
+  background: #fff;
+}
+.el-button--primary.is-plain:hover {
+  background: $bg-color-5;
+  color: $main-color-1;
+}
 .tab-header {
   display: flex;
   align-items: flex-end;
