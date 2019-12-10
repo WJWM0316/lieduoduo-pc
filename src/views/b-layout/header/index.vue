@@ -152,7 +152,7 @@ $header-height-1: $page-b-header-height;
     border: 1px solid #EDf1f0;
   }
   span{
-    color: #92929B;
+    color: #333;
   }
 }
 .reddot{
