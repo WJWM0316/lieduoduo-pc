@@ -855,6 +855,7 @@
                   border: 2px solid #EDF1F0;
                   border-radius: 50%;
                   vertical-align: middle;
+                  box-sizing: border-box;
                 }
                 .gender2 {
                   width: 26px;
@@ -863,8 +864,8 @@
                   border: 1px solid #ffffff;
                   border-radius: 50%;
                   position: absolute;
-                  right: -6px;
-                  bottom: -9px;
+                  right: -3px;
+                  bottom: -4px;
                   text-align: center;
                   .genderimg2{
                     width: 100%;
@@ -884,8 +885,8 @@
                   border: 1px solid #ffffff;
                   border-radius: 50%;
                   position: absolute;
-                  right: -6px;
-                  bottom: -9px;
+                  right: -3px;
+                  bottom: -4px;
                   text-align: center;
                   .genderimg1{
                     width: 100%;
@@ -977,7 +978,7 @@
             }
 
             .description {
-              margin-top: 20px;
+              margin-top: 14px;
               text-align: left;
               color: #92929B;;
               font-size: 13px;
@@ -995,7 +996,7 @@
               }
 
               .iconList {
-                margin-top: 20px;
+                margin-top: 12px;
                 display: flex;
                 justify-items: flex-start;
                 align-items: flex-start;
@@ -1051,15 +1052,12 @@
             }
             .position {
               font-size: 14px;
-              color: rgba(92, 86, 93, 1);
+              color: #333;
               margin-right: 10px;
             }
-            .fields {
-              display: inline-block;
-              span {
-                font-size: 14px;
-                color: #66666E;;
-              }
+            span {
+              font-size: 14px;
+              color: #333;
             }
             .price {
               font-size: 14px;
@@ -1132,7 +1130,7 @@
                 font-size: 14px;
                 color: #92929B;;
                 &:nth-child(1) {
-                  color: #66666E;;
+                  color: #333;
                 }
               }
             }
