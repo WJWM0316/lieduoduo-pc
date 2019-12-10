@@ -4,6 +4,7 @@
         <div class="close"><i @click="quxiao()" class="iconfont icon-danchuang-guanbi"></i></div>
         <div class="content">
           <div class="title">转发简历</div>
+          <div class="scroll-c">
           <div class="con-l">
             <div class="url-toword">
               <div class="u-title">链接转发</div>
@@ -38,6 +39,7 @@
                 <img :src="imagesurl" alt="">
               </div>
             </div>
+          </div>
           </div>
         </div>
       </div>
@@ -168,7 +170,6 @@ export default {
   z-index: 1;
   .noJobBox {
     width:612px;
-    overflow-y: scroll;
     max-height: 578px;
     background:rgba(255,255,255,1);
     box-shadow:0px 6px 14px 2px rgba(0,0,0,0.2);
@@ -177,21 +178,6 @@ export default {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    &::-webkit-scrollbar {
-      width: 4px;
-    }
-    &::-webkit-scrollbar-track {
-      background:#fff;
-      -webkit-border-radius: 20px;
-      -moz-border-radius: 20px;
-      border-radius:20px;
-    }
-    &::-webkit-scrollbar-thumb {
-      background:#DDE1E0;
-      -webkit-border-radius: 20px;
-      -moz-border-radius: 20px;
-      border-radius:20px;
-    }
     .close{
       width: 100%;
       position: relative;
@@ -207,7 +193,7 @@ export default {
     }
   }
   .content{
-    padding: 0 68px 0 40px;
+    padding: 0 0px 0 40px;
     .title{
       height: 24px;
       line-height: 24px;
@@ -216,6 +202,25 @@ export default {
       margin-bottom: 20px;
       margin-top: 30px;
       font-weight: bold;
+    }
+    .scroll-c{
+      overflow-y: scroll;
+      max-height: 400px;
+      &::-webkit-scrollbar {
+        width: 4px;
+      }
+      &::-webkit-scrollbar-track {
+        background:#fff;
+        -webkit-border-radius: 20px;
+        -moz-border-radius: 20px;
+        border-radius:20px;
+      }
+      &::-webkit-scrollbar-thumb {
+        background:#DDE1E0;
+        -webkit-border-radius: 20px;
+        -moz-border-radius: 20px;
+        border-radius:20px;
+      }
     }
     .con-l{
       width: 326px;
@@ -381,6 +386,7 @@ export default {
     .con-r{
       float: right;
       width: 108px;
+      padding-right: 68px;
       .code{
         width: 100%;
         .code-title{
