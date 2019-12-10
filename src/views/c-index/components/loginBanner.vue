@@ -154,6 +154,7 @@ $index-login-height: 130px;
     position: absolute;
     height: 20px;
     top: 7px;
+    opacity: 0.5;
     width: 1px;
     background-color: #fff;
     right: 0;
