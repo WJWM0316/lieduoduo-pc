@@ -2613,12 +2613,10 @@ export default {
                 .gender2 {
                   width: 26px;
                   height: 26px;
-                  // background: #ff6796;
-                  border: 1px solid #ffffff;
                   border-radius: 50%;
                   position: absolute;
-                  right: -3px;
-                  bottom: -4px;
+                  right: 0px;
+                  bottom: -3px;
                   text-align: center;
                   .genderimg2{
                     width: 100%;
@@ -2634,12 +2632,10 @@ export default {
                 .gender {
                   width: 26px;
                   height: 26px;
-                  // background: #2878ff;
-                  border: 1px solid #ffffff;
                   border-radius: 50%;
                   position: absolute;
-                  right: -3px;
-                  bottom: -4px;
+                  right: 0px;
+                  bottom: -3px;
                   text-align: center;
                   .genderimg1{
                     width: 100%;
