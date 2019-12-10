@@ -8,6 +8,7 @@
               v-model="params.cityNums"
               :items="areaList"
               :showArrow="true"
+              :debounce="500"
               :default-width="100"
               :props="{
                 value: 'areaId',
@@ -159,7 +160,7 @@ export default {
           const reslutes = data.data || []
           cb(reslutes.map((val, index) => ({ value: val, id: index })))
         })
-      }, 200)
+      }, 300)
     },
     handleScroll () {
       // 得到页面滚动的距离

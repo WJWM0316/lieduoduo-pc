@@ -9,6 +9,7 @@
           v-model="searchValue"
           :fetch-suggestions="querySearchAsync"
           placeholder="搜索职位、公司"
+          :debounce="500"
           @select="handleSelect"
           @keyup.native.enter="handleSelect()"
           :maxlength="50">
@@ -74,7 +75,7 @@ export default {
           const reslutes = data.data || []
           cb(reslutes.map((val, index) => ({ value: val, id: index })))
         })
-      }, 200)
+      }, 300)
     },
     // 选择查询到的数据
     handleSelect (value) {
