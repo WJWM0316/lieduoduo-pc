@@ -1,10 +1,9 @@
 /** 设置h46px 的按钮 */
-.el-button.el-button-h46 {
-  padding: 14px 20px;
+.el-button.el-button-h50 {
+  padding: 16px 20px;
   border-radius: 0;
   font-size: 16px;
   font-weight: normal;
-  min-height: 46px;
   box-sizing: border-box;
 }
 
@@ -36,6 +35,17 @@
 }
 .el-textarea .el-input__count {
   line-height: 22px;
+}
+/** 新增input size big 属性 */
+.el-input--big {
+  font-size: 16px
+}
+.el-input--big .el-input__inner {
+  height: $--input-big-height;
+  line-height: $--input-big-height;
+}
+.el-input--big .el-input__icon {
+  line-height: $--input-big-height;
 }
 
 /** 下拉框 */
