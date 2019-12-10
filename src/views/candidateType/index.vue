@@ -94,7 +94,7 @@
                   <img class="userIcon" :src="item.avatar.middleUrl" />
                   <div class="infoRight">
                     <div class="infoName textEllipsis">
-                      <span v-if="!item.glass">{{item.name}}</span>
+                      <span>{{item.name}}</span>
                     </div>
 
                     <ul class="userLabel">
