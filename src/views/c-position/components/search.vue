@@ -8,7 +8,6 @@
               v-model="params.cityNums"
               :items="areaList"
               :showArrow="true"
-              :debounce="500"
               :default-width="100"
               :props="{
                 value: 'areaId',
@@ -22,6 +21,7 @@
             v-model="params.keyword"
             @keyup.native.enter="handleSelect()"
             :maxlength="50"
+            :debounce="500"
             :fetch-suggestions="querySearch"
             @select="handleSelectPosition" />
           <el-button class="el-button-h46 " type="primary" @click="handleSelect">搜索</el-button>

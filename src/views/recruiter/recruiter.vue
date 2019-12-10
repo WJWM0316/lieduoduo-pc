@@ -108,8 +108,6 @@
         </div>
       </div>
     </div>
-    <!-- 提示弹窗 -->
-  <message-diggle :visible="msg.messageshow" @clicksure="msgsure" @clickcancle="msgcancel" :btntitle="'前往认证'" :title="msg.msgtitle" :desc="msg.msgdesc"></message-diggle>
   </div>
 </template>
 <script>
@@ -148,11 +146,6 @@ export default class CourseList extends Vue {
     count: 20,
     totalPage: 0,
     total: 0
-  };
-  msg = {
-    messageshow: false,
-    msgtitle: '身份认证',
-    msgdesc: '您尚未认证身份，成功认证后即可发布职位。'
   };
   // close关闭，open 开放，审核通过，audit 审核中，fail 审核失败
   recruiterList = [
@@ -269,11 +262,14 @@ export default class CourseList extends Vue {
         break
       case 'addJob':
         if (!this.$store.state.recruiterinfo.identityAuth) {
-          this.msg = {
-            messageshow: true,
-            msgtitle: '身份认证',
-            msgdesc: '您尚未认证身份，成功认证后即可发布职位。'
-          }
+          this.$confirm('您尚未认证身份，成功认证后即可发布职位。', '身份认证', {
+            confirmButtonText: '前往认证',
+            cancelButtonText: '取消',
+            type: 'warning',
+            center: true
+          }).then(() => {
+            this.$router.push({ name: 'perfectauth' })
+          }).catch(() => {})
         } else {
           this.$router.push({
             name: 'postJob',
@@ -334,15 +330,6 @@ export default class CourseList extends Vue {
         this.getStatusTotal()
         this.getPositionList()
       })
-  }
-
-  msgcancel () {
-    this.msg = {
-      messageshow: false
-    }
-  }
-  msgsure () {
-    this.$router.push({ name: 'perfectauth' })
   }
 
   /**
