@@ -26,13 +26,14 @@
 // 按钮radio样式
 .c-button-group-radio {
   .c-button-radio {
-    height: 46px;
+    height: $--input-height;
     width: 148px;
     border: 1px solid $border-color-1;
-    line-height: 46px;
+    line-height: $--input-height;
     text-align: center;
-    vertical-align: middle;
+    vertical-align: top;
     display: inline-block;
+    box-sizing: border-box;
     background: #fff;
     cursor: pointer;
     font-size: 14px;
