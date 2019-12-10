@@ -1,13 +1,13 @@
 <template>
   <!-- 请选择期望职位 -->
   <div class="salary-wrapper">
-    <el-select v-model="floor" @change="changeEmolumentMin">
+    <el-select v-model="floor" placeholder="期望薪资" @change="changeEmolumentMin">
       <template v-for="item in salaryFloors">
         <el-option :value="item.value" :key="item.value" :label="item.label" />
       </template>
     </el-select>
-    <span class="separator">至</span>
-    <el-select v-model="ceil" :disabled="!salaryCeils.length" @change="handleSelect">
+    <span class="separator">{{separator}}</span>
+    <el-select v-model="ceil" placeholder="期望薪资" :disabled="!salaryCeils.length" @change="handleSelect">
       <template v-for="item in salaryCeils">
         <el-option :value="item.value" :key="item.value" :label="item.label" />
       </template>
@@ -16,6 +16,12 @@
 </template>
 <script>
 export default {
+  props: {
+    separator: {
+      type: String,
+      default: '至'
+    }
+  },
   data () {
     return {
       salaryCeils: [],

@@ -77,17 +77,18 @@ export const request = ({ url, method, params = {}, config = {} }) => {
         if (!config.noCheckLogin && err.response.data.httpStatus !== 200) {
           // 相同提示不重复提示
           let message = err.response.data.msg || err.response.data.message
-          if (window.messagequeue[message]) return
-          window.messagequeue[message] = 1
-          Message({
-            type: 'error',
-            message: message,
-            onClose: () => {
+          if (!window.messagequeue[message]) {
+            window.messagequeue[message] = 1
+            Message({
+              type: 'error',
+              message: message,
+              onClose: () => {
               // 移除队列
-              window.messagequeue[message] = 0
-              delete window.messagequeue[message]
-            }
-          })
+                window.messagequeue[message] = 0
+                delete window.messagequeue[message]
+              }
+            })
+          }
         }
         // 登陆过期或者未登录
         if (!config.noCheckLogin && err.response.data.httpStatus === 401) {

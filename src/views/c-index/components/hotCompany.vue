@@ -81,9 +81,11 @@ export default {
   },
   watch: {
     cityid (value) {
-      this.getTypes().then(() => {
-        this.getCompanyList()
-      })
+      if (this.$route.name === 'index') {
+        this.getTypes().then(() => {
+          this.getCompanyList()
+        })
+      }
     }
   }
 }

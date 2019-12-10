@@ -9,51 +9,79 @@
         <img class="slogon-box" v-if="step === 2" :src="cdnPath + 'img_sentence_02.png'"/>
         <img class="slogon-box" v-if="step === 3" :src="cdnPath + 'img_sentence_03.png'"/>
         <img class="slogon-box" v-if="step === 4" :src="cdnPath + 'img_sentence_04.png'"/>
-        <first-step  v-if="step === 1"></first-step>
-        <second-step v-if="step === 2"></second-step>
-        <third-step v-if="step === 3"></third-step>
-        <fourth-step v-if="step === 4"></fourth-step>
       </div>
      </div>
+     <keep-alive>
+        <component :is="activeComponent" :step.sync="step" :skip.sync="skipStep"/>
+      </keep-alive>
    </div>
  </div>
 </template>
 <script>
-import Vue from 'vue'
-import Component from 'vue-class-component'
 import myHeader from './components/header.vue'
-import firstStep from './components/firstStep.vue'
-import secondStep from './components/secondStep.vue'
-import thirdStep from './components/thirdStep.vue'
-import fourthStep from './components/fourthStep.vue'
+import FirstStep from './components/step1'
+import SecondStep from './components/step2'
+import ThirdStep from './components/step3'
+import FourStep from './components/step4'
 import { searchResumeStepApi } from '@/api/putIn'
 
-@Component({
-  name: 'createUser',
+export default {
   components: {
     myHeader,
-    firstStep,
-    secondStep,
-    thirdStep,
-    fourthStep
-  }
-})
-export default class createUser extends Vue {
-  cdnPath = `${this.$cdnPath}/images/`
-  hasRequest = false
-  step = 1 // 创建步数
+    FirstStep,
+    SecondStep,
+    ThirdStep,
+    FourStep
+  },
+  data () {
+    return {
+      cdnPath: `${this.$cdnPath}/images/`,
+      hasRequest: false,
+      step: 0, // 创建步数
+      skipStep: null // 需要跳过的步数
+    }
+  },
+  computed: {
+    activeComponent () {
+      let component = ''
+      switch (this.step) {
+        case 1:
+          component = 'first-step'
+          break
+        case 2:
+          component = 'second-step'
+          break
+        case 3:
+          component = 'third-step'
+          break
+        case 4:
+          component = 'four-step'
+          break
+      }
+      return component
+    }
+  },
   created () {
     this.getStep()
-  }
-  getStep () {
-    searchResumeStepApi().then(res => {
-      this.hasRequest = true
-      let stepData = res.data.data
-      let userInfo = this.$store.getters.userInfo
-      userInfo.name = stepData.card.name
-      userInfo.avatar = stepData.card.avatar
-      this.$store.dispatch('setUserInfo', userInfo)
-    })
+  },
+  methods: {
+    getStep () {
+      searchResumeStepApi().then(({ data }) => {
+        this.hasRequest = true
+        let stepData = data.data || {}
+        const { card: { name, avatar, startWorkYear }, step } = stepData
+        let userInfo = this.$store.getters.userInfo
+        userInfo.realname = name
+        userInfo.avatarInfo = avatar
+        this.$store.dispatch('setUserInfo', userInfo)
+        if (step > 4) {
+          this.$router.replace('/index')
+        } else {
+          this.step = step >= 4 ? 4 : step === 2 && startWorkYear === 0 ? 3 : step
+          this.skipStep = startWorkYear === 0 ? 2 : null
+        }
+      })
+    }
   }
 }
 
@@ -68,53 +96,70 @@ export default class createUser extends Vue {
     box-sizing: border-box;
     background: url('../../assets/images/create_bg.jpg') repeat $bg-color-4;
     background-size: 30%;
-    & /deep/ .defalut-position{
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      right: 25px;
-      color: #BCBEC0;;
-      transition: all ease .3s;
-      z-index: 1;
-    }
-    .icon_active{
-      transform: translateY(-50%) rotate(180deg);
+    & /deep/ {
+      .step-wrapper {
+        width: 450px;
+        background: #fff;
+        border-radius: 16px;
+        padding: 50px 40px 40px;
+        box-sizing: border-box;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        box-shadow: $shadow-3;
+        .el-form {
+          position: relative;
+          width: 100%;
+        }
+        .el-select, .el-cascader {
+          width: 100%;
+        }
+        .input-value-length {
+          line-height: 46px;
+          color: $title-color-3;
+          font-size: 14px;
+          i {
+            color: $main-color-1;
+          }
+        }
+        .el-input__inner, .c-button-radio {
+          border: none !important;
+          background: $bg-color-1 !important;
+        }
+        .el-input__suffix {
+          right: 15px;
+        }
+        .el-input--suffix .el-input__inner {
+          padding-right: 55px;
+        }
+        .c-button-radio.active {
+          background: $bg-color-5 !important;
+        }
+        .separator, .c-picker-separator {
+          color: $title-color-3;
+        }
+      }
+      .el-input.input-onlyread {
+        cursor: pointer;
+        overflow: hidden;
+        height: $--input-height;
+        .input-onlyread-text {
+          display: inline-block;
+          @include ellipsis();
+          width: 87%;
+        }
+      }
+      .input-onlyread-form-item .el-form-item__content {
+        height: $--input-height;
+      }
     }
     .middle {
       position: relative;
       background-repeat: no-repeat;
       background-position: bottom;
-      text-align: center;
       width: 100%;
+      text-align: center;
       background-size: auto 112px;
-      .formHint {
-        height:60px;
-        background:rgba(255,244,244,1);
-        border-radius:4px;
-        padding: 0 27px;
-        position: absolute;
-        left: 50%;
-        top: 0px;
-        transform: translate(-50%,0);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size:14px;
-        font-family:PingFangSC;
-        font-weight:400;
-        color:rgba(237,92,92,1);
-        white-space:nowrap;
-        z-index: 100;
-        &.two {
-          height:34px;
-        }
-        img {
-          width: 14px;
-          height: 14px;
-          margin-right: 8px;
-          display: block;
-        }
-      }
     }
     .title {
       font-size:22px;
@@ -135,5 +180,10 @@ export default class createUser extends Vue {
       margin: 38px auto 20px;
     }
   }
+}
+</style>
+<style lang="scss">
+.resume-duty {
+  padding: 0 32px;
 }
 </style>

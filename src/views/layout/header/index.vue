@@ -183,6 +183,10 @@ export default {
     cityId (value) {
       if (!isNaN(value)) {
         this.addressId = value
+        const address = this.cityList.find(val => val.areaId === value)
+        if (address) {
+          this.addressName = address.name
+        }
       }
     }
   }

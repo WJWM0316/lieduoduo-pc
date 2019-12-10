@@ -21,6 +21,7 @@
             v-model="params.keyword"
             @keyup.native.enter="handleSelect()"
             :maxlength="50"
+            :debounce="500"
             :fetch-suggestions="querySearch"
             @select="handleSelectPosition" />
           <el-button class="el-button-h46 " type="primary" @click="handleSelect">搜索</el-button>
@@ -159,7 +160,7 @@ export default {
           const reslutes = data.data || []
           cb(reslutes.map((val, index) => ({ value: val, id: index })))
         })
-      }, 50)
+      }, 300)
     },
     handleScroll () {
       // 得到页面滚动的距离

@@ -5,9 +5,9 @@
       <el-dropdown trigger="click"  @command="handleClick" >
         <div class="headerBtn">
           <div class="right">
-            <span class="name">欢迎登录猎多多，{{name}}</span>
-            <img class="op_icon aaa" :src="cdnPath + 'open.png'" v-if="!avatarUrl" />
-            <img class="avatar" :src="avatarUrl" v-if="avatarUrl" />
+            <span class="name">欢迎登录猎多多，{{userInfo.realname}}</span>
+            <img class="op_icon aaa" :src="cdnPath + 'open.png'" v-if="!userInfo.avatarId" />
+            <img class="avatar" v-if="userInfo.avatarInfo" :src="userInfo.avatarInfo.smallUrl"  />
           </div>
         </div>
           <el-dropdown-menu slot="dropdown">
@@ -23,33 +23,18 @@
 export default {
   data () {
     return {
-      cdnPath: `${this.$cdnPath}/images/`,
-      name: null,
-      avatarUrl: ''
+      cdnPath: `${this.$cdnPath}/images/`
     }
   },
   computed: {
-    ...mapState({
-      userInfo: state => state.userInfo
-    })
-  },
-  watch: {
-    userInfo: {
-      handler (val, oldVal) {
-        this.name = val.name
-        this.avatarUrl = val.avatar.middleUrl
-      },
-      deep: true
+    userInfo () {
+      return this.$store.getters.userInfo
     }
-  },
-  created () {
-    this.name = this.userInfo.name
-    this.avatarUrl = this.userInfo.avatar.middleUrl
   },
   methods: {
     handleClick (e) {
       if (e === 'out') {
-        this.$store.dispatch('logoutApi', {curPage: 1})
+        this.$store.dispatch('logoutApi', { curPage: 0 })
       }
     }
   }

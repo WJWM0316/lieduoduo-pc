@@ -42,6 +42,7 @@
 .el-select-dropdown__item.hover, 
 .el-select-dropdown__item:hover, 
 .el-cascader-node:hover,
+.el-cascader-node:focus,
 .el-autocomplete-suggestion li:hover {
   background: $bg-color-5 !important;
 }
@@ -84,6 +85,7 @@
 /** message box */
 .el-message-box.el-message-box--center {
   padding-bottom: 0px;
+  border: none;
 }
 .el-message-box.el-message-box--center .el-message-box__btns {
   text-align: right;
