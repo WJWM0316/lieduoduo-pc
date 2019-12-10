@@ -2681,17 +2681,17 @@ export default {
                     overflow: 19px;
                     &:nth-child(1) {
                       span {
-                        font-weight: 300;
+                        font-weight: 400;
                       }
                     }
                     &:nth-child(2) {
                       span {
-                        font-weight: 300;
+                        font-weight: 400;
                       }
                     }
                     &:nth-child(3) {
                       span {
-                        font-weight: 300;
+                        font-weight: 400;
                       }
                     }
                     &:nth-child(4) {
@@ -2913,7 +2913,7 @@ export default {
                 font-size: 12px;
                 margin-right: 10px;
                 border-radius: 2px;
-                font-weight: 300;
+                font-weight: 400;
               }
             }
             .workContent {
