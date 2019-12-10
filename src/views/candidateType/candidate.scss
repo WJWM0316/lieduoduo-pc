@@ -369,7 +369,7 @@
         box-shadow:0px 0px 20px 0px rgba(0,0,0,0.15);
         position: absolute;
         top: 60px;
-        right: -50px;
+        right: 0px;
         padding: 26px ;
         box-sizing: border-box;
         z-index: 1;
@@ -1014,16 +1014,15 @@
                   border: 2px solid #EDF1F0;
                   border-radius: 50%;
                   vertical-align: middle;
+                  box-sizing: border-box;
                 }
                 .gender2 {
                   width: 26px;
                   height: 26px;
-                  // background: #ff6796;
-                  border: 1px solid #ffffff;
                   border-radius: 50%;
                   position: absolute;
-                  right: -6px;
-                  bottom: -9px;
+                  right: 0px;
+                  bottom: -3px;
                   text-align: center;
                   .genderimg2{
                     width: 100%;
@@ -1039,12 +1038,10 @@
                 .gender {
                   width: 26px;
                   height: 26px;
-                  // background: #2878ff;
-                  border: 1px solid #ffffff;
                   border-radius: 50%;
                   position: absolute;
-                  right: -6px;
-                  bottom: -9px;
+                  right: 0px;
+                  bottom: -3px;
                   text-align: center;
                   .genderimg1{
                     width: 100%;
@@ -1090,17 +1087,17 @@
                       overflow: 19px;
                       &:nth-child(1) {
                         span {
-                          font-weight: 300;
+                          font-weight: 400;
                         }
                       }
                       &:nth-child(2) {
                         span {
-                          font-weight: 300;
+                          font-weight: 400;
                         }
                       }
                       &:nth-child(3) {
                         span {
-                          font-weight: 300;
+                          font-weight: 400;
                         }
                       }
                       &:nth-child(4) {
@@ -1156,7 +1153,7 @@
             }
 
             .description {
-              margin-top: 20px;
+              margin-top: 14px;
               text-align: left;
               color: #92929B;;
               font-size: 13px;
@@ -1174,7 +1171,7 @@
               }
 
               .iconList {
-                margin-top: 20px;
+                margin-top: 12px;
                 display: flex;
                 justify-items: flex-start;
                 align-items: flex-start;
@@ -1231,15 +1228,12 @@
             }
             .position {
               font-size: 14px;
-              color: rgba(92, 86, 93, 1);
+              color: #333;
               margin-right: 10px;
             }
-            .fields {
-              display: inline-block;
-              span {
-                font-size: 14px;
-                color: #66666E;;
-              }
+            span {
+              font-size: 14px;
+              color: #333;;
             }
             .price {
               font-size: 14px;
@@ -1311,7 +1305,7 @@
                 font-size: 14px;
                 color: #92929B;;
                 &:nth-child(1) {
-                  color: #66666E;;
+                  color: #333;
                 }
               }
             }
@@ -1326,7 +1320,7 @@
                 font-size: 12px;
                 margin-right: 10px;
                 border-radius: 2px;
-                font-weight: 300;
+                font-weight: 400;
               }
             }
             .workContent {

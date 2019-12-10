@@ -220,12 +220,8 @@
                 >
                 <div class="whitesize">
                   <span class="position">{{item.position}}&nbsp;|&nbsp;{{item.city}}</span>
-                  <span v-if="item.fields.length>0" style="color:#5c565d">|</span>
-                  <div style="margin-left:9px;display:inline-block;">
-                    <div class="fields" v-for="(item1,index1) in item.fields" :key="index1">
-                      <span>{{item1.field}}&nbsp;&nbsp;</span>
-                    </div>
-                  </div>
+                  <span v-if="item.fields.length>0" style="margin-right:9px;color:#333">|</span>
+                  <span v-for="(item1,index1) in item.fields" :key="index1">{{item1.field}}&nbsp;&nbsp;</span>
                   </div>
                   <span class="price">{{item.salaryFloor}}k-{{item.salaryCeil}}k</span>
                 </div>
@@ -2506,7 +2502,7 @@ export default {
               display:block;
               color: #00C4CD;
               text-align: center;
-              border:1px solid #00C4CD; 
+              border:1px solid #00C4CD;
             }
           }
           .ContactInformation {
@@ -2612,16 +2608,15 @@ export default {
                   border: 2px solid #EDF1F0;
                   border-radius: 50%;
                   vertical-align: middle;
+                  box-sizing: border-box;
                 }
                 .gender2 {
                   width: 26px;
                   height: 26px;
-                  // background: #ff6796;
-                  border: 1px solid #ffffff;
                   border-radius: 50%;
                   position: absolute;
-                  right: -6px;
-                  bottom: -9px;
+                  right: 0px;
+                  bottom: -3px;
                   text-align: center;
                   .genderimg2{
                     width: 100%;
@@ -2637,12 +2632,10 @@ export default {
                 .gender {
                   width: 26px;
                   height: 26px;
-                  // background: #2878ff;
-                  border: 1px solid #ffffff;
                   border-radius: 50%;
                   position: absolute;
-                  right: -6px;
-                  bottom: -9px;
+                  right: 0px;
+                  bottom: -3px;
                   text-align: center;
                   .genderimg1{
                     width: 100%;
@@ -2688,17 +2681,17 @@ export default {
                     overflow: 19px;
                     &:nth-child(1) {
                       span {
-                        font-weight: 300;
+                        font-weight: 400;
                       }
                     }
                     &:nth-child(2) {
                       span {
-                        font-weight: 300;
+                        font-weight: 400;
                       }
                     }
                     &:nth-child(3) {
                       span {
-                        font-weight: 300;
+                        font-weight: 400;
                       }
                     }
                     &:nth-child(4) {
@@ -2754,7 +2747,7 @@ export default {
             }
 
             .description {
-              margin-top: 20px;
+              margin-top: 14px;
               text-align: left;
               color: #92929B;;
               font-size: 13px;
@@ -2772,7 +2765,7 @@ export default {
               }
 
               .iconList {
-                margin-top: 20px;
+                margin-top: 12px;
                 display: flex;
                 justify-items: flex-start;
                 align-items: flex-start;
@@ -2829,15 +2822,11 @@ export default {
           }
           .position {
             font-size: 14px;
-            color: rgba(92, 86, 93, 1);
+            color: #333;
             margin-right: 10px;
           }
-          .fields {
-            display: inline-block;
-            span {
-              font-size: 14px;
-              color: #66666E;;
-            }
+          span {
+            color: #333;;
           }
           .price {
             font-size: 14px;
@@ -2909,7 +2898,7 @@ export default {
                 font-size: 14px;
                 color: #92929B;;
                 &:nth-child(1) {
-                  color: #66666E;;
+                  color: #333;
                 }
               }
             }
@@ -2924,7 +2913,7 @@ export default {
                 font-size: 12px;
                 margin-right: 10px;
                 border-radius: 2px;
-                font-weight: 300;
+                font-weight: 400;
               }
             }
             .workContent {

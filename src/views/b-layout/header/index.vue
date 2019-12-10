@@ -149,9 +149,10 @@ $header-height-1: $page-b-header-height;
     display: inline-block;
     vertical-align: middle;
     margin: 0 0 0 12px;
+    border: 1px solid #EDf1f0;
   }
   span{
-    color: #92929B;
+    color: #333;
   }
 }
 .reddot{
