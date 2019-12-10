@@ -178,7 +178,7 @@ export default {
     width: 100%;
   }
   .wrapper-info .c-btn {
-    width: 520px;
+    width: 545px;
   }
   .el-form {
     display: flex;
