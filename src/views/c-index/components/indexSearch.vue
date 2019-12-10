@@ -142,6 +142,7 @@ $search-width-wrapper: 936px;
     border-top-right-radius: 0px;
     border-bottom-right-radius: 0px;
     padding-left: 56px;
+    border-right: none;
   }
   & /deep/ .el-input__prefix {
     padding: 0 16px;

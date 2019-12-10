@@ -55,7 +55,7 @@
                 class="hot-annualSalaryDesc"
               >{{item.emolumentMin}}k-{{item.emolumentMax}}k{{ item.annualSalary > 12 ? '·' + item.annualSalaryDesc : ''}}</span>
               <p class="hot-text">
-                {{item.province}}{{item.city}}{{item.district}} | {{item.workExperienceName}} |
+                {{item.city}}{{item.district}} | {{item.workExperienceName}} |
                 {{item.educationName}}
               </p>
             </div>
@@ -688,7 +688,7 @@ to {top:0px;}
         }
       }
       .recruitmentTeam{
-        
+
         .recruitmentTeam-title{
           @extend %introductionTitle;
         }
