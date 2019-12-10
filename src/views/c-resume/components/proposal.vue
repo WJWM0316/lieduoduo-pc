@@ -261,6 +261,7 @@ export default {
     color: $title-color-2;
     display: inline-block;
     vertical-align: middle;
+    line-height: 20px;
   }
   span + span {
     padding-left: 6px;
