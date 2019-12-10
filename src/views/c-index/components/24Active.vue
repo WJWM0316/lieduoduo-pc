@@ -8,7 +8,7 @@
          <p ref="bubble">{{bubbleList[bubbleIndex]}}</p>
       </div>
     </div>
-    <div class="active-list" v-loading="!listData.length">
+    <div class="active-list" v-loading="getLoading">
       <template v-for="(item,index) in listData">
         <router-link target="_blank" :to="`/position/details?positionId=${item.id}`" class="active-list-wrapper" :key="item.lableId">
           <div class="list-header">
@@ -69,6 +69,7 @@ export default {
       bubbleIndex: 0,
       bubbleList: [],
       listData: [],
+      getLoading: false,
       buttons: [],
       listCountDown: [] // 倒计时数据
     }
@@ -86,7 +87,9 @@ export default {
   },
   methods: {
     getLists () {
+      this.getLoading = true
       getRapidlyData({ page: 1, city: this.cityid }).then(({ data }) => {
+        this.getLoading = false
         const { items, toastTips, buttons } = data.data
         const listData = items.slice(0, 6)
         this.bubbleList = toastTips
@@ -106,6 +109,8 @@ export default {
         this.setCountDown()
         // 跑气泡
         this.bubbleDown()
+      }).catch(() => {
+        this.getLoading = false
       })
     },
     setCountDown () {
@@ -150,7 +155,7 @@ export default {
   },
   watch: {
     cityid (value) {
-      this.getLists()
+      if (this.$route.name === 'index') this.getLists()
     }
   },
   destroyed () {
