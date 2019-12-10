@@ -410,7 +410,6 @@
       </div>
     </div>
   </div>
-  <message-diggle :visible="msg.messageshow" @clicksure="msgsure" @clickcancle="msgcancel" :title="msg.msgtitle" :desc="msg.msgdesc"></message-diggle>
 </div>
 </template>
 <script>
@@ -420,11 +419,8 @@ import {
   emailReg,
   abbreviationReg
 } from '@/util/fieldRegular.js'
-import { getUserRoleInfoApi } from '@/api/auth'
 import OptionList from '../registerCompany/components/option.vue'
-import MessageDiggle from '../registerCompany/components/message.vue'
 import Picture from 'COMPONENTS/common/upload/picture'
-import MyModel from '@/components/model/index.vue'
 import { getLabelFieldListApi } from 'API/putIn'
 import SelectPositionType from 'COMPONENTS/selectPositionType'
 import {
@@ -442,9 +438,7 @@ import {
 export default {
   components: {
     OptionList,
-    MyModel,
     Picture,
-    MessageDiggle,
     SelectPositionType
   },
   data () {
@@ -538,11 +532,6 @@ export default {
       avatarLoading: false,
       businessLoading: false,
       onjobLoading: false,
-      msg: {
-        messageshow: false,
-        msgtitle: '前往求职端',
-        msgdesc: '是否确认前往求职端？'
-      },
       showPositionModel: false,
       positiondata: [],
       debounce: (() => {
@@ -757,18 +746,24 @@ export default {
     gotowhere (type) {
       switch (type) {
         case 'qiuzhi':
-          this.msg = {
-            messageshow: true,
-            msgtitle: '前往求职端',
-            msgdesc: '是否确认前往求职端？'
-          }
+          this.$confirm('是否确认前往求职端？', '前往求职端', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning',
+            center: true
+          }).then(() => {
+            this.$router.push({ name: 'index' })
+          }).catch(() => {})
           break
         case 'account':
-          this.msg = {
-            messageshow: true,
-            msgtitle: '更换账号',
-            msgdesc: '更换账号登录后不会删除任何历史数据，下次登录依然可以使用本账号。'
-          }
+          this.$confirm('更换账号登录后不会删除任何历史数据，下次登录依然可以使用本账号。', '更换账号', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning',
+            center: true
+          }).then(() => {
+            this.$router.push({ name: 'login' })
+          }).catch(() => {})
           break
         case 'perfect':
           this.authForm.id = this.ruleForm.id
@@ -814,20 +809,6 @@ export default {
           break
         default:
           break
-      }
-    },
-    msgcancel () {
-      this.msg = {
-        messageshow: false,
-        msgtitle: '前往求职端',
-        msgdesc: '是否确认前往求职端？'
-      }
-    },
-    msgsure (title) {
-      if (title === '前往求职端') {
-        this.$router.push({ name: 'index' })
-      } else {
-        this.$router.push({ name: 'login' })
       }
     },
     // 提交注册
