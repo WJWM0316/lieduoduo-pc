@@ -243,7 +243,7 @@ export default class companyDetail extends Vue {
     })
   }
 
-  resumeTo (type) {
+  resumeTo (type = 'x') {
     // 是否已经登陆
     if (!this.hasLogin && type !== 'x') {
       return this.$router.push({
@@ -329,7 +329,7 @@ export default class companyDetail extends Vue {
       .then(() => {
         this.photoAnimation()
         this.$nextTick(() => {
-          this.resumeTo('x')
+          this.resumeTo()
         })
       })
   }
