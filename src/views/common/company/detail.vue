@@ -81,7 +81,7 @@
                 <div class="product-text">
                   <p class="product-text-top">{{ item.productName }} | {{ item.slogan }}</p>
                   <p class="product-text-middle">{{ item.lightspot }}</p>
-                  <p>
+                  <p v-if="item.siteUrl">
                     <a class="product-text-buttom" :href="item.siteUrl" target="_blank">{{ item.siteUrl }}</a>
                   </p>
                 </div>
@@ -212,7 +212,7 @@ export default class companyDetail extends Vue {
       this.companyInformation = res.data.data
       // 遍历地址，没有http协议则加上
       this.companyInformation.product.forEach(function (item, index) {
-        item.siteUrl = item.siteUrl.indexOf('http') !== -1 ? item.siteUrl : 'http://' + item.siteUrl
+        item.siteUrl = !item.siteUrl ? '' : item.siteUrl.indexOf('http') !== -1 ? item.siteUrl : 'http://' + item.siteUrl
       })
       this.$nextTick(() => {
         if (this.$refs.blockOverflow) this.$refs.blockOverflow.updateTextHeigth()
@@ -661,7 +661,6 @@ to {top:0px;}
               color: $font-color-6;
               overflow: hidden;
               text-overflow: ellipsis;
-              margin-bottom: 10px;
               line-height: 18px;
               max-height: 36px;
               display: -webkit-box;
@@ -669,9 +668,11 @@ to {top:0px;}
               -webkit-box-orient: vertical;
             }
             .product-text-buttom{
+              margin-top: 10px;
               color: $font-color-2;
               font-size: 12px;
               line-height:12px;
+              display: block;
             }
           }
         }

@@ -55,11 +55,11 @@
 
 // 多行省略号
 @mixin ellipsis-two() {
-  overflow:hidden;
-  text-overflow:ellipsis;
-  display:-webkit-box; 
-  -webkit-box-orient:vertical;
-  -webkit-line-clamp:2; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box; 
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; 
 }
 
 // a链接
