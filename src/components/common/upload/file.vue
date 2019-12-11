@@ -21,8 +21,8 @@
         </div>
       </div>
     </template>
-    <div @click="handleClickInput" v-loading="uploadLoading">
-      <slot><el-button type="primary" :disabled="disabled">文件上传</el-button></slot>
+    <div @click="handleClickInput">
+      <slot><el-button type="primary" :loading="uploadLoading" :disabled="disabled">文件上传</el-button></slot>
     </div>
     <input
       type="file"

@@ -32,9 +32,12 @@
           <div class="header-right-position">
             <p class="header-right-number" v-if="!isHeader">{{ companyInformation.numOfVisitors }}</p>
             <p class="header-right-text" v-if="!isHeader">浏览</p>
-            <file @change="saveResume" @fail="saveResume" :Resume = myResume :showUploadDetails=false :showTips=true :islogin = islogin>
+            <file @change="saveResume" @before="uploading = true" @fail="uploadResumeFile"  :showUploadDetails=false :showTips=true :islogin = islogin>
               <p class="header-right-resume" @click="resumeTo('annex')">
-                <i class="iconfont" :class="{ 'icon-weibiaoti-': annex === '上传', 'icon-zhongxinshangchuan-':  annex === '更新'}"/>&nbsp;
+                <template v-if="uploading">
+                  <i class="el-icon-loading"/>
+                </template>
+                <i v-else class="iconfont" :class="{ 'icon-weibiaoti-': annex === '上传', 'icon-zhongxinshangchuan-':  annex === '更新'}"/>&nbsp;
                 {{ annex }}附件简历
               </p>
             </file>
@@ -178,6 +181,7 @@ export default class companyDetail extends Vue {
   activation = true
   online = '填写' // 在线简历显示文案
   annex = '上传' // 附件简历显示文案
+  uploading = false // 附件上传loading
   dialogVisible = false // 地图弹窗
   getCompanysTeamText = {} // 招聘团队
   islogin = false // 子组件是否登陆弹窗
@@ -301,15 +305,21 @@ export default class companyDetail extends Vue {
   }
   // 保存简历附件
   saveResume (attach) {
-    if (!attach) return this.$message.error('上传附件简历失败')
     saveResumeAttach({ attach_resume: attach.id, attach_name: attach.fileName }).then(({ data }) => {
+      this.uploading = false
       if (data.httpStatus === 200) {
         this.$message.success('上传附件简历成功')
         this.$store.commit('overwriteResume', {
           resumeAttach: attach
         })
       }
+    }).catch(() => {
+      this.uploading = false
     })
+  }
+  uploadResumeFile () {
+    this.uploading = false
+    this.$message.error('上传附件简历失败')
   }
   created () {
     window.addEventListener('scroll', this.handleScroll)

@@ -22,6 +22,24 @@
   border-color: $bg-color-5;
   background: $bg-color-5;
 }
+.c-btn.c-loading-btn {
+  position: relative;
+  pointer-events: none;
+  &::before {
+    font-family: element-icons!important;
+    content: "\e6cf";
+    display: inline-block;;
+    animation: rotating 2s linear infinite;
+  }
+}
+@keyframes rotating {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(1turn);
+  }
+}
 
 // 按钮radio样式
 .c-button-group-radio {
