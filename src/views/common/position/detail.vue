@@ -100,10 +100,10 @@
         </article>
         <aside class="content-aside">
           <guideLogin v-if="!hasLogin" class="position-guide-login"></guideLogin>
-          <div class="companyInfos">
+          <div class="companyInfos" @click="toCompanyDetail">
             <p class="title">公司基本信息</p>
             <div class="details">
-              <div class="logo" @click="toCompanyDetail"><el-image ref="logo" :class="verticalLogo ? 'vertical' : true" :src="infos.companyInfo.logoInfo.smallUrl" alt="" fit='scale-down'></el-image></div>
+              <div class="logo"><el-image ref="logo" :class="verticalLogo ? 'vertical' : true" :src="infos.companyInfo.logoInfo.smallUrl" alt="" fit='scale-down'></el-image></div>
               <div class="name">{{infos.companyInfo.companyShortname}}</div>
             </div>
             <div class="infos">
@@ -227,12 +227,13 @@ export default class PositionDetail extends Vue {
     })
   }
   toCompanyDetail () {
-    this.$router.push({
+    let routeData = this.$router.resolve({
       name: 'companyDetail',
       query: {
         vkey: this.infos.companyInfo.vkey
       }
     })
+    window.open(routeData.href, '_blank')
   }
   closePoster () {
     this.showPoster = false
@@ -316,19 +317,25 @@ export default class PositionDetail extends Vue {
   init () {
     this.getDetail()
   }
+  handleScroll () {
+    if (!this.headerH) this.headerH = this.$refs.header.clientHeight + 50
+    if (window.scrollY > this.headerH) {
+      if (!this.headerFloat) this.headerFloat = true
+    } else {
+      if (this.headerFloat) this.headerFloat = false
+    }
+  }
   created () {
     that = this
     this.id = this.$route.query.positionId
     this.getQrcode()
     this.getDetail()
-    window.onscroll = () => {
-      if (!this.headerH) this.headerH = this.$refs.header.clientHeight + 50
-      if (window.scrollY > this.headerH) {
-        if (!this.headerFloat) this.headerFloat = true
-      } else {
-        if (this.headerFloat) this.headerFloat = false
-      }
-    }
+  }
+  mounted () {
+    window.addEventListener('scroll', this.handleScroll)
+  }
+  dedestroyed () {
+    window.removeEventListener('scroll', this.handleScroll)
   }
 }
 </script>
