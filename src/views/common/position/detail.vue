@@ -100,10 +100,10 @@
         </article>
         <aside class="content-aside">
           <guideLogin v-if="!hasLogin" class="position-guide-login"></guideLogin>
-          <div class="companyInfos">
+          <div class="companyInfos" @click="toCompanyDetail">
             <p class="title">公司基本信息</p>
             <div class="details">
-              <div class="logo" @click="toCompanyDetail"><el-image ref="logo" :class="verticalLogo ? 'vertical' : true" :src="infos.companyInfo.logoInfo.smallUrl" alt="" fit='scale-down'></el-image></div>
+              <div class="logo"><el-image ref="logo" :class="verticalLogo ? 'vertical' : true" :src="infos.companyInfo.logoInfo.smallUrl" alt="" fit='scale-down'></el-image></div>
               <div class="name">{{infos.companyInfo.companyShortname}}</div>
             </div>
             <div class="infos">
