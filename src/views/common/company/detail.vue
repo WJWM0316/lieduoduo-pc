@@ -630,8 +630,12 @@ to {top:0px;}
         }
 
         .product-box{
+          min-height: 77px;
           margin-bottom: 30px;
           position: relative;
+          display: flex;
+          justify-content: center;
+          @include flex-direction-column;
 
           .product-img-wrap{
             @include img-radius(77px, 77px, 8px, #fff);
@@ -643,10 +647,10 @@ to {top:0px;}
             }
           }
           .product-text{
-            padding: 6px 0 5px 0;
-            min-height: 66px;
             font-weight: 400;
             margin-left: 97px;
+            display: flex;
+            @include flex-direction-column;
 
             .product-text-top{
               font-size: 14px;
