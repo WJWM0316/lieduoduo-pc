@@ -630,20 +630,25 @@ to {top:0px;}
         }
 
         .product-box{
-          margin-bottom: 24px;
+          min-height: 77px;
+          margin-bottom: 30px;
           position: relative;
+          display: flex;
+          justify-content: center;
+          @include flex-direction-column;
 
           .product-img-wrap{
+            border: 1px solid $border-color-8;
             @include img-radius(77px, 77px, 8px, #fff);
             position: absolute;
             left: 0;
             top: 0;
           }
           .product-text{
-            padding: 6px 0 5px 0;
-            height: 66px;
             font-weight: 400;
             margin-left: 97px;
+            display: flex;
+            @include flex-direction-column;
 
             .product-text-top{
               font-size: 14px;
@@ -655,9 +660,13 @@ to {top:0px;}
               font-size: 12px;
               color: $font-color-6;
               overflow: hidden;
-              white-space: nowrap;
               text-overflow: ellipsis;
-              margin-bottom: 12px;
+              margin-bottom: 10px;
+              line-height: 18px;
+              max-height: 36px;
+              display: -webkit-box;
+              -webkit-line-clamp: 2;
+              -webkit-box-orient: vertical;
             }
             .product-text-buttom{
               color: $font-color-2;
