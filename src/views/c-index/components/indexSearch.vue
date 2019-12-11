@@ -10,12 +10,13 @@
           :fetch-suggestions="querySearchAsync"
           placeholder="搜索职位、公司"
           :debounce="500"
+          size="big"
           @select="handleSelect"
           @keyup.native.enter="handleSelect()"
           :maxlength="50">
           <i slot="prefix" class="el-input__icon iconfont icon-sousuo"></i>
         </el-autocomplete>
-        <el-button class="el-button-h46" type="primary" @click="handleToSearch">搜索</el-button>
+        <el-button class="el-button-h50" type="primary" @click="handleToSearch">搜索</el-button>
       </div>
       <p class="hot-word">
         <span>热门搜索：</span>
@@ -134,9 +135,6 @@ $search-width-wrapper: 936px;
 .index-search-wrapper {
   width: $search-width-wrapper;
   margin: 0 auto;
-  .el-autocomplete,& /deep/ .el-input__inner{
-    height: 46px;
-  }
   .el-autocomplete {
     width: 793px;
   }
@@ -144,16 +142,16 @@ $search-width-wrapper: 936px;
     border-top-right-radius: 0px;
     border-bottom-right-radius: 0px;
     padding-left: 56px;
+    border-right: none;
   }
   & /deep/ .el-input__prefix {
     padding: 0 16px;
   }
-  .el-button-h46 {
+  .el-button-h50 {
     display: inline-block;
     vertical-align: top;
     width: 140px;
-    border-top-right-radius: 4px;
-    border-bottom-right-radius: 4px;
+    border-radius: 0 4px 4px 0;
   }
   .search-fixed-title {
     width: 70px;

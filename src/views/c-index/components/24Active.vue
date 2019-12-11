@@ -287,10 +287,13 @@ $position-process-bg-color: #99e7e8;
       padding: 14px 0;
     }
   }
+  .list-position-name, .list-pay {
+    display: inline-block;
+    vertical-align: middle;
+  }
   .list-position-name {
     color: $title-color-1;
     font-size: 18px;
-    display: inline-block;
     font-weight: bold;
     max-width: 190px;
     @include ellipsis;
