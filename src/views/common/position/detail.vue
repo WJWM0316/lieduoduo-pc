@@ -227,12 +227,13 @@ export default class PositionDetail extends Vue {
     })
   }
   toCompanyDetail () {
-    this.$router.push({
+    let routeData = this.$router.resolve({
       name: 'companyDetail',
       query: {
         vkey: this.infos.companyInfo.vkey
       }
     })
+    window.open(routeData.href, '_blank')
   }
   closePoster () {
     this.showPoster = false
@@ -316,19 +317,25 @@ export default class PositionDetail extends Vue {
   init () {
     this.getDetail()
   }
+  handleScroll () {
+    if (!this.headerH) this.headerH = this.$refs.header.clientHeight + 50
+    if (window.scrollY > this.headerH) {
+      if (!this.headerFloat) this.headerFloat = true
+    } else {
+      if (this.headerFloat) this.headerFloat = false
+    }
+  }
   created () {
     that = this
     this.id = this.$route.query.positionId
     this.getQrcode()
     this.getDetail()
-    window.onscroll = () => {
-      if (!this.headerH) this.headerH = this.$refs.header.clientHeight + 50
-      if (window.scrollY > this.headerH) {
-        if (!this.headerFloat) this.headerFloat = true
-      } else {
-        if (this.headerFloat) this.headerFloat = false
-      }
-    }
+  }
+  mounted () {
+    window.addEventListener('scroll', this.handleScroll)
+  }
+  dedestroyed () {
+    window.removeEventListener('scroll', this.handleScroll)
   }
 }
 </script>
