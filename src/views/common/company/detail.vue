@@ -638,13 +638,11 @@ to {top:0px;}
           @include flex-direction-column;
 
           .product-img-wrap{
+            border: 1px solid $border-color-8;
             @include img-radius(77px, 77px, 8px, #fff);
             position: absolute;
             left: 0;
             top: 0;
-            img{
-              border: 1px solid $border-color-8;
-            }
           }
           .product-text{
             font-weight: 400;
