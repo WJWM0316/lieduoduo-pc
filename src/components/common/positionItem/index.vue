@@ -31,7 +31,7 @@
         <p class="">{{item.numOfVisitors}}人已看过</p>
       </div>
       <div class="contact-recruiter">
-        <el-button type="primary" size="small">开约</el-button>
+        <el-button type="primary" size="small">一键申请</el-button>
       </div>
     </div>
   </router-link>

@@ -26,23 +26,26 @@ export default {
         { url: `${process.env.VUE_APP_CDN_PATH}/images/shanghai.png`, city: '上海', chinese: 'Shanghai', cityNums: 310100 },
         { url: `${process.env.VUE_APP_CDN_PATH}/images/hangzhou.png`, city: '杭州', chinese: 'Hangzhou', cityNums: 330100 },
         { url: `${process.env.VUE_APP_CDN_PATH}/images/chengdu.png`, city: '成都', chinese: 'Chengdu', cityNums: 510100 }
-      ]
+      ],
+      isChange: false
     }
   },
   methods: {
     handleToSearchPage (item) {
-      // 写入vuex
-      this.$store.commit('setCityId', item.cityNums)
-      window.setTimeout(() => {
-        this.$router.push({
-          name: 'position',
-          query: {
-            typeName: 'position',
-            cityNums: item.cityNums
-          }
-        })
-      }, 20)
+      this.isChange = true
+      this.currentItem = item
+      this.$router.push({
+        name: 'position',
+        query: {
+          typeName: 'position',
+          cityNums: item.cityNums
+        }
+      })
     }
+  },
+  destroyed () {
+    // 写入vuex 防止有首页刷新
+    if (this.isChange) this.$store.commit('setCityId', this.currentItem.cityNums)
   }
 }
 </script>
