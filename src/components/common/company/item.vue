@@ -96,7 +96,7 @@ export default {
   }
 }
 .company-list:hover .c-btn{
-  background: $main-color-1;
+  background: $bg-color-4;
   color: #fff;
 }
 </style>
