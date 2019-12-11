@@ -620,7 +620,7 @@ to {top:0px;}
         }
 
         .product-box{
-          margin-bottom: 24px;
+          margin-bottom: 30px;
           position: relative;
 
           .product-img-wrap{
@@ -628,10 +628,13 @@ to {top:0px;}
             position: absolute;
             left: 0;
             top: 0;
+            img{
+              border: 1px solid $border-color-8;
+            }
           }
           .product-text{
             padding: 6px 0 5px 0;
-            height: 66px;
+            min-height: 66px;
             font-weight: 400;
             margin-left: 97px;
 
@@ -645,9 +648,13 @@ to {top:0px;}
               font-size: 12px;
               color: $font-color-6;
               overflow: hidden;
-              white-space: nowrap;
               text-overflow: ellipsis;
-              margin-bottom: 12px;
+              margin-bottom: 10px;
+              line-height: 18px;
+              max-height: 36px;
+              display: -webkit-box;
+              -webkit-line-clamp: 2;
+              -webkit-box-orient: vertical;
             }
             .product-text-buttom{
               color: $font-color-2;
