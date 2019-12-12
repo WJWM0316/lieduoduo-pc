@@ -165,7 +165,7 @@ export default {
         if (val.open) val.open = false
       })
       this.$set(item, 'open', open)
-      this.selectedData = item.children
+      this.selectedData = open ? item.children : []
     },
     handleSelected (item) {
       this.$emit('input', item.labelId)

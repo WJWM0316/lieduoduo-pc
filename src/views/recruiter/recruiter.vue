@@ -532,7 +532,7 @@ export default class CourseList extends Vue {
         li {
           font-size: 16px;
           font-weight: 400;
-          color: rgba(98, 98, 98, 1);
+          color: #66666e;
           margin-right: 40px;
           line-height: 46px;
           cursor: pointer;
@@ -596,7 +596,7 @@ export default class CourseList extends Vue {
             padding: 1px 14px;
             font-size: 14px;
             font-weight: 400;
-            color: rgba(40, 40, 40, 1);
+            color: #333333;
             display: block;
             float: left;
             white-space: nowrap;
@@ -630,7 +630,7 @@ export default class CourseList extends Vue {
       font-weight: bold;
       width: 100%;
       border-radius: 8px 8px 0px 0px;
-      color: #2D2D2D;
+      color: #333;
       text-align: left;
       position: relative;
     }
@@ -671,7 +671,7 @@ export default class CourseList extends Vue {
         font-weight: 700;
         width: 408px;
         .job_top {
-          color: rgba(53, 64, 72, 1);
+          color: #333333;
           margin-bottom: 8px;
           line-height: 24px;
         }
@@ -745,6 +745,7 @@ export default class CourseList extends Vue {
       font-weight: 400;
       color: rgba(146, 146, 146, 1);
       line-height: 20px;
+      margin-top: 20px;
     }
     .hint_icon {
       width: 170px;

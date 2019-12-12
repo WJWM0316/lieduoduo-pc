@@ -96,13 +96,11 @@
             </div>
 
             <div class="userOp">
-              <div class="like_user" @click.stop="setJob(vo.jobhunterUid, 'check-invitation', vo, 1)" v-show="vo.status === 51 || vo.status === 57 || vo.status === 58">
-                  去评价
+              <div class="btn" @click.stop="setJob(vo.jobhunterUid, 'check-invitation', vo, 1)">
+                <span :style="'padding-right:15px;'" @click.stop="setJob(vo.jobhunterUid, 'check-invitation', vo, 1)" v-show="vo.status === 51 || vo.status === 57 || vo.status === 58">去评价</span>
+                <span :style="'color: #92929B;padding-right:15px;'" @click.stop="" v-show="vo.status === 60 || vo.status === 61">已评价</span>
+                查看面试详情
                 </div>
-                <div class="like_user" @click.stop="" v-show="vo.status === 60 || vo.status === 61">
-                  <span :style="'color: #92929B;'">已评价</span>
-                </div>
-              <div class="btn" @click.stop="setJob(vo.jobhunterUid, 'check-invitation', vo, 1)">查看面试详情</div>
             </div>
           </div>
         </div>
