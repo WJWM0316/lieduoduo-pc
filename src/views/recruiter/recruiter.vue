@@ -34,7 +34,7 @@
           <div class="blo_left">
             <div class="job_top">
               <div class="job_name">{{item.positionName}}</div>
-              <div class="job_emolument">{{item.emolumentMin}}k-{{item.emolumentMax}}k</div>
+              <div class="job_emolument">{{item.emolumentMin}}k-{{item.emolumentMax}}k{{item.annualSalaryDesc === '12薪' ? '' : '·' + item.annualSalaryDesc}}</div>
             </div>
             <div class="job_info">
               <span v-if="item.city">{{item.city}}{{item.district}}</span>
