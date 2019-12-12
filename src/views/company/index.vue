@@ -102,6 +102,7 @@ export default {
       getLogoListsListsApi({ count: 24 }).then(({ data }) => (this.companyLogoLists = data.data))
     },
     handleSearch () {
+      this.page = 1
       this.getLists()
     },
     getLists () {
@@ -150,6 +151,7 @@ export default {
       })
     },
     onClick (item, index, key) {
+      this.page = 1
       this.updateSearchCollectApi({ item, index, key }).then(() => this.getLists())
     }
   },
