@@ -219,6 +219,12 @@ export default class CourseList extends Vue {
       })
     }).catch(() => {})
   }
+  mounted () {
+    window.addEventListener('scroll', this.handleScroll)
+  }
+  destroyed () {
+    window.removeEventListener('scroll', this.handleScroll)
+  }
   init () {
     this.form = Object.assign(this.form, this.$route.query || {})
     this.userInfo = this.$store.state.userInfo
@@ -469,6 +475,14 @@ export default class CourseList extends Vue {
       }
     })
   }
+  handleScroll () {
+    let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+    if (scrollTop > 155) {
+      this.searchBarFixed = true
+    } else {
+      this.searchBarFixed = false
+    }
+  }
 
   openShare (index, id) {
     getCodeUrl({ id }).then(res => {
@@ -482,7 +496,7 @@ export default class CourseList extends Vue {
   }
 }
 </script>
-<style lang="less">
+<style lang="less" scoped>
 #recruiter {
   .recruiter_cont {
     background: #ffffff;
