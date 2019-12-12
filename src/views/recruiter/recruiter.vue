@@ -65,7 +65,7 @@
 
       <div class="job_cont_none" v-else>
         <img class="hint_icon" src="../../assets/images/fly.png">
-        <div class="none_hint">当前没有招聘中职位~</div>
+        <div class="none_hint">当前没有{{ navSelectName === '' ? '招聘中' : navSelectName }}的职位~</div>
       </div>
 
       <div class="toTop" @click="toTop" v-if="isShowTop">
