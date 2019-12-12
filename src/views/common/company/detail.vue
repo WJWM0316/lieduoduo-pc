@@ -208,16 +208,13 @@ export default class companyDetail extends Vue {
   }
   activationType () {
     this.activation = !this.activation
-    setTimeout(() => { // 切换按钮后延迟执行动画确保虚拟DOM渲染完成
-      this.photoAnimation()
-    }, 1000)
   }
   // 获取公司信息
-  async getCompany () {
+  getCompany () {
     let data = {
       vkey: this.$route.query.vkey
     }
-    await getVkeyCompanyApi(data).then(res => {
+    getVkeyCompanyApi(data).then(res => {
       this.companyInformation = res.data.data
       // 遍历地址，没有http协议则加上
       this.companyInformation.product.forEach(function (item, index) {
@@ -281,27 +278,6 @@ export default class companyDetail extends Vue {
     })
     window.open(toPositionDetail.href, '_blank')
   }
-  photoAnimation () {
-    if (!this.companyInformation.albumInfo && this.$refs.photo && this.companyInformation.albumInfo.length <= 1) return
-    var translateWidths = 0; var timeOut
-    var timer = () => {
-      translateWidths = translateWidths + 2
-      if (translateWidths % 298 === 0) {
-        return setTimeout(() => {
-          timer()
-        }, 3000)
-      }
-      if (translateWidths >= this.companyInformation.albumInfo.length * 298) {
-        translateWidths = 0
-      }
-      if (this.$refs.photo === undefined) return
-      this.$refs.photo.style.transform = `translate3d(-${translateWidths}px, 0, 0)`
-      timeOut = setTimeout(() => {
-        timer()
-      }, 10)
-    }
-    timer()
-  }
   // 保存简历附件
   saveResume (attach) {
     saveResumeAttach({ attach_resume: attach.id, attach_name: attach.fileName }).then(({ data }) => {
@@ -325,9 +301,6 @@ export default class companyDetail extends Vue {
     this.getCompanysTeam()
     this.getCompanyHot()
     this.getCompany()
-      .then(() => {
-        this.photoAnimation()
-      })
   }
   destroyed () {
     window.removeEventListener('scroll', this.handleScroll)
