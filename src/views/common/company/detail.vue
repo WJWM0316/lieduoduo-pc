@@ -26,19 +26,19 @@
             <p class="header-right-text"  v-if="!isHeader">在招职位</p>
             <p class="header-right-resume" @click="resumeTo('online')">
               <i class="iconfont icon-ziwomiaoshu-"/>&nbsp;
-              {{ online }}在线简历
+              {{ this.hasLogin ? (this.myResume.resumeCompletePercentage >= 0.9 ? '更新' : '完善' ) : '填写'}}在线简历
             </p>
           </div>
           <div class="header-right-position">
             <p class="header-right-number" v-if="!isHeader">{{ companyInformation.numOfVisitors }}</p>
             <p class="header-right-text" v-if="!isHeader">浏览</p>
-            <file @change="saveResume" @before="uploading = true" @fail="uploadResumeFile"  :showUploadDetails=false :showTips=true :islogin = islogin>
+            <file v-if="annexing !== ''" @change="saveResume" @before="uploading = true" @fail="uploadResumeFile"  :showUploadDetails=false :showTips=true :islogin = islogin>
               <p class="header-right-resume" @click="resumeTo('annex')">
                 <template v-if="uploading">
                   <i class="el-icon-loading"/>
                 </template>
-                <i v-else class="iconfont" :class="{ 'icon-weibiaoti-': annex === '上传', 'icon-zhongxinshangchuan-':  annex === '更新'}"/>&nbsp;
-                {{ annex }}附件简历
+                <i v-else class="iconfont" :class="{ 'icon-weibiaoti-': annexing === '上传', 'icon-zhongxinshangchuan-':  annexing === '更新'}"/>&nbsp;
+                {{ annexing }}附件简历
               </p>
             </file>
           </div>
@@ -132,7 +132,7 @@
         </div>
       </div>
     </template>
-
+      <login ref="loginPop"></login>
       <companyRecruitment v-if="!activation"></companyRecruitment>
   </div>
 </template>
@@ -146,6 +146,7 @@ import file from '@/components/common/upload/file'
 import companyRecruitment from './components/Recruitment'
 import blockOverflow from '@/components/common/blockOverflow/index'
 import mapPop from '@/components/mapPop/index'
+import login from '@/components/common/loginPop/index'
 
 import { saveResumeAttach } from 'API/resume.js'
 import {
@@ -162,7 +163,8 @@ import {
     appLinks,
     file,
     companyRecruitment,
-    blockOverflow
+    blockOverflow,
+    login
   },
   computed: {
     ...mapState({
@@ -170,7 +172,15 @@ import {
       roleInfos: state => state.roleInfos,
       userInfo: state => state.userInfo,
       hasLogin: state => state.hasLogin
-    })
+    }),
+    annexing () {
+      if(this.myResume && this.myResume.resumeAttach){
+        this.annex = '更新'
+      } else {
+        this.annex = '上传'
+      }
+      return this.annex
+    }
   }
 })
 export default class companyDetail extends Vue {
@@ -179,8 +189,7 @@ export default class companyDetail extends Vue {
   HotPositionList = {} // 热门职位列表
   companyInformation = {}
   activation = true
-  online = '填写' // 在线简历显示文案
-  annex = '上传' // 附件简历显示文案
+  annex = '' // 附件简历显示文案
   uploading = false // 附件上传loading
   dialogVisible = false // 地图弹窗
   getCompanysTeamText = {} // 招聘团队
@@ -246,30 +255,20 @@ export default class companyDetail extends Vue {
   resumeTo (type = 'x') {
     // 是否已经登陆
     if (!this.hasLogin && type !== 'x') {
-      return this.$router.push({
-        name: 'login',
-        query: {
-          type: 'msgLogin'
-        }
-      })
-    } else if (this.hasLogin) { // 已经登录
-      if (!this.roleInfos.isJobhunter) { // 判断有没有走完简历四步
-        this.online = '填写'
-      } else {
-        this.online = this.myResume.resumeCompletePercentage >= 0.9 ? '更新' : '完善'
-        if (JSON.stringify(this.myResume.resumeAttach) !== '{}') {
-          this.annex = '更新'
-        }
-      }
+      this.$refs.loginPop.showLoginPop = true
     }
-
-    if (type === 'online') {
+    if (this.hasLogin && type === 'online') {
+      // 跳转简历四部
       if (!this.roleInfos.isJobhunter) { return this.$router.push({ name: 'createUser' }) }
       // 跳我的简历
       return this.$router.push({ name: 'cresume' })
-    } else if (type === 'annex') {
-      // 这里执行 上传/更新附件简历弹窗
-      this.islogin = true
+    } else if (this.hasLogin && type === 'annex') {
+      if (!this.roleInfos.isJobhunter) {
+        return this.$router.push({ name: 'createUser' })
+      } else {
+        // 这里执行 上传/更新附件简历弹窗
+        this.islogin = true
+      }
     }
   }
 
@@ -328,9 +327,6 @@ export default class companyDetail extends Vue {
     this.getCompany()
       .then(() => {
         this.photoAnimation()
-        this.$nextTick(() => {
-          this.resumeTo()
-        })
       })
   }
   destroyed () {
