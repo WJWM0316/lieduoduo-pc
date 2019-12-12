@@ -24,7 +24,7 @@
             :debounce="500"
             :fetch-suggestions="querySearch"
             @select="handleSelectPosition" />
-          <el-button class="el-button-h46 " type="primary" @click="handleSelect">搜索</el-button>
+          <el-button class="el-button-h50 " type="primary" @click="handleSelect">搜索</el-button>
         </div>
         <div class="search-filter">
           <div class="search-taps">
@@ -238,8 +238,9 @@ export default {
   width: 880px;
   border-radius: 4px;
   position: relative;
+  box-sizing: border-box;
   border: 1px solid $border-color-2;
-  height: 46px;
+  height: 50px;
   .el-autocomplete,& /deep/ .el-input__inner{
     padding-left: 10px;
     height: 40px;
@@ -281,10 +282,12 @@ export default {
     box-sizing: border-box;
     border: none;
   }
-  .el-button-h46 {
+  .el-button-h50 {
     display: inline-block;
     vertical-align: top;
-    width: 130px;
+    width: 128px;
+    border-radius: 0 4px 4px 0;
+    padding: 15px 20px;
   }
   .search-fixed-title {
     display: none

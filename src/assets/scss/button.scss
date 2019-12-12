@@ -5,7 +5,7 @@
   white-space: nowrap;
   cursor: pointer;
   background: transparent;
-  border: 1px solid $main-color-1;
+  border: 1px solid $border-color-2;
   color: $main-color-1;
   text-align: center;
   box-sizing: border-box;
@@ -22,17 +22,36 @@
   border-color: $bg-color-5;
   background: $bg-color-5;
 }
+.c-btn.c-loading-btn {
+  position: relative;
+  pointer-events: none;
+  &::before {
+    font-family: element-icons!important;
+    content: "\e6cf";
+    display: inline-block;
+    animation: rotating 2s linear infinite;
+  }
+}
+@keyframes rotating {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(1turn);
+  }
+}
 
 // 按钮radio样式
 .c-button-group-radio {
   .c-button-radio {
-    height: 46px;
+    height: $--input-height;
     width: 148px;
     border: 1px solid $border-color-1;
-    line-height: 46px;
+    line-height: $--input-height;
     text-align: center;
-    vertical-align: middle;
+    vertical-align: top;
     display: inline-block;
+    box-sizing: border-box;
     background: #fff;
     cursor: pointer;
     font-size: 14px;

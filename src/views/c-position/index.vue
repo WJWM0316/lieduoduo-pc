@@ -196,7 +196,7 @@ export default {
 }
 .lists-wrapper {
   margin-right: 20px;
-  min-height: 108px;
+  min-height: 580px;
   min-width: 882px;
 }
 

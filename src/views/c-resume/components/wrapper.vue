@@ -215,11 +215,11 @@ export default {
   }
   .wrapper-info {
     flex: 1;
-    // max-width: 520px;
+    margin-right: auto;
   }
   .wrapper-operate {
-    width: 100px;
-    margin-left: auto;
+    width: 60px;
+    margin-left: 64px;
     text-align: right;
     span {
       color: $font-color-12;

@@ -32,9 +32,12 @@
           <div class="header-right-position">
             <p class="header-right-number" v-if="!isHeader">{{ companyInformation.numOfVisitors }}</p>
             <p class="header-right-text" v-if="!isHeader">浏览</p>
-            <file @change="saveResume" @fail="saveResume" :Resume = myResume :showUploadDetails=false :showTips=true :islogin = islogin>
+            <file @change="saveResume" @before="uploading = true" @fail="uploadResumeFile"  :showUploadDetails=false :showTips=true :islogin = islogin>
               <p class="header-right-resume" @click="resumeTo('annex')">
-                <i class="iconfont" :class="{ 'icon-weibiaoti-': annex === '上传', 'icon-zhongxinshangchuan-':  annex === '更新'}"/>&nbsp;
+                <template v-if="uploading">
+                  <i class="el-icon-loading"/>
+                </template>
+                <i v-else class="iconfont" :class="{ 'icon-weibiaoti-': annex === '上传', 'icon-zhongxinshangchuan-':  annex === '更新'}"/>&nbsp;
                 {{ annex }}附件简历
               </p>
             </file>
@@ -55,7 +58,7 @@
                 class="hot-annualSalaryDesc"
               >{{item.emolumentMin}}k-{{item.emolumentMax}}k{{ item.annualSalary > 12 ? '·' + item.annualSalaryDesc : ''}}</span>
               <p class="hot-text">
-                {{item.province}}{{item.city}}{{item.district}} | {{item.workExperienceName}} |
+                {{item.city}}{{item.district}} | {{item.workExperienceName}} |
                 {{item.educationName}}
               </p>
             </div>
@@ -78,7 +81,7 @@
                 <div class="product-text">
                   <p class="product-text-top">{{ item.productName }} | {{ item.slogan }}</p>
                   <p class="product-text-middle">{{ item.lightspot }}</p>
-                  <p>
+                  <p v-if="item.siteUrl">
                     <a class="product-text-buttom" :href="item.siteUrl" target="_blank">{{ item.siteUrl }}</a>
                   </p>
                 </div>
@@ -178,6 +181,7 @@ export default class companyDetail extends Vue {
   activation = true
   online = '填写' // 在线简历显示文案
   annex = '上传' // 附件简历显示文案
+  uploading = false // 附件上传loading
   dialogVisible = false // 地图弹窗
   getCompanysTeamText = {} // 招聘团队
   islogin = false // 子组件是否登陆弹窗
@@ -208,7 +212,7 @@ export default class companyDetail extends Vue {
       this.companyInformation = res.data.data
       // 遍历地址，没有http协议则加上
       this.companyInformation.product.forEach(function (item, index) {
-        item.siteUrl = item.siteUrl.indexOf('http') !== -1 ? item.siteUrl : 'http://' + item.siteUrl
+        item.siteUrl = !item.siteUrl ? '' : item.siteUrl.indexOf('http') !== -1 ? item.siteUrl : 'http://' + item.siteUrl
       })
       this.$nextTick(() => {
         if (this.$refs.blockOverflow) this.$refs.blockOverflow.updateTextHeigth()
@@ -301,15 +305,21 @@ export default class companyDetail extends Vue {
   }
   // 保存简历附件
   saveResume (attach) {
-    if (!attach) return this.$message.error('上传附件简历失败')
     saveResumeAttach({ attach_resume: attach.id, attach_name: attach.fileName }).then(({ data }) => {
+      this.uploading = false
       if (data.httpStatus === 200) {
         this.$message.success('上传附件简历成功')
         this.$store.commit('overwriteResume', {
           resumeAttach: attach
         })
       }
+    }).catch(() => {
+      this.uploading = false
     })
+  }
+  uploadResumeFile () {
+    this.uploading = false
+    this.$message.error('上传附件简历失败')
   }
   created () {
     window.addEventListener('scroll', this.handleScroll)
@@ -620,20 +630,25 @@ to {top:0px;}
         }
 
         .product-box{
-          margin-bottom: 24px;
+          min-height: 77px;
+          margin-bottom: 30px;
           position: relative;
+          display: flex;
+          justify-content: center;
+          @include flex-direction-column;
 
           .product-img-wrap{
+            border: 1px solid $border-color-8;
             @include img-radius(77px, 77px, 8px, #fff);
             position: absolute;
             left: 0;
             top: 0;
           }
           .product-text{
-            padding: 6px 0 5px 0;
-            height: 66px;
             font-weight: 400;
             margin-left: 97px;
+            display: flex;
+            @include flex-direction-column;
 
             .product-text-top{
               font-size: 14px;
@@ -645,14 +660,19 @@ to {top:0px;}
               font-size: 12px;
               color: $font-color-6;
               overflow: hidden;
-              white-space: nowrap;
               text-overflow: ellipsis;
-              margin-bottom: 12px;
+              line-height: 18px;
+              max-height: 36px;
+              display: -webkit-box;
+              -webkit-line-clamp: 2;
+              -webkit-box-orient: vertical;
             }
             .product-text-buttom{
+              margin-top: 10px;
               color: $font-color-2;
               font-size: 12px;
               line-height:12px;
+              display: block;
             }
           }
         }
@@ -688,7 +708,7 @@ to {top:0px;}
         }
       }
       .recruitmentTeam{
-        
+
         .recruitmentTeam-title{
           @extend %introductionTitle;
         }

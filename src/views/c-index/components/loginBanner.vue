@@ -7,8 +7,8 @@
           <span class="banner-number">{{total.goodChanceNum}} 好机会</span>
         </p>
         <div class="login-wrapper">
-          <el-input class="login-phone-input el-input-radius2px" maxlength="11" placeholder="请输入手机号码" v-model="loginForm.mobile" size="medium" />
-          <el-input  class="login-code-input el-input-radius2px" placeholder="验证码" v-model="loginForm.code" size="medium">
+          <el-input class="login-phone-input el-input-radius2px" maxlength="11" placeholder="请输入手机号码" v-model="loginForm.mobile" />
+          <el-input  class="login-code-input el-input-radius2px" placeholder="验证码" v-model="loginForm.code">
             <span class="code-span" slot="suffix"  @click="getCode">{{text}}</span>
           </el-input>
           <div class="login-btn" @click="login">登录/注册</div>
@@ -154,6 +154,7 @@ $index-login-height: 130px;
     position: absolute;
     height: 20px;
     top: 7px;
+    opacity: 0.5;
     width: 1px;
     background-color: #fff;
     right: 0;

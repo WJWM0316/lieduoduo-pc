@@ -8,9 +8,11 @@
       <upload-file
         @change="uploadSuccess"
         :size="10"
+        @before="uploading = true"
+        @fail="uploading = false"
         :showTips="true"
         :value="attach">
-        <div class="c-btn resume-add-btn">{{attach.id ? '重新上传附件简历' : '上传附件简历'}}</div>
+        <div class="c-btn resume-add-btn" :class="{'c-loading-btn': uploading}">{{attach.id ? '重新上传附件简历' : '上传附件简历'}}</div>
       </upload-file>
   </div>
 </template>
@@ -32,19 +34,23 @@ export default {
   components: { UploadFile },
   data () {
     return {
-
+      uploading: false
     }
   },
   methods: {
     // 上传成功
     uploadSuccess (attach) {
+      this.uploading = true
       saveResumeAttach({ attach_resume: attach.id, attach_name: attach.fileName }).then(({ data }) => {
+        this.uploading = false
         if (data.httpStatus === 200) {
           this.$message.success('上传附件简历成功')
           this.$store.commit('overwriteResume', {
             resumeAttach: attach
           })
         }
+      }).catch(() => {
+        this.uploading = false
       })
     },
     handleRemoveAttach () {

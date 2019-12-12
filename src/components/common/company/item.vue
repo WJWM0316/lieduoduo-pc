@@ -55,7 +55,8 @@ export default {
   }
 }
 .company-image {
-  @include img-radius(60px, 60px, 8px)
+  @include img-radius(60px, 60px, 8px);
+  border: 1px solid $border-color-8;
 }
 .company-info {
   flex: 1;
@@ -96,7 +97,7 @@ export default {
   }
 }
 .company-list:hover .c-btn{
-  background: $main-color-1;
+  background: $bg-color-4;
   color: #fff;
 }
 </style>

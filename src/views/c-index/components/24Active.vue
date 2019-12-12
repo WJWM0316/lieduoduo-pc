@@ -9,52 +9,56 @@
       </div>
     </div>
     <div class="active-list" v-loading="getLoading">
-      <template v-for="(item,index) in listData">
-        <router-link target="_blank" :to="`/position/details?positionId=${item.id}`" class="active-list-wrapper" :key="item.lableId">
-          <div class="list-header">
-            <div class="list-image">
-              <img :src="item.companyInfo.logoInfo.smallUrl" />
-            </div>
-            <div class="list-company">{{item.companyInfo.companyShortname}}</div>
-            <div class="list-company-info">{{item.companyInfo.industry}}·{{item.companyInfo.employeesInfo}}·{{item.companyInfo.financingInfo}}</div>
-          </div>
-          <div class="list-position-info">
-            <div class="list-position-content">
-               <div>
-                <span class="list-position-name">{{item.positionName}}</span>
-                <span class="list-pay">{{item.emolumentMin}}~{{item.emolumentMax}}K <template v-if="item.annualSalary > 12">· {{item.annualSalaryDesc}}</template></span>
+      <div class="active-lists-warpper">
+        <template v-for="(item,index) in listData">
+          <router-link target="_blank" :to="`/position/details?positionId=${item.id}`" class="active-list-wrapper" :key="item.lableId">
+            <div class="list-header">
+              <div class="list-image">
+                <img :src="item.companyInfo.logoInfo.smallUrl" />
               </div>
-              <div class="list-position-require">
-                <span><i class="iconfont icon-dizhi"></i>{{item.city}}{{item.district}}</span>
-                <span><i class="iconfont icon-zhiwei"></i>{{item.workExperienceName}}</span>
-                <span><i class="iconfont icon-jiaoyu"></i>{{item.educationName}}</span>
+              <div class="list-company">{{item.companyInfo.companyShortname}}</div>
+              <div class="list-company-info">{{item.companyInfo.industry}}·{{item.companyInfo.employeesInfo}}·{{item.companyInfo.financingInfo}}</div>
+            </div>
+            <div class="list-position-info">
+              <div class="list-position-content">
+                <div>
+                  <span class="list-position-name">{{item.positionName}}</span>
+                  <span class="list-pay">{{item.emolumentMin}}~{{item.emolumentMax}}K <template v-if="item.annualSalary > 12">· {{item.annualSalaryDesc}}</template></span>
+                </div>
+                <div class="list-position-require">
+                  <span><i class="iconfont icon-dizhi"></i>{{item.city}}{{item.district}}</span>
+                  <span><i class="iconfont icon-zhiwei"></i>{{item.workExperienceName}}</span>
+                  <span><i class="iconfont icon-jiaoyu"></i>{{item.educationName}}</span>
+                </div>
+              </div>
+              <div class="list-details" v-if="item.companyInfo.oneSentenceIntro">
+                <span class="list-details-box">
+                  <span class="list-details-box-content">{{item.companyInfo.oneSentenceIntro}}</span>
+                </span>
               </div>
             </div>
-            <div class="list-details" v-if="item.companyInfo.oneSentenceIntro">
-              <span>{{item.companyInfo.oneSentenceIntro}}</span>
+            <div class="list-footer">
+              <div class="count-down">
+                <span>还剩</span>
+                <template v-if="listCountDown[index].days > 0">
+                  <span class="list-day">{{listCountDown[index].days}}</span>
+                  <span>天</span>
+                </template>
+                <span class="list-hour">{{listCountDown[index].hours}}</span>:<span class="list-mins">{{listCountDown[index].mins}}</span>:<span class="list-second">{{listCountDown[index].seconds}}</span>
+              </div>
+              <div class="position-count">
+                <p>还剩<b>{{(item.seatsNum -  item.applyNum - item.natureApplyNum) > 99 ? '99+' : item.seatsNum -  item.applyNum - item.natureApplyNum}}</b>个席位</p>
+                <span class="position-process" :class="(item.applyNum + item.natureApplyNum) === 0 ? 'noApply' : ''">
+                  <span
+                    class="position-process-width"
+                    :style="{width: (item.applyNum + item.natureApplyNum) / item.seatsNum * 100 + '%'}"></span>
+                </span>
+              </div>
+              <el-button type="warning"  size="medium" style="width: 71px" round>马上抢</el-button>
             </div>
-          </div>
-          <div class="list-footer">
-            <div class="count-down">
-              <span>还剩</span>
-              <template v-if="listCountDown[index].days > 0">
-                <span class="list-day">{{listCountDown[index].days}}</span>
-                <span>天</span>
-              </template>
-              <span class="list-hour">{{listCountDown[index].hours}}</span>:<span class="list-mins">{{listCountDown[index].mins}}</span>:<span class="list-second">{{listCountDown[index].seconds}}</span>
-            </div>
-            <div class="position-count">
-              <p>还剩<b>{{(item.seatsNum -  item.applyNum - item.natureApplyNum) > 99 ? '99+' : item.seatsNum -  item.applyNum - item.natureApplyNum}}</b>个席位</p>
-              <span class="position-process" :class="(item.applyNum + item.natureApplyNum) === 0 ? 'noApply' : ''">
-                <span
-                  class="position-process-width"
-                  :style="{width: (item.applyNum + item.natureApplyNum) / item.seatsNum * 100 + '%'}"></span>
-              </span>
-            </div>
-            <el-button type="warning"  size="medium" style="width: 71px" round>马上抢</el-button>
-          </div>
-        </router-link>
-      </template>
+          </router-link>
+        </template>
+      </div>
     </div>
     <div class="active-btn">
       <div class="c-btn c-big-btn" @click="handleShowMore">查看更多</div>
@@ -226,13 +230,13 @@ $position-process-bg-color: #99e7e8;
 .active-list {
   padding-top: 17px;
   cursor: pointer;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
   width: 100%;
-  overflow: hidden;
   margin-bottom: 20px;
   min-height: 300px;
+  .active-lists-warpper {
+    display: flex;
+    flex-wrap: wrap;
+  }
   .active-list-wrapper {
     width: 386px;
     overflow: hidden;
@@ -241,6 +245,10 @@ $position-process-bg-color: #99e7e8;
     box-shadow: $shadow-1;
     border-radius:4px;
     background-color: #fff;
+    margin-right: 15px;
+  }
+  .active-list-wrapper:nth-child(3n) {
+    margin-right: 0px;
   }
   .active-list-wrapper:hover {
     box-shadow: $shadow-2;
@@ -287,10 +295,13 @@ $position-process-bg-color: #99e7e8;
       padding: 14px 0;
     }
   }
+  .list-position-name, .list-pay {
+    display: inline-block;
+    vertical-align: middle;
+  }
   .list-position-name {
     color: $title-color-1;
     font-size: 18px;
-    display: inline-block;
     font-weight: bold;
     max-width: 190px;
     @include ellipsis;
@@ -324,13 +335,17 @@ $position-process-bg-color: #99e7e8;
     font-size: 12px;
     min-height: 30px;
     line-height: 16px;
-    span {
-      display: inline-block;
+    position: relative;
+    display: table;
+    .list-details-box {
+      display: table-cell;
+      vertical-align: middle;
+    }
+    .list-details-box-content {
       color: $title-color-3;
       @include ellipsis-two;
       -webkit-box-pack: center;
     }
-
   }
   .list-footer {
     @include flex-v-center;

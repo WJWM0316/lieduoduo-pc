@@ -330,12 +330,8 @@
                 >
                 <div class="whitesize">
                   <span class="position">{{item.position}}&nbsp;|&nbsp;{{item.city}}</span>
-                  <span v-if="item.fields.length>0" style="color:#5c565d">|</span>
-                  <div style="margin-left:9px;display:inline-block;">
-                    <div class="fields" v-for="(item1,index1) in item.fields" :key="index1">
-                      <span>{{item1.field}}&nbsp;&nbsp;</span>
-                    </div>
-                  </div>
+                  <span v-if="item.fields.length>0" style="margin-right:9px;color:#333">|</span>
+                  <span v-for="(item1,index1) in item.fields" :key="index1">{{item1.field}}&nbsp;&nbsp;</span>
                   </div>
                   <span class="price">{{item.salaryFloor}}k-{{item.salaryCeil}}k</span>
                 </div>
