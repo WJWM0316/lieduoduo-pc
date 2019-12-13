@@ -95,11 +95,12 @@ img {
 				}
 				.labels {
 					margin-top: 20px;
-					height: 26px;
+					height: 24px;
 					overflow: hidden;
 					.label-item {
 						padding: 0 16px;
 						height: 24px;
+						box-sizing: border-box;
 						line-height: 24px;
 						background: transparent;
 						border-radius:18px;
