@@ -168,6 +168,7 @@ export default {
     display: flex;
     .list{
       width: 882px;
+      box-shadow: $shadow-1;
     }
   }
   .position-right{
