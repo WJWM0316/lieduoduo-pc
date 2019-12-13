@@ -410,6 +410,9 @@ $sizing: border-box;
           text-align: center;
           cursor: pointer;
         }
+        .header-left-Introduction:hover {
+          color: $main-color-2;
+        }
         //点击激活样式
         .activation{
           color: $main-color-2;
@@ -417,6 +420,7 @@ $sizing: border-box;
           border-bottom: 4px solid $main-color-2;
         }
       }
+
     }
     .header-right{
       width: 270px;
