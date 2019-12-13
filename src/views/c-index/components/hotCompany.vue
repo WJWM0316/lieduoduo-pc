@@ -133,9 +133,12 @@ export default {
     font-weight: 400;
     cursor: pointer;
   }
-  li.active, li:hover {
+  li.active {
     color: $main-color-1;
     border-color: $border-color-2;
+  }
+  li:hover {
+    color: $main-color-1;
   }
   li+li {
     margin-left: 52px;
