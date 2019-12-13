@@ -177,7 +177,7 @@ export default {
     // 选择月份
     handleSelect (type, item) {
       if (this[type + 'Value'].now) return
-      if (!this.single && this.validateDate(type, item.value, 'month')) return
+      // if (!this.single && this.validateDate(type, item.value, 'month')) return
       this[type + 'Value'].year = this[type + 'Value'].year || this.years[0]
       this[type + 'Value'].month = item.value
       this[type + 'PopStatus'] = false
@@ -189,7 +189,7 @@ export default {
     },
     // 切换年份
     handleChangeYear (type, item) {
-      if (!this.single && this.validateDate(type, item, 'year')) return
+      // if (!this.single && this.validateDate(type, item, 'year')) return
       if (!item) {
         this[type + 'Value'].now = true
         this[type + 'PopStatus'] = false
@@ -207,19 +207,9 @@ export default {
     },
     // 验证年份月份是否有效
     validateDate (type, item, event) {
-      if (!this.startTime) return false
-      if (type === 'endTime' && !this.startTimeValue.year) {
-        this.startTimeValue = this.compilerTime(this.startTime)
-      }
-      if (type === 'startTime' && this.endTimeValue.now) return false
-      if (type === 'month' && this.endTimeValue.year === this.startTimeValue.year) return false
-      let isShowTips = true
-      if (type === 'startTime') {
-        isShowTips = item > this.endTimeValue[event]
-      } else {
-        // console.log(item, this.startTimeValue)
-        isShowTips = item < this.startTimeValue[event]
-      }
+      // console.log(this.inputStartTimeValue, this.inputEndTimeValue)
+      let isShowTips = (this.inputStartTimeValue > this.inputEndTimeValue)
+      // let isShowTips = true
       this.$message.closeAll()
       if (isShowTips) this.$message.warning('结束时间不能早于开始时间')
       return isShowTips
