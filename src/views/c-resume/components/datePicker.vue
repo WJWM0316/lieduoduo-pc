@@ -207,6 +207,7 @@ export default {
     },
     // 验证年份月份是否有效
     validateDate (type, item, event) {
+      if (!this.startTime) return false
       if (type === 'endTime' && !this.startTimeValue.year) {
         this.startTimeValue = this.compilerTime(this.startTime)
       }
@@ -219,6 +220,7 @@ export default {
         // console.log(item, this.startTimeValue)
         isShowTips = item < this.startTimeValue[event]
       }
+      this.$message.closeAll()
       if (isShowTips) this.$message.warning('结束时间不能早于开始时间')
       return isShowTips
     },
