@@ -149,7 +149,7 @@ $position-details-width: 528px;
   z-index: 11;
   background: #fff;
   display: none;
-  box-shadow: $shadow-1;
+  box-shadow: 0 30px 30px 0 rgba(22,39,77,0.07);
 }
 // .position-details:hover {
 //   display: block;

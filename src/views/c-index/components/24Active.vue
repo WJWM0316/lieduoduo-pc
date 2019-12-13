@@ -357,6 +357,9 @@ $position-process-bg-color: #99e7e8;
     padding: 10px 20px;
     height: 54px;
   }
+  .list-footer:hover {
+    background: mix(#fff, $bg-color-4, 20%);
+  }
   .count-down {
     color: #fff;
     font-size: 14px;

@@ -185,9 +185,12 @@ $index-login-height: 130px;
   height: 36px;
   border:1px solid #fff;
   line-height: 36px;
-  border-radius:2px;
+  border-radius: 2px;
   color: #fff;
   font-size:14px;
+}
+.login-btn:hover {
+  background: rgba(#fff, 0.2);
 }
 .login-wrapper {
   width: 100%;

@@ -11,17 +11,19 @@
     <div class="position-main">
       <div class="inner">
         <div class="list" v-loading="getLoading">
-          <no-found v-if="!getLoading && !PositionList.length" :max-width="400"></no-found>
-          <positionItem :showCompanyInfo=false v-for="(item, index) in PositionList" :key="index" :item = item></positionItem>
-          <div class="pagination" v-if="total > 20">
-            <el-pagination
-              background
-              @current-change="handleSearch"
-              :current-page.sync ="page"
-              layout="prev, pager, next"
-              :page-size="20"
-              :total="total">
-            </el-pagination>
+          <div class="list-wrapper">
+            <no-found v-if="!getLoading && !PositionList.length" :max-width="400"></no-found>
+            <positionItem :showCompanyInfo=false v-for="(item, index) in PositionList" :key="index" :item = item></positionItem>
+            <div class="pagination" v-if="total > 20">
+              <el-pagination
+                background
+                @current-change="handleSearch"
+                :current-page.sync ="page"
+                layout="prev, pager, next"
+                :page-size="20"
+                :total="total">
+              </el-pagination>
+            </div>
           </div>
         </div>
         <div class="position-right">
@@ -168,6 +170,8 @@ export default {
     display: flex;
     .list{
       width: 882px;
+    }
+    .list-wrapper {
       box-shadow: $shadow-1;
     }
   }
