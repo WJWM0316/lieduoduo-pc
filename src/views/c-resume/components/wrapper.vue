@@ -38,8 +38,8 @@
     <div class="wrapper-edit" v-else>
       <slot name="edit"></slot>
       <div class="wrapper-button">
-        <el-button @click="handleClose" size="small">取消</el-button>
-        <el-button type="primary" @click="handleSave" :loading="btnLoading" size="small">保存</el-button>
+        <el-button @click="handleClose">取消</el-button>
+        <el-button type="primary" @click="handleSave" :loading="btnLoading">保存</el-button>
       </div>
     </div>
   </div>

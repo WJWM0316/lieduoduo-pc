@@ -190,7 +190,7 @@ $index-login-height: 130px;
   font-size:14px;
 }
 .login-btn:hover {
-  background: rgba(#fff, 0.2);
+  background: rgba(#fff, 0.1);
 }
 .login-wrapper {
   width: 100%;
