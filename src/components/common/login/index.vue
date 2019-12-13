@@ -464,9 +464,9 @@ export default class loginForm extends Component {
         display: inline-block;
         text-align: center;
         vertical-align: middle;
-        position: relative;
+        position: absolute;
         top: 20px;
-        left: 12px;
+        right: 100px;
         border: 1px solid $border-color-1;
         &::after{
           display: inline-block;
