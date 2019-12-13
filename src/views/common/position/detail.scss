@@ -99,12 +99,13 @@ img {
 						padding: 0 16px;
 						height: 24px;
 						line-height: 24px;
-						background: #fff;
+						background: transparent;
 						border-radius:18px;
 						margin-right: 16px;
 						font-size:12px;
 						font-weight:400;
-						color: $font-color-6;
+						color: $main-color-1;
+						border:1px solid $border-color-2;
 						display: inline-block;
 					}
 				}
