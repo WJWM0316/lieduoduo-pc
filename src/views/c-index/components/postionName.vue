@@ -125,10 +125,7 @@ $position-details-width: 528px;
 }
 .list-item {
   &:hover {
-    background: $bg-color-5;
-    span, .item-title {
-      color: $main-color-1;
-    }
+    background: $bg-color-1;
   }
 }
 .list-item:hover {
@@ -172,6 +169,9 @@ $position-details-width: 528px;
   .item-sub-title {
     span {
       padding: 0 13px;
+    }
+    span:hover {
+      color: $main-color-1;
     }
   }
   span {

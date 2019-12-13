@@ -174,7 +174,7 @@ import {
       hasLogin: state => state.hasLogin
     }),
     annexing () {
-      if(this.myResume && this.myResume.resumeAttach){
+      if (this.myResume && this.myResume.resumeAttach) {
         this.annex = '更新'
       } else {
         this.annex = '上传'
@@ -526,8 +526,7 @@ to {top:0px;}
         cursor: pointer;
         display: inline-block;
         margin-left: 15px;
-
-
+        box-shadow: $shadow-1;
         .hot-positionName{
           display: inline-block;
           width: 190px;
@@ -554,6 +553,12 @@ to {top:0px;}
       }
       .hotPosition_box_one{ // 解决第一个盒子左边距
         margin-left: 0;
+      }
+      .hotPosition-box:hover {
+        box-shadow: $shadow-2;
+        .hot-positionName {
+          color: $main-color-1;
+        }
       }
     }
   }

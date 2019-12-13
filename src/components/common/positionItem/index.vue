@@ -197,7 +197,10 @@ export default {
   }
 }
 .position-list:hover {
-  background: $bg-color-5;
+  background: $bg-color-1;
+  .position-name {
+    color: $main-color-1;
+  }
   .contact-recruiter {
     display: block;
   }

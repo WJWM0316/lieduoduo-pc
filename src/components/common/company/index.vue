@@ -6,7 +6,7 @@
         <img v-if="item.logoInfo" :src="item.logoInfo.middleUrl" alt="">
       </div>
       <div class="company-info">
-        <p>{{item.companyShortname}}</p>
+        <p class="company-info-name">{{item.companyShortname}}</p>
         <p>{{item.financingInfo}}<template v-if="item.employeesInfo">·{{item.employeesInfo}}</template><template v-if="item.industry">·{{item.industry}}</template></p>
       </div>
     </div>
@@ -84,5 +84,8 @@ export default {
 }
 .company-list-wrapper:hover {
   box-shadow: $shadow-2;
+  .company-info-name {
+    color: $main-color-1;
+  }
 }
 </style>

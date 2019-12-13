@@ -252,6 +252,9 @@ $position-process-bg-color: #99e7e8;
   }
   .active-list-wrapper:hover {
     box-shadow: $shadow-2;
+    .list-position-name {
+      color: $main-color-1;
+    }
   }
   .list-header {
     background-color: #fff;

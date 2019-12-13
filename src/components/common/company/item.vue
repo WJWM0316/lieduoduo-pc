@@ -96,8 +96,14 @@ export default {
     padding: 0 10px;
   }
 }
-.company-list:hover .c-btn{
-  background: $bg-color-4;
-  color: #fff;
+.company-list:hover {
+  background: $bg-color-1;
+  .company-name {
+    color: $main-color-1;
+  }
+  .c-btn{
+    background: $bg-color-4;
+    color: #fff;
+  }
 }
 </style>
