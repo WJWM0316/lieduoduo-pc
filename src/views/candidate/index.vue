@@ -48,7 +48,7 @@
               v-if="isShowScreen"
             >
               <i class="iconfont icon-shaixuan" style="padding-right:3px"></i>
-              {{ selectedScreen.length > 0 || (positionTypeList.length > 0 ? positionTypeList[positionTypeList.length-1].active:false) ? '清除筛选' :'高级筛选' }}
+              {{ selectedScreen.length > 0 || (positionTypeList.length > 1 ? positionTypeList[positionTypeList.length-1].active:false) ? '清除筛选' :'高级筛选' }}
             </div>
 
             <div
@@ -58,7 +58,7 @@
               v-else
             >
               <i class="iconfont icon-shaixuan" style="padding-right:3px"></i>
-              {{selectedScreen.length > 0 || (positionTypeList.length > 0 ? positionTypeList[positionTypeList.length-1].active:false) ? '清除筛选' :'高级筛选' }}
+              {{selectedScreen.length > 0 || (positionTypeList.length > 1 ? positionTypeList[positionTypeList.length-1].active:false) ? '清除筛选' :'高级筛选' }}
             </div>
 
             <div class="topSelected2" @click="screenList(2)" v-if="isShowScreen">
@@ -846,7 +846,6 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import { getMyInfoApi } from 'API/auth'
 import { getPositionTypeApi, openPositionApi } from 'API/position'
-import { getMyNavDataApi } from 'API/browse'
 import { getResumeIdApi } from 'API/userJobhunter'
 import { shareResumeApi } from 'API/forward'
 import {
@@ -1067,7 +1066,7 @@ export default class CourseList extends Vue {
       label: '已结束'
     }
   ];
-  value1 = '';
+  value1 = ['', ''];
   changeTime () {
     if (this.value1) {
       this.form.created_start_time = this.value1[0]
@@ -1088,18 +1087,28 @@ export default class CourseList extends Vue {
     this.form = Object.assign(this.form, this.$route.query || {})
     this.userInfo = this.$store.state.userInfo
     let query = this.$route.query
-    getinviteapplyNum().then(res => {
-      this.applynum = res.data.data.applyTotal
-      this.invitenum = res.data.data.inviteTotal
-    })
+    if (query.created_start_time) {
+      this.value1[0] = query.created_start_time
+    }
+    if (query.created_end_time) {
+      this.value1[1] = query.created_end_time
+    }
     if (query.navType) {
       switch (query.navType) {
         case 'invite':
+          if (this.form.status === 11) {
+            this.form.status = 12
+            this.listType = 12
+          }
           this.typeList = this.inviteOptions
           this.getApplyList()
           this.getPositionTypeList()
           break
         case 'apply':
+          if (this.form.status === 12) {
+            this.form.status = 11
+            this.listType = 11
+          }
           this.typeList = this.applyOptions
           this.getInviteList()
           this.getPositionTypeList()
@@ -1129,9 +1138,8 @@ export default class CourseList extends Vue {
     if (type2 === type) {
       return
     }
-
-    this.listType = 0
-    this.form.status = 0
+    // this.listType = 0
+    // this.form.status = 0
     this.form.page = 1
     this.setPathQuery(this.form)
     if (type === 'apply') this.typeList = this.applyOptions
@@ -1139,12 +1147,6 @@ export default class CourseList extends Vue {
     this.getPositionTypeList()
     this.navType = type
     this.setPath({ navType: type })
-  }
-
-  getMyNavData () {
-    getMyNavDataApi().then(res => {
-      this.navNum = res.data.data
-    })
   }
 
   getList (type) {
@@ -1252,7 +1254,7 @@ export default class CourseList extends Vue {
   // 获取另外的选择
   getOtherActive () {
     let otherActive =
-      this.positionTypeList.length > 0
+      this.positionTypeList.length > 1
         ? this.positionTypeList[this.positionTypeList.length - 1].active
         : false
     return otherActive
@@ -2022,7 +2024,6 @@ export default class CourseList extends Vue {
         return
       }
       let timearr = []
-      console.log(this.model.dateLists)
       this.model.dateLists.map((v, k) => {
         timearr.push(v.appointmentTime)
       })
@@ -2168,6 +2169,10 @@ export default class CourseList extends Vue {
   }
   created () {
     this.hasadmin()
+    getinviteapplyNum().then(res => {
+      this.applynum = res.data.data.applyTotal
+      this.invitenum = res.data.data.inviteTotal
+    })
   }
   addAdress (param) {
     this.pop = {

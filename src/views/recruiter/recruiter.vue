@@ -550,6 +550,9 @@ export default class CourseList extends Vue {
               left: 0px;
             }
           }
+          &:hover{
+            color: #03B3BB;
+          }
         }
       }
       .job_classify_wrap {
@@ -649,6 +652,11 @@ export default class CourseList extends Vue {
       box-sizing: border-box;
       cursor: pointer;
       text-align: center;
+      &:hover{
+        background: mix(#fff, #00C4CD, 20%);
+        border-color: mix(#fff, #00C4CD, 20%);
+        color: #fff;
+      }
     }
   }
 
