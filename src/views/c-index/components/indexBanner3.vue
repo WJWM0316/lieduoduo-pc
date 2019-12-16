@@ -1,6 +1,6 @@
 <template>
 	<div class="random-banner">
-		<router-link target="_blank" :to="{name: 'companyDetail', query: { vkey: '4utnb5ri' }}" class="li-item item0" data-com="北京旷视科技有限公司">
+		<router-link tag="a" target="_blank" href="https://h5.lieduoduo.com/delicate" class="li-item item0" data-com="北京旷视科技有限公司">
 			<img src="~@/assets/random_images/img0.png" alt="loading">
 		</router-link>
 		<router-link target="_blank" :to="{name: 'companyDetail', query: { vkey: 'kkwrgd1m' }}" class="li-item item1" data-com="广州欢聚时代信息科技有限公司">
@@ -24,6 +24,7 @@
 	</div>
 </template>
 <script>
+// {name: 'companyDetail', query: { vkey: '4utnb5ri' }}
 export default {
   data () {
     return {
