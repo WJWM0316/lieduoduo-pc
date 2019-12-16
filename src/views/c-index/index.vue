@@ -6,7 +6,10 @@
       <div class="index-part-1">
         <position-name :list="positionData" v-loading="!positionData.length"></position-name>
         <!-- <index-banner :items="bannerLists" ref="indexBanner"></index-banner> -->
-        <IndexBanner3 />
+        <div class="page-bg-banner">
+          <a target="_blank" href="https://h5.lieduoduo.com/delicate"><img src="~@/assets/random_images/img.jpg" alt="loading"></a>
+        </div>
+        <!-- <IndexBanner3 /> -->
       </div>
       <active />
       <!-- <position-list :nameList="positionLabel" ref="positionList"></position-list> -->
@@ -24,7 +27,7 @@ import SearchWrapper from './components/indexSearch'
 import PositionName from './components/postionName'
 // import IndexBanner from './components/indexBanner'
 import Active from './components/24Active'
-import IndexBanner3 from './components/indexBanner3'
+// import IndexBanner3 from './components/indexBanner3'
 
 // 职位列表
 // import PositionList from './components/positionList.vue'
@@ -44,8 +47,8 @@ export default {
     HotCity,
     HotCompany,
     AppLinks,
-    ScrollToTop,
-    IndexBanner3
+    ScrollToTop
+    // IndexBanner3
   },
   data () {
     return {
@@ -109,5 +112,17 @@ export default {
 }
 .app-links {
   margin-bottom: 40px;
+}
+.page-bg-banner {
+  overflow: hidden;
+  width: 763px;
+  height: 414px;
+  margin-left: 18px;
+  a {
+    display: block;
+  }
+  img {
+    max-width: 100%;
+  }
 }
 </style>

@@ -246,15 +246,14 @@ $position-process-bg-color: #99e7e8;
     border-radius:4px;
     background-color: #fff;
     margin-right: 15px;
+    transition: transform 300ms, box-shadow 300ms;
   }
   .active-list-wrapper:nth-child(3n) {
     margin-right: 0px;
   }
   .active-list-wrapper:hover {
     box-shadow: $shadow-2;
-    .list-position-name {
-      color: $main-color-1;
-    }
+    transform: translateY(-5px);
   }
   .list-header {
     background-color: #fff;
@@ -309,6 +308,9 @@ $position-process-bg-color: #99e7e8;
     max-width: 190px;
     @include ellipsis;
   }
+  .list-position-name:hover {
+    color: $main-color-1;
+  }
   .list-pay {
     color: $error-color-1;
     font-size: 20px;
@@ -356,9 +358,6 @@ $position-process-bg-color: #99e7e8;
     background: $bg-color-4;
     padding: 10px 20px;
     height: 54px;
-  }
-  .list-footer:hover {
-    background: mix(#fff, $bg-color-4, 20%);
   }
   .count-down {
     color: #fff;

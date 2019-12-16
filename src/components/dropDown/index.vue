@@ -157,7 +157,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-$drop-height: 46px;
+$drop-height: 50px;
 .drop-down {
   position: relative;
   .drop-down-wrapper {
@@ -189,7 +189,10 @@ $drop-height: 46px;
     display: none;
     font-size: 14px;
   }
-  .drop-down-item:hover, .drop-down-item.single-active {
+  .drop-down-item:hover {
+     background: $bg-color-5;
+  }
+  .drop-down-item.single-active {
     background: $bg-color-5;
     color: $main-color-1;
   }
@@ -227,7 +230,7 @@ $drop-height: 46px;
 }
 
 .drop-down-footer {
-  padding: 6px;
+  padding: 9px 6px;
   position: relative;
   text-align: right;
   .el-button {
@@ -246,11 +249,11 @@ $drop-height: 46px;
 }
 .opacity.drop-down-footer::after {
   content: "";
-  top: -26px;
+  top: -32px;
   left: 0;
   position: absolute;
   width: 100%;
-  height: 26px;
+  height: 32px;
   background:linear-gradient(180deg,rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
 }
 .drop-down-items::-webkit-scrollbar {
