@@ -6,11 +6,16 @@
   font-weight: normal;
   box-sizing: border-box;
 }
-// .el-button.el-button--default:hover, .el-button.el-button--default:focus {
-//   background: #fff;
-//   color: $title-color-3;
-//   border-color: $title-color-3;
-// }
+.el-button.el-button--default:hover {
+  background: #fff;
+  color: $title-color-3;
+  border-color: $title-color-3;
+}
+.el-button.el-button--default:focus {
+  background: #fff;
+  color: $title-color-3;
+  border-color: $border-color-1;
+}
 
 /** 设置分页组件样式 */
 .el-pagination.is-background .el-pager li.number, .el-pagination.is-background .el-pager li.more{
@@ -141,6 +146,16 @@
   }
   .el-button + .el-button {
     margin-left: 16px;
+  }
+  .el-button--default.el-button--primary:focus {
+    background: $bg-color-4;
+    border-color: $border-color-2;
+    color: #fff;
+  }
+  .el-button--default.el-button--primary:hover {
+    background: mix(#fff, $bg-color-4, 20%);
+    border-color: mix(#fff, $border-color-2, 20%);
+    color: #fff;
   }
 }
 

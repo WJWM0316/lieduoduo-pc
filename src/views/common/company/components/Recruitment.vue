@@ -14,16 +14,16 @@
           <div class="list-wrapper">
             <no-found v-if="!getLoading && !PositionList.length" :max-width="400"></no-found>
             <positionItem :showCompanyInfo=false v-for="(item, index) in PositionList" :key="index" :item = item></positionItem>
-            <div class="pagination" v-if="total > 20">
-              <el-pagination
-                background
-                @current-change="handleSearch"
-                :current-page.sync ="page"
-                layout="prev, pager, next"
-                :page-size="20"
-                :total="total">
-              </el-pagination>
-            </div>
+          </div>
+          <div class="pagination" v-if="total > 20 && !getLoading">
+            <el-pagination
+              background
+              @current-change="handleSearch"
+              :current-page.sync ="page"
+              layout="prev, pager, next"
+              :page-size="20"
+              :total="total">
+            </el-pagination>
           </div>
         </div>
         <div class="position-right">
@@ -142,17 +142,20 @@ export default {
     }
     ul{
       padding-bottom: 5px;
-      .positionType-buttom{
-      padding: 0 10px;
-      margin: 0 24px 14px 0;
-      cursor: pointer;
-      display: inline-block;
-      height: 32px;
-      color: $border-color-7;
-      text-align: center;
-      line-height: 32px;
-      font-weight: 400;
-      border-radius: 2px;
+      .positionType-buttom {
+        padding: 0 10px;
+        margin: 0 24px 14px 0;
+        cursor: pointer;
+        display: inline-block;
+        height: 32px;
+        color: $border-color-7;
+        text-align: center;
+        line-height: 32px;
+        font-weight: 400;
+        border-radius: 2px;
+      }
+      .positionType-buttom:hover {
+        background-color: $bg-color-5;
       }
     }
     .activation{
