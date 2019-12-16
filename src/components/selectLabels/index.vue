@@ -324,10 +324,7 @@ export default {
     color: $main-color-1;
   }
 }
-.label-item:hover {
-  border-color: $border-color-2;
-}
-.label-item.active {
+.label-item:hover, .label-item.active {
   border-color: $border-color-2;
   color: $main-color-1;
 }

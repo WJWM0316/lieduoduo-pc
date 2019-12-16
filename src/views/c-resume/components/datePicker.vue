@@ -329,18 +329,22 @@ export default {
     overflow: hidden;
   }
   .date-months {
-    padding-top: 8px;
+    padding: 8px 10px 0;
     div {
       display: inline-block;
       width: 33%;
       text-align: center;
-      padding:10px 0;
+      padding:5px 0;
+      margin: 5px 0;
       cursor: pointer;
     }
     .active {
       font-weight: bold;
     }
-    div:hover,.active {
+    div:hover {
+      background-color: $bg-color-5;
+    }
+    .active {
       color: $main-color-1;
     }
   }
@@ -352,6 +356,7 @@ export default {
   }
   div:hover {
     color: $title-color-3;
+    background-color: transparent;
   }
 }
 </style>
