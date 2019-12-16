@@ -186,7 +186,7 @@ export default {
   }
 }
 .pagination {
-  background: $bg-color-1;
+  background: transparent;
   padding: 18px 0 0 0;
   text-align: center;
 }
