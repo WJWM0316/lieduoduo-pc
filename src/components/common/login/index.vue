@@ -100,7 +100,7 @@
                     <span>约BOSS</span>
                 </div>
                 <div class="guide_text">
-                    <i class="iconfont icon-weixin" style="font-size: 14px;"></i>
+                    <i class="iconfont icon-yuemian" style="font-size: 14px;"></i>
                     <span>直接面谈</span>
                 </div>
             </div>
@@ -832,7 +832,7 @@ export default class loginForm extends Component {
             vertical-align: middle;
             i{
               font-size: 16px;
-              color: $main-color-1;
+              color: $font-color-13;
               margin-right: 10px;
               line-height: 16px;
               vertical-align: bottom;

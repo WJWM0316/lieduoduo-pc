@@ -234,6 +234,11 @@
           text-align: center;
           margin-left: 40px;
           cursor: pointer;
+          &:hover{
+            background: mix(#fff, $bg-color-4, 20%);
+            border-color: mix(#fff, $border-color-2, 20%);
+            color: #fff;
+          }
         }
         .btn-disable{
           width: 108px;
@@ -461,6 +466,11 @@ height:100%;
           border: none;
           color: #fff;
           margin-right: 16px;
+          &:hover{
+            background: mix(#fff, #00C4CD, 20%);
+            border-color: mix(#fff, #00C4CD, 20%);
+            color: #fff;
+          }
         }
       }
     }
@@ -659,14 +669,12 @@ right: -40px;
 
   .resumeBox {
     background: #fff;
-  width: 940px;
-  // height: 786px;
-  height: 100%;
-  position: absolute;
-  left: 50%;
-  top: 60px;
-  // overflow: scroll;
-  transform: translate(-50%, 0%);
+    width: 940px;
+    height: calc(100vh - 60px);
+    position: absolute;
+    left: 50%;
+    top: 60px;
+    transform: translate(-50%, 0%);
     .Numbering {
       padding: 28px 20px 30px 50px;
       display: flex;
@@ -845,6 +853,11 @@ right: -40px;
             border-radius:4px;
             cursor: pointer;
             margin-bottom: 12px;
+            &:hover{
+              background: mix(#fff, #00C4CD, 20%);
+              border-color: mix(#fff, #00C4CD, 20%);
+              color: #fff;
+            }
           }
           .btndisable{
             width:154px;
@@ -1834,6 +1847,9 @@ right: -40px;
                   font-size: 14px;
                   color: #66666E;;
                 }
+                &:hover{
+                  background: #F0F3F5;
+                }
               }
             }
           }
@@ -2223,6 +2239,11 @@ right: -40px;
           float: right;
           line-height: 32px;
           cursor: pointer;
+          &:hover{
+            background: mix(#fff, #00C4CD, 20%);
+            border-color: mix(#fff, #00C4CD, 20%);
+            color: #fff;
+          }
         }
       }
     }

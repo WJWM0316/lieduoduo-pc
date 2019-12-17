@@ -266,6 +266,11 @@ export default {
           color: #fff;
           background:#00C4CD;
           border-radius:0px 4px 4px 0px;
+          &:hover{
+            background: mix(#fff, #00C4CD, 20%);
+            border-color: mix(#fff, #00C4CD, 20%);
+            color: #fff;
+          }
         }
       }
       .u-desc{
@@ -382,6 +387,11 @@ export default {
       margin-top: 30px;
       margin-bottom: 32px;
       cursor: pointer;
+      &:hover{
+        background: mix(#fff, #00C4CD, 20%);
+        border-color: mix(#fff, #00C4CD, 20%);
+        color: #fff;
+      }
     }
     .con-r{
       float: right;

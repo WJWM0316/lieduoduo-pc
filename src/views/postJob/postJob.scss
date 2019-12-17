@@ -28,6 +28,11 @@
         box-sizing: border-box;
         margin-right: 24px;
         font-weight: 400;
+        &:hover{
+          background: mix(#fff, $bg-color-4, 20%);
+          border-color: mix(#fff, $border-color-2, 20%);
+          color: #fff;
+        }
       }
       .btn_cancel {
         height: 40px;

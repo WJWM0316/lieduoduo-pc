@@ -2218,10 +2218,8 @@ export default {
     .resumeBox {
       background: #fff;
       width: 940px;
-      // height: 786px;
-      height: 100%;
+      height: calc(100vh - 60px);
       position: absolute;
-      // overflow: scroll;
       left: 50%;
       top: 60px;
       transform: translate(-50%, 0%);
@@ -2404,6 +2402,11 @@ export default {
               border-radius:4px;
               cursor: pointer;
               margin-bottom: 12px;
+              &:hover{
+                background: mix(#fff, #00C4CD, 20%);
+                border-color: mix(#fff, #00C4CD, 20%);
+                color: #fff;
+              }
             }
             .btndisable{
               width:154px;
@@ -3375,6 +3378,9 @@ export default {
                     font-size: 14px;
                     color: #66666E;;
                   }
+                  &:hover{
+                    background: #F0F3F5;
+                  }
                 }
               }
             }
@@ -3708,6 +3714,11 @@ export default {
             float: right;
             line-height: 32px;
             cursor: pointer;
+            &:hover{
+              background: mix(#fff, #00C4CD, 20%);
+              border-color: mix(#fff, #00C4CD, 20%);
+              color: #fff;
+            }
           }
         }
       }
