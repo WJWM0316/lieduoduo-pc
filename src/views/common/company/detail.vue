@@ -542,6 +542,9 @@ to {top:0px;}
           font-weight: 500;
           color: $font-color-3;
         }
+        .hot-positionName:hover {
+          color: $main-color-1;
+        }
         .hot-annualSalaryDesc{
           font-size: 18px;
           font-weight: 500;
@@ -562,9 +565,6 @@ to {top:0px;}
       .hotPosition-box:hover {
         transform: translateY(-5px);
         box-shadow: $shadow-2;
-        .hot-positionName {
-          color: $main-color-1;
-        }
       }
     }
   }

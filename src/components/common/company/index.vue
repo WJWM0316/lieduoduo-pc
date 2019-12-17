@@ -50,6 +50,9 @@ export default {
       font-size: 12px;
       margin-left: 10px;
     }
+    .company-info-name:hover {
+      color: $main-color-1;
+    }
     p {
       color: $title-color-1;
       font-size: 16px;
@@ -86,8 +89,5 @@ export default {
 .company-list-wrapper:hover {
   box-shadow: $shadow-2;
   transform: translateY(-5px);
-  .company-info-name {
-    color: $main-color-1;
-  }
 }
 </style>
