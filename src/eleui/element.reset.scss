@@ -183,3 +183,8 @@ div.el-message {
   color: #fff;
   background-color: #BCBEC0;
 }
+
+/**el cascader*/
+.el-cascader-node.is-active .el-icon-check{
+  display: none;
+}
