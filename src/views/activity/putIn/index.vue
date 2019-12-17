@@ -6,7 +6,7 @@
       <img class="left_logo" :src=" cdnPath + 'logo_lieduodou.png'" @click="toIndex"/>
       <div class="headerBtn">
         <span class="btn_blo" @click="openMask('login')">高薪职位</span>
-        <div class="btn_blo2" @click="setAnimate">求职者登录</div>
+        <el-button type="primary" size="small" class="btn_blo2" @click="setAnimate">求职者登录</el-button>
       </div>
     </section>
   </header>
@@ -18,7 +18,7 @@
             <div class="search-bar-top">
               <i class="i-search iconfont icon-sousuo"></i>
               <input class="search-input" placeholder="搜索职位" maxlength="64" v-model="searchJobData.keyword">
-              <div class="search-bar-btn" @click="searchJob">搜索职位</div>
+              <el-button type="primary" class="search-bar-btn" @click="searchJob">搜索职位</el-button>
             </div>
             <div class="select-main" v-if="isShowSelect">
               <div class="select-none" v-if="selectList.length<1">
@@ -107,7 +107,7 @@
               <img class="codePic" :src="codePic.img" @click="getPicCode" />
             </li>
           </ul>
-          <div class="submitBtn" @click="submit">求职者注册/登录</div>
+          <el-button class="submitBtn" type="primary" @click="submit">求职者注册/登录</el-button>
           <div class="lp_agreeNotice_box">
             <p>注册代表你已同意
               <span @click="toAgreement">猎多多用户协议&隐私政策</span>
@@ -778,17 +778,8 @@ export default class CourseList extends Vue {
       }
       .btn_blo2 {
         width:113px;
-        height:34px;
-        background: $bg-color-4;
-        border-radius: 4px;
         font-size:14px;
-        font-weight:700;
-        color:#fff;
-        line-height:34px;
-        text-align: center;
         margin-left: 20px;
-        cursor: pointer;
-
       }
     }
     .left_logo {
@@ -901,15 +892,8 @@ export default class CourseList extends Vue {
               }
               .search-bar-btn {
                 font-size:14px;
-                font-weight:700;
                 color:#fff;
                 width:101px;
-                height:40px;
-                line-height:40px;
-                background: $bg-color-4;
-                border-radius:4px;
-                cursor: pointer;
-                text-align: center;
               }
             }
             .select-main {
@@ -1284,19 +1268,12 @@ export default class CourseList extends Vue {
             }
           }
           .submitBtn {
-            display: block;
             height: 54px;
-            line-height: 54px;
             margin: 0 auto;
             margin-bottom: 16px;
             font-size:18px;
             font-weight:700;
-            color:#fff;
-            text-align: center;
             width:328px;
-            background: $bg-color-4;
-            border-radius: 4px;
-            cursor: pointer;
           }
           .lp_agreeNotice_box {
             font-size: 12px;
