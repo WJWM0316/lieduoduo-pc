@@ -3294,7 +3294,7 @@ export default {
             }
             .phone{
               float: left;
-              color:#00C4CD;
+              // color:#00C4CD;
             }
           }
           .detail{
@@ -3703,6 +3703,9 @@ export default {
             border:1px solid #BCBEC0;
             float: right;
             cursor: pointer;
+            &:hover{
+              border-color: #92929B;
+            }
           }
           .save{
             width:108px;

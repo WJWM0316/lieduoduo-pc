@@ -493,7 +493,7 @@ export default class CommunityEdit extends Vue {
     closePositionApi({ id: this.$route.query.id }).then(() => {
       this.$message({
         type: 'success',
-        message: '成功!'
+        message: '关闭职位成功!'
       })
 
       this.$router.push({

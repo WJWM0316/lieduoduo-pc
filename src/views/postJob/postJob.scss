@@ -42,6 +42,9 @@
         background: #ffffff;
         border: 1px solid #BCBEC0;
         font-weight: 400;
+        &:hover{
+          border-color: #92929B;
+        }
       }
       .cloJob {
         width:80px;
@@ -51,6 +54,7 @@
         color:#03B3BB;
         line-height:40px;
         margin-left: 40px;
+        cursor: pointer;
       }
     }
     .ruleHint {

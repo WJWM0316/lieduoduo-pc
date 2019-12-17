@@ -1763,7 +1763,7 @@ right: -40px;
           }
           .phone{
             float: left;
-            color:#00C4CD;
+            // color:#00C4CD;
           }
         }
         .detail{
@@ -2228,6 +2228,9 @@ right: -40px;
           border:1px solid #BCBEC0;
           float: right;
           cursor: pointer;
+          &:hover{
+            border-color: #92929B;
+          }
         }
         .save{
           width:108px;
