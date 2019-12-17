@@ -222,6 +222,7 @@ $header-height-1: $page-header-height;
   margin-right: 58px;
   img {
     max-height: 100%;
+    cursor: pointer;
   }
 }
 .header-address {

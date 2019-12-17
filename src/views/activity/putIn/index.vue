@@ -390,7 +390,7 @@ export default class CourseList extends Vue {
             }
           })
         }).catch(res => {
-          if (res.data.code === 419) {
+          if (res.data.code === 419 || res.data.code === 440) {
             this.getPicCode()
           }
         })
