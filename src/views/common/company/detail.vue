@@ -539,15 +539,15 @@ to {top:0px;}
           white-space: nowrap;
           text-overflow: ellipsis;
           font-size: 16px;
-          font-weight: 500;
           color: $font-color-3;
+          font-weight: bold;
         }
         .hot-positionName:hover {
           color: $main-color-1;
         }
         .hot-annualSalaryDesc{
           font-size: 18px;
-          font-weight: 500;
+          font-weight: bold;
           color: $sub-color-1;
           display: block;
           float: right;
