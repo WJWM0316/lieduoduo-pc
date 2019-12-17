@@ -1093,6 +1093,10 @@ export default class CourseList extends Vue {
     if (query.created_end_time) {
       this.value1[1] = query.created_end_time
     }
+    if (query.status) {
+      this.form.status = Number(query.status)
+      this.listType = Number(query.status)
+    }
     if (query.navType) {
       switch (query.navType) {
         case 'invite':
@@ -1192,6 +1196,8 @@ export default class CourseList extends Vue {
       if (this.selectedScreen.length > 0 || otherActive) {
         this.setDefaultScreen()
         if (!this.isShowScreen) {
+          this.form.position_type_id = ''
+          this.setPathQuery(this.form)
           this.getList()
         }
       } else {
@@ -1282,8 +1288,8 @@ export default class CourseList extends Vue {
       this.positionTypeList[0].active = false
       // this.positionTypeList[this.positionTypeList.length - 1].active = false
     }
+    this.form.position_type_id = this.selectedScreen.join()
   }
-
   // 职业类型列表
   getPositionTypeList () {
     getPositionTypeApi().then(res => {
@@ -1298,19 +1304,24 @@ export default class CourseList extends Vue {
         active: true
       })
 
-      //   data.push({
-      //     name: '我的主页',
-      //     labelId: 'index',
-      //     active: false
-      //   })
-
       this.positionTypeList = data
+      let ids = this.$route.query.position_type_id.split(',')
+      this.positionTypeList = this.positionTypeList.filter(item => {
+        let idList = ids.map(v => v)
+        if (idList.includes((item.labelId).toString())) {
+          item.active = true
+          this.selectedScreen.push(item.labelId)
+        } else {
+          item.active = false
+        }
+        return item
+      })
     })
   }
 
   // 意向列表
   getInviteList () {
-    this.form.position_type_id = this.selectedScreen.join()
+    // this.form.position_type_id = this.selectedScreen.join()
     getInviteListApi(this.form)
       .then(res => {
         let msg = res.data.data
@@ -1328,7 +1339,7 @@ export default class CourseList extends Vue {
   }
   // 邀请
   getApplyList () {
-    this.form.position_type_id = this.selectedScreen.join()
+    // this.form.position_type_id = this.selectedScreen.join()
     getApplyListApi(this.form)
       .then(res => {
         let msg = res.data.data
@@ -1658,7 +1669,6 @@ export default class CourseList extends Vue {
           }
           this.arrangementInfo.addressId = res.data.data.addressId
           this.arrangementInfo.addressName = res.data.data.address
-          console.log(res.data.data.arrangementInfo.appointmentList)
           if (res.data.data.arrangementInfo.appointmentList) {
             this.model.dateLists = res.data.data.arrangementInfo.appointmentList
           } else {
