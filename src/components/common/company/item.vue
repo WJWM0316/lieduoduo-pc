@@ -75,6 +75,9 @@ export default {
     @include ellipsis();
     padding-right: 12px;
   }
+  .company-name:hover {
+    color: $main-color-1;
+  }
   span.company-desc {
     font-size: 12px;
     color: $title-color-2;
@@ -98,9 +101,6 @@ export default {
 }
 .company-list:hover {
   background: $bg-color-1;
-  .company-name {
-    color: $main-color-1;
-  }
   .c-btn{
     background: $bg-color-4;
     color: #fff;

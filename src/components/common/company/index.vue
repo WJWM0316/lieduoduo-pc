@@ -35,6 +35,7 @@ export default {
   box-sizing: border-box;
   margin-bottom: 13px;
   border-radius:4px;
+  transition: transform 300ms, box-shadow 300ms;
   cursor: pointer;
   .list-header {
     @include flex-v-center;
@@ -84,6 +85,7 @@ export default {
 }
 .company-list-wrapper:hover {
   box-shadow: $shadow-2;
+  transform: translateY(-5px);
   .company-info-name {
     color: $main-color-1;
   }

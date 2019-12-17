@@ -527,6 +527,7 @@ to {top:0px;}
         background: #FFFFFF;
         box-sizing: $sizing;
         border-radius:4px;
+        transition: transform 300ms, box-shadow 300ms;
         cursor: pointer;
         display: inline-block;
         margin-left: 15px;
@@ -559,6 +560,7 @@ to {top:0px;}
         margin-left: 0;
       }
       .hotPosition-box:hover {
+        transform: translateY(-5px);
         box-shadow: $shadow-2;
         .hot-positionName {
           color: $main-color-1;

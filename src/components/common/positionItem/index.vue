@@ -91,6 +91,9 @@ export default {
     color: $title-color-1;
     font-weight: bold;
   }
+  .position-name:hover {
+    color: $main-color-1;
+  }
   .position-pay {
     color: $error-color-1;
     font-weight: bold;
@@ -198,9 +201,6 @@ export default {
 }
 .position-list:hover {
   background: $bg-color-1;
-  .position-name {
-    color: $main-color-1;
-  }
   .contact-recruiter {
     display: block;
   }
