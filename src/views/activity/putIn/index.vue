@@ -91,7 +91,7 @@
           <span class="green">7秒</span>注册 1000+高薪职位任你选
         </p>
         <form id="phone_form" method="post" action="javascript:;">
-          <ul>
+          <ul :class="{ 'codePicLogin': codePic.img }">
             <li>
               <i class="iconfont icon-shoujihaoma input_icon"></i>
               <input placeholder="请输入常用手机号"  maxlength="11" v-model="form.mobile" @focus="setFocus"></li>
@@ -114,7 +114,7 @@
             </p>
           </div>
         </form>
-        <div class="login_btn">
+        <div class="login_btn" :class="{ 'codePicLogin_btn': codePic.img }">
           <p @click="toPcLogin" >企业注册/登录</p>
         </div>
         <div class="formHint" v-if="formHint.isShow">
@@ -389,6 +389,10 @@ export default class CourseList extends Vue {
               this.$router.replace('/createUser')
             }
           })
+        }).catch(res => {
+          if (res.data.code === 419) {
+            this.getPicCode()
+          }
         })
       }
     }
@@ -419,7 +423,7 @@ export default class CourseList extends Vue {
       getCodeApi({
         mobile: this.form.mobile
       }).then(res => {
-        console.log(res)
+        
       }).catch(() => {
       })
     }
@@ -1209,6 +1213,9 @@ export default class CourseList extends Vue {
             cursor: pointer;
           }
         }
+        .codePicLogin_btn{
+          margin-top: 30px;
+        }
         #phone_form {
           width: 328px;
           position: relative;
@@ -1268,6 +1275,12 @@ export default class CourseList extends Vue {
                 cursor: inherit;
                 line-height: 38px;
               }
+            }
+          }
+          .codePicLogin{
+            margin-bottom: 30px;
+            li{
+              margin-bottom: 15px;
             }
           }
           .submitBtn {
