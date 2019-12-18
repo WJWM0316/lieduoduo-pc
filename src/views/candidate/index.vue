@@ -1107,6 +1107,7 @@ export default class CourseList extends Vue {
           }
           this.typeList = this.inviteOptions
           this.getApplyList()
+          this.getInviteList()
           this.getPositionTypeList()
           break
         case 'apply':
@@ -1116,6 +1117,7 @@ export default class CourseList extends Vue {
           }
           this.typeList = this.applyOptions
           this.getInviteList()
+          this.getApplyList()
           this.getPositionTypeList()
           break
       }
@@ -1124,6 +1126,7 @@ export default class CourseList extends Vue {
       this.navType = 'apply'
       this.typeList = this.applyOptions
       this.getInviteList()
+      this.getApplyList()
       this.getPositionTypeList()
     }
   }
@@ -2182,10 +2185,10 @@ export default class CourseList extends Vue {
   }
   created () {
     this.hasadmin()
-    getinviteapplyNum().then(res => {
-      this.applynum = res.data.data.applyTotal
-      this.invitenum = res.data.data.inviteTotal
-    })
+    // getinviteapplyNum().then(res => {
+    //   this.applynum = res.data.data.applyTotal
+    //   this.invitenum = res.data.data.inviteTotal
+    // })
   }
   addAdress (param) {
     this.pop = {
