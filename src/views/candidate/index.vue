@@ -1076,6 +1076,7 @@ export default class CourseList extends Vue {
       this.form.created_end_time = undefined
     }
     this.form.page = 1
+    this.setPathQuery(this.form)
     this.getList()
   }
 
@@ -1231,6 +1232,7 @@ export default class CourseList extends Vue {
         break
       case 'confirm':
         this.form.page = 1
+        this.setPathQuery(this.form)
         this.getList()
         this.isShowScreen = false
         break
@@ -1359,6 +1361,7 @@ export default class CourseList extends Vue {
   getPositionList (listType) {
     this.form.status = listType
     this.form.page = 1
+    this.setPathQuery(this.form)
     this.getList(this.navType)
   }
 
