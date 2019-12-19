@@ -122,7 +122,7 @@
           <div class="null-img">
             <img src="@/assets/images/fly.png" />
           </div>
-          <div class="null-text">与其等待，不如主动出击~</div>
+          <div class="null-text">与其等待，不如主动出击~分享职位约面更多候选人吧</div>
         </div>
 
       </div>

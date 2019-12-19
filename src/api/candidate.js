@@ -123,3 +123,21 @@ export const getinviteapplyNum = data => request({
     host: 'zhaopin'
   }
 })
+
+export const getInterviewRedDotInfoApi = data => request({
+  url: `/interview/getInterviewRedDotInfo`,
+  method: 'get',
+  params: data,
+  config: {
+    host: 'zhaopin'
+  }
+})
+
+// 清除type的红点
+export const getdeleteTabRedDotApi = type => request({
+  url: `/interview/deleteTabRedDot/${type}`,
+  method: 'delete',
+  config: {
+    host: 'zhaopin'
+  }
+})

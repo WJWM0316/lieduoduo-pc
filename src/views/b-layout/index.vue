@@ -44,6 +44,10 @@ export default class App extends Vue {
   cdnPath = `${process.env.VUE_CDN_PATH}/front-assets/`
   isService = false;
 
+  mounted (){
+    this.$store.dispatch('redDotfun')
+  }
+
   // // 下面路由显示管理页面顶部的导航栏
   // shouldTopShown() {
   //   return [

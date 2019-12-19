@@ -13,6 +13,11 @@
             :key="index">
             <i :class="[item.meta.icon, item.title === '面试日程' ? 'kk' : '']"></i>
             <span>{{ item.title }}</span>
+            <el-badge class="page-badge"
+            v-if="item.title === '候选人库' || item.title === '面试日程'"
+            :value="item.title === '候选人库' ? recruiterIntentionList + recruiterInviteList : recruiterScheduleList"
+            :hidden="item.title === '候选人库' ? (recruiterIntentionList + recruiterInviteList) === 0 : recruiterScheduleList === 0">
+            </el-badge>
           </router-link>
         </template>
       </ul>
@@ -112,4 +117,11 @@ $company-msg-height: 60px;
     margin-top: 8px;
   }
 }
+</style>
+<style>
+  .page-badge sup{
+    border: 0;
+    top: -1px;
+    margin-left: 4px;
+  }
 </style>

@@ -34,6 +34,7 @@
           <div class="blo_left">
             <div class="job_top">
               <div class="job_name">{{item.positionName}}</div>
+              <div class="job_24hour" v-if="item.isRapidly === 1"></div>
               <div class="job_emolument">{{item.emolumentMin}}k-{{item.emolumentMax}}k{{item.annualSalaryDesc === '12薪' ? '' : '·' + item.annualSalaryDesc}}</div>
             </div>
             <div class="job_info">
@@ -58,7 +59,7 @@
               @click="openposition(item.id)"
               v-if="item.isOnline===2 && form.status === '0,1'"
             >开放职位</span>
-            <span class="job_op" @click="todoAction('editJob',item.id)">编辑</span>
+            <span class="job_op" @click="todoAction('editJob',item)">编辑</span>
           </div>
         </li>
       </ul>
@@ -66,6 +67,7 @@
       <div class="job_cont_none" v-else>
         <img class="hint_icon" src="../../assets/images/fly.png">
         <div class="none_hint">当前没有{{ navSelectName === '' ? '招聘中' : navSelectName }}的职位~</div>
+        <el-button v-if="navSelectName === ''" class="null-produc-bnt" @click="todoAction('addJob')">分享职位</el-button>
       </div>
 
       <div class="toTop" @click="toTop" v-if="isShowTop">
@@ -248,7 +250,7 @@ export default class CourseList extends Vue {
     })
   }
 
-  todoAction (type, id) {
+  todoAction (type, item) {
     switch (type) {
       case 'cloPop':
         this.pop = {
@@ -286,11 +288,17 @@ export default class CourseList extends Vue {
         }
         break
       case 'editJob':
+        if (item.isRapidly === 1) {
+          return this.$message({
+            type: 'error',
+            message: '该职位是24h反馈职位，暂时不可以关闭或编辑哦~'
+          })
+        }
         this.$router.push({
           name: 'postJob',
           query: {
             type: 'edit',
-            id: id
+            id: item.id
           }
         })
         break
@@ -685,17 +693,24 @@ export default class CourseList extends Vue {
           color: #333333;
           margin-bottom: 8px;
           line-height: 24px;
+          display: flex;
+          align-items: center;
         }
         .job_name {
           max-width: 260px;
           text-overflow: ellipsis;
           white-space: nowrap;
           overflow: hidden;
-          float: left;
+        }
+        .job_24hour{
+          width: 47px;
+          height: 18px;
+          margin-left: 14px;
+          background: url('../../assets/images/tag_list_24hour.png') no-repeat;
+          background-size: cover;
         }
         .job_emolument {
-          display: inline-block;
-          margin-left: 8px;
+          margin-left: 20px;
           max-width: 140px;
           text-overflow: ellipsis;
           white-space: nowrap;
@@ -756,11 +771,19 @@ export default class CourseList extends Vue {
       font-weight: 400;
       color: rgba(146, 146, 146, 1);
       line-height: 20px;
-      margin-top: 20px;
+      margin-top: 14px;
+      margin-bottom: 24px;
     }
     .hint_icon {
       width: 170px;
       height: 120px;
+    }
+    .null-produc-bnt{
+      display: block;
+      margin: 0 auto;
+      border: 0;
+      background: #00C4CD;
+      color: #ffffff;
     }
   }
   .toTop {

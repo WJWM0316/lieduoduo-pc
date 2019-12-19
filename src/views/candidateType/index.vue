@@ -168,13 +168,14 @@
 
       <div class="cont_none" v-if="candidateList.length === 0">
         <div class="null-product">
-            <div class="null-img">
-              <img src="@/assets/images/fly.png" />
-            </div>
-            <div v-show="navType === 'searchBrowseMyself'" class="null-text">还没有人看过你哟~主动分享职位获取更多候选人吧</div>
-            <div v-show="navType === 'searchCollect'" class="null-text">还没有人对你感兴趣哟~主动分享职位获取更多候选人吧</div>
-            <div v-show="navType === 'searchMyCollect'" class="null-text">快去分享职位吧，一大波候选人等着开撩你！</div>
+          <div class="null-img">
+            <img src="@/assets/images/fly.png" />
           </div>
+          <div v-show="navType === 'searchBrowseMyself'" class="null-text">还没有人看过你哟~主动分享职位获取更多候选人吧</div>
+          <div v-show="navType === 'searchCollect'" class="null-text">还没有人对你感兴趣哟~主动分享职位获取更多候选人吧</div>
+          <div v-show="navType === 'searchMyCollect'" class="null-text">快去分享职位吧，一大波候选人等着开撩你！</div>
+          <el-button class="null-produc-bnt" @click="$router.push('/recruiterIndex')">分享职位</el-button>
+        </div>
       </div>
     </div>
     <div class="pop" v-show="pop.isShow" @click="closeMsg($event)">

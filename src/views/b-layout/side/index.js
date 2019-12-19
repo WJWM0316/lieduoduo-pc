@@ -6,6 +6,13 @@ import recruiter from '@/router/recruiter'
   name: 'page-asise',
   methods: {
     // ...mapActions(['showMsg'])
+  },
+  computed: {
+    ...mapGetters([
+      'recruiterIntentionList',
+      'recruiterInviteList',
+      'recruiterScheduleList'
+    ])
   }
 })
 export default class PageAside extends Vue {

@@ -2,11 +2,14 @@
   <div id="candidate">
     <div class="main_top_warp">
         <div class="main_top">
+          <el-badge is-dot :hidden="recruiterIntentionList === 0">
           <div
             class="topBlo topStatusBlo borright"
             :class="{'cur':navType==='apply'}"
             @click="changeNav('apply')"
           >收到意向（{{invitenum}}）</div>
+          </el-badge>
+          <el-badge is-dot :hidden="recruiterInviteList === 0">
           <div
             class="topBlo topStatusBlo borleft"
             :class="{'cur':navType==='invite'}"
@@ -15,6 +18,7 @@
             <span class="border"></span>
             我的邀请（{{applynum}}）
           </div>
+          </el-badge>
 
           <div class="recruiterStatus" style="margin-left: 10px;">
             <el-select v-model="listType" placeholder="请选择状态" @change="getPositionList(listType)">
@@ -107,6 +111,9 @@
             <div class="topText topText2" v-if="item.origin">
               <div class="from">候选人来自</div>
               <div class="origin">{{item.origin}}</div>
+            </div>
+            <div class="bloTop-24hour-wrap">
+              <div class="bloTop-24hour" v-if="item.interviewType === 2"></div>
             </div>
 
             <div class="status">
@@ -233,7 +240,8 @@
           <div class="null-img">
             <img src="@/assets/images/fly.png" />
           </div>
-          <div class="null-text">与其等待，不如主动出击~</div>
+          <div class="null-text">与其等待，不如主动出击~分享职位获取更多候选人吧</div>
+          <el-button class="null-produc-bnt" @click="$router.push('/recruiterIndex')">分享职位</el-button>
         </div>
       </div>
 
@@ -852,7 +860,8 @@ import {
   getinviteapplyNum,
   getApplyListApi,
   getDetailApi,
-  getInviteListApi
+  getInviteListApi,
+  getdeleteTabRedDotApi
 } from 'API/candidate'
 import { recruiterDetail, createonlinepdf, createonlineword } from 'API/common'
 import MapSearch from 'COMPONENTS/map'
@@ -873,7 +882,12 @@ import {
 @Component({
   name: 'candidate',
   methods: {},
-  computed: {},
+  computed: {
+    ...mapGetters([
+      'recruiterIntentionList',
+      'recruiterInviteList'
+    ])
+  },
   watch: {
     '$route': {
       handler () {
@@ -1146,11 +1160,22 @@ export default class CourseList extends Vue {
     // this.form.status = 0
     this.form.page = 1
     this.setPathQuery(this.form)
-    if (type === 'apply') this.typeList = this.applyOptions
-    else this.typeList = this.inviteOptions
+    if (type === 'apply') {
+      this.typeList = this.applyOptions
+      this.getdeleteTabRedDot('invite_list') // 清除apply type红点
+    } else {
+      this.typeList = this.inviteOptions
+      this.getdeleteTabRedDot('intention_list') // 清除 invite红点
+    }
     this.getPositionTypeList()
     this.navType = type
     this.setPath({ navType: type })
+  }
+  getdeleteTabRedDot (type) {
+    getdeleteTabRedDotApi(type)
+    .then(() => {
+      this.$store.dispatch('redDotfun')
+    })
   }
 
   getList (type) {
@@ -2229,7 +2254,9 @@ export default class CourseList extends Vue {
       this.showResume = true
       this.getShareResume(resumeId)
     }
+    
     getResumeIdApi({ uid: resumeId }).then(res => {
+      this.$store.dispatch('redDotfun')
       this.nowResumeMsg = res.data.data
       this.showuid = res.data.data.uid
       this.showindex = res.data.data
@@ -2285,5 +2312,8 @@ export default class CourseList extends Vue {
 }
 .item .el-select .el-input .el-select__caret{
   line-height: 40px!important;
+}
+.main_top .is-fixed{
+  z-index: 1;
 }
 </style>

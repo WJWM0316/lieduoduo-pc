@@ -68,6 +68,18 @@
       .topText2 {
         color: #333333;
       }
+      .bloTop-24hour-wrap{
+        margin-left: 14px;
+        float: left;
+        height: 48px;
+        @include flex-v-center;
+      }
+      .bloTop-24hour{
+        width: 47px;
+        height: 18px;
+        background: url('../../assets/images/tag_list_24hour.png') no-repeat;
+        background-size: cover;
+      }
       .status{
         float: right;
         color:#66666E;
@@ -280,8 +292,15 @@
       color:#92929B;
       font-size: 14px;
       text-align: center;
-      margin-top: 20px;
-      margin-bottom: 25px;
+      margin-top: 14px;
+      margin-bottom: 24px;
+    }
+    .null-produc-bnt{
+      display: block;
+      margin: 0 auto;
+      border: 0;
+      background: $bg-color-4;
+      color: #ffffff;
     }
     .null-btn{
       width:163px;
