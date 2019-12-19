@@ -33,9 +33,19 @@ export const getIndexData = data => request({
   }
 })
 
-// 24h反馈职位列表
-export const getRapidlyData = data => request({
-  url: '/surface/rapidly',
+// 根据类别获取24h职位列表
+export const getRapidlyDataByType = data => request({
+  url: '/surface/rapidly/simplepage/list',
+  method: 'get',
+  params: data,
+  config: {
+    host: 'qiuzhi'
+  }
+})
+
+// 获取24h职位活动页
+export const getActivityPositionList = data => request({
+  url: '/surface/rapidly/all',
   method: 'get',
   params: data,
   config: {
