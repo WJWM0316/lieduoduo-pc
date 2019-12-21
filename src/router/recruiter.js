@@ -75,6 +75,23 @@ const recruiter = [
     ]
   },
   {
+    path: '/myCompany',
+    title: '我的公司',
+    component: Layout,
+    meta: {
+      useNav: true,
+      module: 'recruiterResource',
+      icon: 'iconfont icon-qiye'
+    },
+    children: [
+      {
+        path: '',
+        name: 'myCompany',
+        component: resolve => require(['../views/b-myCompany/index.vue'], resolve)
+      }
+    ]
+  },
+  {
     path: '/issueRule',
     name: 'issueRule',
     title: '发布规则',

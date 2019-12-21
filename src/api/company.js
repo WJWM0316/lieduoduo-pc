@@ -192,6 +192,13 @@ export const getCityApi = (data) => request({
   config: { host: 'zhaopin' }
 })
 
+/* 获取公司详情 */
+export const companyDetailApi = vkey => request({
+  url: '/company/myCompany',
+  method: 'get',
+  config: { host: 'zhaopin' }
+})
+
 /* 获取公司的热招职位 */
 export const getCompanyHotApi = (data) => request({
   url: `/company/web/hot_positions/${data.vkey}`,
