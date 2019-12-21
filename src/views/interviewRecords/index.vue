@@ -30,10 +30,13 @@
         </el-date-picker>
         </div>
         <div class="tab">
-            <div :class="['tabitem', item.cur ? 'active' : '']" :key="i" v-for="(item, i) in tablist" @click="tabclick(item)">{{item.date}}</div>
+            <div :class="['tabitem', item.cur ? 'active' : '']" :key="i" v-for="(item, i) in tablist" @click="tabclick(item)">
+              {{item.date}}
+              <el-badge is-dot v-if="item.number" :hidden="item.number === 0"></el-badge>
+            </div>
           </div>
           </div>
-        <div class="candidate_blo" :key="j" v-for="(vo, j) in list" @click="getResume(vo.jobhunterUid, j)">
+        <div class="candidate_blo" :key="j" v-for="(vo, j) in list" @click="getResume(vo.jobhunterUid, j, vo.interviewId)">
           <div class="bloTop">
             <div class="timer1">面试职位</div>
             <div class="timer2" v-if="vo.positionId !== 0">【{{vo.address.city}}{{vo.address.area}}&nbsp;|&nbsp;{{vo.positionName}}&nbsp;|&nbsp;{{vo.positionEmolumentMin}}k-{{vo.positionEmolumentMax}}K】</div>
@@ -51,7 +54,10 @@
               </span>
             <span v-else>{{vo.arrangementInfo.appointment.substring(11, 16)}}</span>
           </div>
+            <el-badge is-dot :hidden="vo.redDot === 0">
+            </el-badge>
           </div>
+          
           <div class="bloCont">
             <div class="cont_left">
               <div class="leftMsg">
@@ -123,6 +129,7 @@
             <img src="@/assets/images/fly.png" />
           </div>
           <div class="null-text">与其等待，不如主动出击~分享职位约面更多候选人吧</div>
+          <el-button class="null-produc-bnt" @click="$router.push('/recruiterIndex')">分享职位</el-button>
         </div>
 
       </div>
@@ -719,6 +726,9 @@ import { getScheduletodayListtApi, getguanListtApi, getnewHistoryListtApi, getDe
 import { getCommentReasonApi, interviewRetract, getInterviewComment, addressListApi, watchInvitationAPi, setAttendApi, improperMarkingApi, sureOpenupAPi, setCommentApi, topAdminPositonList, recruiterPositonList, confirmInterviewApi, addCompanyAdressApi, editCompanyAdressApi, setInterviewInfoApi, emailtoforword } from 'API/candidateType'
 import { getResumeIdApi } from 'API/userJobhunter'
 import { shareResumeApi } from 'API/forward'
+import { getdeleteInterviewTabRedDotApi,
+  deleteScheduleTabRedDotApi
+} from '@/api/candidate'
 import { putCollectUserApi, cancelCollectUserApi } from 'API/collect'
 import { recruiterDetail, createonlinepdf, createonlineword } from 'API/common'
 import MapSearch from 'COMPONENTS/map'
@@ -748,6 +758,7 @@ export default {
         type: 'clickPic',
         InterviewTitle: '面试信息'
       },
+      typeCaching: {},
       loadingshow: false,
       toworddiggle: false,
       nowResumeMsg: {},
@@ -933,6 +944,15 @@ export default {
     },
     // 点击返回的今天明天获取其他时间
     tabclick (data) {
+      // if (data.time === '') return
+      if (data.time !== this.typeCaching.time && this.typeCaching.number > 0) { // 没有新数据就不请求接口， 减少后端并发量
+        deleteScheduleTabRedDotApi(this.typeCaching.time)
+        .then(res => {
+          this.getScheduleList()
+          this.$store.dispatch('redDotfun')
+        })
+      }
+      this.typeCaching = data
       this.tabform.time = data.time
       this.form.start = data.time
       this.form.end = data.time
@@ -1496,7 +1516,7 @@ export default {
       }
     },
     // 获取简历
-    getResume (resumeId, index) {
+    getResume (resumeId, index, interview_id) {
       getResumeIdApi({ uid: resumeId }).then(res => {
         this.nowResumeMsg = res.data.data
         this.showuid = res.data.data.uid
@@ -1507,6 +1527,11 @@ export default {
         }
         this.showResume = true
         this.getShareResume(resumeId)
+        getdeleteInterviewTabRedDotApi(interview_id)
+        .then(res => {
+          this.$store.dispatch('redDotfun')
+          this.gettablist()
+        })
       })
     },
     // 获取简历二维码
@@ -1805,6 +1830,7 @@ export default {
         color:#92929B;
         box-sizing: border-box;
         overflow: hidden;
+        position: relative;
         .timer1 {
           float: left;
           margin-right: 5px;
@@ -2134,6 +2160,13 @@ export default {
           text-align: center;
           margin-top: 20px;
           margin-bottom: 25px;
+        }
+        .null-produc-bnt{
+          display: block;
+          margin: 0 auto;
+          border: 0;
+          background: $bg-color-4;
+          color: #ffffff;
         }
         .null-btn{
           width:163px;
@@ -3748,5 +3781,25 @@ export default {
 }
 .item .el-select .el-input .el-select__caret{
   line-height: 40px!important;
+}
+.tabitem .el-badge{
+  position: absolute;
+}
+.tabitem .el-badge sup{
+  top: -10px;
+  border: 0;
+  height: 10px;
+  width: 10px;
+}
+.bloTop .el-badge{
+  position: absolute;
+  right: 10px;
+  top: calc(-50% + 20px);
+}
+.bloTop .el-badge .is-dot{
+  z-index: 1;
+  border: 0;
+  width: 10px;
+  height: 10px;
 }
 </style>

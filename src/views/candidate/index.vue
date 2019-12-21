@@ -2315,5 +2315,10 @@ export default class CourseList extends Vue {
 }
 .main_top .is-fixed{
   z-index: 1;
+  border: 0;
+  width: 10px;
+  height: 10px;
+  right: 14px !important;
+  top: 8px;
 }
 </style>

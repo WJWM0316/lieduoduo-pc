@@ -125,7 +125,7 @@ export const getinviteapplyNum = data => request({
 })
 
 export const getInterviewRedDotInfoApi = data => request({
-  url: `/interview/getInterviewRedDotInfo`,
+  url: '/interview/getInterviewRedDotInfo',
   method: 'get',
   params: data,
   config: {
@@ -136,6 +136,24 @@ export const getInterviewRedDotInfoApi = data => request({
 // 清除type的红点
 export const getdeleteTabRedDotApi = type => request({
   url: `/interview/deleteTabRedDot/${type}`,
+  method: 'delete',
+  config: {
+    host: 'zhaopin'
+  }
+})
+
+// 删除面试列表单条红点
+export const getdeleteInterviewTabRedDotApi = interview_id => request({
+  url: `/interview/redDot/${interview_id}`,
+  method: 'delete',
+  config: {
+    host: 'zhaopin'
+  }
+})
+
+// 面试日程tab清除红点
+export const deleteScheduleTabRedDotApi = date => request({
+  url: `/interview/deleteScheduleTabRedDot/${date}`,
   method: 'delete',
   config: {
     host: 'zhaopin'
