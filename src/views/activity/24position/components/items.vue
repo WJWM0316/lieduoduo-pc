@@ -6,8 +6,8 @@
       <p class="header-24h-desc">【 {{type.haveRecentRapidlyDesc}} 】</p>
     </div>
     <div class="position-lists-wrapper">
-      <template v-for="position in positions.items">
-        <position-card :key="position.id" :item="position"   />
+      <template v-for="(position,index) in positions.items">
+        <position-card :key="position.id" :item="position"  :count-down="countDown[index]"  />
       </template>
     </div>
   </div>
@@ -24,11 +24,10 @@ export default {
     positions: {
       type: Object,
       default: () => ({})
-    }
-  },
-  data () {
-    return {
-
+    },
+    countDown: {
+      type: Array,
+      default: () => ([])
     }
   }
 }
@@ -81,4 +80,5 @@ export default {
     margin-right: 0px;
   }
 }
+
 </style>

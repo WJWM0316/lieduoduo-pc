@@ -19,20 +19,27 @@
           <div>职业顾问1V1服务</div>
           <div>BOSS约面对面沟通</div>
         </div>
-        <div class="header-24h-bubble">
-          <p>陈明 成功抢占 产品经理 约面席位！</p>
+        <div class="bubble-wrapper header-24h-bubble">
+          <p ref="bubble">{{bubbleList[bubbleIndex]}}</p>
         </div>
-        <div class="header-wechat-shart">
-          <i class="iconfont icon-weixin"></i> 微信分享
-        </div>
+        <el-popover
+          placement="top"
+          popper-class="position-24h-share-wechat"
+          :width="100">
+          <img style="max-width:100%" :src="mp24hQr" alt="">
+          <div class="header-wechat-shart"  slot="reference">
+            <i class="iconfont icon-weixin"></i> 微信分享
+          </div>
+        </el-popover>
       </div>
     </div>
-    <div class="main-center position-24h-content">
+    <div class="page-loading" v-if="getLoading" v-loading="getLoading" />
+    <div class="main-center position-24h-content" v-show="!getLoading">
       <template v-for="(position, index) in positions">
-        <item :key="index" :positions="position" :type="positionTypes[index]" />
+        <item :key="index" :positions="position" :count-down="listCountDown[index]" :type="positionTypes[index]" />
       </template>
       <div class="position-types" :class="{'fixed-position-citys': fixedCity}" v-if="positionTypes.length">
-        <div class="position-nav-image"></div>
+        <div class="position-nav-top-image"></div>
         <ul>
           <template v-for="(position, index) in positionTypes">
             <li
@@ -40,8 +47,9 @@
               :class="{active: currentType === index}"
               @click="handleScrollToView(index)">{{position.name}}</li>
           </template>
-          <li>顶部</li>
+          <li v-if="fixedCity" @click="handleToTop">顶部</li>
         </ul>
+        <div class="position-nav-end-image"></div>
       </div>
     </div>
     <!-- 底部分享 -->
@@ -53,22 +61,24 @@
       <div class="position-bottom-logo" style="width: 764px">
         <img src="../../../assets/images/activity/24h/footer_logo.png"  />
       </div>
-      <div class="">
+      <div class="position-bottom-qrcode">
         <img :src="appQrcodeUrl" alt="">
-        <p><span></span><span>扫码开抢</span><span></span></p>
+        <p><span class="icon-arrow-top"></span><span>扫码开抢</span><span class="icon-arrow-top"></span></p>
       </div>
     </div>
     <!-- 背景图 -->
-    <div class="bg-24h-images" :style="{'height': bgWrapperHeight + 'px'}">
-      <div style="height: 393px"></div>
-      <div style="height: 375px "></div>
-      <div style="height: 511px"></div>
-      <div style="height: 876px"></div>
-      <div style="height: 876px"></div>
-      <div style="height: 1120px"></div>
+    <div class="bg-24h-images" :style="{'height': bgWrapperHeight + 'px'}" style="padding-top: 50px;">
+      <div class="bg1" style="height: 393px"></div>
+      <div class="bg2" style="height: 375px "></div>
+      <div class="bg3" style="height: 511px"></div>
+      <div class="bg4" style="height: 876px"></div>
+      <div class="bg5" style="height: 876px"></div>
+      <div class="bg6" style="height: 1120px"></div>
+      <div class="division" :style="{'height': discoverHeight + 'px'}"></div>
+      <div class="bg bg7" style="height: 1200px"></div>
     </div>
     <div style="display: none">
-      <scroll-top />
+      <scroll-top ref="scrollTop" />
     </div>
   </div>
 </template>
@@ -85,10 +95,16 @@ export default {
       fixedCity: false,
       currentCity: 0, // 位置id
       positionTypes: [], // 职位类型
-      currentType: null,
+      currentType: 0,
       positions: [],
       bgWrapperHeight: 0,
-      appQrcodeUrl: app_qrcode
+      discoverHeight: 0,
+      getLoading: false,
+      appQrcodeUrl: app_qrcode,
+      mp24hQr: `${this.$cdnPath}/images/24hoursyuemian.jpg`,
+      listCountDown: [], // 倒计时数据
+      bubbleList: [],
+      bubbleIndex: 0
     }
   },
   computed: {
@@ -102,22 +118,88 @@ export default {
   },
   methods: {
     getLists () {
+      this.getLoading = true
       getActivityPositionList({ city: this.currentCity }).then(({ data }) => {
-        const { positionTypes, positions } = data.data
-        this.positionTypes = positionTypes
+        const { positionTypes, positions, toastTips } = data.data
+        this.positionTypes = positionTypes || []
         this.positions = positions
+        this.getLoading = false
+        // 执行倒计时计算
+        this.startCountDown()
+        if (!this.bubbleDownTimer) this.bubbleList = toastTips
         this.$nextTick(() => {
+          if (!this.bubbleDownTimer) this.bubbleDown()
           const dom = document.querySelector('.position-24h-content')
+          const domBottom = document.querySelector('.position-bottom')
           if (dom) {
             const domBounding = dom.getBoundingClientRect()
-            this.bgWrapperHeight = domBounding.height
+            const domBottomBounding = domBottom.getBoundingClientRect()
+            // 内容高度
+            this.bgWrapperHeight = domBounding.height + domBottomBounding.height
+            // 隔层高度 = 内容高度 - 背景图高度
+            // const bgImageHeight  = document.querySelectorAll('.position-24h-content .bg')
+            const bgImageHeight = 393 + 375 + 511 + 876 + 876 + 1120 + 1200
+            this.discoverHeight = this.bgWrapperHeight - bgImageHeight
           }
         })
+      }).catch(() => {
+        this.getLoading = false
       })
+    },
+    startCountDown () {
+      this.listCountDown = this.positions.map(val => {
+        return val.items.map(item => ({
+          endTime: item.endTime,
+          days: '',
+          hours: '',
+          mins: '',
+          seconds: ''
+        }))
+      })
+      if (!this.listCountDown.length) return
+      this.setCountDown()
+    },
+    setCountDown (data) {
+      this.listCountDown.forEach(val => {
+        val.forEach(item => {
+          const results = this.$util.setTimeDown(item.endTime)
+          Object.assign(item, results)
+        })
+      })
+      clearTimeout(this.countDownTimer)
+      this.countDownTimer = setTimeout(() => {
+        this.setCountDown()
+      }, 1000)
+    },
+    bubbleDown () {
+      if (!this.bubbleList.length) return
+      if (!this.$refs.bubble) {
+        // un mounted
+        window.clearTimeout(this.cryExecTimer)
+        this.cryExecTimer = setTimeout(() => {
+          this.bubbleDown()
+        }, 500)
+        return
+      } else {
+        window.clearTimeout(this.cryExecTimer)
+        if (!this.$refs.bubble.querySelector('animation')) this.$refs.bubble.classList.add('animation')
+      }
+      this.bubbleDownTimer = setTimeout(() => {
+        if (this.bubbleIndex >= this.bubbleList.length - 1) {
+          this.bubbleIndex = 0
+        } else {
+          this.bubbleIndex++
+        }
+        this.bubbleDown()
+      }, 5000)
     },
     // 切换城市
     handleChangeCity (city) {
       this.currentCity = city.areaId
+      if (this.fixedCity) {
+        this.handleToTop()
+      }
+      this.getLists()
     },
     // 让职位滚动到可视区域
     handleScrollToView (index) {
@@ -141,6 +223,10 @@ export default {
         })
         this.currentType = index
       }, 20)
+    },
+    // 滚动到顶部
+    handleToTop () {
+      if (this.$refs.scrollTop) this.$refs.scrollTop.toTop()
     }
   },
   mounted () {
@@ -152,6 +238,8 @@ export default {
     this.cityWrapperTop = domBounding.top + scrollTop
   },
   destroyed () {
+    clearTimeout(this.countDownTimer)
+    clearTimeout(this.bubbleDownTimer)
     window.removeEventListener('scroll', this.handleScroll)
     window.clearTimeout(this.timer)
   }
@@ -175,7 +263,8 @@ $bg-map: (
   2: url('../../../assets/images/activity/24h/24h_bg3.png'),
   3: url('../../../assets/images/activity/24h/24h_bg4.png'),
   4: url('../../../assets/images/activity/24h/24h_bg5.png'),
-  5: url('../../../assets/images/activity/24h/24h_bg6.png')
+  5: url('../../../assets/images/activity/24h/24h_bg6.png'),
+  6: url('../../../assets/images/activity/24h/end.png')
 );
 .position-24h {
   background-color: $page-bg-color;
@@ -191,16 +280,26 @@ $bg-map: (
     background-position: top center;
     background-repeat: no-repeat;
   }
-  @for $i from 0 through 5 {
-    div:nth-child(#{$i + 1}) {
+  @for $i from 0 through 6 {
+    .bg#{$i+1}{
       background-image: map-get($bg-map, $i)
     }
+  }
+}
+.bg-24h-images .division {
+  background:repeat 30%/30% url('../../../assets/images/activity/24h/stars.png');
+}
+.page-loading {
+  height: 360px;
+  & /deep/ .el-loading-mask {
+    background-color: transparent;
   }
 }
 .position-24h-content {
   position: relative;
   padding-top: 60px;
   z-index: 1;
+  min-height: 300px;
   .position-item-wrapper {
     position: relative;
   }
@@ -260,6 +359,16 @@ $bg-map: (
     i {
       font-size: 12px;
     }
+  }
+}
+.bubble-wrapper{
+  overflow: hidden;
+  p {
+    transform: translateY(32px);
+    opacity: 0;
+  }
+  p.animation {
+    animation: bubble 5s infinite;
   }
 }
 .header-24h-keywords {
@@ -362,17 +471,24 @@ $bg-map: (
   right: -84px;
   max-width: 60px;
   box-shadow: $shadow-1;
-  .position-nav-image {
+  .position-nav-top-image,  .position-nav-end-image{
     width: 58px;
     height: 39px;
-    background-image: url('../../../assets/images/activity/24h/nav_top.png');
     background-repeat: no-repeat;
     background-size: 100%;
     position: absolute;
-    top: -28px;
-    left: 20px;
     z-index: -1;
   }
+  .position-nav-top-image {
+    background-image: url('../../../assets/images/activity/24h/nav_top.png');
+    top: -28px;
+    left: 20px;
+  }
+   .position-nav-end-image {
+      background-image: url('../../../assets/images/activity/24h/nav_end.png');
+      bottom: -10px;
+      left: -20px;
+   }
   ul {
     z-index: 1;
     background-color: #fff;
@@ -448,6 +564,53 @@ $bg-map: (
 .position-bottom-header, .position-bottom-logo {
   margin: 0 auto;
 }
+.position-bottom-qrcode {
+  color: #fff;
+  max-width: 136px;
+  display:inline-block;
+  position: relative;
+  span {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 4px;
+  }
+  p {
+    margin-top: 14px;
+  }
+  img {
+    max-width: 100%;
+    z-index: 2;
+    position: relative;
+  }
+  .icon-arrow-top {
+    width: 13px;
+    height: 13px;
+    background-size: cover;
+    background-image: url('../../../assets/images/activity/24h/icon_footer.png');
+    background-repeat: no-repeat;
+  }
+  &::after,&::before {
+    content: "";
+    position: absolute;
+    background-repeat: no-repeat;
+    z-index: 1;
+  }
+  &::before {
+    width: 72px;
+    height: 78px;
+    top: -23px;
+    left: -38px;
+    background-size: 100% auto;
+    background-image: url('../../../assets/images/activity/24h/nav_top.png');
+  }
+  &::after {
+    width: 145px;
+    height: 106px;
+    bottom: -39px;
+    right: -117px;
+    background-image: url('../../../assets/images/activity/24h/rocket.png');
+  }
+}
 @for $i from 1 through 8 {
   .position-item-wrapper:nth-child(#{$i}n) {
     & /deep/ {
@@ -459,5 +622,30 @@ $bg-map: (
       }
     }
   }
+}
+@keyframes bubble{
+  0% {}
+  30% {
+    transform: translateY(30px);
+  }
+  45% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  75% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  90% {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+}
+</style>
+<style>
+.position-24h-share-wechat.el-popper {
+  min-width: 105px;
+  padding: 5px;
+  box-sizing: border-box;
 }
 </style>
