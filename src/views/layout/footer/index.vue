@@ -1,5 +1,5 @@
 <template>
-  <footer id="page-footer" class="page-footer" :class="{'isFixed': shouldFixed()}">
+  <footer id="page-footer" class="page-footer" v-if="isShow">
     <section :class="{'minn-footer': miniFooter}">
         <div class="footer_left">
           <div class="footer-header-title">
@@ -215,12 +215,6 @@ export default PageFooter
         }
       }
     }
-  }
-  &.isFixed {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
   }
 }
 

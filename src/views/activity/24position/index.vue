@@ -31,15 +31,32 @@
       <template v-for="(position, index) in positions">
         <item :key="index" :positions="position" :type="positionTypes[index]" />
       </template>
-      <ul class="position-types" :class="{'fixed-position-citys': fixedCity}" v-if="positionTypes.length">
-        <template v-for="(position, index) in positionTypes">
-          <li
-            :key="position.id"
-            :class="{active: currentType === index}"
-            @click="handleScrollToView(index)">{{position.name}}</li>
-        </template>
-        <li>顶部</li>
-      </ul>
+      <div class="position-types" :class="{'fixed-position-citys': fixedCity}" v-if="positionTypes.length">
+        <div class="position-nav-image"></div>
+        <ul>
+          <template v-for="(position, index) in positionTypes">
+            <li
+              :key="position.id"
+              :class="{active: currentType === index}"
+              @click="handleScrollToView(index)">{{position.name}}</li>
+          </template>
+          <li>顶部</li>
+        </ul>
+      </div>
+    </div>
+    <!-- 底部分享 -->
+    <div class="position-bottom">
+      <div class="position-bottom-header">
+        <img src="../../../assets/images/activity/24h/footer_title.png"  />
+        <p>更多酷公司已加入24小时极速面试</p>
+      </div>
+      <div class="position-bottom-logo" style="width: 764px">
+        <img src="../../../assets/images/activity/24h/footer_logo.png"  />
+      </div>
+      <div class="">
+        <img :src="appQrcodeUrl" alt="">
+        <p><span></span><span>扫码开抢</span><span></span></p>
+      </div>
     </div>
     <!-- 背景图 -->
     <div class="bg-24h-images" :style="{'height': bgWrapperHeight + 'px'}">
@@ -59,6 +76,7 @@
 import Item from './components/items'
 import { getActivityPositionList } from '@/api/common'
 import ScrollTop from '@/components/scrollToTop/index.vue'
+import { app_qrcode } from '@/assets/images/image'
 // const clientHeight = window.innerWidth || (document.body && document.body.clientHeight)
 export default {
   components: { Item, ScrollTop },
@@ -69,7 +87,8 @@ export default {
       positionTypes: [], // 职位类型
       currentType: null,
       positions: [],
-      bgWrapperHeight: 0
+      bgWrapperHeight: 0,
+      appQrcodeUrl: app_qrcode
     }
   },
   computed: {
@@ -144,8 +163,8 @@ $gradient-map: (
   0: url('../../../assets/images/activity/24h/star_blue.png') linear-gradient(140deg,rgba(32,193,243,1) 0%,rgba(71,115,196,1) 100%),
   1: url('../../../assets/images/activity/24h/star_green.png') linear-gradient(140deg,rgba(188,246,179,1) 0%,rgba(22,193,164,1) 100%),
   2: url('../../../assets/images/activity/24h/star_orange.png') linear-gradient(137deg,rgba(255,203,159,1) 0%,rgba(255,142,156,1) 100%),
-  3: url('../../../assets/images/activity/24h/star_pick.png') linear-gradient(140deg,rgba(247,211,101,1) 0%,rgba(252,170,127,1) 100%),
-  4: url('../../../assets/images/activity/24h/star_yelow.png') linear-gradient(140deg,rgba(158,194,255,1) 0%,rgba(244,142,198,1) 100%),
+  3: url('../../../assets/images/activity/24h/star_yelow.png') linear-gradient(140deg,rgba(247,211,101,1) 0%,rgba(252,170,127,1) 100%),
+  4: url('../../../assets/images/activity/24h/star_pick.png') linear-gradient(140deg,rgba(158,194,255,1) 0%,rgba(244,142,198,1) 100%),
   5: url('../../../assets/images/activity/24h/star_purple.png') linear-gradient(137deg,rgba(93,157,214,1) 0%,rgba(108,129,214,1) 49%,rgba(124,99,215,1) 100%),
   6: url('../../../assets/images/activity/24h/star_blue.png') linear-gradient(140deg,rgba(32,193,243,1) 0%,rgba(71,115,196,1) 100%),
   7: url('../../../assets/images/activity/24h/star_green.png') linear-gradient(140deg,rgba(188,246,179,1) 0%,rgba(22,193,164,1) 100%),
@@ -182,6 +201,42 @@ $bg-map: (
   position: relative;
   padding-top: 60px;
   z-index: 1;
+  .position-item-wrapper {
+    position: relative;
+  }
+  .position-item-wrapper::after {
+    content: "";
+    position: absolute;
+    width: 226px;
+    height: 226px;
+    z-index: -1;
+    background-size: 50% auto;
+    background-repeat: no-repeat;
+  }
+  .position-item-wrapper:nth-child(1n) {
+    &::after {
+      top: 400px;
+      left: -100px;
+      background-image: url('../../../assets/images/activity/24h/ufo.png');
+    }
+  }
+  .position-item-wrapper:nth-child(2n) {
+    &::after {
+      top: inherit;
+      bottom: -200px;
+      left: 200px;
+      background-image: url('../../../assets/images/activity/24h/star.png');
+    }
+  }
+  .position-item-wrapper:nth-child(3n) {
+    &::after {
+      top: inherit;
+      left: inherit;
+      bottom: -226px;
+      right: 0px;
+      background-image: url('../../../assets/images/activity/24h/rocket.png');
+    }
+  }
 }
 .header-wechat-shart {
   position: absolute;
@@ -282,6 +337,7 @@ $bg-map: (
   position: fixed;
   width: 100%;
   top: 0;
+  z-index: 10;
   background: #212628;
   border-radius: 0;
   ul {
@@ -300,16 +356,13 @@ $bg-map: (
   margin-right: -684px;
 }
 .position-types {
-  border-radius: 4px;
   position: absolute;
-  z-index: 2;
+  z-index: 10;
   top: 138px;
   right: -84px;
   max-width: 60px;
-  background-color: #fff;
   box-shadow: $shadow-1;
-  &::after {
-    content: "";
+  .position-nav-image {
     width: 58px;
     height: 39px;
     background-image: url('../../../assets/images/activity/24h/nav_top.png');
@@ -320,30 +373,41 @@ $bg-map: (
     left: 20px;
     z-index: -1;
   }
+  ul {
+    z-index: 1;
+    background-color: #fff;
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+  }
   li {
     padding: 20px 10px;
-    min-height: 60px;
+    // min-height: 60px;
     cursor: pointer;
     text-align: center;
     box-sizing: border-box;
     line-height: 20px;
     position: relative;
+    margin-top: -1px;
+    margin-bottom: -1px;
   }
   li::before {
     content: "";
-    height: 1px;
+    // height: 1px;
     width: 44px;
+    z-index: -1;
     position: absolute;
     bottom: 0;
     left: 10px;
-    background: $border-color-1;
+    border-bottom: 1px solid $border-color-1;
+  }
+  li:last-child::before {
+    border-color: transparent;
   }
   li:hover, .active {
     &::before {
       background: transparent;
     }
-    margin-top: -1px;
-    margin-bottom: 1px;
     color: #fff;
     background: linear-gradient(180deg,rgba(255,158,64,1) 0%,rgba(255,120,44,1) 100%);
   }
@@ -356,6 +420,33 @@ $bg-map: (
   .active {
     font-weight: bold;
   }
+}
+.position-bottom {
+  text-align: center;
+  padding: 90px 0 64px;
+  .position-bottom-header{
+    p {
+      margin-bottom: 17px;
+      font-weight: bold;
+      color: #fff;
+      font-size: 16px;
+    }
+    img{
+      width: 70%;
+    }
+  }
+  .position-bottom-logo {
+    margin-bottom: 90px;
+  }
+  .position-bottom-logo img {
+    max-width: 100%;
+  }
+  .position-bottom-header {
+    width: 250px;
+  }
+}
+.position-bottom-header, .position-bottom-logo {
+  margin: 0 auto;
 }
 @for $i from 1 through 8 {
   .position-item-wrapper:nth-child(#{$i}n) {

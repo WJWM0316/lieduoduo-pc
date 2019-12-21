@@ -25,7 +25,7 @@ export const getLinks = data => request({
 
 // 获取首页内容
 export const getIndexData = data => request({
-  url: '/aggr/index',
+  url: '/aggr/indexnew',
   method: 'get',
   params: data,
   config: {
