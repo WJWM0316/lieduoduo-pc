@@ -97,7 +97,7 @@ export default {
       positionTypes: [], // 职位类型
       currentType: 0,
       positions: [],
-      bgWrapperHeight: 0,
+      bgWrapperHeight: 300,
       discoverHeight: 0,
       getLoading: false,
       appQrcodeUrl: app_qrcode,
