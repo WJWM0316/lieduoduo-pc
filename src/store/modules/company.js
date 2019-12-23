@@ -75,6 +75,9 @@ const mutations = {
           if (list[0].checked) {
             list[0].checked = false
           }
+          // if(!filterSearchCollect[key].length) {
+          //   list[0].checked = true
+          // }
 			  } else {
 			  	if (!list[0].checked) {
 			  	  list.map((v, i, a) => v.checked = !i ? true : false)
@@ -87,6 +90,9 @@ const mutations = {
           if (list[0].checked) {
             list[0].checked = false
           }
+          // if(!filterSearchCollect[key].length) {
+          //   list[0].checked = true
+          // }
 			  } else {
 			  	if (!list[0].checked) {
 			  	  list.map((v, i, a) => v.checked = !i ? true : false)
@@ -99,6 +105,9 @@ const mutations = {
           if (list[0].checked) {
             list[0].checked = false
           }
+          // if(!filterSearchCollect[key].length) {
+          //   list[0].checked = true
+          // }
 			  } else {
 			  	if (!list[0].checked) {
 			  	  list.map((v, i, a) => v.checked = !i ? true : false)

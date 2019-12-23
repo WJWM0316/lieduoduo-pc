@@ -178,6 +178,9 @@ export default {
     })
   },
   destroyed () {
+    for (let key in this.searchCollect) {
+      this.updateSearchCollectMutipleApi({ arr: [], key })
+    }
     // this.$store.commit('GET_SEARCH_COLLECT', {
     //   area: [],
     //   industry: [],
