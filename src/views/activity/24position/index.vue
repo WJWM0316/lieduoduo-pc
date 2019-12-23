@@ -119,7 +119,7 @@ export default {
     async getCitys () {
       await getActivityCity().then(({ data }) => {
         this.citys = data.data.cityList || []
-        const cityId = this.$store.state.cityId
+        const cityId = +this.$route.query.city || this.$store.state.cityId
         this.currentCity = this.citys.find(val => val.areaId === cityId) ? cityId : 0
       })
     },
@@ -132,9 +132,9 @@ export default {
         this.getLoading = false
         // 执行倒计时计算
         this.startCountDown()
-        if (!this.bubbleDownTimer) this.bubbleList = toastTips
+        if (this.bubbleDownTimer === undefined) this.bubbleList = toastTips
         this.$nextTick(() => {
-          if (!this.bubbleDownTimer) this.bubbleDown()
+          if (this.bubbleDownTimer === undefined) this.bubbleDown()
           const dom = document.querySelector('.position-24h-content')
           const domBottom = document.querySelector('.position-bottom')
           if (dom) {
@@ -201,10 +201,17 @@ export default {
     },
     // 切换城市
     handleChangeCity (city) {
+      if (this.currentCity === city.areaId) return
       this.currentCity = city.areaId
       if (this.fixedCity) {
         this.handleToTop()
       }
+      this.$router.push({
+        name: 'position24h',
+        query: {
+          city: this.currentCity
+        }
+      })
       this.getLists()
     },
     // 让职位滚动到可视区域
