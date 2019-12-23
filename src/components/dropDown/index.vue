@@ -71,6 +71,9 @@ export default {
       const len = this.items.length
       const maxH = Math.ceil(len * 46 / this.col)
       return maxH > this.defaultHeight
+    },
+    len () {
+      return this.items.length
     }
   },
   data () {
@@ -149,6 +152,13 @@ export default {
       })
       this.$emit('input', [])
       this.$emit('on-select', [])
+    }
+  },
+  watch: {
+    len (newvalue, oldvalue) {
+      if (newvalue > oldvalue) {
+        if ((Array.isArray(this.value) && this.value[0] === this.allValue) || this.items[0].checked) this.isCheckedAll = true
+      }
     }
   },
   destroyed () {

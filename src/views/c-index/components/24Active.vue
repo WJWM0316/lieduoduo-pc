@@ -141,12 +141,13 @@ export default {
       }, 5000)
     },
     handleShowMore () {
-      if (!this.isLogin) {
+      this.$router.push({ name: 'position24h' })
+      /* if (!this.isLogin) {
         this.$router.push('/login?type=msgLogin')
       } else {
         // this.$store.commit('guideQrcodePop', { switch: true, type: 'to24Hours' })
         this.$router.push({ name: 'position24h' })
-      }
+      } */
     }
   },
   watch: {
