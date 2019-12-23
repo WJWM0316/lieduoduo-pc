@@ -142,12 +142,13 @@ export default {
       }
       this.handleScrollToView()
     },
-    // 让职位滚动到可视区域
+    // 滚动到可视区域
     handleScrollToView () {
       const dom = document.querySelector('.bank-type-box')
       this.$util.scrollToView(dom)
     },
     reset () {
+      this.handleScrollToView()
       for (let key in this.searchCollect) {
         this.updateSearchCollectMutipleApi({ arr: [], key })
       }
@@ -177,12 +178,12 @@ export default {
     })
   },
   destroyed () {
-    this.$store.commit('GET_SEARCH_COLLECT', {
-      area: [],
-      industry: [],
-      employee: [],
-      financing: []
-    })
+    // this.$store.commit('GET_SEARCH_COLLECT', {
+    //   area: [],
+    //   industry: [],
+    //   employee: [],
+    //   financing: []
+    // })
   }
 }
 </script>
