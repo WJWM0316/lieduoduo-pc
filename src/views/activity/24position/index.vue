@@ -119,7 +119,7 @@ export default {
     async getCitys () {
       await getActivityCity().then(({ data }) => {
         this.citys = data.data.cityList || []
-        const cityId = +this.$route.query.city || this.$store.state.cityId
+        const cityId = this.$route.query.city ? +this.$route.query.city : this.$store.state.cityId
         this.currentCity = this.citys.find(val => val.areaId === cityId) ? cityId : 0
       })
     },
