@@ -159,6 +159,7 @@ export default {
     },
     onClick (item, index, key) {
       this.page = 1
+      this.handleScrollToView()
       this.updateSearchCollectApi({ item, index, key }).then(() => this.getLists())
     }
   },
