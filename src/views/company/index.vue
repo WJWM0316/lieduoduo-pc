@@ -167,6 +167,14 @@ export default {
     this.$nextTick(function () {
       this.height = this.$refs['search-lists'].offsetTop + 180
     })
+  },
+  destroyed () {
+    this.$store.commit('GET_SEARCH_COLLECT', {
+      area: [],
+      industry: [],
+      employee: [],
+      financing: []
+    })
   }
 }
 </script>

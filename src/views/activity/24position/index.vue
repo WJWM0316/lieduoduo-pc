@@ -47,7 +47,10 @@
               :class="{active: currentType === index}"
               @click="handleScrollToView(index)">{{position.name}}</li>
           </template>
-          <li v-if="fixedCity" @click="handleToTop">顶部</li>
+          <li v-if="fixedCity" @click="handleToTop" class="scroll-to-top">
+            <span class="iconfont icon-arrow-top"></span>
+            顶部
+          </li>
         </ul>
         <div class="position-nav-end-image"></div>
       </div>
@@ -519,6 +522,8 @@ $bg-map: (
     position: relative;
     margin-top: -1px;
     margin-bottom: -1px;
+    color: $title-color-2;
+    min-width: 60px;
   }
   li::before {
     content: "";
@@ -539,6 +544,9 @@ $bg-map: (
     }
     color: #fff;
     background: linear-gradient(180deg,rgba(255,158,64,1) 0%,rgba(255,120,44,1) 100%);
+    span {
+      color: #fff;
+    }
   }
   li:hover {
     background-color: linear-gradient(180deg,rgba(255,171,96,1) 0%,rgba(255,151,84,1) 100%);
@@ -548,6 +556,16 @@ $bg-map: (
   }
   .active {
     font-weight: bold;
+  }
+  .scroll-to-top {
+    display: block;
+    span{
+      font-size: 14px;
+      display: inline-block;
+      padding: 0 12px;
+      font-weight: bold;
+      color: $title-color-2;
+    }
   }
 }
 .position-bottom {
