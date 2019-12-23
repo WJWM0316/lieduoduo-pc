@@ -3,7 +3,7 @@
     <div class="position-header">
       <div class="header-24h-image"></div>
       <div class="header-24h-title">{{type.name}}</div>
-      <p class="header-24h-desc">【 {{type.haveRecentRapidlyDesc}} 】</p>
+      <p class="header-24h-desc">【 {{type.slogan}} 】</p>
     </div>
     <div class="position-lists-wrapper">
       <template v-for="(position,index) in positions.items">

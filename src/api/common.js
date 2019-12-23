@@ -43,6 +43,16 @@ export const getRapidlyDataByType = data => request({
   }
 })
 
+// 获取24h活动城市
+export const getActivityCity = data => request({
+  url: '/surface/city/list',
+  method: 'get',
+  params: data,
+  config: {
+    host: 'qiuzhi'
+  }
+})
+
 // 获取24h职位活动页
 export const getActivityPositionList = data => request({
   url: '/surface/rapidly/all',

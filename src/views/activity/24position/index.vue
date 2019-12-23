@@ -8,7 +8,7 @@
             <li
               :key="city.areaId"
               :class="{active: city.areaId === currentCity}"
-              @click="handleChangeCity(city)">{{city.name}}
+              @click="handleChangeCity(city)">{{city.areaName}}
             </li>
           </template>
         </ul>
@@ -84,7 +84,7 @@
 </template>
 <script>
 import Item from './components/items'
-import { getActivityPositionList } from '@/api/common'
+import { getActivityPositionList, getActivityCity } from '@/api/common'
 import ScrollTop from '@/components/scrollToTop/index.vue'
 import { app_qrcode } from '@/assets/images/image'
 // const clientHeight = window.innerWidth || (document.body && document.body.clientHeight)
@@ -104,19 +104,25 @@ export default {
       mp24hQr: `${this.$cdnPath}/images/24hoursyuemian.jpg`,
       listCountDown: [], // 倒计时数据
       bubbleList: [],
+      citys: [],
       bubbleIndex: 0
     }
   },
-  computed: {
-    citys () {
-      return this.$store.getters.areaList || []
-    }
-  },
   created () {
-    this.currentCity = this.$store.state.cityId
-    this.getLists()
+    // this.currentCity = this.$store.state.cityId
+    // this.getLists()
+    this.getCitys().then(() => {
+      this.getLists()
+    })
   },
   methods: {
+    async getCitys () {
+      await getActivityCity().then(({ data }) => {
+        this.citys = data.data.cityList || []
+        const cityId = this.$store.state.cityId
+        this.currentCity = this.citys.find(val => val.areaId === cityId) ? cityId : 0
+      })
+    },
     getLists () {
       this.getLoading = true
       getActivityPositionList({ city: this.currentCity }).then(({ data }) => {
