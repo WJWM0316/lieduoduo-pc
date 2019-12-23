@@ -200,6 +200,9 @@ export default {
   margin-right: 20px;
   min-height: 580px;
   min-width: 882px;
+  & /deep/ .el-loading-mask {
+    z-index: 97;
+  }
 }
 
 .guide-login {

@@ -143,7 +143,8 @@ export default {
       let inputValue = items.map(val => val[this.props.value])
       if (!items.length && this.items[0] && this.allValue === this.items[0].value) {
         items.push(this.items[0])
-        inputValue = this.allValue
+        this.items[0].checked = true
+        inputValue = [this.allValue]
         this.isCheckedAll = true
       }
       this.$emit('input', inputValue)
@@ -156,8 +157,15 @@ export default {
           val.checked = false
         }
       })
-      this.$emit('input', [])
-      this.$emit('on-select', [])
+      let items = []; let inputValue = []
+      if (this.items[0] && this.allValue === this.items[0].value) {
+        items.push(this.items[0])
+        inputValue = [this.allValue]
+        this.items[0].checked = true
+        this.isCheckedAll = true
+      }
+      this.$emit('input', inputValue)
+      this.$emit('on-select', items)
     }
   },
   watch: {

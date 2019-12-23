@@ -103,6 +103,7 @@ export default {
     },
     handleSearch () {
       this.page = 1
+      this.handleScrollToView()
       this.getLists()
     },
     getLists () {
@@ -139,6 +140,12 @@ export default {
         this.$refs.loginPop.showLoginPop = true
         this.page = query.page || 1
       }
+      this.handleScrollToView()
+    },
+    // 让职位滚动到可视区域
+    handleScrollToView () {
+      const dom = document.querySelector('.bank-type-box')
+      this.$util.scrollToView(dom)
     },
     reset () {
       for (let key in this.searchCollect) {
