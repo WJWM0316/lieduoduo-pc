@@ -7,6 +7,7 @@ import recruiter from './recruiter.js'
 import common from './common.js'
 import other from './other.js'
 import login from './login.js'
+import interview from './interview.js'
 
 import store from '../store/store'
 // import { getUserInfosApi } from '@/api/auth.js'
@@ -18,7 +19,8 @@ let routes = [
   ...common,
   ...other,
   ...login,
-  ...company
+  ...company,
+  ...interview
 ]
 Vue.use(Router)
 // const originalPush = Router.prototype.push

@@ -58,3 +58,64 @@ export const refuseInterviewApi = (data, hasLoading) => {
     }
   })
 }
+
+// 获取面试的申请列表
+export const getInterviewApplyListsApi = (data, hasLoading) => {
+  return request({
+    method: 'get',
+    url: '/interview/apply',
+    params: data,
+    config: {
+      host: 'qiuzhi'
+    }
+  })
+}
+
+// 获取日历面试列表
+export const getInterviewScheduleNumberListsApi = (data, hasLoading) => {
+  return request({
+    method: 'get',
+    url: '/interview/newScheduleNumber',
+    params: data,
+    config: {
+      host: 'qiuzhi'
+    }
+  })
+}
+
+// 获取收到邀请列表
+export const getInterviewInviteListsApi = (data, hasLoading) => {
+  return request({
+    method: 'get',
+    url: '/interview/invite',
+    params: data,
+    config: {
+      host: 'qiuzhi'
+    }
+  })
+}
+
+// 获取面试日程列表
+export const getInterviewScheduleListsApi = (data, hasLoading) => {
+  return request({
+    method: 'get',
+    url: '/interview/schedule',
+    params: data,
+    config: {
+      host: 'qiuzhi'
+    }
+  })
+}
+
+// 获取面试的红点信息
+export const getInterviewRedDotInfoApi = (data, hasLoading) => {
+  return request({
+    method: 'get',
+    url: '/interview/getInterviewRedDotInfo',
+    params: data,
+    config: {
+      host: 'qiuzhi'
+    }
+  })
+}
+
