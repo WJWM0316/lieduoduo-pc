@@ -140,7 +140,13 @@ export default {
         this.$message.warning(`最多只能选择${this.limit}个`)
         return
       }
-      this.$emit('input', items.map(val => val[this.props.value]))
+      let inputValue = items.map(val => val[this.props.value])
+      if (!items.length && this.items[0] && this.allValue === this.items[0].value) {
+        items.push(this.items[0])
+        inputValue = this.allValue
+        this.isCheckedAll = true
+      }
+      this.$emit('input', inputValue)
       this.$emit('on-select', items)
       this.handleClose()
     },
