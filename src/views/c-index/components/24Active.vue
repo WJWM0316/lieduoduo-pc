@@ -175,7 +175,7 @@ export default {
   }
 }
 .position-types{
-  padding: 30px 0 8px;
+  padding: 30px 0 7px;
   .scroll-pane {
     height: 22px;
   }

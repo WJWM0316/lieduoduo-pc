@@ -115,8 +115,6 @@ export default {
     }
   },
   created () {
-    // this.currentCity = this.$store.state.cityId
-    // this.getLists()
     this.getCitys().then(() => {
       this.getLists()
     })
@@ -286,7 +284,7 @@ $bg-map: (
   3: url('../../../assets/images/activity/24h/24h_bg4.png'),
   4: url('../../../assets/images/activity/24h/24h_bg5.png'),
   5: url('../../../assets/images/activity/24h/24h_bg6.png'),
-  6: url('../../../assets/images/activity/24h/end.png')
+  6: url('../../../assets/images/activity/24h/24h_bg_end.png')
 );
 .position-24h {
   background-color: $page-bg-color;
@@ -309,7 +307,10 @@ $bg-map: (
   }
 }
 .bg-24h-images .division {
-  background:repeat 30%/30% url('../../../assets/images/activity/24h/stars.png');
+  background-image: url('../../../assets/images/activity/24h/stars.png');
+  background-repeat: repeat;
+  background-position: 0 0;
+  background-size: auto auto;
 }
 .page-loading {
   height: 360px;
@@ -449,10 +450,13 @@ $bg-map: (
     flex: 1;
     box-sizing: border-box;
     cursor: pointer;
-    color: #fff;
+    color: rgba(#fff, .8);
     position: relative;
     margin-left: -1px;
     margin-right: -1px;
+  }
+  li:hover {
+    color: #fff;
   }
   li::after {
     content: "";
@@ -468,6 +472,7 @@ $bg-map: (
     opacity: 0;
   }
   .active {
+    color: #fff;
     font-weight: bold;
     background-color: $bg-color-4;
   }

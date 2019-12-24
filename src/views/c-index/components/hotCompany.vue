@@ -115,13 +115,15 @@ export default {
 }
 .header-wrapper{
   margin-top: 62px;
+  margin-bottom: 24px;
   .scroll-pane {
     width: 100%;
     height: 50px;
   }
   ul {
     width: 100%;
-    height: 50px;
+    height: 22px;
+    line-height: 22px;
     @include flex-v-center;
     flex-wrap: nowrap;
     // justify-items: stretch
