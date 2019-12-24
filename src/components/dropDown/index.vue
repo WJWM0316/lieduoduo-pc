@@ -71,6 +71,9 @@ export default {
       const len = this.items.length
       const maxH = Math.ceil(len * 46 / this.col)
       return maxH > this.defaultHeight
+    },
+    len () {
+      return this.items.length
     }
   },
   data () {
@@ -137,7 +140,14 @@ export default {
         this.$message.warning(`最多只能选择${this.limit}个`)
         return
       }
-      this.$emit('input', items.map(val => val[this.props.value]))
+      let inputValue = items.map(val => val[this.props.value])
+      if (!items.length && this.items[0] && this.allValue === this.items[0].value) {
+        items.push(this.items[0])
+        this.items[0].checked = true
+        inputValue = [this.allValue]
+        this.isCheckedAll = true
+      }
+      this.$emit('input', inputValue)
       this.$emit('on-select', items)
       this.handleClose()
     },
@@ -147,8 +157,36 @@ export default {
           val.checked = false
         }
       })
-      this.$emit('input', [])
-      this.$emit('on-select', [])
+      let items = []; let inputValue = []
+      if (this.items[0] && this.allValue === this.items[0].value) {
+        items.push(this.items[0])
+        inputValue = [this.allValue]
+        this.items[0].checked = true
+        this.isCheckedAll = true
+      }
+      this.$emit('input', inputValue)
+      this.$emit('on-select', items)
+    },
+    clearAll () {
+      this.items.forEach(val => {
+        if (val.checked) {
+          val.checked = false
+        }
+      })
+      let items = []; let inputValue = []
+      if (this.items[0] && this.allValue === this.items[0].value) {
+        items.push(this.items[0])
+        inputValue = [this.allValue]
+        this.items[0].checked = true
+        this.isCheckedAll = true
+      }
+    }
+  },
+  watch: {
+    len (newvalue, oldvalue) {
+      if (newvalue > oldvalue) {
+        if ((Array.isArray(this.value) && this.value[0] === this.allValue) || this.items[0].checked) this.isCheckedAll = true
+      }
     }
   },
   destroyed () {

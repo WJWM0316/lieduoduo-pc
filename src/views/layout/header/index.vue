@@ -175,19 +175,24 @@ export default {
     getHotAreas () {
       getHotArea().then(({ data }) => {
         const areas = [{ 'areaId': 0, 'name': '全国', 'provinceId': 0, 'provinceName': '全国' }, ...data.data]
+        const address = areas.find(val => val.areaId === this.cityId)
+        this.addressName = address.name || '全国'
         this.$store.commit('setAreas', areas)
       })
     }
   },
   watch: {
-    cityId (value) {
-      if (!isNaN(value)) {
-        this.addressId = value
-        const address = this.cityList.find(val => val.areaId === value)
-        if (address) {
-          this.addressName = address.name
+    cityId: {
+      handler (value) {
+        if (!isNaN(value)) {
+          this.addressId = value
+          const address = this.cityList.find(val => val.areaId === value)
+          if (address) {
+            this.addressName = address.name
+          }
         }
-      }
+      },
+      immediate: true
     }
   }
 }

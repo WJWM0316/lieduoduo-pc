@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class="position-24h-wrapper">
     <div class="active-header-wrapper">
       <img src="../../../assets/images/index/title_24hour.png" />
       <span class="position-tag">高薪热门职位</span>
@@ -8,55 +8,23 @@
          <p ref="bubble">{{bubbleList[bubbleIndex]}}</p>
       </div>
     </div>
+    <!-- 24h职位类型 -->
+    <div class="position-types">
+      <scroll-pane class="scroll-pane" ref="scrollPane" :width="scrollPaneWidth">
+        <ul>
+          <template v-for="item in types">
+            <li
+              class="company-name"
+              :class="{active: currentTypeId === item.labelId}"
+              @click="handleChangeType(item)" :key="item.labelId">{{item.name}}</li>
+          </template>
+        </ul>
+      </scroll-pane>
+    </div>
     <div class="active-list" v-loading="getLoading">
       <div class="active-lists-warpper">
         <template v-for="(item,index) in listData">
-          <router-link target="_blank" :to="`/position/details?positionId=${item.id}`" class="active-list-wrapper" :key="item.lableId">
-            <div class="list-header">
-              <div class="list-image">
-                <img :src="item.companyInfo.logoInfo.smallUrl" />
-              </div>
-              <div class="list-company">{{item.companyInfo.companyShortname}}</div>
-              <div class="list-company-info">{{item.companyInfo.industry}}·{{item.companyInfo.employeesInfo}}·{{item.companyInfo.financingInfo}}</div>
-            </div>
-            <div class="list-position-info">
-              <div class="list-position-content">
-                <div>
-                  <span class="list-position-name">{{item.positionName}}</span>
-                  <span class="list-pay">{{item.emolumentMin}}~{{item.emolumentMax}}K <template v-if="item.annualSalary > 12">· {{item.annualSalaryDesc}}</template></span>
-                </div>
-                <div class="list-position-require">
-                  <span><i class="iconfont icon-dizhi"></i>{{item.city}}{{item.district}}</span>
-                  <span><i class="iconfont icon-zhiwei"></i>{{item.workExperienceName}}</span>
-                  <span><i class="iconfont icon-jiaoyu"></i>{{item.educationName}}</span>
-                </div>
-              </div>
-              <div class="list-details" v-if="item.companyInfo.oneSentenceIntro">
-                <span class="list-details-box">
-                  <span class="list-details-box-content">{{item.companyInfo.oneSentenceIntro}}</span>
-                </span>
-              </div>
-            </div>
-            <div class="list-footer">
-              <div class="count-down">
-                <span>还剩</span>
-                <template v-if="listCountDown[index].days > 0">
-                  <span class="list-day">{{listCountDown[index].days}}</span>
-                  <span>天</span>
-                </template>
-                <span class="list-hour">{{listCountDown[index].hours}}</span>:<span class="list-mins">{{listCountDown[index].mins}}</span>:<span class="list-second">{{listCountDown[index].seconds}}</span>
-              </div>
-              <div class="position-count">
-                <p>还剩<b>{{(item.seatsNum -  item.applyNum - item.natureApplyNum) > 99 ? '99+' : item.seatsNum -  item.applyNum - item.natureApplyNum}}</b>个席位</p>
-                <span class="position-process" :class="(item.applyNum + item.natureApplyNum) === 0 ? 'noApply' : ''">
-                  <span
-                    class="position-process-width"
-                    :style="{width: (item.applyNum + item.natureApplyNum) / item.seatsNum * 100 + '%'}"></span>
-                </span>
-              </div>
-              <el-button type="warning"  size="medium" style="width: 71px" round>马上抢</el-button>
-            </div>
-          </router-link>
+          <position-card :key="item.lableId" :item="item" :count-down="listCountDown[index]" />
         </template>
       </div>
     </div>
@@ -66,20 +34,33 @@
   </div>
 </template>
 <script>
-import { getRapidlyData } from 'API/common'
+import ScrollPane from '@/components/scrollPane/index'
+import PositionCard from '@/components/common/positionItem/24h'
+import { getRapidlyDataByType } from 'API/common'
 export default {
+  props: {
+    types: {
+      type: Array,
+      default: () => ([])
+    },
+    bubbleList: {
+      type: Array,
+      default: () => ([])
+    }
+  },
+  components: { ScrollPane, PositionCard },
   data () {
     return {
       bubbleIndex: 0,
-      bubbleList: [],
       listData: [],
       getLoading: false,
-      buttons: [],
-      listCountDown: [] // 倒计时数据
+      listCountDown: [], // 倒计时数据
+      currentTypeId: 0, // 当前类型的Id
+      scrollPaneWidth: 'auto'
     }
   },
   created () {
-    this.getLists()
+    this.getListsByPosition()
   },
   computed: {
     cityid () {
@@ -90,14 +71,26 @@ export default {
     }
   },
   methods: {
-    getLists () {
+    refreshDom () {
+      // 计算是否使用 scroll pane
+      this.$nextTick(() => {
+        const dom = this.$refs.scrollPane.$refs.scrollWrapper
+        this.scrollPaneWidth = dom.clientWidth
+        // 跑气泡
+        this.bubbleDown()
+      })
+    },
+    // 切换类型
+    handleChangeType (item) {
+      this.currentTypeId = item.labelId
+      this.getListsByPosition()
+    },
+    getListsByPosition () {
       this.getLoading = true
-      getRapidlyData({ page: 1, city: this.cityid }).then(({ data }) => {
+      getRapidlyDataByType({ page: 1, city: this.cityid, positionType: this.currentTypeId }).then(({ data }) => {
         this.getLoading = false
-        const { items, toastTips, buttons } = data.data
-        const listData = items.slice(0, 6)
-        this.bubbleList = toastTips
-        this.buttons = buttons
+        let listData = data.data
+        listData = listData.slice(0, 6)
         // 保存倒计时数据
         this.listCountDown = listData.map(val => {
           return {
@@ -111,8 +104,6 @@ export default {
         this.listData = listData
         // 跑倒计时
         this.setCountDown()
-        // 跑气泡
-        this.bubbleDown()
       }).catch(() => {
         this.getLoading = false
       })
@@ -141,25 +132,33 @@ export default {
         if (!this.$refs.bubble.querySelector('animation')) this.$refs.bubble.classList.add('animation')
       }
       this.bubbleDownTimer = setTimeout(() => {
+        this.$refs.bubble.classList.remove('animation')
         if (this.bubbleIndex >= this.bubbleList.length - 1) {
           this.bubbleIndex = 0
         } else {
           this.bubbleIndex++
         }
-        this.bubbleDown()
+        setTimeout(() => {
+          this.bubbleDown()
+        }, 200)
       }, 5000)
     },
     handleShowMore () {
-      if (!this.isLogin) {
+      this.$router.push({ name: 'position24h' })
+      /* if (!this.isLogin) {
         this.$router.push('/login?type=msgLogin')
       } else {
-        this.$store.commit('guideQrcodePop', { switch: true, type: 'to24Hours' })
-      }
+        // this.$store.commit('guideQrcodePop', { switch: true, type: 'to24Hours' })
+        this.$router.push({ name: 'position24h' })
+      } */
     }
   },
   watch: {
     cityid (value) {
-      if (this.$route.name === 'index') this.getLists()
+      if (this.$route.name === 'index') {
+        this.getListsByPosition()
+        this.currentTypeId = 0
+      }
     }
   },
   destroyed () {
@@ -170,7 +169,40 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-$position-process-bg-color: #99e7e8;
+.position-24h-wrapper {
+  & /deep/ .el-loading-mask {
+    background: rgba(255, 255, 255, 0.1);;
+  }
+}
+.position-types{
+  padding: 30px 0 7px;
+  .scroll-pane {
+    height: 22px;
+  }
+  ul {
+    width: 100%;
+    height: 22px;
+    @include flex-v-center;
+    flex-wrap: nowrap;
+  }
+  li {
+    color: $title-color-2;
+    font-size: 16px;
+    border-bottom: 2px solid transparent;
+    font-weight: 400;
+    cursor: pointer;
+  }
+  li.active {
+    color: $main-color-1;
+    border-color: $border-color-2;
+  }
+  li:hover {
+    color: $main-color-1;
+  }
+  li+li {
+    margin-left: 52px;
+  }
+}
 .active-header-wrapper {
   @include flex-v-center;
   height: 64px;
@@ -223,7 +255,7 @@ $position-process-bg-color: #99e7e8;
       background: $bg-color-4;
     }
     p.animation {
-      animation: bubble 5s infinite;
+      animation: bubble 5s 1;
     }
   }
 }
@@ -232,202 +264,13 @@ $position-process-bg-color: #99e7e8;
   cursor: pointer;
   width: 100%;
   margin-bottom: 20px;
-  min-height: 300px;
+  min-height: 220px;
   .active-lists-warpper {
     display: flex;
     flex-wrap: wrap;
   }
-  .active-list-wrapper {
-    width: 386px;
-    overflow: hidden;
-    margin-bottom: 20px;
-    box-sizing: border-box;
-    box-shadow: $shadow-1;
-    border-radius:4px;
-    background-color: #fff;
-    margin-right: 15px;
-    transition: transform 300ms, box-shadow 300ms;
-  }
   .active-list-wrapper:nth-child(3n) {
     margin-right: 0px;
-  }
-  .active-list-wrapper:hover {
-    box-shadow: $shadow-2;
-    transform: translateY(-5px);
-  }
-  .list-header {
-    background-color: #fff;
-    padding: 10px 0px;
-    @include flex-v-center;
-    margin:0 16px;
-    box-sizing: border-box;
-    color: $font-color-6;
-    border-bottom: 1px dashed $border-color-1;
-    .list-image {
-      @include img-radius(28px, 28px);
-      border: 1px solid $border-color-8;
-    }
-    .list-company {
-      font-size: 14px;
-      color: $title-color-1;
-      padding-left: 6px;
-      max-width: 120px;
-      @include ellipsis;
-    }
-    .list-company-info {
-      margin-left: auto;
-      font-size: 12px;
-    }
-  }
-  .list-position-info {
-    padding: 18px;
-    text-align: center;
-    background-color: #fff;
-    box-sizing: border-box;
-    padding: 0px 16px 0 18px;
-    min-height: 138px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    & > div {
-      width: 100%;
-    }
-    .list-position-content {
-      padding: 14px 0;
-    }
-  }
-  .list-position-name, .list-pay {
-    display: inline-block;
-    vertical-align: middle;
-  }
-  .list-position-name {
-    color: $title-color-1;
-    font-size: 18px;
-    font-weight: bold;
-    max-width: 190px;
-    @include ellipsis;
-  }
-  .list-position-name:hover {
-    color: $main-color-1;
-  }
-  .list-pay {
-    color: $error-color-1;
-    font-size: 20px;
-    font-weight: bold;
-    padding-left: 14px;
-  }
-  .list-position-require {
-    margin-top: 10px;
-    font-size: 14px;
-    color: $title-color-2;
-    span + span {
-      margin-left: 22px;
-    }
-    .iconfont {
-      font-size: 14px;
-      padding-right: 3px;
-      color: $font-color-12;
-    }
-  }
-  .list-details {
-    background: $bg-color-8;
-    padding:10px 35px;
-    margin: 0px -26px 0;
-    text-align: left;
-    align-self: flex-end;
-    width: 100%;
-    font-size: 12px;
-    min-height: 30px;
-    line-height: 16px;
-    position: relative;
-    display: table;
-    .list-details-box {
-      display: table-cell;
-      vertical-align: middle;
-    }
-    .list-details-box-content {
-      color: $title-color-3;
-      @include ellipsis-two;
-      -webkit-box-pack: center;
-    }
-  }
-  .list-footer {
-    @include flex-v-center;
-    box-sizing: border-box;
-    background: $bg-color-4;
-    padding: 10px 20px;
-    height: 54px;
-  }
-  .count-down {
-    color: #fff;
-    font-size: 14px;
-    span {
-      vertical-align: middle;
-      display: inline-block;
-      height: 24px;
-      line-height: 24px;
-    }
-  }
-  .list-day, .list-hour, .list-mins, .list-second {
-    width: 24px;
-    background: #fff;
-    color: $sub-color-1;
-    text-align: center;
-    font-weight: 700;
-    border-radius:4px;
-    margin: 0 3px;
-  }
-  .el-button {
-    margin-left: 15px;
-    padding: 0;
-    height: 34px;
-  }
-  .position-count {
-    margin-left: auto;
-    p {
-      font-size: 12px;
-      font-weight: 300;
-      color: #fff;
-      b {
-        color: #fff;
-        font-weight: 700;
-      }
-    }
-    span {
-      display: inline-block;
-      height:8px;
-    }
-  }
-  .position-process {
-    background: $position-process-bg-color;
-    width:53px;
-    position: relative;
-    margin-left: 26px;
-    border-radius: 0 4px 4px 0;
-    &:after {
-      width: 26px;
-      height: 8px;
-      content: '';
-      display: block;
-      position: absolute;
-      top: 0;
-      left: -26px;
-      background: #fff;
-      border-radius:4px 0 0 4px;
-    }
-    &.noApply {
-      &:after {
-        background: #fff;
-      }
-    }
-  }
-  .position-process-width {
-    background: #fff;
-    position: absolute;
-    left: 0;
-    top: 0;
-    border-radius: 0 4px 4px 0;
   }
 }
 .active-btn {
