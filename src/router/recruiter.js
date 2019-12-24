@@ -92,6 +92,21 @@ const recruiter = [
     ]
   },
   {
+    path: '/myinfos',
+    title: '我的资料',
+    component: Layout,
+    meta: {
+      useNav: false
+    },
+    children: [
+      {
+        path: '',
+        name: 'myinfos',
+        component: resolve => require(['../views/b-myinfos/index.vue'], resolve)
+      }
+    ]
+  },
+  {
     path: '/issueRule',
     name: 'issueRule',
     title: '发布规则',

@@ -12,11 +12,12 @@
           </div>
         </div>
         <el-dropdown-menu slot="dropdown">
-           <el-dropdown-item command="perfectauth" v-if="haveIdentity.identityAuth !== 1">
-             身份认证
-             <div class="reddot"></div>
-             </el-dropdown-item>
+          <el-dropdown-item command="perfectauth" v-if="haveIdentity.identityAuth !== 1">
+            身份认证
+            <div class="reddot"></div>
+          </el-dropdown-item>
           <el-dropdown-item command="toggleIdentity">切换为求职者</el-dropdown-item>
+          <el-dropdown-item command="infos">我的资料</el-dropdown-item>
           <el-dropdown-item command="logout">退出登录</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -80,6 +81,9 @@ export default {
           break
         case 'toggleIdentity':
           this.$store.commit('switchIdentity', { toSiutchRole: 1 })
+          break
+        case 'infos':
+          this.$router.push({ name: 'myinfos' })
           break
         case 'perfectauth':
           this.$router.push({ name: 'perfectauth' })
