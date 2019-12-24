@@ -89,7 +89,7 @@ export default {
   props: {
     value: [String, Array],
     multiple: {
-      // 是否是选
+      // 是否多选
       type: Boolean,
       default: false
     },

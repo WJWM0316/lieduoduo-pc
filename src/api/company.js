@@ -199,6 +199,20 @@ export const companyDetailApi = vkey => request({
   config: { host: 'zhaopin' }
 })
 
+/* 获取公司融资阶段列表 */
+export const companyEmployeesApi = vkey => request({
+  url: '/company/employees',
+  method: 'get',
+  config: { host: 'zhaopin' }
+})
+
+/* 获取公司融资阶段列表 */
+export const companyFinancingApi = vkey => request({
+  url: '/company/financing',
+  method: 'get',
+  config: { host: 'zhaopin' }
+})
+
 /* 获取公司的热招职位 */
 export const getCompanyHotApi = (data) => request({
   url: `/company/web/hot_positions/${data.vkey}`,

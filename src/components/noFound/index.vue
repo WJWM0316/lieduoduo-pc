@@ -4,6 +4,7 @@
       <img :style="{'max-width': maxWidth ? maxWidth + 'px' : 'auto' }" :src="imageUrl" alt="">
     </div>
     <p v-if="showText">{{tipText}}</p>
+    <slot></slot>
   </div>
 </template>
 <script>

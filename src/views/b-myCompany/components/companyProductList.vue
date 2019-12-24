@@ -7,12 +7,10 @@
             <div class="product-text">
                 <div class="product-title">
                     <p>{{ item.productName }}</p>
-                    <i>icon</i>
+                    <i class="iconfont icon-bianji"></i>
                 </div>
                 <p class="product-slogan">{{ item.slogan }}</p>
-                <p class="product-lightspot">
-                    <block-overflow :text="item.lightspot"></block-overflow>
-                </p>
+                <block-overflow class="product-lightspot" :text="item.lightspot"></block-overflow>
                 <a :href="item.siteUrl" target="_blank" class="product-siteUrl">{{ item.siteUrl }}</a>
             </div>
         </div>
@@ -40,6 +38,9 @@ export default {
     border-bottom: 1px solid $border-color-1;
     padding: 24px 0;
     @include clearfix;
+    &:nth-last-child(1){
+        border: 0;
+    }
 
     .productImg{
         float: left;
@@ -55,6 +56,45 @@ export default {
         float: left;
         margin-left: 20px;
         width: calc(100% - 80px);
+        .product-title{
+            @include flex-justify-between;
+            @include flex-v-center;
+            p{
+                font-size: 20px;
+                font-weight: 700;
+                color: $font-color-3;
+            }
+            i{
+                color: $font-color-10;
+                cursor: pointer;
+                &:hover{
+                    color: $main-color-1;
+                }
+            }
+        }
+        .product-slogan{
+            font-size: 16px;
+            color: $font-color-6;
+            line-height: 24px;
+            margin-top: 2px;
+        }
+        .product-lightspot{
+            margin-top: 16px;
+        }
+        .product-siteUrl{
+            display: inline-block;
+            margin-top: 10px;
+            color: $main-color-1;
+        }
     }
+}
+</style>
+<style>
+.product-text .introduction-text{
+    line-height: 20px;
+    color: #99999B;
+}
+.product-text .introduction-text button{
+    line-height: 20px;
 }
 </style>
