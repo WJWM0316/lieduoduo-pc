@@ -1,8 +1,9 @@
 import { getSearchCollect } from 'API/common'
-import router from '@/router/index'
 const GET_SEARCH_COLLECT = 'GET_SEARCH_COLLECT'
 const UPDATE_SEARCH_COLLECT = 'UPDATE_SEARCH_COLLECT'
 const UPDATE_SEARCH_COLLECT_MUTIPLE = 'UPDATE_SEARCH_COLLECT_MUTIPLE'
+const RESET_SEARCH_COLLECT_MUTIPLE = 'RESET_SEARCH_COLLECT_MUTIPLE'
+
 const state = {
   searchCollect: {
     area: [],
@@ -75,9 +76,9 @@ const mutations = {
           if (list[0].checked) {
             list[0].checked = false
           }
-          // if(!filterSearchCollect[key].length) {
-          //   list[0].checked = true
-          // }
+          if (!list.filter(v => v.checked).length) {
+            list[0].checked = true
+          }
 			  } else {
 			  	if (!list[0].checked) {
 			  	  list.map((v, i, a) => v.checked = !i ? true : false)
@@ -90,9 +91,9 @@ const mutations = {
           if (list[0].checked) {
             list[0].checked = false
           }
-          // if(!filterSearchCollect[key].length) {
-          //   list[0].checked = true
-          // }
+          if (!list.filter(v => v.checked).length) {
+            list[0].checked = true
+          }
 			  } else {
 			  	if (!list[0].checked) {
 			  	  list.map((v, i, a) => v.checked = !i ? true : false)
@@ -105,9 +106,9 @@ const mutations = {
           if (list[0].checked) {
             list[0].checked = false
           }
-          // if(!filterSearchCollect[key].length) {
-          //   list[0].checked = true
-          // }
+          if (!list.filter(v => v.checked).length) {
+            list[0].checked = true
+          }
 			  } else {
 			  	if (!list[0].checked) {
 			  	  list.map((v, i, a) => v.checked = !i ? true : false)
@@ -166,6 +167,11 @@ const mutations = {
         break
     }
     state.searchCollect[key] = list
+  },
+  [RESET_SEARCH_COLLECT_MUTIPLE] (state) {
+    Object.keys(state.searchCollect).map(key => {
+      state.searchCollect[key].map((v, i) => v.checked = !i ? true : false)
+    })
   }
 }
 
@@ -198,6 +204,12 @@ const actions = {
   updateSearchCollectMutipleApi (store, params) {
     return new Promise((resolve, reject) => {
       store.commit(UPDATE_SEARCH_COLLECT_MUTIPLE, params)
+      resolve()
+    })
+  },
+  resetSearchCollectMutipleApi (store, params) {
+    return new Promise((resolve, reject) => {
+      store.commit(RESET_SEARCH_COLLECT_MUTIPLE, params)
       resolve()
     })
   }

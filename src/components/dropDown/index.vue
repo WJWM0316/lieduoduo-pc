@@ -166,6 +166,20 @@ export default {
       }
       this.$emit('input', inputValue)
       this.$emit('on-select', items)
+    },
+    clearAll () {
+      this.items.forEach(val => {
+        if (val.checked) {
+          val.checked = false
+        }
+      })
+      let items = []; let inputValue = []
+      if (this.items[0] && this.allValue === this.items[0].value) {
+        items.push(this.items[0])
+        inputValue = [this.allValue]
+        this.items[0].checked = true
+        this.isCheckedAll = true
+      }
     }
   },
   watch: {
