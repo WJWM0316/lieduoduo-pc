@@ -832,7 +832,7 @@ export default class loginForm extends Component {
             vertical-align: middle;
             i{
               font-size: 16px;
-              color: $font-color-13;
+              color: $border-color-2;
               margin-right: 10px;
               line-height: 16px;
               vertical-align: bottom;

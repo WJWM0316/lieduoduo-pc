@@ -45,6 +45,12 @@
       <div class="header-user-info">
         <div class="system">
           <template v-if="headerInfo.id">
+            <router-link tag="span" to="/interview" class="resume" v-slot="{ href, isActive, isExactActive }">
+              <span
+                class="router-link"
+                :class="[isActive && 'router-link-active', isExactActive && 'router-link-exact-active']"
+                @click="handeToInterview">面试</span>
+            </router-link>
             <router-link tag="span" to="/cresume" class="resume" v-slot="{ href, isActive, isExactActive }">
               <span
                 class="router-link"
@@ -166,6 +172,9 @@ export default {
       } else {
         this.$router.push({ path: '/cresume' })
       }
+    },
+    handeToInterview() {
+      this.$router.push({ path: '/interview/schedule' })
     },
     changeLocation (item) {
       this.addressName = item.name

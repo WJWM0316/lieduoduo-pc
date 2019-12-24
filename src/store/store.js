@@ -11,6 +11,7 @@ import { logoutApi } from '../api/auth'
 import resume from './modules/resume'
 import company from './modules/company'
 import redDot from './modules/redDot'
+import interview from './modules/interview'
 
 Vue.use(Vuex)
 
@@ -268,6 +269,7 @@ export default new Vuex.Store({
   modules: {
     resume,
     company,
-    redDot
+    redDot,
+    interview
   }
 })

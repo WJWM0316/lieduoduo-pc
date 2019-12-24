@@ -5,7 +5,7 @@
             <p class="myMaterial-head-text">如“<span>*</span>”号的内容，是必须填写的项目；置灰内容为公司认证信息，修改请联系 400-065-5788</p>
         </div>
         <div class="from">
-            <el-form v-model="informations" label-width="100px">
+            <el-form v-model="informations" :rules="rules" label-width="100px">
                 <el-form-item label="公司logo："><el-input v-model="informations.smallUrl"></el-input></el-form-item>
                 <el-form-item label="公司全程："><el-input v-model="informations.companyName"></el-input></el-form-item>
                 <el-form-item label="公司简称："><el-input v-model="informations.companyShortname"></el-input></el-form-item>
@@ -91,7 +91,7 @@ export default {
 
     .myMaterial-head-text{
         font-size: 12px;
-        color: $font-color-14;
+        color: $font-color-9;
         font-weight: 400;
     }
     .myMaterial-head-title{
@@ -106,7 +106,9 @@ export default {
     margin-top: 48px;
 }
 .from{
-
+    input{
+        width: 382px;
+    }
 }
 </style>
 <style>

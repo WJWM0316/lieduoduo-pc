@@ -43,41 +43,9 @@ import PageAside from './side/index.vue'
 export default class App extends Vue {
   cdnPath = `${process.env.VUE_CDN_PATH}/front-assets/`
   isService = false;
-
-  mounted (){
+  mounted () {
     this.$store.dispatch('redDotfun')
   }
-
-  // // 下面路由显示管理页面顶部的导航栏
-  // shouldTopShown() {
-  //   return [
-  //     'applyIndex',
-  //   ].includes(this.$store.state.pageName)
-  // }
-
-  // // 下面路由不显示管理页面的侧边栏,和顶部的导航栏
-  // shouldTopShown2() {
-  //   return [
-  //     'candidate',
-  //     'postJob',
-  //     'recruiterIndex'
-  //   ].includes(this.$store.state.pageName)
-  // }
-
-  // 下面路由不显示管理页面的侧边栏,和顶部的导航栏
-  /* shouldBottomShown () {
-    return [
-      'login',
-      'postJob',
-      'candidate',
-      'recruiterIndex',
-      'resumeFirstPost',
-      'resumeSecondPost',
-      'resumeThirdPost',
-      'resumeFourthPost',
-      '404'
-    ].includes(this.$store.state.pageName)
-  } */
 }
 </script>
 <style lang="scss" scoped>
@@ -101,16 +69,93 @@ export default class App extends Vue {
   min-width: 960px;
   max-width: 1200px;
 }
-.b-app .main-center {
-  width: $page-width;
-  margin:0 auto;
-}
-@media screen and (max-width: 1440px)  {
-  .b-app .main-center {
-    width: 1240px;
-    padding: 0 20px;
-    box-sizing: border-box;
-    overflow-x: scroll;
+.service {
+  font-size:16px;
+  font-weight:700;
+  color:#03B3BB;
+  line-height:18px;
+  position: fixed;
+  top: 50%;
+  height: 120px;
+  margin-top: -60px;
+  right: 0;
+  width:36px;
+  height:120px;
+  background:#E5F9FA;
+  border-radius:4px 0px 0px 4px;
+  box-sizing: border-box;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 100;
+  .service_icon {
+    display: block;
+    margin-bottom: 8px;
+  }
+  .service_pop {
+    width:300px;
+    height:440px;
+    background:rgba(255,255,255,1);
+    box-shadow:0px 8px 12px 0px rgba(48,50,51,0.1);
+    border-radius:8px;
+    position: absolute;
+    left: -320px;
+    top: 50%;
+    margin-top: -220px;
+    .pop_tit {
+      width:300px;
+      text-align: center;
+      height:58px;
+      line-height:58px;
+      background:#00C4CD;
+      border-radius:8px 8px 0px 0px;
+      font-size:20px;
+      font-weight:400;
+      color:rgba(255,255,255,1);
+    }
+    .pop_cont {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      .pop_code {
+        width: 112px;
+        height: 112px;
+        margin: 48px auto 10px auto;
+      }
+      .pop_text {
+        font-size:20px;
+        font-weight:400;
+        color:#333333;
+        margin: 48px 0 20px 0;
+      }
+      .pop_text2 {
+        font-size:24px;
+        font-weight:bold;
+        color:#00C4CD;;
+      }
+      .pop_text3 {
+        font-size:18px;
+        font-weight:400;
+        color:#333333;
+        margin-bottom: 24px;
+      }
+      .pop_text4 {
+        font-size:14px;
+        font-weight:400;
+        color:#66666E;
+      }
+    }
+  }
+  .triangle_border_right{
+    width: 0;
+    height: 0;
+    border-width:10px 0  10px 14px ;
+    border-style: solid;
+    border-color: transparent transparent transparent #fff ;
+    position: absolute;
+    right: -12px;
+    top: 50%;
+    margin-top: -20px;
   }
 }
 </style>
