@@ -132,12 +132,15 @@ export default {
         if (!this.$refs.bubble.querySelector('animation')) this.$refs.bubble.classList.add('animation')
       }
       this.bubbleDownTimer = setTimeout(() => {
+        this.$refs.bubble.classList.remove('animation')
         if (this.bubbleIndex >= this.bubbleList.length - 1) {
           this.bubbleIndex = 0
         } else {
           this.bubbleIndex++
         }
-        this.bubbleDown()
+        setTimeout(() => {
+          this.bubbleDown()
+        }, 200)
       }, 5000)
     },
     handleShowMore () {
@@ -252,7 +255,7 @@ export default {
       background: $bg-color-4;
     }
     p.animation {
-      animation: bubble 5s infinite;
+      animation: bubble 5s 1;
     }
   }
 }

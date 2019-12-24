@@ -14,6 +14,9 @@
         </ul>
       </div>
       <div class="main-center">
+        <div class="header-24-banner">
+          <img src="../../../assets/images/activity/24h/24h_banner.png" alt="">
+        </div>
         <div class="header-24h-keywords">
           <div>精选年薪20W+职位</div>
           <div>职业顾问1V1服务</div>
@@ -26,7 +29,7 @@
           placement="top"
           popper-class="position-24h-share-wechat"
           :width="100">
-          <img style="max-width:100%" :src="mp24hQr" alt="">
+          <img style="max-width:100%; max-height:100%" :src="mp24hQr" alt="">
           <div class="header-wechat-shart"  slot="reference">
             <i class="iconfont icon-weixin"></i> 微信分享
           </div>
@@ -66,7 +69,7 @@
       </div>
       <div class="position-bottom-qrcode">
         <img :src="appQrcodeUrl" alt="">
-        <p><span class="icon-arrow-top"></span><span>扫码开抢</span><span class="icon-arrow-top"></span></p>
+        <p><span class="icon-arrowtop"></span><span>扫码开抢</span><span class="icon-arrowtop"></span></p>
       </div>
     </div>
     <!-- 背景图 -->
@@ -194,13 +197,16 @@ export default {
         if (!this.$refs.bubble.querySelector('animation')) this.$refs.bubble.classList.add('animation')
       }
       this.bubbleDownTimer = setTimeout(() => {
+        this.$refs.bubble.classList.remove('animation')
         if (this.bubbleIndex >= this.bubbleList.length - 1) {
           this.bubbleIndex = 0
         } else {
           this.bubbleIndex++
         }
-        this.bubbleDown()
-      }, 5000)
+        setTimeout(() => {
+          this.bubbleDown()
+        }, 200)
+      }, 4000)
     },
     // 切换城市
     handleChangeCity (city) {
@@ -366,7 +372,7 @@ $bg-map: (
 .position-first-content {
   position: relative;
   height: 486px;
-  background: url('../../../assets/images/activity/24h/banner.png') no-repeat;
+  background: url('../../../assets/images/activity/24h/24h_bg_banner.png') no-repeat;
   background-position: top center;
   .main-center {
     position: relative;
@@ -384,11 +390,19 @@ $bg-map: (
     opacity: 0;
   }
   p.animation {
-    animation: bubble 5s infinite;
+    animation: bubble 4s 1;
+  }
+}
+.header-24-banner {
+  width: 685px;
+  text-align: center;
+  padding: 97px 0 20px;
+  margin: 0 auto;
+  img {
+    max-width: 100%;
   }
 }
 .header-24h-keywords {
-  padding-top: 330px;
   padding-bottom: 24px;
   opacity: .5;
   & > div {
@@ -613,7 +627,7 @@ $bg-map: (
     z-index: 2;
     position: relative;
   }
-  .icon-arrow-top {
+  .icon-arrowtop {
     width: 13px;
     height: 13px;
     background-size: cover;
@@ -656,18 +670,18 @@ $bg-map: (
 }
 @keyframes bubble{
   0% {}
-  30% {
+  5% {
     transform: translateY(30px);
   }
-  45% {
+  25% {
     transform: translateY(0);
     opacity: 1;
   }
-  75% {
+  80% {
     transform: translateY(0);
     opacity: 1;
   }
-  90% {
+  100% {
     opacity: 0;
     transform: translateY(-30px);
   }
@@ -676,6 +690,7 @@ $bg-map: (
 <style>
 .position-24h-share-wechat.el-popper {
   min-width: 105px;
+  height: 105px;
   padding: 5px;
   box-sizing: border-box;
 }

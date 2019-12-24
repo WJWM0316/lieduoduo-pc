@@ -2,7 +2,7 @@
   <div class="index-wrapper">
     <login-banner :banner="loginBannerList" :total="total"></login-banner>
     <div class="index-tips-banner">
-      <ul class="main-center ">
+      <ul class="main-center">
         <li><i class="iconfont icon-rencai"></i> 专注互联网高端才人发展</li>
         <li><i class="iconfont icon-qiuzhiyixiang"></i> 优选年薪20W+高薪机会</li>
         <li><i class="iconfont icon-fuwu"></i> 求职顾问1V1免费辅导服务</li>
@@ -139,7 +139,7 @@ export default {
     font-size: 14px;
     position: relative;
     i {
-      font-size: 14px;
+      font-size: 13px;
     }
   }
   li:not(:first-child)::before {
@@ -148,7 +148,7 @@ export default {
     left: 0;
     height: 18px;
     width: 1px;
-    background-image: linear-gradient(to bottom, rgba($border-color-2, .24) 0%, rgba($border-color-2, .24) 70%, transparent 70%);
+    background-image: linear-gradient(to bottom, rgba($border-color-2, .3) 0%, rgba($border-color-2, .3) 70%, transparent 70%);
     background-size: 1px 6px;
     background-repeat: repeat-y;
   }
