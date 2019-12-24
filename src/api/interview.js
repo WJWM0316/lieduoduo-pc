@@ -119,3 +119,26 @@ export const getInterviewRedDotInfoApi = (data, hasLoading) => {
   })
 }
 
+// 清除面试红点信息
+export const clearTabInterviewRedDotApi = (data, hasLoading) => {
+  return request({
+    method: 'put',
+    url: '/interview/deleteTabRedDot',
+    params: data,
+    config: {
+      host: 'qiuzhi'
+    }
+  })
+}
+
+// 清除面试日程红点信息
+export const clearDayInterviewRedDotApi = (data, hasLoading) => {
+  return request({
+    method: 'put',
+    url: '/interview/deleteTabRedDot',
+    params: data,
+    config: {
+      host: 'qiuzhi'
+    }
+  })
+}

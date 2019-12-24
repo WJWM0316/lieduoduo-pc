@@ -1,9 +1,15 @@
 <template>
-  <div class="card_item">
-    <template v-if="interview.status === 11">
-    	<el-button type="text">开撩约面</el-button>
-    </template>
-  </div>
+  <el-row class="card_item">
+    <el-col :span="8">
+      <div class="grid-content bg-purple">11</div>
+    </el-col>
+    <el-col :span="8">
+      <div class="grid-content bg-purple-light">11</div>
+    </el-col>
+    <el-col :span="8">
+      <div class="grid-content bg-purple">1111</div>
+    </el-col>
+  </el-row>
 </template>
 <script>
 export default {
@@ -11,18 +17,15 @@ export default {
     interview: {
       type: Object,
       default: () => ({})
-    },
-    showCompanyInfo: {
-      type: Boolean,
-      default: true
     }
   }
 }
 </script>
 <style lang="scss" scoped>
 .card_item {
-	margin: 20px 0;
+	margin: 15px 0;
   height: 100px;
   line-height: 100px;
+  background: white;
 }
 </style>
