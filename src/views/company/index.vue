@@ -10,25 +10,53 @@
         <div class="type-item">
           <div class="type-filter">公司地点：</div>
           <div class="type-ul">
-            <span v-for="(area, areaIndex) in searchCollect.area" :key="areaIndex" class="type-li" :class="{active: area.checked}" @click="onClick(area, areaIndex, 'area')">{{area.name}}</span>
+            <span
+              v-for="(area, areaIndex) in searchCollect.area"
+              :key="areaIndex"
+              class="type-li"
+              :class="{active: area.checked}"
+              @click="onClick(area, areaIndex, 'area')">
+              {{area.name}}
+            </span>
           </div>
         </div>
         <div class="type-item">
           <div class="type-filter">融资规模：</div>
           <div class="type-ul">
-            <span v-for="(finance, financeIndex) in searchCollect.financing" :key="financeIndex" class="type-li" :class="{active: finance.checked}" @click="onClick(finance, financeIndex, 'financing')">{{finance.text}}</span>
+            <span 
+              v-for="(finance, financeIndex) in searchCollect.financing" 
+              :key="financeIndex" 
+              class="type-li" 
+              :class="{active: finance.checked}"
+              @click="onClick(finance, financeIndex, 'financing')">
+              {{finance.text}}
+            </span>
           </div>
         </div>
         <div class="type-item">
           <div class="type-filter">人员规模：</div>
           <div class="type-ul">
-            <span v-for="(employee, employeeIndex) in searchCollect.employee" :key="employeeIndex" class="type-li" :class="{active: employee.checked}" @click="onClick(employee, employeeIndex, 'employee')">{{employee.text}}</span>
+            <span
+              v-for="(employee, employeeIndex) in searchCollect.employee"
+              :key="employeeIndex"
+              class="type-li"
+              :class="{active: employee.checked}"
+              @click="onClick(employee, employeeIndex, 'employee')">
+              {{employee.text}}
+            </span>
           </div>
         </div>
         <div class="type-item">
           <div class="type-filter">行业领域：</div>
           <div class="type-ul">
-            <span v-for="(industry, industryIndex) in searchCollect.industry" :key="industryIndex" class="type-li" :class="{active: industry.checked}" @click="onClick(industry, industryIndex, 'industry')">{{industry.name}}</span>
+            <span 
+              v-for="(industry, industryIndex) in searchCollect.industry" 
+              :key="industryIndex" 
+              class="type-li" 
+              :class="{active: industry.checked}" 
+              @click="onClick(industry, industryIndex, 'industry')">
+              {{industry.name}}
+            </span>
           </div>
         </div>
       </div>
@@ -96,17 +124,18 @@ export default {
     ...mapActions([
       'getSearchCollectApi',
       'updateSearchCollectApi',
-      'updateSearchCollectMutipleApi'
+      'updateSearchCollectMutipleApi',
+      'resetSearchCollectMutipleApi'
     ]),
     getLogoListsLists () {
       getLogoListsListsApi({ count: 24 }).then(({ data }) => (this.companyLogoLists = data.data))
     },
     handleSearch () {
       this.page = 1
-      this.handleScrollToView()
       this.getLists()
     },
     getLists () {
+      this.handleScrollToView()
       let cityNums = this.filterSearchCollect.area.map(v => v.areaId).join(',')
       let industryIds = this.filterSearchCollect.industry.map(v => v.labelId).join(',')
       let employeeIds = this.filterSearchCollect.employee.map(v => v.value).join(',')
@@ -140,7 +169,6 @@ export default {
         this.$refs.loginPop.showLoginPop = true
         this.page = query.page || 1
       }
-      this.handleScrollToView()
     },
     // 滚动到可视区域
     handleScrollToView () {
@@ -148,19 +176,13 @@ export default {
       this.$util.scrollToView(dom)
     },
     reset () {
-      this.handleScrollToView()
-      for (let key in this.searchCollect) {
-        this.updateSearchCollectMutipleApi({ arr: [], key })
-      }
-      // 不用promise的情况 确保再同步方法之后执行
-      setTimeout(() => {
+      this.resetSearchCollectMutipleApi().then(() => {
         this.page = 1
         this.getLists()
       })
     },
     onClick (item, index, key) {
       this.page = 1
-      this.handleScrollToView()
       this.updateSearchCollectApi({ item, index, key }).then(() => this.getLists())
     }
   },
