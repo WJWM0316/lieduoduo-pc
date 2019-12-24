@@ -39,7 +39,7 @@
       	{{ item.date }}
     	</li>
     </ul>
-    <!-- <ChatBar :interview="interviewItem" v-for="(interviewItem, interviewIndex) in interview.list" :key="interviewIndex" /> -->
+    <ChatBar :interview="interviewItem" v-for="(interviewItem, interviewIndex) in applyData.list" :key="interviewIndex" />
 	</div>
 </template>
 <script>
@@ -50,7 +50,9 @@ import {
 	getInterviewScheduleNumberListsApi,
 	getInterviewInviteListsApi,
 	getInterviewScheduleListsApi,
-	getInterviewRedDotInfoApi
+	getInterviewRedDotInfoApi,
+	clearTabInterviewRedDotApi,
+	clearDayInterviewRedDotApi
 } from 'API/interview'
 export default {
 	components: {
@@ -187,6 +189,12 @@ export default {
 		}
 	},
 	methods: {
+		clearDayInterviewRedDot(date) {
+      return clearDayInterviewRedDotApi({ date })
+	  },
+	  clearTabInterviewRedDot(type) {
+	    return clearTabInterviewRedDotApi({ type })
+	  },
 		getInterviewRedDotInfo() {
 			return getInterviewRedDotInfoApi().then(( { data } ) => {
 				let infos = data.data
@@ -282,6 +290,14 @@ export default {
 			let data = this.navigation[this.navIndex]
 			list.map((v, i, arr) => v.active = index === i ? true : false)
 			this[`${data.tab}Data`]['page'] = 1
+			if([0, 1].includes(this.navIndex)) {
+				if(item.active && item.showRedDot && item.type) {
+          item.showRedDot = 0
+          this.clearTabInterviewRedDot(item.type)
+        }
+			} else {
+				this.clearDayInterviewRedDot(item.time)
+			}
 			this.getInterviewRedDotInfo().then(() => this[data.api]())
 		},
 		getLists(item) {
