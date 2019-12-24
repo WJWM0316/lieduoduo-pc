@@ -123,7 +123,9 @@ export default {
     async getCitys () {
       await getActivityCity().then(({ data }) => {
         this.citys = data.data.cityList || []
-        const cityId = this.$route.query.city ? +this.$route.query.city : this.$store.state.cityId
+        // eslint-disable-next-line no-ternary
+        const cityId = this.$route.query.city ? this.$route.query.city : this.$store.state.cityId
+        // eslint-disable-next-line no-ternary
         this.currentCity = this.citys.find(val => val.areaId === cityId) ? cityId : 0
       })
     },
@@ -203,7 +205,7 @@ export default {
         }
         setTimeout(() => {
           this.bubbleDown()
-        }, 200)
+        }, 50)
       }, 4000)
     },
     // 切换城市
@@ -674,11 +676,10 @@ $bg-map: (
   }
 }
 @keyframes bubble{
-  0% {}
-  5% {
+  0% {
     transform: translateY(30px);
   }
-  25% {
+  20% {
     transform: translateY(0);
     opacity: 1;
   }
