@@ -275,11 +275,13 @@ export default {
 			this.navigation[this.navIndex].active = false
 			this.navigation[index].active = true
 			this.navIndex = index
+			this[`${item.tab}Data`]['page'] = 1
 			this.getLists(item)
 		},
 		barClick(item, index, list) {
 			let data = this.navigation[this.navIndex]
 			list.map((v, i, arr) => v.active = index === i ? true : false)
+			this[`${data.tab}Data`]['page'] = 1
 			this.getInterviewRedDotInfo().then(() => this[data.api]())
 		},
 		getLists(item) {
@@ -307,7 +309,7 @@ export default {
 			let { query } = this.$route
 			let navIndex = Number(query.navIndex)
 			let navItem = this.navigation[navIndex]
-			let callback = () => {
+			let initPage = () => {
 				navItem = this.navigation[0]
 				navItem.active = true
 				if(query.page) {
@@ -315,7 +317,7 @@ export default {
 				}
 				this.getLists(navItem)
 			}
-			let callback2 = () => {
+			let callback = () => {
 				switch(navIndex) {
 					case 0:
 						this.applyScreen.map(v => v.active = v.value === query.tab ? true : false)
@@ -334,13 +336,13 @@ export default {
 				if(navItem) {
 					navItem.active = true
 					this.navIndex = navIndex
-					callback2()
+					callback()
 					this.getLists(navItem)
 				} else {
-					callback()
+					initPage()
 				}
 			} else {
-				callback()
+				initPage()
 			}
 		}
 	},
