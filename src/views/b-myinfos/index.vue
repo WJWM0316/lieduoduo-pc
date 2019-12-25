@@ -39,7 +39,11 @@
       <el-form-item prop="wechat" label="微信号"><el-input v-model="form.wechat" placeholder="请写微信号" /></el-form-item>
       <el-form-item prop="signature" label="个人签名"><el-input type="textarea" v-model="form.signature" placeholder="用一句话介绍你自己吧~" /></el-form-item>
       <el-form-item prop="labels" label="个人标签">
-        <!-- <el-input v-model="form.labels" placeholder="请选择个人标签" /> -->
+        <select-self-label
+          style="self-label-wrapper"
+          title="个人标签"
+          v-model="form.labels"
+          :limit="6" />
       </el-form-item>
       <el-form-item prop="brief" label="个人简介">
         <el-input
@@ -57,9 +61,10 @@
 <script>
 import Picture from 'COMPONENTS/common/upload/picture'
 import SelectPositionType from 'COMPONENTS/selectPositionType'
+import SelectSelfLabel from './components/selectSelfLabel'
 import { getRecruiter } from '@/api/recruiter'
 export default {
-  components: { Picture, SelectPositionType },
+  components: { Picture, SelectPositionType, SelectSelfLabel },
   data () {
     return {
       avatarLoading: false,
@@ -112,8 +117,9 @@ export default {
         })
       })
     },
-    handleChangeAvatar () {
-
+    handleChangeAvatar (item) {
+      this.form.attachId = item[0].id
+      this.form.avatarUrl = item[0].middleUrl
     },
     selectedPosition () {
 
@@ -184,7 +190,7 @@ export default {
 }
 .el-form-infos {
   padding-top: 48px;
-  .el-input, .el-textarea, .position-type  {
+  .el-input, .el-textarea, .position-type, .self-label-wrapper  {
     width: 382px;
   }
 }
