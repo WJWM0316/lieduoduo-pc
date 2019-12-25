@@ -23,7 +23,8 @@
       custom-class="app-dialog"
       append-to-body
       :visible.sync="dialogStatus">
-      <div slot="title">{{'请选择' + title}} <span class="title-tips">(最多选{{limit}}个{{title}})</span></div>
+      <div slot="title">{{'请选择' + title}} <span class="title-tips">({{value.length}}/{{limit}})</span></div>
+      <div class="select-"></div>
     </el-dialog>
   </div>
 </template>
