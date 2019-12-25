@@ -272,7 +272,7 @@ export default {
     top: 13px;
     right: 0;
     width: 1px;
-    background: $barder-color-4;
+    background: $border-color-5;
   }
   .el-autocomplete {
     width: 640px;
