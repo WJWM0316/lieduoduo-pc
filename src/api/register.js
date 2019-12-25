@@ -216,7 +216,7 @@ export const addPositionAddressApi = (data, hasLoading) => {
       host: 'zhaopin'
     },
     method: 'put',
-    url: `/company/position/address`,
+    url: '/company/position/address',
     params: data,
     hasLoading: true
   })
@@ -273,17 +273,13 @@ export const deleteCompanyAddressApi = (data, hasLoading) => {
 }
 
 // 获取公司地址列表
-export const getCompanyAddressListApi = (data, hasLoading) => {
-  const id = data.id
-  delete data.id
+export const getCompanyAddressListApi = (id) => {
   return request({
     config: {
       host: 'zhaopin'
     },
     method: 'get',
-    url: `/company/addresslist/${id}`,
-    params: data,
-    hasLoading: true
+    url: `/company/addresslist/${id}`
   })
 }
 
@@ -294,7 +290,7 @@ export const getPositionAddressListApi = (data, hasLoading) => {
       host: 'zhaopin'
     },
     method: 'get',
-    url: `/company/position/simplepage/addresses`,
+    url: '/company/position/simplepage/addresses',
     params: data,
     hasLoading: true
   })
@@ -327,15 +323,13 @@ export const getPositionAddressDetailApi = (data, hasLoading) => {
 }
 
 // 获取公司地址详情
-export const getCompanyAddressDetailApi = (data, hasLoading) => {
+export const getCompanyAddressDetailApi = (id) => {
   return request({
     config: {
       host: 'zhaopin'
     },
     method: 'get',
-    url: `/company/address/${data.id}`,
-    params: data,
-    hasLoading: true
+    url: `/company/address/${id}`
   })
 }
 
@@ -411,7 +405,7 @@ export const getCompanyIdentityInfosApi = (data) => {
       host: 'zhaopin'
     },
     method: 'get',
-    url: `/company/identity`,
+    url: '/company/identity',
     params: data,
     hasLoading: true
   })
@@ -424,7 +418,7 @@ export const editCompanyIdentityInfosApi = (data, hasLoading) => {
       host: 'zhaopin'
     },
     method: 'put',
-    url: `/company/identity`,
+    url: '/company/identity',
     params: data,
     hasLoading: true
   })
@@ -437,7 +431,7 @@ export const editIdentityJoinApi = (data, hasLoading) => {
       host: 'zhaopin'
     },
     method: 'put',
-    url: `/company/joinidentity`,
+    url: '/company/joinidentity',
     params: data,
     hasLoading: true
   })
@@ -463,7 +457,7 @@ export const getCompanyNameListApi = (data, hasLoading) => {
       host: 'zhaopin'
     },
     method: 'get',
-    url: `/search/company_name`,
+    url: '/search/company_name',
     params: data,
     hasLoading: true
   })
@@ -489,7 +483,7 @@ export const sendEmailApi = (data, hasLoading) => {
       host: 'zhaopin'
     },
     method: 'post',
-    url: `/company/new_mail`,
+    url: '/company/new_mail',
     params: data,
     hasLoading: true
   })
@@ -502,7 +496,7 @@ export const sendEnterpriseEmailApi = (data, hasLoading) => {
       host: 'zhaopin'
     },
     method: 'post',
-    url: `/company/companyMail`,
+    url: '/company/companyMail',
     params: data,
     hasLoading: true
   })
@@ -515,7 +509,7 @@ export const verifyEnterpriseEmailApi = (data, hasLoading) => {
       host: 'zhaopin'
     },
     method: 'post',
-    url: `/company/verifyCompanyMail`,
+    url: '/company/verifyCompanyMail',
     params: data,
     hasLoading: true
   })
@@ -528,7 +522,7 @@ export const verifyEmailApi = (data, hasLoading) => {
       host: 'zhaopin'
     },
     method: 'post',
-    url: `/company/new_verify`,
+    url: '/company/new_verify',
     params: data,
     hasLoading: true
   })
@@ -590,7 +584,7 @@ export const notifyadminApi = (data) => {
     config: {
       host: 'zhaopin'
     },
-    url: `/company/notifyadmin`,
+    url: '/company/notifyadmin',
     method: 'get',
     params: data,
     hasLoading: false
