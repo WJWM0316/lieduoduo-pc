@@ -52,6 +52,23 @@
           style="width: 520px;"
           v-model="form.brief" placeholder="请描述你的个人经历或成就，字数范围：6-5000字" />
       </el-form-item>
+      <div class="form-intro">
+        <el-popover
+          placement="bottom-start"
+          popper-class="form-intro-popover"
+          width= "520"
+          trigger="click">
+          <div class="intros-wrapper">
+            <ul class="intro-titles">
+              <template v-for="(intro, index) in intros">
+                <li :key="intro.name" :class="{active: index === introIndex}" @click="introContent = intro.intro; introIndex = index">{{intro.name}}</li>
+              </template>
+            </ul>
+            <div class="warpper-scroll intro-content">{{introContent}}</div>
+          </div>
+          <p class="form-intro-tips" slot="reference"><i class="iconfont icon-yulan" /> 看看别人怎么写</p>
+        </el-popover>
+      </div>
       <el-form-item>
         <el-button style="width: 120px;" type="primary" :loading="saveLoading" @click="handleSave">保存</el-button>
       </el-form-item>
@@ -63,6 +80,7 @@ import Picture from 'COMPONENTS/common/upload/picture'
 import SelectPositionType from 'COMPONENTS/selectPositionType'
 import SelectSelfLabel from './components/selectSelfLabel'
 import { getRecruiter, setRecruiter } from '@/api/recruiter'
+import { CompanyIntro } from '@/config/vars'
 export default {
   components: { Picture, SelectPositionType, SelectSelfLabel },
   data () {
@@ -91,11 +109,15 @@ export default {
         position: [{ required: true, message: '请填写担任职务', trigger: 'blur' }],
         email: [{ required: true, message: '请填写公司邮箱', trigger: 'blur' }],
         labels: [{ required: true, type: 'array', message: '请选择个人标签', trigger: 'change' }]
-      }
+      },
+      intros: CompanyIntro,
+      introIndex: 0,
+      introContent: ''
     }
   },
   created () {
     this.getInfos()
+    this.introContent = this.intros[0].intro
   },
   methods: {
     // 获取招聘信息
@@ -214,6 +236,57 @@ export default {
   padding-top: 48px;
   .el-input, .el-textarea, .position-type, .self-label-wrapper  {
     width: 382px;
+  }
+}
+.form-intro {
+  margin-left: 110px;
+  margin-bottom: 50px;
+  .form-intro-tips {
+    color: $main-color-1;
+    line-height:22px;
+    font-size: 12px;
+    display: inline-block;
+    i {
+      font-size: 12px;
+    }
+  }
+}
+</style>
+<style lang="scss">
+.form-intro-popover {
+  padding: 0;
+  .intros-wrapper {
+    border-radius:4px;
+    padding-top: 6px;
+    position: relative;
+  }
+  ul {
+    background-color: $bg-color-1;
+  }
+  li {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 0px 14px;
+    height: 30px;
+    line-height: 30px;
+    color: $title-color-3;
+    font-size: 12px;
+    cursor: pointer;
+  }
+  li:hover {
+    background-color: $bg-color-5;
+  }
+  li.active {
+    background-color: $bg-color-4;
+    color: #fff;
+  }
+  .intro-content {
+    height: 114px;
+    overflow-y: auto;
+    font-size: 12px;
+    line-height:18px;
+    padding: 12px 14px;
+    color: $title-color-1;
   }
 }
 </style>
