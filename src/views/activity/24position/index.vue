@@ -124,7 +124,7 @@ export default {
       await getActivityCity().then(({ data }) => {
         this.citys = data.data.cityList || []
         // eslint-disable-next-line no-ternary
-        const cityId = this.$route.query.city ? this.$route.query.city : this.$store.state.cityId
+        const cityId = this.$route.query.city ? +this.$route.query.city : this.$store.state.cityId
         // eslint-disable-next-line no-ternary
         this.currentCity = this.citys.find(val => val.areaId === cityId) ? cityId : 0
       })
