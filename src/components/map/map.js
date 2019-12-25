@@ -8,6 +8,10 @@ import { TMap } from '../../util/TMap.js'
   props: {
     componyId: {
       type: Number
+    },
+    keywords: {
+      type: String,
+      default: '北京市天安门广场'
     }
   }
 })
@@ -21,7 +25,7 @@ export default class mapSearch extends Vue {
   markers = [] // 当前查询回来的地址信息数组
   nowResults = [] // 当前搜索地址的结果列表
   nowPosiInfo = '' // 当前地址信息
-  keyword = '北京市天安门广场' // 搜索地址关键词
+  keyword = this.keywords// 搜索地址关键词
   doorplate = ''
 
   /* 地址数据 */

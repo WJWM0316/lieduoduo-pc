@@ -59,7 +59,11 @@
             </div>
         </div>
     </div>
-    <my-material v-if="materialShow === '编辑公司'" :information="information"></my-material>
+    <my-material
+    v-if="materialShow === '编辑公司'"
+    :information="information"
+    @click="toEdit">
+    </my-material>
 </div>
 </template>
 
@@ -73,17 +77,17 @@ import myMaterial from './myMaterial'
 import { companyDetailApi } from '@/api/company'
 
 @Component({
-    name: 'myCompany',
-    computed: {
-        // ...mapGetters([
-        //     'userInfo'
-        // ])
-    },
-    components: {
-        companyProductList,
-        myMaterial,
-        noFound
-    }
+  name: 'myCompany',
+  computed: {
+    // ...mapGetters([
+    //     'userInfo'
+    // ])
+  },
+  components: {
+    companyProductList,
+    myMaterial,
+    noFound
+  }
 })
 export default class myCompany extends Vue {
     materialShow = '公司主页'
@@ -92,44 +96,43 @@ export default class myCompany extends Vue {
     transformWidth = 1
     information = {}
     mounted () {
-        this.companyDetail()
+      this.companyDetail()
     }
     toEdit (type) {
-        this.materialShow = type
+      this.materialShow = type
     }
     companyDetail () {
-        companyDetailApi()
-            .then(res => {
-                let data = res.data.data
-                if (!data.website.startsWith('http', 4)) {
-                    data.website = 'http://' + data.website
-                }
-                data.product.forEach((item, index) => {
-                    if (!item.siteUrl.startsWith('http', 4)) {
-                        data.product[index].siteUrl = 'http://' + data.product[index].siteUrl
-                    }
-                })
-                data.financing = parseInt(data.financing)
-                data.employees = parseInt(data.employees)
-                this.information = data
-            })
+      companyDetailApi()
+        .then(res => {
+          let data = res.data.data
+          if (!data.website.startsWith('http', 4)) {
+            data.website = 'http://' + data.website
+          }
+          data.product.forEach((item, index) => {
+            if (!item.siteUrl.startsWith('http', 4)) {
+              data.product[index].siteUrl = 'http://' + data.product[index].siteUrl
+            }
+          })
+          data.financing = parseInt(data.financing)
+          data.employees = parseInt(data.employees)
+          this.information = data
+        })
     }
     clickBnt (displacement) {
-        if (displacement === 'left') {
-            this.transformAnimation(1)
-        } else {
-            this.transformAnimation(-1)
-        }
-        
+      if (displacement === 'left') {
+        this.transformAnimation(1)
+      } else {
+        this.transformAnimation(-1)
+      }
     }
     transformAnimation (value) {
-        console.log(Math.abs(this.transformWidth) / 100)
-        if (Math.abs(this.transformWidth) / 100 === 0) return
-        this.transformWidth += value
-        this.$refs.companySurroundingsWrap.style.transform = `translate3d(${this.transformWidth}px, 0, 0)`
-        setTimeout((value) => {
-            this.transformAnimation(value)
-        }, 10)
+      console.log(Math.abs(this.transformWidth) / 100)
+      if (Math.abs(this.transformWidth) / 100 === 0) return
+      this.transformWidth += value
+      this.$refs.companySurroundingsWrap.style.transform = `translate3d(${this.transformWidth}px, 0, 0)`
+      setTimeout((value) => {
+        this.transformAnimation(value)
+      }, 10)
     }
 }
 </script>
