@@ -95,7 +95,7 @@ export default {
     color: $main-color-1;
   }
   .position-pay {
-    color: $error-color-1;
+    color: $warning-color-1;
     font-weight: bold;
   }
   .position-active {

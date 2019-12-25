@@ -298,7 +298,7 @@ export default {
     color: $title-color-2;
   }
   .check-span {
-    color: $error-color-1;
+    color: $warning-color-1;
   }
 }
 .label-item {

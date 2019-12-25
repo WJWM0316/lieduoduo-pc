@@ -142,7 +142,7 @@ export default {
   color: $title-color-3;
   font-size: 12px;
   em {
-    color: $font-color-14;
+    color: $error-color-1;
   }
 }
 .avatar-wrapper {

@@ -312,7 +312,7 @@ $position-process-bg-color: #99e7e8;
     color: $main-color-1;
   }
   .list-pay {
-    color: $error-color-1;
+    color: $warning-color-1;
     font-size: 20px;
     font-weight: bold;
     padding-left: 14px;

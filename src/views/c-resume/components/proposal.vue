@@ -271,7 +271,7 @@ export default {
   }
   span.salary {
     padding-left: 12px;
-    color: $error-color-1;
+    color: $warning-color-1;
   }
 }
 .proposal-warpper {

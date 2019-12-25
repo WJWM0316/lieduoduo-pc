@@ -167,7 +167,7 @@ export default {
   }
   .list-pay {
     margin: 8px 0;
-    color: $error-color-1;
+    color: $warning-color-1;
     font-size: 18px;
     font-weight: 600;
   }
