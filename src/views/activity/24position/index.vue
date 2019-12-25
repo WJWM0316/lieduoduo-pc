@@ -15,7 +15,7 @@
       </div>
       <div class="main-center">
         <div class="header-24-banner">
-          <img src="../../../assets/images/activity/24h/24h_banner.png" alt="">
+          <img :src="$cdnPath + '/images/24h_banner.png'" alt="">
         </div>
         <div class="header-24h-keywords">
           <div>精选年薪20W+职位</div>
@@ -61,11 +61,11 @@
     <!-- 底部分享 -->
     <div class="position-bottom">
       <div class="position-bottom-header">
-        <img src="../../../assets/images/activity/24h/footer_title.png"  />
+        <img src="../../../assets/images/activity/24h/24h_footer_title.png"  />
         <p>更多酷公司已加入24小时极速面试</p>
       </div>
       <div class="position-bottom-logo" style="width: 764px">
-        <img src="../../../assets/images/activity/24h/footer_logo.png"  />
+        <img :src="$cdnPath + '/images/24h_footer_logo.png'"  />
       </div>
       <div class="position-bottom-qrcode">
         <img :src="appQrcodeUrl" alt="">
@@ -270,23 +270,23 @@ export default {
 <style lang="scss" scoped>
 $page-bg-color: #0B1538;
 $gradient-map: (
-  0: url('../../../assets/images/activity/24h/star_blue.png') linear-gradient(140deg,rgba(32,193,243,1) 0%,rgba(71,115,196,1) 100%),
-  1: url('../../../assets/images/activity/24h/star_green.png') linear-gradient(140deg,rgba(188,246,179,1) 0%,rgba(22,193,164,1) 100%),
-  2: url('../../../assets/images/activity/24h/star_orange.png') linear-gradient(137deg,rgba(255,203,159,1) 0%,rgba(255,142,156,1) 100%),
-  3: url('../../../assets/images/activity/24h/star_yelow.png') linear-gradient(140deg,rgba(247,211,101,1) 0%,rgba(252,170,127,1) 100%),
-  4: url('../../../assets/images/activity/24h/star_pick.png') linear-gradient(140deg,rgba(158,194,255,1) 0%,rgba(244,142,198,1) 100%),
-  5: url('../../../assets/images/activity/24h/star_purple.png') linear-gradient(137deg,rgba(93,157,214,1) 0%,rgba(108,129,214,1) 49%,rgba(124,99,215,1) 100%),
-  6: url('../../../assets/images/activity/24h/star_blue.png') linear-gradient(140deg,rgba(32,193,243,1) 0%,rgba(71,115,196,1) 100%),
-  7: url('../../../assets/images/activity/24h/star_green.png') linear-gradient(140deg,rgba(188,246,179,1) 0%,rgba(22,193,164,1) 100%),
+  0: url('../../../assets/images/activity/24h/24h_star_blue.png') linear-gradient(140deg,rgba(32,193,243,1) 0%,rgba(71,115,196,1) 100%),
+  1: url('../../../assets/images/activity/24h/24h_star_green.png') linear-gradient(140deg,rgba(188,246,179,1) 0%,rgba(22,193,164,1) 100%),
+  2: url('../../../assets/images/activity/24h/24h_star_orange.png') linear-gradient(137deg,rgba(255,203,159,1) 0%,rgba(255,142,156,1) 100%),
+  3: url('../../../assets/images/activity/24h/24h_star_yelow.png') linear-gradient(140deg,rgba(247,211,101,1) 0%,rgba(252,170,127,1) 100%),
+  4: url('../../../assets/images/activity/24h/24h_star_pick.png') linear-gradient(140deg,rgba(158,194,255,1) 0%,rgba(244,142,198,1) 100%),
+  5: url('../../../assets/images/activity/24h/24h_star_purple.png') linear-gradient(137deg,rgba(93,157,214,1) 0%,rgba(108,129,214,1) 49%,rgba(124,99,215,1) 100%),
+  6: url('../../../assets/images/activity/24h/24h_star_blue.png') linear-gradient(140deg,rgba(32,193,243,1) 0%,rgba(71,115,196,1) 100%),
+  7: url('../../../assets/images/activity/24h/24h_star_green.png') linear-gradient(140deg,rgba(188,246,179,1) 0%,rgba(22,193,164,1) 100%),
 );
 $bg-map: (
-  0: url('../../../assets/images/activity/24h/24h_bg1.png'),
-  1: url('../../../assets/images/activity/24h/24h_bg2.png'),
-  2: url('../../../assets/images/activity/24h/24h_bg3.png'),
-  3: url('../../../assets/images/activity/24h/24h_bg4.png'),
-  4: url('../../../assets/images/activity/24h/24h_bg5.png'),
-  5: url('../../../assets/images/activity/24h/24h_bg6.png'),
-  6: url('../../../assets/images/activity/24h/24h_bg_end.png')
+  0: url(#{$image-cdn-url}/images/24h_bg1.png),
+  1: url(#{$image-cdn-url}/images/24h_bg2.png),
+  2: url(#{$image-cdn-url}/images/24h_bg3.png),
+  3: url(#{$image-cdn-url}/images/24h_bg4.png),
+  4: url(#{$image-cdn-url}/images/24h_bg5.png),
+  5: url(#{$image-cdn-url}/images/24h_bg6.png),
+  6: url(#{$image-cdn-url}/images/24h_bg_end.png)
 );
 .position-24h {
   background-color: $page-bg-color;
@@ -309,7 +309,7 @@ $bg-map: (
   }
 }
 .bg-24h-images .division {
-  background-image: url('../../../assets/images/activity/24h/stars.png');
+  background-image: url(#{$image-cdn-url}/images/24h_stars.png);
   background-repeat: repeat;
   background-position: 0 0;
   background-size: auto auto;
@@ -341,7 +341,7 @@ $bg-map: (
     &::after {
       top: 400px;
       left: -100px;
-      background-image: url('../../../assets/images/activity/24h/ufo.png');
+      background-image: url(#{$image-cdn-url}/images/24h_ufo.png);
     }
   }
   .position-item-wrapper:nth-child(2n) {
@@ -349,7 +349,7 @@ $bg-map: (
       top: inherit;
       bottom: -200px;
       left: 200px;
-      background-image: url('../../../assets/images/activity/24h/star.png');
+      background-image: url(#{$image-cdn-url}/images/24h_star.png);
     }
   }
   .position-item-wrapper:nth-child(3n) {
@@ -358,7 +358,7 @@ $bg-map: (
       left: inherit;
       bottom: -226px;
       right: 0px;
-      background-image: url('../../../assets/images/activity/24h/rocket.png');
+      background-image: url('../../../assets/images/activity/24h/24h_rocket.png');
     }
   }
 }
@@ -375,7 +375,7 @@ $bg-map: (
 .position-first-content {
   position: relative;
   height: 486px;
-  background: url('../../../assets/images/activity/24h/24h_bg_banner.png') no-repeat;
+  background: url(#{$image-cdn-url}/images/24h_bg_banner.png) no-repeat;
   background-position: top center;
   .main-center {
     position: relative;
@@ -398,6 +398,7 @@ $bg-map: (
 }
 .header-24-banner {
   width: 685px;
+  height: 215px;
   text-align: center;
   padding: 97px 0 20px;
   margin: 0 auto;
@@ -517,12 +518,12 @@ $bg-map: (
     z-index: -1;
   }
   .position-nav-top-image {
-    background-image: url('../../../assets/images/activity/24h/nav_top.png');
+    background-image: url('../../../assets/images/activity/24h/24h_nav_top.png');
     top: -28px;
     left: 20px;
   }
    .position-nav-end-image {
-      background-image: url('../../../assets/images/activity/24h/nav_end.png');
+      background-image: url('../../../assets/images/activity/24h/24h_nav_end.png');
       bottom: -10px;
       left: -20px;
    }
@@ -638,7 +639,7 @@ $bg-map: (
     width: 13px;
     height: 13px;
     background-size: cover;
-    background-image: url('../../../assets/images/activity/24h/icon_footer.png');
+    background-image: url('../../../assets/images/activity/24h/24h_icon_footer.png');
     background-repeat: no-repeat;
   }
   &::after,&::before {
@@ -653,14 +654,14 @@ $bg-map: (
     top: -23px;
     left: -38px;
     background-size: 100% auto;
-    background-image: url('../../../assets/images/activity/24h/nav_top.png');
+    background-image: url('../../../assets/images/activity/24h/24h_nav_top.png');
   }
   &::after {
     width: 145px;
     height: 106px;
     bottom: -39px;
     right: -117px;
-    background-image: url('../../../assets/images/activity/24h/rocket.png');
+    background-image: url('../../../assets/images/activity/24h/24h_rocket.png');
   }
 }
 @for $i from 1 through 8 {
