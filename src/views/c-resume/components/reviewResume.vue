@@ -229,7 +229,7 @@ export default {
     }
     .icon-xiazai {
       font-size: 14px;
-      color: $font-color-12;
+      color: $font-color-10;
     }
   }
   .download-popover-list + .download-popover-list {

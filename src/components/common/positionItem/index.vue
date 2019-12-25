@@ -129,7 +129,7 @@ export default {
     .iconfont {
       font-size: 14px;
       padding-right: 6px;
-      color: $font-color-12;
+      color: $font-color-10;
     }
   }
 }

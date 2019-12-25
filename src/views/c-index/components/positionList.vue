@@ -179,7 +179,7 @@ export default {
     .iconfont {
       font-size: 12px;
       padding-right: 3px;
-      color: $font-color-12;
+      color: $font-color-10;
     }
     span + span {
       margin-left: 22px;

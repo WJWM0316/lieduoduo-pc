@@ -90,7 +90,7 @@ export default {
 .resume-file-header {
   display: flex;
   .resume-file-remove {
-    color: $font-color-12;
+    color: $font-color-10;
     font-size: 14px;
     margin-left: auto;
     cursor: pointer;

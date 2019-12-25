@@ -222,7 +222,7 @@ export default {
     margin-left: 64px;
     text-align: right;
     span {
-      color: $font-color-12;
+      color: $font-color-10;
       font-size: 16px;
       cursor: pointer;
     }

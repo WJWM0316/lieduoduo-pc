@@ -393,7 +393,7 @@ $image-wrapper: 112px;
     line-height: 1;
   }
   i.iconfont {
-    color: $font-color-12;
+    color: $font-color-10;
     font-size: 14px;
     padding-right: 8px;
     vertical-align: middle;

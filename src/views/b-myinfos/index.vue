@@ -7,7 +7,7 @@
     </div>
     <p class="app-infos-tips">加"<em>*</em>"号的内容，是必须填写的项目；姓名和性别为招聘官认证信息，修改请联系 400-065-5788</p>
     <el-form :model="form" :rules="formRules" label-width="110px" class="el-form-infos">
-      <el-form-item prop="attachIds" label="头像">
+      <el-form-item prop="attachId" label="头像">
         <Picture
           :value.sync="form.avatarUrl"
           attach-type="avatar"
@@ -64,7 +64,8 @@ export default {
     return {
       avatarLoading: false,
       form: {
-        attachIds: null, // 头像附件ids
+        attachId: null, // 头像附件ids
+        avatarUrl: '',
         name: '', // 真实姓名
         gender: '', // 性别，未知0，男1，女2
         position: '', // 担任职务
@@ -77,7 +78,7 @@ export default {
         labels: [] // 个人标签
       },
       formRules: {
-        attachIds: [{ required: true, type: 'number', message: '请上传头像', trigger: 'blur' }],
+        attachId: [{ required: true, type: 'number', message: '请上传头像', trigger: 'blur' }],
         name: [{ required: true, message: '请填写真实姓名', trigger: 'blur' }],
         gender: [{ required: true, message: '请选择性别', trigger: 'blur' }],
         positionTypeId: [{ required: true, message: '请选择担任职位类型', trigger: 'blur' }],
@@ -96,7 +97,8 @@ export default {
       getRecruiter().then(({ data }) => {
         const recruiter = data.data || {}
         Object.assign(this.form, {
-          attachIds: null,
+          attachId: recruiter.avatarId,
+          avatarUrl: recruiter.avatar && recruiter.avatar.middleUrl,
           name: recruiter.name,
           gender: recruiter.gender,
           genderName: recruiter.gender === 1 ? '男' : '女',

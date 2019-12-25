@@ -327,7 +327,7 @@ $position-process-bg-color: #99e7e8;
     .iconfont {
       font-size: 14px;
       padding-right: 3px;
-      color: $font-color-12;
+      color: $font-color-10;
     }
   }
   .list-details {
