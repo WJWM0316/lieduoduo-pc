@@ -52,10 +52,11 @@
           style="width: 520px;"
           v-model="form.brief" placeholder="请描述你的个人经历或成就，字数范围：6-5000字" />
       </el-form-item>
-      <div class="form-intro">
+      <div class="form-intro" :style="{height: isShowPover ? '174px' : 'auto'}">
         <el-popover
           placement="bottom-start"
           popper-class="form-intro-popover"
+          v-model="isShowPover"
           width= "520"
           trigger="click">
           <div class="intros-wrapper">
@@ -87,6 +88,7 @@ export default {
     return {
       avatarLoading: false,
       saveLoading: false,
+      isShowPover: false,
       form: {
         attachId: null, // 头像附件ids
         avatarUrl: '',
@@ -255,6 +257,11 @@ export default {
 <style lang="scss">
 .form-intro-popover {
   padding: 0;
+  box-shadow: none;
+  border: 1px solid $border-color-1;
+  .popper__arrow  {
+    border-bottom-color: $border-color-1 !important;
+  }
   .intros-wrapper {
     border-radius:4px;
     padding-top: 6px;
