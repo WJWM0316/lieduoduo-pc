@@ -176,12 +176,11 @@ div.el-message {
 }
 
 /** el tag */
-.el-select__tags .el-tag.el-tag--info .el-tag__close{
-  color: #fff;
-}
-.el-select__tags .el-tag.el-tag--info .el-tag__close:hover {
-  color: #fff;
-  background-color: #BCBEC0;
+.el-select__tags, .custom__tags {
+  .el-tag.el-tag--info .el-tag__close, .el-tag.el-tag--info .el-tag__close:hover {
+    color: #fff;
+    background-color: #BCBEC0;
+  }
 }
 
 /**el cascader*/

@@ -6,7 +6,7 @@
       <el-button type="primary"> <i class="iconfont icon-fenxiang"></i> 分享主页</el-button>
     </div>
     <p class="app-infos-tips">加"<em>*</em>"号的内容，是必须填写的项目；姓名和性别为招聘官认证信息，修改请联系 400-065-5788</p>
-    <el-form :model="form" :rules="formRules" label-width="110px" class="el-form-infos">
+    <el-form :model="form" ref="form" :rules="formRules" label-width="110px" class="el-form-infos">
       <el-form-item prop="attachId" label="头像">
         <Picture
           :value.sync="form.avatarUrl"
@@ -40,7 +40,7 @@
       <el-form-item prop="signature" label="个人签名"><el-input type="textarea" v-model="form.signature" placeholder="用一句话介绍你自己吧~" /></el-form-item>
       <el-form-item prop="labels" label="个人标签">
         <select-self-label
-          style="self-label-wrapper"
+          class="self-label-wrapper"
           title="个人标签"
           v-model="form.labels"
           :limit="6" />
@@ -53,7 +53,7 @@
           v-model="form.brief" placeholder="请描述你的个人经历或成就，字数范围：6-5000字" />
       </el-form-item>
       <el-form-item>
-        <el-button style="width: 120px;" type="primary">保存</el-button>
+        <el-button style="width: 120px;" type="primary" :loading="saveLoading" @click="handleSave">保存</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -62,12 +62,13 @@
 import Picture from 'COMPONENTS/common/upload/picture'
 import SelectPositionType from 'COMPONENTS/selectPositionType'
 import SelectSelfLabel from './components/selectSelfLabel'
-import { getRecruiter } from '@/api/recruiter'
+import { getRecruiter, setRecruiter } from '@/api/recruiter'
 export default {
   components: { Picture, SelectPositionType, SelectSelfLabel },
   data () {
     return {
       avatarLoading: false,
+      saveLoading: false,
       form: {
         attachId: null, // 头像附件ids
         avatarUrl: '',
@@ -101,8 +102,13 @@ export default {
     getInfos () {
       getRecruiter().then(({ data }) => {
         const recruiter = data.data || {}
+        const labels = recruiter.personalizedLabels || []
         Object.assign(this.form, {
-          attachId: recruiter.avatarId,
+          attachId: +recruiter.avatarId,
+          labels: labels.map(val => {
+            val.name = val.labelName
+            return val
+          }),
           avatarUrl: recruiter.avatar && recruiter.avatar.middleUrl,
           name: recruiter.name,
           gender: recruiter.gender,
@@ -121,8 +127,24 @@ export default {
       this.form.attachId = item[0].id
       this.form.avatarUrl = item[0].middleUrl
     },
-    selectedPosition () {
-
+    selectedPosition (item) {
+      this.form.positionTypeId = item.labelId
+      this.form.positionType = item.name
+    },
+    handleSave () {
+      this.$refs.form.validate(valid => {
+        if (valid) {
+          this.saveLoading = true
+          setRecruiter(this.form).then(({ data }) => {
+            this.saveLoading = false
+            if (data.httpStatus === 200) {
+              this.$message.success('保存成功！')
+            }
+          }).catch(() => {
+            this.saveLoading = true
+          })
+        }
+      })
     }
   }
 }

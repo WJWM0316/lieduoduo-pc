@@ -16,3 +16,27 @@ export const setRecruiter = data => request({
   params: data,
   config: { host: 'zhaopin' }
 })
+
+// 获取生活标签
+export const getLifeLabels = data => request({
+  url: '/label/life',
+  method: 'get',
+  params: data,
+  config: { host: 'zhaopin' }
+})
+
+// 获取职业技能- （职业技能，职业素养）
+export const getSkillLabels = data => request({
+  url: '/label/professionalSkills',
+  method: 'get',
+  params: data,
+  config: { host: 'zhaopin' }
+})
+
+// 创建生活标签 - 自定义标签
+export const addLifeLabels = data => request({
+  url: '/label/life',
+  method: 'post',
+  params: data,
+  config: { host: 'zhaopin' }
+})
