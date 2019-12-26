@@ -7,7 +7,7 @@
             <div class="product-text">
                 <div class="product-title">
                     <p>{{ item.productName }}</p>
-                    <i class="iconfont icon-bianji"></i>
+                    <i @click="toEditProduct(item)" class="iconfont icon-bianji"></i>
                 </div>
                 <p class="product-slogan">{{ item.slogan }}</p>
                 <block-overflow class="product-lightspot" :text="item.lightspot"></block-overflow>
@@ -20,15 +20,22 @@
 <script>
 import blockOverflow from '@/components/common/blockOverflow'
 export default {
-    props: {
-        product: {
-            type: Array,
-            default: () => []
-        }
-    },
-    components: {
-        blockOverflow
+  props: {
+    product: {
+      type: Array,
+      default: () => ([])
     }
+  },
+  components: {
+    blockOverflow
+  },
+  methods: {
+    toEditProduct (item) {
+      this.$emit('toEditProduct', item)
+      let type = '编辑产品'
+      this.$emit('click', type)
+    }
+  }
 }
 </script>
 

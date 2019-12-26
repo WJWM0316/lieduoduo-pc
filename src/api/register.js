@@ -184,15 +184,14 @@ export const JustifyCompanyExistApi = (data, hasLoading) => {
 }
 
 // 编辑公司相册
-export const editCompanyAlbumApi = (data, hasLoading) => {
+export const editCompanyAlbumApi = data => {
   return request({
     config: {
       host: 'zhaopin'
     },
     method: 'put',
     url: `/company/album/${data.id}`,
-    params: data,
-    hasLoading: true
+    params: data
   })
 }
 

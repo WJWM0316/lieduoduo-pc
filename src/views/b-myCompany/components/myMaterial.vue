@@ -7,27 +7,26 @@
         <div class="from">
             <el-form v-model="from" :rules="rules" label-width="100px">
                 <el-form-item prop="img" label="公司logo：">
-					<div class="Picture-wrap">
-						<Picture
-						:value.sync="middleUrl"
-						attach-type="avatar"
-						:cropper="true"
-						cropperRadius="8px"
-						cropper-radius="8px"
-						@before="avatarLoading = true"
-						@fail="avatarLoading = false"
-                        @change="pictureInformation"
-						v-loading="avatarLoading">
-						<div class="avatar-wrapper">
-							<div class="avatar">
-							<img :src="middleUrl" />
-							<span class="iconfont icon-xiangji"></span>
-							</div>
-						</div>
-						</Picture>
-					</div>
-
-				</el-form-item>
+                  <div class="Picture-wrap">
+                    <Picture
+                    :value.sync="middleUrl"
+                    attach-type="avatar"
+                    :cropper="true"
+                    cropperRadius="8px"
+                    cropper-radius="8px"
+                    @before="avatarLoading = true"
+                    @fail="avatarLoading = false"
+                    @change="pictureInformation"
+                    v-loading="avatarLoading">
+                    <div class="avatar-wrapper">
+                      <div class="avatar">
+                      <img :src="middleUrl" />
+                      <span class="iconfont icon-xiangji"></span>
+                      </div>
+                    </div>
+                    </Picture>
+                  </div>
+                </el-form-item>
                 <el-form-item prop="company_name" label="公司全称："><el-input disabled v-model="from.company_name"></el-input></el-form-item>
                 <el-form-item prop="company_shortname" label="公司简称："><el-input disabled v-model="from.company_shortname"></el-input></el-form-item>
                 <el-form-item prop="industry" label="所属行业："><el-input disabled v-model="from.industry"></el-input></el-form-item>
@@ -51,23 +50,23 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="公司官网："><el-input v-model="from.website"></el-input></el-form-item>
+                <el-form-item label="公司官网："><el-input placeholder="请输入公司官网" v-model="from.website"></el-input></el-form-item>
                 <el-form-item prop="intro" label="公司介绍：">
-                    <el-input type="textarea" v-model="from.intro"></el-input>
+                    <el-input type="textarea" placeholder="请输入公司介绍" v-model="from.intro"></el-input>
                 </el-form-item>
-				<el-form-item label="公司图片：">
-                    <div class="Picture-wrap-more">
-						<Picture
-                        class="cresume-upload-wrapper"
-                        :value.sync="albumInfo"
-                        :multiple="true"
-                        :showTipText="true"
-                        :size="20"
-                        @change="pictureAlbumInfo"
-                        :limit="20" />
-					</div>
+                <el-form-item label="公司图片：">
+                  <div class="Picture-wrap-more">
+                  <Picture
+                    class="cresume-upload-wrapper"
+                    :value.sync="albumInfo"
+                    :multiple="true"
+                    :showTipText="true"
+                    :size="20"
+                    @change="pictureAlbumInfo"
+                    :limit="20" />
+                  </div>
                 </el-form-item>
-				<el-form-item label="公司地址：">
+                <el-form-item label="公司地址：">
                     <p class="address">
                         <span @click="increaseAddress">+</span>
                         <pre @click="increaseAddress">点击添加公司地址</pre>
@@ -77,11 +76,11 @@
                         <pre @click="editAddress(index)">{{item.address + '&nbsp;' + item.doorplate}}</pre>
                     </p>
                 </el-form-item>
-				<div class="foot">
-					<el-button type="primary" @click="submit">保存</el-button>
-					<el-button type="default" @click="cancel">取消</el-button>
-				</div>
-			</el-form>
+                <div class="foot">
+                  <el-button type="primary" @click="submit">保存</el-button>
+                  <el-button type="default" @click="cancel">取消</el-button>
+                </div>
+              </el-form>
         </div>
         <Map
             :componyId="from.id"
@@ -105,8 +104,8 @@ import {
   delCompanyAddressApi
 } from '@/api/company'
 import {
-  getCompanyAddressDetailApi,
-  getCompanyAddressListApi
+  getCompanyAddressListApi,
+  editCompanyAlbumApi
 } from '@/api/register'
 
 export default {
@@ -131,8 +130,8 @@ export default {
         company_name: [{ required: true, message: '请输入公司全称', trigger: 'blur' }],
         company_shortname: [{ required: true, message: '请输入公司简称', trigger: 'blur' }],
         industry: [{ required: true, message: '请输入所属行业', trigger: 'blur' }],
-        financing: [{ required: true, message: '请选择融资阶段', trigger: 'blur' }],
-        employees: [{ required: true, message: '请选择公司规模', trigger: 'blur' }],
+        financing: [{ required: true, message: '请选择融资阶段', trigger: 'change' }],
+        employees: [{ required: true, message: '请选择公司规模', trigger: 'change' }],
         intro: [{ required: true, message: '请输入公司介绍', trigger: 'blur' }]
       },
       avatarLoading: false,
@@ -143,7 +142,7 @@ export default {
         industry: this.information.industry,
         industry_id: this.information.industryId,
         financing: this.information.financing,
-        logo: this.information.id,
+        logo: this.information.logoInfo.id,
         employees: this.information.employees,
         business_license: this.information.businessLicense,
         website: this.information.website,
@@ -170,7 +169,33 @@ export default {
         this.$emit('click', type)
       })
     },
-    submit () {},
+    submit () {
+      if (this.from.website === '' || this.from.albumInfo || this.from.address) {
+        this.$confirm('温馨提示', '完善全部信息，可以提高公司的曝光与排名，是否继续完善?', {
+          confirmButtonText: '继续完善',
+          cancelButtonText: '直接保存',
+          type: 'warning',
+          center: true
+        }).catch(() => {
+          let data = this.from
+          editCompanyApi(this.from.id, data).then()
+          let dataAlbumInfo
+          this.albumInfo.map((item, index) => {
+            if (index === this.albumInfo.length) return
+            dataAlbumInfo = item.id + ',' + dataAlbumInfo
+          })
+          console.log(dataAlbumInfo)
+          //   editCompanyAlbumApi()
+          let type = '公司主页'
+          this.$emit('click', type)
+        })
+      } else {
+        let data = this.from
+        editCompanyApi(this.from.id, data).then()
+        let type = '公司主页'
+        this.$emit('click', type)
+      }
+    },
     receiveAddAdress (data) { // 地图回调
       if (this.mapIndex === 100) { // 判断是添加还是编辑 100 是添加
         data.data = JSON.parse(JSON.stringify(data.data).replace(/area_id/g, 'areaName'))
@@ -208,6 +233,7 @@ export default {
     },
     pictureInformation (item) { // 拿到头像回调id
       this.from.logo = item[0].id
+      this.middleUrl = item[0].middleUrl
     },
     pictureAlbumInfo (item) { // 拿到公司图片回调数组
       this.albumInfo = item
@@ -239,19 +265,22 @@ export default {
 }
 
 .myMaterial-head-text{
-	font-size: 12px;
-	color: $font-color-9;
-	font-weight: 400;
+  font-size: 12px;
+  color: $font-color-9;
+  font-weight: 400;
 }
 .myMaterial-head-title{
-	color: $font-color-2;
-	font-size: 24px;
-	line-height: 32px;
-	font-weight: 500;
-	margin-top: 8px;
+  color: $font-color-2;
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 500;
+  margin-top: 8px;
+}
+.from{
+  margin-top: 48px;
 }
 .Picture-wrap{
-	width: 68px;
+  width: 68px;
 }
 .avatar-wrapper {
   width: 68px;
@@ -314,21 +343,15 @@ export default {
     background: $error-color-1 !important;
 }
 .foot{
-	margin-left: 100px;
-	margin-top: 50px;
+  margin-left: 100px;
+  margin-top: 50px;
 }
 .cresume-upload-wrapper /deep/ .common-list li {
   width: 88px;
   height: 88px;
 }
-.cresume-upload-wrapper /deep/ .common-list li:nth-child(7n){
-  margin-right: 0;
-}
 </style>
 <style>
-.myMaterial .el-form{
-    margin-top: 48px;
-}
 .from input{
     width: 382px;
 }
@@ -337,16 +360,16 @@ export default {
     height: 140px;
 }
 .from .el-form-item{
-	margin-bottom: 30px;
+  margin-bottom: 30px;
 }
 .from .el-form-item__label::before{
     color: #F45322 !important;
 }
 .from .el-form-item__content{
-	width: calc(100%-100px);
+  width: calc(100%-100px);
 }
 .from .foot button{
-	width: 120px;
-	height: 40px;
+  width: 120px;
+  height: 40px;
 }
 </style>
