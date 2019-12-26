@@ -97,6 +97,7 @@ export default {
   created () {
     this.getlist()
     this.baiduTj()
+    this.$router.push({ query: { cc: 'themeMC' } })
   },
   methods: {
     // 列表
