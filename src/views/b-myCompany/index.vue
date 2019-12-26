@@ -3,11 +3,14 @@
     <div class="my-company" v-if="materialShow === '公司主页'">
         <div class="companyInformation">
             <div class="companyInformation-head">
-                <img class="avatar" v-if="information.logoInfo" :src="information.logoInfo.middleUrl"/>
+                <div class="avatar">
+                    <img v-if="information.logoInfo" :src="information.logoInfo.middleUrl"/>
+                </div>
                 <div class="companyInformation-head-button">
                     <el-button type="text"><i class="iconfont icon-fenxiang"></i> 分享</el-button>
-                    <el-button type="text" @click="toEdit('编辑公司')"><i class="iconfont icon-bianji"></i> 编辑</el-button>
+                    <el-button  type="text" @click="toEdit('编辑公司')"><i class="iconfont icon-bianji"></i> 编辑</el-button>
                 </div>
+                <!-- v-if="isCompanyAdmin" -->
             </div>
             <p class="companyTitle">{{information.companyName}}</p>
             <p class="companyIndustry">{{information.companyShortname}} | {{information.industry}} | {{information.financingInfo}} | {{information.employeesInfo}}</p>
@@ -49,9 +52,9 @@
         <div class="companyProduct">
             <div class="companyProduct-head">
                 <p>公司产品</p>
-                <el-button type="text"><i class="iconfont icon-tianjia-"></i>添加产品</el-button>
+                <el-button type="text" @click="toEdit('编辑产品')"><i class="iconfont icon-tianjia-"></i>添加产品</el-button>
             </div>
-            <company-productList :product="information.product"></company-productList>
+            <company-productList @click="toEdit" @toEditProduct="toEditProduct" :product="information.product"></company-productList>
             <div v-if="!information.product" class="noFound">
                 <no-found tipText='尚未添加公司产品' imageUrl='/img/fly.26a25d51.png'>
                     <el-button type="primary">去添加</el-button>
@@ -64,6 +67,11 @@
     :information="information"
     @click="toEdit">
     </my-material>
+    <Edit-product
+    v-if="materialShow === '编辑产品'"
+    :currentProduct="currentProduct"
+    @click="toEdit">
+    </Edit-product>
 </div>
 </template>
 
@@ -72,21 +80,23 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import companyProductList from './components/companyProductList'
 import noFound from '@/components/noFound'
-import myMaterial from './myMaterial'
+import myMaterial from './components/myMaterial'
+import EditProduct from './components/EditProduct'
 
 import { companyDetailApi } from '@/api/company'
 
 @Component({
   name: 'myCompany',
   computed: {
-    // ...mapGetters([
-    //     'userInfo'
-    // ])
+    ...mapState({
+      isCompanyAdmin: state => state.roleInfos.isCompanyAdmin
+    })
   },
   components: {
     companyProductList,
     myMaterial,
-    noFound
+    noFound,
+    EditProduct
   }
 })
 export default class myCompany extends Vue {
@@ -95,6 +105,16 @@ export default class myCompany extends Vue {
     bntRightShow = true
     transformWidth = 1
     information = {}
+    currentProduct = {
+      id: '',
+      productName: '',
+      siteUrl: '',
+      slogan: '',
+      lightspot: '',
+      logoInfo: {
+        middleUrl: ''
+      }
+    }
     mounted () {
       this.companyDetail()
     }
@@ -117,6 +137,9 @@ export default class myCompany extends Vue {
           data.employees = parseInt(data.employees)
           this.information = data
         })
+    }
+    toEditProduct (item) { // 从产品列表拿到回调参数
+      this.currentProduct = item
     }
     clickBnt (displacement) {
       if (displacement === 'left') {
@@ -165,7 +188,7 @@ export default class myCompany extends Vue {
         @include flex-v-center;
         @include flex-justify-between;
         .avatar{
-            width: 90px;
+            @include img-radius(90px, 90px, 8px);
         }
         .companyInformation-head-button{
             button{
@@ -278,6 +301,9 @@ export default class myCompany extends Vue {
     .companyProduct-head{
         margin-top: 64px;
         @include flex-justify-between;
+        i{
+            margin-right: 10px;
+        }
         p{
             height: 100%;
             font-weight: 700;
