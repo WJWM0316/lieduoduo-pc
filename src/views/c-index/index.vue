@@ -6,7 +6,7 @@
         <li><i class="iconfont icon-rencai"></i> 专注互联网高端才人发展</li>
         <li><i class="iconfont icon-qiuzhiyixiang"></i> 优选年薪20W+高薪机会</li>
         <li><i class="iconfont icon-fuwu"></i> 求职顾问1V1免费辅导服务</li>
-        <li><i class="iconfont icon-yuebossmiantan"></i> 直接与BOSS约面对面沟通</li>
+        <li><i class="iconfont icon-yuebossmiantan"></i> 直接约BOSS面对面沟通</li>
       </ul>
     </div>
     <search-wrapper  :banner="loginBannerList"></search-wrapper>
