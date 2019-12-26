@@ -126,7 +126,7 @@ export default {
         // eslint-disable-next-line no-ternary
         const cityId = this.$route.query.city ? +this.$route.query.city : this.$store.state.cityId
         // eslint-disable-next-line no-ternary
-        this.currentCity = this.citys.find(val => val.areaId === cityId) ? cityId : 0
+        this.currentCity = this.citys.find(val => val.areaId === cityId) ? cityId : this.citys[0].areaId
       })
     },
     getLists () {
