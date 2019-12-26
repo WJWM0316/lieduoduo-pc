@@ -7,8 +7,8 @@
                     <img v-if="information.logoInfo" :src="information.logoInfo.middleUrl"/>
                 </div>
                 <div class="companyInformation-head-button">
-                    <el-button type="text"><i class="iconfont icon-fenxiang"></i> 分享</el-button>
-                    <el-button  type="text" @click="toEdit('编辑公司')"><i class="iconfont icon-bianji"></i> 编辑</el-button>
+                    <el-button type="text" @click="toShare()"><i class="iconfont icon-fenxiang"></i> 分享</el-button>
+                    <el-button type="text" @click="toEdit('编辑公司')"><i class="iconfont icon-bianji"></i> 编辑</el-button>
                 </div>
                 <!-- v-if="isCompanyAdmin" -->
             </div>
@@ -65,13 +65,18 @@
     <my-material
     v-if="materialShow === '编辑公司'"
     :information="information"
+    @save="companyDetail"
     @click="toEdit">
     </my-material>
     <Edit-product
     v-if="materialShow === '编辑产品'"
     :currentProduct="currentProduct"
+    :companyid="information.id"
     @click="toEdit">
     </Edit-product>
+    <sharePopup
+    :id="information.id"
+    :showSharePopup="showSharePopup"></sharePopup>
 </div>
 </template>
 
@@ -82,6 +87,7 @@ import companyProductList from './components/companyProductList'
 import noFound from '@/components/noFound'
 import myMaterial from './components/myMaterial'
 import EditProduct from './components/EditProduct'
+import sharePopup from '@/components/common/sharePopup/index'
 
 import { companyDetailApi } from '@/api/company'
 
@@ -96,7 +102,8 @@ import { companyDetailApi } from '@/api/company'
     companyProductList,
     myMaterial,
     noFound,
-    EditProduct
+    EditProduct,
+    sharePopup
   }
 })
 export default class myCompany extends Vue {
@@ -105,6 +112,7 @@ export default class myCompany extends Vue {
     bntRightShow = true
     transformWidth = 1
     information = {}
+    showSharePopup = false
     currentProduct = {
       id: '',
       productName: '',
@@ -118,6 +126,9 @@ export default class myCompany extends Vue {
     mounted () {
       this.companyDetail()
     }
+    toShare () {
+      this.showSharePopup = !this.showSharePopup
+    }
     toEdit (type) {
       this.materialShow = type
     }
@@ -125,11 +136,11 @@ export default class myCompany extends Vue {
       companyDetailApi()
         .then(res => {
           let data = res.data.data
-          if (!data.website.startsWith('http', 4)) {
+          if (!data.website.startsWith('http') && data.website) {
             data.website = 'http://' + data.website
           }
           data.product.forEach((item, index) => {
-            if (!item.siteUrl.startsWith('http', 4)) {
+            if (!item.siteUrl.startsWith('http') && item.siteUrl) {
               data.product[index].siteUrl = 'http://' + data.product[index].siteUrl
             }
           })

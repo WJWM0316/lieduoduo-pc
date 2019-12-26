@@ -177,24 +177,31 @@ export default {
           type: 'warning',
           center: true
         }).catch(() => {
-          let data = this.from
-          editCompanyApi(this.from.id, data).then()
-          let dataAlbumInfo
-          this.albumInfo.map((item, index) => {
-            if (index === this.albumInfo.length) return
-            dataAlbumInfo = item.id + ',' + dataAlbumInfo
-          })
-          console.log(dataAlbumInfo)
-          //   editCompanyAlbumApi()
-          let type = '公司主页'
-          this.$emit('click', type)
+          this.saveEditCompany()
         })
       } else {
-        let data = this.from
-        editCompanyApi(this.from.id, data).then()
-        let type = '公司主页'
-        this.$emit('click', type)
+        this.saveEditCompany()
       }
+    },
+    saveEditCompany () { // 提交
+      let data = this.from
+      editCompanyApi(this.from.id, data).then()
+      let dataAlbumInfo = []
+      this.albumInfo.forEach((item, index) => {
+        if (index === this.albumInfo.length) return
+        dataAlbumInfo.push(item.id)
+      })
+      dataAlbumInfo = dataAlbumInfo.join(',')
+      let datas = { images: dataAlbumInfo }
+
+      editCompanyAlbumApi(this.from.id, datas).then(res => {
+        this.$message.success('保存成功！')
+      }).catch(res => {
+        this.$message.error('保存失败！')
+      })
+      this.$emit('save') // 刷新父组件数据
+      let type = '公司主页'
+      this.$emit('click', type)
     },
     receiveAddAdress (data) { // 地图回调
       if (this.mapIndex === 100) { // 判断是添加还是编辑 100 是添加
