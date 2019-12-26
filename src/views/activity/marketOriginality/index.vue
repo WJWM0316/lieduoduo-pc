@@ -11,16 +11,16 @@
   <div class="fourth-bg">
     <div class="enterprise clearfix">
       <div class="clearfix" id="company_recruit-Market">
-      <div class="item" :key="i" v-for="(item, i) in companylist" @click.stop="givethumbsup(item)">
+      <div class="item" :key="i" v-for="(item, i) in companylist">
         <div class="logo">
-          <div class="img">
+          <div class="img" @click="tocompanydetail(item)">
             <img :src="item.companyLogoInfo.smallUrl" alt="">
           </div>
-          <div class="number" v-if="item.isHotFavored">
+          <div class="number" v-if="item.isHotFavored" @click.stop="givethumbsup(item)">
             <img :src="cdnPath + 'fire.png'" alt="">
             <span>{{item.hotFavorCount}}</span>
           </div>
-          <div class="nozan">
+          <div class="nozan" @click.stop="givethumbsup(item)">
             <div class="semicircle">
               <img :src="cdnPath + 'fire.png'" alt="">
             </div>
@@ -123,6 +123,17 @@ export default {
             this.getlist()
           })
         }
+      }
+    },
+    tocompanydetail (data) {
+      if (!getAccessToken()) {
+        this.$refs.loginPop.showLoginPop = true
+      } else {
+        let routeData = this.$router.resolve({
+          path: 'company/details',
+          query: { vkey: data.vkey }
+        })
+        window.open(routeData.href, '_blank')
       }
     },
     topositiondetail (data) {
