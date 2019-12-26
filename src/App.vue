@@ -29,9 +29,11 @@ export default class APP extends Vue {
         this.$store.dispatch('getMyResume')
       }
       if (res.data.data.isRecruiter) {
+        // 身份认证信息
         perfectauthDetail().then((res) => {
           this.$store.commit('setRecruiterinfo', res.data.data)
         })
+        // 招聘官信息
       }
       this.$store.commit('setRoleInfos', res.data.data)
     })

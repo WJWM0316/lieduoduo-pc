@@ -12,6 +12,7 @@ import resume from './modules/resume'
 import company from './modules/company'
 import redDot from './modules/redDot'
 import interview from './modules/interview'
+import recruiter from './modules/recruit'
 
 Vue.use(Vuex)
 
@@ -235,6 +236,7 @@ export default new Vuex.Store({
           // 获取简历信息
           store.dispatch('getMyResume')
         }
+
         if (result.isRecruiter) {
           perfectauthDetail().then((res) => {
             store.commit('setRecruiterinfo', res.data.data)
@@ -248,12 +250,10 @@ export default new Vuex.Store({
           store.commit('LOGOUT', data)
           // 在C端页面退登
           if (data.curPage === 1) {
-						
-						
             if (router.history.current.name === 'cresume') {
               router.replace({ path: '/index' })
             } else {
-              window.location.href = window.location.href
+              window.location.href = location.href
             }
           } else {
             router.replace({ path: '/login', query: { type: 'msgLogin' } })
@@ -270,6 +270,7 @@ export default new Vuex.Store({
     resume,
     company,
     redDot,
-    interview
+    interview,
+    recruiter
   }
 })

@@ -107,6 +107,22 @@ const recruiter = [
     ]
   },
   {
+    path: '/recruiteam',
+    title: '招聘团队',
+    component: Layout,
+    meta: {
+      useNav: true,
+      icon: 'iconfont icon-zhaopintuandui'
+    },
+    children: [
+      {
+        path: '',
+        name: 'recruiteam',
+        component: resolve => require(['../views/b-recruit-team/index.vue'], resolve)
+      }
+    ]
+  },
+  {
     path: '/issueRule',
     name: 'issueRule',
     title: '发布规则',
