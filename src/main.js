@@ -7,6 +7,7 @@ import 'normalize.css'
 import './util'
 import './eleui'
 import './filters'
+import './directive/directive'
 
 Vue.config.productionTip = false
 Vue.prototype.$cdnPath = process.env.VUE_APP_CDN_PATH
