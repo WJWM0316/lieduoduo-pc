@@ -76,7 +76,8 @@ import {
   // CascaderPanel,
   Loading,
   MessageBox,
-  Message
+  Message,
+  InfiniteScroll
   // Notification
 } from 'element-ui'
 
@@ -154,6 +155,8 @@ Vue.use(Calendar)
 // Vue.use(PageHeader);
 // Vue.use(CascaderPanel);
 
+// console.log(InfiniteScroll)
+Vue.use(InfiniteScroll)
 Vue.use(Loading.directive)
 
 Vue.prototype.$loading = Loading.service

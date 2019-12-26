@@ -43,6 +43,14 @@ export const getListApi = data => request({
   config: { host: 'qiuzhi' }
 })
 
+// b端获取职位列表
+export const getBtremListApi = data => request({
+  url: '/position/list',
+  method: 'get',
+  params: data,
+  config: { host: 'zhaopin' }
+})
+
 // 当前招聘官职位搜索列表（只返回招聘官自己的职位）
 export const getMyListApi = data => request({
   url: '/position/mylist',
