@@ -8,7 +8,7 @@ import { mp_qrcode, wx_qrcode, app_qrcode } from 'IMAGES/image'
       return ['putIn'].includes(this.$route.name)
     },
     isShow () {
-      return !['position24h'].includes(this.$route.name)
+      return !['position24h', 'marketOriginality'].includes(this.$route.name)
     }
   },
   methods: {
