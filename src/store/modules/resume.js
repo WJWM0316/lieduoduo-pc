@@ -12,9 +12,11 @@ export default {
   getters: {},
   mutations: {
     // 设置我的简历信息
-    setMyResume (state, data) {
-      state.myResume = data.data
-      state.isFourResume = data.code
+    setMyResume (state, payload) {
+      const { res, status } = payload
+      state.myResume = res.data
+      state.isFourResume = res.code
+      state.loaded = status
     },
     // 设置简历表单状态
     setEditStatus (state, { status, propClass }) {
@@ -46,8 +48,7 @@ export default {
       return new Promise((reslove) => {
         getMyResumeApi().then(({ data }) => {
           const res = data || {}
-          store.commit('setMyResume', res)
-          store.commit('setLoaded', data.httpStatus === 200)
+          store.commit('setMyResume', { res, status: data.httpStatus === 200 })
           reslove(res)
         }).catch(() => {
           store.commit('setLoaded', false)
