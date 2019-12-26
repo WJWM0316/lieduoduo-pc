@@ -4,7 +4,7 @@
       <!-- <a target="_blank" href="https://h5.lieduoduo.com/delicate" class="li-item" data-com="北京旷视科技有限公司">
         <img src="~@/assets/random_images/img01.png" alt="loading">
       </a> -->
-      <a target="_blank" href="https://h5.lieduoduo.com/wantYou" class="li-item">
+      <!-- <a target="_blank" href="https://h5.lieduoduo.com/wantYou" class="li-item">
         <img src="~@/assets/random_images/img02.jpg" alt="loading">
       </a>
       <router-link target="_blank" :to="{name: 'companyDetail', query: { vkey: 'dcrjn1kv' }}" class="li-item li-item1">
@@ -15,6 +15,9 @@
       </router-link>
       <router-link target="_blank" :to="{name: 'companyDetail', query: { vkey: 'enbqgvgx' }}" class="li-item li-item2">
         <img src="~@/assets/random_images/2.jpeg" alt="loading">
+      </router-link> -->
+      <router-link target="_blank" :to="{name: 'marketOriginality', query: { cc: 'themeMC' }}" class="li-item list-item-left">
+        <img src="~@/assets/random_images/active.png" alt="loading">
       </router-link>
 
     </div>
@@ -60,6 +63,9 @@
     .li-item2, .li-item3 {
       width:252px;
       height:108px;
+    }
+    .li-item.list-item-left {
+      height: 100%;
     }
   }
   .random-right-banner {
