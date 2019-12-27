@@ -131,7 +131,7 @@ export default {
         this.$refs.loginPop.showLoginPop = true
       } else {
         let routeData = this.$router.resolve({
-          path: 'company/details',
+          name: 'companyDetail',
           query: { vkey: data.vkey }
         })
         window.open(routeData.href, '_blank')

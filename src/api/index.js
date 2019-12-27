@@ -17,6 +17,9 @@ export const request = ({ url, method, params = {}, config = {} }) => {
   if (params && params.globalLoading) counter++
   if (counter === 1) loadingInstance = Loading.service({})
 
+  // 默认统计参数
+  axios.defaults.headers.common['Channel-Code'] = 'source_web'
+
   // 添加统计头部
   // let urlParams = new URLSearchParams(location.search)
   let urlParams = Util.getUrlParam('cc')
