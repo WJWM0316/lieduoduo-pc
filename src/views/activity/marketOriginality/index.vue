@@ -1,6 +1,17 @@
 <template>
 <div class="originality">
   <div class="first-bg">
+    <div class="wxshare">
+    <el-popover
+      placement="top"
+      popper-class="position-24h-share-wechat"
+      :width="100">
+      <img style="max-width:100%; max-height:100%" :src="cdnPath + 'originality.jpg'" alt="">
+      <div class="header-wechat-shart"  slot="reference">
+        <i class="iconfont icon-weixin"></i> 微信分享
+      </div>
+    </el-popover>
+    </div>
   </div>
   <div class="second-bg"></div>
   <div class="third-bg">
@@ -95,6 +106,7 @@ export default {
     }
   },
   created () {
+    console.log(this.cdnPath + 'originality.jpg')
     this.getlist()
     this.baiduTj()
     this.$router.push({ query: { cc: 'themeMC' } })
@@ -439,5 +451,33 @@ export default {
     }
   }
 }
+.wxshare{
+  width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  font-size: 12px;
+  i{
+    font-size: 12px;
+  }
+}
+.header-wechat-shart {
+  position: absolute;
+  background: rgba( #fff, 0.2);
+  color: #fff;
+  border-radius: 4px;
+  right: 0;
+  top: 52px;
+  padding: 7px 20px;
+  cursor: pointer;
+}
 </style>
+<style>
+.position-24h-share-wechat.el-popper {
+  min-width: 105px;
+  height: 105px;
+  padding: 5px;
+  box-sizing: border-box;
+}
+</style>
+
 
