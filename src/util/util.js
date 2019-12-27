@@ -44,6 +44,7 @@ class Util {
       path,
       query
     }
+    query.q= Date.now()
     if (replace) {
       this.$router.replace(newRoute)
     } else {

@@ -40,3 +40,11 @@ export const setUnPassApply = data => request({
   params: data,
   config: { host: 'zhaopin' }
 })
+
+// 获取招聘官列表
+export const getApplyCount = data => request({
+  url: '/applyjoin/list_num',
+  method: 'get',
+  params: data,
+  config: { host: 'zhaopin' }
+})

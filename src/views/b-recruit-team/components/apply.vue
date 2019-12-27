@@ -11,7 +11,7 @@
           <li
             :key="item.value"
             @click="handleChangeTab(item)"
-            :class="{active: item.value === currentValue}">{{item.name}}({{item.number}})</li>
+            :class="{active: item.value === currentValue, 'b-reddot': item.isdot}">{{item.name}}({{item.number}})</li>
         </template>
       </ul>
     </div>
@@ -51,7 +51,12 @@ import { getApplylist, setPassApply, setUnPassApply } from '@/api/recruitTeam'
 import NoFound from '@/components/noFound'
 export default {
   props: {
-    visible: Boolean
+    visible: Boolean,
+    count: {
+      type: Object,
+      default: () => ({})
+    },
+    reddot: Boolean
   },
   components: { NoFound },
   data () {
@@ -105,7 +110,6 @@ export default {
       }).then(() => {
         if (type === 'pass') {
           setPassApply({ id: list.id }).then(({ data }) => {
-            console.log(data, data.data)
             const { code, httpStatus } = data || {}
             if (code === 402 && httpStatus === 200) {
               this.$alert('该招聘官已加入其他公司无需处理审核。', '温馨提示', {
@@ -116,6 +120,8 @@ export default {
               return
             }
             if (httpStatus === 200) {
+              this.$emit('operate', -1, true)
+              this.tabs[0].number -= 1
               this.lists.splice(index, 1)
             }
           }).catch((err) => {
@@ -131,6 +137,8 @@ export default {
           setUnPassApply({ id: list.id }).then(({ data }) => {
             const { httpStatus } = data || {}
             if (httpStatus === 200) {
+              this.$emit('operate', -1)
+              this.tabs[0].number -= 1
               this.lists.splice(index, 1)
             }
           })
@@ -142,10 +150,12 @@ export default {
       this.total = 0
       this.lists = []
       this.params.page = 1
+      if (this.reddot) this.tabs[0].isdot = false
       this.getApplys()
     },
     handleClose () {
       this.$emit('update:visible', false)
+      this.$emit('close')
     },
     share () {
       this.$emit('share', { uid: this.$store.state.recruiter.info.uid, childrenType: true })
@@ -156,6 +166,10 @@ export default {
       if (value) {
         this.dialogStatus = true
         this.getApplys()
+        this.tabs[0].number = this.count.apply
+        this.tabs[0].isdot = this.reddot
+        this.tabs[1].number = this.count.pass
+        this.tabs[2].number = this.count.unpass
       } else {
         this.currentValue = 0
         this.total = 0
@@ -179,6 +193,7 @@ export default {
     border-bottom: 2px solid transparent;
     padding-bottom: 10px;
     cursor: pointer;
+    position: relative;
   }
   li + li {
     margin-left: 30px;
@@ -190,6 +205,16 @@ export default {
     border-color: $border-color-2;
     color: $main-color-1;
     font-weight: bold;
+  }
+  .b-reddot::after {
+    content: "";
+    top: 0;
+    right: -10px;
+    position: absolute;
+    width:6px;
+    height:6px;
+    background: $error-color-1;
+    border-radius: 50%;
   }
 }
 .apply-lists {

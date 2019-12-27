@@ -4,7 +4,7 @@
     <div class="rec-team-header">
       <h1>招聘官团队</h1>
       <el-badge :is-dot="reddot">
-        <el-button type="primary" @click="applyDialog = true">招聘申请（{{applyNumber}}）</el-button>
+        <el-button type="primary" @click="applyDialog = true">招聘申请（{{count.apply}}）</el-button>
       </el-badge>
     </div>
     <div class="recruit-lists">
@@ -30,13 +30,19 @@
     <!-- 职位列表 -->
     <position-list :visible.sync="positionDialog" :recurit="currentRecruit" />
     <!-- 申请列表 -->
-    <apply-list :visible.sync="applyDialog" @share="handleShowShare" />
+    <apply-list
+      :visible.sync="applyDialog"
+      @close="hanldeApplyClose"
+      @share="handleShowShare"
+      @operate="handleSetApply"
+      :count="count"
+      :reddot="reddot"/>
     <!-- 分享弹窗 -->
     <share-popup :visible.sync="showSharePopup" :type="showSharePopupType" :data="currentSharePopup"/>
   </div>
 </template>
 <script>
-import { getTeamRecruiters, getApplyReddot } from '@/api/recruitTeam'
+import { getTeamRecruiters, getApplyReddot, getApplyCount } from '@/api/recruitTeam'
 import SharePopup from '@/components/common/sharePopup'
 import PositionList from './components/list'
 import ApplyList from './components/apply'
@@ -57,7 +63,11 @@ export default {
       disabledScroll: false,
       showSharePopup: false,
       reddot: false,
-      applyNumber: 0,
+      count: {
+        apply: 0,
+        pass: 0,
+        unpass: 0
+      },
       showSharePopupType: 'recruiter',
       currentSharePopup: {}
     }
@@ -69,6 +79,7 @@ export default {
     ])
   },
   created () {
+    this.getCounts()
     this.getreddots()
   },
   methods: {
@@ -94,12 +105,22 @@ export default {
       this.currentRecruit = item
       this.positionDialog = true
     },
-    // 获取红点数量和组件
+    // 获取红点
     getreddots () {
       getApplyReddot().then(({ data }) => {
-        const { applyAuditBarNum, applyAuditBar } = data.data
+        const { applyAuditBar } = data.data
         this.reddot = Boolean(applyAuditBar || 0)
-        this.applyNumber = applyAuditBarNum || 0
+      })
+    },
+    // 获取数量
+    getCounts () {
+      getApplyCount().then(({ data }) => {
+        const counts = data.data || {}
+        Object.assign(this.count, {
+          apply: counts.auditNum,
+          pass: counts.auditPassNum,
+          unpass: counts.auditFailNum
+        })
       })
     },
     handleShowShare (item) {
@@ -110,6 +131,21 @@ export default {
         this.showSharePopupType = 'invite'
       }
       this.showSharePopup = true
+    },
+    // 刷新红点状态
+    hanldeApplyClose () {
+      // 红点
+      this.getreddots()
+      // 更新数量
+      this.getCounts()
+    },
+    // 审核招聘官
+    handleSetApply (number, isReload = false) {
+      this.count.apply += number
+      if (isReload) {
+        this.lists = []
+        this.getDatas()
+      }
     }
   },
   watch: {
@@ -196,6 +232,7 @@ export default {
     color: $title-color-3;
   }
   .recruit-share {
+    cursor: pointer;
     flex: 3;
     color: $main-color-1;
   }

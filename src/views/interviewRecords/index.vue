@@ -57,7 +57,6 @@
             <el-badge is-dot :hidden="vo.redDot === 0">
             </el-badge>
           </div>
-          
           <div class="bloCont">
             <div class="cont_left">
               <div class="leftMsg">
@@ -730,7 +729,7 @@ import { getdeleteInterviewTabRedDotApi,
   deleteScheduleTabRedDotApi
 } from '@/api/candidate'
 import { putCollectUserApi, cancelCollectUserApi } from 'API/collect'
-import { recruiterDetail, createonlinepdf, createonlineword } from 'API/common'
+import { createonlinepdf, createonlineword } from 'API/common'
 import MapSearch from 'COMPONENTS/map'
 import DynamicRecord from '../candidateType/dynamicrecord.vue'
 export default {
@@ -748,6 +747,12 @@ export default {
         this.hasonload = false
       }
     }
+  },
+  computed: {
+    ...mapGetters([
+      'recruiterIsAdmin',
+      'recruitDataCompanyId'
+    ])
   },
   data () {
     return {
@@ -901,7 +906,6 @@ export default {
           arr[0].cur = true
         }
         this.tablist = arr
-        console.log(this.tablist)
         if (arr[1] && arr[1].time) {
           this.tabform.time = arr[1].time
           this.gettablist()
@@ -946,9 +950,8 @@ export default {
     tabclick (data) {
       // if (data.time === '') return
       if (data.time !== this.typeCaching.time && this.typeCaching.number > 0) { // 没有新数据就不请求接口， 减少后端并发量
-        deleteScheduleTabRedDotApi(this.typeCaching.time)
-        .then(res => {
-          this.getScheduleList()
+        this.getScheduleList()
+        deleteScheduleTabRedDotApi(this.typeCaching.time).then(res => {
           this.$store.dispatch('redDotfun')
         })
       }
@@ -1001,7 +1004,7 @@ export default {
       }
       switch (type) {
         case 'recruiter-chat':
-          if (this.info.isCompanyTopAdmin) {
+          if (this.recruiterIsAdmin) {
             topAdminPositonList().then((res) => {
               let arr = res.data.data
               let hasOnline = []
@@ -1125,7 +1128,7 @@ export default {
               this.model.dateLists = res.data.data.arrangementInfo.appointmentList
             }
 
-            if (this.info.isCompanyTopAdmin) {
+            if (this.recruitDataCompanyId) {
               topAdminPositonList().then((res) => {
                 let arr = res.data.data
                 let hasOnline = []
@@ -1527,10 +1530,9 @@ export default {
         }
         this.showResume = true
         this.getShareResume(resumeId)
-        getdeleteInterviewTabRedDotApi(interview_id)
-        .then(res => {
+        getdeleteInterviewTabRedDotApi(interview_id).then(res => {
           this.$store.dispatch('redDotfun')
-          this.gettablist()
+          // this.gettablist()
         })
       })
     },
@@ -1651,26 +1653,24 @@ export default {
     },
     // 选择地址列表
     selectaddredd () {
-      recruiterDetail().then((res) => {
-        let data = { page: 1, count: 20, company_id: res.data.data.currentCompanyId }
-        addressListApi(data).then((res) => {
-          this.pop = {
-            isShow: true,
-            Interview: true,
-            InterviewTitle: '选择地址',
-            btntext: '发送',
-            type: 'address'
+      let data = { page: 1, count: 20, company_id: this.recruitDataCompanyId }
+      addressListApi(data).then((res) => {
+        this.pop = {
+          isShow: true,
+          Interview: true,
+          InterviewTitle: '选择地址',
+          btntext: '发送',
+          type: 'address'
+        }
+        let arr = res.data.data
+        arr.map((v, k) => {
+          if (this.arrangementInfo.addressId === v.id) {
+            v.cur = true
+          } else {
+            v.cur = false
           }
-          let arr = res.data.data
-          arr.map((v, k) => {
-            if (this.arrangementInfo.addressId === v.id) {
-              v.cur = true
-            } else {
-              v.cur = false
-            }
-          })
-          this.addresslist = arr
         })
+        this.addresslist = arr
       })
     },
     // 点击感觉不错
@@ -1733,11 +1733,6 @@ export default {
           this.$message.error(err.data.msg)
         })
       }
-    },
-    hasadmin () {
-      recruiterDetail().then((res) => {
-        this.info = res.data.data
-      })
     }
   },
   destroyed () {
@@ -1746,7 +1741,6 @@ export default {
   mounted () {
     this.ManageList()
     this.getScheduleList()
-    this.hasadmin()
   }
 }
 </script>

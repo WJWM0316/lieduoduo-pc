@@ -20,7 +20,8 @@ const mutations = {
 
 const getters = {
   recruitDataCompanyId: state => state.info.currentCompanyId,
-  recruitDataLoaded: state => state.loaded
+  recruitDataLoaded: state => state.loaded,
+  recruiterIsAdmin: state => state.info.isCompanyAdmin
 }
 
 const actions = {
