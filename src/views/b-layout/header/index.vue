@@ -162,7 +162,7 @@ $header-height-1: $page-b-header-height;
 </style>
 <style>
 @media screen and (max-width: 1400px) {
-  .page-header .head-contain {
+  .page-header .page-header-wrapper {
     padding-right: 30px;
   }
 }
