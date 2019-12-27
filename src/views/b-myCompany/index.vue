@@ -75,7 +75,6 @@
     @click="toEdit">
     </Edit-product>
     <sharePopup
-    type="invite"
     :data="information"
     :visible.sync="showSharePopup"></sharePopup>
 </div>

@@ -5,7 +5,7 @@
             <p class="myMaterial-head-text">如“<span>*</span>”号的内容，是必须填写的项目；置灰内容为公司认证信息，修改请联系 400-065-5788</p>
         </div>
         <div class="from">
-            <el-form v-model="from" :rules="rules" label-width="100px">
+            <el-form :model="from" :rules="rules" label-width="100px">
                 <el-form-item prop="img" label="公司logo：">
                   <div class="Picture-wrap">
                     <Picture
