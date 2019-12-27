@@ -64,6 +64,9 @@ export default {
     },
     companyid: {
       type: Number
+    },
+    typeto: {
+      type: String
     }
   },
   data () {
@@ -95,22 +98,17 @@ export default {
     submit () {
       if (this.from.id) { // 根据是否有id来判断是新建产品还是编辑已有产品
         editCompanyProductInfosApi(this.from).then(res => {
-          if (res.httpStatus === 200) {
-            this.$message.success('编辑产品成功！')
-            this.$emit('save') // 刷新父组件数据
-            let type = '公司主页'
-            this.$emit('click', type)
-          }
+          this.$message.success('编辑产品成功！')
+          this.$emit('save') // 刷新父组件数据
+          let type = '公司主页'
+          this.$emit('click', type)
         })
       } else {
         createCompanyProductApi(this.from).then(res => {
-          console.log(res.data.httpStatus)
-          if (res.data.httpStatus === 200) {
-            this.$message.success('创建产品成功！')
-            this.$emit('save') // 刷新父组件数据
-            let type = '公司主页'
-            this.$emit('click', type)
-          }
+          this.$message.success('创建产品成功！')
+          this.$emit('save') // 刷新父组件数据
+          let type = '公司主页'
+          this.$emit('click', type)
         })
       }
     },

@@ -38,25 +38,25 @@
                 <ul v-if="information.address">
                     <li v-for="(item, index) in information.address" :key="index">{{ item.address + '&nbsp;' + item.doorplate }}</li>
                 </ul>
-                <div v-else>尚未添加公司地址<el-button v-if="isCompanyAdmin" type="text">去添加</el-button></div>
+                <div v-else>尚未添加公司地址<el-button @click="toEdit('编辑公司')" v-if="isCompanyAdmin" type="text">去添加</el-button></div>
             </div>
             <div class="companyWebsite">
                 <p class="companyWebsite-title">
                     <i class="iconfont icon-guanwang-"></i>公司官网
                 </p>
                 <a v-if="information.website" :href="information.website" target="_blank">{{information.website}}</a>
-                <div v-else>尚未添加公司官网<el-button v-if="isCompanyAdmin" type="text">去添加</el-button></div>
+                <div v-else>尚未添加公司官网<el-button @click="toEdit('编辑公司')" v-if="isCompanyAdmin" type="text">去添加</el-button></div>
             </div>
         </div>
         <div class="companyProduct">
             <div class="companyProduct-head">
                 <p>公司产品</p>
-                <el-button v-if="isCompanyAdmin" type="text" @click="toEdit('编辑产品')"><i class="iconfont icon-tianjia-"></i>添加产品</el-button>
+                <el-button v-if="isCompanyAdmin" type="text" @click="toEdit('编辑产品', '添加产品')"><i class="iconfont icon-tianjia-"></i>添加产品</el-button>
             </div>
             <company-productList @click="toEdit" @toEditProduct="toEditProduct" :product="information.product"></company-productList>
             <div v-if="!information.product" class="noFound">
                 <no-found tipText='尚未添加公司产品' imageUrl='/img/fly.26a25d51.png'>
-                    <el-button v-if="isCompanyAdmin" type="primary">去添加</el-button>
+                    <el-button v-if="isCompanyAdmin" @click="toEdit('编辑产品')" type="primary">去添加</el-button>
                 </no-found>
             </div>
         </div>
@@ -71,6 +71,7 @@
     v-if="materialShow === '编辑产品'"
     :currentProduct="currentProduct"
     :companyid="information.id"
+    @save="companyDetail"
     @click="toEdit">
     </Edit-product>
     <sharePopup
@@ -129,7 +130,20 @@ export default class myCompany extends Vue {
     toShare () {
       this.showSharePopup = true
     }
-    toEdit (type) {
+    toEdit (type, typeto) { // typeto识别是否新建产品
+      if (typeto) {
+        let currentProduct = {
+          id: '',
+          productName: '',
+          siteUrl: '',
+          slogan: '',
+          lightspot: '',
+          logoInfo: {
+            middleUrl: ''
+          }
+        }
+        Object.assign(this.currentProduct, currentProduct)
+      }
       this.materialShow = type
     }
     companyDetail () {
@@ -150,7 +164,7 @@ export default class myCompany extends Vue {
         })
     }
     toEditProduct (item) { // 从产品列表拿到回调参数
-      this.currentProduct = item
+      Object.assign(this.currentProduct, item)
     }
     clickBnt (displacement) {
       if (displacement === 'left') {
