@@ -4,7 +4,7 @@
     <div class="postion-list">
       <ul>
         <template v-for="item in forepartData">
-          <li class="list-item" :key="item.labelId" @mouseover.self="mouseOverEvent">
+          <li class="list-item" :key="item.id" @mouseover.self="mouseOverEvent">
             <div class="list-item-wrapper">
               <span class="item-title">{{item.name}}</span>
               <div class="item-sub-title">
@@ -29,7 +29,7 @@
         <p class="list-more-tips">显示全部职位</p>
         <ul class="list-more-wrapper">
           <template v-for="item in backendData">
-            <li class="list-item" :key="item.labelId" @mouseover.self="mouseOverEvent">
+            <li class="list-item" :key="item.id" @mouseover.self="mouseOverEvent">
               <div class="list-item-wrapper">
                 <span class="item-title">{{item.name}}</span>
                 <div class="item-sub-title">

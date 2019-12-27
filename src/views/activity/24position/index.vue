@@ -693,6 +693,14 @@ $bg-map: (
     transform: translateY(-30px);
   }
 }
+@media screen and (max-width:  1300px)  {
+  .position-types {
+    right: 0px;
+  }
+  .position-types.fixed-position-citys {
+    margin-right: -600px;
+  }
+}
 </style>
 <style>
 .position-24h-share-wechat.el-popper {
