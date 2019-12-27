@@ -379,4 +379,8 @@ export default {
   width: 120px;
   height: 40px;
 }
+.myMaterial .el-form-item:nth-of-type(1) .el-form-item__label:nth-of-type(1){
+  height: 70px;
+  line-height: 70px;
+}
 </style>

@@ -229,3 +229,9 @@ export default {
   margin-top: 50px;
 }
 </style>
+<style>
+.EditProduct .el-form-item:nth-of-type(1) .el-form-item__label:nth-of-type(1){
+  height: 70px;
+  line-height: 70px;
+}
+</style>
