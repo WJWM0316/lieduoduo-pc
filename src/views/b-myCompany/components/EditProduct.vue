@@ -7,7 +7,7 @@
       </p>
     </div>
     <div class="from">
-      <el-form v-model="from" :rules="rules" label-width="110px">
+      <el-form :model="from" :rules="rules" label-width="110px">
         <el-form-item prop="img" label="公司logo：">
           <div class="Picture-wrap">
             <Picture
@@ -29,7 +29,7 @@
             </Picture>
           </div>
         </el-form-item>
-        <el-form-item prop="productName" label="产品名称："><el-input placeholder="请输入产品名称" v-model="from.product_name"></el-input></el-form-item>
+        <el-form-item prop="product_name" label="产品名称："><el-input placeholder="请输入产品名称" v-model="from.product_name"></el-input></el-form-item>
         <el-form-item label="产品官网："><el-input placeholder="请输入产品官网" v-model="from.site_url"></el-input></el-form-item>
         <el-form-item prop="slogan" label=" 产品slogan："><el-input placeholder="一句话简单介绍公司的产品定位" v-model="from.slogan"></el-input></el-form-item>
         <el-form-item prop="lightspot" label="产品亮点：">
@@ -84,7 +84,7 @@ export default {
       middleUrl: this.currentProduct.logoInfo.middleUrl,
       rules: {
         img: [{ required: true, message: '请上传公司logo', trigger: 'blur' }],
-        productName: [{ required: true, message: '请输入产品名称', trigger: 'blur' }],
+        product_name: [{ required: true, message: '请输入产品名称', trigger: 'blur' }],
         slogan: [{ required: true, message: '请输入产品slogan', trigger: 'blur' }],
         lightspot: [{ required: true, message: '请输入产品亮点', trigger: 'blur' }]
       }
