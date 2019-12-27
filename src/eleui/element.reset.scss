@@ -135,6 +135,14 @@
 .el-message-box .el-message-box__message {
   font-size: 14px;
   color: $title-color-2;
+  p:first-child {
+    padding-left: 6px;
+  }
+}
+.el-message-box.el-message-box--center .el-message-box__message {
+  p:first-child {
+    padding-left: 0px;
+  }
 }
 .el-message-box .el-message-box__btns {
   padding: 52px 40px 30px 0;

@@ -40,7 +40,6 @@
               </div>
               <span slot="reference" @click="handleShowQrCode(item.id)">分享</span>
             </el-popover>
-
           </div>
         </div>
       </template>
@@ -76,17 +75,19 @@ export default {
   },
   methods: {
     loadmore () {
-      if (this.total === 0 || this.disabledScroll) return
+      if (this.getLoading || this.total === 0 || this.disabledScroll) return
       this.params.page++
       this.getList()
     },
     getList () {
+      this.getLoading = true
       getBtremListApi({ ...this.params, recruiter: this.recurit.uid }).then(({ data }) => {
+        this.getLoading = false
         this.lists = this.lists.concat(data.data || [])
         this.total = data.meta.total
         this.disabledScroll = this.params.page * this.params.count >= data.meta.total
       }).catch(() => {
-        //
+        this.getLoading = false
       })
     },
     handleShowQrCode (id) {
