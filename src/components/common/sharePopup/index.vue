@@ -6,10 +6,13 @@
                 <div class="share-guide">{{ text.guide }}</div>
                 <div class="share-imgUrl" :class="{ 'invite-imgUrl': type === 'invite'}">
                     <img v-if="type !== 'invite'" :src="imgUrl"/>
-                    <VueQArt :config="config"></VueQArt>
+                    <div id="qrcode"></div>
                 </div>
-                <div class="invite" v-if="type === 'invite'"></div>
-                <el-button @click="helpPopupShowFun" type="text" class="helpBtn">{{ text.helpTitle }}帮助<i class="iconfont icon-question-circle"></i></el-button>
+                <div class="invite" v-if="type === 'invite'">
+                  <el-input v-model="Url"></el-input>
+                  <el-button type="primary" @click="copyActiveCode($event,Url )">复制</el-button>
+                </div>
+                <el-button @click="helpPopupShowFun" type="text" class="helpBtn">{{ text.helpTitle }}<i class="iconfont icon-question-circle"></i></el-button>
                 <div class="helpPop" v-if="helpPopupShow">
                     <p class="helpTitle">{{ text.helpTitle }}</p>
                     <p class="helpText">{{ text.helpText }}</p>
@@ -25,13 +28,15 @@ import {
   getCompanyQrcodeApi,
   getRecruiterQrcodeApi
 } from '@/api/qrcode'
-import VueQArt from 'vue-qart'
+import QRCode from 'qrcodejs2'
+import Clipboard from 'clipboard'
 
 export default {
   watch: {
     visible (value) {
       if (value) {
         this.showSharePopStatus = true
+        this.loadData()
       }
     }
   },
@@ -53,12 +58,7 @@ export default {
       helpPopupShow: false,
       showSharePopStatus: false,
       text: {},
-      config: {
-        value: 'https://h5.lieduoduo.com/wantYou_b?type=appEnter&uid=193',
-        // ${this.data.id}
-        imagePath: '../../../assets/fly.png',
-        filter: 'color'
-      },
+      Url: `https://h5.lieduoduo.com/wantYou_b?type=appEnter&${this.data.id}`,
       dataText: {
         'company': {
           title: '分享公司主页',
@@ -85,34 +85,7 @@ export default {
     }
   },
   components: {
-    VueQArt
-  },
-  mounted () {
-    if (this.data.id) return
-    switch (this.type) {
-      case 'company':
-        this.text = this.dataText['company']
-        let companyId = {
-          companyId: this.data.id
-        }
-        getCompanyQrcodeApi(companyId).then(res => {
-          this.imgUrl = res.data.data.positionQrCodeUrl
-        })
-        break
-      case 'recruiter':
-        this.text = this.dataText['recruiter']
-        let recruiterUid = {
-          recruiterUid: this.data.id
-        }
-        getRecruiterQrcodeApi(recruiterUid).then(res => {
-          this.imgUrl = res.data.data.positionQrCodeUrl
-        })
-        break
-      case 'invite':
-        this.text = this.dataText['invite']
-        console.log(3)
-        break
-    }
+
   },
   methods: {
     helpPopupShowFun () {
@@ -120,7 +93,66 @@ export default {
     },
     handleClose () {
       this.$emit('update:visible', false)
+    },
+    loadData () {
+      switch (this.type) {
+        case 'company':
+          this.text = this.dataText['company']
+          let companyId = {
+            companyId: this.data.id
+          }
+          getCompanyQrcodeApi(companyId).then(res => {
+            this.imgUrl = res.data.data.positionQrCodeUrl
+          })
+          break
+        case 'recruiter':
+          this.text = this.dataText['recruiter']
+          let recruiterUid = {
+            recruiterUid: this.data.id
+          }
+          getRecruiterQrcodeApi(recruiterUid).then(res => {
+            this.imgUrl = res.data.data.positionQrCodeUrl
+          })
+          break
+        case 'invite':
+          this.text = this.dataText['invite']
+          this.$nextTick(() => {
+            if (this.qrcodeImg) {
+              this.qrcodeImg.clear()
+              this.qrcodeImg.makeCode(this.Url)
+              return
+            }
+            this.qrcodeImg = new QRCode(document.getElementById('qrcode'), {
+              width: 132,
+              height: 132
+            })
+            this.qrcodeImg.makeCode(this.Url)
+          })
+          break
+      }
+    },
+    copyActiveCode (e, text) {
+      const clipboard = new Clipboard(e.target, { text: () => text })
+      clipboard.on('success', e => {
+        this.$message({ type: 'success', message: '复制成功' })
+        // 释放内存
+        clipboard.off('error')
+        clipboard.off('success')
+        clipboard.destroy()
+      })
+      clipboard.on('error', e => {
+      // 不支持复制
+        this.$message({ type: 'waning', message: '该浏览器不支持自动复制' })
+        // 释放内存
+        clipboard.off('error')
+        clipboard.off('success')
+        clipboard.destroy()
+      })
+      clipboard.onClick(e)
     }
+  },
+  destoryed () {
+    this.qrcodeImg = null
   }
 }
 </script>
@@ -171,6 +203,18 @@ export default {
             color: $bg-color-4;
             margin-left: 6px;
         }
+    }
+    .invite{
+      margin-top: 24px;
+      width: 302px;
+      height: 32px;
+      display: flex;
+      input{
+        height: 32px;
+      }
+      button{
+        height: 32px;
+      }
     }
 }
 .helpPop{
@@ -227,5 +271,13 @@ export default {
 }
 .cover .el-dialog__headerbtn{
     z-index: 1001;
+}
+.invite .el-input__inner{
+  width: 240px;
+  height: 32px;
+}
+.invite .el-button .el-button--primary{
+  width: 72px;
+  height: 32px;
 }
 </style>
