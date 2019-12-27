@@ -16,8 +16,8 @@
       </ul>
     </div>
     <div class="apply-lists" v-infinite-scroll="loadmore" :infinite-scroll-disabled="disabledScroll">
-      <no-found class="no-apply-lists" v-if="!lists.length" :image-url="nofoundUrl" :tip-text="tipsText[currentValue]" max-width="160">
-        <el-button type="primary" style="width: 143px;" v-if="currentValue < 2">邀请同事</el-button>
+      <no-found class="no-apply-lists" v-if="lists.length" :image-url="nofoundUrl" :tip-text="tipsText[currentValue]" max-width="160">
+        <el-button type="primary" style="width: 143px;" v-if="currentValue < 2" @click="share">邀请同事</el-button>
       </no-found>
       <template v-for="(list,index) in lists">
         <div class="apply-list" :key="list.id">
@@ -146,6 +146,9 @@ export default {
     },
     handleClose () {
       this.$emit('update:visible', false)
+    },
+    share () {
+      this.$emit('share', { uid: this.$store.state.recruiter.info.uid, childrenType: true })
     }
   },
   watch: {

@@ -23,25 +23,25 @@
           <div class="recruit-position-number" @click="handleShowPosition(item)">发布了{{item.allPositionNum}}个职位 <span class="iconfont icon-right"></span></div>
           <div class="recruit-interview-number">面试了{{item.interviewNum}}人</div>
           <div class="recruit-activity-time">活跃于 {{item.visitTimeDesc}}</div>
-          <div class="recruit-share">分享</div>
+          <div class="recruit-share" @click="handleShowShare(item)">分享</div>
         </div>
       </template>
     </div>
     <!-- 职位列表 -->
     <position-list :visible.sync="positionDialog" :recurit="currentRecruit" />
     <!-- 申请列表 -->
-    <apply-list :visible.sync="applyDialog" />
+    <apply-list :visible.sync="applyDialog" @share="handleShowShare" />
     <!-- 分享弹窗 -->
-    <!-- <share-popup  /> -->
+    <share-popup :visible.sync="showSharePopup" :type="showSharePopupType" :data="currentSharePopup"/>
   </div>
 </template>
 <script>
 import { getTeamRecruiters, getApplyReddot } from '@/api/recruitTeam'
-// import SharePopup from '@/components/common/sharePopup'
+import SharePopup from '@/components/common/sharePopup'
 import PositionList from './components/list'
 import ApplyList from './components/apply'
 export default {
-  components: { PositionList, ApplyList },
+  components: { PositionList, ApplyList, SharePopup },
   data () {
     return {
       lists: [],
@@ -55,8 +55,11 @@ export default {
       },
       total: 0,
       disabledScroll: false,
+      showSharePopup: false,
       reddot: false,
-      applyNumber: 0
+      applyNumber: 0,
+      showSharePopupType: 'recruiter',
+      currentSharePopup: {}
     }
   },
   computed: {
@@ -98,6 +101,15 @@ export default {
         this.reddot = Boolean(applyAuditBar || 0)
         this.applyNumber = applyAuditBarNum || 0
       })
+    },
+    handleShowShare (item) {
+      this.currentSharePopup = item
+      if (!item.childrenType) {
+        this.showSharePopupType = 'recruiter'
+      } else {
+        this.showSharePopupType = 'invite'
+      }
+      this.showSharePopup = true
     }
   },
   watch: {

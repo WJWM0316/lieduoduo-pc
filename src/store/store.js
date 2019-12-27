@@ -238,6 +238,9 @@ export default new Vuex.Store({
         }
 
         if (result.isRecruiter) {
+          // 招聘官信息
+          store.dispatch('getMyRecruit')
+          // 招聘官认证信息
           perfectauthDetail().then((res) => {
             store.commit('setRecruiterinfo', res.data.data)
           })

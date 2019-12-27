@@ -5,12 +5,12 @@
                 <div class="share-title">{{ text.title }}</div>
                 <div class="share-guide">{{ text.guide }}</div>
                 <div class="share-imgUrl" :class="{ 'invite-imgUrl': type === 'invite'}">
-                    <img v-if="type !== 'invite'" :src="imgUrl"/>
+                    <img v-if="type !== 'invite' && imgUrl" :src="imgUrl"/>
                     <div id="qrcode"></div>
                 </div>
                 <div class="invite" v-if="type === 'invite'">
-                  <el-input v-model="Url"></el-input>
-                  <el-button type="primary" @click="copyActiveCode($event,Url )">复制</el-button>
+                  <div class="invite-copy-url"><span>{{Url}}</span></div>
+                  <el-button type="primary" style="width: 72px" size="small" @click="copyActiveCode($event,Url )">复制</el-button>
                 </div>
                 <el-button @click="helpPopupShowFun" type="text" class="helpBtn">{{ text.helpTitle }}<i class="iconfont icon-question-circle"></i></el-button>
                 <div class="helpPop" v-if="helpPopupShow">
@@ -37,6 +37,8 @@ export default {
       if (value) {
         this.showSharePopStatus = true
         this.loadData()
+      } else {
+        this.imgUrl = ''
       }
     }
   },
@@ -58,7 +60,7 @@ export default {
       helpPopupShow: false,
       showSharePopStatus: false,
       text: {},
-      Url: `https://h5.lieduoduo.com/wantYou_b?type=appEnter&${this.data.id}`,
+      Url: '',
       dataText: {
         'company': {
           title: '分享公司主页',
@@ -107,15 +109,13 @@ export default {
           break
         case 'recruiter':
           this.text = this.dataText['recruiter']
-          let recruiterUid = {
-            recruiterUid: this.data.id
-          }
-          getRecruiterQrcodeApi(recruiterUid).then(res => {
+          getRecruiterQrcodeApi({ recruiterUid: this.data.uid }).then(res => {
             this.imgUrl = res.data.data.positionQrCodeUrl
           })
           break
         case 'invite':
           this.text = this.dataText['invite']
+          this.Url = `https://h5.lieduoduo.com/wantYou_b?type=appEnter&uid=${this.data.uid}`
           this.$nextTick(() => {
             if (this.qrcodeImg) {
               this.qrcodeImg.clear()
@@ -209,11 +209,24 @@ export default {
       width: 302px;
       height: 32px;
       display: flex;
-      input{
-        height: 32px;
+      .el-button {
+        border-radius: 0;
       }
-      button{
-        height: 32px;
+    }
+    .invite-copy-url {
+      width: 230px;
+      height: 32px;
+      line-height: 32px;
+      border: 1px solid $border-color-1;
+       padding:0 14px;
+      color: $title-color-2;
+      font-size: 12px;
+      box-sizing: border-box;
+      span {
+        display: inline-block;
+        overflow: hidden;
+        white-space: nowrap;
+        width: 100%;
       }
     }
 }
@@ -271,13 +284,5 @@ export default {
 }
 .cover .el-dialog__headerbtn{
     z-index: 1001;
-}
-.invite .el-input__inner{
-  width: 240px;
-  height: 32px;
-}
-.invite .el-button .el-button--primary{
-  width: 72px;
-  height: 32px;
 }
 </style>
