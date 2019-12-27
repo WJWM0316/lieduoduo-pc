@@ -1330,7 +1330,7 @@ export default class CourseList extends Vue {
       })
 
       this.positionTypeList = data
-      let ids = this.$route.query.position_type_id.split(',')
+      let ids = this.$route.query.position_type_id && this.$route.query.position_type_id.split(',') || []
       this.positionTypeList = this.positionTypeList.filter(item => {
         let idList = ids.map(v => v)
         if (idList.includes((item.labelId).toString())) {

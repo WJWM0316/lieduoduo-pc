@@ -7,7 +7,7 @@
             <div class="product-text">
                 <div class="product-title">
                     <p>{{ item.productName }}</p>
-                    <i @click="toEditProduct(item)" class="iconfont icon-bianji"></i>
+                    <i v-if="isCompanyAdmin" @click="toEditProduct(item)" class="iconfont icon-bianji"></i>
                 </div>
                 <p class="product-slogan">{{ item.slogan }}</p>
                 <block-overflow class="product-lightspot" :text="item.lightspot"></block-overflow>
@@ -25,6 +25,11 @@ export default {
       type: Array,
       default: () => ([])
     }
+  },
+  computed: {
+    ...mapState({
+      isCompanyAdmin: state => state.roleInfos.isCompanyAdmin
+    })
   },
   components: {
     blockOverflow
