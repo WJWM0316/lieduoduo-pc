@@ -20,6 +20,7 @@
     "normalize.css": "^8.0.1",
     "vue": "^2.5.21",
     "vue-class-component": "^6.3.2",
+    "vue-qart": "^2.2.0",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1",
     "web-storage-cache": "^1.0.3"

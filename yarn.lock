@@ -7089,6 +7089,11 @@ q@^1.1.2:
   resolved "https://registry.yarnpkg.com/q/-/q-1.5.1.tgz#7e32f75b41381291d04611f1bf14109ac00651d7"
   integrity sha1-fjL3W0E4EpHQRhHxvxQQmsAGUdc=
 
+qartjs@1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/qartjs/-/qartjs-1.1.1.tgz#f6391368e5910e585e5673c41db2440c5ce07c47"
+  integrity sha1-9jkTaOWRDlheVnPEHbJEDFzgfEc=
+
 qs@6.7.0:
   version "6.7.0"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.7.0.tgz#41dc1a015e3d581f1621776be31afb2876a9b1bc"
@@ -8868,6 +8873,13 @@ vue-loader@^15.7.0:
     loader-utils "^1.1.0"
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
+
+vue-qart@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/vue-qart/-/vue-qart-2.2.0.tgz#13336325d01975c832489e8ece8bd6f777c211e7"
+  integrity sha512-Wt0WDreWVctPVioIAlnXeiK+rzOhFZjWdm2051QC+NcmPU3AjkbUh4crNU8WQ3yRm8ySkBq0DKWlTbVT0IP48Q==
+  dependencies:
+    qartjs "1.1.1"
 
 vue-router@^3.0.1:
   version "3.1.3"
