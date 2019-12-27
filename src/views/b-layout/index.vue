@@ -3,8 +3,8 @@
     <page-aside />
     <div class="b-wrapper">
       <page-header />
-      <div class="contain">
-      <router-view class="pages" />
+      <div class="b-app-contain">
+        <router-view class="pages" />
       </div>
     </div>
     <div class="service" @mouseover="isService = true" @mouseout="isService = false">
@@ -50,24 +50,21 @@ export default class App extends Vue {
 </script>
 <style lang="scss" scoped>
 .b-app .pages {
-  // height: calc(100vh - #{$page-b-header-height});
-  // min-width: $page-width;
-  // padding-top: 30px;
-  // box-sizing: border-box;
-  // overflow-y: auto;
-  margin: 32px auto 0;
-  padding: 0px 30px 30px 30px;
+  box-sizing: border-box;
+  min-width: 960px;
+  width: 100%;
+  max-width: $page-width;
+  margin: 30px auto;
 }
 .b-wrapper {
   margin-left: $page-b-side-width;
   overflow: hidden;
   background: $bg-color-1;
 }
-.contain{
-  margin: 0 auto;
-  padding-top: 60px;
-  min-width: 960px;
-  max-width: 1200px;
+.b-app-contain {
+  width: 100%;
+  height: calc(100vh - #{$page-b-header-height});
+  overflow-y: auto;
 }
 .service {
   font-size:16px;
