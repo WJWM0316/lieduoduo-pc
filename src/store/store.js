@@ -27,7 +27,7 @@ export default new Vuex.Store({
     token: getAccessToken(),
     pageName: '',
     loginValidTime: 60 * 60 * 24 * 7 * 1000,
-    cityId: 0, // 用户地址id
+    cityId: parseInt(sessionStorage.getItem('cityid')) || 0, // 用户地址id
     guideCreateRecruiter: false, // 登录B端引导二维码
     showGuideQrcodePop: false, // 引导二维码
     guideQrcodePop: { // 引导二维码参数
@@ -106,6 +106,7 @@ export default new Vuex.Store({
     },
 
     setCityId (state, id) {
+      sessionStorage.setItem('cityid', id)
       state.cityId = id
     },
     guideQrcodePop (state, data) {

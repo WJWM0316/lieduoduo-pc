@@ -225,6 +225,7 @@ export default {
     padding: 20px 28px;
     box-sizing: border-box;
     overflow-y: auto;
+    border-radius: 0 0 8px 8px;
     background-color: $bg-color-1;
     & /deep/ .el-input__validateIcon {
       display: none;

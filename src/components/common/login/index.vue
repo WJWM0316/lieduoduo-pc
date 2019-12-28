@@ -40,7 +40,7 @@
               <div :class="{ helptype: !helptype}" @click="helptype = !helptype">求职者</div>
               <div :class="{ helptype: helptype}" @click="helptype = !helptype">招聘者</div>
             </div>
-            <p class="help_text">我的 > 右上角「扫码」登录</p>
+            <p class="help_text">我的 > 左上角「扫码」登录</p>
 
             <div class="help_img">
               <img :src="!helptype ? cdnPath + 'scanhelp.png' : cdnPath + 'scanhelptoo.png'" />

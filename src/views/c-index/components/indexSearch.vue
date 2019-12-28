@@ -56,7 +56,7 @@ export default {
       // 如果是登陆状态是 120 非登陆状态 是 180
       const { userInfo } = this.$store.state
       let bannerHeight = this.banner[0] && this.banner[0].bigImgUrl ? 70 : 0
-      return userInfo && userInfo.id ? 50 + bannerHeight : 180
+      return userInfo && userInfo.id ? 96 + bannerHeight : 226
     }
   },
   mounted () {

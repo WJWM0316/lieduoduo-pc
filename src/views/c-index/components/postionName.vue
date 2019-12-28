@@ -4,21 +4,21 @@
     <div class="postion-list">
       <ul>
         <template v-for="item in forepartData">
-          <li class="list-item" :key="item.labelId" @mouseover.self="mouseOverEvent">
+          <li class="list-item" :key="item.id" @mouseover.self="mouseOverEvent">
             <div class="list-item-wrapper">
               <span class="item-title">{{item.name}}</span>
               <div class="item-sub-title">
                 <template v-for="child in item.children">
-                  <router-link tag="span" :to="`/position/?keyword=${child.name}`"  :key="child.labelId">{{child.name}}</router-link>
+                  <router-link tag="span" :to="`/position/?keyword=${child.name}`"  :key="child.id">{{child.name}}</router-link>
                 </template>
               </div>
               <span class="item-icon iconfont icon-right"></span>
             </div>
             <div class="position-details">
-              <div class="position-details-wrapper" v-for="child in item.all.children" :key="child.labelId">
+              <div class="position-details-wrapper" v-for="child in item.all.children" :key="child.id">
                 <p>{{child.name}}</p>
                 <div class="detaisl-span">
-                  <router-link  :to="`/position/?keyword=${link.name}`" v-for="link in child.children" :key="link.labelId">{{link.name}}</router-link>
+                  <router-link  :to="`/position/?keyword=${link.name}`" v-for="link in child.children" :key="link.id">{{link.name}}</router-link>
                 </div>
               </div>
             </div>
@@ -29,21 +29,21 @@
         <p class="list-more-tips">显示全部职位</p>
         <ul class="list-more-wrapper">
           <template v-for="item in backendData">
-            <li class="list-item" :key="item.labelId" @mouseover.self="mouseOverEvent">
+            <li class="list-item" :key="item.id" @mouseover.self="mouseOverEvent">
               <div class="list-item-wrapper">
                 <span class="item-title">{{item.name}}</span>
                 <div class="item-sub-title">
                   <template v-for="child in item.children">
-                    <router-link tag="span" :to="`/position/?keyword=${child.name}`"  :key="child.labelId">{{child.name}}</router-link>
+                    <router-link tag="span" :to="`/position/?keyword=${child.name}`"  :key="child.id">{{child.name}}</router-link>
                   </template>
                 </div>
                 <span class="item-icon iconfont icon-right"></span>
               </div>
               <div class="position-details">
-                <div class="position-details-wrapper" v-for="child in item.all.children" :key="child.labelId">
+                <div class="position-details-wrapper" v-for="child in item.all.children" :key="child.id">
                   <p>{{child.name}}</p>
                   <div class="detaisl-span">
-                    <router-link  :to="`/position/?keyword=${link.name}`" v-for="link in child.children" :key="link.labelId">{{link.name}}</router-link>
+                    <router-link  :to="`/position/?keyword=${link.name}`" v-for="link in child.children" :key="link.id">{{link.name}}</router-link>
                   </div>
                 </div>
               </div>

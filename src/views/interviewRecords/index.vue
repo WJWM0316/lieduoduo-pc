@@ -731,6 +731,7 @@ import { getdeleteInterviewTabRedDotApi,
 import { putCollectUserApi, cancelCollectUserApi } from 'API/collect'
 import { createonlinepdf, createonlineword } from 'API/common'
 import MapSearch from 'COMPONENTS/map'
+import moment from 'moment'
 import DynamicRecord from '../candidateType/dynamicrecord.vue'
 export default {
   components: {
@@ -790,7 +791,7 @@ export default {
         page: 1,
         count: 20
       },
-      time: [],
+      time: ['', ''],
       info: '',
       extra: '',
       positionLists: [],
@@ -944,6 +945,7 @@ export default {
       } else {
         this.form.page = 1
       }
+      this.setPathQuery(this.form)
       this.getlist()
     },
     // 点击返回的今天明天获取其他时间
@@ -970,6 +972,7 @@ export default {
         this.form.page = 1
         this.getlist()
       }
+      this.setPathQuery(this.form)
     },
     gettablist () {
       if (this.tabform.position_label_id === '') {
@@ -982,12 +985,18 @@ export default {
       })
     },
     pickchange () {
-      this.form.start = Date.parse(this.time[0]) / 1000
-      this.form.end = Date.parse(this.time[1]) / 1000
+      if (this.time) {
+        this.form.start = Date.parse(this.time[0]) / 1000
+        this.form.end = Date.parse(this.time[1]) / 1000
+      } else {
+        this.form.start = undefined
+        this.form.end = undefined
+      }
       this.tablist.map((v, k) => {
         v.cur = false
       })
       this.tablist[0].cur = true
+      this.setPathQuery(this.form)
       this.getlist()
     },
     setJob (uid, type, vo, statusid) {
@@ -1741,6 +1750,18 @@ export default {
   mounted () {
     this.ManageList()
     this.getScheduleList()
+    if (this.$route.query.start) {
+      this.time[0] = moment((this.$route.query.start) * 1000).format('YYYY-MM-DD')
+      this.form.start = this.$route.query.start
+    }
+    if (this.$route.query.end) {
+      this.time[1] = moment((this.$route.query.end) * 1000).format('YYYY-MM-DD')
+      this.form.end = this.$route.query.end
+    }
+    if (this.$route.query.position_label_id) {
+      this.form.position_label_id = Number(this.$route.query.position_label_id)
+      this.tabform.position_label_id = Number(this.$route.query.position_label_id)
+    }
   }
 }
 </script>

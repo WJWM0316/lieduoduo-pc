@@ -6,6 +6,9 @@ import { mp_qrcode, wx_qrcode, app_qrcode } from 'IMAGES/image'
   computed: {
     miniFooter () {
       return ['putIn'].includes(this.$route.name)
+    },
+    isShow () {
+      return !['position24h', 'marketOriginality'].includes(this.$route.name)
     }
   },
   methods: {
@@ -18,11 +21,6 @@ export default class PageFooter extends Vue {
       images: { mp_qrcode, wx_qrcode, app_qrcode },
       cdnPath: `${this.$cdnPath}/images/`
     }
-  }
-  blackBg () {
-    return [
-      'positionDetail'
-    ].includes(this.$store.state.pageName)
   }
   shouldFixed () {
     return [

@@ -1,17 +1,22 @@
 <template>
   <div class="index-wrapper">
     <login-banner :banner="loginBannerList" :total="total"></login-banner>
+    <div class="index-tips-banner">
+      <ul class="main-center">
+        <li><i class="iconfont icon-rencai"></i> 专注互联网高端才人发展</li>
+        <li><i class="iconfont icon-qiuzhiyixiang"></i> 优选年薪20W+高薪机会</li>
+        <li><i class="iconfont icon-fuwu"></i> 求职顾问1V1免费辅导服务</li>
+        <li><i class="iconfont icon-yuebossmiantan"></i> 直接约BOSS面对面沟通</li>
+      </ul>
+    </div>
     <search-wrapper  :banner="loginBannerList"></search-wrapper>
     <div class="position-wrapper main-center">
       <div class="index-part-1">
         <position-name :list="positionData" v-loading="!positionData.length"></position-name>
         <!-- <index-banner :items="bannerLists" ref="indexBanner"></index-banner> -->
-        <div class="page-bg-banner">
-          <a target="_blank" href="https://h5.lieduoduo.com/delicate"><img src="~@/assets/random_images/img.jpg" alt="loading"></a>
-        </div>
-        <!-- <IndexBanner3 /> -->
+        <IndexBanner4 />
       </div>
-      <active />
+      <active ref="active" :types="positionTypes" :bubble-list="toastTips" />
       <!-- <position-list :nameList="positionLabel" ref="positionList"></position-list> -->
       <hot-company />
       <hot-city />
@@ -27,7 +32,7 @@ import SearchWrapper from './components/indexSearch'
 import PositionName from './components/postionName'
 // import IndexBanner from './components/indexBanner'
 import Active from './components/24Active'
-// import IndexBanner3 from './components/indexBanner3'
+import IndexBanner4 from './components/indexBanner4'
 
 // 职位列表
 // import PositionList from './components/positionList.vue'
@@ -47,8 +52,8 @@ export default {
     HotCity,
     HotCompany,
     AppLinks,
-    ScrollToTop
-    // IndexBanner3
+    ScrollToTop,
+    IndexBanner4
   },
   data () {
     return {
@@ -56,6 +61,8 @@ export default {
       bannerLists: [], // index banner
       positionData: [], // 职位类型数据
       positionLabel: [], // 部分职位名称tab数据
+      positionTypes: [], // 24h 职位类型
+      toastTips: [], // 24 气泡
       total: {
         coolCompanyNum: '',
         goodChanceNum: ''
@@ -92,10 +99,13 @@ export default {
     // 获取页面数据 比如职位，地址等等
     getPageData () {
       getIndexData({}).then(({ data }) => {
-        const { positionType, label, coolCompanyNum, goodChanceNum } = data.data
+        const { positionType, label, coolCompanyNum, goodChanceNum, surfaceRapidly: { positionTypes, toastTips } } = data.data
         this.positionData = positionType
         this.positionLabel = label || []
         this.total = { coolCompanyNum, goodChanceNum }
+        this.positionTypes = positionTypes ? [{ labelId: 0, name: '全部' }, ...positionTypes] : [{ labelId: 0, name: '全部' }] // 24h
+        this.toastTips = toastTips // 24h
+        this.$refs.active.refreshDom()
       })
     }
   }
@@ -112,6 +122,33 @@ export default {
 }
 .app-links {
   margin-bottom: 40px;
+}
+.index-tips-banner {
+  background: rgba($bg-color-4, .1);
+  .main-center {
+    @include flex-v-center;
+    height: 46px;
+  }
+  li {
+    flex: 1;
+    text-align: center;
+    color: $main-color-1;
+    font-size: 14px;
+    position: relative;
+    i {
+      font-size: 13px;
+    }
+  }
+  li:not(:first-child)::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    height: 18px;
+    width: 1px;
+    background-image: linear-gradient(to bottom, rgba($border-color-2, .3) 0%, rgba($border-color-2, .3) 70%, transparent 70%);
+    background-size: 1px 6px;
+    background-repeat: repeat-y;
+  }
 }
 .page-bg-banner {
   overflow: hidden;

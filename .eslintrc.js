@@ -19,6 +19,7 @@ module.exports = {
       "error",
       "single"
     ],
+    "no-ternary": 1,
     "generator-star-spacing": "off",
     "no-mixed-spaces-and-tabs": "off",
     "no-param-reassign": 0,

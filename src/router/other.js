@@ -1,3 +1,4 @@
+import Layout from '@/views/layout'
 const other = [
   {
     path: '/',
@@ -28,6 +29,30 @@ const other = [
     name: 'putIn',
     title: '猎多多 | 投放',
     component: resolve => require(['../views/activity/putIn/index.vue'], resolve)
+  },
+  {
+    path: '/position24h',
+    title: '职位24h',
+    component: Layout,
+    children: [
+      {
+        path: '',
+        name: 'position24h',
+        component: resolve => require(['../views/activity/24position/index.vue'], resolve)
+      }
+    ]
+  },
+  {
+    path: '/marketOriginality',
+    title: '营销创意',
+    component: Layout,
+    children: [
+      {
+        path: '',
+        name: 'marketOriginality',
+        component: resolve => require(['../views/activity/marketOriginality/index.vue'], resolve)
+      }
+    ]
   }
 ]
 export default other
