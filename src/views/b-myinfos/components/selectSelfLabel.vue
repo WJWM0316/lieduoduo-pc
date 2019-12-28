@@ -224,12 +224,13 @@ export default {
       if (skills.length) {
         for (let skillKey in skills) {
           let clabel = this.positionSkills.find(val => val.labelId === skills[skillKey].topPid)
+          if (!clabel) continue
           let label = clabel.children.find(val => val.labelId === skills[skillKey].labelId)
           this.$set(label, 'checked', true)
           data.push(label)
         }
         this.selectValue = skills[skills.length - 1].topPid
-        this.handleChangeSkill(this.selectValue)
+        if (this.selectValue) this.handleChangeSkill(this.selectValue)
       }
       const temp = [this.positionAttainment, this.personality, this.hobby]
       temp.forEach(val => {

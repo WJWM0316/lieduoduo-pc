@@ -4,7 +4,7 @@
     <div class="main-center">
       <div class="lists-wrapper" v-loading="getLoading">
         <template v-if="currentType === 'position'">
-          <no-found v-if="!getLoading && !listData.length" tip-text="没有符合筛选条件的公司，放宽筛选条件试试？" :max-width="400"></no-found>
+          <no-found v-if="!getLoading && !listData.length" tip-text="没有符合筛选条件的职位，放宽筛选条件试试？" :max-width="400"></no-found>
           <div class="position-lists" v-else>
             <template v-for="item in listData">
               <position-item :key="item.id" :item="item" />
@@ -183,6 +183,8 @@ export default {
             }
           }
         }
+      }).catch(() => {
+        this.isGetSearchType = false
       })
     }
   }
@@ -198,6 +200,9 @@ export default {
   margin-right: 20px;
   min-height: 580px;
   min-width: 882px;
+  & /deep/ .el-loading-mask {
+    z-index: 97;
+  }
 }
 
 .guide-login {

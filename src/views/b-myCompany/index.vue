@@ -7,10 +7,9 @@
                     <img v-if="information.logoInfo" :src="information.logoInfo.middleUrl"/>
                 </div>
                 <div class="companyInformation-head-button">
-                    <el-button type="text"><i class="iconfont icon-fenxiang"></i> 分享</el-button>
-                    <el-button  type="text" @click="toEdit('编辑公司')"><i class="iconfont icon-bianji"></i> 编辑</el-button>
+                    <el-button type="text" @click="toShare()"><i class="iconfont icon-fenxiang"></i> 分享</el-button>
+                    <el-button type="text" v-if="isCompanyAdmin" @click="toEdit('编辑公司')"><i class="iconfont icon-bianji"></i> 编辑</el-button>
                 </div>
-                <!-- v-if="isCompanyAdmin" -->
             </div>
             <p class="companyTitle">{{information.companyName}}</p>
             <p class="companyIndustry">{{information.companyShortname}} | {{information.industry}} | {{information.financingInfo}} | {{information.employeesInfo}}</p>
@@ -39,25 +38,25 @@
                 <ul v-if="information.address">
                     <li v-for="(item, index) in information.address" :key="index">{{ item.address + '&nbsp;' + item.doorplate }}</li>
                 </ul>
-                <p v-else>尚未添加公司地址<span>去添加</span></p>
+                <div v-else>尚未添加公司地址<el-button @click="toEdit('编辑公司')" v-if="isCompanyAdmin" type="text">去添加</el-button></div>
             </div>
             <div class="companyWebsite">
                 <p class="companyWebsite-title">
                     <i class="iconfont icon-guanwang-"></i>公司官网
                 </p>
                 <a v-if="information.website" :href="information.website" target="_blank">{{information.website}}</a>
-                <p v-else>尚未添加公司官网<span>去添加</span></p>
+                <div v-else>尚未添加公司官网<el-button @click="toEdit('编辑公司')" v-if="isCompanyAdmin" type="text">去添加</el-button></div>
             </div>
         </div>
         <div class="companyProduct">
             <div class="companyProduct-head">
                 <p>公司产品</p>
-                <el-button type="text" @click="toEdit('编辑产品')"><i class="iconfont icon-tianjia-"></i>添加产品</el-button>
+                <el-button v-if="isCompanyAdmin" type="text" @click="toEdit('编辑产品', '添加产品')"><i class="iconfont icon-tianjia-"></i>添加产品</el-button>
             </div>
             <company-productList @click="toEdit" @toEditProduct="toEditProduct" :product="information.product"></company-productList>
             <div v-if="!information.product" class="noFound">
                 <no-found tipText='尚未添加公司产品' imageUrl='/img/fly.26a25d51.png'>
-                    <el-button type="primary">去添加</el-button>
+                    <el-button v-if="isCompanyAdmin" @click="toEdit('编辑产品')" type="primary">去添加</el-button>
                 </no-found>
             </div>
         </div>
@@ -65,13 +64,19 @@
     <my-material
     v-if="materialShow === '编辑公司'"
     :information="information"
+    @save="companyDetail"
     @click="toEdit">
     </my-material>
     <Edit-product
     v-if="materialShow === '编辑产品'"
     :currentProduct="currentProduct"
+    :companyid="information.id"
+    @save="companyDetail"
     @click="toEdit">
     </Edit-product>
+    <sharePopup
+    :data="information"
+    :visible.sync="showSharePopup"></sharePopup>
 </div>
 </template>
 
@@ -82,6 +87,7 @@ import companyProductList from './components/companyProductList'
 import noFound from '@/components/noFound'
 import myMaterial from './components/myMaterial'
 import EditProduct from './components/EditProduct'
+import sharePopup from '@/components/common/sharePopup/index'
 
 import { companyDetailApi } from '@/api/company'
 
@@ -96,7 +102,8 @@ import { companyDetailApi } from '@/api/company'
     companyProductList,
     myMaterial,
     noFound,
-    EditProduct
+    EditProduct,
+    sharePopup
   }
 })
 export default class myCompany extends Vue {
@@ -105,6 +112,7 @@ export default class myCompany extends Vue {
     bntRightShow = true
     transformWidth = 1
     information = {}
+    showSharePopup = false
     currentProduct = {
       id: '',
       productName: '',
@@ -118,18 +126,34 @@ export default class myCompany extends Vue {
     mounted () {
       this.companyDetail()
     }
-    toEdit (type) {
+    toShare () {
+      this.showSharePopup = true
+    }
+    toEdit (type, typeto) { // typeto识别是否新建产品
+      if (typeto) {
+        let currentProduct = {
+          id: '',
+          productName: '',
+          siteUrl: '',
+          slogan: '',
+          lightspot: '',
+          logoInfo: {
+            middleUrl: ''
+          }
+        }
+        Object.assign(this.currentProduct, currentProduct)
+      }
       this.materialShow = type
     }
     companyDetail () {
       companyDetailApi()
         .then(res => {
           let data = res.data.data
-          if (!data.website.startsWith('http', 4)) {
+          if (!data.website.startsWith('http') && data.website) {
             data.website = 'http://' + data.website
           }
           data.product.forEach((item, index) => {
-            if (!item.siteUrl.startsWith('http', 4)) {
+            if (!item.siteUrl.startsWith('http') && item.siteUrl) {
               data.product[index].siteUrl = 'http://' + data.product[index].siteUrl
             }
           })
@@ -139,7 +163,7 @@ export default class myCompany extends Vue {
         })
     }
     toEditProduct (item) { // 从产品列表拿到回调参数
-      this.currentProduct = item
+      Object.assign(this.currentProduct, item)
     }
     clickBnt (displacement) {
       if (displacement === 'left') {
@@ -269,6 +293,9 @@ export default class myCompany extends Vue {
             margin-bottom: 8px;
             margin-left: 15px;
         }
+        button{
+            margin-left: 10px;
+        }
     }
     .companyWebsite{
         margin-top: 50px;
@@ -282,6 +309,9 @@ export default class myCompany extends Vue {
         a{
             color: $font-color-6;
             font-weight: 400;
+        }
+        button{
+            margin-left: 10px;
         }
     }
 }
@@ -319,3 +349,4 @@ export default class myCompany extends Vue {
     }
 }
 </style>
+<style>

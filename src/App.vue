@@ -34,6 +34,7 @@ export default class APP extends Vue {
           this.$store.commit('setRecruiterinfo', res.data.data)
         })
         // 招聘官信息
+        this.$store.dispatch('getMyRecruit')
       }
       this.$store.commit('setRoleInfos', res.data.data)
     })

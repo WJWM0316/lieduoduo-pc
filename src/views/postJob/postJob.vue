@@ -140,22 +140,7 @@
 
       <div class="pop" v-if="pop.isShow">
         <map-search v-if="pop.type==='addAdress'" @popCancel="popCancel" @addAdress="addAdress"></map-search>
-        <div class="addAdressPop" v-if="pop.type==='addAdress2'">
-          <img class="clo" src="../../assets/images/clo.png" @click="popCancel" />
-          <h3 class="">添加新的公司地址</h3>
-          <p>你创建的工作地址，将加入公司的地址库中与同事共享</p>
-
-          <el-input style="width: 368px;margin: 13px 0 26px 0;box-sizing: border-box;" v-model="adressInput" placeholder="请输入工作地址）"></el-input>
-
-          <el-input style="width: 368px;margin: 13px 0 26px 0;box-sizing: border-box;" v-model="adress_id_Input" placeholder="请输入门牌号（选填）"></el-input>
-
-          <div class="btn-add">
-            <el-button class="btn_cancel" @click="popCancel">取消</el-button>
-            <el-button class="btn_submit" type="primary" @click="addAdress">添加</el-button>
-          </div>
-        </div>
       </div>
-
     </el-form>
   </div>
 </template>

@@ -44,6 +44,7 @@ class Util {
       path,
       query
     }
+    query.q= Date.now()
     if (replace) {
       this.$router.replace(newRoute)
     } else {
@@ -292,6 +293,40 @@ class Util {
       hours: hours > 9 ? hours : '0' + hours,
       mins: minutes > 9 ? minutes : '0' + minutes,
       seconds: seconds > 9 ? seconds : '0' + seconds
+    }
+  }
+  /**
+   * @desc dom 滚动到可见区域
+   * @param {HTMLDivElement} dom节点
+   * @returns -
+   */
+  scrollToView (dom) {
+    if (dom) {
+      const domBounding = dom.getBoundingClientRect()
+      const { top } = domBounding
+      if (top === 0) return
+      let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+      let to = top + scrollTop
+      let duration = 500
+      const s = Math.abs(scrollTop - to)
+      const v = Math.ceil((s / duration) * 50)
+      // eslint-disable-next-line no-inner-declarations
+      function scroll (start, end, step) {
+        if (start === end) return
+        // console.log(start, end)
+        let d = start + step > end ? end : start + step
+        if (start > end) {
+          d = start - step < end ? end : start - step
+        }
+        window.scrollTo(0, d)
+        window.requestAnimationFrame(() => scroll(d, end, step))
+      }
+      scroll(scrollTop, to, v)
+      /* window.scrollTo({
+        top: end, // 滚动终点y的位置
+        left: 0, // 滚动终点x的位置
+        behavior: 'smooth' // 平滑滚动
+      }) */
     }
   }
 }

@@ -10,10 +10,6 @@
 <script>
 export default {
   props: {
-    isShow: {
-      type: Boolean,
-      default: false
-    },
     imageUrl: {
       type: String,
       default: process.env.VUE_APP_CDN_PATH + '/images/pic_404.png'

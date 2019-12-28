@@ -1,43 +1,41 @@
 <template>
   <div class="page-header">
-    <div class="head-contain">
-    <div class="header-dropdown">
-      <el-dropdown trigger="click" placement="bottom-start" @command="handleClick">
-        <div>
-          <span>
-            欢迎登录猎多多，{{userInfo.realname}}
-          </span>
-          <div class="user-avatar">
-            <img :src="userInfo.avatarInfo && userInfo.avatarInfo.smallUrl" alt="">
+    <div class="page-header-wrapper">
+      <div class="sc-wrapper">
+        <template v-for="(item, index) in headerDrop">
+          <div :key="index" class="sc-wrapper-item">
+            <el-popover
+              placement="bottom"
+              width="124"
+              trigger="hover">
+              <div class="share-image">
+                <img :src="item.img" />
+                <p>{{item.desc}}</p>
+              </div>
+              <div slot="reference" class="nav-name">{{item.title}}</div>
+            </el-popover>
           </div>
-        </div>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item command="perfectauth" v-if="haveIdentity.identityAuth !== 1">
-            身份认证
-            <div class="reddot"></div>
-          </el-dropdown-item>
-          <el-dropdown-item command="toggleIdentity">切换为求职者</el-dropdown-item>
-          <el-dropdown-item command="infos">我的资料</el-dropdown-item>
-          <el-dropdown-item command="logout">退出登录</el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
-    </div>
-    <div class="sc-wrapper">
-      <template v-for="(item,index) in headerDrop">
-        <div :key="index" class="sc-wrapper-item">
-        <el-popover
-          placement="bottom"
-          width="124"
-          trigger="hover">
-          <div class="share-image">
-            <img :src="item.img" />
-            <p>{{item.desc}}</p>
+        </template>
+      </div>
+      <div class="header-dropdown">
+        <el-dropdown trigger="click" placement="bottom-start" @command="handleClick">
+          <div>
+            <span class="user-name">欢迎登录猎多多，{{userInfo.realname}}</span>
+            <div class="user-avatar">
+              <img :src="userInfo.avatarInfo && userInfo.avatarInfo.smallUrl" alt="">
+            </div>
           </div>
-          <div slot="reference" class="nav-name">{{item.title}}</div>
-        </el-popover>
-        </div>
-      </template>
-    </div>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="perfectauth" v-if="haveIdentity.identityAuth !== 1">
+              身份认证
+              <div class="reddot"></div>
+            </el-dropdown-item>
+            <el-dropdown-item command="toggleIdentity">切换为求职者</el-dropdown-item>
+            <el-dropdown-item command="infos">我的资料</el-dropdown-item>
+            <el-dropdown-item command="logout">退出登录</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </div>
     </div>
   </div>
 </template>
@@ -98,39 +96,31 @@ export default {
 <style lang="scss" scoped>
 $header-height-1: $page-b-header-height;
 .page-header {
-  @include flex-v-center;
-  margin-left: 200px;
-  // justify-content: flex-end;
-  // padding: 0 20px;
-  height: 60px;
+  width: 100%;
   background: #fff;
-  text-align: right;
   font-size: 14px;
+  position: relative;
+  z-index: 99;
   -webkit-box-shadow: 0 1px 0 0 rgba(29,45,53,.06);
   box-shadow: 0 1px 0 0 rgba(29,45,53,.06);
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 3;
 }
-.page-header {
-  height: $header-height-1;
-  background: #fff;
-  box-shadow: 0 1px 0 0 rgba(29,45,53,.06);
-}
-.head-contain{
-  width: 1140px;
+.page-header-wrapper {
+  @include flex-v-center;
+  justify-content: flex-end;
+  width: 100%;
+  max-width: $page-width;
+  min-width: 960px;
   margin: 0 auto;
+  height: $header-height-1;
 }
 .sc-wrapper {
   color: #333333;
-  float: right;
   .sc-wrapper-item {
-    display: inline-block;
+    height: $header-height-1;
+    line-height: $header-height-1;
     width: 100px;
-    vertical-align: middle;
-    margin-top: 6px;
+    display: inline-block;
+    vertical-align: top;
   }
   .sc-wrapper-item + .sc-wrapper-item {
     margin-left: 12px;
@@ -147,13 +137,14 @@ $header-height-1: $page-b-header-height;
 }
 .header-dropdown {
   padding-left: 40px;
-  float: right;
   .user-avatar {
     @include img-radius(30px, 30px);
-    display: inline-block;
-    vertical-align: middle;
     margin: 0 0 0 12px;
     border: 1px solid #EDf1f0;
+  }
+  .user-name, .user-avatar{
+    display: inline-block;
+    vertical-align: middle;
   }
   span{
     color: #333;
@@ -171,7 +162,7 @@ $header-height-1: $page-b-header-height;
 </style>
 <style>
 @media screen and (max-width: 1400px) {
-  .page-header .head-contain {
+  .page-header .page-header-wrapper {
     padding-right: 30px;
   }
 }

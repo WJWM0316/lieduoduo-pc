@@ -7,6 +7,7 @@
           :items="searchCollect.area"
           :showArrow="true"
           :all-value="0"
+          ref="area"
           :props="{
             value: 'areaId',
             label: 'name'
@@ -19,6 +20,7 @@
           :multiple="true"
           :showArrow="true"
           :all-value="0"
+          ref="financing"
           :limit="100000"
           :props="{
             value: 'value',
@@ -33,6 +35,7 @@
           :limit="100000"
           :showArrow="true"
           :all-value="0"
+          ref="employee"
           :props="{
             value: 'value',
             label: 'text'
@@ -47,6 +50,7 @@
           :col="3"
           :limit="100000"
           :all-value="0"
+          ref="industry"
           :props="{
             value: 'labelId',
             label: 'name'
@@ -123,6 +127,11 @@ export default {
     },
     // 清空筛选
     handleRemove () {
+      Object.keys(this.searchCollect).map(key => {
+        if(this.$refs[key]) {
+          this.$refs[key].clearAll()
+        }
+      })
       this.$emit('on-reset')
     }
   },

@@ -222,10 +222,12 @@ export default class CourseList extends Vue {
     }).catch(() => {})
   }
   mounted () {
-    window.addEventListener('scroll', this.handleScroll)
+    const dom = document.querySelector('.b-app-contain')
+    dom.addEventListener('scroll', this.handleScroll)
   }
   destroyed () {
-    window.removeEventListener('scroll', this.handleScroll)
+    const dom = document.querySelector('.b-app-contain')
+    dom.removeEventListener('scroll', this.handleScroll)
   }
   init () {
     this.form = Object.assign(this.form, this.$route.query || {})
@@ -483,8 +485,8 @@ export default class CourseList extends Vue {
       }
     })
   }
-  handleScroll () {
-    let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+  handleScroll (e) {
+    let scrollTop = e.target.scrollTop
     if (scrollTop > 155) {
       this.searchBarFixed = true
     } else {
@@ -525,7 +527,9 @@ export default class CourseList extends Vue {
         position: fixed;
         background-color: #fff;
         top: 0px;
-        width: 1140px;
+        width: 100%;
+        min-width: 960px;
+        max-width: 1200px;
         padding-top: 60px;
         z-index: 1;
       }

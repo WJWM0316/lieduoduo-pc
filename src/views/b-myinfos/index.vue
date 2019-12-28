@@ -3,7 +3,7 @@
   <div class="app-infos">
     <div class="infos-header">
       <h1>我的资料</h1>
-      <el-button type="primary"> <i class="iconfont icon-fenxiang"></i> 分享主页</el-button>
+      <el-button type="primary" v-if="currentSharePopup.uid" @click="showSharePopup = true"> <i class="iconfont icon-fenxiang"></i> 分享主页</el-button>
     </div>
     <p class="app-infos-tips">加"<em>*</em>"号的内容，是必须填写的项目；姓名和性别为招聘官认证信息，修改请联系 400-065-5788</p>
     <el-form :model="form" ref="form" :rules="formRules" label-width="110px" class="el-form-infos">
@@ -74,16 +74,19 @@
         <el-button style="width: 120px;" type="primary" :loading="saveLoading" @click="handleSave">保存</el-button>
       </el-form-item>
     </el-form>
+    <!-- 分享弹窗 -->
+    <share-popup :visible.sync="showSharePopup" type="recruiter" :data="currentSharePopup"/>
   </div>
 </template>
 <script>
 import Picture from 'COMPONENTS/common/upload/picture'
 import SelectPositionType from 'COMPONENTS/selectPositionType'
 import SelectSelfLabel from './components/selectSelfLabel'
+import SharePopup from '@/components/common/sharePopup'
 import { getRecruiter, setRecruiter } from '@/api/recruiter'
 import { CompanyIntro } from '@/config/vars'
 export default {
-  components: { Picture, SelectPositionType, SelectSelfLabel },
+  components: { Picture, SelectPositionType, SelectSelfLabel, SharePopup },
   data () {
     return {
       avatarLoading: false,
@@ -114,7 +117,9 @@ export default {
       },
       intros: CompanyIntro,
       introIndex: 0,
-      introContent: ''
+      introContent: '',
+      showSharePopup: false,
+      currentSharePopup: {}
     }
   },
   created () {
@@ -127,6 +132,7 @@ export default {
       getRecruiter().then(({ data }) => {
         const recruiter = data.data || {}
         const labels = recruiter.personalizedLabels || []
+        this.currentSharePopup.uid = recruiter.uid
         Object.assign(this.form, {
           attachId: +recruiter.avatarId,
           labels: labels.map(val => {
@@ -238,6 +244,9 @@ export default {
   padding-top: 48px;
   .el-input, .el-textarea, .position-type, .self-label-wrapper  {
     width: 382px;
+  }
+  .el-form-item {
+    margin-bottom: 30px;
   }
 }
 .form-intro {

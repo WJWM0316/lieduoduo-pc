@@ -732,7 +732,7 @@
 <script>
 import Vue from 'vue'
 import Component from 'vue-class-component'
-import { recruiterDetail, createonlinepdf, createonlineword } from 'API/common'
+import { createonlinepdf, createonlineword } from 'API/common'
 import { getPositionTypeApi, openPositionApi } from 'API/position'
 import { getSearchMyCollectApi, getSearchCollectApi, putCollectUserApi, cancelCollectUserApi } from 'API/collect'
 import { getSearchBrowseMyselfApi, getMyNavDataApi, getJobHunterPositionTypeApi } from 'API/browse'
@@ -753,12 +753,18 @@ import {
   addressListApi, interviewRetract, addCompanyAdressApi, editCompanyAdressApi, setInterviewInfoApi, emailtoforword, manyrecordstatus } from 'API/candidateType'
 
 import { applyInterviewApi } from 'API/interview'
+import { mapGetters } from 'vuex'
 
   @Component({
     name: 'candidate',
     methods: {
     },
-    computed: {},
+    computed: {
+      ...mapGetters([
+        'recruitDataCompanyId',
+        'recruiterIsAdmin'
+      ])
+    },
     watch: {
       '$route': {
         handler () {
@@ -960,7 +966,7 @@ export default class CourseList extends Vue {
       this.interviewId = vo.interviewInfo.data.lastInterviewId
       switch (type) {
         case 'recruiter-chat':
-          if (this.info.isCompanyTopAdmin) {
+          if (this.recruiterIsAdmin) {
             topAdminPositonList().then((res) => {
               let arr = res.data.data
               let hasOnline = []
@@ -1090,7 +1096,7 @@ export default class CourseList extends Vue {
               this.model.dateLists = []
             }
 
-            if (this.info.isCompanyTopAdmin) {
+            if (this.recruiterIsAdmin) {
               topAdminPositonList().then((res) => {
                 let arr = res.data.data
                 let hasOnline = []
@@ -1553,33 +1559,26 @@ export default class CourseList extends Vue {
     togglereson (data) {
       data.cur = !data.cur
     }
-    hasadmin () {
-      recruiterDetail().then((res) => {
-        this.info = res.data.data
-      })
-    }
     // 选择地址列表
     selectaddredd () {
-      recruiterDetail().then((res) => {
-        let data = { page: 1, count: 20, company_id: res.data.data.currentCompanyId }
-        addressListApi(data).then((res) => {
-          this.pop = {
-            isShow: true,
-            Interview: true,
-            InterviewTitle: '选择地址',
-            btntext: '发送',
-            type: 'address'
+      let data = { page: 1, count: 20, company_id: this.recruitDataCompanyId }
+      addressListApi(data).then((res) => {
+        this.pop = {
+          isShow: true,
+          Interview: true,
+          InterviewTitle: '选择地址',
+          btntext: '发送',
+          type: 'address'
+        }
+        let arr = res.data.data
+        arr.map((v, k) => {
+          if (this.arrangementInfo.addressId === v.id) {
+            v.cur = true
+          } else {
+            v.cur = false
           }
-          let arr = res.data.data
-          arr.map((v, k) => {
-            if (this.arrangementInfo.addressId === v.id) {
-              v.cur = true
-            } else {
-              v.cur = false
-            }
-          })
-          this.addresslist = arr
         })
+        this.addresslist = arr
       })
     }
     toggleaddress (data) {
@@ -1950,9 +1949,6 @@ export default class CourseList extends Vue {
     handleSearch () {
       this.form.page = 1
       this.setPathQuery(this.form)
-    }
-    created () {
-      this.hasadmin()
     }
     cancelmessage () {
       this.toworddiggle = !this.toworddiggle

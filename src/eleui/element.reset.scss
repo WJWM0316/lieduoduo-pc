@@ -6,12 +6,12 @@
   font-weight: normal;
   box-sizing: border-box;
 }
-.el-button.el-button--default:hover {
+button.el-button--default:hover {
   background: #fff;
   color: $title-color-3;
   border-color: $title-color-3;
 }
-.el-button.el-button--default:focus {
+button.el-button--default:focus {
   background: #fff;
   color: $title-color-3;
   border-color: $border-color-1;
@@ -135,6 +135,14 @@
 .el-message-box .el-message-box__message {
   font-size: 14px;
   color: $title-color-2;
+  p:first-child {
+    padding-left: 6px;
+  }
+}
+.el-message-box.el-message-box--center .el-message-box__message {
+  p:first-child {
+    padding-left: 0px;
+  }
 }
 .el-message-box .el-message-box__btns {
   padding: 52px 40px 30px 0;

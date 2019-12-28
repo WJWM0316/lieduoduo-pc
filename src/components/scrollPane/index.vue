@@ -1,8 +1,13 @@
 <template>
-  <div class="scroll-container" ref="scrollContainer" @wheel.prevent="handleScroll">
-    <div class="scroll-wrapper" ref="scrollWrapper" :style="{left: left + 'px'}">
-      <slot></slot>
+  <div>
+    <div class="scroll-container" ref="scrollContainer" @wheel.prevent="handleScroll" v-if="isWheel">
+      <div class="scroll-wrapper" ref="scrollWrapper" :style="{left: left + 'px'}">
+        <slot></slot>
+      </div>
     </div>
+    <template v-else>
+      <slot></slot>
+    </template>
   </div>
 </template>
 
@@ -11,9 +16,25 @@ const padding = 15
 
 export default {
   name: 'scrollPane',
+  props: {
+    width: {
+      type: [Number, String],
+      default: 'auto'
+    },
+    maxWidth: {
+      type: Number,
+      default: 1200
+    }
+  },
   data () {
     return {
       left: 0
+    }
+  },
+  computed: {
+    isWheel () {
+      if (this.width === 'auto') return true
+      return this.width > this.maxWidth
     }
   },
   methods: {
@@ -72,6 +93,7 @@ export default {
   position: relative;
   overflow: hidden;
   width: 100%;
+  height: 100%;
   .scroll-wrapper {
     position: absolute;
   }

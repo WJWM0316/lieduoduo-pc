@@ -5,7 +5,7 @@
             <p class="myMaterial-head-text">如“<span>*</span>”号的内容，是必须填写的项目；置灰内容为公司认证信息，修改请联系 400-065-5788</p>
         </div>
         <div class="from">
-            <el-form v-model="from" :rules="rules" label-width="100px">
+            <el-form :model="from" :rules="rules" label-width="100px">
                 <el-form-item prop="img" label="公司logo：">
                   <div class="Picture-wrap">
                     <Picture
@@ -177,24 +177,31 @@ export default {
           type: 'warning',
           center: true
         }).catch(() => {
-          let data = this.from
-          editCompanyApi(this.from.id, data).then()
-          let dataAlbumInfo
-          this.albumInfo.map((item, index) => {
-            if (index === this.albumInfo.length) return
-            dataAlbumInfo = item.id + ',' + dataAlbumInfo
-          })
-          console.log(dataAlbumInfo)
-          //   editCompanyAlbumApi()
-          let type = '公司主页'
-          this.$emit('click', type)
+          this.saveEditCompany()
         })
       } else {
-        let data = this.from
-        editCompanyApi(this.from.id, data).then()
-        let type = '公司主页'
-        this.$emit('click', type)
+        this.saveEditCompany()
       }
+    },
+    saveEditCompany () { // 提交
+      let data = this.from
+      editCompanyApi(this.from.id, data).then()
+      let dataAlbumInfo = []
+      this.albumInfo.forEach((item, index) => {
+        if (index === this.albumInfo.length) return
+        dataAlbumInfo.push(item.id)
+      })
+      dataAlbumInfo = dataAlbumInfo.join(',')
+      let datas = { images: dataAlbumInfo }
+
+      editCompanyAlbumApi(this.from.id, datas).then(res => {
+        this.$message.success('保存成功！')
+      }).catch(res => {
+        this.$message.error('保存失败！')
+      })
+      this.$emit('save') // 刷新父组件数据
+      let type = '公司主页'
+      this.$emit('click', type)
     },
     receiveAddAdress (data) { // 地图回调
       if (this.mapIndex === 100) { // 判断是添加还是编辑 100 是添加
@@ -371,5 +378,9 @@ export default {
 .from .foot button{
   width: 120px;
   height: 40px;
+}
+.myMaterial .el-form-item:nth-of-type(1) .el-form-item__label:nth-of-type(1){
+  height: 70px;
+  line-height: 70px;
 }
 </style>

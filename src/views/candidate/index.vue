@@ -863,7 +863,7 @@ import {
   getInviteListApi,
   getdeleteTabRedDotApi
 } from 'API/candidate'
-import { recruiterDetail, createonlinepdf, createonlineword } from 'API/common'
+import { createonlinepdf, createonlineword } from 'API/common'
 import MapSearch from 'COMPONENTS/map'
 import DynamicRecord from '../candidateType/dynamicrecord.vue'
 import { putCollectUserApi, cancelCollectUserApi } from 'API/collect'
@@ -885,7 +885,9 @@ import {
   computed: {
     ...mapGetters([
       'recruiterIntentionList',
-      'recruiterInviteList'
+      'recruiterInviteList',
+      'recruitDataCompanyId',
+      'recruiterIsAdmin'
     ])
   },
   watch: {
@@ -1090,6 +1092,7 @@ export default class CourseList extends Vue {
       this.form.created_end_time = undefined
     }
     this.form.page = 1
+    this.setPathQuery(this.form)
     this.getList()
   }
 
@@ -1256,6 +1259,7 @@ export default class CourseList extends Vue {
         break
       case 'confirm':
         this.form.page = 1
+        this.setPathQuery(this.form)
         this.getList()
         this.isShowScreen = false
         break
@@ -1330,7 +1334,7 @@ export default class CourseList extends Vue {
       })
 
       this.positionTypeList = data
-      let ids = this.$route.query.position_type_id.split(',')
+      let ids = this.$route.query.position_type_id && this.$route.query.position_type_id.split(',') || []
       this.positionTypeList = this.positionTypeList.filter(item => {
         let idList = ids.map(v => v)
         if (idList.includes((item.labelId).toString())) {
@@ -1384,6 +1388,7 @@ export default class CourseList extends Vue {
   getPositionList (listType) {
     this.form.status = listType
     this.form.page = 1
+    this.setPathQuery(this.form)
     this.getList(this.navType)
   }
 
@@ -1550,11 +1555,6 @@ export default class CourseList extends Vue {
       this.reasonlist = arr
     })
   }
-  hasadmin () {
-    recruiterDetail().then((res) => {
-      this.info = res.data.data
-    })
-  }
   setJob (uid, type, vo, statusid) {
     if (statusid === 1) {
       this.showResume = false
@@ -1570,7 +1570,7 @@ export default class CourseList extends Vue {
     }
     switch (type) {
       case 'recruiter-chat':
-        if (this.info.isCompanyTopAdmin) {
+        if (this.recruiterIsAdmin) {
           topAdminPositonList().then((res) => {
             let arr = res.data.data
             let hasOnline = []
@@ -1700,7 +1700,7 @@ export default class CourseList extends Vue {
             this.model.dateLists = []
           }
 
-          if (this.info.isCompanyTopAdmin) {
+          if (this.recruiterIsAdmin) {
             topAdminPositonList().then((res) => {
               let arr = res.data.data
               let hasOnline = []
@@ -2134,26 +2134,24 @@ export default class CourseList extends Vue {
   }
   // 选择地址列表
   selectaddredd () {
-    recruiterDetail().then((res) => {
-      let data = { page: 1, count: 20, company_id: res.data.data.currentCompanyId }
-      addressListApi(data).then((res) => {
-        this.pop = {
-          isShow: true,
-          Interview: true,
-          InterviewTitle: '选择地址',
-          btntext: '发送',
-          type: 'address'
+    let data = { page: 1, count: 20, company_id: this.recruitDataCompanyId }
+    addressListApi(data).then((res) => {
+      this.pop = {
+        isShow: true,
+        Interview: true,
+        InterviewTitle: '选择地址',
+        btntext: '发送',
+        type: 'address'
+      }
+      let arr = res.data.data
+      arr.map((v, k) => {
+        if (this.arrangementInfo.addressId === v.id) {
+          v.cur = true
+        } else {
+          v.cur = false
         }
-        let arr = res.data.data
-        arr.map((v, k) => {
-          if (this.arrangementInfo.addressId === v.id) {
-            v.cur = true
-          } else {
-            v.cur = false
-          }
-        })
-        this.addresslist = arr
       })
+      this.addresslist = arr
     })
   }
   toggleaddress (data) {
@@ -2203,7 +2201,6 @@ export default class CourseList extends Vue {
     }
   }
   created () {
-    this.hasadmin()
     getinviteapplyNum().then(res => {
       this.applynum = res.data.data.applyTotal
       this.invitenum = res.data.data.inviteTotal

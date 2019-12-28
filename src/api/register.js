@@ -184,13 +184,13 @@ export const JustifyCompanyExistApi = (data, hasLoading) => {
 }
 
 // 编辑公司相册
-export const editCompanyAlbumApi = data => {
+export const editCompanyAlbumApi = (id, data) => {
   return request({
     config: {
       host: 'zhaopin'
     },
     method: 'put',
-    url: `/company/album/${data.id}`,
+    url: `/company/album/${id}`,
     params: data
   })
 }
@@ -333,15 +333,14 @@ export const getCompanyAddressDetailApi = (id) => {
 }
 
 // 创建公司产品
-export const createCompanyProductApi = (data, hasLoading) => {
+export const createCompanyProductApi = data => {
   return request({
     config: {
       host: 'zhaopin'
     },
     method: 'post',
     url: '/company/product',
-    params: data,
-    hasLoading: true
+    params: data
   })
 }
 
@@ -359,28 +358,25 @@ export const getCompanyProductInfosApi = (data, hasLoading) => {
 }
 
 // 编辑公司产品信息
-export const editCompanyProductInfosApi = (data, hasLoading) => {
+export const editCompanyProductInfosApi = data => {
   return request({
     config: {
       host: 'zhaopin'
     },
     method: 'put',
     url: `/company/product/${data.id}`,
-    params: data,
-    hasLoading: true
+    params: data
   })
 }
 
 // 删除公司产品信息
-export const deleteCompanyProductInfosApi = (data, hasLoading) => {
+export const deleteCompanyProductInfosApi = id => {
   return request({
     config: {
       host: 'zhaopin'
     },
     method: 'delete',
-    url: `/company/product/${data.id}`,
-    params: data,
-    hasLoading: true
+    url: `/company/product/${id}`
   })
 }
 

@@ -27,7 +27,7 @@ export default new Vuex.Store({
     token: getAccessToken(),
     pageName: '',
     loginValidTime: 60 * 60 * 24 * 7 * 1000,
-    cityId: 0, // 用户地址id
+    cityId: parseInt(sessionStorage.getItem('cityid')) || 0, // 用户地址id
     guideCreateRecruiter: false, // 登录B端引导二维码
     showGuideQrcodePop: false, // 引导二维码
     guideQrcodePop: { // 引导二维码参数
@@ -106,6 +106,7 @@ export default new Vuex.Store({
     },
 
     setCityId (state, id) {
+      sessionStorage.setItem('cityid', id)
       state.cityId = id
     },
     guideQrcodePop (state, data) {
@@ -193,6 +194,8 @@ export default new Vuex.Store({
               store.dispatch('getMyResume')
             }
             if (result.isRecruiter) {
+              // 招聘官信息
+              store.dispatch('getMyRecruit')
               perfectauthDetail().then((res) => {
                 store.commit('setRecruiterinfo', res.data.data)
               })
@@ -238,6 +241,9 @@ export default new Vuex.Store({
         }
 
         if (result.isRecruiter) {
+          // 招聘官信息
+          store.dispatch('getMyRecruit')
+          // 招聘官认证信息
           perfectauthDetail().then((res) => {
             store.commit('setRecruiterinfo', res.data.data)
           })
@@ -247,6 +253,10 @@ export default new Vuex.Store({
     logoutApi (store, data) {
       return logoutApi()
         .then(res => {
+          // 清除简历信息
+          store.commit('removeResume')
+          // 清除招聘官信息
+          store.commit('removeRecruit')
           store.commit('LOGOUT', data)
           // 在C端页面退登
           if (data.curPage === 1) {
