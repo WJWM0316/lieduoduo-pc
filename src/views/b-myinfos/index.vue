@@ -113,7 +113,8 @@ export default {
         positionTypeId: [{ required: true, message: '请选择担任职位类型', trigger: 'blur' }],
         position: [{ required: true, message: '请填写担任职务', trigger: 'blur' }],
         email: [{ required: true, message: '请填写公司邮箱', trigger: 'blur' }],
-        labels: [{ required: true, type: 'array', message: '请选择个人标签', trigger: 'change' }]
+        labels: [{ required: true, type: 'array', message: '请选择个人标签', trigger: 'change' }],
+        brief: [{ min: 6, max: 5000, message: '个人简介字数在6到5000之间', trigger: 'blur' }]
       },
       intros: CompanyIntro,
       introIndex: 0,
@@ -151,15 +152,32 @@ export default {
           positionType: recruiter.positionType,
           brief: recruiter.brief
         })
+        // 保存信息
+        this.recruiterAvatar = recruiter.avatar
+        this.positionTemp = {
+          positionTypeTopPid: recruiter.positionTypeTopPid,
+          positionTypePid: recruiter.positionTypePid,
+          positionTypeId: recruiter.positionTypeId,
+          positionType: recruiter.positionType
+        }
       })
     },
     handleChangeAvatar (item) {
       this.form.attachId = item[0].id
       this.form.avatarUrl = item[0].middleUrl
+      // 保存头像信息
+      this.recruiterAvatar = item[0]
     },
     selectedPosition (item) {
       this.form.positionTypeId = item.labelId
       this.form.positionType = item.name
+
+      this.positionTemp = {
+        positionTypeTopPid: item.topPid,
+        positionTypePid: item.pid,
+        positionTypeId: item.labelId,
+        positionType: item.name
+      }
     },
     handleSave () {
       this.$refs.form.validate(valid => {
@@ -168,10 +186,22 @@ export default {
           setRecruiter(this.form).then(({ data }) => {
             this.saveLoading = false
             if (data.httpStatus === 200) {
+              // 记录到vuex中
+              this.$store.commit('overwriteRecruit', {
+                avatarId: this.form.attachId,
+                avatar: this.recruiterAvatar,
+                email: this.form.email,
+                position: this.form.position,
+                wechat: this.form.wechat,
+                signature: this.form.signature,
+                brief: this.form.brief,
+                personalizedLabels: this.form.labels,
+                ...this.positionTemp
+              })
               this.$message.success('保存成功！')
             }
           }).catch(() => {
-            this.saveLoading = true
+            this.saveLoading = false
           })
         }
       })

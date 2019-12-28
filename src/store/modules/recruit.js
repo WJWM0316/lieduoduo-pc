@@ -20,6 +20,10 @@ const mutations = {
   removeRecruit (state) {
     state.info = {}
     state.loaded = false
+  },
+  // 修改招聘官信息
+  overwriteRecruit (state, data) {
+    Object.assign(state.info, data)
   }
 }
 
