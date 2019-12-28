@@ -6,14 +6,12 @@ import { getAdressListApi, addCompanyAdressApi } from '@/api/company'
 import { baseUrl } from '../../../config.js'
 import { getMyInfoApi } from '../../api/auth'
 
-import SearchBar from '@/components/searchBar'
 import MapSearch from '@/components/map'
 import SelectPositionType from '@/components/selectPositionType'
 
 @Component({
   name: 'community-edit',
   components: {
-    SearchBar,
     MapSearch,
     SelectPositionType
   },

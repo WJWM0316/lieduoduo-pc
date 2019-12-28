@@ -245,6 +245,9 @@ export default {
   .el-input, .el-textarea, .position-type, .self-label-wrapper  {
     width: 382px;
   }
+  .el-form-item {
+    margin-bottom: 30px;
+  }
 }
 .form-intro {
   margin-left: 110px;
