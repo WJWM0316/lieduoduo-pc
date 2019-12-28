@@ -245,3 +245,11 @@ export const getRecommendPosition = data => request({
   params: data,
   config: { host: 'qiuzhi' }
 })
+
+// 猜你感兴趣 - 职位列表
+export const getRecommendOpptyInterestListsApi = data => request({
+  url: '/recommend/oppty/interest',
+  method: 'get',
+  params: data,
+  config: { host: 'qiuzhi' }
+})

@@ -142,3 +142,15 @@ export const clearDayInterviewRedDotApi = (data, hasLoading) => {
     }
   })
 }
+
+// 获取全部面试列表
+export const getHistoryInterviewListsApi = (data, hasLoading) => {
+  return request({
+    method: 'get',
+    url: '/interview/newHistory',
+    params: data,
+    config: {
+      host: 'qiuzhi'
+    }
+  })
+}
