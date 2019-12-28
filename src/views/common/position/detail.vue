@@ -77,6 +77,32 @@
     <div class="content">
       <div class="inner">
         <article class="content-article">
+          <el-row class="admin-infos">
+            <el-col :span="24">
+              <div class="img-box">
+                <el-popover
+                  placement="left"
+                  popper-class="user-infos"
+                  trigger="hover">
+                  <div class="box">
+                    <div class="describe">
+                      “Hi，对我发布的职位感兴趣？<strong>用微信扫描二维码</strong>，和TA约聊吧。”
+                    </div>
+                    <div class="qr-code">
+                      <img :src="infos.qrCode"/>
+                    </div>
+                  </div>
+                  <div slot="reference">
+                    <img :src="infos.recruiterInfo.avatar.smallUrl" alt="avatar" v-if="infos.recruiterInfo && infos.recruiterInfo.avatar">
+                  </div>
+                </el-popover>
+              </div>
+              <div class="admin-hello">
+                <div class="tips_01">我是招聘官</div>
+                <div class="degress">技术总监 <template v-if="infos.activeLabel">· {{infos.activeLabel}}</template></div>
+              </div>
+            </el-col>
+          </el-row>
           <section class="part" v-if="infos.skillsLabel.length > 0">
             <div class="title">技能要求</div>
             <div class="labels">
@@ -137,6 +163,7 @@ import AppLinks from 'COMPONENTS/common/appLinks'
 import BlockOverflow from 'COMPONENTS/common/blockOverflow'
 import mapPop from '@/components/mapPop/index'
 let that = null
+import { app_qrcode } from 'IMAGES/image'
 
 @Component({
   name: 'positionDetail',
@@ -213,7 +240,9 @@ export default class PositionDetail extends Vue {
   getDetail () {
     let that = this
     getPositionApi({ id: this.id }).then(res => {
-      this.infos = res.data.data
+      let infos = res.data.data
+      infos.qrCode = app_qrcode
+      this.infos = infos
       if (that.infos.rapidlyInfo && that.infos.rapidlyInfo.endTime) {
         let time = that.infos.rapidlyInfo.endTime.replace(/-/g, '/')
         this.remainingTime = timePocessor.restTime(time)

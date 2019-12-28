@@ -47,6 +47,14 @@
 }
 
 // 单行省略号
+@mixin ellipsis-over($width){
+  max-width: $width;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+// 单行省略号
 @mixin ellipsis(){
   overflow: hidden;
   white-space: nowrap;

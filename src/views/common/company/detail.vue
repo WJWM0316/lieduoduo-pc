@@ -111,8 +111,30 @@
             <div :class="['recruitmentTeam', companyInformation.albumInfo.length === 0 ? 'resetmar' : '']">
               <p class="recruitmentTeam-title">招聘团队</p>
               <div class="recruitmentTeam-mian">
-                <div class="recruitmentTeam-box" v-for="(item, index) in getCompanysTeamText" :key="index">
-                  <img :src="item.avatar.smallUrl"/>
+                <div 
+                  class="recruitmentTeam-box" 
+                  v-for="(item, index) in getCompanysTeamText" 
+                  :key="index"
+                  v-if="getCompanysTeamText.length">
+                  <el-popover
+                    placement="left"
+                    popper-class="user-infos"
+                    v-model="item.show"
+                    trigger="hover">
+                    <div class="box">
+                      <div class="describe" v-show="item.show">
+                        “Hi，对我发布的职位感兴趣？<strong>用微信扫描二维码</strong>，和TA约聊吧。”
+                      </div>
+                      <div class="qr-code">
+                        <img
+                          :src="item.qrCode"
+                          @load="hasloadedRemoteImg(item, index)"
+                          @mouseout="removeShowQrCode(item, index)"
+                          @mouseover="getRemoteImg(item, index)"/>
+                      </div>
+                    </div>
+                    <div slot="reference"><img :src="item.avatar.smallUrl"/></div>
+                  </el-popover>
                   <div class="recruitmentTeam-text">
                     <p class="recruitmentTeam-text-top">{{ item.name }} | {{ item.position }}</p>
                     <p class="recruitmentTeam-text-buttom">
@@ -149,11 +171,15 @@ import mapPop from '@/components/mapPop/index'
 import login from '@/components/common/loginPop/index'
 
 import { saveResumeAttach } from 'API/resume.js'
+import { getRecruiterQrcodeApi } from 'API/qrcode.js'
+
 import {
   getCompanyHotApi,
   getVkeyCompanyApi,
   getCompanysTeamApi
 } from '@/api/company.js'
+
+import { app_qrcode } from 'IMAGES/image'
 
 @Component({
   name: 'company-detail',
@@ -192,7 +218,7 @@ export default class companyDetail extends Vue {
   annex = '' // 附件简历显示文案
   uploading = false // 附件上传loading
   dialogVisible = false // 地图弹窗
-  getCompanysTeamText = {} // 招聘团队
+  getCompanysTeamText = [] // 招聘团队
   islogin = false // 子组件是否登陆弹窗
   isIntroduction_text = true // 显示文案切换按钮
   isHeader = false // 是否显示顶部悬浮栏
@@ -232,10 +258,14 @@ export default class companyDetail extends Vue {
       page: 1,
       count: 3
     }
-    getCompanysTeamApi(data)
-      .then(res => {
-        this.getCompanysTeamText = res.data.data
+    getCompanysTeamApi(data).then(({ data }) => {
+      let getCompanysTeamText = data.data
+      getCompanysTeamText.map(v => {
+        v.qrCode = app_qrcode
+        v.show = false
       })
+      this.getCompanysTeamText = getCompanysTeamText
+    })
   }
   // 获取公司热门职位
   getCompanyHot () {
@@ -295,6 +325,19 @@ export default class companyDetail extends Vue {
   uploadResumeFile () {
     this.uploading = false
     this.$message.error('上传附件简历失败')
+  }
+  getRemoteImg(item, index) {
+    if(item.qrCode) {
+      item.show = true
+    } else {
+      // getRecruiterQrcodeApi({recruiterUid: item.uid}).then(( { data } ) => item.qrCode = data.data.positionQrCodeUrl)
+    }
+  }
+  removeShowQrCode(item, index) {
+    item.show = false
+  }
+  hasloadedRemoteImg(item, index) {
+    // item.show = true
   }
   created () {
     window.addEventListener('scroll', this.handleScroll)
@@ -695,7 +738,7 @@ to {top:0px;}
         .recruitmentTeam-box{
 					padding: 19px 0 20px 0;
           height: 60px;
-					padding-left: 74px;
+					/*padding-left: 74px;*/
 					position: relative;
           @include flex-v-center;
           border-top: 1px solid $--input-disabled-border;
@@ -703,17 +746,15 @@ to {top:0px;}
             width: 60px;
             height: 60px;
             border-radius: 50%;
-            position: absolute;
-						top: 50%;
-            left: 0;
-            transform: translateY(-50%)
+            position: relative;
           }
           .recruitmentTeam-text{
             height: 44px;
             font-weight: 400;
             font-size: 14px;
             line-height: 20px;
-						width: 100%;
+            padding-left: 14px;
+						/*width: 100%;*/
             .recruitmentTeam-text-top{
               color: $font-color-3;
               white-space: nowrap;
@@ -770,6 +811,34 @@ to {top:0px;}
     color: $font-color-10;
     display: inline-block;
     margin: 0 7px 0 15px;
+  }
+}
+</style>
+<style lang="scss">
+.user-infos{
+  padding: 13px 17px;
+  .box {
+    display: flex;
+    align-items: center;
+  }
+  .describe {
+    width:151px;
+    font-size:12px;
+    font-weight:400;
+    color:$font-color-3;
+    line-height:16px;
+    margin-right: 5px;
+  }
+  .qr-code{
+    width: 76px;
+    height: 76px;
+  }
+  strong{
+    color: $nav-color-hover;
+  }
+  img{
+    width: 100%;
+    height: 100%;
   }
 }
 </style>

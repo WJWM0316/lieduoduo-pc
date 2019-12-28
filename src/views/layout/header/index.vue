@@ -49,7 +49,9 @@
               <span
                 class="router-link"
                 :class="[isActive && 'router-link-active', isExactActive && 'router-link-exact-active']"
-                @click="handeToInterview">面试</span>
+                @click="handeToInterview">
+                面试<span class="reddot" v-if="interviewData.jobhunterInterviewTotal">{{interviewData.jobhunterInterviewTotal}}</span>
+              </span>
             </router-link>
             <router-link tag="span" to="/cresume" class="resume" v-slot="{ href, isActive, isExactActive }">
               <span
@@ -122,6 +124,10 @@ export default {
       cityList: state => state.areaList,
       cityId: state => state.cityId
     }),
+    ...mapGetters([
+      'interviewData',
+      'asideBar'
+    ]),
     headerInfo () {
       // 有加载简历就用简历里面的 没有就用登陆携带回来的信息
       const { userInfo, resume: { myResume } } = this.$store.state
@@ -174,7 +180,8 @@ export default {
       }
     },
     handeToInterview() {
-      this.$router.push({ path: '/interview/schedule' })
+      let route = this.asideBar.topNav[2]
+      this.$router.push({name: route.routeName, query: route.query})
     },
     changeLocation (item) {
       this.addressName = item.name
@@ -293,6 +300,16 @@ $header-height-1: $page-header-height;
   }
   .resume.router-link-active {
     color: $nav-color-hover;
+  }
+  .reddot{
+    background:$error-color-1;
+    border-radius:7px;
+    padding: 0 4px;
+    font-size:12px;
+    font-weight:400;
+    color:white;
+    line-height: 14px;
+    margin-left: 3px;
   }
 }
 .system {
