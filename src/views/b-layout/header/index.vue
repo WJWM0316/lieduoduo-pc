@@ -20,9 +20,7 @@
       <div class="header-dropdown">
         <el-dropdown trigger="click" placement="bottom-start" @command="handleClick">
           <div>
-            <span>
-              欢迎登录猎多多，{{userInfo.realname}}
-            </span>
+            <span class="user-name">欢迎登录猎多多，{{userInfo.realname}}</span>
             <div class="user-avatar">
               <img :src="userInfo.avatarInfo && userInfo.avatarInfo.smallUrl" alt="">
             </div>
@@ -117,11 +115,11 @@ $header-height-1: $page-b-header-height;
 }
 .sc-wrapper {
   color: #333333;
-  height: 30px;
   .sc-wrapper-item {
+    height: $header-height-1;
+    line-height: $header-height-1;
     width: 100px;
     display: inline-block;
-    line-height: 30px;
     vertical-align: top;
   }
   .sc-wrapper-item + .sc-wrapper-item {
@@ -141,10 +139,12 @@ $header-height-1: $page-b-header-height;
   padding-left: 40px;
   .user-avatar {
     @include img-radius(30px, 30px);
-    display: inline-block;
-    vertical-align: middle;
     margin: 0 0 0 12px;
     border: 1px solid #EDf1f0;
+  }
+  .user-name, .user-avatar{
+    display: inline-block;
+    vertical-align: middle;
   }
   span{
     color: #333;
