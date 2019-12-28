@@ -4,8 +4,8 @@
 		  <el-col :span="12" class="header-col-left">
 		  	<span class="create-time">{{item.createdAt}}</span>
 		  	<span class="creater-by">
-		  		<template v-if="pIndex === 0">你发起的约面</template>
-		  		<template v-if="pIndex === 1">邀请你约面</template>
+		  		<template v-if="tab === 'apply'">你发起的约面</template>
+		  		<template v-if="tab === 'receive'">邀请你约面</template>
 		  	</span>
 		  </el-col>
 		  <el-col :span="12" class="header-col-right">
@@ -54,11 +54,11 @@
 		  			</router-link>
 		  			<el-button type="text" v-if="!item.positionId">查看招聘官</el-button>
 		  		</template>
-		  		<el-button type="primary" v-if="[31].includes(item.status)" @click="todoAction(item)" class="func-btn">确认面试信息</el-button>
-		  		<a type="primary" v-if="[41, 51, 58, 60].includes(item.status)" class="router-link" @click="todoAction(item)">查看面试</a>
+		  		<el-button type="primary" v-if="[31].includes(item.status)" @click="bindClick(item)" class="func-btn">确认面试信息</el-button>
+		  		<a type="primary" v-if="[41, 51, 58, 60].includes(item.status)" class="router-link" @click="bindClick(item)">查看面试</a>
 		  		<template v-if="item.status === 12">
 		  			<el-button type="text">暂不考虑</el-button>
-		  			<el-button type="primary" @click="todoAction(item)" class="func-btn">接受约面</el-button>
+		  			<el-button type="primary" @click="bindClick(item)" class="func-btn">接受约面</el-button>
 		  		</template>
 		  	</div>
 		  </el-col>
@@ -72,82 +72,14 @@ export default {
       type: Object,
       default: () => ({})
     },
-    pIndex: {
-      type: Number,
-      default: 0
+    tab: {
+    	type: String,
+    	default: ''
     }
   },
   methods: {
-  	todoAction(item) {
-	    switch(item.status) {
-	      case 12:
-	        if(Number(params.positionid)) {
-	          // wx.navigateTo({url: `${COMMON}positionDetail/positionDetail?positionId=${params.positionid}`})
-	        } else {
-	          // wx.navigateTo({url: `${COMMON}recruiterDetail/recruiterDetail?uid=${params.recruiteruid}`})
-	        }
-	        break
-	      case 11:
-	        if(Number(params.positionid)) {
-	          // wx.navigateTo({url: `${COMMON}positionDetail/positionDetail?positionId=${params.positionid}`})
-	        } else {
-	          // wx.navigateTo({url: `${COMMON}recruiterDetail/recruiterDetail?uid=${params.recruiteruid}`})
-	        }
-	        break
-	      case 21:
-	        if(Number(params.positionid)) {
-	          // wx.navigateTo({url: `${COMMON}positionDetail/positionDetail?positionId=${params.positionid}`})
-	        } else {
-	          // wx.navigateTo({url: `${COMMON}recruiterDetail/recruiterDetail?uid=${params.recruiteruid}`})
-	        }
-	        break
-	      case 52:
-	        if(Number(params.positionid)) {
-	          // wx.navigateTo({url: `${COMMON}positionDetail/positionDetail?positionId=${params.positionid}`})
-	        } else {
-	          // wx.navigateTo({url: `${COMMON}recruiterDetail/recruiterDetail?uid=${params.recruiteruid}`})
-	        }
-	        break
-	      case 53:
-	        if(Number(params.positionid)) {
-	          // wx.navigateTo({url: `${COMMON}positionDetail/positionDetail?positionId=${params.positionid}`})
-	        } else {
-	          // wx.navigateTo({url: `${COMMON}recruiterDetail/recruiterDetail?uid=${params.recruiteruid}`})
-	        }
-	        break
-	      case 54:
-	        if(Number(params.positionid)) {
-	          // wx.navigateTo({url: `${COMMON}positionDetail/positionDetail?positionId=${params.positionid}`})
-	        } else {
-	          // wx.navigateTo({url: `${COMMON}recruiterDetail/recruiterDetail?uid=${params.recruiteruid}`})
-	        }
-	        break
-	      case 55:
-	        if(Number(params.positionid)) {
-	          // wx.navigateTo({url: `${COMMON}positionDetail/positionDetail?positionId=${params.positionid}`})
-	        } else {
-	          // wx.navigateTo({url: `${COMMON}recruiterDetail/recruiterDetail?uid=${params.recruiteruid}`})
-	        }
-	        break  
-	      case 57:
-	        // wx.navigateTo({url: `${COMMON}arrangement/arrangement?id=${params.itemId}`})
-	        break
-	      case 58:
-	        // wx.navigateTo({url: `${COMMON}arrangement/arrangement?id=${params.itemId}`})
-	        break
-	      case 59:
-	        // wx.navigateTo({url: `${COMMON}arrangement/arrangement?id=${params.itemId}`})
-	        break
-	      case 60:
-	        // wx.navigateTo({url: `${COMMON}arrangement/arrangement?id=${params.itemId}`})
-	        break
-	      case 61:
-	        // wx.navigateTo({url: `${COMMON}arrangement/arrangement?id=${params.itemId}`})
-	        break
-	      default:
-	        // wx.navigateTo({url: `${COMMON}arrangement/arrangement?id=${params.itemId}`})
-	        break
-	    }
+  	bindClick(item) {
+	    this.$emit('click', item)
 	  }
   }
 }

@@ -114,8 +114,7 @@
                 <div 
                   class="recruitmentTeam-box" 
                   v-for="(item, index) in getCompanysTeamText" 
-                  :key="index"
-                  v-if="getCompanysTeamText.length">
+                  :key="index">
                   <el-popover
                     placement="left"
                     popper-class="user-infos"
@@ -171,7 +170,7 @@ import mapPop from '@/components/mapPop/index'
 import login from '@/components/common/loginPop/index'
 
 import { saveResumeAttach } from 'API/resume.js'
-import { getRecruiterQrcodeApi } from 'API/qrcode.js'
+// import { getRecruiterQrcodeApi } from 'API/qrcode.js'
 
 import {
   getCompanyHotApi,
@@ -326,17 +325,17 @@ export default class companyDetail extends Vue {
     this.uploading = false
     this.$message.error('上传附件简历失败')
   }
-  getRemoteImg(item, index) {
-    if(item.qrCode) {
+  getRemoteImg (item, index) {
+    if (item.qrCode) {
       item.show = true
     } else {
       // getRecruiterQrcodeApi({recruiterUid: item.uid}).then(( { data } ) => item.qrCode = data.data.positionQrCodeUrl)
     }
   }
-  removeShowQrCode(item, index) {
+  removeShowQrCode (item, index) {
     item.show = false
   }
-  hasloadedRemoteImg(item, index) {
+  hasloadedRemoteImg () {
     // item.show = true
   }
   created () {
