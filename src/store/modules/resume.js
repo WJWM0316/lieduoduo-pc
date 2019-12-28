@@ -35,23 +35,27 @@ export default {
     // 清空简历信息
     removeResume (state) {
       state.myResume = {}
+      state.loaded = false
     },
     // 是否请求成功
-    setLoaded (state, status) {
+    setResumeLoaded (state, status) {
       state.loaded = status
     }
   },
   actions: {
     // 获取我的简历详情
-    getMyResume (store) {
+    getMyResume ({ commit, state }) {
       // eslint-disable-next-line promise/param-names
       return new Promise((reslove) => {
+        if (state.loaded) {
+          return reslove(state.myResume)
+        }
         getMyResumeApi().then(({ data }) => {
           const res = data || {}
-          store.commit('setMyResume', { res, status: data.httpStatus === 200 })
+          commit('setMyResume', { res, status: data.httpStatus === 200 })
           reslove(res)
         }).catch(() => {
-          store.commit('setLoaded', false)
+          commit('setResumeLoaded', false)
         })
       })
     }

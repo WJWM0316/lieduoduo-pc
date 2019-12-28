@@ -194,6 +194,8 @@ export default new Vuex.Store({
               store.dispatch('getMyResume')
             }
             if (result.isRecruiter) {
+              // 招聘官信息
+              store.dispatch('getMyRecruit')
               perfectauthDetail().then((res) => {
                 store.commit('setRecruiterinfo', res.data.data)
               })
@@ -251,6 +253,10 @@ export default new Vuex.Store({
     logoutApi (store, data) {
       return logoutApi()
         .then(res => {
+          // 清除简历信息
+          store.commit('removeResume')
+          // 清除招聘官信息
+          store.commit('removeRecruit')
           store.commit('LOGOUT', data)
           // 在C端页面退登
           if (data.curPage === 1) {

@@ -13,8 +13,13 @@ const mutations = {
     state.loaded = status
   },
   // 是否请求成功
-  setLoaded (state, status) {
+  setRecruitLoaded (state, status) {
     state.loaded = status
+  },
+  // 移除招聘信息
+  removeRecruit (state) {
+    state.info = {}
+    state.loaded = false
   }
 }
 
@@ -34,7 +39,7 @@ const actions = {
         store.commit('setRecruit', { info: res, status: data.httpStatus === 200 })
         reslove(res)
       }).catch(() => {
-        store.commit('setLoaded', false)
+        store.commit('setRecruitLoaded', false)
       })
     })
   }

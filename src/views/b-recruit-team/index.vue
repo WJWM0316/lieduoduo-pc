@@ -3,7 +3,7 @@
   <div class="recruit-team" v-infinite-scroll="loadmore" :infinite-scroll-disabled="disabledScroll">
     <div class="rec-team-header">
       <h1>招聘官团队</h1>
-      <el-badge :is-dot="reddot">
+      <el-badge :is-dot="reddot" v-if="recruiterIsAdmin">
         <el-button type="primary" @click="applyDialog = true">招聘申请（{{count.apply}}）</el-button>
       </el-badge>
     </div>
@@ -75,12 +75,9 @@ export default {
   computed: {
     ...mapGetters([
       'recruitDataLoaded',
-      'recruitDataCompanyId'
+      'recruitDataCompanyId',
+      'recruiterIsAdmin'
     ])
-  },
-  created () {
-    this.getCounts()
-    this.getreddots()
   },
   methods: {
     loadmore () {
@@ -154,6 +151,11 @@ export default {
         this.getLoading = !value
         if (value) {
           this.getDatas()
+          // 如果是超级管理员
+          if (this.recruiterIsAdmin) {
+            this.getCounts()
+            this.getreddots()
+          }
         }
       },
       immediate: true
