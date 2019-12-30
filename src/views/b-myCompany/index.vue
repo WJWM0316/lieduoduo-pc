@@ -18,7 +18,7 @@
                     <i class="iconfont icon-qiye"></i>公司简介
                 </p>
                 <p v-if="information.intro" class="companyIntroduction-text">{{information.intro}}</p>
-                <p v-else>尚未添加公司简介<span>去添加</span></p>
+                <p v-else>尚未添加公司简介<el-button @click="toEdit('编辑公司')" v-if="isCompanyAdmin" type="text">去添加</el-button></p>
             </div>
             <div class="companySurroundings">
                 <div class="companySurroundings-bnt" v-if="bntLeftShow" @click="clickBnt('left')">
@@ -245,6 +245,9 @@ export default class myCompany extends Vue {
         font-size: 34px;
         color: $font-color-3;
         font-weight: 700;
+        button{
+            margin-left: 10px;
+        }
     }
     .companyIndustry{
         margin-top: 14px;
