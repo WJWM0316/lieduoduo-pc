@@ -22,7 +22,7 @@
             </div>
             <div class="companySurroundings">
                 <div class="companySurroundings-bnt" v-if="bntLeftShow" @click="clickBnt('left')">
-                    <i class="iconfont icon-left"></i>
+                    <i class="iconfont icon-right Spin"></i>
                 </div>
                 <div class="companySurroundings-bnt companySurroundings-rightbnt"  v-if="bntRightShow" @click="clickBnt('right')">
                     <i class="iconfont icon-right"></i>
@@ -100,13 +100,12 @@ import { companyDetailApi } from '@/api/company'
   },
   watch: {
     transformWidth () {
-      console.log(this.transformWidth)
       if (this.transformWidth < 100) {
         this.bntLeftShow = false
       } else {
         this.bntLeftShow = true
       }
-      if (this.transformWidth > this.information.albumInfo.lenghth - 5) {
+      if (this.transformWidth > (this.information.albumInfo.length - 5) * 100) {
         this.bntRightShow = false
       } else {
         this.bntRightShow = true
@@ -274,6 +273,9 @@ export default class myCompany extends Vue {
         overflow: hidden;
         .companySurroundings-bnt{
             display: none;
+            .Spin{
+              transform: rotate(180deg);
+            }
         }
         &:hover{
             .companySurroundings-bnt{
