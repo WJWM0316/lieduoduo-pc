@@ -50,7 +50,7 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="公司官网："><el-input placeholder="请输入公司官网" v-model="from.website"></el-input></el-form-item>
+                <el-form-item prop="website" label="公司官网："><el-input placeholder="请输入公司官网" v-model="from.website"></el-input></el-form-item>
                 <el-form-item prop="intro" label="公司介绍：">
                     <el-input type="textarea" placeholder="请输入公司介绍" v-model="from.intro"></el-input>
                 </el-form-item>
@@ -107,6 +107,10 @@ import {
   getCompanyAddressListApi,
   editCompanyAlbumApi
 } from '@/api/register'
+import {
+  urlReg,
+  companyIntroReg
+} from '@/util/fieldRegular'
 
 export default {
   props: {
@@ -120,6 +124,20 @@ export default {
     }
   },
   data () {
+    let urlRegReplace = (rule, value, callback) => {
+      if (urlReg.test(value)) {
+        callback()
+      } else {
+        callback(new Error('请输入正确的公司官网！'))
+      }
+    }
+    let introRegReplace = (rule, value, callback) => {
+      if (companyIntroReg.test(value)) {
+        callback()
+      } else {
+        callback(new Error('公司介绍字数应当在20~5000字以内哦！'))
+      }
+    }
     return {
       financing: {},
       employees: {},
@@ -132,7 +150,8 @@ export default {
         industry: [{ required: true, message: '请输入所属行业', trigger: 'blur' }],
         financing: [{ required: true, message: '请选择融资阶段', trigger: 'change' }],
         employees: [{ required: true, message: '请选择公司规模', trigger: 'change' }],
-        intro: [{ required: true, message: '请输入公司介绍', trigger: 'blur' }]
+        website: [{ required: false, message: '请输入正确的公司官网', trigger: 'change' }, { validator: urlRegReplace, trigger: 'blur' }],
+        intro: [{ required: true, message: '请输入公司介绍', trigger: 'blur' }, { validator: introRegReplace, trigger: 'blur' }]
       },
       avatarLoading: false,
       from: {
