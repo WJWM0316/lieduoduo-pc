@@ -116,11 +116,11 @@
         <li class="item-li center">
           <div class="waiting5">面试时间已确认</div>
           <div class="waiting4">已添加到面试日程，请准时赴约哦~<strong>通知我</strong></div>
-          <div class="waiting3">{{infos.arrangementInfo.appointmentTime}}</div>
+          <div class="waiting3">{{infos.arrangementInfo.appointment}}</div>
         </li>
       </ul>
     </template>
-    <template v-if="[58].includes(infos.status) && infos.arrangementInfo">
+    <template v-if="[58, 60].includes(infos.status) && infos.arrangementInfo">
       <ul class="ul-box">
         <li class="item-li">
           <i class="iconfont icon-rencai"></i>
@@ -143,7 +143,7 @@
         </li>
         <li class="item-li center">
           <div class="waiting5">面试时间已结束</div>
-          <div class="waiting6">{{infos.arrangementInfo.appointmentTime}}</div>
+          <div class="waiting6">{{infos.arrangementInfo.appointment}}</div>
         </li>
       </ul>
     </template>
