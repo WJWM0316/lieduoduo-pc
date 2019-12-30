@@ -73,7 +73,7 @@
 		<div class="pagination-interview" v-if="applyData.total > applyData.pageSize && pIndex === 0">
       <el-pagination
         background
-        @current-change="changePage"
+        @current-change="(page) => changePage(page, applyData)"
         :current-page.sync ="applyData.page"
         :page-size="applyData.pageSize"
         layout="prev, pager, next"
@@ -173,7 +173,7 @@ export default {
 				page: this.applyData.page,
 				tab: applyItem.value
 			}
-			getInterviewApplyListsApi(Object.assign(params, {count: 20})).then(({ data }) => {
+			getInterviewApplyListsApi(Object.assign(params, {count: this.applyData.count})).then(({ data }) => {
 				this.applyData.list = data.data || []
 				this.applyData.total = data.meta.total || 0
 				this.applyData.hasInitPage = true
@@ -195,7 +195,7 @@ export default {
 				page: this.receiveData.page,
 				tab: receiveItem.value
 			}
-			getInterviewInviteListsApi(Object.assign(params, {count: 20})).then(({ data }) => {
+			getInterviewInviteListsApi(Object.assign(params, {count: this.receiveData.count})).then(({ data }) => {
 				this.receiveData.list = data.data || []
 				this.receiveData.total = data.meta.total || 0
 				this.receiveData.hasInitPage = true
@@ -225,7 +225,7 @@ export default {
 				return
 			}
 			params = Object.assign(params, {time: tab.time})
-			getInterviewScheduleListsApi(Object.assign(params, { count: 20 })).then(({ data }) => {
+			getInterviewScheduleListsApi(Object.assign(params, { count: this.scheduleData.count })).then(({ data }) => {
 				this.scheduleData.list = data.data || []
 				this.scheduleData.total = data.meta.total || 0
 				this.scheduleData.hasInitPage = true
@@ -239,14 +239,14 @@ export default {
 			})
 		},
 		getHistoryInterviewLists() {
-			let params = { page: 1 }
+			let params = { page: this.scheduleData.page }
 			if(this.time.length) {
 				params = Object.assign(params, {
 					start: this.time[0]/1000,
 					end: this.time[1]/1000
 				})
 			}
-			getHistoryInterviewListsApi(Object.assign(params, { count: 20 })).then(({ data }) => {
+			getHistoryInterviewListsApi(Object.assign(params, { count: this.scheduleData.historyData })).then(({ data }) => {
 				this.historyData.list = data.data || []
 				this.historyData.total = data.meta.total || 0
 				this.historyData.hasInitPage = true
@@ -358,11 +358,26 @@ export default {
 					break
 			}
 		},
-		changePage(page) {
-			console.log(page)
-		},
-		bindClick(e) {
-			console.log(e)
+		changePage(page, data) {
+			let item = this.interviewBar[this.pIndex]
+			data.page = page
+			switch(item.api) {
+				case 'getApplyList':
+					this.getLists(item)
+					break
+				case 'getReceiveList':
+					this.getLists(item)
+					break
+				case 'getScheduleList':
+					if(!this.cIndex) {
+						this.getLists(item)
+					} else {
+						this.getInterviewRedDotInfo().then(() => this.getHistoryInterviewLists())
+					}
+					break
+				default:
+					break
+			}
 		},
 		init() {
 			let { query } = this.$route
