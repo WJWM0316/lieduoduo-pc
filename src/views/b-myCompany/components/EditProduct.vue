@@ -30,7 +30,7 @@
           </div>
         </el-form-item>
         <el-form-item prop="product_name" label="产品名称："><el-input placeholder="请输入产品名称" v-model="from.product_name"></el-input></el-form-item>
-        <el-form-item label="产品官网："><el-input placeholder="请输入产品官网" v-model="from.site_url"></el-input></el-form-item>
+        <el-form-item prop="site_url" label="产品官网："><el-input placeholder="请输入产品官网" v-model="from.site_url"></el-input></el-form-item>
         <el-form-item prop="slogan" label=" 产品slogan："><el-input placeholder="一句话简单介绍公司的产品定位" v-model="from.slogan"></el-input></el-form-item>
         <el-form-item prop="lightspot" label="产品亮点：">
             <el-input type="textarea" placeholder="可从产品涉及的市场、业务、用户和功能等方面进行描述..." v-model="from.lightspot"></el-input>
@@ -67,6 +67,11 @@ import {
   editCompanyProductInfosApi, // 编辑
   createCompanyProductApi // 创建
 } from '@/api/register'
+
+import {
+  urlReg
+} from '@/util/fieldRegular'
+
 export default {
   components: {
     Picture
@@ -84,6 +89,13 @@ export default {
     }
   },
   data () {
+    let urlRegReplace = (rule, value, callback) => {
+      if (urlReg.test(value)) {
+        callback()
+      } else {
+        callback(new Error('请输入正确的产品官网！'))
+      }
+    }
     return {
       cdnPath: `${process.env.VUE_APP_CDN_PATH}/images/`,
       avatarLoading: false,
@@ -100,6 +112,7 @@ export default {
       rules: {
         img: [{ required: true, message: '请上传公司logo', trigger: 'blur' }],
         product_name: [{ required: true, message: '请输入产品名称', trigger: 'blur' }],
+        site_url: [{ required: false, message: '请输入产品官网', trigger: 'change' }, { validator: urlRegReplace, trigger: 'blur' }],
         slogan: [{ required: true, message: '请输入产品slogan', trigger: 'blur' }],
         lightspot: [{ required: true, message: '请输入产品亮点', trigger: 'blur' }]
       }
