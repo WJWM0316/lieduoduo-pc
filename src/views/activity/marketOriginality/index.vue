@@ -106,7 +106,6 @@ export default {
     }
   },
   created () {
-    console.log(this.cdnPath + 'originality.jpg')
     this.getlist()
     this.baiduTj()
     this.$router.push({ query: { cc: 'themeMC' } })
