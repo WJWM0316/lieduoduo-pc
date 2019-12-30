@@ -1,19 +1,19 @@
 <template>
 	<div id="interview">
-    <FloatBox />
-    <Siderbar />
-    <AdsorptionBar />
+	  <interview-content />
+    <interview-sider-bar />
+    <floating-bar />
 	</div>
 </template>
 <script>
-import Siderbar from './components/siderbar'
-import FloatBox from './components/content'
-import AdsorptionBar from './components/adsorptionBar'
+import InterviewSiderBar from './components/siderbar'
+import InterviewContent from './components/content'
+import FloatingBar from 'COMPONENTS/floatingBar'
 export default {
 	components: {
-		Siderbar,
-		FloatBox,
-		AdsorptionBar
+		InterviewSiderBar,
+		InterviewContent,
+		FloatingBar
 	}
 }
 </script>

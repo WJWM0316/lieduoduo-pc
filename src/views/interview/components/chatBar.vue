@@ -54,8 +54,8 @@
 		  			</router-link>
 		  			<el-button type="text" v-if="!item.positionId">查看招聘官</el-button>
 		  		</template>
-		  		<el-button type="primary" v-if="[31].includes(item.status)" @click="bindClick(item)" class="func-btn">确认面试信息</el-button>
-		  		<a type="primary" v-if="[41, 51, 58, 60].includes(item.status)" class="router-link" @click="bindClick(item)">查看面试</a>
+		  		<el-button type="primary" v-if="[31].includes(item.status)" @click="bindClick(item)" class="func-btn btn-style">确认面试信息</el-button>
+		  		<a type="primary" v-if="[41, 51, 58, 60].includes(item.status)" class="router-link btn-style" @click="bindClick(item)">查看面试</a>
 		  		<template v-if="item.status === 12">
 		  			<el-button type="text">暂不考虑</el-button>
 		  			<el-button type="primary" @click="bindClick(item)" class="func-btn">接受约面</el-button>
@@ -241,6 +241,9 @@ export default {
 		height:40px;
 		border-radius:4px;
 		margin-left: 30px;
+	}
+	.btn-style {
+		cursor: pointer;
 	}
 }
 </style>
