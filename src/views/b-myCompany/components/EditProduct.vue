@@ -90,6 +90,9 @@ export default {
   },
   data () {
     let urlRegReplace = (rule, value, callback) => {
+      if (!value) {
+        return callback()
+      }
       if (urlReg.test(value)) {
         callback()
       } else {
@@ -151,10 +154,11 @@ export default {
         type: 'warning',
         center: true
       }).then(() => {
-        deleteCompanyProductInfosApi(this.from.id)
-        this.$emit('save') // 刷新父组件数据
-        let type = '公司主页'
-        this.$emit('click', type)
+        deleteCompanyProductInfosApi(this.from.id).then(res => {
+          this.$emit('save') // 刷新父组件数据
+          let type = '公司主页'
+          this.$emit('click', type)
+        })
       })
     },
     cancel () {

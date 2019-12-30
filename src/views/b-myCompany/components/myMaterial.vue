@@ -126,6 +126,9 @@ export default {
   },
   data () {
     let urlRegReplace = (rule, value, callback) => {
+      if (!value) {
+        return callback()
+      }
       if (urlReg.test(value)) {
         callback()
       } else {
@@ -144,8 +147,8 @@ export default {
         industry: [{ required: true, message: '请输入所属行业', trigger: 'blur' }],
         financing: [{ required: true, message: '请选择融资阶段', trigger: 'change' }],
         employees: [{ required: true, message: '请选择公司规模', trigger: 'change' }],
-        website: [{ required: false, message: '请输入正确的公司官网', trigger: 'change' }, { validator: urlRegReplace, trigger: 'blur' }],
-        intro: [{ min: 6, max: 5000, message: '请输入公司介绍', trigger: 'blur' }]
+        website: [{ required: false, message: '请输入正确的公司官网', trigger: 'blur' }, { validator: urlRegReplace, trigger: 'blur' }],
+        intro: [{ required: true, min: 6, max: 5000, message: '请输入公司介绍', trigger: 'blur' }]
       },
       avatarLoading: false,
       from: {
