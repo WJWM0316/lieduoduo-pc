@@ -5,7 +5,7 @@
 	  	<div class="ul-box">
   			<router-link
   				target="_blank"
-  				:to="{name: 'positionDetail', query: { vkey: item.vkey }}"
+  				:to="{name: 'positionDetail', query: { positionId: item.id }}"
   				v-for="(item, index) in recommendOpptyInterestLists"
   				:key="index"
   				class="li-item">

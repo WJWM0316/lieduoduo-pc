@@ -9,14 +9,11 @@
 import Siderbar from './components/siderbar'
 import FloatBox from './components/content'
 import AdsorptionBar from './components/adsorptionBar'
-import DialogModel from './components/dialog'
-
 export default {
 	components: {
 		Siderbar,
 		FloatBox,
-		AdsorptionBar,
-		DialogModel
+		AdsorptionBar
 	}
 }
 </script>

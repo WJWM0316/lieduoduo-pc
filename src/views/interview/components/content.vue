@@ -66,19 +66,19 @@
 		    </div>
 	    </div>
 	    <div v-if="pIndex === 0" class="ul-li-box">
-	    	<ChatBar :item="interviewItem" v-for="(interviewItem, interviewIndex) in applyData.list" :key="interviewIndex" :pIndex="pIndex" />
+	    	<ChatBar :item="interviewItem" v-for="(interviewItem, interviewIndex) in applyData.list" :key="interviewIndex" tab="apply" @click="bindClick" />
 	    	<no-data v-if="!applyData.total && applyData.hasInitPage" />
 	    </div>
 	    <div v-if="pIndex === 1" class="ul-li-box">
-	    	<ChatBar :item="receiveItem" v-for="(receiveItem, receiveIndex) in receiveData.list" :key="receiveIndex" :pIndex="pIndex" />
+	    	<ChatBar :item="receiveItem" v-for="(receiveItem, receiveIndex) in receiveData.list" :key="receiveIndex" tab="receive" @click="bindClick" />
 	    	<no-data v-if="!receiveData.total && receiveData.hasInitPage" />
 	    </div>
 	    <div v-if="pIndex === 2 && cIndex === 0" class="ul-li-box">
-	    	<ChatBar :item="scheduleItem" v-for="(scheduleItem, scheduleIndex) in scheduleData.list" :key="scheduleIndex" :pIndex="pIndex" />
+	    	<ChatBar :item="scheduleItem" v-for="(scheduleItem, scheduleIndex) in scheduleData.list" :key="scheduleIndex" tab="schedule" @click="bindClick" />
 	    	<no-data v-if="!scheduleData.total && scheduleData.hasInitPage" />
 	    </div>
 	    <div v-if="pIndex === 2 && cIndex === 1" class="ul-li-box">
-	    	<ChatBar :item="historyItem" v-for="(historyItem, historyIndex) in historyData.list" :key="historyIndex" :pIndex="pIndex" />
+	    	<ChatBar :item="historyItem" v-for="(historyItem, historyIndex) in historyData.list" :key="historyIndex" tab="history" @click="bindClick" />
 	    	<no-data v-if="!historyData.total && historyData.hasInitPage" />
 	    </div>
 		</div>
@@ -92,12 +92,14 @@
         :total="applyData.total">
       </el-pagination>
     </div>
+    <DialogModel />
 	</div>
 </template>
 <script>
 /* eslint-disable */
 import ChatBar from './chatBar'
 import NoData from './noData'
+import DialogModel from './dialog'
 
 import {
 	getInterviewApplyListsApi,
@@ -123,7 +125,8 @@ import {
 export default {
 	components: {
 		ChatBar,
-		NoData
+		NoData,
+		DialogModel
 	},
 	data() {
 		return {
@@ -371,6 +374,9 @@ export default {
 		changePage(page) {
 			console.log(page)
 		},
+		bindClick(e) {
+			console.log(e)
+		},
 		init() {
 			let { query } = this.$route
 			let pIndex = Number(query.pIndex)
@@ -431,8 +437,8 @@ export default {
 		}
 	}
 	.interview-bar{
-		height: 52px;
-		line-height: 52px;
+		height: 58px;
+		line-height: 58px;
 		box-sizing: border-box;
 		padding: 0 36px;
 		li {
@@ -448,7 +454,7 @@ export default {
 				position: absolute;
 				left: 50%;
 				margin-left: -50%;
-				bottom: -18px;
+				bottom: -24px;
 				height: 2px;
 				width: 100%;
 				background: $nav-color-hover;
@@ -474,9 +480,9 @@ export default {
 		}
 	}
 	.tab-bar{
-	  height: 56px;
+	  height: 62px;
 	  background: $btn-forbid;
-	  line-height: 56px;
+	  line-height: 62px;
 	  padding: 0 36px;
 	  .item {
 	    padding: 0 16px;

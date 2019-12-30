@@ -1,5 +1,5 @@
 import {
-	getInterviewRedDotInfoApi,
+	getInterviewRedDotInfoApi
 	// clearTabInterviewRedDotApi,
 	// clearDayInterviewRedDotApi
 } from 'API/interview'
