@@ -8,7 +8,7 @@
     </div>
     <div class="from">
       <el-form :model="from" :rules="rules" label-width="110px">
-        <el-form-item prop="img" label="公司logo：">
+        <el-form-item prop="img" label="产品logo：">
           <div class="Picture-wrap">
             <Picture
             :value.sync="middleUrl"
@@ -29,11 +29,11 @@
             </Picture>
           </div>
         </el-form-item>
-        <el-form-item prop="product_name" label="产品名称："><el-input placeholder="请输入产品名称" v-model="from.product_name"></el-input></el-form-item>
+        <el-form-item prop="product_name" label="产品名称："><el-input show-word-limit maxlength="20" placeholder="请输入产品名称" v-model="from.product_name"></el-input></el-form-item>
         <el-form-item prop="site_url" label="产品官网："><el-input placeholder="请输入产品官网" v-model="from.site_url"></el-input></el-form-item>
-        <el-form-item prop="slogan" label=" 产品slogan："><el-input placeholder="一句话简单介绍公司的产品定位" v-model="from.slogan"></el-input></el-form-item>
+        <el-form-item prop="slogan" label=" 产品slogan："><el-input show-word-limit maxlength="30" placeholder="一句话简单介绍公司的产品定位" v-model="from.slogan"></el-input></el-form-item>
         <el-form-item prop="lightspot" label="产品亮点：">
-            <el-input type="textarea" placeholder="可从产品涉及的市场、业务、用户和功能等方面进行描述..." v-model="from.lightspot"></el-input>
+            <el-input type="textarea" show-word-limit maxlength="50" placeholder="可从产品涉及的市场、业务、用户和功能等方面进行描述..." v-model="from.lightspot"></el-input>
         </el-form-item>
         <div class="foot">
           <el-button type="primary" @click="submit">保存</el-button>
@@ -313,5 +313,11 @@ export default {
 .EditProduct .el-form-item:nth-of-type(1) .el-form-item__label:nth-of-type(1){
   height: 70px;
   line-height: 70px;
+}
+.EditProduct .el-input{
+  width: 382px;
+}
+.EditProduct .el-textarea{
+  width: 520px;
 }
 </style>

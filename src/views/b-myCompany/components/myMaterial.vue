@@ -52,7 +52,7 @@
                 </el-form-item>
                 <el-form-item prop="website" label="公司官网："><el-input placeholder="请输入公司官网" v-model="from.website"></el-input></el-form-item>
                 <el-form-item prop="intro" label="公司介绍：">
-                    <el-input type="textarea" placeholder="请输入公司介绍" v-model="from.intro"></el-input>
+                    <el-input type="textarea"  show-word-limit maxlength="5000" placeholder="请输入公司介绍" v-model="from.intro"></el-input>
                 </el-form-item>
                 <el-form-item label="公司图片：">
                   <div class="Picture-wrap-more">
@@ -401,5 +401,8 @@ export default {
 .myMaterial .el-form-item:nth-of-type(1) .el-form-item__label:nth-of-type(1){
   height: 70px;
   line-height: 70px;
+}
+.myMaterial .el-textarea{
+  width: 520px;
 }
 </style>
