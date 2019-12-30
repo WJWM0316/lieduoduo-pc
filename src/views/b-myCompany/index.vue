@@ -268,6 +268,9 @@ export default class myCompany extends Vue {
             word-wrap: break-word;
             word-break: break-all;
         }
+        button{
+            margin-left: 10px;
+        }
     }
     .companySurroundings{
         cursor: pointer;

@@ -5,8 +5,8 @@
             <p class="myMaterial-head-text">如“<span>*</span>”号的内容，是必须填写的项目；置灰内容为公司认证信息，修改请联系 400-065-5788</p>
         </div>
         <div class="from">
-            <el-form :model="from" :rules="rules" label-width="100px">
-                <el-form-item prop="img" label="公司logo：">
+            <el-form :model="from" ref="fromMyMaterial" :rules="rules" label-width="100px">
+                <el-form-item prop="id" label="公司logo：">
                   <div class="Picture-wrap">
                     <Picture
                     :value.sync="middleUrl"
@@ -145,7 +145,7 @@ export default {
       mapIndex: 0, // 地图索引
       mapShow: false,
       rules: {
-        img: [{ required: true, message: '请选择公司logo', trigger: 'blur' }],
+        id: [{ required: true, type: 'number', message: '请选择公司logo', trigger: 'blur' }],
         company_name: [{ required: true, message: '请输入公司全称', trigger: 'blur' }],
         company_shortname: [{ required: true, message: '请输入公司简称', trigger: 'blur' }],
         industry: [{ required: true, message: '请输入所属行业', trigger: 'blur' }],
@@ -190,18 +190,22 @@ export default {
       })
     },
     submit () {
-      if (this.from.website === '' || this.from.albumInfo || this.from.address) {
-        this.$confirm('温馨提示', '完善全部信息，可以提高公司的曝光与排名，是否继续完善?', {
-          confirmButtonText: '继续完善',
-          cancelButtonText: '直接保存',
-          type: 'warning',
-          center: true
-        }).catch(() => {
-          this.saveEditCompany()
-        })
-      } else {
-        this.saveEditCompany()
-      }
+      this.$refs.fromMyMaterial.validate(valid => {
+        if (valid) {
+          if (this.from.website === '' || this.from.albumInfo || this.from.address) {
+            this.$confirm('温馨提示', '完善全部信息，可以提高公司的曝光与排名，是否继续完善?', {
+              confirmButtonText: '继续完善',
+              cancelButtonText: '直接保存',
+              type: 'warning',
+              center: true
+            }).catch(() => {
+              this.saveEditCompany()
+            })
+          } else {
+            this.saveEditCompany()
+          }
+        }
+      })
     },
     saveEditCompany () { // 提交
       let dataAlbumInfo = []

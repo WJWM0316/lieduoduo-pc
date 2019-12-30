@@ -7,8 +7,8 @@
       </p>
     </div>
     <div class="from">
-      <el-form :model="from" :rules="rules" label-width="110px">
-        <el-form-item prop="img" label="产品logo：">
+      <el-form :model="from" ref="fromEditProduct" :rules="rules" label-width="110px">
+        <el-form-item prop="logo" label="产品logo：">
           <div class="Picture-wrap">
             <Picture
             :value.sync="middleUrl"
@@ -110,7 +110,7 @@ export default {
       },
       middleUrl: this.currentProduct.logoInfo.middleUrl,
       rules: {
-        img: [{ required: true, message: '请上传公司logo', trigger: 'blur' }],
+        logo: [{ required: true, type: 'number', message: '请上传公司logo', trigger: 'blur' }],
         product_name: [{ required: true, message: '请输入产品名称', trigger: 'blur' }],
         site_url: [{ required: false, message: '请输入产品官网', trigger: 'change' }, { validator: urlRegReplace, trigger: 'blur' }],
         slogan: [{ required: true, message: '请输入产品slogan', trigger: 'blur' }],
@@ -124,21 +124,25 @@ export default {
       this.middleUrl = item[0].middleUrl
     },
     submit () {
-      if (this.from.id) { // 根据是否有id来判断是新建产品还是编辑已有产品
-        editCompanyProductInfosApi(this.from).then(res => {
-          this.$message.success('编辑产品成功！')
-          this.$emit('save') // 刷新父组件数据
-          let type = '公司主页'
-          this.$emit('click', type)
-        })
-      } else {
-        createCompanyProductApi(this.from).then(res => {
-          this.$message.success('创建产品成功！')
-          this.$emit('save') // 刷新父组件数据
-          let type = '公司主页'
-          this.$emit('click', type)
-        })
-      }
+      this.$refs.fromEditProduct.validate(valid => {
+        if (valid) {
+          if (this.from.id) { // 根据是否有id来判断是新建产品还是编辑已有产品
+            editCompanyProductInfosApi(this.from).then(res => {
+              this.$message.success('编辑产品成功！')
+              this.$emit('save') // 刷新父组件数据
+              let type = '公司主页'
+              this.$emit('click', type)
+            })
+          } else {
+            createCompanyProductApi(this.from).then(res => {
+              this.$message.success('创建产品成功！')
+              this.$emit('save') // 刷新父组件数据
+              let type = '公司主页'
+              this.$emit('click', type)
+            })
+          }
+        }
+      })
     },
     deleteProduct () {
       this.$confirm('删除后，该产品将不再显示，确定永久删除该产品？', '确认删除产品吗？', {
