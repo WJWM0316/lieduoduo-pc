@@ -101,7 +101,8 @@ import {
   companyEmployeesApi,
   addCompanyAddressApi,
   editCompanyApi,
-  delCompanyAddressApi
+  delCompanyAddressApi,
+  editCompanyAdressApi
 } from '@/api/company'
 import {
   getCompanyAddressListApi,
@@ -224,6 +225,7 @@ export default {
     },
     receiveAddAdress (data) { // 地图回调
       if (this.mapIndex === 100) { // 判断是添加还是编辑 100 是添加
+        console.log(data.data)
         data.data = JSON.parse(JSON.stringify(data.data).replace(/area_id/g, 'areaName'))
         // this.address.push(data.data)
         addCompanyAddressApi(this.from.id, data.data)
@@ -231,9 +233,11 @@ export default {
             this.getCompanyAddressList()
           })
       } else {
-        data.data.area_id = this.address[this.mapIndex].area_id
+        data.data.area_id = this.address[this.mapIndex].areaId
         data.data.id = this.address[this.mapIndex].id
-        this.getCompanyAddressList()
+        editCompanyAdressApi(data.data).then(res => {
+          this.getCompanyAddressList()
+        })
       }
     },
     getCompanyAddressList () { // 获取公司地址
@@ -243,8 +247,10 @@ export default {
         })
     },
     deleteAddress (item) {
-      delCompanyAddressApi(item.id)
-      this.getCompanyAddressList()
+      delCompanyAddressApi(item.id).then(res => {
+        this.getCompanyAddressList()
+        this.$message.success('删除成功！')
+      })
     },
     shutDown () {
       this.mapShow = false
