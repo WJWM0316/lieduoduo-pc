@@ -102,7 +102,7 @@ import {
   addCompanyAddressApi,
   editCompanyApi,
   delCompanyAddressApi,
-  editCompanyAdressApi
+  addresseditCompanyAddressApi
 } from '@/api/company'
 import {
   getCompanyAddressListApi,
@@ -226,16 +226,16 @@ export default {
     },
     receiveAddAdress (data) { // 地图回调
       if (this.mapIndex === 100) { // 判断是添加还是编辑 100 是添加
-        data.data = JSON.parse(JSON.stringify(data.data).replace(/area_id/g, 'areaName'))
         addCompanyAddressApi(this.from.id, data.data)
           .then(res => {
             this.getCompanyAddressList()
           })
       } else {
-        data.data.area_id = this.address[this.mapIndex].areaId
+        data.data = JSON.parse(JSON.stringify(data.data).replace(/area_id/g, 'areaId'))
         data.data.id = this.address[this.mapIndex].id
-        editCompanyAdressApi(data.data).then(res => {
+        addresseditCompanyAddressApi(data.data).then(res => {
           this.getCompanyAddressList()
+          this.$message.success('编辑成功！')
         })
       }
     },
