@@ -122,6 +122,7 @@ export default {
             if (httpStatus === 200) {
               this.$emit('operate', -1, true)
               if (this.tabs[0].number > 0) this.tabs[0].number -= 1
+              this.tabs[1].number += 1
               this.lists.splice(index, 1)
             }
           }).catch((err) => {
@@ -139,6 +140,7 @@ export default {
             if (httpStatus === 200) {
               this.$emit('operate', -1)
               if (this.tabs[0].number > 0) this.tabs[0].number -= 1
+              this.tabs[2].number += 1
               this.lists.splice(index, 1)
             }
           })

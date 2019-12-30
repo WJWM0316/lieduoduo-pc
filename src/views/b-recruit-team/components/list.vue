@@ -19,7 +19,7 @@
             <p>
               <span class="position-close" v-if="item.isOnline === 2">关闭</span>
               <span class="position-name">{{item.positionName}}</span>
-              <span class="position-emolument">{{item.emolumentMin}}~{{item.emolumentMax}}</span>
+              <span class="position-emolument">{{item.emolumentMin}}~{{item.emolumentMax}}K</span>
             </p>
             <p class="position-tags">
               <span>{{item.city}}{{item.district}}</span>
@@ -68,7 +68,8 @@ export default {
       qrUrl: '',
       params: {
         count: 20,
-        page: 1
+        page: 1,
+        is_online: 1
       },
       total: 0,
       disabledScroll: false

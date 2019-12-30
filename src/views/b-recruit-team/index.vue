@@ -20,7 +20,7 @@
               <p class="recruit-email"><span>邮箱：</span>{{item.email}}</p>
             </div>
           </div>
-          <div class="recruit-position-number" @click="handleShowPosition(item)">发布了{{item.allPositionNum}}个职位 <span class="iconfont icon-right"></span></div>
+          <div class="recruit-position-number" @click="handleShowPosition(item)">{{item.positionNum}}个招聘中职位 <span class="iconfont icon-right"></span></div>
           <div class="recruit-interview-number">面试了{{item.interviewNum}}人</div>
           <div class="recruit-activity-time">活跃于 {{item.visitTimeDesc}}</div>
           <div class="recruit-share" @click="handleShowShare(item)">分享</div>
