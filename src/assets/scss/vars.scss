@@ -18,43 +18,6 @@ $warning-color-1: #FF9E40;
 // 错误颜色
 $error-color-1: #F45322;
 
-// element-ui
-$--color-primary: $main-color-1;
-$--color-danger: $error-color-1;
-$--color-warning: $warning-color-1;
-$--button-primary-background-color: #00C4CD;
-$--button-primary-border-color: #00C4CD;
-$--button-small-height: 32px;
-/// color||Color|0
-$--button-default-font-color: #92929B;
-
-/// color||Color|0
-$--button-disabled-font-color: #929292;
-/// color||Color|0
-$--button-disabled-background-color: #E9EAEA;
-/// color||Color|0
-$--button-disabled-border-color: #E9EAEA;
-
-$--tooltip-fill: #fff;
-
-$--input-big-height: 50px;
-$--input-height: 40px;
-// $--input-medium-height: 40px;
-$--border-color-base: #DDE1E0;
-$--input-hover-border: #00C4CD;
-$--input-font-color: #333;
-$--select-border-color-hover: #00C4CD;
-$--color-text-placeholder: #BCBEC0;
-$--input-disabled-fill: #F8FAFA;
-$--input-disabled-border : #DDE1E0;
-$--input-disabled-color: #99999e;
-
-$--msgbox-border-radius: 8px;
-$--scrollbar-background-color:#DDE1E0;
-
-$--dropdown-menuItem-hover-fill: #E5F9FA;
-$--dropdown-menuItem-hover-color: #66666E;
-
 // 高亮字体颜色
 $lightFont-color-orange: #FF9E40;
 $lightFont-color-purple: $main-color-1;
@@ -129,3 +92,41 @@ $page-b-side-width: 200px;
 // b端layout头部高度
 $page-b-header-height: 60px;
 $page-b-bg-color: #3E294D;
+
+
+// element-ui
+$--color-primary: $main-color-1;
+$--color-danger: $error-color-1;
+$--color-warning: $warning-color-1;
+$--button-primary-background-color: #00C4CD;
+$--button-primary-border-color: #00C4CD;
+$--button-small-height: 32px;
+/// color||Color|0
+$--button-default-font-color: #92929B;
+
+/// color||Color|0
+$--button-disabled-font-color: #929292;
+/// color||Color|0
+$--button-disabled-background-color: #E9EAEA;
+/// color||Color|0
+$--button-disabled-border-color: #E9EAEA;
+
+$--tooltip-fill: #fff;
+
+$--input-big-height: 50px;
+$--input-height: 40px;
+// $--input-medium-height: 40px;
+$--border-color-base: #DDE1E0;
+$--input-hover-border: #00C4CD;
+$--input-font-color: #333;
+$--select-border-color-hover: #00C4CD;
+$--color-text-placeholder: #BCBEC0;
+$--input-disabled-fill: #F8FAFA;
+$--input-disabled-border : #DDE1E0;
+$--input-disabled-color: #99999e;
+
+$--msgbox-border-radius: 8px;
+$--scrollbar-background-color:#DDE1E0;
+
+$--dropdown-menuItem-hover-fill: #E5F9FA;
+$--dropdown-menuItem-hover-color: #66666E;
