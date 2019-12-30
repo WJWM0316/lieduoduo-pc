@@ -162,30 +162,6 @@ export const historyData = {
   pageSize: 20
 }
 
-export const bottomNav = [
-  {
-    text: 'APP',
-    reddot: 0,
-    iconClass: 'icon-ganxingqu-',
-    qrCode: mp_qrcode,
-    tooltips: '下载猎多多APP<br/>体验完整功能'
-  },
-  {
-    text: '小程序',
-    reddot: 0,
-    iconClass: 'icon-ganxingqu-',
-    qrCode: wx_qrcode,
-    tooltips: '下载猎多多APP<br/>体验完整功能'
-  },
-  {
-    text: '公众号',
-    reddot: 0,
-    iconClass: 'icon-ganxingqu-',
-    qrCode: app_qrcode,
-    tooltips: '下载猎多多APP<br/>体验完整功能'
-  }
-]
-
 export const asideBar = {
   topNav: [
     {
@@ -230,25 +206,25 @@ export const asideBar = {
   ],
   bottomNav: [
     {
-      text: 'APP',
+      name: 'APP',
       reddot: 0,
       iconClass: 'icon-app',
-      qrCode: mp_qrcode,
+      url: app_qrcode,
       tooltips: '下载猎多多APP<br/>体验完整功能'
     },
     {
-      text: '小程序',
+      name: '小程序',
       reddot: 0,
       iconClass: 'icon-xiaochengxu_huaban',
-      qrCode: wx_qrcode,
-      tooltips: '下载猎多多APP<br/>体验完整功能'
+      url: mp_qrcode,
+      tooltips: '猎多多小程序<br/>开启社交求职新时代'
     },
     {
-      text: '公众号',
+      name: '公众号',
       reddot: 0,
       iconClass: 'icon-yuemian',
-      qrCode: app_qrcode,
-      tooltips: '下载猎多多APP<br/>体验完整功能'
+      url: wx_qrcode,
+      tooltips: '关注猎多多公众号<br/>不错过重要消息通知'
     }
   ]
 }

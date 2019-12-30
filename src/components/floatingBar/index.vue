@@ -24,7 +24,7 @@
           :open-delay="200"
           trigger="hover">
           <div class="box">
-            <div><img :src="item.qrCode"/></div>
+            <div><img :src="item.url"/></div>
             <div class="tooltips" v-html="item.tooltips"></div>
           </div>
           <div slot="reference">
@@ -32,7 +32,7 @@
               <i class="iconfont" :class="item.iconClass"></i>
               <div class="circle" v-if="item.reddot"></div>
             </div>
-            <div class="describe">{{item.text}}</div>
+            <div class="describe">{{item.name}}</div>
           </div>
         </el-popover>
       </li>
