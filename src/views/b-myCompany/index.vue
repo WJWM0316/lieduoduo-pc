@@ -77,6 +77,7 @@
     <sharePopup
     :data="information"
     :visible.sync="showSharePopup"></sharePopup>
+
 </div>
 </template>
 
@@ -224,7 +225,7 @@ export default class myCompany extends Vue {
     background: #ffffff;
     width: 50%;
     float: left;
-    padding: 0 56px;
+    padding: 0 56px 64px 56px;
     box-sizing: border-box;
     .companyInformation-head{
         margin-top: 64px;
@@ -338,15 +339,15 @@ export default class myCompany extends Vue {
     }
 }
 .companyProduct{
-    max-height: 1170px;
-    overflow:auto;
+    // max-height: 1170px;
+    // overflow: auto;
     float: left;
     background: #ffffff;
     box-sizing: border-box;
     width: 49%;
     margin-left: 1%;
     padding: 0 56px;
-    overflow-y: scroll;
+    // overflow-y: scroll;
     &::-webkit-scrollbar{
         display: none;
     }

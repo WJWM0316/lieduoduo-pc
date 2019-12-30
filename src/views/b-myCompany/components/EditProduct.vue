@@ -46,7 +46,7 @@
       <p class="EditProduct-Example-title">产品示例:</p>
       <div class="EditProduct-Example-main">
         <div class="EditProduct-Example-main-img">
-          <img :src="process.env.VUE_APP_CDN_PATH + 'exampleLogo.png'"/>
+          <img :src="cdnPath + 'exampleLogo.png'"/>
         </div>
         <div class="EditProduct-Example-main-text">
           <p class="Example-main-text-productName">猎多多</p>
@@ -85,6 +85,7 @@ export default {
   },
   data () {
     return {
+      cdnPath: `${process.env.VUE_APP_CDN_PATH}/images/`,
       avatarLoading: false,
       from: {
         company_id: this.companyid,
