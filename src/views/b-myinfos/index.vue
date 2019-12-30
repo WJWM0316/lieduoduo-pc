@@ -85,9 +85,24 @@ import SelectSelfLabel from './components/selectSelfLabel'
 import SharePopup from '@/components/common/sharePopup'
 import { getRecruiter, setRecruiter } from '@/api/recruiter'
 import { CompanyIntro } from '@/config/vars'
+import { emailReg, positionReg } from '@/util/fieldRegular'
 export default {
   components: { Picture, SelectPositionType, SelectSelfLabel, SharePopup },
   data () {
+    const positionValidate = (rule, value, callback) => {
+      if (positionReg.test(value)) {
+        callback()
+      } else {
+        callback(new Error('职位名称需为2-20个字'))
+      }
+    }
+    var emailValidate = (rule, value, callback) => {
+      if (emailReg.test(value)) {
+        callback()
+      } else {
+        callback(new Error('邮箱格式不正确'))
+      }
+    }
     return {
       avatarLoading: false,
       saveLoading: false,
@@ -111,8 +126,8 @@ export default {
         name: [{ required: true, message: '请填写真实姓名', trigger: 'blur' }],
         gender: [{ required: true, message: '请选择性别', trigger: 'blur' }],
         positionTypeId: [{ required: true, message: '请选择担任职位类型', trigger: 'blur' }],
-        position: [{ required: true, message: '请填写担任职务', trigger: 'blur' }],
-        email: [{ required: true, message: '请填写公司邮箱', trigger: 'blur' }],
+        position: [{ required: true, message: '请填写担任职务', trigger: 'blur' }, { validator: positionValidate, trigger: 'blur' }],
+        email: [{ required: true, message: '请填写公司邮箱', trigger: 'blur' }, { validator: emailValidate, trigger: 'blur' }],
         labels: [{ required: true, type: 'array', message: '请选择个人标签', trigger: 'change' }],
         brief: [{ min: 6, max: 5000, message: '个人简介字数在6到5000之间', trigger: 'blur' }]
       },
