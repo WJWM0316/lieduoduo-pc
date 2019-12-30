@@ -65,22 +65,10 @@
 			    </el-date-picker>
 		    </div>
 	    </div>
-	    <div v-if="pIndex === 0" class="ul-li-box">
-	    	<ChatBar :item="interviewItem" v-for="(interviewItem, interviewIndex) in applyData.list" :key="interviewIndex" tab="apply" @click="bindClick" />
-	    	<no-data v-if="!applyData.total && applyData.hasInitPage" />
-	    </div>
-	    <div v-if="pIndex === 1" class="ul-li-box">
-	    	<ChatBar :item="receiveItem" v-for="(receiveItem, receiveIndex) in receiveData.list" :key="receiveIndex" tab="receive" @click="bindClick" />
-	    	<no-data v-if="!receiveData.total && receiveData.hasInitPage" />
-	    </div>
-	    <div v-if="pIndex === 2 && cIndex === 0" class="ul-li-box">
-	    	<ChatBar :item="scheduleItem" v-for="(scheduleItem, scheduleIndex) in scheduleData.list" :key="scheduleIndex" tab="schedule" @click="bindClick" />
-	    	<no-data v-if="!scheduleData.total && scheduleData.hasInitPage" />
-	    </div>
-	    <div v-if="pIndex === 2 && cIndex === 1" class="ul-li-box">
-	    	<ChatBar :item="historyItem" v-for="(historyItem, historyIndex) in historyData.list" :key="historyIndex" tab="history" @click="bindClick" />
-	    	<no-data v-if="!historyData.total && historyData.hasInitPage" />
-	    </div>
+	    <search-list :data="applyData" tab="apply" v-if="pIndex === 0"/>
+	    <search-list :data="receiveData" tab="receive" v-if="pIndex === 1"/>
+	    <search-list :data="scheduleData" tab="schedule" v-if="pIndex === 2 && cIndex === 0"/>
+	    <search-list :data="historyData" tab="history" v-if="pIndex === 2 && cIndex === 1"/>
 		</div>
 		<div class="pagination-interview" v-if="applyData.total > applyData.pageSize && pIndex === 0">
       <el-pagination
@@ -92,14 +80,11 @@
         :total="applyData.total">
       </el-pagination>
     </div>
-    <DialogModel />
 	</div>
 </template>
 <script>
 /* eslint-disable */
-import ChatBar from './chatBar'
-import NoData from './noData'
-import DialogModel from './dialog'
+import SearchList from './searchList'
 
 import {
 	getInterviewApplyListsApi,
@@ -124,9 +109,7 @@ import {
 
 export default {
 	components: {
-		ChatBar,
-		NoData,
-		DialogModel
+		SearchList
 	},
 	data() {
 		return {
@@ -141,7 +124,11 @@ export default {
 	    receiveData,
 	    scheduleData,
 	    historyData,
-	    time: []
+	    time: [],
+	    model: {
+	    	show: true,
+	    	title: '面试详情'
+	    }
 		}
 	},
 	computed: {
@@ -427,14 +414,6 @@ export default {
 		padding-top: 20px;
 		box-shadow:0px 0px 30px 0px rgba(22,39,77,0.07);
 		border-radius:4px;
-	}
-	.ul-li-box {
-		margin-bottom: 50px;
-		.li-item {
-			&:last-child {
-				border-bottom: 0;
-			}
-		}
 	}
 	.interview-bar{
 		height: 58px;
