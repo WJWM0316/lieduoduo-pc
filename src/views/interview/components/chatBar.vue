@@ -35,7 +35,7 @@
 		  			class="router-link" :to="{name: 'positionDetail', query: { positionId: item.positionId }}">
 				  	<div class="limit-line-height-two">
 				  		<span class="position-name">{{item.positionName}}</span>
-				  		<span class="position-salary">20~40k · 14薪</span>
+				  		<span class="position-salary">{{item.positionEmolumentMin}}~{{item.positionEmolumentMax}}k<template>· 14薪</template></span>
 				  	</div>
 				  	<div class="position-adress">广州市天河区 | 10年以上 | 初中及以上</div>
 			  	</router-link>
@@ -55,9 +55,9 @@
 		  			<el-button type="text" v-if="!item.positionId">查看招聘官</el-button>
 		  		</template>
 		  		<el-button type="primary" v-if="[31].includes(item.status)" @click="bindClick(item)" class="func-btn btn-style">确认面试信息</el-button>
-		  		<a type="primary" v-if="[41, 51, 58, 60].includes(item.status)" class="router-link btn-style" @click="bindClick(item)">查看面试</a>
+		  		<a v-if="[32, 41, 51, 58, 60].includes(item.status)" class="router-link btn-style" @click="bindClick(item)">查看面试</a>
 		  		<template v-if="item.status === 12">
-		  			<el-button type="text">暂不考虑</el-button>
+		  			<el-button type="text" @click="refuseInterview">暂不考虑</el-button>
 		  			<el-button type="primary" @click="bindClick(item)" class="func-btn">接受约面</el-button>
 		  		</template>
 		  	</div>
@@ -66,6 +66,10 @@
   </div>
 </template>
 <script>
+import {
+  refuseInterviewApi,
+  getInterviewDetailApi
+} from 'API/interview'
 export default {
 	props: {
     item: {
@@ -75,11 +79,32 @@ export default {
     tab: {
     	type: String,
     	default: ''
+    },
+    rowIndex: {
+    	type: Number,
+    	default: 0
     }
+  },
+  data() {
+  	return {
+  		infos: {}
+  	}
   },
   methods: {
   	bindClick(item) {
+  		this.infos = item
 	    this.$emit('click', item)
+	  },
+	  getInterviewDetail() {
+      return getInterviewDetailApi({interviewId: this.infos.interviewId}).then(({ data }) => data.data)
+    },
+	  refuseInterview() {
+	  	refuseInterviewApi({id: this.infos.recruiterUid}).then(() => {
+	  		this.getInterviewDetail().then(res => {
+          this.list[this.item[this.rowIndex]].status = res.status
+          this.list[this.item[this.rowIndex]].statusDesc = res.statusDesc
+        })
+	  	})
 	  }
   }
 }

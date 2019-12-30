@@ -191,7 +191,7 @@ export const asideBar = {
     {
       text: '申请记录',
       reddot: 0,
-      iconClass: 'icon-ganxingqu-',
+      iconClass: 'icon-shenqingjilu',
       routeName: 'interviewApply',
       query: {
         page: 1,
@@ -232,21 +232,21 @@ export const asideBar = {
     {
       text: 'APP',
       reddot: 0,
-      iconClass: 'icon-ganxingqu-',
+      iconClass: 'icon-app',
       qrCode: mp_qrcode,
       tooltips: '下载猎多多APP<br/>体验完整功能'
     },
     {
       text: '小程序',
       reddot: 0,
-      iconClass: 'icon-ganxingqu-',
+      iconClass: 'icon-xiaochengxu_huaban',
       qrCode: wx_qrcode,
       tooltips: '下载猎多多APP<br/>体验完整功能'
     },
     {
       text: '公众号',
       reddot: 0,
-      iconClass: 'icon-ganxingqu-',
+      iconClass: 'icon-yuemian',
       qrCode: app_qrcode,
       tooltips: '下载猎多多APP<br/>体验完整功能'
     }

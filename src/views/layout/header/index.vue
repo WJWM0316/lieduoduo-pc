@@ -180,7 +180,7 @@ export default {
       }
     },
     handeToInterview() {
-      let route = this.asideBar.topNav[2]
+      let route = this.asideBar.topNav[0]
       this.$router.push({name: route.routeName, query: route.query})
     },
     changeLocation (item) {

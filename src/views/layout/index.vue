@@ -6,6 +6,7 @@
     </div>
     <page-footer />
     <guide-qrcode-pop></guide-qrcode-pop>
+    <floating-bar />
   </section>
 </template>
 <script>
@@ -15,13 +16,15 @@ import Component from 'vue-class-component'
 import PageFooter from '@/views/layout/footer/index.vue'
 import PageHeader from '@/views/layout/header/'
 import GuideQrcodePop from 'COMPONENTS/common/guideQrcodePop'
+import FloatingBar from 'COMPONENTS/floatingBar'
 
 @Component({
   name: 'App',
   components: {
     PageFooter,
     PageHeader,
-    GuideQrcodePop
+    GuideQrcodePop,
+    FloatingBar
   },
   watch: {
   }
