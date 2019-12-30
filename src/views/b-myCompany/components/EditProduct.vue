@@ -42,6 +42,20 @@
         </div>
       </el-form>
     </div>
+    <div class="EditProduct-Example">
+      <p class="EditProduct-Example-title">产品示例:</p>
+      <div class="EditProduct-Example-main">
+        <div class="EditProduct-Example-main-img">
+          <img :src="process.env.VUE_APP_CDN_PATH + 'exampleLogo.png'"/>
+        </div>
+        <div class="EditProduct-Example-main-text">
+          <p class="Example-main-text-productName">猎多多</p>
+          <p class="Example-main-text-slogan">互联网精英招聘神器</p>
+          <p class="Example-main-text-lightspot">专注约面的互联网精英求职招聘神器</p>
+          <p class="Example-main-text-siteUrl">http://www.lieduoduo.com/</p>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -148,6 +162,7 @@ export default {
     margin: 30px auto 0 auto;
     background: #ffffff;
     padding: 48px 82px 30px 82px !important;
+    position: relative;
 }
 .EditProduct-head-text{
 	font-size: 12px;
@@ -227,6 +242,57 @@ export default {
 .foot{
   margin-left: 100px;
   margin-top: 50px;
+}
+.EditProduct-Example{
+  width: 270px;
+  position: absolute;
+  top: 135px;
+  right: 117px;
+  .EditProduct-Example-title{
+    color: $font-color-6;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+  }
+  .EditProduct-Example-main{
+    margin-top: 25px;
+    @include clearfix;
+    .EditProduct-Example-main-img{
+      width: 56px;
+      height: 56px;
+      float: left;
+      margin-right: 14px;
+      img{
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .EditProduct-Example-main-text{
+      float: left;
+      .Example-main-text-productName{
+        font-size: 20px;
+        font-weight: 700;
+        color: $font-color-3;
+      }
+      .Example-main-text-slogan{
+        font-size: 16px;
+        color: $font-color-6;
+        margin-top: 8px;
+        font-weight:400;
+      }
+      .Example-main-text-lightspot{
+        margin-top: 10px;
+        font-size: 12px;
+        font-weight:400;
+        color: #99999B;
+      }
+      .Example-main-text-siteUrl{
+        display: inline-block;
+        margin-top: 20px;
+        color: $main-color-1;
+      }
+    }
+  }
 }
 </style>
 <style>

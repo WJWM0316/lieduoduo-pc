@@ -98,6 +98,21 @@ import { companyDetailApi } from '@/api/company'
       isCompanyAdmin: state => state.roleInfos.isCompanyAdmin
     })
   },
+  watch: {
+    transformWidth () {
+      console.log(this.transformWidth)
+      if (this.transformWidth < 100) {
+        this.bntLeftShow = false
+      } else {
+        this.bntLeftShow = true
+      }
+      if (this.transformWidth > this.information.albumInfo.lenghth - 5) {
+        this.bntRightShow = false
+      } else {
+        this.bntRightShow = true
+      }
+    }
+  },
   components: {
     companyProductList,
     myMaterial,
@@ -110,7 +125,7 @@ export default class myCompany extends Vue {
     materialShow = '公司主页'
     bntLeftShow = false
     bntRightShow = true
-    transformWidth = 1
+    transformWidth = 0 // 轮播图平移
     information = {}
     showSharePopup = false
     currentProduct = {
@@ -166,20 +181,25 @@ export default class myCompany extends Vue {
       Object.assign(this.currentProduct, item)
     }
     clickBnt (displacement) {
+      let value
       if (displacement === 'left') {
-        this.transformAnimation(1)
-      } else {
-        this.transformAnimation(-1)
+        value = -10
+      } else if (displacement === 'right') {
+        value = 10
       }
+
+      this.transformAnimation(value) // 执行动画
     }
     transformAnimation (value) {
-      console.log(Math.abs(this.transformWidth) / 100)
-      if (Math.abs(this.transformWidth) / 100 === 0) return
-      this.transformWidth += value
-      this.$refs.companySurroundingsWrap.style.transform = `translate3d(${this.transformWidth}px, 0, 0)`
-      setTimeout((value) => {
-        this.transformAnimation(value)
-      }, 10)
+      let timer = () => {
+        this.transformWidth += value
+        if (this.transformWidth % 100 === 0) return
+        this.$refs.companySurroundingsWrap.style.transform = `translate3d(-${this.transformWidth}px, 0, 0)`
+        setTimeout(() => {
+          timer()
+        }, 20)
+      }
+      timer()
     }
 }
 </script>
