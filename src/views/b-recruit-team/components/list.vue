@@ -19,7 +19,7 @@
             <p>
               <span class="position-close" v-if="item.isOnline === 2">关闭</span>
               <span class="position-name">{{item.positionName}}</span>
-              <span class="position-emolument">{{item.emolumentMin}}~{{item.emolumentMax}}K</span>
+              <span class="position-emolument">{{item.emolumentMin}}K~{{item.emolumentMax}}K<template v-if="item.annualSalary > 12">·{{item.annualSalaryDesc}}</template></span>
             </p>
             <p class="position-tags">
               <span>{{item.city}}{{item.district}}</span>
