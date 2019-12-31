@@ -28,7 +28,7 @@
                     <i class="iconfont icon-right"></i>
                 </div>
                 <div class="companySurroundings-wrap" ref="companySurroundingsWrap">
-                    <img class="img" v-for="(item, index) in information.albumInfo" :key="index" :src="item.url"  :preview="0" preview-text="描述文字" />
+                    <img class="img" v-for="(item, index) in information.albumInfo" :key="index" :src="item.smallUrl" :large="item.url"  :preview="0"/>
                 </div>
             </div>
             <div class="companyAddress">
@@ -92,8 +92,8 @@ import sharePopup from '@/components/common/sharePopup/index'
 // 引入查看大图插件
 import preview from 'vue-photo-preview'
 import 'vue-photo-preview/dist/skin.css'
-Vue.use(preview)
 import { companyDetailApi } from '@/api/company'
+Vue.use(preview)
 
 @Component({
   name: 'myCompany',
