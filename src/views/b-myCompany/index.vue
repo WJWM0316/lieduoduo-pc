@@ -28,7 +28,7 @@
                     <i class="iconfont icon-right"></i>
                 </div>
                 <div class="companySurroundings-wrap" ref="companySurroundingsWrap">
-                    <div class="img" v-for="(item, index) in information.albumInfo" :key="index" :style="'background: url(' + item.smallUrl + ')'"></div>
+                    <img class="img" v-for="(item, index) in information.albumInfo" :key="index" :src="item.url"  :preview="0" preview-text="描述文字" />
                 </div>
             </div>
             <div class="companyAddress">
@@ -54,7 +54,7 @@
                 <el-button v-if="isCompanyAdmin" type="text" @click="toEdit('编辑产品', '添加产品')"><i class="iconfont icon-tianjia-"></i>添加产品</el-button>
             </div>
             <company-productList @click="toEdit" @toEditProduct="toEditProduct" :product="information.product"></company-productList>
-            <div v-if="!information.product.length" class="noFound">
+            <div v-if="!information.product || !information.product.length" class="noFound">
                 <no-found tipText='尚未添加公司产品' imageUrl='/img/fly.26a25d51.png'>
                     <el-button v-if="isCompanyAdmin" @click="toEdit('编辑产品')" type="primary">去添加</el-button>
                 </no-found>
@@ -89,7 +89,10 @@ import noFound from '@/components/noFound'
 import myMaterial from './components/myMaterial'
 import EditProduct from './components/EditProduct'
 import sharePopup from '@/components/common/sharePopup/index'
-
+// 引入查看大图插件
+import preview from 'vue-photo-preview'
+import 'vue-photo-preview/dist/skin.css'
+Vue.use(preview)
 import { companyDetailApi } from '@/api/company'
 
 @Component({
