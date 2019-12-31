@@ -38,7 +38,7 @@
                 <ul v-if="information.address">
                     <li v-for="(item, index) in information.address" :key="index">{{ item.address + '&nbsp;' + item.doorplate }}</li>
                 </ul>
-                <div v-else>尚未添加公司地址<el-button @click="toEdit('编辑公司')" v-if="isCompanyAdmin" type="text">去添加</el-button></div>
+                <div v-if="information.address && !information.address.length">尚未添加公司地址<el-button @click="toEdit('编辑公司')" v-if="isCompanyAdmin" type="text">去添加</el-button></div>
             </div>
             <div class="companyWebsite">
                 <p class="companyWebsite-title">
@@ -50,7 +50,7 @@
         </div>
         <div class="companyProduct">
             <div class="companyProduct-head">
-                <p>公司产品</p>
+                <p>公司产品</p>x`
                 <el-button v-if="isCompanyAdmin" type="text" @click="toEdit('编辑产品', '添加产品')"><i class="iconfont icon-tianjia-"></i>添加产品</el-button>
             </div>
             <company-productList @click="toEdit" @toEditProduct="toEditProduct" :product="information.product"></company-productList>

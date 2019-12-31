@@ -135,20 +135,27 @@ export default {
         callback(new Error('请输入正确的公司官网！'))
       }
     }
+    let logoRegReplace = (rule, value, callback) => {
+      if (this.id > 0) {
+        callback()
+      } else {
+        callback(new Error('请上传公司logo！'))
+      }
+    }
     return {
       financing: {},
       employees: {},
       mapIndex: 0, // 地图索引
       mapShow: false,
       rules: {
-        id: [{ required: true, type: 'number', message: '请选择公司logo', trigger: 'blur' }],
+        id: [{ required: true, type: 'number', message: '请选择公司logo', trigger: 'blur' }, { validator: logoRegReplace, trigger: 'change' }],
         company_name: [{ required: true, message: '请输入公司全称', trigger: 'blur' }],
         company_shortname: [{ required: true, message: '请输入公司简称', trigger: 'blur' }],
         industry: [{ required: true, message: '请输入所属行业', trigger: 'blur' }],
         financing: [{ required: true, message: '请选择融资阶段', trigger: 'change' }],
         employees: [{ required: true, message: '请选择公司规模', trigger: 'change' }],
         website: [{ required: false, message: '请输入正确的公司官网', trigger: 'blur' }, { validator: urlRegReplace, trigger: 'blur' }],
-        intro: [{ required: true, min: 6, max: 5000, message: '请输入公司介绍', trigger: 'blur' }]
+        intro: [{ required: true, min: 20, max: 5000, message: '请输入公司介绍', trigger: 'blur' }]
       },
       avatarLoading: false,
       from: {
