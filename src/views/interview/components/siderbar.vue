@@ -71,7 +71,6 @@ export default {
 	width:290px;
 	border-radius:4px;
 	margin-left: 20px;
-	margin-bottom: 25px;
 	.guest-like {
 		width:100%;
 		background:white;

@@ -82,7 +82,7 @@
               <div class="img-box">
                 <el-popover
                   placement="left"
-                  popper-class="user-infos"
+                  popper-class="admin-toast"
                   trigger="hover">
                   <div class="box">
                     <div class="describe">

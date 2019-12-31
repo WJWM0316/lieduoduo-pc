@@ -108,6 +108,7 @@ export default {
   }
   i {
     font-size: 18px;
+    color: $iconFont-gray;
   }
   .li-item1{
     display: block;
@@ -158,6 +159,7 @@ export default {
   .back{
     text-align: center;
     cursor: pointer;
+    font-size: 12px;
   }
 }
 .qr-box-sidebar{
