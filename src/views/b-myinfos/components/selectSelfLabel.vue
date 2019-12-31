@@ -59,7 +59,7 @@
           width="306"
           v-model="customTagStatus">
           <p>新建自定义标签</p>
-          <el-input maxlength="7" show-word-limit v-model="customTagValue" placeholder="请输入个性标签" />
+          <el-input maxlength="6" show-word-limit v-model="customTagValue" placeholder="请输入个性标签" />
           <div style="text-align: right; margin: 0">
             <el-button size="small" style="width: 88px;"  @click="customTagStatus = false">取消</el-button>
             <el-button type="primary" style="width: 116px;" :loading="addCustomLoading" size="small" :disabled="!customTagValue.length && selectedLabels.length < limit " @click="handleAddCustom">确定</el-button>
@@ -192,7 +192,7 @@ export default {
         this.$message.warning(`最多存在${this.limit}个${this.title}`)
         return
       }
-      if (this.customTagValue && this.customTagValue.length <= 7) {
+      if (this.customTagValue && this.customTagValue.length <= 6) {
         this.addCustomLoading = true
         addLifeLabels({ name: this.customTagValue }).then(({ data: { httpStatus, data } }) => {
           this.addCustomLoading = false

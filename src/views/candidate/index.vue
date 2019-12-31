@@ -868,7 +868,6 @@ import MapSearch from 'COMPONENTS/map'
 import DynamicRecord from '../candidateType/dynamicrecord.vue'
 import { putCollectUserApi, cancelCollectUserApi } from 'API/collect'
 import {
-  topAdminPositonList,
   recruiterPositonList,
   sureOpenupAPi,
   watchInvitationAPi,
@@ -1175,8 +1174,7 @@ export default class CourseList extends Vue {
     this.setPath({ navType: type })
   }
   getdeleteTabRedDot (type) {
-    getdeleteTabRedDotApi(type)
-    .then(() => {
+    getdeleteTabRedDotApi(type).then(() => {
       this.$store.dispatch('redDotfun')
     })
   }
@@ -1570,66 +1568,32 @@ export default class CourseList extends Vue {
     }
     switch (type) {
       case 'recruiter-chat':
-        if (this.recruiterIsAdmin) {
-          topAdminPositonList().then((res) => {
-            let arr = res.data.data
-            let hasOnline = []
-            arr.map((v, k) => {
-              v.cur = false
-              if (v.isOnline === 1) {
-                hasOnline.push(v)
-              }
-            })
-            if (arr.length === 0) {
-              this.pop = {
-                isShow: true,
-                type: 'noJob'
-              }
-            }
-            if (arr.length === 0 && hasOnline.length === 0) {
-              this.pop = {
-                isShow: true,
-                type: 'noJob'
-              }
-            } else {
-              this.pop = {
-                isShow: true,
-                Interview: true,
-                InterviewTitle: '选择职位',
-                btntext: '确定',
-                type: 'selectposition'
-              }
-              this.positionLists = arr
+        let datalist = { is_online: 1 }
+        recruiterPositonList(datalist).then((res) => {
+          let arr = res.data.data
+          let hasOnline = []
+          arr.map((v, k) => {
+            v.cur = false
+            if (v.isOnline === 2) {
+              hasOnline.push(v)
             }
           })
-        } else {
-          let datalist = { is_online: 1 }
-          recruiterPositonList(datalist).then((res) => {
-            let arr = res.data.data
-            let hasOnline = []
-            arr.map((v, k) => {
-              v.cur = false
-              if (v.isOnline === 2) {
-                hasOnline.push(v)
-              }
-            })
-            if (arr.length === 0 || hasOnline.length === arr.length) {
-              this.pop = {
-                isShow: true,
-                type: 'noJob'
-              }
-            } else {
-              this.pop = {
-                isShow: true,
-                Interview: true,
-                InterviewTitle: '选择职位',
-                btntext: '确定',
-                type: 'selectposition'
-              }
-              this.positionLists = arr
+          if (arr.length === 0 || hasOnline.length === arr.length) {
+            this.pop = {
+              isShow: true,
+              type: 'noJob'
             }
-          })
-        }
+          } else {
+            this.pop = {
+              isShow: true,
+              Interview: true,
+              InterviewTitle: '选择职位',
+              btntext: '确定',
+              type: 'selectposition'
+            }
+            this.positionLists = arr
+          }
+        })
         break
       case 'check-invitation':
         this.pop = {
@@ -1700,35 +1664,21 @@ export default class CourseList extends Vue {
             this.model.dateLists = []
           }
 
-          if (this.recruiterIsAdmin) {
-            topAdminPositonList().then((res) => {
-              let arr = res.data.data
-              let hasOnline = []
-              arr.map((v, k) => {
-                v.cur = false
-                if (v.isOnline === 1) {
-                  hasOnline.push(v)
-                }
-              })
-              this.positionOption = hasOnline
-            })
-          } else {
-            let datalist = { is_online: 1 }
-            recruiterPositonList(datalist).then((res) => {
-              let arr = res.data.data
-              let hasOnline = []
-              arr.map((v, k) => {
-                v.cur = false
-                if (v.isOnline === 1) {
-                  hasOnline.push(v)
-                }
-              })
-              if (this.arrangeobj.positionStatus === 0 && this.arrangeobj.positionId !== 0) {
-                hasOnline.push({ id: this.arrangeobj.positionId, positionName: this.arrangeobj.positionName })
+          let datalist = { is_online: 1 }
+          recruiterPositonList(datalist).then((res) => {
+            let arr = res.data.data
+            let hasOnline = []
+            arr.map((v, k) => {
+              v.cur = false
+              if (v.isOnline === 1) {
+                hasOnline.push(v)
               }
-              this.positionOption = hasOnline
             })
-          }
+            if (this.arrangeobj.positionStatus === 0 && this.arrangeobj.positionId !== 0) {
+              hasOnline.push({ id: this.arrangeobj.positionId, positionName: this.arrangeobj.positionName })
+            }
+            this.positionOption = hasOnline
+          })
           // this.arrangementInfo.interviewTime = res.data.data.createdAtTime
         })
         break
@@ -2274,7 +2224,7 @@ export default class CourseList extends Vue {
       this.toworddiggle = false
       this.$message({
         type: 'success',
-        message: '转发成功成功!'
+        message: '转发成功!'
       })
     })
   }

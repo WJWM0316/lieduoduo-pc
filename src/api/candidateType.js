@@ -1,15 +1,5 @@
 import { request } from './index.js'
 
-// 超管的职位列表
-// export const topAdminPositonList = data => request('/position/company_top/list', 'get', data)
-export const topAdminPositonList = data => request({
-  url: '/position/company_top/list',
-  method: 'get',
-  params: data,
-  config: {
-    host: 'zhaopin'
-  }
-})
 
 // 机构和招聘官的职位列表
 // export const recruiterPositonList = data => request('/position/mylist', 'get', data)
