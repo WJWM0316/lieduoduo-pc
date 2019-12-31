@@ -16,7 +16,22 @@
 		  <el-col :span="8" class="li-item-content-admin">
 		  	<div>
 			  	<div class="img-box">
-			  		<img :src="item.avatar.smallUrl" alt="avatar" v-if="item.avatar" />
+			  		<el-popover
+              placement="right"
+              popper-class="admin-toast"
+              trigger="click">
+              <div class="box">
+                <div class="describe">
+                  “Hi，对我发布的职位感兴趣？<strong>用微信扫描二维码</strong>，和TA约聊吧。”
+                </div>
+                <div class="qr-code"> <img :src="app_qrcode" alt="avatar" /> </div>
+              </div>
+              <div slot="reference">
+              	<div class="img-box-inner">
+	                <img :src="item.avatar.smallUrl" alt="avatar" v-if="item.avatar" />
+	              </div>
+              </div>
+            </el-popover>
 			  	</div>
 			  	<div class="infos">
 			  		<div class="limit-line-height-one">
@@ -52,7 +67,21 @@
 		  				v-if="item.positionId">
 		  				查看职位
 		  			</router-link>
-		  			<el-button type="text" v-if="!item.positionId">查看招聘官</el-button>
+		  			<el-popover
+              placement="right"
+              v-if="!item.positionId"
+              popper-class="admin-toast"
+              trigger="click">
+              <div class="box">
+                <div class="describe">
+                  “Hi，对我发布的职位感兴趣？<strong>用微信扫描二维码</strong>，和TA约聊吧。”
+                </div>
+                <div class="qr-code"> <img :src="app_qrcode" alt="avatar" /> </div>
+              </div>
+              <div slot="reference">
+              	<el-button type="text">查看招聘官</el-button>
+              </div>
+            </el-popover>
 		  		</template>
 		  		<el-button type="primary" v-if="[31].includes(item.status)" @click="bindClick(item)" class="func-btn btn-style">确认面试信息</el-button>
 		  		<a v-if="[32, 41, 51, 58, 60].includes(item.status)" class="router-link btn-style" @click="bindClick(item)">查看面试</a>
@@ -70,6 +99,9 @@ import {
   refuseInterviewApi,
   getInterviewDetailApi
 } from 'API/interview'
+import {
+  app_qrcode
+} from 'IMAGES/image'
 export default {
 	props: {
     item: {
@@ -87,7 +119,8 @@ export default {
   },
   data() {
   	return {
-  		infos: {}
+  		infos: {},
+  		app_qrcode
   	}
   },
   methods: {
@@ -111,9 +144,18 @@ export default {
 </script>
 <style lang="scss" scoped>
 .li-item {
-	border-bottom: 1px solid $border-color-1;
 	padding: 26px 40px;
 	transition: .2s background;
+	position: relative;
+	&:before{
+		position: absolute;
+		left: 40px;
+		right: 40px;
+		bottom: 0;
+		border-bottom: 1px dashed $border-color-1;
+		height: 1px;
+		content: ''
+	};
 	&:hover{
 		background: #f8fafa;
 	};
@@ -158,7 +200,6 @@ export default {
 	}
 	.li-item-content{
 		height: 46px;
-		position: relative;
 		line-height: 46px;
 	}
 	.li-item-content-admin{
@@ -186,8 +227,9 @@ export default {
 		height: 46px;
 		width: 46px;
 		border-radius: 50%;
-		background: rgba(0,0,0,.1);
-		overflow: hidden;
+		display: inline-block;
+	}
+	.img-box-inner{
 		display: inline-block;
 		@include img-radius(46px, 46px, 23px);
 	}
@@ -269,6 +311,12 @@ export default {
 	}
 	.btn-style {
 		cursor: pointer;
+	}
+	.el-popover__reference{
+		width: 100%;
+		height: 100%;
+		position: relative;
+		z-index: 1;
 	}
 }
 </style>

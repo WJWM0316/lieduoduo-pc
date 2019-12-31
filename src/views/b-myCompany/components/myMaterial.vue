@@ -132,14 +132,14 @@ export default {
       if (urlReg.test(value)) {
         callback()
       } else {
-        callback(new Error('请输入正确的公司官网！'))
+        callback(new Error('请输入正确的公司官网'))
       }
     }
     let logoRegReplace = (rule, value, callback) => {
       if (this.id > 0) {
         callback()
       } else {
-        callback(new Error('请上传公司logo！'))
+        callback(new Error('请上传公司logo'))
       }
     }
     return {
@@ -155,7 +155,7 @@ export default {
         financing: [{ required: true, message: '请选择融资阶段', trigger: 'change' }],
         employees: [{ required: true, message: '请选择公司规模', trigger: 'change' }],
         website: [{ required: false, message: '请输入正确的公司官网', trigger: 'blur' }, { validator: urlRegReplace, trigger: 'blur' }],
-        intro: [{ required: true, min: 20, max: 5000, message: '请输入公司介绍', trigger: 'blur' }]
+        intro: [{ required: true, min: 20, max: 5000, message: '请输入20到5000字以内的公司介绍', trigger: 'blur' }]
       },
       avatarLoading: false,
       from: {
