@@ -5,8 +5,8 @@
             <p class="myMaterial-head-text">如“<span>*</span>”号的内容，是必须填写的项目；置灰内容为公司认证信息，修改请联系 400-065-5788</p>
         </div>
         <div class="from">
-            <el-form :model="from" :rules="rules" label-width="100px">
-                <el-form-item prop="img" label="公司logo：">
+            <el-form :model="from" ref="fromMyMaterial" :rules="rules" label-width="100px">
+                <el-form-item prop="id" label="公司logo：">
                   <div class="Picture-wrap">
                     <Picture
                     :value.sync="middleUrl"
@@ -52,7 +52,7 @@
                 </el-form-item>
                 <el-form-item prop="website" label="公司官网："><el-input placeholder="请输入公司官网" v-model="from.website"></el-input></el-form-item>
                 <el-form-item prop="intro" label="公司介绍：">
-                    <el-input type="textarea"  show-word-limit maxlength="5000" placeholder="请输入公司介绍" v-model="from.intro"></el-input>
+                    <el-input type="textarea" show-word-limit maxlength="5000" placeholder="请输入公司介绍" v-model="from.intro"></el-input>
                 </el-form-item>
                 <el-form-item label="公司图片：">
                   <div class="Picture-wrap-more">
@@ -126,17 +126,13 @@ export default {
   },
   data () {
     let urlRegReplace = (rule, value, callback) => {
+      if (!value) {
+        return callback()
+      }
       if (urlReg.test(value)) {
         callback()
       } else {
         callback(new Error('请输入正确的公司官网！'))
-      }
-    }
-    let introRegReplace = (rule, value, callback) => {
-      if (companyIntroReg.test(value)) {
-        callback()
-      } else {
-        callback(new Error('公司介绍字数应当在20~5000字以内哦！'))
       }
     }
     return {
@@ -145,14 +141,14 @@ export default {
       mapIndex: 0, // 地图索引
       mapShow: false,
       rules: {
-        img: [{ required: true, message: '请选择公司logo', trigger: 'blur' }],
+        id: [{ required: true, type: 'number', message: '请选择公司logo', trigger: 'blur' }],
         company_name: [{ required: true, message: '请输入公司全称', trigger: 'blur' }],
         company_shortname: [{ required: true, message: '请输入公司简称', trigger: 'blur' }],
         industry: [{ required: true, message: '请输入所属行业', trigger: 'blur' }],
         financing: [{ required: true, message: '请选择融资阶段', trigger: 'change' }],
         employees: [{ required: true, message: '请选择公司规模', trigger: 'change' }],
-        website: [{ required: false, message: '请输入正确的公司官网', trigger: 'change' }, { validator: urlRegReplace, trigger: 'blur' }],
-        intro: [{ required: true, message: '请输入公司介绍', trigger: 'blur' }, { validator: introRegReplace, trigger: 'blur' }]
+        website: [{ required: false, message: '请输入正确的公司官网', trigger: 'blur' }, { validator: urlRegReplace, trigger: 'blur' }],
+        intro: [{ required: true, min: 6, max: 5000, message: '请输入公司介绍', trigger: 'blur' }]
       },
       avatarLoading: false,
       from: {
@@ -190,18 +186,22 @@ export default {
       })
     },
     submit () {
-      if (this.from.website === '' || this.from.albumInfo || this.from.address) {
-        this.$confirm('温馨提示', '完善全部信息，可以提高公司的曝光与排名，是否继续完善?', {
-          confirmButtonText: '继续完善',
-          cancelButtonText: '直接保存',
-          type: 'warning',
-          center: true
-        }).catch(() => {
-          this.saveEditCompany()
-        })
-      } else {
-        this.saveEditCompany()
-      }
+      this.$refs.fromMyMaterial.validate(valid => {
+        if (valid) {
+          if (this.from.website === '' || this.from.albumInfo || this.from.address) {
+            this.$confirm('温馨提示', '完善全部信息，可以提高公司的曝光与排名，是否继续完善?', {
+              confirmButtonText: '继续完善',
+              cancelButtonText: '直接保存',
+              type: 'warning',
+              center: true
+            }).catch(() => {
+              this.saveEditCompany()
+            })
+          } else {
+            this.saveEditCompany()
+          }
+        }
+      })
     },
     saveEditCompany () { // 提交
       let dataAlbumInfo = []

@@ -54,7 +54,7 @@
                 <el-button v-if="isCompanyAdmin" type="text" @click="toEdit('编辑产品', '添加产品')"><i class="iconfont icon-tianjia-"></i>添加产品</el-button>
             </div>
             <company-productList @click="toEdit" @toEditProduct="toEditProduct" :product="information.product"></company-productList>
-            <div v-if="!information.product" class="noFound">
+            <div v-if="!information.product.length" class="noFound">
                 <no-found tipText='尚未添加公司产品' imageUrl='/img/fly.26a25d51.png'>
                     <el-button v-if="isCompanyAdmin" @click="toEdit('编辑产品')" type="primary">去添加</el-button>
                 </no-found>
@@ -267,6 +267,9 @@ export default class myCompany extends Vue {
             white-space: pre-wrap;
             word-wrap: break-word;
             word-break: break-all;
+        }
+        button{
+            margin-left: 10px;
         }
     }
     .companySurroundings{

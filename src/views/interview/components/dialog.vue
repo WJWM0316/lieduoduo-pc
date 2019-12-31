@@ -17,13 +17,17 @@
         <li class="item-li">
           <i class="iconfont icon-zhiwei1"></i>
           <div class="ul-li-text-box">
-            <div class="color2 position-name">{{infos.positionName}}</div>
+            <router-link
+              class="color2 position-name"
+              target="_blank" :to="{name: 'positionDetail', query: { positionId: infos.positionId }}">
+              {{infos.positionName}}
+            </router-link>
           </div>
         </li>
         <li class="item-li">
           <i class="iconfont icon-didian"></i>
           <div class="ul-li-text-box">
-            <div class="color2 address">广州市天河区天河北路光大银行1607</div>
+            <div class="color2 address">{{infos.address}}</div>
           </div>
         </li>
         <li class="item-li">
@@ -35,11 +39,12 @@
               :key="index"
               @click="chooseInterviewDate(item, index)"
               :class="{'time-item-active': item.checked}">
-              <i class="iconfont choose icon-zhongxinshangchuan-"></i>
+              <i class="iconfont icon-chenggong choose" v-show="item.checked"></i>
+              <i class="iconfont icon-beixuanxiang choose" v-show="!item.checked"></i>
               <span class="date">{{item.appointment}}</span>
             </div>
           </div>
-          <div class="tips">以上时间都不合适，<strong>请联系我</strong></div>
+          <div class="tips">以上时间都不合适，<strong @click="setDateInappropriate">请联系我</strong></div>
         </li>
       </ul>
       <footer slot="footer" class="footer">
@@ -47,63 +52,75 @@
         <el-button type="primary" @click="handleConfirm" class="btn-sure-width" size="mini">确 定</el-button>
       </footer>
     </template>
-    <template v-if="[1].includes(infos.status)">
+    <template v-if="[32].includes(infos.status) && infos.arrangementInfo">
       <ul class="ul-box">
         <li class="item-li">
           <i class="iconfont icon-rencai"></i>
           <div class="ul-li-text-box">
-            <div class="color1 user-name">小米</div>
-            <div class="user-contact color2">15999972494</div>
+            <div class="color1 user-name">{{infos.arrangementInfo.realname}}</div>
+            <div class="user-contact color2">{{infos.arrangementInfo.mobile}}</div>
           </div>
         </li>
         <li class="item-li">
           <i class="iconfont icon-zhiwei1"></i>
           <div class="ul-li-text-box">
-            <div class="color1 position-name">Java工程师</div>
+            <div class="color1 position-name">
+              <router-link
+                class="color2 position-name"
+                target="_blank" :to="{name: 'positionDetail', query: { positionId: infos.positionId }}">
+                {{infos.positionName}}
+              </router-link>
+            </div>
           </div>
         </li>
         <li class="item-li">
           <i class="iconfont icon-didian"></i>
           <div class="ul-li-text-box">
-            <div class="color1 address">广州市天河区天河北路光大银行1607</div>
+            <div class="color1 address">{{infos.address}}</div>
           </div>
         </li>
         <li class="item-li center">
           <div class="img-box3"></div>
-          <div class="waiting">等待候选人接受邀请</div>
-          <div class="waiting2">候选人将收到你的面试邀请，请耐心等待</div>
+          <div class="waiting">等待面试官安排面试</div>
+          <div class="waiting2">你也可以通过上方的电话，联系面试官确认时间~</div>
         </li>
       </ul>
     </template>
-    <template v-if="[1].includes(infos.status)">
+    <template v-if="[41].includes(infos.status) && infos.arrangementInfo">
       <ul class="ul-box">
         <li class="item-li">
           <i class="iconfont icon-rencai"></i>
           <div class="ul-li-text-box">
-            <div class="color1 user-name">小米</div>
-            <div class="user-contact color2">15999972494</div>
+            <div class="color1 user-name">{{infos.arrangementInfo.realname}}</div>
+            <div class="user-contact color2">{{infos.arrangementInfo.mobile}}</div>
           </div>
         </li>
         <li class="item-li">
           <i class="iconfont icon-zhiwei1"></i>
           <div class="ul-li-text-box">
-            <div class="color1 position-name">Java工程师</div>
+            <div class="color1 position-name">
+              <router-link
+                class="color2 position-name"
+                target="_blank" :to="{name: 'positionDetail', query: { positionId: infos.positionId }}">
+                {{infos.positionName}}
+              </router-link>
+            </div>
           </div>
         </li>
         <li class="item-li">
           <i class="iconfont icon-didian"></i>
           <div class="ul-li-text-box">
-            <div class="color1 address">广州市天河区天河北路光大银行1607</div>
+            <div class="color1 address">{{infos.address}}</div>
           </div>
         </li>
         <li class="item-li center">
           <div class="waiting5">面试时间已确认</div>
           <div class="waiting4">已添加到面试日程，请准时赴约哦~<strong>通知我</strong></div>
-          <div class="waiting3">2019-08-30 09:00</div>
+          <div class="waiting3">{{infos.arrangementInfo.appointment}}</div>
         </li>
       </ul>
     </template>
-    <template v-if="[58].includes(infos.status) && infos.arrangementInfo">
+    <template v-if="[58, 60].includes(infos.status) && infos.arrangementInfo">
       <ul class="ul-box">
         <li class="item-li">
           <i class="iconfont icon-rencai"></i>
@@ -121,34 +138,40 @@
         <li class="item-li">
           <i class="iconfont icon-didian"></i>
           <div class="ul-li-text-box">
-            <div class="color1 address">广州市天河区天河北路光大银行1607</div>
+            <div class="color1 address">{{infos.address}}</div>
           </div>
         </li>
         <li class="item-li center">
           <div class="waiting5">面试时间已结束</div>
-          <div class="waiting6">2019-08-30 09:00</div>
+          <div class="waiting6">{{infos.arrangementInfo.appointment}}</div>
         </li>
       </ul>
     </template>
-    <template v-if="[2].includes(infos.status)">
+    <template v-if="[52].includes(infos.status) && infos.arrangementInfo">
       <ul class="ul-box">
         <li class="item-li">
           <i class="iconfont icon-rencai"></i>
           <div class="ul-li-text-box">
-            <div class="color1 user-name">小米</div>
-            <div class="user-contact color2">15999972494</div>
+            <div class="color1 user-name">{{infos.arrangementInfo.realname}}</div>
+            <div class="user-contact color2">{{infos.arrangementInfo.mobile}}</div>
           </div>
         </li>
         <li class="item-li">
           <i class="iconfont icon-zhiwei1"></i>
           <div class="ul-li-text-box">
-            <div class="color1 position-name">Java工程师</div>
+            <div class="color1 position-name">
+              <router-link
+                class="color2 position-name"
+                target="_blank" :to="{name: 'positionDetail', query: { positionId: infos.positionId }}">
+                {{infos.positionName}}
+              </router-link>
+            </div>
           </div>
         </li>
         <li class="item-li">
           <i class="iconfont icon-didian"></i>
           <div class="ul-li-text-box">
-            <div class="color1 address">广州市天河区天河北路光大银行1607</div>
+            <div class="color1 address">{{infos.address}}</div>
           </div>
         </li>
         <li class="item-li center">
@@ -160,6 +183,10 @@
   </el-dialog>
 </template>
 <script>
+import {
+  getInterviewDetailApi,
+  sureInterviewApi
+} from 'API/interview'
 export default {
   props: {
     show: {
@@ -168,9 +195,13 @@ export default {
     },
     title: {
       type: String,
-      default: '提示'
+      default: '面试信息'
     },
-    infos: {
+    list: {
+      type: Array,
+      default: () => ([])
+    },
+    item: {
       type: Object,
       default: () => ({})
     }
@@ -178,9 +209,15 @@ export default {
   watch: {
     show: {
       handler(show) {
-        this.visiable = show
-      },
-      immediate: true
+        if (show) {
+          this.getInterviewDetail().then(res => {
+            this.visiable = true
+            this.infos = res
+          })
+        } else {
+          this.visiable = false
+        }
+      }
     },
     visiable: {
       handler(visiable) {
@@ -192,7 +229,9 @@ export default {
   },
   data() {
     return {
-      visiable: false
+      visiable: false,
+      infos: {},
+      params: {}
     }
   },
   model: {
@@ -200,21 +239,50 @@ export default {
     event: 'input'
   },
   methods: {
+    setDateInappropriate() {
+      this.params = Object.assign(this.params, {
+        interviewId: this.infos.interviewId,
+        appointmentId: 0
+      })
+    },
+    getInterviewDetail() {
+      return getInterviewDetailApi({interviewId: this.item.interviewId}).then(({ data }) => data.data)
+    },
     handleClose() {
+      this.params = {}
       this.visiable = false
       this.$emit('input', this.visiable)
     },
     handleConfirm() {
       this.$emit('confirm')
+      this.sureInterview()
     },
     chooseInterviewDate(item, index) {
-      let { appointmentList } = this.infos.arrangementInfo
+      let infos = this.infos
+      let { appointmentList } = infos.arrangementInfo
       appointmentList.map((v, i, arr) => {
-        v.checked = false
-        if(i === index) {
-          this.$set(arr[i], 'checked', true)
-          console.log(v)
+        if (i === index) {
+          this.$set(v, 'checked', true)
+          this.params = Object.assign(this.params, {
+            interviewId: infos.interviewId,
+            id: v.id
+          })
+        } else {
+          v.checked = false
         }
+      })
+    },
+    sureInterview() {
+      if(!Reflect.has(this.params, 'id')) {
+        this.$message({message: '请选择一个面试时间', type: 'warning'})
+        return
+      }
+      sureInterviewApi(this.params).then(() => {
+        this.getInterviewDetail().then(res => {
+          this.list[this.item['editItemIndex']].status = res.status
+          this.list[this.item['editItemIndex']].statusDesc = res.statusDesc
+          this.visiable = false
+        })
       })
     }
   }
@@ -222,7 +290,7 @@ export default {
 </script>
 <style lang="scss">
 .interview-model{
-  border-radius: 8px;
+  border-radius: 8px !important;
   .item-li {
     font-size:14px;
     font-weight:400;
@@ -231,7 +299,7 @@ export default {
   }
   .iconfont {
     font-size: 14px;
-    color: #D8D8D8;
+    color: $font-color-6;
     display: inline-block;
     vertical-align: middle;
   }
@@ -239,6 +307,7 @@ export default {
     display: inline-block;
     vertical-align: middle;
     padding-left: 18px;
+    max-width: calc(100% - 32px);
   }
   .user-name {
     display: inline-block;
@@ -282,7 +351,7 @@ export default {
   .el-dialog__title{
     font-size:16px;
     font-weight:500;
-    color:rgba(51,51,51,1);
+    color:$font-color-3;
     line-height:24px;
   }
   .el-dialog__header{
@@ -343,13 +412,13 @@ export default {
   .waiting{
     font-size:16px;
     font-weight:500;
-    color:rgba(51,51,51,1);
+    color:$font-color-3;
     line-height:16px;
     text-align: center;
   }
   .waiting2 {
     font-size:14px;
-    color:rgba(51,51,51,1);
+    color:$font-color-3;
     line-height:20px;
     text-align: center;
     padding-top: 6px;
@@ -358,42 +427,50 @@ export default {
   .waiting3 {
     font-size:28px;
     font-weight:500;
-    color:rgba(3,179,187,1);
+    color:$main-color-1;
     line-height:28px;
     padding-bottom: 42px;
   }
   .waiting4 {
     font-size:14px;
     font-weight:400;
-    color:rgba(92,86,93,1);
+    color:$font-color-5;
     line-height:14px;
     padding-bottom: 30px;
     padding-top: 10px;
     strong {
-      color:rgba(3,179,187,1);
+      color:$main-color-1;
     }
   }
   .waiting5 {
     font-size:18px;
     font-weight:500;
-    color:rgba(40,40,40,1);
+    color:$font-color-3;
     line-height:18px;
     padding-top: 28px;
   }
   .waiting6 {
     font-size:28px;
     font-weight:500;
-    color:rgba(146,146,155,1);
+    color:$font-color-9;
     line-height:28px;
     padding-bottom: 32px;
     padding-top: 30px;
   }
   .waiting7 {
     font-size:14px;
-    color:rgba(92,86,93,1);
+    color:$font-color-5;
     line-height:14px;
     padding-top: 10px;
     padding-bottom: 32px;
+  }
+  .position-name{
+    cursor: pointer;
+    display: inline-block
+  }
+  .el-dialog__headerbtn{
+    top: 16px;
+    right: 16px;
   }
 }
 </style>

@@ -35,6 +35,7 @@
                 trigger="hover">
                 <div class="share-image">
                   <img :src="item.url" />
+                  <div class="tooltips" v-html="item.tooltips"></div>
                 </div>
                 <div slot="reference" class="nav-name">{{item.name}}</div>
               </el-popover>
@@ -95,10 +96,9 @@
   </div>
 </template>
 <script>
-import { mp_qrcode, wx_qrcode, app_qrcode } from 'IMAGES/image'
 import { getHotArea } from 'API/common'
 import DropDown from 'COMPONENTS/dropDown'
-import { mapState } from 'vuex'
+import { asideBar } from 'UTIL/interview-static-data'
 export default {
   components: { DropDown },
   data () {
@@ -108,9 +108,9 @@ export default {
       navList: [
         { name: '首页', url: '/index', type: 'link' },
         { name: '公司', url: '/company', type: 'link' },
-        { name: 'APP', url: app_qrcode, type: 'hover' },
-        { name: '小程序', url: mp_qrcode, type: 'hover' },
-        { name: '公众号', url: wx_qrcode, type: 'hover' }
+        { name: 'APP', type: 'hover', ...asideBar.bottomNav[0] },
+        { name: '小程序', type: 'hover', ...asideBar.bottomNav[1] },
+        { name: '公众号', type: 'hover', ...asideBar.bottomNav[2] }
       ]
     }
   },
@@ -125,8 +125,7 @@ export default {
       cityId: state => state.cityId
     }),
     ...mapGetters([
-      'interviewData',
-      'asideBar'
+      'interviewData'
     ]),
     headerInfo () {
       // 有加载简历就用简历里面的 没有就用登陆携带回来的信息
@@ -180,7 +179,7 @@ export default {
       }
     },
     handeToInterview() {
-      let route = this.asideBar.topNav[2]
+      let route = asideBar.topNav[0]
       this.$router.push({name: route.routeName, query: route.query})
     },
     changeLocation (item) {
@@ -268,12 +267,12 @@ $header-height-1: $page-header-height;
     line-height: $header-height-1;
   }
 }
-.share-image {
+/*.share-image {
   height: 146px;
   img {
     width: 100%;
   }
-}
+}*/
 .header-nav {
   display: flex;
   height: 100%;
@@ -360,9 +359,24 @@ $header-height-1: $page-header-height;
 </style>
 <style lang="scss">
 .el-popover.share-popover {
-  width: 158px;
+  width: 152px;
   box-sizing: border-box;
-  padding: 5px;
+  padding: 5px 13px 7px 13px;
+  .tooltips{
+    text-align: center;
+    font-size:12px;
+    font-weight:400;
+    color:rgba(153,153,155,1);
+    line-height:15px;
+    letter-spacing:1px;
+  }
+  .share-image{
+    height: unset;
+    text-align: center;
+    img{
+      width: 100%;
+    }
+  }
 }
 .header-dorpdown-wrapper {
   min-width: 124px;

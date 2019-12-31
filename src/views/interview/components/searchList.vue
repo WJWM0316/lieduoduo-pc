@@ -1,8 +1,8 @@
 <template>
 	<div class="search-content">
-		<ChatBar :item="item" v-for="(item, index) in data.list" :key="index" :tab="tab" @click="bindClick" />
+		<ChatBar :item="item" v-for="(item, index) in data.list" :key="index" :tab="tab" @click="bindClick($event, index)" :rowIndex="index" />
 	  <no-data v-if="!data.total && data.hasInitPage" />
-	  <dialog-model :title="model.title" v-model="model.show" @confirm="confirm" @cancle="cancle" :infos="model.interview" />
+	  <dialog-model v-model="model.show" :item="model.interview" :list="data.list" />
 	</div>
 </template>
 <script>
@@ -43,15 +43,12 @@ export default {
 		DialogModel
 	},
 	methods: {
-		bindClick(item) {
+		bindClick(item, index) {
 			this.model.show = true
-			this.model.interview = item
-		},
-		confirm() {
-			this.model.show = false
-		},
-		cancle() {
-			this.model.show = false
+			this.model.interview = {
+				...item,
+				editItemIndex: index
+			}
 		}
 	}
 }
