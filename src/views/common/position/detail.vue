@@ -96,7 +96,7 @@
 										<img :src="infos.recruiterInfo.avatar.smallUrl" alt="avatar" v-if="infos.recruiterInfo && infos.recruiterInfo.avatar">
 									</div>
 									<div class="admin-hello">
-										<div class="tips_01">{{infos.recruiterInfo.name}}</div>
+										<div class="tips_01">{{infos.recruiterInfo.name}}<i class="icon iconfont icon-duihua_huaban"></i></div>
 										<div class="degress">{{infos.recruiterInfo.position}} <template v-if="infos.activeLabel">· {{infos.activeLabel}}</template></div>
 									</div>
 								</div>

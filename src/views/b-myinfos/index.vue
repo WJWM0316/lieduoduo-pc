@@ -13,6 +13,7 @@
           attach-type="avatar"
           :cropper="true"
           cropper-radius="50%"
+          :validate-event="true"
           @before="avatarLoading = true"
           @fail="avatarLoading = false"
           @change="handleChangeAvatar">
@@ -37,7 +38,7 @@
       <el-form-item prop="position" label="担任职务"><el-input show-word-limit maxlength="20" v-model="form.position" placeholder="请写担任职务" /></el-form-item>
       <el-form-item prop="email" label="公司邮箱"><el-input v-model="form.email" placeholder="请写公司邮箱" /></el-form-item>
       <el-form-item prop="wechat" label="微信号"><el-input show-word-limit maxlength="20" v-model="form.wechat" placeholder="请写微信号" /></el-form-item>
-      <el-form-item prop="signature" label="个人签名"><el-input type="textarea" show-word-limit maxlength="30" v-model="form.signature" placeholder="用一句话介绍你自己吧~" /></el-form-item>
+      <el-form-item prop="signature" label="个性签名"><el-input type="textarea" show-word-limit maxlength="30" v-model="form.signature" placeholder="用一句话介绍你自己吧~" /></el-form-item>
       <el-form-item prop="labels" label="个人标签">
         <select-self-label
           class="self-label-wrapper"
@@ -132,7 +133,7 @@ export default {
         labels: [] // 个人标签
       },
       formRules: {
-        attachId: [{ required: true, type: 'number', message: '请上传头像', trigger: 'blur' }],
+        attachId: [{ required: true, type: 'number', message: '请上传头像', trigger: 'change' }],
         name: [{ required: true, message: '请填写真实姓名', trigger: 'blur' }],
         gender: [{ required: true, message: '请选择性别', trigger: 'blur' }],
         positionTypeId: [{ required: true, message: '请选择担任职位类型', trigger: 'blur' }],
@@ -140,7 +141,7 @@ export default {
         email: [{ required: true, message: '请填写公司邮箱', trigger: 'blur' }, { validator: emailValidate, trigger: 'blur' }],
         labels: [{ required: true, type: 'array', message: '请选择个人标签', trigger: 'change' }],
         wechat: [{ validator: wechatValidate, trigger: 'blur' }],
-        signature: [{ min: 6, max: 30, message: '个性签名需为6~30个字', trigger: 'blur' }],
+        signature: [{ required: true, min: 6, max: 30, message: '个性签名需为6~30个字', trigger: 'blur' }],
         brief: [{ min: 6, max: 5000, message: '个人简介字数在6到5000之间', trigger: 'blur' }]
       },
       intros: CompanyIntro,
