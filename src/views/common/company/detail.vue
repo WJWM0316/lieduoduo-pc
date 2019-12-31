@@ -123,13 +123,7 @@
                       <div class="describe" v-show="item.show">
                         “Hi，对我发布的职位感兴趣？<strong>用微信扫描二维码</strong>，和TA约聊吧。”
                       </div>
-                      <div class="qr-code">
-                        <img
-                          :src="item.qrCode"
-                          @load="hasloadedRemoteImg(item, index)"
-                          @mouseout="removeShowQrCode(item, index)"
-                          @mouseover="getRemoteImg(item, index)"/>
-                      </div>
+                      <div class="qr-code"> <img :src="item.qrCode" /> </div>
                     </div>
                     <div class="recruitmentTeam-box"  slot="reference">
 											<img :src="item.avatar.smallUrl"/>
@@ -325,19 +319,6 @@ export default class companyDetail extends Vue {
   uploadResumeFile () {
     this.uploading = false
     this.$message.error('上传附件简历失败')
-  }
-  getRemoteImg (item, index) {
-    if (item.qrCode) {
-      item.show = true
-    } else {
-      // getRecruiterQrcodeApi({recruiterUid: item.uid}).then(( { data } ) => item.qrCode = data.data.positionQrCodeUrl)
-    }
-  }
-  removeShowQrCode (item, index) {
-    item.show = false
-  }
-  hasloadedRemoteImg () {
-    // item.show = true
   }
   created () {
     window.addEventListener('scroll', this.handleScroll)

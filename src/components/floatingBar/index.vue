@@ -99,7 +99,7 @@ export default {
     position: relative;
   }
   i {
-    font-size: 18px;
+    font-size: 16px;
     color: $iconFont-gray;
   }
   .li-item1{
