@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="search-content">
   <div class="li-item clearfix" v-for="(item, index) in data.list" :key="index">
 		<div class="col-left">
 			<div class="logo-box">
