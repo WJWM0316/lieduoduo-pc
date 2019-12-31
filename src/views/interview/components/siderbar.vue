@@ -12,7 +12,8 @@
   				<div class="jump">
 		  			<div class="li-item-row-one">
 		  				<div class="position-name">{{item.positionName}}</div>
-		  				<span v-if="item.isRapidly">24K约面</span>
+		  				<!-- <span v-if="item.isRapidly">24K约面</span> -->
+		  				<img src="~IMAGES/tag_list_24hour.png" alt="" class="position-24hour" v-if="item.isRapidly === 1" />
 		  				<div class="position-salary">
 		  					{{item.emolumentMin}}-{{item.emolumentMax}}K<template v-if="item.annualSalary > 12">·{{item.annualSalary}}薪</template>
 		  				</div>
@@ -93,7 +94,7 @@ export default {
 		};
 	}
 	.jump{
-		border-bottom: 1px dashed $--border-color-base;
+		border-bottom: 1px solid $--border-color-base;
 		padding-bottom: 20px;
 	}
 	.li-item-row-one {
@@ -113,6 +114,15 @@ export default {
 	.position-name {
 		display: inline-block;
 	}
+	.position-24hour {
+    height: 14px;
+    display: inline-block;
+    line-height: 1;
+    vertical-align: middle;
+    margin: 0 8px 0 6px;
+    position: relative;
+    top: -1px;
+  }
 	.get-more{
 		height: 46px;
 		line-height: 46px;

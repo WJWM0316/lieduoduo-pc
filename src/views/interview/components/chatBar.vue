@@ -36,7 +36,7 @@
 			  	<div class="infos">
 			  		<div class="limit-line-height-one">
 			  			<span class="user-name">{{item.recruiterRealname}}</span>
-			  			<span class="user-degress"> · {{item.recruiterPositionName}}</span>
+			  			<span class="user-degress">&nbsp;&nbsp;·&nbsp;&nbsp;{{item.recruiterPositionName}}</span>
 			  		</div>
 			  		<div class="company-name">{{item.companyShortname}}</div>
 			  	</div>
@@ -50,6 +50,7 @@
 		  			class="router-link" :to="{name: 'positionDetail', query: { positionId: item.positionId }}">
 				  	<div class="limit-line-height-two">
 				  		<span class="position-name">{{item.positionName}}</span>
+				  		<img src="~IMAGES/tag_list_24hour.png" alt="" class="position-24hour" v-if="item.interviewType === 2">
 				  		<span class="position-salary">{{item.positionEmolumentMin}}~{{item.positionEmolumentMax}}k<template>· 14薪</template></span>
 				  	</div>
 				  	<div class="position-adress">广州市天河区 | 10年以上 | 初中及以上</div>
@@ -273,16 +274,16 @@ export default {
 	.position-adress {
 		font-size:12px;
 		font-weight:400;
-		color:$--dropdown-menuItem-hover-color;
+		color:$font-color-6;
 		line-height:12px;
 		padding-top: 12px;
 		position: relative;
-		top: -3px;
+		top: -1px;
 	}
 	.company-name{
 		font-size:14px;
 		font-weight:400;
-		color:$--dropdown-menuItem-hover-color;
+		color:$font-color-6;
 		line-height:14px;
 		padding-top: 12px;
 	}
@@ -318,5 +319,12 @@ export default {
 		position: relative;
 		z-index: 1;
 	}
+	.position-24hour {
+    height: 16px;
+    display: inline-block;
+    line-height: 1;
+    vertical-align: middle;
+    margin: 0 8px 0 6px;
+  }
 }
 </style>
