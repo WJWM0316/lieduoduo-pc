@@ -188,6 +188,10 @@ export default {
     },
     // 添加自定义标签
     handleAddCustom () {
+      if (this.limit <= this.selectedLabels.length) {
+        this.$message.warning(`最多存在${this.limit}个${this.title}`)
+        return
+      }
       if (this.customTagValue && this.customTagValue.length <= 7) {
         this.addCustomLoading = true
         addLifeLabels({ name: this.customTagValue }).then(({ data: { httpStatus, data } }) => {
@@ -256,6 +260,7 @@ export default {
         val.checked = false
       })
       this.selectedLabels = []
+      this.customTagStatus = false
     }
   }
 }
