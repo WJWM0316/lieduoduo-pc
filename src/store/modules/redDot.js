@@ -1,9 +1,9 @@
 import { getInterviewRedDotInfoApi } from '@/api/candidate'
 export default {
   state: { // b端数据
-				recruiterIntentionList: 0,
-				recruiterInviteList: 0,
-				recruiterScheduleList: 0
+    recruiterIntentionList: 0,
+    recruiterInviteList: 0,
+    recruiterScheduleList: 0
   },
   getters: {
     recruiterIntentionList: state => state.recruiterIntentionList,
