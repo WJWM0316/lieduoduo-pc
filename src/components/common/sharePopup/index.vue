@@ -5,12 +5,16 @@
                 <div class="share-title">{{ text.title }}</div>
                 <div class="share-guide">{{ text.guide }}</div>
                 <div class="share-imgUrl" :class="{ 'invite-imgUrl': type === 'invite'}">
-                    <img v-if="type !== 'invite' && imgUrl" :src="imgUrl"/>
-                    <div id="qrcode"></div>
+                    <template v-if="type !== 'invite'">
+                       <img v-if="imgUrl" :src="imgUrl"/>
+                    </template>
+                    <template v-else>
+                      <div id="qrcode"></div>
+                    </template>
                 </div>
                 <div class="invite" v-if="type === 'invite'">
                   <div class="invite-copy-url"><span>{{Url}}</span></div>
-                  <el-button type="primary" style="width: 72px" size="small" @click="copyActiveCode($event,Url )">复制</el-button>
+                  <el-button type="primary" style="width: 72px" size="small" @click="copyActiveCode($event, Url)">复制</el-button>
                 </div>
                 <el-button @click="helpPopupShowFun" type="text" class="helpBtn">{{ text.helpTitle }}<i class="iconfont icon-question-circle"></i></el-button>
                 <div class="helpPop" v-if="helpPopupShow">
