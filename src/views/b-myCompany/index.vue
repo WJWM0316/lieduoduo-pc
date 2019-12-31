@@ -28,7 +28,7 @@
                     <i class="iconfont icon-right"></i>
                 </div>
                 <div class="companySurroundings-wrap" ref="companySurroundingsWrap">
-                    <img class="img" v-for="(item, index) in information.albumInfo" :key="index" :src="item.url"  :preview="0" preview-text="描述文字" />
+                    <img class="img" v-for="(item, index) in information.albumInfo" :key="index" :src="item.smallUrl" :large="item.url"  :preview="0"/>
                 </div>
             </div>
             <div class="companyAddress">

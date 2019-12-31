@@ -24,6 +24,9 @@ img {
 		height: calc(100vh - #{$page-header-height} - #{$page-footer-height});
 		box-sizing: border-box;
 	}
+	.slotContent {
+		display: inline-block;
+	}
 	.admin-infos {
 		margin-bottom: 40px;
 		height: 48px;

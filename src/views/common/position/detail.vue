@@ -79,28 +79,28 @@
         <article class="content-article">
           <el-row class="admin-infos">
             <el-col :span="24">
-              <div class="img-box">
-                <el-popover
-                  placement="left"
-                  popper-class="admin-toast"
-                  trigger="hover">
-                  <div class="box">
-                    <div class="describe">
-                      “Hi，对我发布的职位感兴趣？<strong>用微信扫描二维码</strong>，和TA约聊吧。”
-                    </div>
-                    <div class="qr-code">
-                      <img :src="infos.qrCode"/>
-                    </div>
-                  </div>
-                  <div slot="reference">
-                    <img :src="infos.recruiterInfo.avatar.smallUrl" alt="avatar" v-if="infos.recruiterInfo && infos.recruiterInfo.avatar">
-                  </div>
-                </el-popover>
-              </div>
-              <div class="admin-hello">
-                <div class="tips_01">我是招聘官</div>
-                <div class="degress">技术总监 <template v-if="infos.activeLabel">· {{infos.activeLabel}}</template></div>
-              </div>
+							<el-popover
+							  placement="left"
+							  popper-class="user-infos"
+							  trigger="hover">
+								<div class="box">
+									<div class="describe">
+										“Hi，对我发布的职位感兴趣？<strong>用微信扫描二维码</strong>，和TA约聊吧。”
+									</div>
+									<div class="qr-code">
+										<img :src="infos.qrCode"/>
+									</div>
+								</div>
+								<div class="slotContent" slot="reference">
+									<div class="img-box">
+										<img :src="infos.recruiterInfo.avatar.smallUrl" alt="avatar" v-if="infos.recruiterInfo && infos.recruiterInfo.avatar">
+									</div>
+									<div class="admin-hello">
+										<div class="tips_01">{{infos.recruiterInfo.name}}</div>
+										<div class="degress">{{infos.recruiterInfo.position}} <template v-if="infos.activeLabel">· {{infos.activeLabel}}</template></div>
+									</div>
+								</div>
+              </el-popover>
             </el-col>
           </el-row>
           <section class="part" v-if="infos.skillsLabel.length > 0">

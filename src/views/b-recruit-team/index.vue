@@ -14,7 +14,7 @@
             <div class="recruit-image">
               <img :src="item.avatar && item.avatar.smallUrl" alt="">
             </div>
-            <div>
+            <div style="width: 70%;">
               <p class="recruit-name"><span class="recruit-name-text">{{item.name}}</span> <span class="admin-tag" v-if="item.isCompanyAdmin">管理员</span></p>
               <p class="recruit-position">{{item.position}}</p>
               <p class="recruit-email"><span>邮箱：</span>{{item.email}}</p>
