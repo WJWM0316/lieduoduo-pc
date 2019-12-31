@@ -14,7 +14,7 @@
                     :cropper="true"
                     cropperRadius="8px"
                     cropper-radius="8px"
-                    :validateEvent="true"
+                    :validate-event="true"
                     @change="pictureInformation">
                     <div class="avatar-wrapper">
                       <div class="avatar">
