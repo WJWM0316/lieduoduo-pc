@@ -224,10 +224,10 @@ export default {
             }
           } else {
             this.$emit('change', data.data)
-            this.$emit('update:value', data[0].url)
+            this.$emit('update:value', data.data[0].url)
             if (this.$parent.$options.componentName === 'ElFormItem') {
               if (this.validateEvent) {
-                this.$parent.$emit('el.form.change', data[0].url)
+                this.$parent.$emit('el.form.change', data.data[0].url)
               }
             }
           }
