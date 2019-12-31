@@ -9,7 +9,7 @@
 		<div class="col-center">
 			<div class="colc-top">
 				<div class="company-name" @click="tocompany(item)">{{item.companyShortname}}</div>
-				<div class="company-desc">B轮<span>·</span>99-199人<span>·</span>教育行业</div>
+				<div class="company-desc">{{item.companyInfo.financingDesc}}<span>·</span>{{item.companyInfo.employeesDesc}}<span>·</span>{{item.companyInfo.industry}}</div>
 			</div>
 			<div class="colc-bottom">
 				<i class="iconfont icon-didian"></i>
@@ -47,6 +47,7 @@
 			</div>
 		</div>
 		<div class="dottedlien"></div>
+		<div class="listredhot" v-if="item.redDot"></div>
   </div>
 	</div>
 </template>
@@ -82,6 +83,7 @@ export default {
 .li-item {
 	position: relative;
 	padding: 33px 40px;
+	cursor: pointer;
 	transition: .2s background;
 	&:hover{
 		background: #f8fafa;
@@ -99,6 +101,15 @@ export default {
     bottom: 0;
     position: absolute;
     left: 0;
+	}
+	.listredhot{
+		position: absolute;
+		right: 33px;
+		top: 18px;
+		width:6px;
+		height:6px;
+		border-radius: 50%;
+		background:#F45322;
 	}
 	.logo-box{
 		width:64px;
