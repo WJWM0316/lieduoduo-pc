@@ -67,7 +67,7 @@
       <div class="job_cont_none" v-else>
         <img class="hint_icon" src="../../assets/images/fly.png">
         <div class="none_hint">当前没有{{ navSelectName === '' ? '招聘中' : navSelectName }}的职位~</div>
-        <el-button v-if="navSelectName === ''" class="null-produc-bnt" @click="todoAction('addJob')">分享职位</el-button>
+        <el-button v-if="navSelectName === ''" class="null-produc-bnt" @click="todoAction('addJob')">发布职位</el-button>
       </div>
 
       <div class="toTop" @click="toTop" v-if="isShowTop">

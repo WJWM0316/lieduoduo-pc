@@ -108,9 +108,9 @@ export default {
       navList: [
         { name: '首页', url: '/index', type: 'link' },
         { name: '公司', url: '/company', type: 'link' },
-        { name: 'APP', type: 'hover', ...asideBar.bottomNav[0] },
-        { name: '小程序', type: 'hover', ...asideBar.bottomNav[1] },
-        { name: '公众号', type: 'hover', ...asideBar.bottomNav[2] }
+        { ...asideBar.bottomNav[0] },
+        { ...asideBar.bottomNav[1] },
+        { ...asideBar.bottomNav[2] }
       ]
     }
   },

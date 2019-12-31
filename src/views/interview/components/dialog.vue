@@ -80,7 +80,7 @@
           </div>
         </li>
         <li class="item-li center">
-          <div class="img-box3"></div>
+          <img src="@/assets/images/timeinfo.png" alt="" class="img-box3">
           <div class="waiting">等待面试官安排面试</div>
           <div class="waiting2">你也可以通过上方的电话，联系面试官确认时间~</div>
         </li>
@@ -115,12 +115,12 @@
         </li>
         <li class="item-li center">
           <div class="waiting5">面试时间已确认</div>
-          <div class="waiting4">已添加到面试日程，请准时赴约哦~<strong>通知我</strong></div>
+          <div class="waiting4">已添加到面试日程，请准时赴约哦~<strong> 通知我</strong></div>
           <div class="waiting3">{{infos.arrangementInfo.appointment}}</div>
         </li>
       </ul>
     </template>
-    <template v-if="[58, 60].includes(infos.status) && infos.arrangementInfo">
+    <template v-if="[51, 58, 60].includes(infos.status) && infos.arrangementInfo">
       <ul class="ul-box">
         <li class="item-li">
           <i class="iconfont icon-rencai"></i>
@@ -227,7 +227,7 @@ export default {
       }
     }
   },
-  data() {
+  data () {
     return {
       visiable: false,
       infos: {},
@@ -239,25 +239,25 @@ export default {
     event: 'input'
   },
   methods: {
-    setDateInappropriate() {
+    setDateInappropriate () {
       this.params = Object.assign(this.params, {
         interviewId: this.infos.interviewId,
         appointmentId: 0
       })
     },
-    getInterviewDetail() {
-      return getInterviewDetailApi({interviewId: this.item.interviewId}).then(({ data }) => data.data)
+    getInterviewDetail () {
+      return getInterviewDetailApi({ interviewId: this.item.interviewId }).then(({ data }) => data.data)
     },
-    handleClose() {
+    handleClose () {
       this.params = {}
       this.visiable = false
       this.$emit('input', this.visiable)
     },
-    handleConfirm() {
+    handleConfirm () {
       this.$emit('confirm')
       this.sureInterview()
     },
-    chooseInterviewDate(item, index) {
+    chooseInterviewDate (item, index) {
       let infos = this.infos
       let { appointmentList } = infos.arrangementInfo
       appointmentList.map((v, i, arr) => {
@@ -272,9 +272,9 @@ export default {
         }
       })
     },
-    sureInterview() {
-      if(!Reflect.has(this.params, 'id')) {
-        this.$message({message: '请选择一个面试时间', type: 'warning'})
+    sureInterview () {
+      if (!Reflect.has(this.params, 'id')) {
+        this.$message({ message: '请选择一个面试时间', type: 'warning' })
         return
       }
       sureInterviewApi(this.params).then(() => {
@@ -299,7 +299,7 @@ export default {
   }
   .iconfont {
     font-size: 14px;
-    color: $font-color-6;
+    color: $iconFont-gray;
     display: inline-block;
     vertical-align: middle;
   }
@@ -403,9 +403,6 @@ export default {
   }
   .img-box3 {
     width: 134px;
-    height: 120px;
-    background: red;
-    display: inline-block;
     display: block;
     margin: 20px auto 32px auto;
   }
@@ -418,7 +415,7 @@ export default {
   }
   .waiting2 {
     font-size:14px;
-    color:$font-color-3;
+    color:$border-color-7;
     line-height:20px;
     text-align: center;
     padding-top: 6px;
