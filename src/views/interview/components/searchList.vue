@@ -61,9 +61,12 @@ export default {
 }
 </script>
 <style lang="scss">
-.search-content .li-item-last {
-	&:before{
-		display: none;
+.search-content {
+	min-height: 790px;
+	.li-item-last {
+		&:before{
+			display: none;
+		}
 	}
 }
 </style>

@@ -17,7 +17,7 @@
           @before="avatarLoading = true"
           @fail="avatarLoading = false"
           @change="handleChangeAvatar">
-          <div class="avatar-wrapper">
+          <div class="avatar-wrapper" v-loading="avatarLoading">
             <div class="avatar">
               <img :src="form.avatarUrl" />
               <span class="iconfont icon-xiangji"></span>
@@ -195,6 +195,7 @@ export default {
       this.form.avatarUrl = item[0].middleUrl
       // 保存头像信息
       this.recruiterAvatar = item[0]
+      this.avatarLoading = false
     },
     selectedPosition (item) {
       this.form.positionTypeId = item.labelId

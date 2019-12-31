@@ -22,7 +22,7 @@
       <hot-city />
       <app-links class="app-links" />
     </div>
-    <scroll-to-top></scroll-to-top>
+    <!-- <scroll-to-top></scroll-to-top> -->
   </div>
 </template>
 <script>
@@ -38,7 +38,7 @@ import IndexBanner4 from './components/indexBanner4'
 // import PositionList from './components/positionList.vue'
 // 热门公司列表
 import HotCompany from './components/hotCompany'
-import ScrollToTop from 'COMPONENTS/scrollToTop'
+// import ScrollToTop from 'COMPONENTS/scrollToTop'
 import HotCity from './components/hotCity'
 import AppLinks from 'COMPONENTS/common/appLinks'
 import { getBanners, getIndexData } from 'API/common'
@@ -52,7 +52,7 @@ export default {
     HotCity,
     HotCompany,
     AppLinks,
-    ScrollToTop,
+    // ScrollToTop,
     IndexBanner4
   },
   data () {

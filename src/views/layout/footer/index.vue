@@ -1,5 +1,5 @@
 <template>
-  <footer id="page-footer" class="page-footer" v-if="isShow">
+  <footer id="page-footer" class="page-footer">
     <section :class="{'minn-footer': miniFooter}">
         <div class="footer_left">
           <div class="footer-header-title">

@@ -51,15 +51,7 @@ export default {
       'getInterviewRedDotInfoApi'
     ]),
     scroll() {
-      let dom = this.$refs['backTop']
-      let timer = setInterval(() => {
-        let scrollTop = document.documentElement.scrollTop || document.body.scrollTop
-        let ispeed = Math.floor(-scrollTop / 6)
-        if(scrollTop <= 0) {
-          clearInterval(timer)
-        }
-        document.documentElement.scrollTop = document.body.scrollTop = scrollTop + ispeed
-      }, 30)
+      this.$util.scrollToView(document.body)
     }
   },
   mounted() {
