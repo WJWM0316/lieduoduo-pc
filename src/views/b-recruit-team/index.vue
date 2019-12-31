@@ -4,7 +4,7 @@
     <div class="rec-team-header">
       <h1>招聘团队</h1>
       <el-badge :is-dot="reddot" v-if="recruiterIsAdmin">
-        <el-button type="primary" @click="applyDialog = true">加入申请 {{count.apply}}）</el-button>
+        <el-button type="primary" @click="applyDialog = true">加入申请（{{count.apply}}）</el-button>
       </el-badge>
     </div>
     <div class="recruit-lists">
@@ -131,10 +131,14 @@ export default {
     },
     // 刷新红点状态
     hanldeApplyClose () {
-      // 红点
-      this.getreddots()
-      // 更新数量
-      this.getCounts()
+      if (this.reddot) {
+        // 红点
+        this.getreddots()
+        // 更新数量
+        this.getCounts()
+        // 刷新侧边栏红点逻辑
+        this.$store.dispatch('redDotfun')
+      }
     },
     // 审核招聘官
     handleSetApply (number, isReload = false) {

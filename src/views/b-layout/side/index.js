@@ -11,12 +11,14 @@ import recruiter from '@/router/recruiter'
     ...mapGetters([
       'recruiterIntentionList',
       'recruiterInviteList',
-      'recruiterScheduleList'
+      'recruiterScheduleList',
+      'newJoinApplyNum'
     ]),
     reddot () {
       return {
         '/candidate': this.recruiterIntentionList + this.recruiterInviteList,
-        '/interviewRecords': this.recruiterScheduleList
+        '/interviewRecords': this.recruiterScheduleList,
+        '/recruiteam': this.newJoinApplyNum
       }
     }
   }
