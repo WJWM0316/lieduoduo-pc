@@ -227,7 +227,7 @@ export default class CourseList extends Vue {
   }
   destroyed () {
     const dom = document.querySelector('.b-app-contain')
-    dom.removeEventListener('scroll', this.handleScroll)
+    if (dom) dom.removeEventListener('scroll', this.handleScroll)
   }
   init () {
     this.form = Object.assign(this.form, this.$route.query || {})
