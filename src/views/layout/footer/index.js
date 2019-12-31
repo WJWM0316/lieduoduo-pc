@@ -6,9 +6,6 @@ import { mp_qrcode, wx_qrcode, app_qrcode } from 'IMAGES/image'
   computed: {
     miniFooter () {
       return ['putIn'].includes(this.$route.name)
-    },
-    isShow () {
-      return !['position24h', 'marketOriginality'].includes(this.$route.name)
     }
   },
   methods: {
@@ -21,17 +18,5 @@ export default class PageFooter extends Vue {
       images: { mp_qrcode, wx_qrcode, app_qrcode },
       cdnPath: `${this.$cdnPath}/images/`
     }
-  }
-  shouldFixed () {
-    return [
-      // 'recruiterIndex'
-    ].includes(this.$store.state.pageName)
-  }
-
-  toUserDeal () {
-    let urlData = this.$router.resolve({
-      name: 'userAgreement'
-    })
-    window.open(urlData.href, '_blank')
   }
 }

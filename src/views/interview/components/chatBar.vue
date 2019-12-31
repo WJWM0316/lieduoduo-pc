@@ -13,7 +13,7 @@
 		  </el-col>
 		</el-row>
 		<el-row class="li-item-content">
-		  <el-col :span="8" class="li-item-content-admin">
+		  <el-col :span="7" class="li-item-content-admin">
 		  	<div>
 			  	<div class="img-box">
 			  		<el-popover
@@ -42,7 +42,7 @@
 			  	</div>
 		  	</div>
 		  </el-col>
-		  <el-col :span="8" class="li-item-content-position">
+		  <el-col :span="9" class="li-item-content-position">
 		  	<div>
 		  		<router-link
 		  			v-if="item.positionId"
@@ -50,6 +50,7 @@
 		  			class="router-link" :to="{name: 'positionDetail', query: { positionId: item.positionId }}">
 				  	<div class="limit-line-height-two">
 				  		<span class="position-name">{{item.positionName}}</span>
+				  		<img src="~IMAGES/jipin_v1.png" alt="" class="position-jipin" v-if="item.isUrgency === 1" />
 				  		<img src="~IMAGES/tag_list_24hour.png" alt="" class="position-24hour" v-if="item.interviewType === 2">
 				  		<span class="position-salary">{{item.positionEmolumentMin}}~{{item.positionEmolumentMax}}k<template>· 14薪</template></span>
 				  	</div>
@@ -257,6 +258,7 @@ export default {
 		display: inline-block;
 		@include ellipsis-over(128px);
 		vertical-align: middle;
+		margin-right: 4px;
 	}
 	.unchoose-position {
 		font-size:14px;
@@ -324,7 +326,15 @@ export default {
     display: inline-block;
     line-height: 1;
     vertical-align: middle;
-    margin: 0 8px 0 6px;
+    position: relative;
+    top: -1px;
+  }
+  .position-jipin {
+    height: 16px;
+    display: inline-block;
+    line-height: 1;
+    vertical-align: middle;
+    margin-right: 4px;
   }
 }
 </style>
