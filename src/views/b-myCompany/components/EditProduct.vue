@@ -16,10 +16,7 @@
             :cropper="true"
             :validate-event="true"
             cropper-radius="8px"
-            @before="avatarLoading = true"
-            @fail="avatarLoading = false"
-            @change="pictureInformation"
-            v-loading="avatarLoading">
+            @change="pictureInformation">
             <div class="avatar-wrapper">
               <div class="avatar">
               <img :src="middleUrl" />
@@ -101,7 +98,6 @@ export default {
     }
     return {
       cdnPath: `${process.env.VUE_APP_CDN_PATH}/images/`,
-      avatarLoading: false,
       from: {
         company_id: this.companyid,
         id: this.currentProduct.id,

@@ -14,11 +14,8 @@
                     :cropper="true"
                     cropperRadius="8px"
                     cropper-radius="8px"
-                    :validateEvent="true"
-                    @before="avatarLoading = true"
-                    @fail="avatarLoading = false"
-                    @change="pictureInformation"
-                    v-loading="avatarLoading">
+                    :validate-event="true"
+                    @change="pictureInformation">
                     <div class="avatar-wrapper">
                       <div class="avatar">
                       <img :src="middleUrl" />
@@ -158,7 +155,6 @@ export default {
         website: [{ required: false, message: '请输入正确的公司官网', trigger: 'blur' }, { validator: urlRegReplace, trigger: 'blur' }],
         intro: [{ required: true, min: 20, max: 5000, message: '请输入20到5000字以内的公司介绍', trigger: 'blur' }]
       },
-      avatarLoading: false,
       from: {
         id: this.information.id,
         company_name: this.information.companyName,
