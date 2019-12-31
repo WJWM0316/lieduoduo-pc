@@ -18,7 +18,7 @@ import NoData from './noData'
 import DialogModel from './dialog'
 
 export default {
-	props: {
+  props: {
     data: {
       type: Object,
       default: () => ({
@@ -44,20 +44,20 @@ export default {
 	    }
   	}
   },
-	components: {
-		ChatBar,
-		NoData,
-		DialogModel
-	},
-	methods: {
-		bindClick (item, index) {
-			this.model.show = true
-			this.model.interview = {
-				...item,
-				editItemIndex: index
-			}
-		}
-	}
+  components: {
+    ChatBar,
+    NoData,
+    DialogModel
+  },
+  methods: {
+    bindClick (item, index) {
+      this.model.show = true
+      this.model.interview = {
+        ...item,
+        editItemIndex: index
+      }
+    }
+  }
 }
 </script>
 <style lang="scss">
