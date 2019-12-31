@@ -14,6 +14,7 @@
                     :cropper="true"
                     cropperRadius="8px"
                     cropper-radius="8px"
+                    :validateEvent="true"
                     @before="avatarLoading = true"
                     @fail="avatarLoading = false"
                     @change="pictureInformation"
@@ -148,7 +149,7 @@ export default {
       mapIndex: 0, // 地图索引
       mapShow: false,
       rules: {
-        id: [{ required: true, type: 'number', message: '请选择公司logo', trigger: 'blur' }, { validator: logoRegReplace, trigger: 'change' }],
+        id: [{ required: true, type: 'number', message: '请选择公司logo', trigger: 'change' }, { validator: logoRegReplace, trigger: 'change' }],
         company_name: [{ required: true, message: '请输入公司全称', trigger: 'blur' }],
         company_shortname: [{ required: true, message: '请输入公司简称', trigger: 'blur' }],
         industry: [{ required: true, message: '请输入所属行业', trigger: 'blur' }],
