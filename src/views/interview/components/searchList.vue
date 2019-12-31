@@ -7,11 +7,12 @@
 </template>
 <script>
 import ChatBar from './chatBar'
+import Schedule from './schedule'
 import NoData from './noData'
 import DialogModel from './dialog'
 
 export default {
-	props: {
+  props: {
     data: {
       type: Object,
       default: () => ({
@@ -28,7 +29,7 @@ export default {
       default: 'apply'
     }
   },
-  data() {
+  data () {
   	return {
   		model: {
 	    	show: false,
@@ -37,23 +38,34 @@ export default {
 	    }
   	}
   },
-	components: {
-		ChatBar,
-		NoData,
-		DialogModel
-	},
-	methods: {
-		bindClick(item) {
-			this.model.show = true
-			this.model.interview = item
-		},
-		confirm() {
-			this.model.show = false
-		},
-		cancle() {
-			this.model.show = false
-		}
-	}
+  components: {
+    Schedule,
+    ChatBar,
+    NoData,
+    DialogModel
+  },
+  created () {
+    console.log('23', this.chunk(['a', 'b', 'c', 'd', 'e'], 2))
+  },
+  methods: {
+    chunk (arr, size) {
+      var new_arr = []
+      for (var i = 0; i < arr.length; i += size) {
+        new_arr.push(arr.slice(i, i + size))
+      }
+      return new_arr
+    },
+    bindClick (item) {
+      this.model.show = true
+      this.model.interview = item
+    },
+    confirm () {
+      this.model.show = false
+    },
+    cancle () {
+      this.model.show = false
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>
