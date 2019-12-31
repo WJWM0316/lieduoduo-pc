@@ -59,7 +59,7 @@
 		      	class="item"
 		      	:class="{ active: item.active }">
 		      	{{ item.date }}
-						<span class="reddot" v-if="item.showRedDot"></span>
+						<span class="reddot" v-if="item.number"></span>
 		    	</li>
 		    </ul>
 	    </div>
@@ -123,7 +123,7 @@ export default {
 		SearchList,
 		Schedule
 	},
-	data() {
+	data () {
 		return {
 	    pIndex: 0,
 	    cIndex: 0,
@@ -159,7 +159,9 @@ export default {
       return clearDayInterviewRedDotApi({ date })
 	  },
 	  clearTabInterviewRedDot(type) {
-	    return clearTabInterviewRedDotApi({ type })
+	  	return clearTabInterviewRedDotApi({ type }).catch(err => {
+	  		console.log(err)
+	  	})
 	  },
 		getInterviewRedDotInfo() {
 			return this.getInterviewRedDotInfoApi().then(() => {
@@ -328,11 +330,17 @@ export default {
 		},
 		chooseTime(item, index) {
 			this.dateList.map((v, i) => v.active = i === index ? true : false)
-			if (item.active && item.number === 0) {
+			if (item.active && Reflect.has(item, 'number')) {
 				this.scheduleData.page = 1
-				this.getLists({api: 'getScheduleList'})
+				if(item.number) {
+					this.clearDayInterviewRedDot(item.time).then(() => {
+	        	this.getLists({api: 'getScheduleList'})
+	        })
+				} else {
+					this.getLists({api: 'getScheduleList'})
+				}
 			} else {
-				this.historyData.page = 1
+				this.scheduleData.page = 1
 				this.getLists({api: 'getHistoryInterviewLists'})
 			}
 		},

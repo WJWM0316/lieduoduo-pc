@@ -224,7 +224,7 @@ export const asideBar = {
     {
       name: '公众号',
       reddot: 0,
-      iconClass: 'icon-yuemian',
+      iconClass: 'icon-weixin',
       url: wx_qrcode,
       tooltips: '关注猎多多公众号<br/>不错过重要消息通知',
       type: 'hover'
