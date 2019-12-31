@@ -83,19 +83,15 @@
       <div class="division" :style="{'height': discoverHeight + 'px'}"></div>
       <div class="bg bg7" style="height: 1200px"></div>
     </div>
-    <div style="display: none">
-      <scroll-top ref="scrollTop" />
-    </div>
   </div>
 </template>
 <script>
 import Item from './components/items'
 import { getActivityPositionList, getActivityCity } from '@/api/common'
-import ScrollTop from '@/components/scrollToTop/index.vue'
 import { app_qrcode } from '@/assets/images/image'
 // const clientHeight = window.innerWidth || (document.body && document.body.clientHeight)
 export default {
-  components: { Item, ScrollTop },
+  components: { Item },
   data () {
     return {
       fixedCity: false,
@@ -246,7 +242,7 @@ export default {
     },
     // 滚动到顶部
     handleToTop () {
-      if (this.$refs.scrollTop) this.$refs.scrollTop.toTop()
+      this.$util.scrollToView(document.documentElement || document.body)
     }
   },
   mounted () {
