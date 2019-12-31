@@ -113,7 +113,7 @@ export default {
       },
       middleUrl: this.currentProduct.logoInfo.middleUrl,
       rules: {
-        logo: [{ required: true, type: 'number', message: '请上传公司logo', trigger: 'blur' }],
+        logo: [{ required: true, type: 'number', message: '请上传产品logo', trigger: 'blur' }],
         product_name: [{ required: true, message: '请输入产品名称', trigger: 'blur' }],
         site_url: [{ required: false, message: '请输入产品官网', trigger: 'change' }, { validator: urlRegReplace, trigger: 'blur' }],
         slogan: [{ required: true, message: '请输入产品slogan', trigger: 'blur' }],
