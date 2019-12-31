@@ -50,8 +50,8 @@
         </div>
         <div class="companyProduct">
             <div class="companyProduct-head">
-                <p>公司产品</p>x`
-                <el-button v-if="isCompanyAdmin" type="text" @click="toEdit('编辑产品', '添加产品')"><i class="iconfont icon-tianjia-"></i>添加产品</el-button>
+                <p>公司产品</p>
+                <el-button v-if="isCompanyAdmin && information.product && information.product.length" type="text" @click="toEdit('编辑产品', '添加产品')"><i class="iconfont icon-tianjia-"></i>添加产品</el-button>
             </div>
             <company-productList @click="toEdit" @toEditProduct="toEditProduct" :product="information.product"></company-productList>
             <div v-if="!information.product || !information.product.length" class="noFound">
