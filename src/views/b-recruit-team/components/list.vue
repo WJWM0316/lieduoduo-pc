@@ -12,7 +12,7 @@
       <span class="recruit-name">{{recurit.name}}</span>
       <span>发布的职位</span>
     </div>
-    <div class="position-lists" v-infinite-scroll="loadmore" :infinite-scroll-disabled="disabledScroll">
+    <div class="warpper-scroll position-lists" v-infinite-scroll="loadmore" :infinite-scroll-disabled="disabledScroll">
       <template v-for="item in lists">
         <div :key="item.id" class="position-list" :class="{'is-close': item.isOnline === 2}">
           <div class="position-info">

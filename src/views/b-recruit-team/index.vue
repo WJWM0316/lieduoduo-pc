@@ -7,7 +7,7 @@
         <el-button type="primary" @click="applyDialog = true">加入申请（{{count.apply}}）</el-button>
       </el-badge>
     </div>
-    <div class="recruit-lists">
+    <div class="warpper-scroll recruit-lists">
       <template v-for="item in lists">
         <div class="recruit-list" :key="item.id">
           <div class="recruit-info">
@@ -76,7 +76,8 @@ export default {
     ...mapGetters([
       'recruitDataLoaded',
       'recruitDataCompanyId',
-      'recruiterIsAdmin'
+      'recruiterIsAdmin',
+      'newJoinApplyNum'
     ])
   },
   methods: {
@@ -136,6 +137,8 @@ export default {
         this.getreddots()
         // 更新数量
         this.getCounts()
+      }
+      if (this.newJoinApplyNum) {
         // 刷新侧边栏红点逻辑
         this.$store.dispatch('redDotfun')
       }
