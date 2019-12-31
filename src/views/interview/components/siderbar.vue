@@ -8,7 +8,9 @@
   				:to="{name: 'positionDetail', query: { positionId: item.id }}"
   				v-for="(item, index) in recommendOpptyInterestLists"
   				:key="index"
+  				:class="{'jipin-mark': item.isUrgency === 1}"
   				class="li-item">
+  				<!-- :class="{'jipin': item.isUrgency === 1}" -->
   				<div class="jump">
 		  			<div class="li-item-row-one">
 		  				<div class="position-name">{{item.positionName}}</div>
@@ -90,11 +92,19 @@ export default {
 		display: block;
 		padding: 20px 20px 0 20px;
 		&:hover{
-			background: $btn-forbid;
+			background: $btn-forbid
+		};
+	}
+	.jipin-mark {
+		background: url('~IMAGES/jipin_2.png') white no-repeat;
+		background-size:38px  38px;
+		&:hover{
+			background: url('~IMAGES/jipin_2.png')  $btn-forbid no-repeat;
+			background-size:38px  38px;
 		};
 	}
 	.jump{
-		border-bottom: 1px solid $--border-color-base;
+		border-bottom: 1px dashed $--border-color-base;
 		padding-bottom: 20px;
 	}
 	.li-item-row-one {

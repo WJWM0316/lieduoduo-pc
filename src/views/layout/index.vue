@@ -4,9 +4,9 @@
     <div class="pages">
       <router-view />
     </div>
-    <page-footer />
+    <page-footer v-if="shouldBottomShown"/>
     <guide-qrcode-pop></guide-qrcode-pop>
-    <floating-bar />
+    <floating-bar v-if="shouldBottomShown"/>
   </section>
 </template>
 <script>
@@ -17,8 +17,8 @@ import PageFooter from '@/views/layout/footer/index.vue'
 import PageHeader from '@/views/layout/header/'
 import GuideQrcodePop from 'COMPONENTS/common/guideQrcodePop'
 import FloatingBar from 'COMPONENTS/floatingBar'
-
-@Component({
+const cdnPath = `${process.env.VUE_CDN_PATH}/front-assets/`
+export default {
   name: 'App',
   components: {
     PageFooter,
@@ -26,42 +26,15 @@ import FloatingBar from 'COMPONENTS/floatingBar'
     GuideQrcodePop,
     FloatingBar
   },
-  watch: {
-  }
-})
-
-export default class App extends Vue {
-  cdnPath = `${process.env.VUE_CDN_PATH}/front-assets/`
-
-  // // 下面路由显示管理页面顶部的导航栏
-  // shouldTopShown() {
-  //   return [
-  //     'applyIndex',
-  //   ].includes(this.$store.state.pageName)
-  // }
-
-  // // 下面路由不显示管理页面的侧边栏,和顶部的导航栏
-  // shouldTopShown2() {
-  //   return [
-  //     'candidate',
-  //     'postJob',
-  //     'recruiterIndex'
-  //   ].includes(this.$store.state.pageName)
-  // }
-
-  // 下面路由不显示管理页面的侧边栏,和顶部的导航栏
-  shouldBottomShown () {
-    return [
-      'login',
-      'postJob',
-      'candidate',
-      'recruiterIndex',
-      'resumeFirstPost',
-      'resumeSecondPost',
-      'resumeThirdPost',
-      'resumeFourthPost',
-      '404'
-    ].includes(this.$store.state.pageName)
+  computed: {
+    shouldBottomShown () {
+      return !['position24h', 'marketOriginality'].includes(this.$route.name)
+    }
+  },
+  data() {
+    return  {
+      cdnPath
+    }
   }
 }
 </script>
