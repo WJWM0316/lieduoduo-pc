@@ -2,9 +2,9 @@
   <!-- 招聘团队 -->
   <div class="recruit-team" v-infinite-scroll="loadmore" :infinite-scroll-disabled="disabledScroll">
     <div class="rec-team-header">
-      <h1>招聘官团队</h1>
+      <h1>招聘团队</h1>
       <el-badge :is-dot="reddot" v-if="recruiterIsAdmin">
-        <el-button type="primary" @click="applyDialog = true">招聘申请（{{count.apply}}）</el-button>
+        <el-button type="primary" @click="applyDialog = true">加入申请（{{count.apply}}）</el-button>
       </el-badge>
     </div>
     <div class="recruit-lists">
@@ -14,13 +14,13 @@
             <div class="recruit-image">
               <img :src="item.avatar && item.avatar.smallUrl" alt="">
             </div>
-            <div>
+            <div style="width: 70%;">
               <p class="recruit-name"><span class="recruit-name-text">{{item.name}}</span> <span class="admin-tag" v-if="item.isCompanyAdmin">管理员</span></p>
               <p class="recruit-position">{{item.position}}</p>
               <p class="recruit-email"><span>邮箱：</span>{{item.email}}</p>
             </div>
           </div>
-          <div class="recruit-position-number" @click="handleShowPosition(item)">发布了{{item.allPositionNum}}个职位 <span class="iconfont icon-right"></span></div>
+          <div class="recruit-position-number" @click="handleShowPosition(item)">{{item.positionNum}}个招聘中职位 <span class="iconfont icon-right"></span></div>
           <div class="recruit-interview-number">面试了{{item.interviewNum}}人</div>
           <div class="recruit-activity-time">活跃于 {{item.visitTimeDesc}}</div>
           <div class="recruit-share" @click="handleShowShare(item)">分享</div>
@@ -131,10 +131,14 @@ export default {
     },
     // 刷新红点状态
     hanldeApplyClose () {
-      // 红点
-      this.getreddots()
-      // 更新数量
-      this.getCounts()
+      if (this.reddot) {
+        // 红点
+        this.getreddots()
+        // 更新数量
+        this.getCounts()
+        // 刷新侧边栏红点逻辑
+        this.$store.dispatch('redDotfun')
+      }
     },
     // 审核招聘官
     handleSetApply (number, isReload = false) {

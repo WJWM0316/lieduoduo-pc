@@ -176,6 +176,14 @@ export const addCompanyAddressApi = (id, data) => request({
   config: { host: 'zhaopin' }
 })
 
+/* 编辑公司地址 */
+export const addresseditCompanyAddressApi = data => request({
+  url: `/company/addressedit/${data.id}`,
+  method: 'put',
+  params: data,
+  config: { host: 'zhaopin' }
+})
+
 /* 删除公司地址 */
 export const delCompanyAddressApi = (id, data) => request({
   url: `/company/address/${id}`,

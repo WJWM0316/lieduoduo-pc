@@ -89,7 +89,7 @@
             </div>
             <div class="address" v-if="companyInformation.address && companyInformation.address.length">
               <p class="address-title">公司地址</p>
-              <map-pop :companyAddress = companyInformation.address></map-pop>
+              <map-pop :companyAddress = "companyInformation.address"></map-pop>
             </div>
           </div>
           <div class="introduction-right">
@@ -112,7 +112,6 @@
               <p class="recruitmentTeam-title">招聘团队</p>
               <div class="recruitmentTeam-mian">
                 <div 
-                  class="recruitmentTeam-box" 
                   v-for="(item, index) in getCompanysTeamText" 
                   :key="index">
                   <el-popover
@@ -124,24 +123,20 @@
                       <div class="describe" v-show="item.show">
                         “Hi，对我发布的职位感兴趣？<strong>用微信扫描二维码</strong>，和TA约聊吧。”
                       </div>
-                      <div class="qr-code">
-                        <img
-                          :src="item.qrCode"
-                          @load="hasloadedRemoteImg(item, index)"
-                          @mouseout="removeShowQrCode(item, index)"
-                          @mouseover="getRemoteImg(item, index)"/>
-                      </div>
+                      <div class="qr-code"> <img :src="item.qrCode" /> </div>
                     </div>
-                    <div slot="reference"><img :src="item.avatar.smallUrl"/></div>
-                  </el-popover>
-                  <div class="recruitmentTeam-text">
-                    <p class="recruitmentTeam-text-top">{{ item.name }} | {{ item.position }}</p>
-                    <p class="recruitmentTeam-text-buttom">
-                      <span>{{ '正在招聘' }}</span>
-                      <span class="recruitmentTeam-positionName">{{ item.positionName === 0 ? item.positionName : '&quot;' + item.positionName + '&quot;' }}</span>
-                      <span>{{ item.positionName === 0 ? '个职位' : '等' + item.positionNum + '个职位' }}</span>
-                    </p>
-                  </div>
+                    <div class="recruitmentTeam-box"  slot="reference">
+											<img :src="item.avatar.smallUrl"/>
+											<div class="recruitmentTeam-text">
+												<p class="recruitmentTeam-text-top">{{ item.name }} | {{ item.position }}</p>
+												<p class="recruitmentTeam-text-buttom">
+													<span>{{ '正在招聘' }}</span>
+													<span class="recruitmentTeam-positionName">{{ item.positionName === 0 ? item.positionName : '&quot;' + item.positionName + '&quot;' }}</span>
+													<span>{{ item.positionName === 0 ? '个职位' : '等' + item.positionNum + '个职位' }}</span>
+												</p>
+											</div>
+										</div>
+									</el-popover>
                 </div>
                 <el-button @click="activationType" class="recruitmentTeam-buttom" plain>
                   查看所有Boss的在招职位 <i class="iconfont icon-right"></i>
@@ -324,19 +319,6 @@ export default class companyDetail extends Vue {
   uploadResumeFile () {
     this.uploading = false
     this.$message.error('上传附件简历失败')
-  }
-  getRemoteImg (item, index) {
-    if (item.qrCode) {
-      item.show = true
-    } else {
-      // getRecruiterQrcodeApi({recruiterUid: item.uid}).then(( { data } ) => item.qrCode = data.data.positionQrCodeUrl)
-    }
-  }
-  removeShowQrCode (item, index) {
-    item.show = false
-  }
-  hasloadedRemoteImg () {
-    // item.show = true
   }
   created () {
     window.addEventListener('scroll', this.handleScroll)
@@ -737,6 +719,7 @@ to {top:0px;}
         .recruitmentTeam-box{
 					padding: 19px 0 20px 0;
           height: 60px;
+					cursor: pointer;
 					/*padding-left: 74px;*/
 					position: relative;
           @include flex-v-center;

@@ -51,7 +51,7 @@
 	    </div>
 			<!-- 面试日历tab -->
 	    <div v-show="pIndex === 2">
-		    <ul class="tab-bar" v-show="dateList.length">
+		    <ul class="tab-bar" v-if="dateList.length && !cIndex">
 		      <li
 		      	v-for="(item, index) in dateList"
 		      	:key="index"
@@ -67,14 +67,26 @@
 	    <search-list :data="receiveData" tab="receive" v-if="pIndex === 1"/>
 	    <Schedule :data="scheduleData" v-if="pIndex === 2 && cIndex === 0"/>
 		</div>
-		<div class="pagination-interview" v-if="applyData.total > applyData.pageSize && pIndex === 0">
+		<div class="pagination-interview" v-if="pIndex === 0">
       <el-pagination
         background
-        @current-change="changePage"
+        v-if="applyData.total > applyData.pageSize"
+        @current-change="(page) => changePage(page, applyData)"
         :current-page.sync ="applyData.page"
         :page-size="applyData.pageSize"
         layout="prev, pager, next"
         :total="applyData.total">
+      </el-pagination>
+    </div>
+    <div class="pagination-interview" v-if="pIndex === 1">
+      <el-pagination
+        background
+        v-if="receiveData.total > receiveData.pageSize"
+        @current-change="(page) => changePage(page, receiveData)"
+        :current-page.sync ="receiveData.page"
+        :page-size="receiveData.pageSize"
+        layout="prev, pager, next"
+        :total="receiveData.total">
       </el-pagination>
     </div>
 	</div>
@@ -84,6 +96,7 @@
 import SearchList from './searchList'
 import Schedule from './schedule'
 import { app_qrcode } from 'IMAGES/image'
+
 import {
 	getInterviewApplyListsApi,
 	getInterviewScheduleNumberListsApi,
@@ -179,7 +192,9 @@ export default {
 				page: this.applyData.page,
 				tab: applyItem.value
 			}
-			getInterviewApplyListsApi(Object.assign(params, {count: 20})).then(({ data }) => {
+			getInterviewApplyListsApi(Object.assign(params, {count: this.applyData.count})).then(({ data }) => {
+				// let list = data.data || []
+				// list.map(v => v.app_qrcode = app_qrcode)
 				this.applyData.list = data.data || []
 				this.applyData.total = data.meta.total || 0
 				this.applyData.hasInitPage = true
@@ -201,7 +216,9 @@ export default {
 				page: this.receiveData.page,
 				tab: receiveItem.value
 			}
-			getInterviewInviteListsApi(Object.assign(params, {count: 20})).then(({ data }) => {
+			getInterviewInviteListsApi(Object.assign(params, {count: this.receiveData.count})).then(({ data }) => {
+				// let list = data.data || []
+				// list.map(v => v.app_qrcode = app_qrcode)
 				this.receiveData.list = data.data || []
 				this.receiveData.total = data.meta.total || 0
 				this.receiveData.hasInitPage = true
@@ -231,7 +248,9 @@ export default {
 				return
 			}
 			params = Object.assign(params, {time: tab.time})
-			getInterviewScheduleListsApi(Object.assign(params, { count: 20 })).then(({ data }) => {
+			getInterviewScheduleListsApi(Object.assign(params, { count: this.scheduleData.count })).then(({ data }) => {
+				// let list = data.data || []
+				// list.map(v => v.app_qrcode = app_qrcode)
 				this.scheduleData.list = data.data || []
 				this.scheduleData.total = data.meta.total || 0
 				this.scheduleData.hasInitPage = true
@@ -245,8 +264,7 @@ export default {
 			})
 		},
 		getHistoryInterviewLists() {
-			console.log('344')
-			let params = { page: 1, isselect: 'all' }
+			let params = { page: this.scheduleData.page, isselect: 'all' }
 			if(this.time.length) {
 				params = Object.assign(params, {
 					start: this.time[0]/1000,
@@ -354,11 +372,26 @@ export default {
 					break
 			}
 		},
-		changePage(page) {
-			console.log(page)
-		},
-		bindClick(e) {
-			console.log(e)
+		changePage(page, data) {
+			let item = this.interviewBar[this.pIndex]
+			data.page = page
+			switch(item.api) {
+				case 'getApplyList':
+					this.getLists(item)
+					break
+				case 'getReceiveList':
+					this.getLists(item)
+					break
+				case 'getScheduleList':
+					if(!this.cIndex) {
+						this.getLists(item)
+					} else {
+						this.getInterviewRedDotInfo().then(() => this.getHistoryInterviewLists())
+					}
+					break
+				default:
+					break
+			}
 		},
 		init() {
 			let { query } = this.$route
@@ -410,6 +443,7 @@ export default {
 		padding-top: 20px;
 		box-shadow:0px 0px 30px 0px rgba(22,39,77,0.07);
 		border-radius:4px;
+		overflow: hidden;
 	}
 	.interview-bar{
 		height: 58px;
@@ -589,7 +623,7 @@ export default {
 	}
 	.pagination-interview{
 		text-align: center;
-		margin-bottom: 30px;
+		margin: 45px 0 30px 0;
 	}
 }
 </style>

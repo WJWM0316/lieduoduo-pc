@@ -80,26 +80,27 @@
           <el-row class="admin-infos">
             <el-col :span="24">
               <div class="img-box">
-                <el-popover
-                  placement="left"
-                  popper-class="user-infos"
-                  trigger="hover">
-                  <div class="box">
-                    <div class="describe">
-                      “Hi，对我发布的职位感兴趣？<strong>用微信扫描二维码</strong>，和TA约聊吧。”
-                    </div>
-                    <div class="qr-code">
-                      <img :src="infos.qrCode"/>
-                    </div>
-                  </div>
-                  <div slot="reference">
-                    <img :src="infos.recruiterInfo.avatar.smallUrl" alt="avatar" v-if="infos.recruiterInfo && infos.recruiterInfo.avatar">
-                  </div>
-                </el-popover>
+                <img :src="infos.recruiterInfo.avatar.smallUrl" alt="avatar" v-if="infos.recruiterInfo && infos.recruiterInfo.avatar">
               </div>
               <div class="admin-hello">
-                <div class="tips_01">我是招聘官</div>
-                <div class="degress">技术总监 <template v-if="infos.activeLabel">· {{infos.activeLabel}}</template></div>
+                <div class="tips_01">
+                  {{infos.recruiterInfo.name}}
+                  <el-popover
+                    placement="right"
+                    popper-class="user-infos"
+                    trigger="hover">
+                    <div class="box">
+                      <div class="describe">
+                        “Hi，对我发布的职位感兴趣？<strong>用微信扫描二维码</strong>，和TA约聊吧。”
+                      </div>
+                      <div class="qr-code">
+                        <img :src="infos.qrCode"/>
+                      </div>
+                    </div>
+                    <div class="slotContent" slot="reference"><i class="icon iconfont icon-duihua_huaban"></i></div>
+                  </el-popover>
+                </div>
+                <div class="degress">{{infos.recruiterInfo.position}} <template v-if="infos.activeLabel">· {{infos.activeLabel}}</template></div>
               </div>
             </el-col>
           </el-row>

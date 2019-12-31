@@ -24,6 +24,9 @@ img {
 		height: calc(100vh - #{$page-header-height} - #{$page-footer-height});
 		box-sizing: border-box;
 	}
+	.slotContent {
+		display: inline-block;
+	}
 	.admin-infos {
 		margin-bottom: 40px;
 		height: 48px;
@@ -51,10 +54,17 @@ img {
 			padding-top: 6px;
 		}
 		.admin-hello{
-			line-height: 1;
+			line-height: 18px;
 			display: inline-block;
-			vertical-align: middle;
 			margin-left: 18px;
+			font-size:16px;
+			color: $font-color-3;
+			vertical-align: middle;
+			.icon {
+				font-size: 14px;
+				color: $bg-color-4;
+				margin-left: 6px;
+			}
 		}
 	}
 	.header {

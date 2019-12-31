@@ -14,12 +14,12 @@
     </div>
     <div class="position-lists" v-infinite-scroll="loadmore" :infinite-scroll-disabled="disabledScroll">
       <template v-for="item in lists">
-        <div :key="item.id" class="position-list" :class="{'is-close': item.isOnline === 0 && item.status === 0}">
+        <div :key="item.id" class="position-list" :class="{'is-close': item.isOnline === 2}">
           <div class="position-info">
             <p>
-              <span class="position-close" v-if="item.isOnline === 0 && item.status === 0">关闭</span>
+              <span class="position-close" v-if="item.isOnline === 2">关闭</span>
               <span class="position-name">{{item.positionName}}</span>
-              <span class="position-emolument">{{item.emolumentMin}}~{{item.emolumentMax}}</span>
+              <span class="position-emolument">{{item.emolumentMin}}K~{{item.emolumentMax}}K<template v-if="item.annualSalary > 12">·{{item.annualSalaryDesc}}</template></span>
             </p>
             <p class="position-tags">
               <span>{{item.city}}{{item.district}}</span>
@@ -28,17 +28,18 @@
             </p>
           </div>
           <div class="position-operate">
-            <span @click="handleDetails(item.id)" v-if="item.isOnline !== 0 || item.status !== 0">查看</span>
+            <span @click="handleDetails(item.id, item.isOnline)">查看</span>
             <el-popover
               placement="bottom"
               popper-class="position-list-popover"
+              :disabled="item.isOnline === 2"
               width="166">
               <div class="popover-share" v-loading="popoverLoading">
                 <img :src="qrUrl" alt="">
                 <p>微信扫码</p>
                 <p>打开小程序查看</p>
               </div>
-              <span slot="reference" @click="handleShowQrCode(item.id)">分享</span>
+              <span slot="reference" @click="handleShowQrCode(item.id, item.isOnline)">分享</span>
             </el-popover>
           </div>
         </div>
@@ -67,7 +68,8 @@ export default {
       qrUrl: '',
       params: {
         count: 20,
-        page: 1
+        page: 1,
+        is_online: 1
       },
       total: 0,
       disabledScroll: false
@@ -90,7 +92,8 @@ export default {
         this.getLoading = false
       })
     },
-    handleShowQrCode (id) {
+    handleShowQrCode (id, isonline) {
+      if (isonline === 2) return
       this.qrUrl = ''
       this.getQrCode(id)
     },
@@ -103,7 +106,8 @@ export default {
         this.popoverLoading = false
       })
     },
-    handleDetails (id) {
+    handleDetails (id, isonline) {
+      if (isonline === 2) return
       const resolve = this.$router.resolve({
         name: 'positionDetail',
         query: {
@@ -121,7 +125,12 @@ export default {
     visible (value) {
       if (value) {
         this.dialogStatus = true
+        this.params.page = 1
         this.getList()
+      } else {
+        this.lists = []
+        this.total = 0
+        this.disabledScroll = false
       }
     }
   }
@@ -199,8 +208,11 @@ $font-color-close : #ED5C5C;
   }
 }
 .position-list.is-close {
-  .position-name, .position-emolument,.position-tags span {
+  .position-name, .position-emolument,.position-tags span,  .position-operate{
     color: $title-color-3;
+  }
+  .position-operate span{
+    cursor: not-allowed;
   }
 }
 </style>

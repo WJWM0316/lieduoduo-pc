@@ -1,6 +1,6 @@
 <template>
   <div class="position-24h-wrapper">
-    <div class="active-header-wrapper">
+    <div class="active-header-wrapper" @click="handleShowMore">
       <img src="../../../assets/images/index/title_24hour.png" />
       <span class="position-tag">高薪热门职位</span>
       <span class="position-tag">职业顾问服务</span>
@@ -207,6 +207,7 @@ export default {
   @include flex-v-center;
   height: 64px;
   margin-top: 56px;
+  cursor: pointer;
   background: transparent;
   img {
     max-height: 100%;

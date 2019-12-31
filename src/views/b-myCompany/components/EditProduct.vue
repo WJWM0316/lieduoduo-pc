@@ -7,19 +7,16 @@
       </p>
     </div>
     <div class="from">
-      <el-form :model="from" :rules="rules" label-width="110px">
-        <el-form-item prop="img" label="公司logo：">
+      <el-form :model="from" ref="fromEditProduct" :rules="rules" label-width="110px">
+        <el-form-item prop="logo" label="产品logo：">
           <div class="Picture-wrap">
             <Picture
             :value.sync="middleUrl"
             attach-type="avatar"
             :cropper="true"
-            cropperRadius="8px"
+            :validate-event="true"
             cropper-radius="8px"
-            @before="avatarLoading = true"
-            @fail="avatarLoading = false"
-            @change="pictureInformation"
-            v-loading="avatarLoading">
+            @change="pictureInformation">
             <div class="avatar-wrapper">
               <div class="avatar">
               <img :src="middleUrl" />
@@ -29,11 +26,11 @@
             </Picture>
           </div>
         </el-form-item>
-        <el-form-item prop="product_name" label="产品名称："><el-input placeholder="请输入产品名称" v-model="from.product_name"></el-input></el-form-item>
+        <el-form-item prop="product_name" label="产品名称："><el-input show-word-limit maxlength="20" placeholder="请输入产品名称" v-model="from.product_name"></el-input></el-form-item>
         <el-form-item prop="site_url" label="产品官网："><el-input placeholder="请输入产品官网" v-model="from.site_url"></el-input></el-form-item>
-        <el-form-item prop="slogan" label=" 产品slogan："><el-input placeholder="一句话简单介绍公司的产品定位" v-model="from.slogan"></el-input></el-form-item>
+        <el-form-item prop="slogan" label=" 产品slogan："><el-input show-word-limit maxlength="30" placeholder="一句话简单介绍公司的产品定位" v-model="from.slogan"></el-input></el-form-item>
         <el-form-item prop="lightspot" label="产品亮点：">
-            <el-input type="textarea" placeholder="可从产品涉及的市场、业务、用户和功能等方面进行描述..." v-model="from.lightspot"></el-input>
+            <el-input type="textarea" show-word-limit maxlength="50" placeholder="可从产品涉及的市场、业务、用户和功能等方面进行描述..." v-model="from.lightspot"></el-input>
         </el-form-item>
         <div class="foot">
           <el-button type="primary" @click="submit">保存</el-button>
@@ -90,6 +87,9 @@ export default {
   },
   data () {
     let urlRegReplace = (rule, value, callback) => {
+      if (!value) {
+        return callback()
+      }
       if (urlReg.test(value)) {
         callback()
       } else {
@@ -98,7 +98,6 @@ export default {
     }
     return {
       cdnPath: `${process.env.VUE_APP_CDN_PATH}/images/`,
-      avatarLoading: false,
       from: {
         company_id: this.companyid,
         id: this.currentProduct.id,
@@ -110,7 +109,7 @@ export default {
       },
       middleUrl: this.currentProduct.logoInfo.middleUrl,
       rules: {
-        img: [{ required: true, message: '请上传公司logo', trigger: 'blur' }],
+        logo: [{ required: true, type: 'number', message: '请上传产品logo', trigger: 'change' }],
         product_name: [{ required: true, message: '请输入产品名称', trigger: 'blur' }],
         site_url: [{ required: false, message: '请输入产品官网', trigger: 'change' }, { validator: urlRegReplace, trigger: 'blur' }],
         slogan: [{ required: true, message: '请输入产品slogan', trigger: 'blur' }],
@@ -124,21 +123,25 @@ export default {
       this.middleUrl = item[0].middleUrl
     },
     submit () {
-      if (this.from.id) { // 根据是否有id来判断是新建产品还是编辑已有产品
-        editCompanyProductInfosApi(this.from).then(res => {
-          this.$message.success('编辑产品成功！')
-          this.$emit('save') // 刷新父组件数据
-          let type = '公司主页'
-          this.$emit('click', type)
-        })
-      } else {
-        createCompanyProductApi(this.from).then(res => {
-          this.$message.success('创建产品成功！')
-          this.$emit('save') // 刷新父组件数据
-          let type = '公司主页'
-          this.$emit('click', type)
-        })
-      }
+      this.$refs.fromEditProduct.validate(valid => {
+        if (valid) {
+          if (this.from.id) { // 根据是否有id来判断是新建产品还是编辑已有产品
+            editCompanyProductInfosApi(this.from).then(res => {
+              this.$message.success('编辑产品成功！')
+              this.$emit('save') // 刷新父组件数据
+              let type = '公司主页'
+              this.$emit('click', type)
+            })
+          } else {
+            createCompanyProductApi(this.from).then(res => {
+              this.$message.success('创建产品成功！')
+              this.$emit('save') // 刷新父组件数据
+              let type = '公司主页'
+              this.$emit('click', type)
+            })
+          }
+        }
+      })
     },
     deleteProduct () {
       this.$confirm('删除后，该产品将不再显示，确定永久删除该产品？', '确认删除产品吗？', {
@@ -147,10 +150,11 @@ export default {
         type: 'warning',
         center: true
       }).then(() => {
-        deleteCompanyProductInfosApi(this.from.id)
-        this.$emit('save') // 刷新父组件数据
-        let type = '公司主页'
-        this.$emit('click', type)
+        deleteCompanyProductInfosApi(this.from.id).then(res => {
+          this.$emit('save') // 刷新父组件数据
+          let type = '公司主页'
+          this.$emit('click', type)
+        })
       })
     },
     cancel () {
@@ -313,5 +317,11 @@ export default {
 .EditProduct .el-form-item:nth-of-type(1) .el-form-item__label:nth-of-type(1){
   height: 70px;
   line-height: 70px;
+}
+.EditProduct .el-input{
+  width: 382px;
+}
+.EditProduct .el-textarea{
+  width: 520px;
 }
 </style>

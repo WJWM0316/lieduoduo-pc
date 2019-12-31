@@ -162,36 +162,12 @@ export const historyData = {
   pageSize: 20
 }
 
-export const bottomNav = [
-  {
-    text: 'APP',
-    reddot: 0,
-    iconClass: 'icon-ganxingqu-',
-    qrCode: mp_qrcode,
-    tooltips: '下载猎多多APP<br/>体验完整功能'
-  },
-  {
-    text: '小程序',
-    reddot: 0,
-    iconClass: 'icon-ganxingqu-',
-    qrCode: wx_qrcode,
-    tooltips: '下载猎多多APP<br/>体验完整功能'
-  },
-  {
-    text: '公众号',
-    reddot: 0,
-    iconClass: 'icon-ganxingqu-',
-    qrCode: app_qrcode,
-    tooltips: '下载猎多多APP<br/>体验完整功能'
-  }
-]
-
 export const asideBar = {
   topNav: [
     {
       text: '申请记录',
       reddot: 0,
-      iconClass: 'icon-ganxingqu-',
+      iconClass: 'icon-shenqingjilu',
       routeName: 'interviewApply',
       query: {
         page: 1,
@@ -204,7 +180,7 @@ export const asideBar = {
     {
       text: '收到邀请',
       reddot: 0,
-      iconClass: 'icon-ganxingqu-',
+      iconClass: 'icon-shoudaoyaoqing',
       routeName: 'interviewReceive',
       query: {
         page: 1,
@@ -230,25 +206,28 @@ export const asideBar = {
   ],
   bottomNav: [
     {
-      text: 'APP',
+      name: 'APP',
       reddot: 0,
-      iconClass: 'icon-ganxingqu-',
-      qrCode: mp_qrcode,
-      tooltips: '下载猎多多APP<br/>体验完整功能'
+      iconClass: 'icon-app',
+      url: app_qrcode,
+      tooltips: '下载猎多多APP<br/>体验完整功能',
+      type: 'hover'
     },
     {
-      text: '小程序',
+      name: '小程序',
       reddot: 0,
-      iconClass: 'icon-ganxingqu-',
-      qrCode: wx_qrcode,
-      tooltips: '下载猎多多APP<br/>体验完整功能'
+      iconClass: 'icon-xiaochengxu_huaban',
+      url: mp_qrcode,
+      tooltips: '猎多多小程序<br/>开启社交求职新时代',
+      type: 'hover'
     },
     {
-      text: '公众号',
+      name: '公众号',
       reddot: 0,
-      iconClass: 'icon-ganxingqu-',
-      qrCode: app_qrcode,
-      tooltips: '下载猎多多APP<br/>体验完整功能'
+      iconClass: 'icon-yuemian',
+      url: wx_qrcode,
+      tooltips: '关注猎多多公众号<br/>不错过重要消息通知',
+      type: 'hover'
     }
   ]
 }

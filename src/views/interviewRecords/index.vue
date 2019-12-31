@@ -722,7 +722,7 @@
 </template>
 <script>
 import { getScheduletodayListtApi, getguanListtApi, getnewHistoryListtApi, getDetailApi, getScheduleListApi } from 'API/schedule'
-import { getCommentReasonApi, interviewRetract, getInterviewComment, addressListApi, watchInvitationAPi, setAttendApi, improperMarkingApi, sureOpenupAPi, setCommentApi, topAdminPositonList, recruiterPositonList, confirmInterviewApi, addCompanyAdressApi, editCompanyAdressApi, setInterviewInfoApi, emailtoforword } from 'API/candidateType'
+import { getCommentReasonApi, interviewRetract, getInterviewComment, addressListApi, watchInvitationAPi, setAttendApi, improperMarkingApi, sureOpenupAPi, setCommentApi, recruiterPositonList, confirmInterviewApi, addCompanyAdressApi, editCompanyAdressApi, setInterviewInfoApi, emailtoforword } from 'API/candidateType'
 import { getResumeIdApi } from 'API/userJobhunter'
 import { shareResumeApi } from 'API/forward'
 import { getdeleteInterviewTabRedDotApi,
@@ -1013,66 +1013,32 @@ export default {
       }
       switch (type) {
         case 'recruiter-chat':
-          if (this.recruiterIsAdmin) {
-            topAdminPositonList().then((res) => {
-              let arr = res.data.data
-              let hasOnline = []
-              arr.map((v, k) => {
-                v.cur = false
-                if (v.isOnline === 1) {
-                  hasOnline.push(v)
-                }
-              })
-              if (arr.length === 0) {
-                this.pop = {
-                  isShow: true,
-                  type: 'noJob'
-                }
-              }
-              if (arr.length === 0 && hasOnline.length === 0) {
-                this.pop = {
-                  isShow: true,
-                  type: 'noJob'
-                }
-              } else {
-                this.pop = {
-                  isShow: true,
-                  Interview: true,
-                  InterviewTitle: '选择职位',
-                  btntext: '确定',
-                  type: 'selectposition'
-                }
-                this.positionLists = arr
+          let datalist = { is_online: 1 }
+          recruiterPositonList(datalist).then((res) => {
+            let arr = res.data.data
+            let hasOnline = []
+            arr.map((v, k) => {
+              v.cur = false
+              if (v.isOnline === 2) {
+                hasOnline.push(v)
               }
             })
-          } else {
-            let datalist = { is_online: 1 }
-            recruiterPositonList(datalist).then((res) => {
-              let arr = res.data.data
-              let hasOnline = []
-              arr.map((v, k) => {
-                v.cur = false
-                if (v.isOnline === 2) {
-                  hasOnline.push(v)
-                }
-              })
-              if (arr.length === 0 || hasOnline.length === arr.length) {
-                this.pop = {
-                  isShow: true,
-                  type: 'noJob'
-                }
-              } else {
-                this.pop = {
-                  isShow: true,
-                  Interview: true,
-                  InterviewTitle: '选择职位',
-                  btntext: '确定',
-                  type: 'selectposition'
-                }
-                this.positionLists = arr
+            if (arr.length === 0 || hasOnline.length === arr.length) {
+              this.pop = {
+                isShow: true,
+                type: 'noJob'
               }
-            })
-          }
+            } else {
+              this.pop = {
+                isShow: true,
+                Interview: true,
+                InterviewTitle: '选择职位',
+                btntext: '确定',
+                type: 'selectposition'
+              }
+              this.positionLists = arr
+            }
+          })
           break
         case 'check-invitation':
           this.pop = {
@@ -1137,35 +1103,21 @@ export default {
               this.model.dateLists = res.data.data.arrangementInfo.appointmentList
             }
 
-            if (this.recruitDataCompanyId) {
-              topAdminPositonList().then((res) => {
-                let arr = res.data.data
-                let hasOnline = []
-                arr.map((v, k) => {
-                  v.cur = false
-                  if (v.isOnline === 1) {
-                    hasOnline.push(v)
-                  }
-                })
-                this.positionOption = hasOnline
-              })
-            } else {
-              let datalist = { is_online: 1 }
-              recruiterPositonList(datalist).then((res) => {
-                let arr = res.data.data
-                let hasOnline = []
-                arr.map((v, k) => {
-                  v.cur = false
-                  if (v.isOnline === 1) {
-                    hasOnline.push(v)
-                  }
-                })
-                if (this.arrangeobj.positionStatus === 0 && this.arrangeobj.positionId !== 0) {
-                  hasOnline.push({ id: this.arrangeobj.positionId, positionName: this.arrangeobj.positionName })
+            let datalist = { is_online: 1 }
+            recruiterPositonList(datalist).then((res) => {
+              let arr = res.data.data
+              let hasOnline = []
+              arr.map((v, k) => {
+                v.cur = false
+                if (v.isOnline === 1) {
+                  hasOnline.push(v)
                 }
-                this.positionOption = hasOnline
               })
-            }
+              if (this.arrangeobj.positionStatus === 0 && this.arrangeobj.positionId !== 0) {
+                hasOnline.push({ id: this.arrangeobj.positionId, positionName: this.arrangeobj.positionName })
+              }
+              this.positionOption = hasOnline
+            })
             // this.arrangementInfo.interviewTime = res.data.data.createdAtTime
           })
           break
@@ -1582,7 +1534,7 @@ export default {
         this.toworddiggle = false
         this.$message({
           type: 'success',
-          message: '转发成功成功!'
+          message: '转发成功!'
         })
       })
     },

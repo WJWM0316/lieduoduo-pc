@@ -154,3 +154,87 @@ export const getHistoryInterviewListsApi = (data, hasLoading) => {
     }
   })
 }
+
+// 获取面试详情
+export const getInterviewDetailApi = (data) => {
+  return request({
+    method: 'get',
+    url: `/interview/detail/${data.interviewId}?`,
+    params: data,
+    config: {
+      host: 'qiuzhi'
+    }
+  })
+}
+
+// 暂不考虑
+export const cencelInterviewApi = (data) => {
+  return request({
+    method: 'post',
+    url: `/interview/refuse/${data.recruiterUid}?`,
+    params: data,
+    config: {
+      host: 'qiuzhi'
+    }
+  })
+}
+
+// 面试安排不合适
+export const notonsiderInterviewApi = (data) => {
+  return request({
+    method: 'post',
+    url: `/interview/notonsider/${data.id}`,
+    params: data,
+    config: {
+      host: 'qiuzhi'
+    }
+  })
+}
+
+// 招聘官撩约接口
+export const inviteInterviewApi = (data) => {
+  return request({
+    method: 'post',
+    url: '/interview/inviteInterview',
+    params: data,
+    config: {
+      host: 'qiuzhi'
+    }
+  })
+}
+
+// 求职端面试详情
+export const interviewDetailApi = (data) => {
+  return request({
+    method: 'get',
+    url: `/interview/detail/${data.interviewId}?`,
+    params: data,
+    config: {
+      host: 'qiuzhi'
+    }
+  })
+}
+
+// 招聘端面试安排设置
+export const setInterviewDetailApi = (data) => {
+  return request({
+    method: 'post',
+    url: `/interview/setInterviewInfo/${data.interviewId}`,
+    params: data,
+    config: {
+      host: 'qiuzhi'
+    }
+  })
+}
+
+// 求职端确认面试安排
+export const sureInterviewApi = (data) => {
+  return request({
+    method: 'post',
+    url: `/interview/confirmArrangementInfo/${data.interviewId}`,
+    params: data,
+    config: {
+      host: 'qiuzhi'
+    }
+  })
+}

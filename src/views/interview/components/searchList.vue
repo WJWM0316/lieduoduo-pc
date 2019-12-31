@@ -1,13 +1,19 @@
 <template>
 	<div class="search-content">
-		<ChatBar :item="item" v-for="(item, index) in data.list" :key="index" :tab="tab" @click="bindClick" />
+		<chat-bar
+			:item="item" v-for="(item, index) in data.list"
+			:key="index"
+			:tab="tab"
+			@click="bindClick($event, index)"
+			:rowIndex="index"
+			:class="{'li-item-last': index === data.list.length - 1}">
+		</chat-bar>
 	  <no-data v-if="!data.total && data.hasInitPage" />
-	  <dialog-model :title="model.title" v-model="model.show" @confirm="confirm" @cancle="cancle" :infos="model.interview" />
+	  <dialog-model v-model="model.show" :item="model.interview" :list="data.list" />
 	</div>
 </template>
 <script>
 import ChatBar from './chatBar'
-import Schedule from './schedule'
 import NoData from './noData'
 import DialogModel from './dialog'
 
@@ -39,41 +45,27 @@ export default {
   	}
   },
   components: {
-    Schedule,
     ChatBar,
     NoData,
     DialogModel
   },
-  created () {
-    console.log('23', this.chunk(['a', 'b', 'c', 'd', 'e'], 2))
-  },
   methods: {
-    chunk (arr, size) {
-      var new_arr = []
-      for (var i = 0; i < arr.length; i += size) {
-        new_arr.push(arr.slice(i, i + size))
-      }
-      return new_arr
-    },
-    bindClick (item) {
+    bindClick (item, index) {
       this.model.show = true
-      this.model.interview = item
-    },
-    confirm () {
-      this.model.show = false
-    },
-    cancle () {
-      this.model.show = false
+      this.model.interview = {
+        ...item,
+        editItemIndex: index
+      }
     }
   }
 }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 .search-content {
-	margin-bottom: 50px;
-	.li-item {
-		&:last-child {
-			border-bottom: 0;
+	min-height: 790px;
+	.li-item-last {
+		&:before{
+			display: none;
 		}
 	}
 }

@@ -13,10 +13,11 @@
           attach-type="avatar"
           :cropper="true"
           cropper-radius="50%"
+          :validate-event="true"
           @before="avatarLoading = true"
           @fail="avatarLoading = false"
           @change="handleChangeAvatar">
-          <div class="avatar-wrapper">
+          <div class="avatar-wrapper" v-loading="avatarLoading">
             <div class="avatar">
               <img :src="form.avatarUrl" />
               <span class="iconfont icon-xiangji"></span>
@@ -34,10 +35,10 @@
           @on-selected="selectedPosition">
         </select-position-type>
       </el-form-item>
-      <el-form-item prop="position" label="担任职务"><el-input v-model="form.position" placeholder="请写担任职务" /></el-form-item>
+      <el-form-item prop="position" label="担任职务"><el-input show-word-limit maxlength="20" v-model="form.position" placeholder="请写担任职务" /></el-form-item>
       <el-form-item prop="email" label="公司邮箱"><el-input v-model="form.email" placeholder="请写公司邮箱" /></el-form-item>
-      <el-form-item prop="wechat" label="微信号"><el-input v-model="form.wechat" placeholder="请写微信号" /></el-form-item>
-      <el-form-item prop="signature" label="个人签名"><el-input type="textarea" v-model="form.signature" placeholder="用一句话介绍你自己吧~" /></el-form-item>
+      <el-form-item prop="wechat" label="微信号"><el-input show-word-limit maxlength="20" v-model="form.wechat" placeholder="请写微信号" /></el-form-item>
+      <el-form-item prop="signature" label="个性签名"><el-input type="textarea" show-word-limit maxlength="30" v-model="form.signature" placeholder="用一句话介绍你自己吧~" /></el-form-item>
       <el-form-item prop="labels" label="个人标签">
         <select-self-label
           class="self-label-wrapper"
@@ -50,6 +51,8 @@
           type="textarea"
           :autosize="{ minRows: 7, maxRows: 10}"
           style="width: 520px;"
+          show-word-limit
+          maxlength="5000"
           v-model="form.brief" placeholder="请描述你的个人经历或成就，字数范围：6-5000字" />
       </el-form-item>
       <div class="form-intro" :style="{height: isShowPover ? '174px' : 'auto'}">
@@ -85,7 +88,7 @@ import SelectSelfLabel from './components/selectSelfLabel'
 import SharePopup from '@/components/common/sharePopup'
 import { getRecruiter, setRecruiter } from '@/api/recruiter'
 import { CompanyIntro } from '@/config/vars'
-import { emailReg, positionReg } from '@/util/fieldRegular'
+import { emailReg, positionReg, wechatReg } from '@/util/fieldRegular'
 export default {
   components: { Picture, SelectPositionType, SelectSelfLabel, SharePopup },
   data () {
@@ -94,6 +97,14 @@ export default {
         callback()
       } else {
         callback(new Error('职位名称需为2-20个字'))
+      }
+    }
+    const wechatValidate = (rule, value, callback) => {
+      if (value === '') return callback()
+      if (wechatReg.test(value)) {
+        callback()
+      } else {
+        callback(new Error('微信号需为2-20个字符'))
       }
     }
     var emailValidate = (rule, value, callback) => {
@@ -122,13 +133,15 @@ export default {
         labels: [] // 个人标签
       },
       formRules: {
-        attachId: [{ required: true, type: 'number', message: '请上传头像', trigger: 'blur' }],
+        attachId: [{ required: true, type: 'number', message: '请上传头像', trigger: 'change' }],
         name: [{ required: true, message: '请填写真实姓名', trigger: 'blur' }],
         gender: [{ required: true, message: '请选择性别', trigger: 'blur' }],
         positionTypeId: [{ required: true, message: '请选择担任职位类型', trigger: 'blur' }],
         position: [{ required: true, message: '请填写担任职务', trigger: 'blur' }, { validator: positionValidate, trigger: 'blur' }],
         email: [{ required: true, message: '请填写公司邮箱', trigger: 'blur' }, { validator: emailValidate, trigger: 'blur' }],
         labels: [{ required: true, type: 'array', message: '请选择个人标签', trigger: 'change' }],
+        wechat: [{ validator: wechatValidate, trigger: 'blur' }],
+        signature: [{ required: true, min: 6, max: 30, message: '个性签名需为6~30个字', trigger: 'blur' }],
         brief: [{ min: 6, max: 5000, message: '个人简介字数在6到5000之间', trigger: 'blur' }]
       },
       intros: CompanyIntro,
@@ -182,6 +195,7 @@ export default {
       this.form.avatarUrl = item[0].middleUrl
       // 保存头像信息
       this.recruiterAvatar = item[0]
+      this.avatarLoading = false
     },
     selectedPosition (item) {
       this.form.positionTypeId = item.labelId

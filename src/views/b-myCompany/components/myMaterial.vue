@@ -5,8 +5,8 @@
             <p class="myMaterial-head-text">如“<span>*</span>”号的内容，是必须填写的项目；置灰内容为公司认证信息，修改请联系 400-065-5788</p>
         </div>
         <div class="from">
-            <el-form :model="from" :rules="rules" label-width="100px">
-                <el-form-item prop="img" label="公司logo：">
+            <el-form :model="from" ref="fromMyMaterial" :rules="rules" label-width="100px">
+                <el-form-item prop="id" label="公司logo：">
                   <div class="Picture-wrap">
                     <Picture
                     :value.sync="middleUrl"
@@ -14,10 +14,8 @@
                     :cropper="true"
                     cropperRadius="8px"
                     cropper-radius="8px"
-                    @before="avatarLoading = true"
-                    @fail="avatarLoading = false"
-                    @change="pictureInformation"
-                    v-loading="avatarLoading">
+                    :validate-event="true"
+                    @change="pictureInformation">
                     <div class="avatar-wrapper">
                       <div class="avatar">
                       <img :src="middleUrl" />
@@ -52,7 +50,7 @@
                 </el-form-item>
                 <el-form-item prop="website" label="公司官网："><el-input placeholder="请输入公司官网" v-model="from.website"></el-input></el-form-item>
                 <el-form-item prop="intro" label="公司介绍：">
-                    <el-input type="textarea" placeholder="请输入公司介绍" v-model="from.intro"></el-input>
+                    <el-input type="textarea" show-word-limit maxlength="5000" placeholder="请输入公司介绍" v-model="from.intro"></el-input>
                 </el-form-item>
                 <el-form-item label="公司图片：">
                   <div class="Picture-wrap-more">
@@ -101,7 +99,8 @@ import {
   companyEmployeesApi,
   addCompanyAddressApi,
   editCompanyApi,
-  delCompanyAddressApi
+  delCompanyAddressApi,
+  addresseditCompanyAddressApi
 } from '@/api/company'
 import {
   getCompanyAddressListApi,
@@ -125,17 +124,20 @@ export default {
   },
   data () {
     let urlRegReplace = (rule, value, callback) => {
+      if (!value) {
+        return callback()
+      }
       if (urlReg.test(value)) {
         callback()
       } else {
-        callback(new Error('请输入正确的公司官网！'))
+        callback(new Error('请输入正确的公司官网'))
       }
     }
-    let introRegReplace = (rule, value, callback) => {
-      if (companyIntroReg.test(value)) {
+    let logoRegReplace = (rule, value, callback) => {
+      if (this.id > 0) {
         callback()
       } else {
-        callback(new Error('公司介绍字数应当在20~5000字以内哦！'))
+        callback(new Error('请上传公司logo'))
       }
     }
     return {
@@ -144,16 +146,15 @@ export default {
       mapIndex: 0, // 地图索引
       mapShow: false,
       rules: {
-        img: [{ required: true, message: '请选择公司logo', trigger: 'blur' }],
+        id: [{ required: true, type: 'number', message: '请选择公司logo', trigger: 'change' }, { validator: logoRegReplace, trigger: 'change' }],
         company_name: [{ required: true, message: '请输入公司全称', trigger: 'blur' }],
         company_shortname: [{ required: true, message: '请输入公司简称', trigger: 'blur' }],
         industry: [{ required: true, message: '请输入所属行业', trigger: 'blur' }],
         financing: [{ required: true, message: '请选择融资阶段', trigger: 'change' }],
         employees: [{ required: true, message: '请选择公司规模', trigger: 'change' }],
-        website: [{ required: false, message: '请输入正确的公司官网', trigger: 'change' }, { validator: urlRegReplace, trigger: 'blur' }],
-        intro: [{ required: true, message: '请输入公司介绍', trigger: 'blur' }, { validator: introRegReplace, trigger: 'blur' }]
+        website: [{ required: false, message: '请输入正确的公司官网', trigger: 'blur' }, { validator: urlRegReplace, trigger: 'blur' }],
+        intro: [{ required: true, min: 20, max: 5000, message: '请输入20到5000字以内的公司介绍', trigger: 'blur' }]
       },
-      avatarLoading: false,
       from: {
         id: this.information.id,
         company_name: this.information.companyName,
@@ -189,22 +190,24 @@ export default {
       })
     },
     submit () {
-      if (this.from.website === '' || this.from.albumInfo || this.from.address) {
-        this.$confirm('温馨提示', '完善全部信息，可以提高公司的曝光与排名，是否继续完善?', {
-          confirmButtonText: '继续完善',
-          cancelButtonText: '直接保存',
-          type: 'warning',
-          center: true
-        }).catch(() => {
-          this.saveEditCompany()
-        })
-      } else {
-        this.saveEditCompany()
-      }
+      this.$refs.fromMyMaterial.validate(valid => {
+        if (valid) {
+          if (this.from.website === '' || this.from.albumInfo || this.from.address) {
+            this.$confirm('温馨提示', '完善全部信息，可以提高公司的曝光与排名，是否继续完善?', {
+              confirmButtonText: '继续完善',
+              cancelButtonText: '直接保存',
+              type: 'warning',
+              center: true
+            }).catch(() => {
+              this.saveEditCompany()
+            })
+          } else {
+            this.saveEditCompany()
+          }
+        }
+      })
     },
     saveEditCompany () { // 提交
-      let data = this.from
-      editCompanyApi(this.from.id, data).then()
       let dataAlbumInfo = []
       this.albumInfo.forEach((item, index) => {
         if (index === this.albumInfo.length) return
@@ -214,26 +217,30 @@ export default {
       let datas = { images: dataAlbumInfo }
 
       editCompanyAlbumApi(this.from.id, datas).then(res => {
-        this.$message.success('保存成功！')
-      }).catch(res => {
-        this.$message.error('保存失败！')
+
       })
-      this.$emit('save') // 刷新父组件数据
-      let type = '公司主页'
-      this.$emit('click', type)
+
+      let data = this.from
+      editCompanyApi(this.from.id, data).then(res => {
+        this.$message.success('保存成功！')
+        this.$emit('save') // 刷新父组件数据
+        let type = '公司主页'
+        this.$emit('click', type)
+      })
     },
     receiveAddAdress (data) { // 地图回调
       if (this.mapIndex === 100) { // 判断是添加还是编辑 100 是添加
-        data.data = JSON.parse(JSON.stringify(data.data).replace(/area_id/g, 'areaName'))
-        // this.address.push(data.data)
         addCompanyAddressApi(this.from.id, data.data)
           .then(res => {
             this.getCompanyAddressList()
           })
       } else {
-        data.data.area_id = this.address[this.mapIndex].area_id
+        data.data = JSON.parse(JSON.stringify(data.data).replace(/area_id/g, 'areaId'))
         data.data.id = this.address[this.mapIndex].id
-        this.getCompanyAddressList()
+        addresseditCompanyAddressApi(data.data).then(res => {
+          this.getCompanyAddressList()
+          this.$message.success('编辑成功！')
+        })
       }
     },
     getCompanyAddressList () { // 获取公司地址
@@ -243,8 +250,10 @@ export default {
         })
     },
     deleteAddress (item) {
-      delCompanyAddressApi(item.id)
-      this.getCompanyAddressList()
+      delCompanyAddressApi(item.id).then(res => {
+        this.getCompanyAddressList()
+        this.$message.success('删除成功！')
+      })
     },
     shutDown () {
       this.mapShow = false
@@ -401,5 +410,8 @@ export default {
 .myMaterial .el-form-item:nth-of-type(1) .el-form-item__label:nth-of-type(1){
   height: 70px;
   line-height: 70px;
+}
+.myMaterial .el-textarea{
+  width: 520px;
 }
 </style>
