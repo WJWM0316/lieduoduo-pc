@@ -10,31 +10,27 @@
 						{{item.text}}<span class="reddot" v-if="item.showRedDot"></span>
 				</li>
 			</ul>
-			<div v-show="pIndex === 0">
-		    <ul class="tab-bar">
-		      <li
-		      	v-for="(item, index) in applyScreen"
-		      	:key="index"
-		      	class="item"
-		      	@click="tabClick(item, index, applyScreen)"
-		      	:class="{ active: item.active }">
-		      	{{ item.key }}<span class="reddot" v-if="item.showRedDot"></span>
-		    	</li>
-		    </ul>
-	    </div>
-	    <div v-show="pIndex === 1">
-		    <ul class="tab-bar">
-		      <li
-		      	v-for="(item, index) in receiveScreen"
-		      	:key="index"
-		      	class="item"
-		      	@click="tabClick(item, index, receiveScreen)"
-		      	:class="{ active: item.active }">
-		      	{{ item.key }}<span class="reddot" v-if="item.showRedDot"></span>
-		    	</li>
-		    </ul>
-	    </div>
-	    <div v-show="pIndex === 2">
+	    <ul class="tab-bar" v-if="pIndex === 0">
+	      <li
+	      	v-for="(item, index) in applyScreen"
+	      	:key="index"
+	      	class="item"
+	      	@click="tabClick(item, index, applyScreen)"
+	      	:class="{ active: item.active }">
+	      	{{ item.key }}<span class="reddot" v-if="item.showRedDot"></span>
+	    	</li>
+	    </ul>
+	    <ul class="tab-bar" v-if="pIndex === 1">
+	      <li
+	      	v-for="(item, index) in receiveScreen"
+	      	:key="index"
+	      	class="item"
+	      	@click="tabClick(item, index, receiveScreen)"
+	      	:class="{ active: item.active }">
+	      	{{ item.key }}<span class="reddot" v-if="item.showRedDot"></span>
+	    	</li>
+	    </ul>
+	    <template v-if="pIndex === 2">
 	    	<ul class="child-bar">
 					<li
 						:class="{active: index === cIndex}"
@@ -44,7 +40,7 @@
 							{{item.text}}<template v-if="item.showRedDot">（{{scheduleData.total}}）</template>
 					</li>
 				</ul>
-		    <ul class="tab-bar" v-show="dateList.length && !cIndex">
+		    <ul class="tab-bar" v-if="dateList.length && !cIndex">
 		      <li
 		      	v-for="(item, index) in dateList"
 		      	:key="index"
@@ -54,7 +50,7 @@
 		      	{{ item.date }}
 		    	</li>
 		    </ul>
-		    <div v-show="cIndex">
+		    <div v-if="cIndex">
 			    <el-date-picker
 			      v-model="time"
 			      type="datetimerange"
@@ -64,20 +60,32 @@
 			      end-placeholder="结束日期">
 			    </el-date-picker>
 		    </div>
-	    </div>
+	    </template>
 	    <search-list :data="applyData" tab="apply" v-if="pIndex === 0"/>
 	    <search-list :data="receiveData" tab="receive" v-if="pIndex === 1"/>
 	    <search-list :data="scheduleData" tab="schedule" v-if="pIndex === 2 && cIndex === 0"/>
 	    <search-list :data="historyData" tab="history" v-if="pIndex === 2 && cIndex === 1"/>
 		</div>
-		<div class="pagination-interview" v-if="applyData.total > applyData.pageSize && pIndex === 0">
+		<div class="pagination-interview" v-if="pIndex === 0">
       <el-pagination
         background
+        v-if="applyData.total > applyData.pageSize"
         @current-change="(page) => changePage(page, applyData)"
         :current-page.sync ="applyData.page"
         :page-size="applyData.pageSize"
         layout="prev, pager, next"
         :total="applyData.total">
+      </el-pagination>
+    </div>
+    <div class="pagination-interview" v-if="pIndex === 1">
+      <el-pagination
+        background
+        v-if="receiveData.total > receiveData.pageSize"
+        @current-change="(page) => changePage(page, receiveData)"
+        :current-page.sync ="receiveData.page"
+        :page-size="receiveData.pageSize"
+        layout="prev, pager, next"
+        :total="receiveData.total">
       </el-pagination>
     </div>
 	</div>
@@ -438,6 +446,7 @@ export default {
 		padding-top: 20px;
 		box-shadow:0px 0px 30px 0px rgba(22,39,77,0.07);
 		border-radius:4px;
+		overflow: hidden;
 	}
 	.interview-bar{
 		height: 58px;
@@ -538,7 +547,7 @@ export default {
 	}
 	.pagination-interview{
 		text-align: center;
-		margin-bottom: 30px;
+		margin: 45px 0 30px 0;
 	}
 }
 </style>

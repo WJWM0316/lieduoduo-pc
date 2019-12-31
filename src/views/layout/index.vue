@@ -80,4 +80,30 @@ export default class App extends Vue {
     min-width: calc(#{$page-width} + 20px);
   }
 }
+.admin-toast{
+  padding: 13px 17px;
+  .box {
+    display: flex;
+    align-items: center;
+  }
+  .describe {
+    width:151px;
+    font-size:12px;
+    font-weight:400;
+    color:$font-color-3;
+    line-height:16px;
+    margin-right: 5px;
+  }
+  .qr-code{
+    width: 76px;
+    height: 76px;
+  }
+  strong{
+    color: $nav-color-hover;
+  }
+  img{
+    width: 100%;
+    height: 100%;
+  }
+}
 </style>

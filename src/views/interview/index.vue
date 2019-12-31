@@ -17,7 +17,7 @@ export default {
 <style lang="scss" scoped>
 #interview{
 	width: $page-width;
-	margin: 30px auto;
+	margin: 30px auto 0 auto;
 	display: flex;
 }
 </style>

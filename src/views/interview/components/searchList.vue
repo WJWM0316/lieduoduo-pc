@@ -1,6 +1,13 @@
 <template>
 	<div class="search-content">
-		<ChatBar :item="item" v-for="(item, index) in data.list" :key="index" :tab="tab" @click="bindClick($event, index)" :rowIndex="index" />
+		<chat-bar
+			:item="item" v-for="(item, index) in data.list"
+			:key="index"
+			:tab="tab"
+			@click="bindClick($event, index)"
+			:rowIndex="index"
+			:class="{'li-item-last': index === data.list.length - 1}">
+		</chat-bar>
 	  <no-data v-if="!data.total && data.hasInitPage" />
 	  <dialog-model v-model="model.show" :item="model.interview" :list="data.list" />
 	</div>
@@ -28,7 +35,7 @@ export default {
       default: 'apply'
     }
   },
-  data() {
+  data () {
   	return {
   		model: {
 	    	show: false,
@@ -43,7 +50,7 @@ export default {
 		DialogModel
 	},
 	methods: {
-		bindClick(item, index) {
+		bindClick (item, index) {
 			this.model.show = true
 			this.model.interview = {
 				...item,
@@ -53,13 +60,10 @@ export default {
 	}
 }
 </script>
-<style lang="scss" scoped>
-.search-content {
-	margin-bottom: 50px;
-	.li-item {
-		&:last-child {
-			border-bottom: 0;
-		}
+<style lang="scss">
+.search-content .li-item-last {
+	&:before{
+		display: none;
 	}
 }
 </style>

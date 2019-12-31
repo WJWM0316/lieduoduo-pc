@@ -180,7 +180,7 @@ export const asideBar = {
     {
       text: '收到邀请',
       reddot: 0,
-      iconClass: 'icon-ganxingqu-',
+      iconClass: 'icon-shoudaoyaoqing',
       routeName: 'interviewReceive',
       query: {
         page: 1,
@@ -210,21 +210,24 @@ export const asideBar = {
       reddot: 0,
       iconClass: 'icon-app',
       url: app_qrcode,
-      tooltips: '下载猎多多APP<br/>体验完整功能'
+      tooltips: '下载猎多多APP<br/>体验完整功能',
+      type: 'hover'
     },
     {
       name: '小程序',
       reddot: 0,
       iconClass: 'icon-xiaochengxu_huaban',
       url: mp_qrcode,
-      tooltips: '猎多多小程序<br/>开启社交求职新时代'
+      tooltips: '猎多多小程序<br/>开启社交求职新时代',
+      type: 'hover'
     },
     {
       name: '公众号',
       reddot: 0,
       iconClass: 'icon-yuemian',
       url: wx_qrcode,
-      tooltips: '关注猎多多公众号<br/>不错过重要消息通知'
+      tooltips: '关注猎多多公众号<br/>不错过重要消息通知',
+      type: 'hover'
     }
   ]
 }
