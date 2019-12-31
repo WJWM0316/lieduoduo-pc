@@ -14,9 +14,8 @@
             <i :class="item.meta.icon"></i>
             <span>{{ item.title }}</span>
             <el-badge class="page-badge"
-            v-if="item.title === '候选人库' || item.title === '面试日程'"
-            :value="item.title === '候选人库' ? recruiterIntentionList + recruiterInviteList : recruiterScheduleList"
-            :hidden="item.title === '候选人库' ? (recruiterIntentionList + recruiterInviteList) === 0 : recruiterScheduleList === 0">
+              v-if="reddot[item.path]"
+              :value="reddot[item.path]">
             </el-badge>
           </router-link>
         </template>

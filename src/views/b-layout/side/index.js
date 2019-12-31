@@ -12,7 +12,13 @@ import recruiter from '@/router/recruiter'
       'recruiterIntentionList',
       'recruiterInviteList',
       'recruiterScheduleList'
-    ])
+    ]),
+    reddot () {
+      return {
+        '/candidate': this.recruiterIntentionList + this.recruiterInviteList,
+        '/interviewRecords': this.recruiterScheduleList
+      }
+    }
   }
 })
 export default class PageAside extends Vue {
