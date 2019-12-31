@@ -7,6 +7,10 @@ import 'normalize.css'
 import './util'
 import './eleui'
 import './filters'
+// 引入查看大图插件
+import preview from 'vue-photo-preview'
+// import 'vue-photo-preview/dist/skin.css'
+Vue.use(preview)
 
 Vue.config.productionTip = false
 Vue.prototype.$cdnPath = process.env.VUE_APP_CDN_PATH
