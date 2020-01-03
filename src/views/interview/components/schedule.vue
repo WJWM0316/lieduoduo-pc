@@ -13,7 +13,7 @@
 			</div>
 			<div class="colc-bottom">
 				<i class="iconfont icon-didian"></i>
-				<div class="address">{{item.address}}</div>
+				<div class="address" @click="editAddress(item, index)">{{item.address}}{{item.doorplate}}</div>
 			</div>
 		</div>
 		<div class="col-right">
@@ -50,10 +50,17 @@
 		<div class="listredhot" v-if="item.redDot"></div>
   </div>
 	<no-data v-if="!data.total && data.hasInitPage" />
+	<Map
+		@addAdress="receiveAddAdress"
+		:keywords="mapIndex === 100 ? '北京市天安门广场' : keyaddress"
+		@popCancel="shutDown"
+		v-if="mapShow"
+		></Map>
 	</div>
 </template>
 <script>
 import NoData from './noData'
+import Map from '@/components/map/map.vue'
 export default {
   props: {
     data: {
@@ -68,8 +75,16 @@ export default {
       })
     }
   },
+  data () {
+    return {
+      mapShow: false,
+      keyaddress: '',
+      mapIndex: 0 // 地图索引
+    }
+  },
   components: {
-    NoData
+    NoData,
+    Map
   },
   methods: {
     toposition (data) {
@@ -79,11 +94,26 @@ export default {
       })
       window.open(routeData.href, '_blank')
     },
+    editAddress (item, index) { // 编辑地址
+      this.mapIndex = index
+      this.keyaddress = item.address + item.doorplate
+      this.mapShow = true
+    },
+    shutDown () {
+      this.mapShow = false
+    },
+    receiveAddAdress (data) { // 地图回调
+      if (this.mapIndex === 100) { // 判断是添加还是编辑 100 是添加
+        return false
+      } else {
+        return false
+      }
+    },
     tocompany (data) {
       let routeData = this.$router.resolve({
         name: 'companyDetail',
         query: {
-          vkey: data.companyId
+          vkey: data.companyInfo.vkey
         }
       })
       window.open(routeData.href, '_blank')
@@ -169,7 +199,7 @@ export default {
 		width: 454px;
 		font-weight:400;
 		line-height: 20px;
-		height: 20px;
+		// height: 20px;
 		display: flex;
 		cursor: pointer;
 		&:hover i{
@@ -186,7 +216,7 @@ export default {
 			margin-left: 4px;
 			color: #66666E;
 			font-size: 14px;
-			@include ellipsis-over(435px);
+			// @include ellipsis-over(435px);
 		}
 	}
 	.col-right{
