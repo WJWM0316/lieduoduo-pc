@@ -59,7 +59,7 @@
 		      	class="item"
 		      	:class="{ active: item.active }">
 		      	{{ item.date }}
-						<span class="reddot" v-if="item.showRedDot"></span>
+						<span class="reddot" v-if="item.number"></span>
 		    	</li>
 		    </ul>
 	    </div>
@@ -87,6 +87,17 @@
         :page-size="receiveData.pageSize"
         layout="prev, pager, next"
         :total="receiveData.total">
+      </el-pagination>
+    </div>
+    <div class="pagination-interview" v-if="pIndex === 2 && cIndex === 0"/>
+      <el-pagination
+        background
+        v-if="scheduleData.total > scheduleData.pageSize"
+        @current-change="(page) => changePage(page, scheduleData)"
+        :current-page.sync ="scheduleData.page"
+        :page-size="scheduleData.pageSize"
+        layout="prev, pager, next"
+        :total="scheduleData.total">
       </el-pagination>
     </div>
 	</div>
@@ -123,7 +134,7 @@ export default {
 		SearchList,
 		Schedule
 	},
-	data() {
+	data () {
 		return {
 	    pIndex: 0,
 	    cIndex: 0,
@@ -159,7 +170,7 @@ export default {
       return clearDayInterviewRedDotApi({ date })
 	  },
 	  clearTabInterviewRedDot(type) {
-	    return clearTabInterviewRedDotApi({ type })
+	  	return clearTabInterviewRedDotApi({ type })
 	  },
 		getInterviewRedDotInfo() {
 			return this.getInterviewRedDotInfoApi().then(() => {
@@ -285,9 +296,15 @@ export default {
 			})
 		},
 		pTabClick(item, index) {
+			let dateList = this.dateList
 			this.interviewBar[this.pIndex].active = false
 			item.active = true
 			this.pIndex = index
+			// 当前tab位于面试日程，并且面试日程下面的日期列表的第一个有红点，则离开父级tab 则把首个日期列表的红点清除
+			if (index === 2 && dateList.length && dateList[0].number > 0) {
+				dateList[0].number = 0
+				this.clearDayInterviewRedDot(dateList[0].time)
+			}
 			switch(item.api) {
 				case 'getApplyList':
 					this.applyData.page = 1
@@ -328,11 +345,17 @@ export default {
 		},
 		chooseTime(item, index) {
 			this.dateList.map((v, i) => v.active = i === index ? true : false)
-			if (item.active && item.number === 0) {
+			if (item.active && Reflect.has(item, 'number')) {
 				this.scheduleData.page = 1
-				this.getLists({api: 'getScheduleList'})
+				if(item.number) {
+					this.clearDayInterviewRedDot(item.time).then(() => {
+	        	this.getLists({api: 'getScheduleList'})
+	        })
+				} else {
+					this.getLists({api: 'getScheduleList'})
+				}
 			} else {
-				this.historyData.page = 1
+				this.scheduleData.page = 1
 				this.getLists({api: 'getHistoryInterviewLists'})
 			}
 		},

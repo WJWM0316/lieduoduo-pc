@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="search-content">
   <div class="li-item clearfix" v-for="(item, index) in data.list" :key="index">
 		<div class="col-left">
 			<div class="logo-box">
@@ -49,15 +49,27 @@
 		<div class="dottedlien"></div>
 		<div class="listredhot" v-if="item.redDot"></div>
   </div>
+	<no-data v-if="!data.total && data.hasInitPage" />
 	</div>
 </template>
 <script>
+import NoData from './noData'
 export default {
   props: {
     data: {
       type: Object,
-      list: []
+      default: () => ({
+      	list: [],
+			  page: 1,
+			  count: 20,
+			  hasInitPage: false,
+			  total: 0,
+			  pageSize: 20
+      })
     }
+  },
+  components: {
+    NoData
   },
   methods: {
     toposition (data) {
