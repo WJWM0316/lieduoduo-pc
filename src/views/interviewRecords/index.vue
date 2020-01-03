@@ -3500,6 +3500,7 @@ export default {
           .add_time{
             position: relative;
             overflow: hidden;
+            cursor: pointer;
             padding: 12px 0;
             color: #03b3bb;
             .el-date-editor{

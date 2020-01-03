@@ -4,10 +4,10 @@
     <div class="rec-team-header">
       <h1>招聘团队</h1>
       <el-badge :is-dot="reddot" v-if="recruiterIsAdmin">
-        <el-button type="primary" @click="applyDialog = true">加入申请 {{count.apply}}）</el-button>
+        <el-button type="primary" @click="applyDialog = true">加入申请（{{count.apply}}）</el-button>
       </el-badge>
     </div>
-    <div class="recruit-lists">
+    <div class="warpper-scroll recruit-lists">
       <template v-for="item in lists">
         <div class="recruit-list" :key="item.id">
           <div class="recruit-info">
@@ -17,7 +17,7 @@
             <div style="width: 70%;">
               <p class="recruit-name"><span class="recruit-name-text">{{item.name}}</span> <span class="admin-tag" v-if="item.isCompanyAdmin">管理员</span></p>
               <p class="recruit-position">{{item.position}}</p>
-              <p class="recruit-email"><span>邮箱：</span>{{item.email}}</p>
+              <p class="recruit-email"><span>邮箱：</span>{{item.email || '暂未添加邮箱'}}</p>
             </div>
           </div>
           <div class="recruit-position-number" @click="handleShowPosition(item)">{{item.positionNum}}个招聘中职位 <span class="iconfont icon-right"></span></div>
@@ -76,7 +76,8 @@ export default {
     ...mapGetters([
       'recruitDataLoaded',
       'recruitDataCompanyId',
-      'recruiterIsAdmin'
+      'recruiterIsAdmin',
+      'newJoinApplyNum'
     ])
   },
   methods: {
@@ -131,10 +132,16 @@ export default {
     },
     // 刷新红点状态
     hanldeApplyClose () {
-      // 红点
-      this.getreddots()
-      // 更新数量
-      this.getCounts()
+      if (this.reddot) {
+        // 红点
+        this.getreddots()
+        // 更新数量
+        this.getCounts()
+      }
+      if (this.newJoinApplyNum) {
+        // 刷新侧边栏红点逻辑
+        this.$store.dispatch('redDotfun')
+      }
     },
     // 审核招聘官
     handleSetApply (number, isReload = false) {

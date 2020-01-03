@@ -3,6 +3,7 @@
   <el-dialog
     :visible.sync="dialogStatus"
     custom-class="app-dialog"
+    width="610px"
     @close="handleClose"
     title="招聘申请">
     <div class="app-dialog-tabs">
@@ -22,6 +23,7 @@
       <template v-for="(list,index) in lists">
         <div class="apply-list" :key="list.id">
           <div class="apply-name">
+            <span class="b-reddot" v-if="list.isRead"></span>
             <p class="_text">{{list.realName}}</p>
             <p>{{list.userPosition}}</p>
           </div>
@@ -198,7 +200,7 @@ export default {
     position: relative;
   }
   li + li {
-    margin-left: 30px;
+    margin-left: 44px;
   }
   li:hover {
     color: $main-color-1;
@@ -208,16 +210,16 @@ export default {
     color: $main-color-1;
     font-weight: bold;
   }
-  .b-reddot::after {
-    content: "";
-    top: 0;
-    right: -10px;
-    position: absolute;
-    width:6px;
-    height:6px;
-    background: $error-color-1;
-    border-radius: 50%;
-  }
+}
+.b-reddot::after {
+  content: "";
+  top: 0;
+  right: -10px;
+  position: absolute;
+  width:6px;
+  height:6px;
+  background: $error-color-1;
+  border-radius: 50%;
 }
 .apply-lists {
   height: 500px;
@@ -228,10 +230,10 @@ export default {
   padding: 24px 40px;
   border-bottom: 1px solid $border-color-1;
   .apply-name, .apply-operate {
-    flex: 1
+    flex: 2
   }
   .apply-email, .apply-time {
-    flex: 2;
+    flex: 3;
     p {
       color: $title-color-3;
       font-size: 12px;
@@ -248,9 +250,18 @@ export default {
       color: $title-color-3;
     }
   }
+  .apply-name {
+    position: relative;
+    .b-reddot::after {
+      left: -10px;
+      right: inherit;
+      top: -6px;
+    }
+  }
   .apply-name p{
     font-size: 14px;
     color: $title-color-2;
+    max-width: 84px;
   }
   p._text {
     max-width: 150px;

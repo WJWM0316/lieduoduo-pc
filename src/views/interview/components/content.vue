@@ -9,62 +9,64 @@
 					:key="index">
 						{{item.text}}<span class="reddot" v-if="item.showRedDot"></span>
 				</li>
+				<div class="notice" @mouseenter="shownotice" @mouseleave="isshownotice = false">
+					<i class="iconfont icon-tongzhi"></i>
+					<span>获取约面通知</span>
+					<div class="notice-diggle" v-show="isshownotice">
+						<div class="headbar">
+							<img src="@/assets/images/pic_message.png" alt="">
+						</div>
+						<div class="clock"><img src="@/assets/images/pic_bell.png" alt=""></div>
+						<div class="qrcode">
+							<img :src="app_url" alt="">
+						</div>
+						<p>下载猎多多APP<br/>获得面试日程通知提醒</p>
+						<div class="forward"></div>
+						<div class="rocket"><img src="@/assets/images/rocket.png" alt=""></div>
+					</div>
+				</div>
 			</ul>
-	    <ul class="tab-bar" v-if="pIndex === 0">
-	      <li
-	      	v-for="(item, index) in applyScreen"
-	      	:key="index"
-	      	class="item"
-	      	@click="tabClick(item, index, applyScreen)"
-	      	:class="{ active: item.active }">
-	      	{{ item.key }}<span class="reddot" v-if="item.showRedDot"></span>
-	    	</li>
-	    </ul>
-	    <ul class="tab-bar" v-if="pIndex === 1">
-	      <li
-	      	v-for="(item, index) in receiveScreen"
-	      	:key="index"
-	      	class="item"
-	      	@click="tabClick(item, index, receiveScreen)"
-	      	:class="{ active: item.active }">
-	      	{{ item.key }}<span class="reddot" v-if="item.showRedDot"></span>
-	    	</li>
-	    </ul>
-	    <template v-if="pIndex === 2">
-	    	<ul class="child-bar">
-					<li
-						:class="{active: index === cIndex}"
-						v-for="(item, index) in scheduleBar"
-						@click="cTabClick(item, index)"
-						:key="index">
-							{{item.text}}<template v-if="item.showRedDot">（{{scheduleData.total}}）</template>
-					</li>
-				</ul>
+			<div v-show="pIndex === 0">
+		    <ul class="tab-bar">
+		      <li
+		      	v-for="(item, index) in applyScreen"
+		      	:key="index"
+		      	class="item"
+		      	@click="tabClick(item, index, applyScreen)"
+		      	:class="{ active: item.active }">
+		      	{{ item.key }}<span class="reddot" v-if="item.showRedDot"></span>
+		    	</li>
+		    </ul>
+	    </div>
+	    <div v-show="pIndex === 1">
+		    <ul class="tab-bar">
+		      <li
+		      	v-for="(item, index) in receiveScreen"
+		      	:key="index"
+		      	class="item"
+		      	@click="tabClick(item, index, receiveScreen)"
+		      	:class="{ active: item.active }">
+		      	{{ item.key }}<span class="reddot" v-if="item.showRedDot"></span>
+		    	</li>
+		    </ul>
+	    </div>
+			<!-- 面试日历tab -->
+	    <div v-show="pIndex === 2">
 		    <ul class="tab-bar" v-if="dateList.length && !cIndex">
 		      <li
 		      	v-for="(item, index) in dateList"
 		      	:key="index"
-		      	@click="chooseTime(item, index, dateList)"
+		      	@click="chooseTime(item, index)"
 		      	class="item"
 		      	:class="{ active: item.active }">
 		      	{{ item.date }}
+						<span class="reddot" v-if="item.number"></span>
 		    	</li>
 		    </ul>
-		    <div v-if="cIndex">
-			    <el-date-picker
-			      v-model="time"
-			      type="datetimerange"
-			      range-separator="至"
-			      start-placeholder="开始日期"
-			      value-format="timestamp"
-			      end-placeholder="结束日期">
-			    </el-date-picker>
-		    </div>
-	    </template>
+	    </div>
 	    <search-list :data="applyData" tab="apply" v-if="pIndex === 0"/>
 	    <search-list :data="receiveData" tab="receive" v-if="pIndex === 1"/>
-	    <search-list :data="scheduleData" tab="schedule" v-if="pIndex === 2 && cIndex === 0"/>
-	    <search-list :data="historyData" tab="history" v-if="pIndex === 2 && cIndex === 1"/>
+	    <Schedule :data="scheduleData" v-if="pIndex === 2 && cIndex === 0"/>
 		</div>
 		<div class="pagination-interview" v-if="pIndex === 0">
       <el-pagination
@@ -88,11 +90,23 @@
         :total="receiveData.total">
       </el-pagination>
     </div>
+    <div class="pagination-interview" v-if="pIndex === 2 && cIndex === 0"/>
+      <el-pagination
+        background
+        v-if="scheduleData.total > scheduleData.pageSize"
+        @current-change="(page) => changePage(page, scheduleData)"
+        :current-page.sync ="scheduleData.page"
+        :page-size="scheduleData.pageSize"
+        layout="prev, pager, next"
+        :total="scheduleData.total">
+      </el-pagination>
+    </div>
 	</div>
 </template>
 <script>
 /* eslint-disable */
 import SearchList from './searchList'
+import Schedule from './schedule'
 import { app_qrcode } from 'IMAGES/image'
 
 import {
@@ -118,9 +132,10 @@ import {
 
 export default {
 	components: {
-		SearchList
+		SearchList,
+		Schedule
 	},
-	data() {
+	data () {
 		return {
 	    pIndex: 0,
 	    cIndex: 0,
@@ -133,7 +148,9 @@ export default {
 	    receiveData,
 	    scheduleData,
 	    historyData,
-	    time: [],
+			time: [],
+			app_url: app_qrcode,
+			isshownotice: false,
 	    model: {
 	    	show: true,
 	    	title: '面试详情'
@@ -154,7 +171,7 @@ export default {
       return clearDayInterviewRedDotApi({ date })
 	  },
 	  clearTabInterviewRedDot(type) {
-	    return clearTabInterviewRedDotApi({ type })
+	  	return clearTabInterviewRedDotApi({ type })
 	  },
 		getInterviewRedDotInfo() {
 			return this.getInterviewRedDotInfoApi().then(() => {
@@ -166,11 +183,16 @@ export default {
 		getInterviewScheduleNumberLists() {
 			return getInterviewScheduleNumberListsApi().then(({ data }) => {
 				let dateList = data.data
-				if(dateList.length) {
-					dateList.map(v => v.active = false)
-					dateList[0].active = true
-					this.dateList = dateList
+				dateList.unshift({ date: '全部' })
+				dateList.map((v, k) => {
+          v.active = false
+        })
+        if (dateList.length >= 2) {
+          dateList[1].active = true
+        } else {
+          dateList[0].active = true
 				}
+				this.dateList = dateList
 			})
 		},
 		getApplyList() {
@@ -182,9 +204,7 @@ export default {
 				page: this.applyData.page,
 				tab: applyItem.value
 			}
-			getInterviewApplyListsApi(Object.assign(params, {count: this.applyData.count})).then(({ data }) => {
-				// let list = data.data || []
-				// list.map(v => v.app_qrcode = app_qrcode)
+			getInterviewApplyListsApi({...params, count: this.applyData.count}).then(({ data }) => {
 				this.applyData.list = data.data || []
 				this.applyData.total = data.meta.total || 0
 				this.applyData.hasInitPage = true
@@ -206,9 +226,7 @@ export default {
 				page: this.receiveData.page,
 				tab: receiveItem.value
 			}
-			getInterviewInviteListsApi(Object.assign(params, {count: this.receiveData.count})).then(({ data }) => {
-				// let list = data.data || []
-				// list.map(v => v.app_qrcode = app_qrcode)
+			getInterviewInviteListsApi({...params, count: this.receiveData.count}).then(({ data }) => {
 				this.receiveData.list = data.data || []
 				this.receiveData.total = data.meta.total || 0
 				this.receiveData.hasInitPage = true
@@ -238,9 +256,7 @@ export default {
 				return
 			}
 			params = Object.assign(params, {time: tab.time})
-			getInterviewScheduleListsApi(Object.assign(params, { count: this.scheduleData.count })).then(({ data }) => {
-				// let list = data.data || []
-				// list.map(v => v.app_qrcode = app_qrcode)
+			getInterviewScheduleListsApi({...params, count: this.scheduleData.count}).then(({ data }) => {
 				this.scheduleData.list = data.data || []
 				this.scheduleData.total = data.meta.total || 0
 				this.scheduleData.hasInitPage = true
@@ -254,19 +270,11 @@ export default {
 			})
 		},
 		getHistoryInterviewLists() {
-			let params = { page: this.scheduleData.page }
-			if(this.time.length) {
-				params = Object.assign(params, {
-					start: this.time[0]/1000,
-					end: this.time[1]/1000
-				})
-			}
-			getHistoryInterviewListsApi(Object.assign(params, { count: this.scheduleData.historyData })).then(({ data }) => {
-				// let list = data.data || []
-				// list.map(v => v.app_qrcode = app_qrcode)
-				this.historyData.list = data.data || []
-				this.historyData.total = data.meta.total || 0
-				this.historyData.hasInitPage = true
+			let params = { page: this.scheduleData.page, isselect: 'all' }
+			getHistoryInterviewListsApi({...params, count: this.scheduleData.count}).then(({ data }) => {
+				this.scheduleData.list = data.data || []
+				this.scheduleData.total = data.meta.total || 0
+				this.scheduleData.hasInitPage = true
 				let query = {
 					...params,
 					pIndex: this.pIndex,
@@ -277,9 +285,15 @@ export default {
 			})
 		},
 		pTabClick(item, index) {
+			let dateList = this.dateList
 			this.interviewBar[this.pIndex].active = false
 			item.active = true
 			this.pIndex = index
+			// 当前tab位于面试日程，并且面试日程下面的日期列表的第一个有红点，则离开父级tab 则把首个日期列表的红点清除
+			if (index === 2 && dateList.length && dateList[0].number > 0) {
+				dateList[0].number = 0
+				this.clearDayInterviewRedDot(dateList[0].time)
+			}
 			switch(item.api) {
 				case 'getApplyList':
 					this.applyData.page = 1
@@ -290,7 +304,7 @@ export default {
 					this.getLists(item)
 					break
 				case 'getScheduleList':
-					if(!this.cIndex) {
+					if(!this.cIndex && Reflect.has(item, 'number')) {
 						this.scheduleData.page = 1
 						this.getLists(item)
 					} else {
@@ -315,28 +329,23 @@ export default {
       	this.getInterviewRedDotInfo().then(() => this[data.api]())
       }
 		},
+		shownotice () {
+			this.isshownotice = true
+		},
 		chooseTime(item, index) {
 			this.dateList.map((v, i) => v.active = i === index ? true : false)
-			if(item.active && item.number) {
-        item.number = 0
-        this.clearDayInterviewRedDot(item.time).then(() => {
-        	this.getScheduleList()
-        })
-      } else {
-      	this.getInterviewRedDotInfo().then(() => this[data.api]())
-      }
-		},
-		cTabClick(item, index) {
-			let { query } = this.$route
-			this.scheduleBar[this.cIndex].active = false
-			item.active = true
-			this.cIndex = index
-			if(!index) {
+			if (item.active && Reflect.has(item, 'number')) {
 				this.scheduleData.page = 1
-				this.getLists(item)
+				if(item.number) {
+					this.clearDayInterviewRedDot(item.time).then(() => {
+	        	this.getLists({api: 'getScheduleList'})
+	        })
+				} else {
+					this.getLists({api: 'getScheduleList'})
+				}
 			} else {
-				this.historyData.page = 1
-				this.getInterviewRedDotInfo().then(() => this.getHistoryInterviewLists())
+				this.scheduleData.page = 1
+				this.getLists({api: 'getHistoryInterviewLists'})
 			}
 		},
 		getLists(item) {
@@ -418,7 +427,9 @@ export default {
 					this.setActive(pIndex)
 					if(pIndex === 2) {
 						if(cItem) {
-							if(cIndex === 1) {
+							if(query.time) {
+								navItem.api = 'getScheduleList'
+							} else {
 								navItem.api = 'getHistoryInterviewLists'
 							}
 						}
@@ -452,7 +463,7 @@ export default {
 		height: 58px;
 		line-height: 58px;
 		box-sizing: border-box;
-		padding: 0 36px;
+		padding: 0 40px;
 		li {
 			display: inline-block;
 			margin-right: 96px;
@@ -490,12 +501,92 @@ export default {
 			right: -7px;
 			top: -4px;
 		}
+		.notice{
+			float: right;
+			cursor: pointer;
+			position: relative;
+			i{
+				font-size: 16px;
+				color: #00C4CD;
+				margin-right: 2px;
+			}
+			span{
+				font-size:14px;
+				color: #03B3BB;
+			}
+			.notice-diggle{
+				position: absolute;
+				top: 50px;
+				right: 0px;
+				width:260px;
+				background: #fff;
+				border-radius: 8px;
+				height:276px;
+				z-index: 1;
+				.headbar{
+					width: 260px;
+					height: 81px;
+					background: #00C4CD;
+					img{
+						width: 100%;
+						height: 100%;
+					}
+				}
+				.qrcode{
+					width:104px;
+					height:104px;
+					margin: 23px auto 7px;
+					img{
+						width: 100%;
+						height: 100%;
+					}
+				}
+				.clock{
+					position: absolute;
+					width: 59px;
+					height: 64px;
+					top: 45px;
+    			left: 98px;
+					img{
+						width: 100%;
+						height: 100%;
+					}
+				}
+				.rocket{
+					position: absolute;
+					width: 39px;
+					height: 28px;
+					top: 200px;
+    			right: 55px;
+					img{
+						width: 100%;
+						height: 100%;
+					}
+				}
+				p{
+					text-align: center;
+					line-height: 18px;
+					font-size: 12px;
+					color: #333333;
+				}
+				.forward{
+					width: 0;
+					height: 0;
+					border-left: 20px solid transparent;
+					border-right: 20px solid transparent;
+					border-bottom: 20px solid #00C4CD;
+					position: absolute;
+					top: -7px;
+					right: 15px;
+				}
+			}
+		}
 	}
 	.tab-bar{
-	  height: 62px;
+	  height: 56px;
 	  background: $btn-forbid;
-	  line-height: 62px;
-	  padding: 0 36px;
+	  line-height: 56px;
+	  padding: 0 40px;
 	  .item {
 	    padding: 0 16px;
 	    margin-right: 46px;
@@ -529,20 +620,31 @@ export default {
 		}
 	}
 	.child-bar{
-		height: 50px;
-		line-height: 50px;
-		background: white;
+		height: 62px;
+    background: #f8fafa;
+    line-height: 62px;
+    padding: 0 40px;
 		li {
-			display: inline-block;
-			margin: 0 30px;
-			position: relative;
-			height: 50px;
-			line-height: 50px;
-			cursor: pointer;
+			padding: 0 16px;
+	    margin-right: 46px;
+	    cursor: pointer;
+	    display: inline-block;
+	    height: 24px;
+	    color: $border-color-7;
+	    text-align: center;
+	    line-height: 24px;
+	    font-weight: 400;
+	    border-radius: 2px;
+	    vertical-align: middle;
+	    border-radius:2px;
+	    transition: all .2s;
+	    position: relative;
 		}
 		.active{
-			color: $nav-color-hover;
-			pointer-events: none;
+			color: white;
+	    font-weight: 500;
+	    pointer-events: none;
+			background:$--button-primary-background-color;
 		}
 	}
 	.pagination-interview{

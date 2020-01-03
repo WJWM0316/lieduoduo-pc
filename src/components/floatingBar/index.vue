@@ -51,7 +51,7 @@ export default {
       'getInterviewRedDotInfoApi'
     ]),
     scroll() {
-      this.$util.scrollToView(document.body)
+      this.$util.scrollToView(document.documentElement || document.body)
     }
   },
   mounted() {
@@ -99,7 +99,7 @@ export default {
     position: relative;
   }
   i {
-    font-size: 16px;
+    font-size: 18px;
     color: $iconFont-gray;
   }
   .li-item1{
@@ -129,6 +129,9 @@ export default {
     &:hover {
       color: $nav-color-hover;
       a {
+        color: $nav-color-hover;
+      }
+      .iconfont {
         color: $nav-color-hover;
       }
     };
