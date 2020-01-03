@@ -52,9 +52,16 @@
 				  		<span class="position-name">{{item.positionName}}</span>
 				  		<img src="~IMAGES/jipin_v1.png" alt="" class="position-jipin" v-if="item.isUrgency === 1" />
 				  		<img src="~IMAGES/tag_list_24hour.png" alt="" class="position-24hour" v-if="item.interviewType === 2">
-				  		<span class="position-salary">{{item.positionEmolumentMin}}~{{item.positionEmolumentMax}}k<template>· 14薪</template></span>
+				  		<span class="position-salary" v-if="item.positionInfo">
+				  			<template>{{item.positionInfo.positionEmolumentMin}}~{{item.positionInfo.positionEmolumentMax}}k</template>
+				  			<template v-if="item.positionInfo.annualSalary > 12">· {{item.positionInfo.annualSalary}}薪</template>
+				  		</span>
 				  	</div>
-				  	<div class="position-adress">广州市天河区 | 10年以上 | 初中及以上</div>
+				  	<div class="position-adress" v-if="item.positionInfo && item.positionInfo.addressInfo">
+				  		<template>{{item.positionInfo.addressInfo.city}}{{item.positionInfo.addressInfo.area}}</template>
+				  		<template> | {{item.positionInfo.workExperience}} </template>
+				  		<template> | {{item.positionInfo.educationDesc}}</template>
+				  	</div>
 			  	</router-link>
 			  	<template v-else><span class="unchoose-position">未选择约面职位</span></template>
 		  	</div>

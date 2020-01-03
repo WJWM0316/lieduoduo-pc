@@ -90,6 +90,17 @@
         :total="receiveData.total">
       </el-pagination>
     </div>
+    <div class="pagination-interview" v-if="pIndex === 2 && cIndex === 0"/>
+      <el-pagination
+        background
+        v-if="scheduleData.total > scheduleData.pageSize"
+        @current-change="(page) => changePage(page, scheduleData)"
+        :current-page.sync ="scheduleData.page"
+        :page-size="scheduleData.pageSize"
+        layout="prev, pager, next"
+        :total="scheduleData.total">
+      </el-pagination>
+    </div>
 	</div>
 </template>
 <script>
@@ -160,9 +171,7 @@ export default {
       return clearDayInterviewRedDotApi({ date })
 	  },
 	  clearTabInterviewRedDot(type) {
-	  	return clearTabInterviewRedDotApi({ type }).catch(err => {
-	  		console.log(err)
-	  	})
+	  	return clearTabInterviewRedDotApi({ type })
 	  },
 		getInterviewRedDotInfo() {
 			return this.getInterviewRedDotInfoApi().then(() => {
@@ -195,7 +204,7 @@ export default {
 				page: this.applyData.page,
 				tab: applyItem.value
 			}
-			getInterviewApplyListsApi(Object.assign(params, {count: this.applyData.count})).then(({ data }) => {
+			getInterviewApplyListsApi({...params, count: this.applyData.count}).then(({ data }) => {
 				// let list = data.data || []
 				// list.map(v => v.app_qrcode = app_qrcode)
 				this.applyData.list = data.data || []
@@ -219,7 +228,7 @@ export default {
 				page: this.receiveData.page,
 				tab: receiveItem.value
 			}
-			getInterviewInviteListsApi(Object.assign(params, {count: this.receiveData.count})).then(({ data }) => {
+			getInterviewInviteListsApi({...params, count: this.receiveData.count}).then(({ data }) => {
 				// let list = data.data || []
 				// list.map(v => v.app_qrcode = app_qrcode)
 				this.receiveData.list = data.data || []
@@ -251,7 +260,7 @@ export default {
 				return
 			}
 			params = Object.assign(params, {time: tab.time})
-			getInterviewScheduleListsApi(Object.assign(params, { count: this.scheduleData.count })).then(({ data }) => {
+			getInterviewScheduleListsApi({...params, count: this.scheduleData.count}).then(({ data }) => {
 				// let list = data.data || []
 				// list.map(v => v.app_qrcode = app_qrcode)
 				this.scheduleData.list = data.data || []
@@ -268,13 +277,7 @@ export default {
 		},
 		getHistoryInterviewLists() {
 			let params = { page: this.scheduleData.page, isselect: 'all' }
-			if(this.time.length) {
-				params = Object.assign(params, {
-					start: this.time[0]/1000,
-					end: this.time[1]/1000
-				})
-			}
-			getHistoryInterviewListsApi(Object.assign(params, { count: 20 })).then(({ data }) => {
+			getHistoryInterviewListsApi({...params, count: this.scheduleData.count}).then(({ data }) => {
 				this.scheduleData.list = data.data || []
 				this.scheduleData.total = data.meta.total || 0
 				this.scheduleData.hasInitPage = true
@@ -288,9 +291,15 @@ export default {
 			})
 		},
 		pTabClick(item, index) {
+			let dateList = this.dateList
 			this.interviewBar[this.pIndex].active = false
 			item.active = true
 			this.pIndex = index
+			// 当前tab位于面试日程，并且面试日程下面的日期列表的第一个有红点，则离开父级tab 则把首个日期列表的红点清除
+			if (index === 2 && dateList.length && dateList[0].number > 0) {
+				dateList[0].number = 0
+				this.clearDayInterviewRedDot(dateList[0].time)
+			}
 			switch(item.api) {
 				case 'getApplyList':
 					this.applyData.page = 1
@@ -301,7 +310,7 @@ export default {
 					this.getLists(item)
 					break
 				case 'getScheduleList':
-					if(!this.cIndex) {
+					if(!this.cIndex && Reflect.has(item, 'number')) {
 						this.scheduleData.page = 1
 						this.getLists(item)
 					} else {
@@ -424,7 +433,9 @@ export default {
 					this.setActive(pIndex)
 					if(pIndex === 2) {
 						if(cItem) {
-							if(cIndex === 1) {
+							if(query.time) {
+								navItem.api = 'getScheduleList'
+							} else {
 								navItem.api = 'getHistoryInterviewLists'
 							}
 						}
