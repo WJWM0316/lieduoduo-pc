@@ -21,9 +21,6 @@
 		  				</div>
 		  			</div>
 		  			<div class="li-item-row-two">
-		  				<div class="img-box2" v-if="item.companyInfo && item.companyInfo.logoInfo">
-		  					<img :src="item.companyInfo.logoInfo.smallUrl" alt="">
-		  				</div>
 		  				<div class="company-infos">
 		  					<div class="li-item-row-top">
 		  						<div class="company-name">{{item.companyInfo && item.companyInfo.companyShortname}}</div>
@@ -32,6 +29,9 @@
 		  					<div class="li-item-row-bottom">
 		  						{{item.companyInfo && item.companyInfo.financingInfo}} · {{item.companyInfo && item.companyInfo.employeesInfo}} · {{item.companyInfo && item.companyInfo.industry}}
 		  					</div>
+		  				</div>
+		  				<div class="img-box2" v-if="item.companyInfo && item.companyInfo.logoInfo">
+		  					<img :src="item.companyInfo.logoInfo.smallUrl" alt="">
 		  				</div>
 		  			</div>
 	  			</div>
@@ -181,6 +181,7 @@ export default {
 	.company-infos {
 		display: inline-block;
 		vertical-align: middle;
+		width: calc(100% - 42px);
 	}
 	.company-name{
 		display: inline-block;
