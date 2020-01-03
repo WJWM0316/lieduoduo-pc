@@ -122,5 +122,6 @@ $company-msg-height: 60px;
     border: 0;
     top: -1px;
     margin-left: 4px;
+    padding: 0 5.67px;
   }
 </style>

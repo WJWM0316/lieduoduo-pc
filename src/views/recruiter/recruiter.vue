@@ -788,6 +788,9 @@ export default class CourseList extends Vue {
       border: 0;
       background: #00C4CD;
       color: #ffffff;
+      width: 134px;
+      height: 40px;
+      box-sizing: border-box;
     }
   }
   .toTop {

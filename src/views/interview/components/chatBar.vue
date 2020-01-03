@@ -142,19 +142,23 @@ export default {
       return getInterviewDetailApi({interviewId: this.infos.interviewId}).then(({ data }) => data.data)
     },
 	  refuseInterview(item) {
+	  	let query = {
+	  		...this.$route.query,
+	  		reLoad: true,
+	  		q: Date.now()
+	  	}
 	  	refuseInterviewApi({id: item.recruiterUid}).then(() => {
-	  		this.getInterviewDetail().then(res => {
-          this.list[this.item[this.rowIndex]].status = res.status
-          this.list[this.item[this.rowIndex]].statusDesc = res.statusDesc
-        })
+	  		this.$router.push({ query })
 	  	})
 	  },
 	  confirmInterview(item) {
+	  	let query = {
+	  		...this.$route.query,
+	  		reLoad: true,
+	  		q: Date.now()
+	  	}
 	  	confirmInterviewApi({id: item.interviewId}).then(() => {
-	  		this.getInterviewDetail().then(res => {
-          this.list[this.item[this.rowIndex]].status = res.status
-          this.list[this.item[this.rowIndex]].statusDesc = res.statusDesc
-        })
+	  		this.$router.push({ query })
 	  	})
 	  }
   }

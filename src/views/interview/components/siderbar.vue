@@ -123,6 +123,8 @@ export default {
 	}
 	.position-name {
 		display: inline-block;
+		@include ellipsis-over(115px);
+		vertical-align: middle;
 	}
 	.position-24hour {
     height: 14px;
@@ -154,11 +156,7 @@ export default {
 		}
 	}
 	.img-box2 {
-		width:34px;
-		height:34px;
-		border-radius:4px;
 		@include img-radius(34px, 34px, 4px);
-		margin-right: 8px;
 		display: inline-block;
 		vertical-align: middle;
 	}
@@ -181,7 +179,9 @@ export default {
 	.company-infos {
 		display: inline-block;
 		vertical-align: middle;
-		width: calc(100% - 42px);
+		width: calc(100% - 34px);
+		min-height: 34px;
+		overflow: hidden;
 	}
 	.company-name{
 		display: inline-block;

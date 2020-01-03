@@ -12,7 +12,6 @@
                     :value.sync="middleUrl"
                     attach-type="avatar"
                     :cropper="true"
-                    cropperRadius="8px"
                     cropper-radius="8px"
                     :validate-event="true"
                     @change="pictureInformation">
@@ -134,7 +133,8 @@ export default {
       }
     }
     let logoRegReplace = (rule, value, callback) => {
-      if (this.id > 0) {
+      console.log(this.from.id)
+      if (this.from.logo > 0) {
         callback()
       } else {
         callback(new Error('请上传公司logo'))
@@ -229,19 +229,7 @@ export default {
       })
     },
     receiveAddAdress (data) { // 地图回调
-      if (this.mapIndex === 100) { // 判断是添加还是编辑 100 是添加
-        addCompanyAddressApi(this.from.id, data.data)
-          .then(res => {
-            this.getCompanyAddressList()
-          })
-      } else {
-        data.data = JSON.parse(JSON.stringify(data.data).replace(/area_id/g, 'areaId'))
-        data.data.id = this.address[this.mapIndex].id
-        addresseditCompanyAddressApi(data.data).then(res => {
-          this.getCompanyAddressList()
-          this.$message.success('编辑成功！')
-        })
-      }
+      return false
     },
     getCompanyAddressList () { // 获取公司地址
       getCompanyAddressListApi(this.from.id)
