@@ -34,10 +34,17 @@
 				</div>
 			</div>
 			<div class="clor-bottom">
-				<div class="position" @click="toposition(item)">
+				<router-link
+  				target="_blank"
+  				class="position"
+  				:to="{name: 'positionDetail', query: { positionId: item.positionId }}"
+  				v-if="item.positionId">
+  				<i class="iconfont icon-zhiwei"></i>
+  				{{item.positionName}}
+  			</router-link>
+				<div class="position" v-if="!item.positionId">
 					<i class="iconfont icon-zhiwei"></i>
-					<span v-if="item.positionName">{{item.positionName}}</span>
-					<span v-else>直接约面</span>
+					直接约面
 				</div>
 				<div class="name">
 					<i class="iconfont icon-app"></i>
@@ -85,6 +92,7 @@ export default {
   },
   methods: {
     toposition (data) {
+    	console.log(data)
       let routeData = this.$router.resolve({
         name: 'positionDetail',
         query: { positionId: data.positionId }
@@ -179,11 +187,11 @@ export default {
 			margin-right: 12px;
 			cursor: pointer;
 			&:hover{
-				color: #03B3BB;
+				color: $nav-color-hover;
 			}
 		}
 		.company-desc{
-			color: #66666E;
+			color: $font-color-6;
 			float: left;
 			font-size: 14px;
 			span{
@@ -200,10 +208,10 @@ export default {
 		display: flex;
 		cursor: pointer;
 		&:hover i{
-				color: #03B3BB;
+				color: $nav-color-hover;
 		}
 		&:hover .address{
-			color: #03B3BB;
+			color: $nav-color-hover;
 		}
 		i{
 			color: #BCBEC0;
@@ -211,7 +219,7 @@ export default {
 		}
 		.address{
 			margin-left: 4px;
-			color: #66666E;
+			color: $font-color-6;
 			font-size: 14px;
 			// @include ellipsis-over(435px);
 		}
@@ -255,25 +263,25 @@ export default {
 		display: flex;
 		height: 20px;
 		line-height: 20px;
-		font-size: #66666E;
+		font-size: $font-color-6;
+		.icon-zhiwei {
+			color: $iconFont-gray;
+		}
 		.position{
 			margin-right: 18px;
 			cursor: pointer;
-			&:hover i{
-				color: #03B3BB;
+			color: $font-color-6;
+			&:hover{
+				color: $nav-color-hover;
+				i {
+					color: $nav-color-hover;
+				}
 			}
-			&:hover span{
-				color: #03B3BB;
-			}
-		}
-		i{
-			margin-right: 6px;
-			color: #BCBEC0;
 		}
 		.line{
 			width:1px;
 			height:10px;
-			background: #66666E;
+			background: $font-color-6;
 			margin: 6px 5px 0 6px;
 		}
 		.phone{
