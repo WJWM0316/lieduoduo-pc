@@ -279,6 +279,12 @@ export default {
 .cover .el-dialog{
     height: 396px;
     border-radius: 8px;
+    margin-top: 0 !important;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 1010;
 }
 .cover .el-dialog__body{
     padding: 0;
