@@ -27,7 +27,7 @@
         <li class="item-li">
           <i class="iconfont icon-didian"></i>
           <div class="ul-li-text-box">
-            <div class="color2 address">{{infos.address}}</div>
+            <div class="color2 address">{{infos.address}}{{infos.doorplate}}</div>
           </div>
         </li>
         <li class="item-li">
@@ -44,7 +44,7 @@
               <span class="date">{{item.appointment}}</span>
             </div>
           </div>
-          <div class="tips">以上时间都不合适，<strong @click="setDateInappropriate">请联系我</strong></div>
+          <!-- <div class="tips">以上时间都不合适，<strong @click="setDateInappropriate">请联系我</strong></div> -->
         </li>
       </ul>
       <footer slot="footer" class="footer">
@@ -76,7 +76,7 @@
         <li class="item-li">
           <i class="iconfont icon-didian"></i>
           <div class="ul-li-text-box">
-            <div class="color1 address">{{infos.address}}</div>
+            <div class="color1 address">{{infos.address}}{{infos.doorplate}}</div>
           </div>
         </li>
         <li class="item-li center">
@@ -110,7 +110,7 @@
         <li class="item-li">
           <i class="iconfont icon-didian"></i>
           <div class="ul-li-text-box">
-            <div class="color1 address">{{infos.address}}</div>
+            <div class="color1 address">{{infos.address}}{{infos.doorplate}}</div>
           </div>
         </li>
         <li class="item-li center">
@@ -138,7 +138,7 @@
         <li class="item-li">
           <i class="iconfont icon-didian"></i>
           <div class="ul-li-text-box">
-            <div class="color1 address">{{infos.address}}</div>
+            <div class="color1 address">{{infos.address}}{{infos.doorplate}}</div>
           </div>
         </li>
         <li class="item-li center">
@@ -171,7 +171,7 @@
         <li class="item-li">
           <i class="iconfont icon-didian"></i>
           <div class="ul-li-text-box">
-            <div class="color1 address">{{infos.address}}</div>
+            <div class="color1 address">{{infos.address}}{{infos.doorplate}}</div>
           </div>
         </li>
         <li class="item-li center">
@@ -211,7 +211,15 @@ export default {
       handler(show) {
         if (show) {
           this.getInterviewDetail().then(res => {
+            let { appointmentList } = res.arrangementInfo
             this.visiable = true
+            if (res.arrangementInfo.appointmentList) {
+              appointmentList.push({
+                checked: false,
+                id: 'inappropriate',
+                appointment: '以上时间都不合适，请联系我'
+              })
+            }
             this.infos = res
           })
         } else {
@@ -263,10 +271,17 @@ export default {
       appointmentList.map((v, i, arr) => {
         if (i === index) {
           this.$set(v, 'checked', true)
-          this.params = Object.assign(this.params, {
-            interviewId: infos.interviewId,
-            appointmentId: v.id
-          })
+          if (item.id === 'inappropriate') {
+            this.params = Object.assign(this.params, {
+              interviewId: infos.interviewId,
+              appointmentId: 0
+            })
+          } else {
+            this.params = Object.assign(this.params, {
+              interviewId: infos.interviewId,
+              appointmentId: v.id
+            })
+          }
         } else {
           v.checked = false
         }
@@ -283,6 +298,7 @@ export default {
         return
       }
       sureInterviewApi(this.params).then(() => {
+        this.visiable = false
         this.$router.push({ query })
       })
     }
