@@ -163,6 +163,16 @@ export default {
 			'roleInfos'
 		])
 	},
+	watch: {
+    '$route': {
+      handler(route) {
+      	if(route.query.reLoad) {
+      		this.init()
+      	}
+      },
+      immediate: true
+    }
+  },
 	methods: {
 		...mapActions([
 			'getInterviewRedDotInfoApi'
