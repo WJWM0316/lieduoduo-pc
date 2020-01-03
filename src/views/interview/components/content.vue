@@ -461,7 +461,11 @@ export default {
 		}
 	},
 	created() {
-		this.init()
+		if(this.roleInfos.isJobhunter) {
+			this.init()
+		} else {
+			this.$router.push({name: 'createUser'})
+		}
 	}
 }
 /* eslint-enable */
