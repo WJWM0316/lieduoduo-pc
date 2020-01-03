@@ -56,7 +56,7 @@
             <company-productList @click="toEdit" @toEditProduct="toEditProduct" :product="information.product"></company-productList>
             <div v-if="!information.product || !information.product.length" class="noFound">
                 <no-found tipText='尚未添加公司产品' imageUrl='/img/fly.26a25d51.png'>
-                    <el-button v-if="isCompanyAdmin" @click="toEdit('编辑产品')" type="primary">去添加</el-button>
+                    <el-button class="null-produc-bnt" v-if="isCompanyAdmin" @click="toEdit('编辑产品')" type="primary">去添加</el-button>
                 </no-found>
             </div>
         </div>
@@ -379,6 +379,10 @@ export default class myCompany extends Vue {
             margin-top: 24px;
         }
     }
+}
+.null-produc-bnt{
+  width: 134px;
+  height: 40px;
 }
 </style>
 <style>
