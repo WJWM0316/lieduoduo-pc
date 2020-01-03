@@ -150,7 +150,7 @@ export default {
 	    historyData,
 			time: [],
 			app_url: app_qrcode,
-			isshownotice: true,
+			isshownotice: false,
 	    model: {
 	    	show: true,
 	    	title: '面试详情'
@@ -205,8 +205,6 @@ export default {
 				tab: applyItem.value
 			}
 			getInterviewApplyListsApi({...params, count: this.applyData.count}).then(({ data }) => {
-				// let list = data.data || []
-				// list.map(v => v.app_qrcode = app_qrcode)
 				this.applyData.list = data.data || []
 				this.applyData.total = data.meta.total || 0
 				this.applyData.hasInitPage = true
@@ -229,8 +227,6 @@ export default {
 				tab: receiveItem.value
 			}
 			getInterviewInviteListsApi({...params, count: this.receiveData.count}).then(({ data }) => {
-				// let list = data.data || []
-				// list.map(v => v.app_qrcode = app_qrcode)
 				this.receiveData.list = data.data || []
 				this.receiveData.total = data.meta.total || 0
 				this.receiveData.hasInitPage = true
@@ -261,8 +257,6 @@ export default {
 			}
 			params = Object.assign(params, {time: tab.time})
 			getInterviewScheduleListsApi({...params, count: this.scheduleData.count}).then(({ data }) => {
-				// let list = data.data || []
-				// list.map(v => v.app_qrcode = app_qrcode)
 				this.scheduleData.list = data.data || []
 				this.scheduleData.total = data.meta.total || 0
 				this.scheduleData.hasInitPage = true
