@@ -108,6 +108,7 @@
 import SearchList from './searchList'
 import Schedule from './schedule'
 import { app_qrcode } from 'IMAGES/image'
+import { getUserRoleInfoApi } from '@/api/auth'
 
 import {
 	getInterviewApplyListsApi,
@@ -361,7 +362,6 @@ export default {
 			}
 		},
 		getLists(item) {
-			console.log(item)
 			switch(item.api) {
 				case 'getApplyList':
 					this.getInterviewRedDotInfo().then(() => this[item.api]())
@@ -461,12 +461,18 @@ export default {
 		}
 	},
 	created() {
-		if(this.roleInfos.isJobhunter) {
-			this.init()
-		} else {
-			this.$router.push({name: 'createUser'})
-		}
-	}
+		getUserRoleInfoApi().then(({ data }) => {
+			if(data.data.isJobhunter) {
+				this.init()
+			} else {
+				this.$router.push({name: 'createUser'})
+			}
+		})
+	},
+	destroyed () {
+    this.interviewBar.map((v,i,a) => v.active = !i ? true : false)
+    this.pIndex = 0
+  }
 }
 /* eslint-enable */
 </script>
