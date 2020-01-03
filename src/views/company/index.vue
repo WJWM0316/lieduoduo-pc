@@ -23,10 +23,10 @@
         <div class="type-item">
           <div class="type-filter">融资规模：</div>
           <div class="type-ul">
-            <span 
-              v-for="(finance, financeIndex) in searchCollect.financing" 
-              :key="financeIndex" 
-              class="type-li" 
+            <span
+              v-for="(finance, financeIndex) in searchCollect.financing"
+              :key="financeIndex"
+              class="type-li"
               :class="{active: finance.checked}"
               @click="onClick(finance, financeIndex, 'financing')">
               {{finance.text}}
@@ -49,11 +49,11 @@
         <div class="type-item">
           <div class="type-filter">行业领域：</div>
           <div class="type-ul">
-            <span 
-              v-for="(industry, industryIndex) in searchCollect.industry" 
-              :key="industryIndex" 
-              class="type-li" 
-              :class="{active: industry.checked}" 
+            <span
+              v-for="(industry, industryIndex) in searchCollect.industry"
+              :key="industryIndex"
+              class="type-li"
+              :class="{active: industry.checked}"
               @click="onClick(industry, industryIndex, 'industry')">
               {{industry.name}}
             </span>
@@ -135,7 +135,8 @@ export default {
       this.getLists()
     },
     getLists () {
-      this.handleScrollToView()
+      if (this.firstloaded) this.handleScrollToView()
+      this.firstloaded = true
       let cityNums = this.filterSearchCollect.area.map(v => v.areaId).join(',')
       let industryIds = this.filterSearchCollect.industry.map(v => v.labelId).join(',')
       let employeeIds = this.filterSearchCollect.employee.map(v => v.value).join(',')
