@@ -17,7 +17,7 @@
             <div style="width: 70%;">
               <p class="recruit-name"><span class="recruit-name-text">{{item.name}}</span> <span class="admin-tag" v-if="item.isCompanyAdmin">管理员</span></p>
               <p class="recruit-position">{{item.position}}</p>
-              <p class="recruit-email"><span>邮箱：</span>{{item.email}}</p>
+              <p class="recruit-email"><span>邮箱：</span>{{item.email || '暂未添加邮箱'}}</p>
             </div>
           </div>
           <div class="recruit-position-number" @click="handleShowPosition(item)">{{item.positionNum}}个招聘中职位 <span class="iconfont icon-right"></span></div>

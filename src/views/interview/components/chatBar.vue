@@ -95,8 +95,8 @@
 		  		<el-button type="primary" v-if="[31].includes(item.status)" @click="bindClick(item)" class="func-btn btn-style">确认面试信息</el-button>
 		  		<a v-if="[32, 41, 51, 58, 60].includes(item.status)" class="router-link btn-style" @click="bindClick(item)">查看面试</a>
 		  		<template v-if="item.status === 12">
-		  			<el-button type="text" @click="refuseInterview">暂不考虑</el-button>
-		  			<el-button type="primary" @click="bindClick(item)" class="func-btn">接受约面</el-button>
+		  			<el-button type="text" @click="refuseInterview(item)">暂不考虑</el-button>
+		  			<el-button type="primary" @click="confirmInterview(item)" class="func-btn">接受约面</el-button>
 		  		</template>
 		  	</div>
 		  </el-col>
@@ -106,7 +106,8 @@
 <script>
 import {
   refuseInterviewApi,
-  getInterviewDetailApi
+  getInterviewDetailApi,
+  confirmInterviewApi
 } from 'API/interview'
 import {
   app_qrcode
@@ -140,12 +141,24 @@ export default {
 	  getInterviewDetail() {
       return getInterviewDetailApi({interviewId: this.infos.interviewId}).then(({ data }) => data.data)
     },
-	  refuseInterview() {
-	  	refuseInterviewApi({id: this.infos.recruiterUid}).then(() => {
-	  		this.getInterviewDetail().then(res => {
-          this.list[this.item[this.rowIndex]].status = res.status
-          this.list[this.item[this.rowIndex]].statusDesc = res.statusDesc
-        })
+	  refuseInterview(item) {
+	  	let query = {
+	  		...this.$route.query,
+	  		reLoad: true,
+	  		q: Date.now()
+	  	}
+	  	refuseInterviewApi({id: item.recruiterUid}).then(() => {
+	  		this.$router.push({ query })
+	  	})
+	  },
+	  confirmInterview(item) {
+	  	let query = {
+	  		...this.$route.query,
+	  		reLoad: true,
+	  		q: Date.now()
+	  	}
+	  	confirmInterviewApi({id: item.interviewId}).then(() => {
+	  		this.$router.push({ query })
 	  	})
 	  }
   }

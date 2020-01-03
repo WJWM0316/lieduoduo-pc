@@ -12,7 +12,6 @@
                     :value.sync="middleUrl"
                     attach-type="avatar"
                     :cropper="true"
-                    cropperRadius="8px"
                     cropper-radius="8px"
                     :validate-event="true"
                     @change="pictureInformation">
@@ -134,7 +133,8 @@ export default {
       }
     }
     let logoRegReplace = (rule, value, callback) => {
-      if (this.id > 0) {
+      console.log(this.from.id)
+      if (this.from.logo > 0) {
         callback()
       } else {
         callback(new Error('请上传公司logo'))

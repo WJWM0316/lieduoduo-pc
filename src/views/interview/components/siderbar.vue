@@ -21,9 +21,6 @@
 		  				</div>
 		  			</div>
 		  			<div class="li-item-row-two">
-		  				<div class="img-box2" v-if="item.companyInfo && item.companyInfo.logoInfo">
-		  					<img :src="item.companyInfo.logoInfo.smallUrl" alt="">
-		  				</div>
 		  				<div class="company-infos">
 		  					<div class="li-item-row-top">
 		  						<div class="company-name">{{item.companyInfo && item.companyInfo.companyShortname}}</div>
@@ -32,6 +29,9 @@
 		  					<div class="li-item-row-bottom">
 		  						{{item.companyInfo && item.companyInfo.financingInfo}} · {{item.companyInfo && item.companyInfo.employeesInfo}} · {{item.companyInfo && item.companyInfo.industry}}
 		  					</div>
+		  				</div>
+		  				<div class="img-box2" v-if="item.companyInfo && item.companyInfo.logoInfo">
+		  					<img :src="item.companyInfo.logoInfo.smallUrl" alt="">
 		  				</div>
 		  			</div>
 	  			</div>
@@ -123,6 +123,8 @@ export default {
 	}
 	.position-name {
 		display: inline-block;
+		@include ellipsis-over(115px);
+		vertical-align: middle;
 	}
 	.position-24hour {
     height: 14px;
@@ -158,7 +160,6 @@ export default {
 		height:34px;
 		border-radius:4px;
 		@include img-radius(34px, 34px, 4px);
-		margin-right: 8px;
 		display: inline-block;
 		vertical-align: middle;
 	}
@@ -181,6 +182,8 @@ export default {
 	.company-infos {
 		display: inline-block;
 		vertical-align: middle;
+		width: calc(100% - 34px);
+		min-height: 34px;
 	}
 	.company-name{
 		display: inline-block;

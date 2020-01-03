@@ -265,7 +265,7 @@ export default {
           this.$set(v, 'checked', true)
           this.params = Object.assign(this.params, {
             interviewId: infos.interviewId,
-            id: v.id
+            appointmentId: v.id
           })
         } else {
           v.checked = false
@@ -273,16 +273,17 @@ export default {
       })
     },
     sureInterview () {
-      if (!Reflect.has(this.params, 'id')) {
+      let query = {
+        ...this.$route.query,
+        reLoad: true,
+        q: Date.now()
+      }
+      if (!Reflect.has(this.params, 'appointmentId')) {
         this.$message({ message: '请选择一个面试时间', type: 'warning' })
         return
       }
       sureInterviewApi(this.params).then(() => {
-        this.getInterviewDetail().then(res => {
-          this.list[this.item['editItemIndex']].status = res.status
-          this.list[this.item['editItemIndex']].statusDesc = res.statusDesc
-          this.visiable = false
-        })
+        this.$router.push({ query })
       })
     }
   }
