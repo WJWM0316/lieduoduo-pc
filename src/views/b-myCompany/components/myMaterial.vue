@@ -229,19 +229,7 @@ export default {
       })
     },
     receiveAddAdress (data) { // 地图回调
-      if (this.mapIndex === 100) { // 判断是添加还是编辑 100 是添加
-        addCompanyAddressApi(this.from.id, data.data)
-          .then(res => {
-            this.getCompanyAddressList()
-          })
-      } else {
-        data.data = JSON.parse(JSON.stringify(data.data).replace(/area_id/g, 'areaId'))
-        data.data.id = this.address[this.mapIndex].id
-        addresseditCompanyAddressApi(data.data).then(res => {
-          this.getCompanyAddressList()
-          this.$message.success('编辑成功！')
-        })
-      }
+      return false
     },
     getCompanyAddressList () { // 获取公司地址
       getCompanyAddressListApi(this.from.id)

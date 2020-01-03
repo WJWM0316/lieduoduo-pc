@@ -111,8 +111,8 @@
             <div :class="['recruitmentTeam', companyInformation.albumInfo.length === 0 ? 'resetmar' : '']">
               <p class="recruitmentTeam-title">招聘团队</p>
               <div class="recruitmentTeam-mian">
-                <div 
-                  v-for="(item, index) in getCompanysTeamText" 
+                <div
+                  v-for="(item, index) in getCompanysTeamText"
                   :key="index">
                   <el-popover
                     placement="left"
@@ -236,6 +236,7 @@ export default class companyDetail extends Vue {
     }
     getVkeyCompanyApi(data).then(res => {
       this.companyInformation = res.data.data
+      console.log(this.companyInformation)
       // 遍历地址，没有http协议则加上
       this.companyInformation.product.forEach(function (item, index) {
         item.siteUrl = !item.siteUrl ? '' : item.siteUrl.indexOf('http') !== -1 ? item.siteUrl : 'http://' + item.siteUrl
