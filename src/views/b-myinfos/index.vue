@@ -5,9 +5,9 @@
       <h1>我的资料</h1>
       <el-button type="primary" v-if="currentSharePopup.uid" @click="showSharePopup = true"> <i class="iconfont icon-fenxiang"></i> 分享主页</el-button>
     </div>
-    <p class="app-infos-tips">加"<em>*</em>"号的内容，是必须填写的项目；姓名和性别为招聘官认证信息，修改请联系 400-065-5788</p>
-    <el-form :model="form" ref="form" :rules="formRules" label-width="110px" class="el-form-infos">
-      <el-form-item prop="attachId" label="头像">
+    <p class="app-infos-tips">加“<i>*</i>”号的内容，是必须填写的项目；姓名和性别为招聘官认证信息，修改请联系 400-065-5788</p>
+    <el-form :model="form" ref="form" label-suffix=":" :rules="formRules" label-width="120px" class="el-form-infos">
+      <el-form-item prop="attachId" label="头像" class="el-form-avatar">
         <Picture
           :value.sync="form.avatarUrl"
           attach-type="avatar"
@@ -49,30 +49,34 @@
       <el-form-item prop="brief" label="个人简介">
         <el-input
           type="textarea"
-          :autosize="{ minRows: 7, maxRows: 10}"
+          :rows="7"
+          :show-message="true"
           style="width: 520px;"
           show-word-limit
           maxlength="5000"
           v-model="form.brief" placeholder="请描述你的个人经历或成就，字数范围：6-5000字" />
-      </el-form-item>
-      <div class="form-intro" :style="{height: isShowPover ? '174px' : 'auto'}">
-        <el-popover
-          placement="bottom-start"
-          popper-class="form-intro-popover"
-          v-model="isShowPover"
-          width= "520"
-          trigger="click">
-          <div class="intros-wrapper">
-            <ul class="intro-titles">
-              <template v-for="(intro, index) in intros">
-                <li :key="intro.name" :class="{active: index === introIndex}" @click="introContent = intro.intro; introIndex = index">{{intro.name}}</li>
-              </template>
-            </ul>
-            <div class="warpper-scroll intro-content">{{introContent}}</div>
+          <template slot="error" slot-scope="slot">
+            <div class="el-form-item__error">{{slot.error}}</div>
+          </template>
+          <div class="form-intro" :style="{height: isShowPover ? '224px' : 'auto'}">
+            <el-popover
+              placement="bottom-start"
+              popper-class="form-intro-popover"
+              v-model="isShowPover"
+              width= "520"
+              trigger="click">
+              <div class="intros-wrapper">
+                <ul class="intro-titles">
+                  <template v-for="(intro, index) in intros">
+                    <li :key="intro.name" :class="{active: index === introIndex}" @click="introContent = intro.intro; introIndex = index">{{intro.name}}</li>
+                  </template>
+                </ul>
+                <div class="warpper-scroll intro-content">{{introContent}}</div>
+              </div>
+              <p class="form-intro-tips" slot="reference"><i class="iconfont icon-yulan" /> 看看别人怎么写</p>
+            </el-popover>
           </div>
-          <p class="form-intro-tips" slot="reference"><i class="iconfont icon-yulan" /> 看看别人怎么写</p>
-        </el-popover>
-      </div>
+      </el-form-item>
       <el-form-item>
         <el-button style="width: 120px;" type="primary" :loading="saveLoading" @click="handleSave">保存</el-button>
       </el-form-item>
@@ -260,8 +264,9 @@ export default {
 .app-infos-tips {
   color: $title-color-3;
   font-size: 12px;
-  em {
+  i {
     color: $error-color-1;
+
   }
 }
 .avatar-wrapper {
@@ -307,10 +312,17 @@ export default {
   .el-form-item {
     margin-bottom: 30px;
   }
+  & /deep/ {
+    .el-form-item__label {
+      padding-right: 20px;
+    }
+  }
+}
+.el-form-avatar /deep/ .el-form-item__label{
+  line-height: 70px;
 }
 .form-intro {
-  margin-left: 110px;
-  margin-bottom: 50px;
+  line-height: 28px;
   .form-intro-tips {
     color: $main-color-1;
     line-height:22px;

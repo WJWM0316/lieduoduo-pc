@@ -17,23 +17,25 @@
       </ul>
     </div>
     <div class="apply-lists" v-infinite-scroll="loadmore" :infinite-scroll-disabled="disabledScroll">
-      <no-found class="no-apply-lists" v-if="!lists.length" :image-url="nofoundUrl" :tip-text="tipsText[currentValue]" max-width="160">
+      <no-found class="no-apply-lists" v-if="!lists.length && !getLoading" :image-url="nofoundUrl" :tip-text="tipsText[currentValue]" max-width="160">
         <el-button type="primary" style="width: 143px;" v-if="currentValue < 2" @click="share">邀请同事</el-button>
       </no-found>
       <template v-for="(list,index) in lists">
         <div class="apply-list" :key="list.id">
-          <div class="apply-name">
-            <span class="b-reddot" v-if="list.isRead"></span>
-            <p class="_text">{{list.realName}}</p>
-            <p>{{list.userPosition}}</p>
-          </div>
-          <div class="apply-email">
-            <p>公司邮箱</p>
-            <p class="_text">{{list.userEmail}}</p>
-          </div>
-          <div class="apply-time">
-            <p>申请时间</p>
-            <p class="_text">{{list.createdAt}}</p>
+          <div class="apply-info">
+            <div class="apply-name">
+              <span class="b-reddot" v-if="list.isRead === 0 && currentValue === 0"></span>
+              <p class="_text">{{list.realName}}</p>
+              <p>{{list.userPosition}}</p>
+            </div>
+            <div class="apply-email">
+              <p>公司邮箱</p>
+              <p class="_text">{{list.userEmail}}</p>
+            </div>
+            <div class="apply-time">
+              <p>申请时间</p>
+              <p class="_text">{{list.createdAt}}</p>
+            </div>
           </div>
           <div class="apply-operate">
             <template v-if="currentValue === 0">
@@ -229,7 +231,11 @@ export default {
   @include flex-v-center;
   padding: 24px 40px;
   border-bottom: 1px solid $border-color-1;
-  .apply-name, .apply-operate {
+  .apply-info {
+    flex: 5;
+    display: flex;
+  }
+  .apply-name{
     flex: 2
   }
   .apply-email, .apply-time {
@@ -240,6 +246,8 @@ export default {
     }
   }
   .apply-operate {
+    flex: 1;
+    padding-left: 2px;
     color: $main-color-1;
     cursor: pointer;
     font-weight: bold;

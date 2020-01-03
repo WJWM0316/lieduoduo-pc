@@ -156,9 +156,6 @@ export default {
 		}
 	}
 	.img-box2 {
-		width:34px;
-		height:34px;
-		border-radius:4px;
 		@include img-radius(34px, 34px, 4px);
 		display: inline-block;
 		vertical-align: middle;
@@ -184,6 +181,7 @@ export default {
 		vertical-align: middle;
 		width: calc(100% - 34px);
 		min-height: 34px;
+		overflow: hidden;
 	}
 	.company-name{
 		display: inline-block;

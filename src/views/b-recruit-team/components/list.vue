@@ -44,11 +44,13 @@
           </div>
         </div>
       </template>
+      <no-found class="no-apply-lists" v-if="!lists.length && !getLoading" :image-url="nofoundUrl" tip-text="招聘官暂未发布/开放职位" max-width="160" />
     </div>
   </el-dialog>
 </template>
 <script>
 import { getBtremListApi, getCodeUrl } from '@/api/position'
+import NoFound from '@/components/noFound'
 export default {
   props: {
     // 招聘官id
@@ -59,10 +61,12 @@ export default {
     },
     visible: Boolean
   },
+  components: { NoFound },
   data () {
     return {
       dialogStatus: false,
       lists: [],
+      nofoundUrl: require('@/assets/images/fly.png'),
       getLoading: false,
       popoverLoading: false,
       qrUrl: '',
@@ -156,6 +160,9 @@ $font-color-close : #ED5C5C;
   padding: 0 40px 11px;
   height: 473px;
   overflow-y: auto;
+  .position-list:first-of-type {
+    border-top: 1px solid $border-color-1;
+  }
 }
 .position-list {
   border-bottom: 1px solid $border-color-1;

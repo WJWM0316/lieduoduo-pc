@@ -112,7 +112,7 @@ export default class CommunityEdit extends Vue {
       { max: 50, message: '职位名称最多输入50个字', trigger: 'blur' }
     ],
     type: [
-      { required: true, message: '请选择职位类型', trigger: 'blur' }
+      { required: true, message: '请选择职位类型', trigger: 'change' }
     ],
     master_intro: [
       { required: true, message: '请填写简介', trigger: 'blur' },

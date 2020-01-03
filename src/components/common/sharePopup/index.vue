@@ -5,12 +5,8 @@
                 <div class="share-title">{{ text.title }}</div>
                 <div class="share-guide">{{ text.guide }}</div>
                 <div class="share-imgUrl" :class="{ 'invite-imgUrl': type === 'invite'}">
-                    <template v-if="type !== 'invite'">
-                       <img v-if="imgUrl" :src="imgUrl"/>
-                    </template>
-                    <template v-else>
-                      <div id="qrcode"></div>
-                    </template>
+                    <img v-if="imgUrl" v-show="type !== 'invite'" :src="imgUrl"/>
+                    <div v-show="type === 'invite'" id="qrcode"></div>
                 </div>
                 <div class="invite" v-if="type === 'invite'">
                   <div class="invite-copy-url"><span>{{Url}}</span></div>
@@ -42,7 +38,7 @@ export default {
         this.showSharePopStatus = true
         this.loadData()
       } else {
-        this.imgUrl = ''
+        // this.imgUrl = ''
       }
     }
   },
@@ -119,9 +115,10 @@ export default {
           break
         case 'invite':
           this.text = this.dataText['invite']
-          this.Url = `https://h5.lieduoduo.com/wantYou_b?type=appEnter&uid=${this.data.uid}`
+          this.Url = `https://h5.lieduoduo.com/wantYou_b?type=appEnter&uid=${this.data.uid}&q=${Date.now()}`
           this.$nextTick(() => {
             if (this.qrcodeImg) {
+              console.log(document.getElementById('qrcode'))
               this.qrcodeImg.clear()
               this.qrcodeImg.makeCode(this.Url)
               return

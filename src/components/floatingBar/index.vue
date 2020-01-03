@@ -7,14 +7,14 @@
           target="_blank" :to="{name: item.routeName, query: item.query}">
           <div class="icon">
             <i class="iconfont" :class="item.iconClass"></i>
-            <div class="circle" v-if="item.reddot"></div>
+            <div class="circle" v-if="item.reddot || !isLogin"></div>
           </div>
           <div class="describe">{{item.text}}</div>
         </router-link>
       </li>
     </ul>
     <ul class="bottom">
-      <li class="back" @click="scroll" ref="backTop">
+      <li class="back" @click="scroll" ref="backTop" v-show="showScrollTopBtn">
         <i class="iconfont icon-arrow-top"></i>
       </li>
       <li v-for="(item, index) in asideBar.bottomNav" :key="index" class="li-item2">
@@ -44,18 +44,34 @@ export default {
   computed: {
     ...mapGetters([
       'asideBar'
-    ])
+    ]),
+    isLogin () {
+      return !!this.$store.state.userInfo.id
+    }
+  },
+  data () {
+    return {
+      showScrollTopBtn: false
+    }
   },
   methods: {
     ...mapActions([
       'getInterviewRedDotInfoApi'
     ]),
-    scroll() {
+    scroll () {
       this.$util.scrollToView(document.documentElement || document.body)
+    },
+    handleScroll () {
+      let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+      this.showScrollTopBtn = scrollTop > 200
     }
   },
-  mounted() {
+  mounted () {
     this.getInterviewRedDotInfoApi()
+    window.addEventListener('scroll', this.handleScroll)
+  },
+  destroyed () {
+    window.removeEventListener('scroll', this.handleScroll)
   }
 }
 </script>

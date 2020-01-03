@@ -314,13 +314,15 @@ export default {
 					this.getLists(item)
 					break
 				case 'getScheduleList':
-					if(!this.cIndex && Reflect.has(item, 'number')) {
-						this.scheduleData.page = 1
-						this.getLists(item)
-					} else {
-						this.historyData.page = 1
-						this.getInterviewRedDotInfo().then(() => this.getHistoryInterviewLists())
-					}
+					this.getInterviewScheduleNumberLists().then(() => {
+						if(!this.cIndex && Reflect.has(item, 'number')) {
+							this.scheduleData.page = 1
+							this.getLists(item)
+						} else {
+							this.historyData.page = 1
+							this.getInterviewRedDotInfo().then(() => this.getHistoryInterviewLists())
+						}
+					})
 					break
 				default:
 					break
@@ -438,14 +440,18 @@ export default {
 					this.setActive(pIndex)
 					if(pIndex === 2) {
 						if(cItem) {
-							if(query.time) {
-								navItem.api = 'getScheduleList'
-							} else {
-								navItem.api = 'getHistoryInterviewLists'
-							}
+							this.getInterviewScheduleNumberLists().then(() => {
+								if(query.time) {
+									navItem.api = 'getScheduleList'
+								} else {
+									navItem.api = 'getHistoryInterviewLists'
+								}
+								this.getLists(navItem)
+							})
 						}
+					} else {
+						this.getLists(navItem)
 					}
-					this.getLists(navItem)
 				} else {
 					initPage()
 				}
@@ -455,7 +461,11 @@ export default {
 		}
 	},
 	created() {
-		this.init()
+		if(this.roleInfos.isJobhunter) {
+			this.init()
+		} else {
+			this.$router.push({name: 'createUser'})
+		}
 	}
 }
 /* eslint-enable */
@@ -533,6 +543,7 @@ export default {
 				background: #fff;
 				border-radius: 8px;
 				height:276px;
+				box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
 				z-index: 1;
 				.headbar{
 					width: 260px;
