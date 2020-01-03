@@ -2142,6 +2142,8 @@ export default {
           border: 0;
           background: $bg-color-4;
           color: #ffffff;
+          width: 134px;
+          height: 40px;
         }
         .null-btn{
           width:163px;
@@ -3764,8 +3766,8 @@ export default {
 .tabitem .el-badge sup{
   top: -10px;
   border: 0;
-  height: 10px;
-  width: 10px;
+  height: 8px;
+  width: 8px;
 }
 .bloTop .el-badge{
   position: absolute;
@@ -3775,7 +3777,7 @@ export default {
 .bloTop .el-badge .is-dot{
   z-index: 1;
   border: 0;
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
 }
 </style>

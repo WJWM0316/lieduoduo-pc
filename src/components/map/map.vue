@@ -79,6 +79,7 @@ export default mapSearch
       }
       button{
         width: 83px;
+        border-radius: 0 4px 4px 0;
       }
     }
     .nowPosi {
@@ -113,6 +114,7 @@ export default mapSearch
 }
 .pop .searchBox .el-input__inner{
   padding-left: 56px;
+  border-radius: 4px 0 0 4px;
 }
 .pop .el-button--default{
   width: 88px;

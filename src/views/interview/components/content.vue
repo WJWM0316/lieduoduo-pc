@@ -361,6 +361,7 @@ export default {
 			}
 		},
 		getLists(item) {
+			console.log(item)
 			switch(item.api) {
 				case 'getApplyList':
 					this.getInterviewRedDotInfo().then(() => this[item.api]())

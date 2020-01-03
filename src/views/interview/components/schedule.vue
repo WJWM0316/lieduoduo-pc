@@ -13,7 +13,7 @@
 			</div>
 			<div class="colc-bottom">
 				<i class="iconfont icon-didian"></i>
-				<div class="address" @click="editAddress(item, index)">{{item.address}}{{item.doorplate}}</div>
+				<div class="address" @click="editAddress(item, index)">{{item.addressInfo.address}}{{item.addressInfo.doorplate}}</div>
 			</div>
 		</div>
 		<div class="col-right">
@@ -21,7 +21,7 @@
 				<!-- <div class="exit">面试已取消</div> -->
 				<div :class="['time', item.status >= 51 ? 'pasttime' : '']"><i class="iconfont icon-shijian"></i>
 				<div class="isall" v-if="$route.query.isselect === 'all'">
-					<span v-if="item.status >= 51">
+					<span v-if="item.status >= 51 || new Date(1565836800000).getFullYear() !== (new Date()).getFullYear()">
 					{{(item.arrangementInfo.appointmentTime)*1000 | date('YYYY-MM-DD HH:mm') }}
 					</span>
 					<span v-else>
@@ -36,7 +36,8 @@
 			<div class="clor-bottom">
 				<div class="position" @click="toposition(item)">
 					<i class="iconfont icon-zhiwei"></i>
-					<span>{{item.positionName}}</span>
+					<span v-if="item.positionName">{{item.positionName}}</span>
+					<span v-else>直接约面</span>
 				</div>
 				<div class="name">
 					<i class="iconfont icon-app"></i>
@@ -50,17 +51,12 @@
 		<div class="listredhot" v-if="item.redDot"></div>
   </div>
 	<no-data v-if="!data.total && data.hasInitPage" />
-	<Map
-		@addAdress="receiveAddAdress"
-		:keywords="mapIndex === 100 ? '北京市天安门广场' : keyaddress"
-		@popCancel="shutDown"
-		v-if="mapShow"
-		></Map>
+	<company-map :visible.sync="showadress" @closedialog="cancel" :companyAddress="companyAddress"></company-map>
 	</div>
 </template>
 <script>
 import NoData from './noData'
-import Map from '@/components/map/map.vue'
+import companyMap from '@/components/companyMap/index'
 export default {
   props: {
     data: {
@@ -77,14 +73,15 @@ export default {
   },
   data () {
     return {
-      mapShow: false,
       keyaddress: '',
+      showadress: false,
+      companyAddress: [],
       mapIndex: 0 // 地图索引
     }
   },
   components: {
     NoData,
-    Map
+    companyMap
   },
   methods: {
     toposition (data) {
@@ -95,12 +92,12 @@ export default {
       window.open(routeData.href, '_blank')
     },
     editAddress (item, index) { // 编辑地址
-      this.mapIndex = index
-      this.keyaddress = item.address + item.doorplate
-      this.mapShow = true
+      this.companyAddress = []
+      this.companyAddress.push(item.addressInfo)
+      this.showadress = true
     },
-    shutDown () {
-      this.mapShow = false
+    cancel () {
+      this.showadress = false
     },
     receiveAddAdress (data) { // 地图回调
       if (this.mapIndex === 100) { // 判断是添加还是编辑 100 是添加
