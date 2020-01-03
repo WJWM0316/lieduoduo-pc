@@ -30,7 +30,7 @@
         </el-date-picker>
         </div>
         <div class="tab">
-            <div :class="['tabitem', item.cur ? 'active' : '']" :key="i" v-for="(item, i) in tablist" @click="tabclick(item)">
+            <div :class="['tabitem', item.cur ? 'active' : '']" :key="i" v-for="(item, i) in tablist" @click="tabclick(item, i)">
               {{item.date}}
               <el-badge is-dot v-if="item.number" :hidden="item.number === 0"></el-badge>
             </div>
@@ -949,13 +949,15 @@ export default {
       this.getlist()
     },
     // 点击返回的今天明天获取其他时间
-    tabclick (data) {
-      // if (data.time === '') return
-      if (data.time !== this.typeCaching.time && this.typeCaching.number > 0) { // 没有新数据就不请求接口， 减少后端并发量
-        this.getScheduleList()
-        deleteScheduleTabRedDotApi(this.typeCaching.time).then(res => {
-          this.$store.dispatch('redDotfun')
+    tabclick (data, i) {
+      if (data.time === '') return
+      if (data.time !== this.typeCaching.time && data.number > 0) { // 没有新数据就不请求接口， 减少后端并发量
+        deleteScheduleTabRedDotApi(data.time).then(res => { // 请求消除当前定位的红点，实际样式并未改变，当离开此按钮才会删除红点
         })
+      }
+      if (this.typeCaching && this.typeCaching.time && this.typeCaching.number > 0) {
+        this.typeCaching.number = 0
+        this.$store.dispatch('redDotfun')
       }
       this.typeCaching = data
       this.tabform.time = data.time
@@ -1698,6 +1700,7 @@ export default {
   },
   destroyed () {
     document.body.style.overflow = 'auto'
+    this.$store.dispatch('redDotfun')
   },
   mounted () {
     this.ManageList()

@@ -1097,6 +1097,10 @@ export default class CourseList extends Vue {
 
   destroyed () {
     document.body.style.overflow = 'auto'
+    this.$store.dispatch('redDotfun')
+  }
+  mounted () {
+    this.getdeleteTabRedDot('intention_list') // 清除apply type红点
   }
 
   init () {
@@ -1164,10 +1168,13 @@ export default class CourseList extends Vue {
     this.setPathQuery(this.form)
     if (type === 'apply') {
       this.typeList = this.applyOptions
-      this.getdeleteTabRedDot('invite_list') // 清除apply type红点
+      this.$store.dispatch('redDotfun')
     } else {
+      this.$store.dispatch('redDotfun')
       this.typeList = this.inviteOptions
-      this.getdeleteTabRedDot('intention_list') // 清除 invite红点
+      setTimeout(() => {
+      this.getdeleteTabRedDot('invite_list') // 清除 invite红点
+      }, 1000)
     }
     this.getPositionTypeList()
     this.navType = type
@@ -1175,7 +1182,6 @@ export default class CourseList extends Vue {
   }
   getdeleteTabRedDot (type) {
     getdeleteTabRedDotApi(type).then(() => {
-      this.$store.dispatch('redDotfun')
     })
   }
 
