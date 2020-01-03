@@ -29,20 +29,20 @@ const state = {
 
 const mutations = {
 	[GET_INTERVIEW_REDDOT_INFO] (state, data) {
-		state.interviewData.jobhunterApplyHaveArrangement = data.jobhunterApplyHaveArrangement
-		state.interviewData.jobhunterApplyList = data.jobhunterApplyList
-		state.interviewData.jobhunterApplyNotSuitable = data.jobhunterApplyNotSuitable
-		state.interviewData.jobhunterApplyWaitingArrangement = data.jobhunterApplyWaitingArrangement
-		state.interviewData.jobhunterInviteHaveArrangement = data.jobhunterInviteHaveArrangement
-		state.interviewData.jobhunterInviteList = data.jobhunterInviteList
-		state.interviewData.jobhunterInviteNotSuitable = data.jobhunterInviteNotSuitable
-		state.interviewData.jobhunterInviteWaitingArrangement = data.jobhunterInviteWaitingArrangement
-		state.interviewData.jobhunterInviteWaitingProcessing = data.jobhunterInviteWaitingProcessing
-		state.interviewData.jobhunterScheduleList = data.jobhunterScheduleList
-		state.interviewData.jobhunterInterviewTotal = data.jobhunterApplyList + data.jobhunterInviteList + data.jobhunterScheduleList
-		state.asideBar.topNav[0].reddot = data.jobhunterApplyList
-		state.asideBar.topNav[1].reddot = data.jobhunterInviteList
-		state.asideBar.topNav[2].reddot = data.jobhunterScheduleList
+		state.interviewData.jobhunterApplyHaveArrangement = data.jobhunterApplyHaveArrangement || 0
+		state.interviewData.jobhunterApplyList = data.jobhunterApplyList || 0
+		state.interviewData.jobhunterApplyNotSuitable = data.jobhunterApplyNotSuitable || 0
+		state.interviewData.jobhunterApplyWaitingArrangement = data.jobhunterApplyWaitingArrangement || 0
+		state.interviewData.jobhunterInviteHaveArrangement = data.jobhunterInviteHaveArrangement || 0
+		state.interviewData.jobhunterInviteList = data.jobhunterInviteList || 0
+		state.interviewData.jobhunterInviteNotSuitable = data.jobhunterInviteNotSuitable || 0
+		state.interviewData.jobhunterInviteWaitingArrangement = data.jobhunterInviteWaitingArrangement || 0
+		state.interviewData.jobhunterInviteWaitingProcessing = data.jobhunterInviteWaitingProcessing || 0
+		state.interviewData.jobhunterScheduleList = data.jobhunterScheduleList || 0
+		state.interviewData.jobhunterInterviewTotal = state.interviewData.jobhunterApplyList + state.interviewData.jobhunterInviteList + state.interviewData.jobhunterScheduleList
+		state.asideBar.topNav[0].reddot = data.jobhunterApplyList || 0
+		state.asideBar.topNav[1].reddot = data.jobhunterInviteList || 0
+		state.asideBar.topNav[2].reddot = data.jobhunterScheduleList || 0
 	}
 }
 

@@ -287,9 +287,14 @@ export default {
 			})
 		},
 		pTabClick(item, index) {
+			let dateList = this.dateList
 			this.interviewBar[this.pIndex].active = false
 			item.active = true
 			this.pIndex = index
+			// 当前tab位于面试日程，并且面试日程下面的日期列表的第一个有红点，则离开父级tab 则把首个日期列表的红点清除
+			if (index === 2 && dateList.length && dateList[0].number > 0) {
+				this.clearDayInterviewRedDot(dateList[0].time)
+			}
 			switch(item.api) {
 				case 'getApplyList':
 					this.applyData.page = 1
