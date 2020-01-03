@@ -273,7 +273,7 @@ export default {
       })
     },
     sureInterview () {
-      if (!Reflect.has(this.params, 'id')) {
+      if (!Reflect.has(this.params, 'appointmentId')) {
         this.$message({ message: '请选择一个面试时间', type: 'warning' })
         return
       }
