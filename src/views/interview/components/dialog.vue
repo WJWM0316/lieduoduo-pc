@@ -265,7 +265,7 @@ export default {
           this.$set(v, 'checked', true)
           this.params = Object.assign(this.params, {
             interviewId: infos.interviewId,
-            id: v.id
+            appointmentId: v.id
           })
         } else {
           v.checked = false
