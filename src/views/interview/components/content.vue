@@ -22,6 +22,7 @@
 						</div>
 						<p>下载猎多多APP<br/>获得面试日程通知提醒</p>
 						<div class="forward"></div>
+						<div class="rocket"><img src="@/assets/images/rocket.png" alt=""></div>
 					</div>
 				</div>
 			</ul>
@@ -149,7 +150,7 @@ export default {
 	    historyData,
 			time: [],
 			app_url: app_qrcode,
-			isshownotice: false,
+			isshownotice: true,
 	    model: {
 	    	show: true,
 	    	title: '面试详情'
@@ -203,7 +204,7 @@ export default {
 				page: this.applyData.page,
 				tab: applyItem.value
 			}
-			getInterviewApplyListsApi(Object.assign(params, {count: this.applyData.count})).then(({ data }) => {
+			getInterviewApplyListsApi({...params, count: this.applyData.count}).then(({ data }) => {
 				// let list = data.data || []
 				// list.map(v => v.app_qrcode = app_qrcode)
 				this.applyData.list = data.data || []
@@ -227,7 +228,7 @@ export default {
 				page: this.receiveData.page,
 				tab: receiveItem.value
 			}
-			getInterviewInviteListsApi(Object.assign(params, {count: this.receiveData.count})).then(({ data }) => {
+			getInterviewInviteListsApi({...params, count: this.receiveData.count}).then(({ data }) => {
 				// let list = data.data || []
 				// list.map(v => v.app_qrcode = app_qrcode)
 				this.receiveData.list = data.data || []
@@ -259,7 +260,7 @@ export default {
 				return
 			}
 			params = Object.assign(params, {time: tab.time})
-			getInterviewScheduleListsApi(Object.assign(params, { count: this.scheduleData.count })).then(({ data }) => {
+			getInterviewScheduleListsApi({...params, count: this.scheduleData.count}).then(({ data }) => {
 				// let list = data.data || []
 				// list.map(v => v.app_qrcode = app_qrcode)
 				this.scheduleData.list = data.data || []
@@ -276,13 +277,7 @@ export default {
 		},
 		getHistoryInterviewLists() {
 			let params = { page: this.scheduleData.page, isselect: 'all' }
-			if(this.time.length) {
-				params = Object.assign(params, {
-					start: this.time[0]/1000,
-					end: this.time[1]/1000
-				})
-			}
-			getHistoryInterviewListsApi(Object.assign(params, { count: 20 })).then(({ data }) => {
+			getHistoryInterviewListsApi({...params, count: this.scheduleData.count}).then(({ data }) => {
 				this.scheduleData.list = data.data || []
 				this.scheduleData.total = data.meta.total || 0
 				this.scheduleData.hasInitPage = true
@@ -315,7 +310,7 @@ export default {
 					this.getLists(item)
 					break
 				case 'getScheduleList':
-					if(!this.cIndex) {
+					if(!this.cIndex && Reflect.has(item, 'number')) {
 						this.scheduleData.page = 1
 						this.getLists(item)
 					} else {
@@ -438,7 +433,9 @@ export default {
 					this.setActive(pIndex)
 					if(pIndex === 2) {
 						if(cItem) {
-							if(cIndex === 1) {
+							if(query.time) {
+								navItem.api = 'getScheduleList'
+							} else {
 								navItem.api = 'getHistoryInterviewLists'
 							}
 						}
@@ -535,6 +532,7 @@ export default {
 				.headbar{
 					width: 260px;
 					height: 81px;
+					background: #00C4CD;
 					img{
 						width: 100%;
 						height: 100%;
@@ -560,6 +558,17 @@ export default {
 						height: 100%;
 					}
 				}
+				.rocket{
+					position: absolute;
+					width: 39px;
+					height: 28px;
+					top: 200px;
+    			right: 55px;
+					img{
+						width: 100%;
+						height: 100%;
+					}
+				}
 				p{
 					text-align: center;
 					line-height: 18px;
@@ -571,7 +580,7 @@ export default {
 					height: 0;
 					border-left: 20px solid transparent;
 					border-right: 20px solid transparent;
-					border-bottom: 20px solid #fff;
+					border-bottom: 20px solid #00C4CD;
 					position: absolute;
 					top: -7px;
 					right: 15px;
