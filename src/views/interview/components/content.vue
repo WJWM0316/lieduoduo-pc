@@ -22,6 +22,7 @@
 						</div>
 						<p>下载猎多多APP<br/>获得面试日程通知提醒</p>
 						<div class="forward"></div>
+						<div class="rocket"><img src="@/assets/images/rocket.png" alt=""></div>
 					</div>
 				</div>
 			</ul>
@@ -138,7 +139,7 @@ export default {
 	    historyData,
 			time: [],
 			app_url: app_qrcode,
-			isshownotice: false,
+			isshownotice: true,
 	    model: {
 	    	show: true,
 	    	title: '面试详情'
@@ -520,6 +521,7 @@ export default {
 				.headbar{
 					width: 260px;
 					height: 81px;
+					background: #00C4CD;
 					img{
 						width: 100%;
 						height: 100%;
@@ -545,6 +547,17 @@ export default {
 						height: 100%;
 					}
 				}
+				.rocket{
+					position: absolute;
+					width: 39px;
+					height: 28px;
+					top: 200px;
+    			right: 55px;
+					img{
+						width: 100%;
+						height: 100%;
+					}
+				}
 				p{
 					text-align: center;
 					line-height: 18px;
@@ -556,7 +569,7 @@ export default {
 					height: 0;
 					border-left: 20px solid transparent;
 					border-right: 20px solid transparent;
-					border-bottom: 20px solid #fff;
+					border-bottom: 20px solid #00C4CD;
 					position: absolute;
 					top: -7px;
 					right: 15px;
