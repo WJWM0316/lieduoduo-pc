@@ -89,6 +89,17 @@
         :total="receiveData.total">
       </el-pagination>
     </div>
+    <div class="pagination-interview" v-if="pIndex === 2 && cIndex === 0"/>
+      <el-pagination
+        background
+        v-if="scheduleData.total > scheduleData.pageSize"
+        @current-change="(page) => changePage(page, scheduleData)"
+        :current-page.sync ="scheduleData.page"
+        :page-size="scheduleData.pageSize"
+        layout="prev, pager, next"
+        :total="scheduleData.total">
+      </el-pagination>
+    </div>
 	</div>
 </template>
 <script>
@@ -159,9 +170,7 @@ export default {
       return clearDayInterviewRedDotApi({ date })
 	  },
 	  clearTabInterviewRedDot(type) {
-	  	return clearTabInterviewRedDotApi({ type }).catch(err => {
-	  		console.log(err)
-	  	})
+	  	return clearTabInterviewRedDotApi({ type })
 	  },
 		getInterviewRedDotInfo() {
 			return this.getInterviewRedDotInfoApi().then(() => {
@@ -293,6 +302,7 @@ export default {
 			this.pIndex = index
 			// 当前tab位于面试日程，并且面试日程下面的日期列表的第一个有红点，则离开父级tab 则把首个日期列表的红点清除
 			if (index === 2 && dateList.length && dateList[0].number > 0) {
+				dateList[0].number = 0
 				this.clearDayInterviewRedDot(dateList[0].time)
 			}
 			switch(item.api) {

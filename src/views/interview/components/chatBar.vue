@@ -60,7 +60,7 @@
 				  	<div class="position-adress" v-if="item.positionInfo && item.positionInfo.addressInfo">
 				  		<template>{{item.positionInfo.addressInfo.city}}{{item.positionInfo.addressInfo.area}}</template>
 				  		<template> | {{item.positionInfo.workExperience}} </template>
-				  		<template> | 初中及以上</template>
+				  		<template> | {{item.positionInfo.educationDesc}}</template>
 				  	</div>
 			  	</router-link>
 			  	<template v-else><span class="unchoose-position">未选择约面职位</span></template>
