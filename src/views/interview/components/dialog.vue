@@ -16,7 +16,7 @@
         </li>
         <li class="item-li">
           <i class="iconfont icon-zhiwei1"></i>
-          <div class="ul-li-text-box">
+          <div class="ul-li-text-box" v-if="infos.positionId">
             <router-link
               class="color2 position-name"
               target="_blank" :to="{name: 'positionDetail', query: { positionId: infos.positionId }}">
@@ -64,7 +64,7 @@
         <li class="item-li">
           <i class="iconfont icon-zhiwei1"></i>
           <div class="ul-li-text-box">
-            <div class="color1 position-name">
+            <div class="color1 position-name" v-if="infos.positionId">
               <router-link
                 class="color2 position-name"
                 target="_blank" :to="{name: 'positionDetail', query: { positionId: infos.positionId }}">
@@ -98,7 +98,7 @@
         <li class="item-li">
           <i class="iconfont icon-zhiwei1"></i>
           <div class="ul-li-text-box">
-            <div class="color1 position-name">
+            <div class="color1 position-name" v-if="infos.positionId">
               <router-link
                 class="color2 position-name"
                 target="_blank" :to="{name: 'positionDetail', query: { positionId: infos.positionId }}">
@@ -132,7 +132,7 @@
         <li class="item-li">
           <i class="iconfont icon-zhiwei1"></i>
           <div class="ul-li-text-box">
-            <div class="color1 position-name">{{infos.positionName}}</div>
+            <div class="color1 position-name" v-if="infos.positionId">{{infos.positionName}}</div>
           </div>
         </li>
         <li class="item-li">
@@ -159,7 +159,7 @@
         <li class="item-li">
           <i class="iconfont icon-zhiwei1"></i>
           <div class="ul-li-text-box">
-            <div class="color1 position-name">
+            <div class="color1 position-name" v-if="infos.positionId">
               <router-link
                 class="color2 position-name"
                 target="_blank" :to="{name: 'positionDetail', query: { positionId: infos.positionId }}">
