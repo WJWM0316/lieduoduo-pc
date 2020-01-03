@@ -1,6 +1,6 @@
 <template>
   <div class="interview-data">
-    <template v-if="roleInfos.hasCard">
+    <template v-if="roleInfos.isJobhunter">
       <no-found :max-width="234" :tipText="'空空如也~'">
         <el-button type="primary" @click="todoAction('search')" class="jump">发现更多高薪机会</el-button>
       </no-found>
