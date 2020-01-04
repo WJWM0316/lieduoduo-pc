@@ -23,7 +23,7 @@
 			<div class="clor-top">
 				<!-- <div class="exit">面试已取消</div> -->
 				<div :class="['time', item.status >= 51 ? 'pasttime' : '']"><i class="iconfont icon-shijian"></i>
-				<div class="isall" v-if="$route.query.isselect === 'all' && item.status >= 51 || new Date((item.arrangementInfo.appointmentTime)*1000).getFullYear() !== (new Date()).getFullYear()">
+				<div class="isall" v-if="$route.query.time === '0' && item.status >= 51 || new Date((item.arrangementInfo.appointmentTime)*1000).getFullYear() !== (new Date()).getFullYear()">
 					<span v-if="item.status >= 51 && new Date((item.arrangementInfo.appointmentTime)*1000).getFullYear() !== (new Date()).getFullYear()">
 					{{(item.arrangementInfo.appointmentTime)*1000 | date('YYYY-MM-DD HH:mm') }}
 					</span>
