@@ -230,7 +230,7 @@ export default class myCompany extends Vue {
     float: left;
     padding: 0 56px 64px 56px;
     box-sizing: border-box;
-    min-height: 1170px;
+    min-height: calc(100vh - 120px);
     .companyInformation-head{
         margin-top: 64px;
         @include flex-v-center;
@@ -360,7 +360,7 @@ export default class myCompany extends Vue {
 .companyProduct{
     // max-height: 1170px;
     // overflow: auto;
-    min-height: 1170px;
+    min-height: calc(100vh - 120px);
     float: left;
     background: #ffffff;
     box-sizing: border-box;
