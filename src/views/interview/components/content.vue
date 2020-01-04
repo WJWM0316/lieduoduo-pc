@@ -305,6 +305,7 @@ export default {
 				dateList[0].number = 0
 				this.clearDayInterviewRedDot(dateList[0].time)
 			}
+			console.log(item, index)
 			switch(item.api) {
 				case 'getApplyList':
 					this.applyData.page = 1
@@ -371,11 +372,13 @@ export default {
 					break
 				case 'getScheduleList':
 					this.getInterviewRedDotInfo().then(() => {
-						this.getInterviewScheduleNumberLists().then(() => this[item.api]())
+						if(this.$route.query.time) {
+							this.getInterviewScheduleNumberLists().then(() => this[item.api]())
+						} else {
+							this.getInterviewRedDotInfo().then(() => this.getHistoryInterviewLists())
+						}
+						
 					})
-					break
-				case 'getHistoryInterviewLists':
-					this.getInterviewRedDotInfo().then(() => this.getHistoryInterviewLists())
 					break
 				default:
 					break
@@ -440,14 +443,7 @@ export default {
 					this.setActive(pIndex)
 					if(pIndex === 2) {
 						if(cItem) {
-							this.getInterviewScheduleNumberLists().then(() => {
-								if(query.time) {
-									navItem.api = 'getScheduleList'
-								} else {
-									navItem.api = 'getHistoryInterviewLists'
-								}
-								this.getLists(navItem)
-							})
+							this.getInterviewScheduleNumberLists().then(() => this.getLists({api: 'getScheduleList'}))
 						}
 					} else {
 						this.getLists(navItem)
@@ -471,7 +467,12 @@ export default {
 	},
 	destroyed () {
     this.interviewBar.map((v,i,a) => v.active = !i ? true : false)
-    this.pIndex = 0
+    this.applyScreen.map((v,i,a) => v.active = !i ? true : false)
+    this.receiveScreen.map((v,i,a) => v.active = !i ? true : false)
+    if (this.dateList.length) {
+    	this.dateList.map((v,i,a) => v.active = !i ? true : false)
+    }
+    ['applyData', 'receiveData', 'scheduleData', 'historyData'].map(key => this[key].page = 1)
   }
 }
 /* eslint-enable */
