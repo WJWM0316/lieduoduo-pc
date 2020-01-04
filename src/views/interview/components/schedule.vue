@@ -45,7 +45,7 @@
   				<i class="iconfont icon-zhiwei"></i>
   				<span>{{item.positionName}}</span>
   			</router-link>
-				<div class="position" v-if="!item.positionId">
+				<div class="noposition" v-if="!item.positionId">
 					<i class="iconfont icon-zhiwei"></i>
 					<span>直接约面</span>
 				</div>
