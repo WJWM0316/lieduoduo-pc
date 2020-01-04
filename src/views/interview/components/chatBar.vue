@@ -71,7 +71,7 @@
 		  		<template v-if="[11, 21, 52, 53, 54, 55, 61].includes(item.status)">
 		  			<a
 		  				class="router-link"
-		  				@click="clearPositionRedDot(item, index)"
+		  				@click="clearPositionRedDot(item)"
 		  				v-if="item.positionId">
 		  				查看职位
 		  			</a>
@@ -87,7 +87,7 @@
                 <div class="qr-code"> <img :src="app_qrcode" alt="avatar" /> </div>
               </div>
               <div slot="reference">
-              	<el-button type="text">查看招聘官</el-button>
+              	<el-button type="text" @click="clearRecruiterRedDot(item)">查看招聘官</el-button>
               </div>
             </el-popover>
 		  		</template>
@@ -106,7 +106,8 @@
 import {
   refuseInterviewApi,
   getInterviewDetailApi,
-  confirmInterviewApi
+  confirmInterviewApi,
+  clearInterviewItemRedDotApi
 } from 'API/interview'
 import {
 	getMyPositionApi
@@ -163,14 +164,22 @@ export default {
 	  		this.$router.push({ query })
 	  	})
 	  },
-	  clearPositionRedDot(item, index) {
-	  	getMyPositionApi({id: item.positionId}).then(() => {
+	  clearInterviewItemRedDot(data) {
+	  	return clearInterviewItemRedDotApi(data)
+	  },
+	  clearPositionRedDot(item) {
+	  	clearInterviewItemRedDot({id: item.interviewId}).then(() => {
 	  		item.redDot = 0
 		  	let routeData = this.$router.resolve({
 	        name: 'positionDetail',
 	        query: { positionId: item.positionId }
 	      })
 	      window.open(routeData.href, '_blank')
+	  	})
+	  },
+	  clearRecruiterRedDot(item, index) {
+	  	clearInterviewItemRedDot({id: item.interviewId}).then(() => {
+	  		item.redDot = 0
 	  	})
 	  }
   }

@@ -141,6 +141,17 @@ export const clearDayInterviewRedDotApi = (data, hasLoading) => {
   })
 }
 
+// 删除面试列表单条红点
+export const clearInterviewItemRedDotApi = (data, hasLoading) => {
+  return request({
+    method: 'delete',
+    url: `/interview/deleteScheduleTabRedDot/${data.id}`,
+    config: {
+      host: 'qiuzhi'
+    }
+  })
+}
+
 // 获取全部面试列表
 export const getHistoryInterviewListsApi = (data, hasLoading) => {
   return request({
