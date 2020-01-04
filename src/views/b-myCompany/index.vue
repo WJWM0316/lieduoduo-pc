@@ -54,7 +54,7 @@
                 <el-button v-if="isCompanyAdmin && information.product && information.product.length" type="text" @click="toEdit('编辑产品', '添加产品')"><i class="iconfont icon-tianjia-"></i>添加产品</el-button>
             </div>
             <company-productList @click="toEdit" @toEditProduct="toEditProduct" :product="information.product"></company-productList>
-            <div v-if="!information.product || !information.product.length" class="noFound">
+            <div v-loading="getLoading" v-if="getLoading && !information.product.length" class="noFound">
                 <no-found tipText='尚未添加公司产品' imageUrl='/img/fly.26a25d51.png'>
                     <el-button class="null-produc-bnt" v-if="isCompanyAdmin" @click="toEdit('编辑产品')" type="primary">去添加</el-button>
                 </no-found>
@@ -131,6 +131,7 @@ export default class myCompany extends Vue {
     transformWidth = 0 // 轮播图平移
     information = {}
     showSharePopup = false
+    getLoading = true
     currentProduct = {
       id: '',
       productName: '',
@@ -178,6 +179,9 @@ export default class myCompany extends Vue {
           data.financing = parseInt(data.financing)
           data.employees = parseInt(data.employees)
           this.information = data
+          this.getLoading = false
+        }).catch(res => {
+          this.getLoading = true
         })
     }
     toEditProduct (item) { // 从产品列表拿到回调参数

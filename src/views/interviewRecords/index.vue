@@ -913,10 +913,8 @@ export default {
         } else {
           this.getlist()
         }
-        console.log(this.tablist.length)
         if (this.tablist.length > 0) {
           deleteScheduleTabRedDotApi(this.tablist[1].time)
-          console.log(1)
         }
       })
     },
@@ -1059,6 +1057,12 @@ export default {
           watchInvitationAPi(data).then((res) => {
             this.jobhunterInfo = res.data.data
           })
+          if (vo.redDot > 0) { // 没有红点则不去请求接口，减少并发
+            getdeleteInterviewTabRedDotApi(this.interviewId).then(res => {
+              this.$store.dispatch('redDotfun')
+              this.getScheduleList() // 刷新列表数据
+            })
+          }
           break
         case 'confirm-interview':
           if (vo.interviewInfo.data.data.length > 1) {
