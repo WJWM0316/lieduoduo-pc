@@ -14,6 +14,9 @@
 			<div class="colc-bottom">
 				<i class="iconfont icon-didian"></i>
 				<div class="address" @click="editAddress(item, index)">{{item.addressInfo.address}}{{item.addressInfo.doorplate}}</div>
+				<div class="addressdetail">
+					{{item.addressInfo.address}}{{item.addressInfo.doorplate}}
+				</div>
 			</div>
 		</div>
 		<div class="col-right">
@@ -21,7 +24,7 @@
 				<!-- <div class="exit">面试已取消</div> -->
 				<div :class="['time', item.status >= 51 ? 'pasttime' : '']"><i class="iconfont icon-shijian"></i>
 				<div class="isall" v-if="$route.query.isselect === 'all' && item.status >= 51 || new Date((item.arrangementInfo.appointmentTime)*1000).getFullYear() !== (new Date()).getFullYear()">
-					<span v-if="item.status >= 51 || new Date((item.arrangementInfo.appointmentTime)*1000).getFullYear() !== (new Date()).getFullYear()">
+					<span v-if="item.status >= 51 && new Date((item.arrangementInfo.appointmentTime)*1000).getFullYear() !== (new Date()).getFullYear()">
 					{{(item.arrangementInfo.appointmentTime)*1000 | date('YYYY-MM-DD HH:mm') }}
 					</span>
 					<span v-else>
@@ -40,11 +43,11 @@
   				:to="{name: 'positionDetail', query: { positionId: item.positionId }}"
   				v-if="item.positionId">
   				<i class="iconfont icon-zhiwei"></i>
-  				{{item.positionName}}
+  				<span>{{item.positionName}}</span>
   			</router-link>
 				<div class="position" v-if="!item.positionId">
 					<i class="iconfont icon-zhiwei"></i>
-					直接约面
+					<span>直接约面</span>
 				</div>
 				<div class="name">
 					<i class="iconfont icon-app"></i>
@@ -206,7 +209,7 @@ export default {
 		width: 454px;
 		font-weight:400;
 		line-height: 20px;
-		// height: 20px;
+		position: relative;
 		display: flex;
 		cursor: pointer;
 		&:hover i{
@@ -214,6 +217,12 @@ export default {
 		}
 		&:hover .address{
 			color: $nav-color-hover;
+		}
+		&:hover{
+			.addressdetail {
+				display: block;
+				opacity: 1;
+			}
 		}
 		i{
 			color: #BCBEC0;
@@ -223,7 +232,22 @@ export default {
 			margin-left: 4px;
 			color: $font-color-6;
 			font-size: 14px;
-			// @include ellipsis-over(435px);
+			@include ellipsis-over(435px);
+		}
+		.addressdetail{
+			position: absolute;
+			width:520px;
+			padding: 10px;
+			color: #fff;
+			font-size:12px;
+			display: none;
+			box-sizing: border-box;
+			background:rgba(0,0,0,0.62);
+			border-radius:4px;
+			top: 23px;
+			line-height: 16px;
+			left: -62px;
+			z-index: 1;
 		}
 	}
 	.col-right{
@@ -271,6 +295,7 @@ export default {
 		i{
 			font-size: 13px;
 			color:#BCBEC0;
+			margin-right: 6px;
 		}
 		span{
 			font-size: 14px;
@@ -283,6 +308,9 @@ export default {
 			&:hover{
 				color: $nav-color-hover;
 				i {
+					color: $nav-color-hover;
+				}
+				span {
 					color: $nav-color-hover;
 				}
 			}
