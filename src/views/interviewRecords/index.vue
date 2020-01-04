@@ -3438,6 +3438,12 @@ export default {
                   font-weight: bold;
                   font-size:16px;
                 }
+                .p2{
+                  font-weight:300;
+                  font-size:14px;
+                  margin-top: 6px;
+                  color:#92929B;
+                }
               }
             }
           }

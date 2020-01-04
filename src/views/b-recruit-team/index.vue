@@ -7,7 +7,7 @@
         <el-button type="primary" @click="applyDialog = true">加入申请（{{count.apply}}）</el-button>
       </el-badge>
     </div>
-    <div class="warpper-scroll recruit-lists">
+    <div class="warpper-scroll recruit-lists"  v-loading="getLoading && total === 0">
       <template v-for="item in lists">
         <div class="recruit-list" :key="item.id">
           <div class="recruit-info">
@@ -183,6 +183,9 @@ export default {
     color: $title-color-1;
     flex: 1;
   }
+}
+.recruit-lists {
+  min-height: 100px;
 }
 .recruit-list {
   @include flex-v-center;

@@ -149,12 +149,7 @@ export default {
 	    receiveData,
 	    scheduleData,
 	    historyData,
-			time: [],
-			app_url: app_qrcode,
-	    model: {
-	    	show: true,
-	    	title: '面试详情'
-	    }
+			app_url: app_qrcode
 		}
 	},
 	computed: {
@@ -192,16 +187,22 @@ export default {
 		},
 		getInterviewScheduleNumberLists() {
 			return getInterviewScheduleNumberListsApi().then(({ data }) => {
-				let dateList = data.data
-				dateList.unshift({ date: '全部' })
-				dateList.map((v, k) => {
-          v.active = false
-        })
-        if (dateList.length >= 2) {
-          dateList[1].active = true
-        } else {
-          dateList[0].active = true
-				}
+				let dateList = data.data || []
+				let { query } = this.$route
+				dateList.unshift({ date: '全部', time: 0 })
+				dateList.map((v, k, a) => {
+					if (query.time) {
+						if (v.time == query.time) {
+							v.active = true
+						}
+					} else {
+						if (dateList.length > 1) {
+							dateList[1].active = true
+						} else {
+							dateList[0].active = true
+						}
+					}
+				})
 				this.dateList = dateList
 			})
 		},
@@ -258,6 +259,7 @@ export default {
 				...params,
 				pIndex: this.pIndex,
 				cIndex: this.cIndex,
+				type: 'day',
 				q: Date.now()
 			}
 			if(!tab) {
@@ -274,13 +276,14 @@ export default {
 					...params,
 					pIndex: this.pIndex,
 					cIndex: this.cIndex,
+					type: 'day',
 					q: Date.now()
 				}
 				this.$router.push({ query })
 			})
 		},
 		getHistoryInterviewLists() {
-			let params = { page: this.scheduleData.page, isselect: 'all' }
+			let params = { page: this.scheduleData.page}
 			getHistoryInterviewListsApi({...params, count: this.scheduleData.count}).then(({ data }) => {
 				this.scheduleData.list = data.data || []
 				this.scheduleData.total = data.meta.total || 0
@@ -289,6 +292,7 @@ export default {
 					...params,
 					pIndex: this.pIndex,
 					cIndex: this.cIndex,
+					time: '0',
 					q: Date.now()
 				}
 				this.$router.push({ query })
@@ -309,9 +313,10 @@ export default {
 					break
 				case 'getScheduleList':
 					this.getInterviewScheduleNumberLists().then(() => {
-						if(!this.cIndex && Reflect.has(item, 'number')) {
+						let dateItem = this.dateList.find(v => v.active)
+						if(Reflect.has(dateItem, 'number')) {
 							this.scheduleData.page = 1
-							this.getLists(item)
+							this.getLists({api: 'getScheduleList', ...dateItem})
 						} else {
 							this.historyData.page = 1
 							this.getInterviewRedDotInfo().then(() => this.getHistoryInterviewLists())
@@ -323,13 +328,15 @@ export default {
 			}
 		},
 		tabClick(item, index, list) {
-			let beforeItem = list.find(v => v.active)
+			let beforeActive = list.slice().find(v => v.active)
 			let data = this.interviewBar[this.pIndex]
-			list.map((v, i, arr) => v.active = index === i ? true : false)
 			this[`${data.tab}Data`]['page'] = 1
-			if(beforeItem.active && beforeItem.showRedDot && beforeItem.type) {
-        beforeItem.showRedDot = 0
-        this.clearTabInterviewRedDot(beforeItem.type).then(() => {
+			list[index].active = true
+			beforeActive.active = false
+			console.log(beforeActive, item)
+			if (beforeActive.showRedDot && beforeActive.type) {
+        this.clearTabInterviewRedDot(beforeActive.type).then(() => {
+        	beforeActive.showRedDot = 0
         	this.getInterviewRedDotInfo().then(() => this[data.api]())
         })
       } else {
@@ -337,17 +344,18 @@ export default {
       }
 		},
 		chooseTime(item, index) {
-			this.dateList.map((v, i) => v.active = i === index ? true : false)
+			let beforeDate = this.dateList.slice().find(v => v.active)
+			this.dateList[index].active = true
+			this.scheduleData.page = 1
+			beforeDate.active = false
 			if (item.active && Reflect.has(item, 'number')) {
-				this.scheduleData.page = 1
-				if(item.number) {
-					this.clearDayInterviewRedDot(item.time).then(() => this.getLists({api: 'getScheduleList'}))
+				if (beforeDate.number) {
+					this.clearDayInterviewRedDot(beforeDate.time).then(() => this.getLists({api: 'getScheduleList'}))
 				} else {
-					this.getLists({api: 'getScheduleList'})
+					this.getLists({api: 'getScheduleList', ...item})
 				}
 			} else {
-				this.scheduleData.page = 1
-				this.getLists({api: 'getHistoryInterviewLists'})
+				this.getLists({api: 'getScheduleList'})
 			}
 		},
 		getLists(item) {
@@ -360,8 +368,8 @@ export default {
 					break
 				case 'getScheduleList':
 					this.getInterviewRedDotInfo().then(() => {
-						if(this.$route.query.time) {
-							this.getInterviewScheduleNumberLists().then(() => this[item.api]())
+						if (Reflect.has(item, 'number')) {
+							this[item.api]()
 						} else {
 							this.getHistoryInterviewLists()
 						}
@@ -430,7 +438,14 @@ export default {
 					this.setActive(pIndex)
 					if(pIndex === 2) {
 						if(cItem) {
-							this.getInterviewScheduleNumberLists().then(() => this.getLists({api: 'getScheduleList'}))
+							this.getInterviewScheduleNumberLists().then(() => {
+								let dateItem = this.dateList.find(v => v.time == query.time)
+								if (dateItem) {
+									this.getLists({api: 'getScheduleList', ...dateItem})
+								} else {
+									this.getLists({api: 'getScheduleList'})
+								}
+							})
 						}
 					} else {
 						this.getLists(navItem)
@@ -453,7 +468,8 @@ export default {
 		})
 	},
 	destroyed () {
-    this.interviewBar.map((v,i,a) => v.active = !i ? true : false)
+    this.pIndex = 0
+		this.interviewBar.map((v,i,a) => v.active = !i ? true : false)
     this.applyScreen.map((v,i,a) => v.active = !i ? true : false)
     this.receiveScreen.map((v,i,a) => v.active = !i ? true : false)
     if (this.dateList.length) {

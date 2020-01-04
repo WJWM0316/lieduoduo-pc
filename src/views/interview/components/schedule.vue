@@ -23,7 +23,7 @@
 			<div class="clor-top">
 				<!-- <div class="exit">面试已取消</div> -->
 				<div :class="['time', item.status >= 51 ? 'pasttime' : '']"><i class="iconfont icon-shijian"></i>
-				<div class="isall" v-if="$route.query.isselect === 'all' && item.status >= 51 || new Date((item.arrangementInfo.appointmentTime)*1000).getFullYear() !== (new Date()).getFullYear()">
+				<div class="isall" v-if="$route.query.time === '0' || new Date((item.arrangementInfo.appointmentTime)*1000).getFullYear() !== (new Date()).getFullYear()">
 					<span v-if="item.status >= 51 && new Date((item.arrangementInfo.appointmentTime)*1000).getFullYear() !== (new Date()).getFullYear()">
 					{{(item.arrangementInfo.appointmentTime)*1000 | date('YYYY-MM-DD HH:mm') }}
 					</span>
@@ -31,7 +31,7 @@
 					{{(item.arrangementInfo.appointmentTime)*1000 | date('MM-DD HH:mm') }}
 					</span>
 				</div>
-				<div class="other">
+				<div class="other" v-else>
 				<span>{{item.arrangementInfo.appointment.substring(11, 16)}}</span>
 				</div>
 				</div>
@@ -93,12 +93,8 @@ export default {
     NoData,
     companyMap
   },
-  created () {
-    console.log(this.data.list)
-  },
   methods: {
     toposition (data) {
-    	console.log(data)
       let routeData = this.$router.resolve({
         name: 'positionDetail',
         query: { positionId: data.positionId }
