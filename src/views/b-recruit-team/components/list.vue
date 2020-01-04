@@ -22,7 +22,7 @@
               <span class="position-emolument">{{item.emolumentMin}}K~{{item.emolumentMax}}K<template v-if="item.annualSalary > 12">·{{item.annualSalaryDesc}}</template></span>
             </p>
             <p class="position-tags">
-              <span>{{item.city}}{{item.district}}</span>
+              <span v-if="item.city">{{item.city}}{{item.district}}</span>
               <span>{{item.workExperienceName}}</span>
               <span>{{item.educationName}}</span>
             </p>
@@ -162,6 +162,9 @@ $font-color-close : #ED5C5C;
   overflow-y: auto;
   .position-list:first-of-type {
     border-top: 1px solid $border-color-1;
+  }
+  .no-apply-lists {
+    padding-top: 96px;
   }
 }
 .position-list {
