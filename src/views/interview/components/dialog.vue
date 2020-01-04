@@ -211,16 +211,18 @@ export default {
       handler(show) {
         if (show) {
           this.getInterviewDetail().then(res => {
-            let { appointmentList } = res.arrangementInfo
-            this.visiable = true
-            if (res.arrangementInfo.appointmentList) {
-              appointmentList.push({
-                checked: false,
-                id: 'inappropriate',
-                appointment: '以上时间都不合适，请联系我'
-              })
-            }
-            this.infos = res
+            this.getInterviewRedDotInfoApi().then(() => {
+              let { appointmentList } = res.arrangementInfo
+              this.visiable = true
+              if (res.arrangementInfo.appointmentList) {
+                appointmentList.push({
+                  checked: false,
+                  id: 'inappropriate',
+                  appointment: '以上时间都不合适，请联系我'
+                })
+              }
+              this.infos = res
+            })
           })
         } else {
           this.visiable = false
@@ -247,6 +249,9 @@ export default {
     event: 'input'
   },
   methods: {
+    ...mapActions([
+      'getInterviewRedDotInfoApi'
+    ]),
     setDateInappropriate () {
       this.params = Object.assign(this.params, {
         interviewId: this.infos.interviewId,
