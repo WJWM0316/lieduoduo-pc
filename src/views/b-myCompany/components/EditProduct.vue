@@ -18,7 +18,7 @@
             cropper-radius="8px"
             @change="pictureInformation">
             <div class="avatar-wrapper">
-              <div class="avatar">
+              <div class="avatar" :class="{ 'avatarBg' : !middleUrl }">
               <img :src="middleUrl" />
               <span class="iconfont icon-xiangji"></span>
               </div>
@@ -177,7 +177,7 @@ export default {
     box-sizing: border-box;
     max-width: 1140px;
     min-width: 960px;
-    margin: 30px auto 0 auto;
+    margin: 30px auto 30px auto;
     background: #ffffff;
     padding: 48px 82px 30px 82px !important;
     position: relative;
@@ -185,7 +185,10 @@ export default {
 .EditProduct-head-text{
 	font-size: 12px;
 	color: $font-color-9;
-	font-weight: 400;
+  font-weight: 400;
+  span{
+    color: $error-color-1;
+  }
 }
 .EditProduct-head-title{
 	color: $font-color-2;
@@ -218,6 +221,11 @@ export default {
     font-size: 26px;
     opacity: 0;
   }
+}
+.avatarBg{
+  background: url('./../../../assets/images/cp_logo.png');
+  background-position: center center;
+  background-size: 100% 100%;
 }
 .avatar:hover::after {
   content: "";
@@ -258,7 +266,7 @@ export default {
     }
 }
 .foot{
-  margin-left: 100px;
+  margin-left: 110px;
   margin-top: 50px;
 }
 .EditProduct-Example{
@@ -288,12 +296,12 @@ export default {
     .EditProduct-Example-main-text{
       float: left;
       .Example-main-text-productName{
-        font-size: 20px;
-        font-weight: 700;
+        font-size: 16px;
+        font-weight: 500;
         color: $font-color-3;
       }
       .Example-main-text-slogan{
-        font-size: 16px;
+        font-size: 14px;
         color: $font-color-6;
         margin-top: 8px;
         font-weight:400;
@@ -308,6 +316,7 @@ export default {
         display: inline-block;
         margin-top: 20px;
         color: $main-color-1;
+        font-size: 12px;
       }
     }
   }
@@ -323,5 +332,8 @@ export default {
 }
 .EditProduct .el-textarea{
   width: 520px;
+}
+.EditProduct .foot .el-button--default{
+  margin-left: 24px;
 }
 </style>

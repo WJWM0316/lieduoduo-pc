@@ -179,8 +179,14 @@ export default {
       }
     },
     handeToInterview() {
-      let route = asideBar.topNav[0]
-      this.$router.push({name: route.routeName, query: route.query})
+      let query = {
+        page: 1,
+        tab: 'all',
+        pIndex: 0,
+        cIndex: 0,
+        q: Date.now()
+      }
+      this.$router.push({name: 'interviewApply', query})
     },
     changeLocation (item) {
       this.addressName = item.name
