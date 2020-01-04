@@ -14,9 +14,9 @@
             <div class="user-contact color3">{{infos.arrangementInfo.mobile}}</div>
           </div>
         </li>
-        <li class="item-li">
+        <li class="item-li" v-if="infos.positionId">
           <i class="iconfont icon-zhiwei1"></i>
-          <div class="ul-li-text-box" v-if="infos.positionId">
+          <div class="ul-li-text-box">
             <router-link
               class="color2 position-name"
               target="_blank" :to="{name: 'positionDetail', query: { positionId: infos.positionId }}">
@@ -61,10 +61,10 @@
             <div class="user-contact color2">{{infos.arrangementInfo.mobile}}</div>
           </div>
         </li>
-        <li class="item-li">
+        <li class="item-li" v-if="infos.positionId">
           <i class="iconfont icon-zhiwei1"></i>
           <div class="ul-li-text-box">
-            <div class="color1 position-name" v-if="infos.positionId">
+            <div class="color1 position-name">
               <router-link
                 class="color2 position-name"
                 target="_blank" :to="{name: 'positionDetail', query: { positionId: infos.positionId }}">
@@ -95,10 +95,10 @@
             <div class="user-contact color2">{{infos.arrangementInfo.mobile}}</div>
           </div>
         </li>
-        <li class="item-li">
+        <li class="item-li" v-if="infos.positionId">
           <i class="iconfont icon-zhiwei1"></i>
           <div class="ul-li-text-box">
-            <div class="color1 position-name" v-if="infos.positionId">
+            <div class="color1 position-name">
               <router-link
                 class="color2 position-name"
                 target="_blank" :to="{name: 'positionDetail', query: { positionId: infos.positionId }}">
@@ -156,10 +156,10 @@
             <div class="user-contact color2">{{infos.arrangementInfo.mobile}}</div>
           </div>
         </li>
-        <li class="item-li">
+        <li class="item-li" v-if="infos.positionId">
           <i class="iconfont icon-zhiwei1"></i>
           <div class="ul-li-text-box">
-            <div class="color1 position-name" v-if="infos.positionId">
+            <div class="color1 position-name">
               <router-link
                 class="color2 position-name"
                 target="_blank" :to="{name: 'positionDetail', query: { positionId: infos.positionId }}">
