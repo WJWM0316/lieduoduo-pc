@@ -69,13 +69,12 @@
 		  <el-col :span="8" class="li-item-content-2">
 		  	<div>
 		  		<template v-if="[11, 21, 52, 53, 54, 55, 61].includes(item.status)">
-		  			<router-link
-		  				target="_blank"
+		  			<a
 		  				class="router-link"
-		  				:to="{name: 'positionDetail', query: { positionId: item.positionId }}"
+		  				@click="clearPositionRedDot(item, index)"
 		  				v-if="item.positionId">
 		  				查看职位
-		  			</router-link>
+		  			</a>
 		  			<el-popover
               placement="right"
               v-if="!item.positionId"
@@ -109,6 +108,9 @@ import {
   getInterviewDetailApi,
   confirmInterviewApi
 } from 'API/interview'
+import {
+	getMyPositionApi
+} from 'API/position'
 import {
   app_qrcode
 } from 'IMAGES/image'
@@ -159,6 +161,16 @@ export default {
 	  	}
 	  	confirmInterviewApi({id: item.interviewId}).then(() => {
 	  		this.$router.push({ query })
+	  	})
+	  },
+	  clearPositionRedDot(item, index) {
+	  	getMyPositionApi({id: item.positionId}).then(() => {
+	  		item.redDot = 0
+		  	let routeData = this.$router.resolve({
+	        name: 'positionDetail',
+	        query: { positionId: item.positionId }
+	      })
+	      window.open(routeData.href, '_blank')
 	  	})
 	  }
   }
@@ -324,7 +336,8 @@ export default {
 		vertical-align: middle;
 	}
 	.router-link{
-		color: $nav-color-hover
+		color: $nav-color-hover;
+		cursor: pointer
 	}
 	.func-btn {
 		width:120px;
