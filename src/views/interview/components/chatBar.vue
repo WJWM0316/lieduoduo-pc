@@ -137,6 +137,9 @@ export default {
   	}
   },
   methods: {
+  	...mapActions([
+      'getInterviewRedDotInfoApi'
+    ]),
   	bindClick(item) {
   		this.infos = item
 	    this.$emit('click', item)
@@ -151,7 +154,10 @@ export default {
 	  		q: Date.now()
 	  	}
 	  	refuseInterviewApi({id: item.recruiterUid}).then(() => {
-	  		this.$router.push({ query })
+	  		this.getInterviewRedDotInfoApi().then(() => {
+	  			item.redDot = 0
+	  			this.$router.push({ query })
+	  		})
 	  	})
 	  },
 	  confirmInterview(item) {
@@ -161,25 +167,32 @@ export default {
 	  		q: Date.now()
 	  	}
 	  	confirmInterviewApi({id: item.interviewId}).then(() => {
-	  		this.$router.push({ query })
+	  		this.getInterviewRedDotInfoApi().then(() => {
+	  			item.redDot = 0
+	  			this.$router.push({ query })
+	  		})
 	  	})
 	  },
 	  clearInterviewItemRedDot(data) {
 	  	return clearInterviewItemRedDotApi(data)
 	  },
 	  clearPositionRedDot(item) {
-	  	clearInterviewItemRedDot({id: item.interviewId}).then(() => {
-	  		item.redDot = 0
-		  	let routeData = this.$router.resolve({
-	        name: 'positionDetail',
-	        query: { positionId: item.positionId }
-	      })
-	      window.open(routeData.href, '_blank')
+	  	clearInterviewItemRedDotApi({id: item.interviewId}).then(() => {
+	  		this.getInterviewRedDotInfoApi().then(() => {
+	  			item.redDot = 0
+			  	let routeData = this.$router.resolve({
+		        name: 'positionDetail',
+		        query: { positionId: item.positionId }
+		      })
+		      window.open(routeData.href, '_blank')
+	  		})
 	  	})
 	  },
 	  clearRecruiterRedDot(item, index) {
-	  	clearInterviewItemRedDot({id: item.interviewId}).then(() => {
-	  		item.redDot = 0
+	  	clearInterviewItemRedDotApi({id: item.interviewId}).then(() => {
+	  		this.getInterviewRedDotInfoApi().then(() => {
+	  			item.redDot = 0
+	  		})
 	  	})
 	  }
   }
