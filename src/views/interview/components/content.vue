@@ -9,10 +9,10 @@
 					:key="index">
 						{{item.text}}<span class="reddot" v-if="item.showRedDot"></span>
 				</li>
-				<div class="notice" @mouseenter="shownotice" @mouseleave="isshownotice = false">
+				<div class="notice">
 					<i class="iconfont icon-tongzhi"></i>
 					<span>获取约面通知</span>
-					<div class="notice-diggle" v-show="isshownotice">
+					<div class="notice-diggle">
 						<div class="headbar">
 							<img src="@/assets/images/pic_message.png" alt="">
 						</div>
@@ -108,6 +108,7 @@
 import SearchList from './searchList'
 import Schedule from './schedule'
 import { app_qrcode } from 'IMAGES/image'
+import { getUserRoleInfoApi } from '@/api/auth'
 
 import {
 	getInterviewApplyListsApi,
@@ -361,7 +362,6 @@ export default {
 			}
 		},
 		getLists(item) {
-			console.log(item)
 			switch(item.api) {
 				case 'getApplyList':
 					this.getInterviewRedDotInfo().then(() => this[item.api]())
@@ -461,12 +461,18 @@ export default {
 		}
 	},
 	created() {
-		if(this.roleInfos.isJobhunter) {
-			this.init()
-		} else {
-			this.$router.push({name: 'createUser'})
-		}
-	}
+		getUserRoleInfoApi().then(({ data }) => {
+			if(data.data.isJobhunter) {
+				this.init()
+			} else {
+				this.$router.push({name: 'createUser'})
+			}
+		})
+	},
+	destroyed () {
+    this.interviewBar.map((v,i,a) => v.active = !i ? true : false)
+    this.pIndex = 0
+  }
 }
 /* eslint-enable */
 </script>
@@ -526,6 +532,12 @@ export default {
 			float: right;
 			cursor: pointer;
 			position: relative;
+			&:hover{
+				.notice-diggle {
+					display: block;
+					opacity: 1;
+				}
+			};
 			i{
 				font-size: 16px;
 				color: #00C4CD;
@@ -545,6 +557,9 @@ export default {
 				height:276px;
 				box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
 				z-index: 1;
+				opacity: 0;
+				display: none;
+				transition: all ease .2s;
 				.headbar{
 					width: 260px;
 					height: 81px;

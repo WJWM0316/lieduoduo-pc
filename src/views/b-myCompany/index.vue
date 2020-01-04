@@ -38,7 +38,7 @@
                 <ul v-if="information.address">
                     <li v-for="(item, index) in information.address" :key="index">{{ item.address + '&nbsp;' + item.doorplate }}</li>
                 </ul>
-                <div v-if="information.address && !information.address.length">尚未添加公司地址<el-button @click="toEdit('编辑公司')" v-if="isCompanyAdmin" type="text">去添加</el-button></div>
+                <div class="onFondAddress" v-if="information.address && !information.address.length">尚未添加公司地址<el-button @click="toEdit('编辑公司')" v-if="isCompanyAdmin" type="text">去添加</el-button></div>
             </div>
             <div class="companyWebsite">
                 <p class="companyWebsite-title">
@@ -209,7 +209,7 @@ export default class myCompany extends Vue {
 
 <style lang="scss" scoped>
 %company-title{
-    color: $font-color-2;
+    color: $font-color-3;
     font-size: 18px;
     font-weight: 500;
     margin-bottom: 20px;
@@ -230,12 +230,16 @@ export default class myCompany extends Vue {
     float: left;
     padding: 0 56px 64px 56px;
     box-sizing: border-box;
+    min-height: 1170px;
     .companyInformation-head{
         margin-top: 64px;
         @include flex-v-center;
         @include flex-justify-between;
         .avatar{
             @include img-radius(90px, 90px, 8px);
+            img{
+              border: 1px solid $border-color-8;
+            }
         }
         .companyInformation-head-button{
             button{
@@ -281,6 +285,8 @@ export default class myCompany extends Vue {
         margin-top: 20px;
         width: 100%;
         overflow: hidden;
+        height: 90px;
+        border-radius: 4px;
         .companySurroundings-bnt{
             display: none;
             .Spin{
@@ -309,6 +315,7 @@ export default class myCompany extends Vue {
                 @include bg-image-radius(88px, 88px, 4px);
                 border: 1px solid $border-color-8;
                 margin-right: 10px;
+                box-sizing: border-box;
             }
         }
     }
@@ -327,6 +334,9 @@ export default class myCompany extends Vue {
         }
         button{
             margin-left: 10px;
+        }
+        .onFondAddress{
+          color: $font-color-6;
         }
     }
     .companyWebsite{
@@ -350,6 +360,7 @@ export default class myCompany extends Vue {
 .companyProduct{
     // max-height: 1170px;
     // overflow: auto;
+    min-height: 1170px;
     float: left;
     background: #ffffff;
     box-sizing: border-box;
