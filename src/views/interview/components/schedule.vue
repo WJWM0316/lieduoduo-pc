@@ -176,7 +176,6 @@ export default {
 		margin-left: 8px;
 	}
 	.colc-top{
-		width: 454px;
 		height: 25px;
 		line-height: 25px;
 		margin: 4px 0 12px 0;
@@ -202,7 +201,6 @@ export default {
 		}
 	}
 	.colc-bottom{
-		width: 454px;
 		font-weight:400;
 		line-height: 20px;
 		position: relative;
@@ -228,7 +226,7 @@ export default {
 			margin-left: 4px;
 			color: $font-color-6;
 			font-size: 14px;
-			@include ellipsis-over(435px);
+			@include ellipsis-over(370px);
 		}
 		.addressdetail{
 			position: absolute;
