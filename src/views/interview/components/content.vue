@@ -333,7 +333,8 @@ export default {
 			this[`${data.tab}Data`]['page'] = 1
 			list[index].active = true
 			beforeActive.active = false
-			if (beforeActive.active && beforeActive.showRedDot && beforeActive.type) {
+			console.log(beforeActive, item)
+			if (beforeActive.showRedDot && beforeActive.type) {
         this.clearTabInterviewRedDot(beforeActive.type).then(() => {
         	beforeActive.showRedDot = 0
         	this.getInterviewRedDotInfo().then(() => this[data.api]())

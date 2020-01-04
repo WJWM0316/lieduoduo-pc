@@ -93,12 +93,8 @@ export default {
     NoData,
     companyMap
   },
-  created () {
-    console.log(this.data.list)
-  },
   methods: {
     toposition (data) {
-    	console.log(data)
       let routeData = this.$router.resolve({
         name: 'positionDetail',
         query: { positionId: data.positionId }
