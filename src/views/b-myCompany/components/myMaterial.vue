@@ -65,11 +65,13 @@
                 </el-form-item>
                 <el-form-item label="公司地址：">
                     <p class="address">
-                        <span @click="increaseAddress">+</span>
+                        <!-- <span @click="increaseAddress">+</span> -->
+                        <i @click="increaseAddress" class="iconfont icon-tianjiashijian"></i>
                         <pre @click="increaseAddress">点击添加公司地址</pre>
                     </p>
                     <p class="address" v-for="(item, index) in address" :key="index">
-                        <span @click="deleteAddress(item)" class="addressBg">-</span>
+                        <!-- <span @click="deleteAddress(item)" class="addressBg">-</span> -->
+                        <i @click="deleteAddress(item)" class="iconfont icon-shanjian addressIconColor"></i>
                         <pre @click="editAddress(index)">{{item.address + '&nbsp;' + item.doorplate}}</pre>
                     </p>
                 </el-form-item>
@@ -229,7 +231,19 @@ export default {
       })
     },
     receiveAddAdress (data) { // 地图回调
-      return false
+      if (this.mapIndex === 100) { // 判断是添加还是编辑 100 是添加
+        addCompanyAddressApi(this.from.id, data.data)
+          .then(res => {
+            this.getCompanyAddressList()
+          })
+      } else {
+        data.data = JSON.parse(JSON.stringify(data.data).replace(/area_id/g, 'areaId'))
+        data.data.id = this.address[this.mapIndex].id
+        addresseditCompanyAddressApi(data.data).then(res => {
+          this.getCompanyAddressList()
+          this.$message.success('编辑成功！')
+        })
+      }
     },
     getCompanyAddressList () { // 获取公司地址
       getCompanyAddressListApi(this.from.id)
@@ -346,13 +360,12 @@ export default {
     color: $font-color-6;
     font-weight: 400;
     @include flex-v-center;
-    span{
+    i{
         display: inline-block;
         width: 12px;
         height: 12px;
         border-radius: 50%;
-        color: #ffffff;
-        background: #65C533;
+        color: #65C533;
         margin-right: 10px;
         line-height: 12px;
         text-align: center;
@@ -362,8 +375,8 @@ export default {
         cursor: pointer;
     }
 }
-.addressBg{
-    background: $error-color-1 !important;
+.addressIconColor{
+    color: $error-color-1 !important;
 }
 .foot{
   margin-left: 100px;
@@ -385,6 +398,9 @@ export default {
 .from .el-form-item{
   margin-bottom: 30px;
 }
+.from .el-form-item:nth-of-type(9){
+  margin-bottom: 20px;
+}
 .from .el-form-item__label::before{
     color: #F45322 !important;
 }
@@ -401,5 +417,8 @@ export default {
 }
 .myMaterial .el-textarea{
   width: 520px;
+}
+.myMaterial .foot .el-button--default{
+  margin-left: 24px;
 }
 </style>

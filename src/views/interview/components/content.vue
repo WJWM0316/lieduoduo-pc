@@ -90,7 +90,7 @@
         :total="receiveData.total">
       </el-pagination>
     </div>
-    <div class="pagination-interview" v-if="pIndex === 2 && cIndex === 0"/>
+    <div class="pagination-interview" v-if="pIndex === 2 && cIndex === 0">
       <el-pagination
         background
         v-if="scheduleData.total > scheduleData.pageSize"
@@ -151,7 +151,6 @@ export default {
 	    historyData,
 			time: [],
 			app_url: app_qrcode,
-			isshownotice: false,
 	    model: {
 	    	show: true,
 	    	title: '面试详情'
@@ -296,15 +295,9 @@ export default {
 			})
 		},
 		pTabClick(item, index) {
-			let dateList = this.dateList
 			this.interviewBar[this.pIndex].active = false
 			item.active = true
 			this.pIndex = index
-			// 当前tab位于面试日程，并且面试日程下面的日期列表的第一个有红点，则离开父级tab 则把首个日期列表的红点清除
-			if (index === 2 && dateList.length && dateList[0].number > 0) {
-				dateList[0].number = 0
-				this.clearDayInterviewRedDot(dateList[0].time)
-			}
 			switch(item.api) {
 				case 'getApplyList':
 					this.applyData.page = 1
@@ -342,17 +335,12 @@ export default {
       	this.getInterviewRedDotInfo().then(() => this[data.api]())
       }
 		},
-		shownotice () {
-			this.isshownotice = true
-		},
 		chooseTime(item, index) {
 			this.dateList.map((v, i) => v.active = i === index ? true : false)
 			if (item.active && Reflect.has(item, 'number')) {
 				this.scheduleData.page = 1
 				if(item.number) {
-					this.clearDayInterviewRedDot(item.time).then(() => {
-	        	this.getLists({api: 'getScheduleList'})
-	        })
+					this.clearDayInterviewRedDot(item.time).then(() => this.getLists({api: 'getScheduleList'}))
 				} else {
 					this.getLists({api: 'getScheduleList'})
 				}
@@ -374,9 +362,8 @@ export default {
 						if(this.$route.query.time) {
 							this.getInterviewScheduleNumberLists().then(() => this[item.api]())
 						} else {
-							this.getInterviewRedDotInfo().then(() => this.getHistoryInterviewLists())
+							this.getHistoryInterviewLists()
 						}
-						
 					})
 					break
 				default:
