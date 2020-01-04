@@ -132,7 +132,7 @@ export default {
         this.getLoading = false
         // 执行倒计时计算
         this.startCountDown()
-        if (this.bubbleDownTimer === undefined) this.bubbleList = toastTips
+        if (this.bubbleDownTimer === undefined) this.bubbleList = toastTips || []
         this.$nextTick(() => {
           if (this.bubbleDownTimer === undefined) this.bubbleDown()
           const dom = document.querySelector('.position-24h-content')
