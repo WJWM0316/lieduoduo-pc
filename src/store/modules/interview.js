@@ -4,7 +4,13 @@ import {
 	// clearDayInterviewRedDotApi
 } from 'API/interview'
 
-import { asideBar } from 'UTIL/interview-static-data'
+import {
+	scheduleBar,
+	interviewBar,
+	applyScreen,
+	receiveScreen,
+	asideBar
+} from 'UTIL/interview-static-data'
 
 const GET_INTERVIEW_REDDOT_INFO = 'GET_INTERVIEW_REDDOT_INFO'
 // const CLEAR_TAB_INTERVIEW_REDDOT = 'CLEAR_TAB_INTERVIEW_REDDOT'
@@ -24,6 +30,10 @@ const state = {
 		jobhunterScheduleList: 0,
 		jobhunterInterviewTotal: 0
 	},
+	scheduleBar,
+	interviewBar,
+	applyScreen,
+	receiveScreen,
 	asideBar
 }
 
@@ -43,12 +53,19 @@ const mutations = {
 		state.asideBar.topNav[0].reddot = data.jobhunterApplyList
 		state.asideBar.topNav[1].reddot = data.jobhunterInviteList
 		state.asideBar.topNav[2].reddot = data.jobhunterScheduleList
+		state.applyScreen.map(field => field.showRedDot = data[field.flag])
+    state.receiveScreen.map(field => field.showRedDot = data[field.flag])
+    state.interviewBar.map(field => field.showRedDot = data[field.flag])
 	}
 }
 
 const getters = {
 	interviewData: state => state.interviewData,
-	asideBar: state => state.asideBar
+	asideBar: state => state.asideBar,
+	scheduleBar: state => state.scheduleBar,
+	interviewBar: state => state.interviewBar,
+	applyScreen: state => state.applyScreen,
+	receiveScreen: state => state.receiveScreen,
 }
 
 const actions = {

@@ -121,10 +121,6 @@ import {
 } from 'API/interview'
 
 import {
-	scheduleBar,
-	interviewBar,
-	applyScreen,
-	receiveScreen,
 	applyData,
 	receiveData,
 	scheduleData,
@@ -140,10 +136,6 @@ export default {
 		return {
 	    pIndex: 0,
 	    cIndex: 0,
-	    scheduleBar,
-			interviewBar,
-			applyScreen,
-	    receiveScreen,
 			dateList: [],
 			applyData,
 	    receiveData,
@@ -155,7 +147,11 @@ export default {
 	computed: {
 		...mapGetters([
 			'interviewData',
-			'roleInfos'
+			'roleInfos',
+			'scheduleBar',
+			'interviewBar',
+			'applyScreen',
+			'receiveScreen'
 		])
 	},
 	watch: {
@@ -333,7 +329,6 @@ export default {
 			this[`${data.tab}Data`]['page'] = 1
 			list[index].active = true
 			beforeActive.active = false
-			console.log(beforeActive, item)
 			if (beforeActive.showRedDot && beforeActive.type) {
         this.clearTabInterviewRedDot(beforeActive.type).then(() => {
         	beforeActive.showRedDot = 0
