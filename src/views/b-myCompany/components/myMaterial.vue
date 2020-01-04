@@ -305,6 +305,11 @@ export default {
   font-size: 12px;
   color: $font-color-9;
   font-weight: 400;
+  line-height:20px;
+  margin-top: 8px;
+  span{
+    color: $error-color-1;
+  }
 }
 .myMaterial-head-title{
   color: $font-color-2;
@@ -385,6 +390,7 @@ export default {
 .cresume-upload-wrapper /deep/ .common-list li {
   width: 88px;
   height: 88px;
+  border: 1px solid $border-color-8;
 }
 </style>
 <style>

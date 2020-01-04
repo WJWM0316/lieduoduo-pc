@@ -91,6 +91,13 @@ export const getPositionApi = data => request({
   config: { host: 'qiuzhi' }
 })
 
+// 获取职位信息（用于清除面试红点）
+export const getMyPositionApi = data => request({
+  url: `/position/my_position/${data.id}`,
+  method: 'get',
+  config: { host: 'qiuzhi' }
+})
+
 // 编辑职位信息
 export const editPositionApi = data => request({
   url: `/position/${data.id}`,

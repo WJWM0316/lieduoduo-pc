@@ -323,12 +323,13 @@ export default {
 			}
 		},
 		tabClick(item, index, list) {
+			let beforeItem = list.find(v => v.active)
 			let data = this.interviewBar[this.pIndex]
 			list.map((v, i, arr) => v.active = index === i ? true : false)
 			this[`${data.tab}Data`]['page'] = 1
-			if(item.active && item.showRedDot && item.type) {
-        item.showRedDot = 0
-        this.clearTabInterviewRedDot(item.type).then(() => {
+			if(beforeItem.active && beforeItem.showRedDot && beforeItem.type) {
+        beforeItem.showRedDot = 0
+        this.clearTabInterviewRedDot(beforeItem.type).then(() => {
         	this.getInterviewRedDotInfo().then(() => this[data.api]())
         })
       } else {

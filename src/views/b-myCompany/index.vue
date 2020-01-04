@@ -230,7 +230,8 @@ export default class myCompany extends Vue {
     float: left;
     padding: 0 56px 64px 56px;
     box-sizing: border-box;
-    min-height: 1170px;
+    min-height: calc(100vh - 120px);
+    border-radius: 8px;
     .companyInformation-head{
         margin-top: 64px;
         @include flex-v-center;
@@ -243,7 +244,12 @@ export default class myCompany extends Vue {
         }
         .companyInformation-head-button{
             button{
-                margin-left: 15px;
+                margin-left: 24px;
+                &:nth-child(1){
+                  i{
+                    font-size: 14px;
+                  }
+                }
             }
         }
     }
@@ -303,9 +309,12 @@ export default class myCompany extends Vue {
                 background: #00000080;
                 z-index: 2;
                 @include flex-center;
+                border-radius: 4px 0 0 4px;
+                box-sizing: border-box;
             }
             .companySurroundings-rightbnt{
                 right: 0;
+                border-radius: 0 4px 4px 0;
             }
         }
         .companySurroundings-wrap{
@@ -360,7 +369,8 @@ export default class myCompany extends Vue {
 .companyProduct{
     // max-height: 1170px;
     // overflow: auto;
-    min-height: 1170px;
+    min-height: calc(100vh - 120px);
+    border-radius: 8px;
     float: left;
     background: #ffffff;
     box-sizing: border-box;
@@ -376,6 +386,7 @@ export default class myCompany extends Vue {
         @include flex-justify-between;
         i{
             margin-right: 10px;
+            font-size: 14px;
         }
         p{
             height: 100%;
@@ -386,6 +397,10 @@ export default class myCompany extends Vue {
     .noFound{
         width: 160px;
         margin: 0 auto;
+        .no-found{ // 覆盖组件内部样式
+          padding-left: 0;
+          padding-right: 0;
+        }
         button{
             margin-top: 24px;
         }

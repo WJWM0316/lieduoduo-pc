@@ -181,6 +181,7 @@ export default {
     background: #ffffff;
     padding: 48px 82px 30px 82px !important;
     position: relative;
+    min-height: calc(100vh - 120px);
 }
 .EditProduct-head-text{
 	font-size: 12px;

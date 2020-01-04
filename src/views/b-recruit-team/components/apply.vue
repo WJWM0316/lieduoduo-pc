@@ -37,7 +37,7 @@
               <p class="_text">{{list.createdAt}}</p>
             </div>
           </div>
-          <div class="apply-operate">
+          <div class="apply-operate" :class="{_center: currentValue > 0}">
             <template v-if="currentValue === 0">
               <span @click="handleSetApply('pass', list, index)">通过</span>
               <span @click="handleSetApply('nopass', list, index)">不通过</span>
@@ -257,6 +257,9 @@ export default {
     ._disabled {
       color: $title-color-3;
     }
+  }
+  .apply-operate._center {
+    text-align: center;
   }
   .apply-name {
     position: relative;

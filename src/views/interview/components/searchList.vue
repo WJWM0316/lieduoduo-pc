@@ -51,6 +51,7 @@ export default {
   },
   methods: {
     bindClick (item, index) {
+      item.redDot = 0
       this.model.show = true
       this.model.interview = {
         ...item,

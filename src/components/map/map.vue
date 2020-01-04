@@ -85,7 +85,7 @@ export default mapSearch
     .nowPosi {
       clear: both;
       width: 100%;
-      border-top: 1px solid #CCCCCC;
+      border-top: 1px solid $border-color-1;
       @include flex-v-center;
       .address {
         color: $main-color-1;

@@ -401,6 +401,14 @@ $image-wrapper: 112px;
   .user-company {
     margin-bottom: 17px;
   }
+  .user-phone,.user-wechat {
+    i {
+      min-width: 20px;
+      display: inline-block;
+      padding-right: 0;
+      vertical-align: top;
+    }
+  }
   .user-phone {
     margin-top: 20px;
   }

@@ -49,6 +49,16 @@ export default {
       return !!this.$store.state.userInfo.id
     }
   },
+  watch: {
+    '$route': {
+      handler(route) {
+        if(!['interviewApply', 'interviewReceive', 'interviewSchedule'].includes(route.name)) {
+          this.getInterviewRedDotInfoApi()
+        }
+      },
+      immediate: true
+    }
+  },
   data () {
     return {
       showScrollTopBtn: false
@@ -67,7 +77,6 @@ export default {
     }
   },
   mounted () {
-    this.getInterviewRedDotInfoApi()
     window.addEventListener('scroll', this.handleScroll)
   },
   destroyed () {

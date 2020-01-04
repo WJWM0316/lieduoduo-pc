@@ -121,7 +121,7 @@
       <el-form-item label="职位描述" prop="describe" style="width: 520px;" >
         <el-input
           type="textarea"
-          :autosize="{ minRows: 6}"
+          :rows="7"
           placeholder="请填写职位描述"
           :maxlength="5000"
           v-model="form.describe"
