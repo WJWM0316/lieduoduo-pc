@@ -57,7 +57,7 @@ export default {
       currentRecruit: {},
       params: {
         page: 1,
-        count: 2
+        count: 20
       },
       total: 0,
       disabledScroll: false,
