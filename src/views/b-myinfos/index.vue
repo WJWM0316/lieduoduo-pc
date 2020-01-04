@@ -50,14 +50,15 @@
         <el-input
           type="textarea"
           :rows="7"
-          :show-message="true"
+          :show-message="false"
           style="width: 520px;"
           show-word-limit
           maxlength="5000"
           v-model="form.brief" placeholder="请描述你的个人经历或成就，字数范围：6-5000字" />
-          <template slot="error" slot-scope="slot">
-            <div class="el-form-item__error">{{slot.error}}</div>
-          </template>
+          <template slot="error"><span></span></template>
+          <transition name="el-zoon-in-top">
+             <div class="el-form-item__error" style="position: relative" v-show="isShowBriefError">个人简介字数在6到5000之间</div>
+          </transition>
           <div class="form-intro" :style="{height: isShowPover ? '224px' : 'auto'}">
             <el-popover
               placement="bottom-start"
@@ -111,11 +112,20 @@ export default {
         callback(new Error('微信号需为2-20个字符'))
       }
     }
-    var emailValidate = (rule, value, callback) => {
+    const emailValidate = (rule, value, callback) => {
       if (emailReg.test(value)) {
         callback()
       } else {
         callback(new Error('邮箱格式不正确'))
+      }
+    }
+    const briefValidate = (rule, value, callback) => {
+      if (/^.{6,5000}$/.test(value) || value === '') {
+        this.isShowBriefError = false
+        callback()
+      } else {
+        this.isShowBriefError = true
+        callback(new Error())
       }
     }
     return {
@@ -146,8 +156,9 @@ export default {
         labels: [{ required: true, type: 'array', message: '请选择个人标签', trigger: 'change' }],
         wechat: [{ validator: wechatValidate, trigger: 'blur' }],
         signature: [{ required: true, min: 6, max: 30, message: '个性签名需为6~30个字', trigger: 'blur' }],
-        brief: [{ min: 6, max: 5000, message: '个人简介字数在6到5000之间', trigger: 'blur' }]
+        brief: [{ validator: briefValidate, trigger: 'blur' }]
       },
+      isShowBriefError: false,
       intros: CompanyIntro,
       introIndex: 0,
       introContent: '',
