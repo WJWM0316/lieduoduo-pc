@@ -20,7 +20,7 @@
                 <p v-if="information.intro" class="companyIntroduction-text">{{information.intro}}</p>
                 <p v-else>尚未添加公司简介<el-button @click="toEdit('编辑公司')" v-if="isCompanyAdmin" type="text">去添加</el-button></p>
             </div>
-            <div class="companySurroundings">
+            <div class="companySurroundings" v-if="information.albumInfo && information.albumInfo.length > 1">
                 <div class="companySurroundings-bnt" v-if="bntLeftShow" @click="clickBnt('left')">
                     <i class="iconfont icon-right Spin"></i>
                 </div>
@@ -396,4 +396,4 @@ export default class myCompany extends Vue {
   height: 40px;
 }
 </style>
-<style>
+
