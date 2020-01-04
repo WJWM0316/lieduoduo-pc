@@ -1,10 +1,10 @@
 /** 滚动条样式 */
-.warpper-scroll::-webkit-scrollbar {
-  width: 4px;
+.warpper-scroll::-webkit-scrollbar, textarea::-webkit-scrollbar {
+  width: 6px;
   height: 10px;
   background-clip: padding-box;
 }
-.warpper-scroll::-webkit-scrollbar-thumb {
+.warpper-scroll::-webkit-scrollbar-thumb, textarea::-webkit-scrollbar-thumb{
   background-color: $scroll-bar-color;
   border-radius: 4px;
 }

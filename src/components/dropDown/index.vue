@@ -7,7 +7,7 @@
     </div>
     <div class="drop-down-wrapper" :style="{width: wrapperWidth}">
       <slot name="content">
-        <div class="drop-down-items" :class="{'has': opacity}" :style="{'max-height': defaultHeight + 'px'}">
+        <div class="warpper-scroll drop-down-items" :class="{'has': opacity}" :style="{'max-height': defaultHeight + 'px'}">
           <template v-for="item in items">
             <div
               :key="item[props.value]"
@@ -293,14 +293,5 @@ $drop-height: 50px;
   width: 100%;
   height: 32px;
   background:linear-gradient(180deg,rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
-}
-.drop-down-items::-webkit-scrollbar {
-    width: 6px;
-    height: 10px;
-    background-clip: padding-box;
-}
-.drop-down-items::-webkit-scrollbar-thumb {
-  background-color: $scroll-bar-color;
-  border-radius: 4px;
 }
 </style>
