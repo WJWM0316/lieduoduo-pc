@@ -114,7 +114,9 @@ div.el-dialog {
   text-align: right;
 }
 .el-message-box.el-message-box--center .el-message-box__status {
-  padding-right: 10px
+  padding-right: 10px;
+  height: 22px;
+  &::before {padding-left: 0;}
 }
 .el-message-box.el-message-box--center .el-message-box__content {
   text-align: left;
