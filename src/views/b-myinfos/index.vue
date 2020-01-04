@@ -3,7 +3,7 @@
   <div class="app-infos">
     <div class="infos-header">
       <h1>我的资料</h1>
-      <el-button type="primary" v-if="currentSharePopup.uid" @click="showSharePopup = true"> <i class="iconfont icon-fenxiang"></i> 分享主页</el-button>
+      <el-button type="primary" v-if="currentSharePopup.uid" @click="showSharePopup = true"><i class="iconfont icon-fenxiang"></i>分享主页</el-button>
     </div>
     <p class="app-infos-tips">加“<i>*</i>”号的内容，是必须填写的项目；姓名和性别为招聘官认证信息，修改请联系 400-065-5788</p>
     <el-form :model="form" ref="form" label-suffix=":" :rules="formRules" label-width="120px" class="el-form-infos">
@@ -270,6 +270,7 @@ export default {
   }
   .iconfont {
     font-size: 14px;
+    padding-right: 7px;
   }
 }
 .app-infos-tips {

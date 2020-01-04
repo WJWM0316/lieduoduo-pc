@@ -211,15 +211,17 @@ export default {
       height: 32px;
       display: flex;
       .el-button {
-        border-radius: 0;
+        border-radius: 0 2px 2px 0;
       }
     }
     .invite-copy-url {
       width: 230px;
       height: 32px;
       line-height: 32px;
+      border-radius: 2px 0 0 2px;
       border: 1px solid $border-color-1;
-       padding:0 14px;
+      border-right: none;
+      padding:0 14px;
       color: $title-color-2;
       font-size: 12px;
       box-sizing: border-box;
