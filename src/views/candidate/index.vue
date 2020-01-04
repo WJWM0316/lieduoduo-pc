@@ -2206,15 +2206,14 @@ export default class CourseList extends Vue {
       }
       this.showResume = true
       this.getShareResume(resumeId)
+      getResumeIdApi({ uid: resumeId }).then(res => {
+        this.$store.dispatch('redDotfun')
+        this.nowResumeMsg = res.data.data
+        this.showuid = res.data.data.uid
+        this.showindex = res.data.data
+        this.init()
+      })
     }
-    
-    getResumeIdApi({ uid: resumeId }).then(res => {
-      this.$store.dispatch('redDotfun')
-      this.nowResumeMsg = res.data.data
-      this.showuid = res.data.data.uid
-      this.showindex = res.data.data
-      this.init()
-    })
   }
 
   // 获取简历二维码
