@@ -9,10 +9,10 @@
 					:key="index">
 						{{item.text}}<span class="reddot" v-if="item.showRedDot"></span>
 				</li>
-				<div class="notice" @mouseenter="shownotice" @mouseleave="isshownotice = false">
+				<div class="notice">
 					<i class="iconfont icon-tongzhi"></i>
 					<span>获取约面通知</span>
-					<div class="notice-diggle" v-show="isshownotice">
+					<div class="notice-diggle">
 						<div class="headbar">
 							<img src="@/assets/images/pic_message.png" alt="">
 						</div>
@@ -532,6 +532,12 @@ export default {
 			float: right;
 			cursor: pointer;
 			position: relative;
+			&:hover{
+				.notice-diggle {
+					display: block;
+					opacity: 1;
+				}
+			};
 			i{
 				font-size: 16px;
 				color: #00C4CD;
@@ -551,6 +557,9 @@ export default {
 				height:276px;
 				box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
 				z-index: 1;
+				opacity: 0;
+				display: none;
+				transition: all ease .2s;
 				.headbar{
 					width: 260px;
 					height: 81px;

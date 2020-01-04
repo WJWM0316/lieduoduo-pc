@@ -1,6 +1,6 @@
 <template>
 <div class="search-content">
-  <div class="li-item clearfix" v-for="(item, index) in data.list" :key="index">
+  <div class="li-item_schedule clearfix" v-for="(item, index) in data.list" :key="index">
 		<div class="col-left">
 			<div class="logo-box">
 				<img :src="item.avatar.smallUrl" alt="avatar" v-if="item.avatar" />
@@ -127,10 +127,9 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.li-item {
+.li-item_schedule {
 	position: relative;
 	padding: 33px 40px;
-	cursor: pointer;
 	transition: .2s background;
 	&:hover{
 		background: #f8fafa;
@@ -263,7 +262,6 @@ export default {
 		display: flex;
 		height: 20px;
 		line-height: 20px;
-		font-size: $font-color-6;
 		.icon-zhiwei {
 			color: $iconFont-gray;
 		}
