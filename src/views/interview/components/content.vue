@@ -305,7 +305,6 @@ export default {
 				dateList[0].number = 0
 				this.clearDayInterviewRedDot(dateList[0].time)
 			}
-			console.log(item, index)
 			switch(item.api) {
 				case 'getApplyList':
 					this.applyData.page = 1
