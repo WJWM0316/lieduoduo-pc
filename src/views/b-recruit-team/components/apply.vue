@@ -16,7 +16,7 @@
         </template>
       </ul>
     </div>
-    <div class="apply-lists" v-infinite-scroll="loadmore" :infinite-scroll-disabled="disabledScroll">
+    <div class="apply-lists" v-loading="getLoading && total === 0" v-infinite-scroll="loadmore" :infinite-scroll-disabled="disabledScroll">
       <no-found class="no-apply-lists" v-if="!lists.length && !getLoading" :image-url="nofoundUrl" :tip-text="tipsText[currentValue]" max-width="160">
         <el-button type="primary" style="width: 143px;" v-if="currentValue < 2" @click="share">邀请同事</el-button>
       </no-found>
