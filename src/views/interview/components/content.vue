@@ -520,6 +520,7 @@ export default {
 			cursor: pointer;
 			vertical-align: middle;
 			color: $font-color-6;
+			font-size: 16px;
 			&:before{
 				content: '';
 				display: block;

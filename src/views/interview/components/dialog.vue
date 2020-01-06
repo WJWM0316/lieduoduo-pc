@@ -350,7 +350,9 @@ export default {
     font-size: 14px;
     color: $iconFont-gray;
     display: inline-block;
-    vertical-align: middle;
+    vertical-align: top;
+    position: relative;
+    top: 1px;
   }
   .ul-li-text-box{
     display: inline-block;
@@ -362,8 +364,19 @@ export default {
     display: inline-block;
     font-size:14px;
     padding-right: 7px;
-    border-right: 1px solid $border-color-1;
     margin-right: 7px;
+    position: relative;
+    &:after{
+      content: '';
+      display: block;
+      height: 12px;
+      width: 1px;
+      top: 50%;
+      margin-top: -6px;
+      right: 0;
+      background: $border-color-1;
+      position: absolute;
+    }
   }
   .user-contact {
     display: inline-block;
