@@ -185,7 +185,7 @@ export default {
   }
 }
 .recruit-lists {
-  min-height: 100px;
+  min-height: 150px;
 }
 .recruit-list {
   @include flex-v-center;

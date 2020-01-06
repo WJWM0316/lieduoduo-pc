@@ -390,7 +390,6 @@ export default {
 .cresume-upload-wrapper /deep/ .common-list li {
   width: 88px;
   height: 88px;
-  border: 1px solid $border-color-8;
 }
 </style>
 <style>

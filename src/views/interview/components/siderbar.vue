@@ -132,8 +132,6 @@ export default {
     line-height: 1;
     vertical-align: middle;
     margin: 0 8px 0 6px;
-    position: relative;
-    top: -1px;
   }
 	.get-more{
 		height: 46px;
