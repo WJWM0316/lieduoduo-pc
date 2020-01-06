@@ -172,7 +172,8 @@ export default {
       },
       address: this.information.address,
       middleUrl: this.information.logoInfo.middleUrl,
-      albumInfo: this.information.albumInfo
+      albumInfo: this.information.albumInfo,
+      fromCaching: '' // 表单数据缓存
     }
   },
   components: {
@@ -278,6 +279,7 @@ export default {
   },
   mounted () {
     this.$nextTick(() => {
+      this.fromCaching = JSON.stringify(this.from)
       companyFinancingApi()
         .then(res => {
           this.financing = res.data.data
