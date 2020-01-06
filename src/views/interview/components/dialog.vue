@@ -145,10 +145,10 @@
             <div class="user-contact color2">{{infos.arrangementInfo.mobile}}</div>
           </div>
         </li>
-        <li class="item-li">
+        <li class="item-li" v-if="infos.positionId">
           <i class="iconfont icon-zhiwei1"></i>
           <div class="ul-li-text-box">
-            <div class="color1 position-name" v-if="infos.positionId">{{infos.positionName}}</div>
+            <div class="color1 position-name">{{infos.positionName}}</div>
           </div>
         </li>
         <li class="item-li">
