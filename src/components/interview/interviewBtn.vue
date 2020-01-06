@@ -53,6 +53,7 @@
     </section>
 
     <loginPop ref="loginPop" v-if="!hasLogin"></loginPop>
+    <dialog-model v-model="model.show" :item="model.interview" />
   </div>
 </template>
 <script>
@@ -60,10 +61,13 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import loginPop from '@/components/common/loginPop'
 import { getInterviewStatusApi, applyInterviewApi, confirmInterviewApi, refuseInterviewApi } from '@/api/interview.js'
+import DialogModel from '@/views/interview/components/dialog'
+
 @Component({
   name: 'interviewBtn',
   components: {
-    loginPop
+    loginPop,
+    DialogModel
   },
   props: {
     infos: {
@@ -91,12 +95,19 @@ export default class InterviewBtn extends Component {
   popParmas = {} // 弹窗需要的参数
   hasStatus = false
   showSharePop = false
+  model = {
+    show: false,
+    interview: {}
+  }
   getInterviewStatus () {
     this.btnLoad = true
     getInterviewStatusApi({ type: this.type, vkey: this.infos.vkey }).then(res => {
       this.interviewInfos = res.data.data
       this.hasStatus = true
       this.btnLoad = false
+      if ([41].includes(res.data.data.interviewStatus)) {
+        this.model.interview = res.data.data.data[0]
+      }
     }).catch(e => {
       this.btnLoad = false
     })
@@ -188,10 +199,12 @@ export default class InterviewBtn extends Component {
         this.confirmInterview()
         break
       case 'job-hunting-view-detail':
-        let popParmas = {
-          interviewId: this.interviewInfos.data[0].interviewId
-        }
-        this.$store.commit('guideQrcodePop', { switch: true, type: 'interviewDetail', params: popParmas })
+        this.model.show = true
+        console.log(this.model)
+        // let popParmas = {
+        //   interviewId: this.interviewInfos.data[0].interviewId
+        // }
+        // this.$store.commit('guideQrcodePop', { switch: true, type: 'interviewDetail', params: popParmas })
         break
     }
   }
