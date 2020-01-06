@@ -913,7 +913,7 @@ export default {
         } else {
           this.getlist()
         }
-        if (this.tablist.length > 0) {
+        if (this.tablist.length > 1) {
           deleteScheduleTabRedDotApi(this.tablist[1].time)
         }
       })

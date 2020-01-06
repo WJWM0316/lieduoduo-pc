@@ -294,6 +294,19 @@ export default {
 				this.$router.push({ query })
 			})
 		},
+		clearRedDotBar(oldIndex, newIndex) {
+			let list = this[['applyScreen', 'receiveScreen', 'dateList'][oldIndex]]
+			let beforeActive = list.find(v => v.active)
+			if (oldIndex === 0 || oldIndex === 1) {
+				if (beforeActive.showRedDot && beforeActive.type) {
+					this.clearTabInterviewRedDot(beforeActive.type)
+				}
+			} else {
+				if (beforeActive.number) {
+					this.clearDayInterviewRedDot(beforeActive.time)
+				}
+			}
+		},
 		pTabClick(item, index) {
 			let beforeDate = this.dateList.slice().find(v => v.active)
 			if (beforeDate) {
@@ -306,6 +319,7 @@ export default {
 			}
 			this.interviewBar[this.pIndex].active = false
 			item.active = true
+			this.clearRedDotBar(this.pIndex, index)
 			this.pIndex = index
 			switch(item.api) {
 				case 'getApplyList':

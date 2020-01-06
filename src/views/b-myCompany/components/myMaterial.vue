@@ -298,7 +298,7 @@ export default {
     min-width: 960px;
     margin: 30px auto 0 auto;
     background: #ffffff;
-    padding: 48px 82px 30px 82px !important;
+    padding: 48px 82px !important;
 }
 
 .myMaterial-head-text{
