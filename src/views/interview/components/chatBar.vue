@@ -260,9 +260,11 @@ export default {
 	}
 	.li-item-content-admin{
 		text-align: left;
+		height: 100%;
 		> div {
 			display: inline-block;
 			vertical-align: middle;
+			height: 100%;
 		}
 	}
 	.li-item-content-position{
@@ -288,6 +290,13 @@ export default {
 	.img-box-inner{
 		display: inline-block;
 		@include img-radius(46px, 46px, 23px);
+		overflow: unset;
+		background: unset;
+		position: absolute;
+		top: -3px;
+		img{
+			border-radius: 50%;
+		}
 	}
 	.infos{
 		position: absolute;
