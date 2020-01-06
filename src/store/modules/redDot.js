@@ -22,7 +22,7 @@ export default {
   },
   actions: {
     redDotfun (store) {
-      if (store.rootState.hasLogin) return
+      if (!store.rootState.hasLogin) return
       getLeftColumnRedDotInfoApi()
         .then(res => {
           let data = res.data.data

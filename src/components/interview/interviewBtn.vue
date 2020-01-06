@@ -53,14 +53,20 @@
     </section>
 
     <loginPop ref="loginPop" v-if="!hasLogin"></loginPop>
-    <dialog-model v-model="model.show" :item="model.interview" />
+    <dialog-model v-model="model.show" :item="model.interview" @confirm="confirm" />
   </div>
 </template>
 <script>
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import loginPop from '@/components/common/loginPop'
-import { getInterviewStatusApi, applyInterviewApi, confirmInterviewApi, refuseInterviewApi } from '@/api/interview.js'
+import {
+  getInterviewStatusApi,
+  applyInterviewApi,
+  confirmInterviewApi,
+  refuseInterviewApi,
+  clearInterviewItemRedDotApi
+} from '@/api/interview'
 import DialogModel from '@/views/interview/components/dialog'
 
 @Component({
@@ -85,7 +91,12 @@ import DialogModel from '@/views/interview/components/dialog'
   },
   computed: mapState({
     hasLogin: state => state.hasLogin
-  })
+  }),
+  methods: {
+    ...mapActions([
+      'getInterviewRedDotInfoApi'
+    ])
+  }
 })
 export default class InterviewBtn extends Component {
   btnLoad = false
@@ -99,13 +110,16 @@ export default class InterviewBtn extends Component {
     show: false,
     interview: {}
   }
+  clearInterviewItemRedDot(data) {
+    return clearInterviewItemRedDotApi(data)
+  }
   getInterviewStatus () {
     this.btnLoad = true
     getInterviewStatusApi({ type: this.type, vkey: this.infos.vkey }).then(res => {
       this.interviewInfos = res.data.data
       this.hasStatus = true
       this.btnLoad = false
-      if ([41].includes(res.data.data.interviewStatus)) {
+      if (res.data.data.data.length) {
         this.model.interview = res.data.data.data[0]
       }
     }).catch(e => {
@@ -183,6 +197,7 @@ export default class InterviewBtn extends Component {
     })
   }
   todoAction (type) {
+    let { interview } = this.model
     if (!this.hasLogin) {
       this.$refs.loginPop.showLoginPop = true
       return
@@ -190,23 +205,32 @@ export default class InterviewBtn extends Component {
     if (this.btnLoad) return
     switch (type) {
       case 'job-hunting-reject':
-        this.jobRejectChat()
+        console.log(interview)
+        this.clearInterviewItemRedDot({id: interview.interviewId}).then(() => {
+          this.getInterviewRedDotInfoApi().then(() => this.jobRejectChat())          
+        })
         break
       case 'job-hunting-chat':
         this.jobHunterChat()
         break
       case 'job-hunting-accept':
-        this.confirmInterview()
+        this.clearInterviewItemRedDot({id: interview.interviewId}).then(() => {
+          this.getInterviewRedDotInfoApi().then(() => this.confirmInterview())
+        })        
         break
       case 'job-hunting-view-detail':
-        this.model.show = true
-        console.log(this.model)
+        this.clearInterviewItemRedDot({id: this.model.interview.interviewId}).then(() => {
+          this.model.show = true
+        })        
         // let popParmas = {
         //   interviewId: this.interviewInfos.data[0].interviewId
         // }
         // this.$store.commit('guideQrcodePop', { switch: true, type: 'interviewDetail', params: popParmas })
         break
     }
+  }
+  confirm () {
+    this.getInterviewStatus()
   }
   created () {
     this.getInterviewStatus()
