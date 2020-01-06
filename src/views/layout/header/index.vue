@@ -51,7 +51,7 @@
                 class="router-link"
                 :class="[isActive && 'router-link-active', isExactActive && 'router-link-exact-active']"
                 @click="handeToInterview">
-                面试<span class="reddot" v-if="interviewData.jobhunterInterviewTotal">{{interviewData.jobhunterInterviewTotal}}</span>
+                面试<font class="reddot" v-if="interviewData.jobhunterInterviewTotal">{{interviewData.jobhunterInterviewTotal > 99 ? '99...' : interviewData.jobhunterInterviewTotal}}</font>
               </span>
             </router-link>
             <router-link tag="span" to="/cresume" class="resume" v-slot="{ href, isActive, isExactActive }">
@@ -297,7 +297,10 @@ $header-height-1: $page-header-height;
   }
   li:hover, .router-link-active{
     color: $nav-color-hover;
-    background: $bg-color-3
+    background: $bg-color-3;
+    .reddot{
+      color: white
+    }
   }
 }
 .header-user-info {
@@ -311,8 +314,8 @@ $header-height-1: $page-header-height;
     color: $nav-color-hover;
   }
   .reddot{
-    background:$error-color-1;
-    border-radius:7px;
+    background:#F45322;
+    border-radius:8px;
     padding: 0 4px;
     font-size:12px;
     font-weight:400;
@@ -326,7 +329,7 @@ $header-height-1: $page-header-height;
     padding-right: 20px;
   }
   span ~ span {
-    padding-left: 24px;
+    margin-left: 42px;
   }
   span:hover,.active {
     color: $nav-color-hover;
