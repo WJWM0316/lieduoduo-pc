@@ -35,6 +35,7 @@ export default new Vuex.Store({
       type: 'tocIndex',
       params: ''
     },
+		roleCallBack: null, 
     areaList: []
   },
   // 在getters中声明state中变量的计算函数，缓存计算后的数据， 通过 this.$store.getters 调用
@@ -85,7 +86,11 @@ export default new Vuex.Store({
       removeAccessToken()
     },
     setRoleInfos (state, data) {
-      state.roleInfos = data
+			if (state.roleCallBack) {
+				state.roleCallBack()
+			}
+			state.roleInfos = data
+			state.roleCallBack = true
     },
     setRecruiterinfo (state, data) {
       state.recruiterinfo = data
