@@ -8,11 +8,10 @@ import common from './common.js'
 import other from './other.js'
 import login from './login.js'
 import interview from './interview.js'
-
+import { Message } from 'element-ui'
 import store from '../store/store'
-// import { getUserInfosApi } from '@/api/auth.js'
-// import { getUserRoleInfoApi } from '@/api/auth'
 
+let checkRecruiterRouter = ['recruiterIndex', 'postJob', 'candidateType', 'candidatetype', 'interviewRecords', 'myCompany', 'myinfos', 'recruiteam']
 let routes = [
   ...applicant,
   ...recruiter,
@@ -23,37 +22,39 @@ let routes = [
   ...interview
 ]
 Vue.use(Router)
-// const originalPush = Router.prototype.push
-// Router.prototype.push = function push (location) {
-//   return originalPush.call(this, location).catch(err => err)
-// }
+
 const router = new Router({
   mode: 'history',
   routes
-  // scrollBehavior (to, from, savedPosition) {
-  //   return savedPosition || { x: 0, y: 0 }
-  // }
 })
-/* let getUserInfo = () => {
-  return getUserInfosApi().then(res => {
-    store.commit('SETLOGIN', 1)
-    store.commit('setUserInfo', res.data.data)
-  }).catch(e => {
-    store.commit('SETLOGIN', 0)
-  })
-}
-let getUserRoleInfo = () => {
-  return getUserRoleInfoApi().then(res => {
-    if (res.data.data.isJobhunter) this.$store.dispatch('getMyResume')
-    store.commit('setRoleInfos', res.data.data)
-  })
-} */
+
 router.beforeEach((to, from, next) => {
   store.dispatch('setPageName', { name: to.name })
   if (from.name !== to.name) {
     window.scrollTo(0, 0)
   }
-  next(true)
+  let checkRole = () => {
+    if (!store.state.roleInfos.isRecruiter) {
+      next({path: '/register'})
+      Message({
+        type: 'worn',
+        message: '您还未成为招聘官，请先认证成为招聘官！'
+      })
+    } else {
+      next(true)
+    }
+  }
+	if (checkRecruiterRouter.includes(to.name)) {
+		if (store.state.roleCallBack) {
+      checkRole()
+		} else {
+			store.state.roleCallBack = () => {
+				checkRole()
+			}
+		}
+	} else {
+    next(true)
+  }
 })
 
 export default router

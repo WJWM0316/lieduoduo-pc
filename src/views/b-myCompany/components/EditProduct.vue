@@ -187,6 +187,8 @@ export default {
 	font-size: 12px;
 	color: $font-color-9;
   font-weight: 400;
+  line-height:20px;
+  margin-top: 8px;
   span{
     color: $error-color-1;
   }

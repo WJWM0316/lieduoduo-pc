@@ -9,7 +9,7 @@ export const scheduleBar = [
 	{
     api: 'getScheduleList',
     text: '最近面试',
-    todoNumber: 10,
+    showRedDot: 10,
     active: true,
     flag: 'jobhunterApplyList',
     tab: 'apply'
@@ -89,14 +89,14 @@ export const receiveScreen = [
   	key: '全部',
   	value: 'all',
   	active: true,
-  	todoNumber: 0,
+  	showRedDot: 0,
   	flag: 'all'
   },
   {
   	key: '待处理',
   	value: 'waiting_processing',
   	active: false,
-  	todoNumber: 0,
+  	showRedDot: 0,
   	flag: 'jobhunterInviteWaitingProcessing',
   	type: 'invite_waiting_processing'
   },
@@ -104,7 +104,7 @@ export const receiveScreen = [
   	key: '待安排面试',
   	value: 'waiting_arrangement',
   	active: false,
-  	todoNumber: 0,
+  	showRedDot: 0,
   	flag: 'jobhunterInviteWaitingArrangement',
   	type: 'invite_waiting_arrangement'
   },
@@ -112,7 +112,7 @@ export const receiveScreen = [
   	key: '已安排面试',
   	value: 'have_arrangement',
   	active: false,
-  	todoNumber: 0,
+  	showRedDot: 0,
   	flag: 'jobhunterInviteHaveArrangement',
   	type: 'invite_have_arrangement'
   },
@@ -120,7 +120,7 @@ export const receiveScreen = [
   	key: '不合适',
   	value: 'not_suitable',
   	active: false,
-  	todoNumber: 0,
+  	showRedDot: 0,
   	flag: 'jobhunterInviteNotSuitable',
   	type: 'invite_not_suitable'
   }
@@ -168,7 +168,7 @@ export const asideBar = {
       text: '申请记录',
       reddot: 0,
       iconClass: 'icon-shenqingjilu',
-      routeName: 'interviewApply',
+      routeName: 'jobhunterInterview',
       query: {
         page: 1,
         tab: 'all',
@@ -181,7 +181,7 @@ export const asideBar = {
       text: '收到邀请',
       reddot: 0,
       iconClass: 'icon-shoudaoyaoqing',
-      routeName: 'interviewReceive',
+      routeName: 'jobhunterInterview',
       query: {
         page: 1,
         tab: 'all',
@@ -194,7 +194,7 @@ export const asideBar = {
       text: '面试日程',
       reddot: 0,
       iconClass: 'icon-ganxingqu-',
-      routeName: 'interviewSchedule',
+      routeName: 'jobhunterInterview',
       query: {
         page: 1,
         tab: 'all',
