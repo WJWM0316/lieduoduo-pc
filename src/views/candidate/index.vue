@@ -1571,7 +1571,7 @@ export default class CourseList extends Vue {
       this.showResume = true
     }
     this.jobuid = uid
-    this.getResume(uid, 'red')
+    this.getResume(uid, 'red', vo)
     if (vo.interviewId) {
       this.interviewId = vo.interviewId
     } else {
@@ -2203,7 +2203,7 @@ export default class CourseList extends Vue {
   }
 
   // 获取简历
-  getResume (resumeId, index) {
+  getResume (resumeId, index, data) {
     if (index !== 'red') {
       this.pop = {
         isShow: true,
@@ -2211,14 +2211,17 @@ export default class CourseList extends Vue {
       }
       this.showResume = true
       this.getShareResume(resumeId)
-      getResumeIdApi({ uid: resumeId }).then(res => {
-        this.$store.dispatch('redDotfun')
-        this.nowResumeMsg = res.data.data
-        this.showuid = res.data.data.uid
-        this.showindex = res.data.data
-        // this.init()
-      })
     }
+    getResumeIdApi({ uid: resumeId }).then(res => {
+      this.$store.dispatch('redDotfun')
+      if (data) {
+        data.redDot = 0
+      }
+      this.nowResumeMsg = res.data.data
+      this.showuid = res.data.data.uid
+      this.showindex = res.data.data
+      // this.init()
+    })
   }
 
   // 获取简历二维码

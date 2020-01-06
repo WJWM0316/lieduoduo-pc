@@ -207,7 +207,7 @@ export default {
               type: 'warning',
               center: true
             }).catch(() => {
-              this.saveEditCompany()
+              return false
             })
           } else {
             this.saveEditCompany()
