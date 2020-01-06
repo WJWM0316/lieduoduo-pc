@@ -147,7 +147,6 @@ export default {
           this.$store.dispatch('logoutApi', { curPage: 1 }).then(() => {
             this.$store.commit('removeResume')
           })
-
           break
         case 'usercenter':
           this.$router.push('/position')
@@ -178,7 +177,7 @@ export default {
         this.$router.push({ path: '/cresume' })
       }
     },
-    handeToInterview() {
+    handeToInterview () {
       let query = {
         page: 1,
         tab: 'all',
@@ -186,7 +185,7 @@ export default {
         cIndex: 0,
         q: Date.now()
       }
-      this.$router.push({name: 'interviewApply', query})
+      this.$router.push({ name: 'jobhunterInterview', query })
     },
     changeLocation (item) {
       this.addressName = item.name
