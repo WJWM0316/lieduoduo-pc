@@ -3796,4 +3796,7 @@ export default {
   width: 8px;
   height: 8px;
 }
+.interviewrecords .el-loading-mask {
+  z-index: 0;
+}
 </style>

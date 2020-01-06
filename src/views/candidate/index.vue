@@ -2278,4 +2278,7 @@ export default class CourseList extends Vue {
   right: 14px !important;
   top: 8px;
 }
+#candidate .el-loading-mask {
+  z-index: 0;
+}
 </style>

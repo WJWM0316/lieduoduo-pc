@@ -1961,4 +1961,7 @@ export default class CourseList extends Vue {
 .item .el-select .el-input .el-select__caret{
   line-height: 40px!important;
 }
+#candidate .el-loading-mask {
+  z-index: 0;
+}
 </style>
