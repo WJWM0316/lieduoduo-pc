@@ -100,7 +100,7 @@
                     <span>约BOSS</span>
                 </div>
                 <div class="guide_text">
-                    <i class="iconfont icon-yuemian" style="font-size: 14px;"></i>
+                    <i class="iconfont icon-yuemian" style="font-size: 13px;"></i>
                     <span>直接面谈</span>
                 </div>
             </div>

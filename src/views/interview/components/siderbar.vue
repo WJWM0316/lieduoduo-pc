@@ -24,7 +24,7 @@
 		  				<div class="company-infos">
 		  					<div class="li-item-row-top">
 		  						<div class="company-name">{{item.companyInfo && item.companyInfo.companyShortname}}</div>
-		  						<div class="company-address"> | {{item.city}}{{item.district}}</div>
+		  						<div class="company-address">&nbsp;&nbsp;|&nbsp;&nbsp;{{item.city}}{{item.district}}</div>
 		  					</div>
 		  					<div class="li-item-row-bottom">
 		  						{{item.companyInfo && item.companyInfo.financingInfo}} · {{item.companyInfo && item.companyInfo.employeesInfo}} · {{item.companyInfo && item.companyInfo.industry}}
@@ -189,7 +189,9 @@ export default {
 		vertical-align: middle;
 	}
 	.company-address{
-		display: inline;
+		display: inline-block;
+		@include ellipsis-over(96px);
+		vertical-align: middle
 	}
 }
 </style>
