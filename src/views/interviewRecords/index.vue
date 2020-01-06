@@ -885,14 +885,6 @@ export default {
         arr.unshift({ name: '全部', id: '' })
         arr.push({ name: '无职位约面', id: 0 })
         this.mgoptions = arr
-        // this.mgoptions.forEach(item => {
-        //   item.children.forEach(item1 => {
-        //     item1.children.forEach(item2 => {
-        //       let result = JSON.stringify(item2.children)
-        //       if (result === '[]') delete item2.children
-        //     })
-        //   })
-        // })
       })
     },
     // 今天和明天列表
@@ -1071,7 +1063,11 @@ export default {
           if (vo.redDot > 0) { // 没有红点则不去请求接口，减少并发
             getdeleteInterviewTabRedDotApi(this.interviewId).then(res => {
               this.$store.dispatch('redDotfun')
-              this.getScheduleList() // 刷新列表数据
+              if (this.$route.query.start) {
+                this.gettablist()
+              } else {
+                this.getlist()
+              }
             })
           }
           break
