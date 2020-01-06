@@ -265,7 +265,7 @@ export default new Vuex.Store({
           store.commit('LOGOUT', data)
           // 在C端页面退登
           if (data.curPage === 1) {
-            if (router.history.current.name === 'cresume') {
+            if (['cresume', 'jobhunterInterview'].includes(router.history.current.name)) {
               router.replace({ path: '/index' })
             } else {
               window.location.href = location.href

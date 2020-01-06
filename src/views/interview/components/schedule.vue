@@ -45,7 +45,7 @@
   				<i class="iconfont icon-zhiwei"></i>
   				<span>{{item.positionName}}</span>
   			</router-link>
-				<div class="position" v-if="!item.positionId">
+				<div class="noposition" v-if="!item.positionId">
 					<i class="iconfont icon-zhiwei"></i>
 					<span>直接约面</span>
 				</div>
@@ -58,7 +58,7 @@
 			</div>
 		</div>
 		<div class="dottedlien"></div>
-		<div class="listredhot" v-if="item.redDot"></div>
+		<!-- <div class="listredhot" v-if="item.redDot"></div> -->
   </div>
 	<no-data v-if="!data.total && data.hasInitPage" />
 	<company-map :visible.sync="showadress" @closedialog="cancel" :companyAddress="companyAddress"></company-map>

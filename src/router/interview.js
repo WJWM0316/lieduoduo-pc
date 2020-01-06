@@ -6,21 +6,9 @@ const interview = [
     component: Layout,
     children: [
       {
-        path: 'apply',
-        name: 'interviewApply',
+        path: 'index',
+        name: 'jobhunterInterview',
         title: '收到申请',
-        component: resolve => require(['../views/interview/index.vue'], resolve)
-      },
-      {
-        path: 'receive',
-        name: 'interviewReceive',
-        title: '收到邀请',
-        component: resolve => require(['../views/interview/index.vue'], resolve)
-      },
-      {
-        path: 'schedule',
-        name: 'interviewSchedule',
-        title: '面试日程',
         component: resolve => require(['../views/interview/index.vue'], resolve)
       }
     ]
