@@ -294,9 +294,24 @@ export default {
 				this.$router.push({ query })
 			})
 		},
+		clearRedDot(oldIndex, newIndex) {
+			let tem = ['applyScreen', 'receiveScreen', 'dateList']
+			let list = this[tem[oldIndex]]
+			let beforeActive = list.find(v => v.active)
+			if (oldIndex === 0 || oldIndex === 1) {
+				if (beforeActive.showRedDot && beforeActive.type) {
+					this.clearTabInterviewRedDot(beforeActive.type)
+				}
+			} else {
+				if (beforeActive.number) {
+					this.clearDayInterviewRedDot(beforeActive.time)
+				}
+			}
+		},
 		pTabClick(item, index) {
 			this.interviewBar[this.pIndex].active = false
 			item.active = true
+			this.clearRedDot(this.pIndex, index)
 			this.pIndex = index
 			switch(item.api) {
 				case 'getApplyList':
