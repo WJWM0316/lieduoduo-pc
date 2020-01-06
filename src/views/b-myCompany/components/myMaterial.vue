@@ -201,7 +201,7 @@ export default {
       this.$refs.fromMyMaterial.validate(valid => {
         if (valid) {
           if (this.from.website === '' || this.from.albumInfo || this.from.address) {
-            this.$confirm('温馨提示', '完善全部信息，可以提高公司的曝光与排名，是否继续完善?', {
+            this.$confirm('完善全部信息，可以提高公司的曝光与排名，是否继续完善?', '温馨提示', {
               confirmButtonText: '继续完善',
               cancelButtonText: '直接保存',
               type: 'warning',

@@ -28,11 +28,11 @@ export default {
   },
   computed: {
     shouldBottomShown () {
-      return !['position24h', 'marketOriginality'].includes(this.$route.name)
+      return !['position24h', 'marketOriginality', 'dreamDisco'].includes(this.$route.name)
     }
   },
-  data() {
-    return  {
+  data () {
+    return {
       cdnPath
     }
   }
