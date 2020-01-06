@@ -182,6 +182,11 @@ export default {
   },
   methods: {
     cancel () {
+      if (this.fromCaching === JSON.stringify(this.from)) {
+        let type = '公司主页'
+        this.$emit('click', type)
+        return
+      }
       this.$confirm('确定退出，更新的内容将不被保存', '有编辑中内容尚未保存，确定退出编辑吗?', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
