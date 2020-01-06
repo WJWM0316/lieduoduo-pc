@@ -122,7 +122,7 @@
                 <span v-else>{{item.statusDesc}}</span>
               </div>
               </div>
-              <div class="phone" v-if="item.status === 21 || item.status === 31 || item.status === 41 || item.status === 32">手机：{{item.resume.mobile}}</div>
+              <div class="phone" v-if="[21, 31, 32, 41].includes(item.status)">手机：{{item.resume.mobile}}</div>
               <div class="redot" v-if="item.redDot"></div>
           </div>
           <div class="bloCont">
@@ -189,16 +189,16 @@
               </div>
             </div>
             <div class="userOp">
-              <div class="like_user" @click.stop="setJob(item.jobhunterUid, 'inappropriate', item, 1)" v-show="item.status === 11 || item.status === 12 || item.status === 21 || item.status === 31 || item.status === 32 || item.status === 41">
+              <div class="like_user" @click.stop="setJob(item.jobhunterUid, 'inappropriate', item, 1)" v-show="[11, 12, 21, 31, 32, 41].includes(item.status)">
                 不合适
               </div>
               <!-- <div class="like_user" @click.stop="setJob(item.jobhunterUid, 'watch-reson', item, 1)" v-show="item.status === 52 || item.status === 53">
                   查看原因
                 </div> -->
-                <div class="like_user" @click.stop="setJob(item.jobhunterUid, 'check-invitation', item, 1)" v-show="item.status === 57 || item.status === 58">
+                <div class="like_user" @click.stop="setJob(item.jobhunterUid, 'check-invitation', item, 1)" v-show="[57, 58].includes(item.status)">
                   去评价
                 </div>
-                <div class="like_user" @click.stop="" v-show="item.status === 60 || item.status === 61">
+                <div class="like_user" @click.stop="" v-show="[60, 61].includes(item.status)">
                   <span :style="'color: #92929B;'">已评价</span>
                 </div>
               <div class="btn" @click.stop="setJob(item.jobhunterUid, 'confirm-interview', item, 1)" v-if="item.status === 11">查看联系</div>
@@ -215,8 +215,8 @@
                 <span>修改面试</span>
                 </div>
               <!-- <div class="btn" @click.stop="setJob(item.jobhunterUid, 'interview-retract', item, 1)" v-if="item.status === 52 || item.status === 53">撤回</div> -->
-              <div class="btn" @click.stop="setJob(item.jobhunterUid, 'check-invitation', item, 1)" v-if="item.status === 41 || item.status === 51 || item.status === 57 || item.status === 58 || item.status === 59 || item.status === 60 || item.status === 61 ">面试详情</div>
-              <div class="btn" @click="getResume(item.jobhunterUid, index)" v-if="item.status === 52 || item.status === 53 || item.status === 54 || item.status === 55">查看简历</div>
+              <div class="btn" @click.stop="setJob(item.jobhunterUid, 'check-invitation', item, 1)" v-if="[41, 51, 57, 58, 59, 60, 61].includes(item.status)">面试详情</div>
+              <div class="btn" @click="getResume(item.jobhunterUid, index)" v-if="[52, 53, 54, 55].includes(item.status)">查看简历</div>
             </div>
           </div>
         </div>
@@ -689,7 +689,7 @@
                 </div>
               </div>
               <!-- 评价 -->
-              <div class="stepevaluate clearfix" v-show="jobhunterInfo.status === 57 || jobhunterInfo.status === 58">
+              <div class="stepevaluate clearfix" v-show="[57, 58].includes(jobhunterInfo.status)">
                 <div class="titlel">
                   <div class="dian"></div>
                   <div class="tex">到场面试后感觉如何？评价一下吧~</div>
@@ -705,7 +705,7 @@
                 </div>
                 </div>
               </div>
-              <div class="end-status" v-show="jobhunterInfo.status === 60 || jobhunterInfo.status === 61 || jobhunterInfo.status === 59">
+              <div class="end-status" v-show="[59, 60, 61].includes(jobhunterInfo.status)">
                 <div class="status-icon">
                   <img v-show="jobhunterInfo.status === 60" src="@/assets/images/xiao.png" />
                   <img v-show="jobhunterInfo.status === 61" src="@/assets/images/ku.png" />
@@ -2216,7 +2216,7 @@ export default class CourseList extends Vue {
         this.nowResumeMsg = res.data.data
         this.showuid = res.data.data.uid
         this.showindex = res.data.data
-        this.init()
+        // this.init()
       })
     }
   }

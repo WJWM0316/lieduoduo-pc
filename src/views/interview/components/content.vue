@@ -586,6 +586,7 @@ export default {
 				.headbar{
 					width: 260px;
 					height: 81px;
+					border-radius: 8px 8px 0 0;
 					background: #00C4CD;
 					img{
 						width: 100%;
@@ -602,11 +603,11 @@ export default {
 					}
 				}
 				.clock{
-					position: absolute;
-					width: 59px;
-					height: 64px;
-					top: 45px;
-    			left: 98px;
+					  position: absolute;
+						width: 44px;
+						height: 47px;
+						top: 54px;
+						left: 95px;
 					img{
 						width: 100%;
 						height: 100%;
