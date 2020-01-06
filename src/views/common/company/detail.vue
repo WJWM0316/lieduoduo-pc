@@ -111,32 +111,31 @@
             <div :class="['recruitmentTeam', companyInformation.albumInfo.length === 0 ? 'resetmar' : '']">
               <p class="recruitmentTeam-title">招聘团队</p>
               <div class="recruitmentTeam-mian">
-                <div
-                  v-for="(item, index) in getCompanysTeamText"
-                  :key="index">
-                  <el-popover
-                    placement="left"
-                    popper-class="user-infos"
-                    v-model="item.show"
-                    trigger="hover">
-                    <div class="box">
-                      <div class="describe" v-show="item.show">
-                        “Hi，对我发布的职位感兴趣？<strong>用微信扫描二维码</strong>，和TA约聊吧。”
-                      </div>
-                      <div class="qr-code"> <img :src="item.qrCode" /> </div>
-                    </div>
-                    <div class="recruitmentTeam-box"  slot="reference">
-											<img :src="item.avatar.smallUrl"/>
-											<div class="recruitmentTeam-text">
-												<p class="recruitmentTeam-text-top">{{ item.name }} | {{ item.position }}</p>
-												<p class="recruitmentTeam-text-buttom">
-													<span>{{ '正在招聘' }}</span>
-													<span class="recruitmentTeam-positionName">{{ item.positionName === 0 ? item.positionName : '&quot;' + item.positionName + '&quot;' }}</span>
-													<span>{{ item.positionName === 0 ? '个职位' : '等' + item.positionNum + '个职位' }}</span>
-												</p>
-											</div>
-										</div>
-									</el-popover>
+                <div class="recruitmentTeam-box" :key="index" v-for="(item, index) in getCompanysTeamText" :class="{'last-item-team': index === getCompanysTeamText.length - 1}">
+                  <img :src="item.avatar.smallUrl"/>
+                  <div class="recruitmentTeam-text">
+                    <p class="recruitmentTeam-text-top">
+                      {{ item.name }} | {{ item.position }}                        
+                      <el-popover
+                        placement="bottom-end"
+                        popper-class="user-infos"
+                        v-model="item.show"
+                        trigger="hover">
+                        <div class="box">
+                          <div class="describe" v-show="item.show">
+                            “Hi，对我发布的职位感兴趣？<strong>用微信扫描二维码</strong>，和TA约聊吧。”
+                          </div>
+                          <div class="qr-code"> <img :src="item.qrCode" /> </div>
+                        </div>
+                        <div slot="reference"><i class="icon iconfont icon-duihua_huaban"></i></div>           
+                      </el-popover>
+                    </p>
+                    <p class="recruitmentTeam-text-buttom">
+                      <span>{{ '正在招聘' }}</span>
+                      <span class="recruitmentTeam-positionName">{{ item.positionName === 0 ? item.positionName : '&quot;' + item.positionName + '&quot;' }}</span>
+                      <span>{{ item.positionName === 0 ? '个职位' : '等' + item.positionNum + '个职位' }}</span>
+                    </p>
+                  </div>
                 </div>
                 <el-button @click="activationType" class="recruitmentTeam-buttom" plain>
                   查看所有Boss的在招职位 <i class="iconfont icon-right"></i>
@@ -236,7 +235,6 @@ export default class companyDetail extends Vue {
     }
     getVkeyCompanyApi(data).then(res => {
       this.companyInformation = res.data.data
-      console.log(this.companyInformation)
       // 遍历地址，没有http协议则加上
       this.companyInformation.product.forEach(function (item, index) {
         item.siteUrl = !item.siteUrl ? '' : item.siteUrl.indexOf('http') !== -1 ? item.siteUrl : 'http://' + item.siteUrl
@@ -724,12 +722,19 @@ to {top:0px;}
 					/*padding-left: 74px;*/
 					position: relative;
           @include flex-v-center;
-          border-top: 1px solid $--input-disabled-border;
+          border-bottom: 1px solid $--input-disabled-border;
           img{
             width: 60px;
             height: 60px;
             border-radius: 50%;
             position: relative;
+          }
+          .el-popover__reference{
+            display: inline;
+          }
+          .icon-duihua_huaban {
+            color: #00C4CD;
+            font-size: 14px;
           }
           .recruitmentTeam-text{
             height: 44px;
@@ -763,8 +768,8 @@ to {top:0px;}
             }
           }
         }
-        .recruitmentTeam-box:first-of-type{
-          border-top: 0 !important;
+        .last-item-team{
+          border-bottom: 0 !important;
         }
         .recruitmentTeam-buttom{
           margin-top: 10px;

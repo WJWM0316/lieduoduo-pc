@@ -514,11 +514,12 @@ export default {
 		padding: 0 40px;
 		li {
 			display: inline-block;
-			margin-right: 96px;
+			margin-right: 50px;
 			position: relative;
 			line-height: 1;
 			cursor: pointer;
 			vertical-align: middle;
+			color: $font-color-6;
 			&:before{
 				content: '';
 				display: block;
@@ -528,14 +529,15 @@ export default {
 				bottom: -24px;
 				height: 2px;
 				width: 100%;
-				background: $nav-color-hover;
+				background: $bg-color-4;
 				opacity: 0;
 				transition: all ease .4s;
 			};
 		}
 		.active{
-			color: $nav-color-hover;
+			color: $main-color-1;
 			pointer-events: none;
+			font-weight: 500;
 			&:before{
 				opacity: 1;
 			};
@@ -647,7 +649,7 @@ export default {
 	  padding: 0 40px;
 	  .item {
 	    padding: 0 16px;
-	    margin-right: 46px;
+	    margin-right: 14px;
 	    cursor: pointer;
 	    display: inline-block;
 	    height: 24px;
@@ -663,9 +665,8 @@ export default {
 	  }
 	  .active{
 	    color: white;
-	    font-weight: 500;
 	    pointer-events: none;
-			background:$--button-primary-background-color;
+			background:$bg-color-4;
 	  }
 	  .reddot{
 			width:6px;
@@ -702,7 +703,7 @@ export default {
 			color: white;
 	    font-weight: 500;
 	    pointer-events: none;
-			background:$--button-primary-background-color;
+			background:$bg-color-4;
 		}
 	}
 	.pagination-interview{

@@ -320,8 +320,14 @@ $header-height-1: $page-header-height;
     font-size:12px;
     font-weight:400;
     color:white;
-    line-height: 14px;
+    line-height: 16px;
     margin-left: 3px;
+    display: inline-block;
+    text-align: center;
+    box-sizing: border-box;
+    min-width: 16px;
+    position: relative;
+    top: -1px;
   }
 }
 .system {
