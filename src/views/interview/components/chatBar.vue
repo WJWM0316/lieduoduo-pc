@@ -42,7 +42,7 @@
 			  	</div>
 		  	</div>
 		  </el-col>
-		  <el-col :span="9" class="li-item-content-position">
+		  <el-col :span="9" class="li-item-content-position" :push="1">
 		  	<div>
 		  		<router-link
 		  			v-if="item.positionId"
@@ -243,6 +243,7 @@ export default {
 	.todo-status {
 		display: inline-block;
 		position: relative;
+		right: -7px;
 	}
 	.reddot{
 		width:6px;
@@ -325,7 +326,7 @@ export default {
 	}
 	.unchoose-position {
 		font-size:14px;
-		color:$font-color-11;
+		color:$font-color-9;
 	}
 	.position-salary {
 		font-size:16px;

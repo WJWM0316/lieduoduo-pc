@@ -139,7 +139,7 @@ export default {
 		text-align: center;
 		font-size:12px;
 		font-weight:400;
-		color:$font-color-12;
+		color:$font-color-10;
 		&:hover{
 			background: $btn-forbid;
 			a {

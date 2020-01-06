@@ -196,7 +196,7 @@ export default {
   .tooltips {
     font-size:12px;
     font-weight:400;
-    color:$font-color-11;
+    color:$font-color-9;
     line-height:15px;
     letter-spacing:1px;
   }
