@@ -897,7 +897,7 @@ export default {
     },
     // 今天和明天列表
     getScheduleList () {
-      // let data = {level: 1}
+      this.getLoading = true
       getScheduletodayListtApi().then((res) => {
         let arr = res.data.data
         arr.unshift({ date: '全部' })

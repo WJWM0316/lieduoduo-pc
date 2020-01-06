@@ -43,11 +43,11 @@
   				:to="{name: 'positionDetail', query: { positionId: item.positionId }}"
   				v-if="item.positionId">
   				<i class="iconfont icon-zhiwei"></i>
-  				<span>{{item.positionName}}</span>
+  				<span class="pname">{{item.positionName}}</span>
   			</router-link>
 				<div class="noposition" v-if="!item.positionId">
 					<i class="iconfont icon-zhiwei"></i>
-					<span>直接约面</span>
+					<span class="pname">直接约面</span>
 				</div>
 				<div class="name">
 					<i class="iconfont icon-app"></i>
@@ -173,7 +173,7 @@ export default {
 	}
 	.col-center{
 		float: left;
-		margin-left: 8px;
+		margin-left: 14px;
 	}
 	.colc-top{
 		height: 25px;
@@ -285,6 +285,7 @@ export default {
 		line-height: 20px;
 		.icon-zhiwei {
 			color: $iconFont-gray;
+			float: left;
 		}
 		i{
 			font-size: 13px;
@@ -294,6 +295,11 @@ export default {
 		span{
 			font-size: 14px;
 			color: #66666E;
+		}
+		.pname{
+			display: block;
+    	float: left;
+			@include ellipsis-over(98px);
 		}
 		.position{
 			margin-right: 18px;
