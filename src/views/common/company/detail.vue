@@ -114,8 +114,8 @@
                 <div class="recruitmentTeam-box" :key="index" v-for="(item, index) in getCompanysTeamText" :class="{'last-item-team': index === getCompanysTeamText.length - 1}">
                   <img :src="item.avatar.smallUrl"/>
                   <div class="recruitmentTeam-text">
-                    <p class="recruitmentTeam-text-top">
-                      {{ item.name }} | {{ item.position }}                        
+                    <div class="recruitmentTeam-text-top">
+                      <p class="admin-detail">{{ item.name }} | {{ item.position }}</p>                                              
                       <el-popover
                         placement="bottom-end"
                         popper-class="user-infos"
@@ -129,12 +129,12 @@
                         </div>
                         <div slot="reference"><i class="icon iconfont icon-duihua_huaban"></i></div>           
                       </el-popover>
-                    </p>
-                    <p class="recruitmentTeam-text-buttom">
+                    </div>
+                    <div class="recruitmentTeam-text-buttom">
                       <span>{{ '正在招聘' }}</span>
                       <span class="recruitmentTeam-positionName">{{ item.positionName === 0 ? item.positionName : '&quot;' + item.positionName + '&quot;' }}</span>
                       <span>{{ item.positionName === 0 ? '个职位' : '等' + item.positionNum + '个职位' }}</span>
-                    </p>
+                    </div>
                   </div>
                 </div>
                 <el-button @click="activationType" class="recruitmentTeam-buttom" plain>
@@ -730,7 +730,9 @@ to {top:0px;}
             position: relative;
           }
           .el-popover__reference{
-            display: inline;
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 6px;
           }
           .icon-duihua_huaban {
             color: #00C4CD;
@@ -747,8 +749,16 @@ to {top:0px;}
               color: $font-color-3;
               white-space: nowrap;
               text-overflow: ellipsis;
+              max-width: 192px;
+            }
+            .admin-detail{
+              color: $font-color-3;
+              white-space: nowrap;
+              text-overflow: ellipsis;
               overflow: hidden;
               max-width: 192px;
+              display: inline-block;
+              vertical-align: middle
             }
             .recruitmentTeam-text-buttom{
               width: 100%;
