@@ -50,7 +50,7 @@
             </div>
           </div>
       </div>
-      <div id="box" class="main_cont" v-if="candidateList.length>0">
+      <div id="box" class="main_cont" v-loading="getLoading">
         <div class="candidate_blo" v-for="(item,index) in candidateList" :key="index" @click="getResume(item.uid, index)">
           <div class="bloTop">
             <div class="timer">{{item.viewAt}}</div>
@@ -166,7 +166,7 @@
         <span class="total">共{{ Math.ceil(form.totalPage) }}页, {{form.total}}条记录</span>
       </el-pagination>
 
-      <div class="cont_none" v-if="candidateList.length === 0">
+      <div class="cont_none"  v-if="!getLoading && candidateList.length === 0">
         <div class="null-product">
           <div class="null-img">
             <img src="@/assets/images/fly.png" />
@@ -793,6 +793,7 @@ export default class CourseList extends Vue {
     toworddiggle = false
     tishishow = false
     loadingshow = false
+    getLoading = false
     pop = {
       isShow: false,
       Interview: false,
@@ -1747,6 +1748,7 @@ export default class CourseList extends Vue {
     }
     // 查询我感兴趣的
     getSearchMyCollect () {
+      this.getLoading = true
       let otherActive = this.getOtherActive()
       let data = {
         category: this.selectedScreen.length > 0 || otherActive ? 1 : 0,
@@ -1761,12 +1763,15 @@ export default class CourseList extends Vue {
         this.form.total = res.data.meta.total
         this.form.totalPage = res.data.meta.lastPage
         this.navNum.myCollectCount = res.data.meta.total
+        this.getLoading = false
       }).catch(e => {
         this.candidateList = []
+        this.getLoading = false
       })
     }
     // 对我感兴趣的
     getSearchCollect () {
+      this.getLoading = true
       let otherActive = this.getOtherActive()
       let data = {
         category: this.selectedScreen.length > 0 || otherActive ? 1 : 0,
@@ -1781,12 +1786,15 @@ export default class CourseList extends Vue {
         this.form.total = res.data.meta.total
         this.form.totalPage = res.data.meta.lastPage
         this.navNum.collectMyselfCount = res.data.meta.total
+        this.getLoading = false
       }).catch(e => {
         this.candidateList = []
+        this.getLoading = false
       })
     }
     // 浏览过我的求职者
     getSearchBrowseMyself () {
+      this.getLoading = true
       let otherActive = this.positionTypeList.length > 0 ? this.positionTypeList[this.positionTypeList.length - 1].active : false
       let data = {
         category: this.selectedScreen.length > 0 || otherActive ? 1 : 0,
@@ -1801,8 +1809,10 @@ export default class CourseList extends Vue {
         this.form.total = res.data.meta.total
         this.form.totalPage = res.data.meta.lastPage
         this.navNum.browseMyselfCount = res.data.meta.total
+        this.getLoading = false
       }).catch(e => {
         this.candidateList = []
+        this.getLoading = false
       })
     }
     // 职业类型列表

@@ -92,7 +92,7 @@
           </div>
         </div>
       </div>
-      <div id="box" class="main_cont" v-if="candidateList.length>0">
+      <div id="box" class="main_cont" v-loading="getLoading">
         <div
           class="candidate_blo"
           v-for="(item,index) in candidateList"
@@ -235,7 +235,7 @@
         <span class="total">共{{ Math.ceil(form.totalPage) }}页, {{form.total}}条记录</span>
       </el-pagination>
 
-      <div class="cont_none" v-if="candidateList.length === 0">
+      <div class="cont_none" v-if="!getLoading && candidateList.length === 0">
         <div class="null-product">
           <div class="null-img">
             <img src="@/assets/images/fly.png" />
@@ -984,6 +984,7 @@ export default class CourseList extends Vue {
   loading = false; // 翻页
   shareResumeImg = ''; // 简历二维码
   candidateList = [];
+  getLoading = false
   searchCollect = [];
   isShowScreen = false;
   selectedScreen = []; // 筛选选中条件
@@ -1354,7 +1355,7 @@ export default class CourseList extends Vue {
 
   // 意向列表
   getInviteList () {
-    // this.form.position_type_id = this.selectedScreen.join()
+    this.getLoading = true
     getInviteListApi(this.form)
       .then(res => {
         let msg = res.data.data
@@ -1365,14 +1366,16 @@ export default class CourseList extends Vue {
         this.form.total = res.data.meta.total
         this.form.totalPage = res.data.meta.lastPage
         this.invitenum = res.data.meta.total
+        this.getLoading = false
       })
       .catch(e => {
         this.candidateList = []
+        this.getLoading = false
       })
   }
   // 邀请
   getApplyList () {
-    // this.form.position_type_id = this.selectedScreen.join()
+    this.getLoading = true
     getApplyListApi(this.form)
       .then(res => {
         let msg = res.data.data
@@ -1383,9 +1386,11 @@ export default class CourseList extends Vue {
         this.form.total = res.data.meta.total
         this.form.totalPage = res.data.meta.lastPage
         this.applynum = res.data.meta.total
+        this.getLoading = false
       })
       .catch(e => {
         this.candidateList = []
+        this.getLoading = false
       })
   }
   // 职业类型列表

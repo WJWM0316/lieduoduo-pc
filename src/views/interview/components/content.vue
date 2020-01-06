@@ -303,20 +303,12 @@ export default {
 				}
 			} else {
 				if (beforeActive.number) {
+					beforeDate.number = 0
 					this.clearDayInterviewRedDot(beforeActive.time)
 				}
 			}
 		},
 		pTabClick(item, index) {
-			let beforeDate = this.dateList.slice().find(v => v.active)
-			if (beforeDate) {
-				beforeDate.active = false
-				if (beforeDate.number) {
-					this.clearDayInterviewRedDot(beforeDate.time).then((res) => {
-						beforeDate.number = 0
-					})
-				}
-			}
 			this.interviewBar[this.pIndex].active = false
 			item.active = true
 			this.clearRedDotBar(this.pIndex, index)

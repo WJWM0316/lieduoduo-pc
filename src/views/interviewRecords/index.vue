@@ -36,6 +36,7 @@
             </div>
           </div>
           </div>
+          <div v-loading="getLoading">
         <div class="candidate_blo" :key="j" v-for="(vo, j) in list" @click="getResume(vo.jobhunterUid, j, vo.interviewId)">
           <div class="bloTop">
             <div class="timer1">面试职位</div>
@@ -109,6 +110,7 @@
             </div>
           </div>
         </div>
+        </div>
 
         <el-pagination
         class="pagination"
@@ -123,7 +125,7 @@
         <span class="total">共{{ Math.ceil(form.totalPage) }}页, {{form.total}}条记录</span>
       </el-pagination>
 
-        <div class="null-product" v-show="list.length === 0">
+        <div class="null-product" v-show="!getLoading && list.length === 0">
           <div class="null-img">
             <img src="@/assets/images/fly.png" />
           </div>
@@ -764,6 +766,7 @@ export default {
         type: 'clickPic',
         InterviewTitle: '面试信息'
       },
+      getLoading: false,
       typeCaching: {},
       loadingshow: false,
       toworddiggle: false,
@@ -919,6 +922,7 @@ export default {
       })
     },
     getlist () {
+      this.getLoading = true
       if (this.form.position_label_id === '') {
         this.form.position_label_id = undefined
       }
@@ -926,6 +930,9 @@ export default {
         this.list = res.data.data
         this.form.total = res.data.meta.total
         this.form.totalPage = res.data.meta.lastPage
+        this.getLoading = false
+      }).catch(e => {
+        this.getLoading = false
       })
     },
     handleCurrentPageChange (page) {
@@ -980,6 +987,7 @@ export default {
       this.setPathQuery(this.form)
     },
     gettablist () {
+      this.getLoading = true
       if (this.tabform.position_label_id === '') {
         this.tabform.position_label_id = undefined
       }
@@ -987,6 +995,9 @@ export default {
         this.list = res.data.data
         this.form.total = res.data.meta.total
         this.form.totalPage = res.data.meta.lastPage
+        this.getLoading = false
+      }).catch(e => {
+        this.getLoading = false
       })
     },
     pickchange () {
