@@ -13,7 +13,7 @@
 		  </el-col>
 		</el-row>
 		<el-row class="li-item-content">
-		  <el-col :span="7" class="li-item-content-admin">
+		  <el-col :span="10" class="li-item-content-admin">
 		  	<div>
 			  	<div class="img-box">
 			  		<el-popover
@@ -42,7 +42,7 @@
 			  	</div>
 		  	</div>
 		  </el-col>
-		  <el-col :span="9" class="li-item-content-position" :push="1">
+		  <el-col :span="7" class="li-item-content-position">
 		  	<div>
 		  		<router-link
 		  			v-if="item.positionId"
@@ -66,7 +66,7 @@
 			  	<template v-else><span class="unchoose-position">未选择约面职位</span></template>
 		  	</div>
 		  </el-col>
-		  <el-col :span="8" class="li-item-content-2">
+		  <el-col :span="7" class="li-item-content-2">
 		  	<div>
 		  		<template v-if="[11, 21, 52, 53, 54, 55, 61].includes(item.status)">
 		  			<a

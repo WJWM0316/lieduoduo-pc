@@ -157,6 +157,8 @@ export default {
 		@include img-radius(34px, 34px, 4px);
 		display: inline-block;
 		vertical-align: middle;
+		border: 1px solid $border-color-8;
+		box-sizing: border-box
 	}
 	.li-item-row-top{
 		font-size:12px;
