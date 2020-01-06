@@ -9,7 +9,7 @@
 		  	</span>
 		  </el-col>
 		  <el-col :span="12" class="header-col-right">
-		  	<div class="todo-status">【{{item.statusDesc}}】<span class="reddot" v-if="item.redDot"></span></div>
+		  	<div class="todo-status">【{{item.statusDesc}}】<!--<span class="reddot" v-if="item.redDot"></span>--></div>
 		  </el-col>
 		</el-row>
 		<el-row class="li-item-content">
