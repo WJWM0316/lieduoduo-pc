@@ -4,6 +4,7 @@
     :visible.sync="visiable"
     width="430px"
     custom-class="interview-model"
+    :center="true"
     @close="handleClose">
     <template v-if="[31].includes(infos.status) && infos.arrangementInfo">
       <ul class="ul-box">
@@ -332,11 +333,18 @@ export default {
 <style lang="scss">
 .interview-model{
   border-radius: 8px !important;
+  display: flex;
+  flex-direction: column;
+  margin:0 !important;
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
   .item-li {
     font-size:14px;
     font-weight:400;
-    line-height:14px;
-    padding: 10px 40px;
+    line-height:20px;
+    padding: 9px 40px;
   }
   .iconfont {
     font-size: 14px;
@@ -361,10 +369,10 @@ export default {
     display: inline-block;
   }
   .color3 {
-    color: $border-color-2;
+    color: $font-color-6;
   }
   .color1 {
-    color: $font-color-3;
+    color: $font-color-2;
   }
   .time-title{
     padding: 20px 0 14px 0;
@@ -402,9 +410,9 @@ export default {
     padding: 0;
   }
   .time-item-active{
-    color: $border-color-2;
+    color: $font-color-6;
     .iconfont {
-      color: $border-color-2;
+      color: $font-color-6;
     }
   }
   .tips{
@@ -416,7 +424,7 @@ export default {
     padding-top: 10px;
     padding-bottom: 12px;
     strong {
-      color: $border-color-2;
+      color: $font-color-6;
       font-weight: 400;
       cursor: pointer;
     }

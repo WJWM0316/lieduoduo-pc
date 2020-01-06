@@ -367,7 +367,7 @@ export default {
 		vertical-align: middle;
 	}
 	.router-link{
-		color: $nav-color-hover;
+		color: $main-color-1;
 		cursor: pointer
 	}
 	.func-btn {
