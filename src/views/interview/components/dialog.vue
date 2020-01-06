@@ -115,7 +115,23 @@
         </li>
         <li class="item-li center">
           <div class="waiting5">面试时间已确认</div>
-          <div class="waiting4">已添加到面试日程，请准时赴约哦~<strong> 通知我</strong></div>
+          <div class="waiting4">已添加到面试日程，请准时赴约哦~
+            <strong>
+              通知我
+              <div class="notice-diggle2">
+                <div class="headbar">
+                  <img src="@/assets/images/pic_message.png" alt="">
+                </div>
+                <div class="clock"><img src="@/assets/images/pic_bell.png" alt=""></div>
+                <div class="qrcode">
+                  <img :src="app_url" alt="">
+                </div>
+                <p>下载猎多多APP<br/>获得面试日程通知提醒</p>
+                <div class="forward"></div>
+                <div class="rocket"><img src="@/assets/images/rocket.png" alt=""></div>
+              </div>
+            </strong>
+          </div>
           <div class="waiting3">{{infos.arrangementInfo.appointment}}</div>
         </li>
       </ul>
@@ -187,6 +203,8 @@ import {
   getInterviewDetailApi,
   sureInterviewApi
 } from 'API/interview'
+import { app_qrcode } from 'IMAGES/image'
+
 export default {
   props: {
     show: {
@@ -241,7 +259,8 @@ export default {
     return {
       visiable: false,
       infos: {},
-      params: {}
+      params: {},
+      app_url: app_qrcode
     }
   },
   model: {
@@ -459,6 +478,13 @@ export default {
     padding-top: 10px;
     strong {
       color:$main-color-1;
+      position: relative;
+      &:hover{
+        .notice-diggle2 {
+          display: block;
+          opacity: 1;
+        }
+      };
     }
   }
   .waiting5 {
@@ -490,6 +516,76 @@ export default {
   .el-dialog__headerbtn{
     top: 16px;
     right: 16px;
+  }
+  .notice-diggle2{
+    position: absolute;
+    top: 25px;
+    right: -15px;
+    width:260px;
+    background: #fff;
+    border-radius: 8px;
+    height:276px;
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+    z-index: 1;
+    opacity: 0;
+    display: none;
+    transition: all ease .2s;
+    .headbar{
+      width: 260px;
+      height: 81px;
+      background: #00C4CD;
+      img{
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .qrcode{
+      width:104px;
+      height:104px;
+      margin: 23px auto 7px;
+      img{
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .clock{
+      position: absolute;
+      width: 59px;
+      height: 64px;
+      top: 45px;
+      left: 98px;
+      img{
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .rocket{
+      position: absolute;
+      width: 39px;
+      height: 28px;
+      top: 200px;
+      right: 55px;
+      img{
+        width: 100%;
+        height: 100%;
+      }
+    }
+    p{
+      text-align: center;
+      line-height: 18px;
+      font-size: 12px;
+      color: #333333;
+    }
+    .forward{
+      width: 0;
+      height: 0;
+      border-left: 20px solid transparent;
+      border-right: 20px solid transparent;
+      border-bottom: 20px solid #00C4CD;
+      position: absolute;
+      top: -7px;
+      right: 15px;
+    }
   }
 }
 </style>
