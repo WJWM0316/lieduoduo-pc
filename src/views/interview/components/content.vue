@@ -295,6 +295,15 @@ export default {
 			})
 		},
 		pTabClick(item, index) {
+			let beforeDate = this.dateList.slice().find(v => v.active)
+			if (beforeDate) {
+				beforeDate.active = false
+				if (beforeDate.number) {
+					this.clearDayInterviewRedDot(beforeDate.time).then((res) => {
+						beforeDate.number = 0
+					})
+				}
+			}
 			this.interviewBar[this.pIndex].active = false
 			item.active = true
 			this.pIndex = index
@@ -350,14 +359,11 @@ export default {
 					this.getLists({api: 'getScheduleList', ...item})
 				}
 			} else {
-				// this.getLists({api: 'getScheduleList'})
 				if (beforeDate.number) {
 					this.clearDayInterviewRedDot(beforeDate.time).then((res) => {
-						console.log(item, beforeDate)
 						beforeDate.number = 0
 						this.getLists({api: 'getScheduleList'})
 					})
-					// this.clearDayInterviewRedDot(beforeDate.time).then(() => this.getLists({api: 'getScheduleList'}))
 				} else {
 					this.getLists({api: 'getScheduleList', ...item})
 				}
