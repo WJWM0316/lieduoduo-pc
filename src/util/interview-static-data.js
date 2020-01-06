@@ -168,7 +168,7 @@ export const asideBar = {
       text: '申请记录',
       reddot: 0,
       iconClass: 'icon-shenqingjilu',
-      routeName: 'interviewApply',
+      routeName: 'jobhunterInterview',
       query: {
         page: 1,
         tab: 'all',
@@ -181,7 +181,7 @@ export const asideBar = {
       text: '收到邀请',
       reddot: 0,
       iconClass: 'icon-shoudaoyaoqing',
-      routeName: 'interviewReceive',
+      routeName: 'jobhunterInterview',
       query: {
         page: 1,
         tab: 'all',
@@ -194,7 +194,7 @@ export const asideBar = {
       text: '面试日程',
       reddot: 0,
       iconClass: 'icon-ganxingqu-',
-      routeName: 'interviewSchedule',
+      routeName: 'jobhunterInterview',
       query: {
         page: 1,
         tab: 'all',

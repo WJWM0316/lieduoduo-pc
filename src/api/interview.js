@@ -145,7 +145,7 @@ export const clearDayInterviewRedDotApi = (data, hasLoading) => {
 export const clearInterviewItemRedDotApi = (data, hasLoading) => {
   return request({
     method: 'delete',
-    url: `/interview/deleteScheduleTabRedDot/${data.id}`,
+    url: `/interview/redDot/${data.id}`,
     config: {
       host: 'qiuzhi'
     }

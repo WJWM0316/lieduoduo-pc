@@ -45,7 +45,7 @@
   				<i class="iconfont icon-zhiwei"></i>
   				<span>{{item.positionName}}</span>
   			</router-link>
-				<div class="position" v-if="!item.positionId">
+				<div class="noposition" v-if="!item.positionId">
 					<i class="iconfont icon-zhiwei"></i>
 					<span>直接约面</span>
 				</div>
@@ -58,7 +58,7 @@
 			</div>
 		</div>
 		<div class="dottedlien"></div>
-		<div class="listredhot" v-if="item.redDot"></div>
+		<!-- <div class="listredhot" v-if="item.redDot"></div> -->
   </div>
 	<no-data v-if="!data.total && data.hasInitPage" />
 	<company-map :visible.sync="showadress" @closedialog="cancel" :companyAddress="companyAddress"></company-map>
@@ -176,7 +176,6 @@ export default {
 		margin-left: 8px;
 	}
 	.colc-top{
-		width: 454px;
 		height: 25px;
 		line-height: 25px;
 		margin: 4px 0 12px 0;
@@ -202,7 +201,6 @@ export default {
 		}
 	}
 	.colc-bottom{
-		width: 454px;
 		font-weight:400;
 		line-height: 20px;
 		position: relative;
@@ -228,7 +226,7 @@ export default {
 			margin-left: 4px;
 			color: $font-color-6;
 			font-size: 14px;
-			@include ellipsis-over(435px);
+			@include ellipsis-over(370px);
 		}
 		.addressdetail{
 			position: absolute;
