@@ -2119,8 +2119,7 @@ export default {
 }
 
       .null-product{
-        // width: 238px;
-        height: 239px;
+        height: 520px;
         margin: 0 auto;
         padding-top: 120px;
         background: #fff;

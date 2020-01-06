@@ -86,10 +86,10 @@ export default new Vuex.Store({
       removeAccessToken()
     },
     setRoleInfos (state, data) {
+      state.roleInfos = data
 			if (state.roleCallBack && typeof state.roleCallBack === "function") {
 				state.roleCallBack()
 			}
-			state.roleInfos = data
 			state.roleCallBack = true
     },
     setRecruiterinfo (state, data) {
