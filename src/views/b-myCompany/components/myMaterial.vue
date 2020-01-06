@@ -172,7 +172,8 @@ export default {
       },
       address: this.information.address,
       middleUrl: this.information.logoInfo.middleUrl,
-      albumInfo: this.information.albumInfo
+      albumInfo: this.information.albumInfo,
+      fromCaching: '' // 表单数据缓存
     }
   },
   components: {
@@ -181,6 +182,11 @@ export default {
   },
   methods: {
     cancel () {
+      if (this.fromCaching === JSON.stringify(this.from)) {
+        let type = '公司主页'
+        this.$emit('click', type)
+        return
+      }
       this.$confirm('确定退出，更新的内容将不被保存', '有编辑中内容尚未保存，确定退出编辑吗?', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -278,6 +284,7 @@ export default {
   },
   mounted () {
     this.$nextTick(() => {
+      this.fromCaching = JSON.stringify(this.from)
       companyFinancingApi()
         .then(res => {
           this.financing = res.data.data
