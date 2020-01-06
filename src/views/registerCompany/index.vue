@@ -1524,9 +1524,9 @@ export default {
           float: left;
           .tips-line{
             width:149px;
-            height:2px;
+            height:1px;
             float: left;
-            margin-top: 10px;
+            margin-top: 11px;
             background: #92929B;
           }
           .tips-box{
@@ -1551,9 +1551,9 @@ export default {
           float: left;
           .tips-line{
             width:149px;
-            height:2px;
+            height:1px;
             float: left;
-            margin-top: 10px;
+            margin-top: 11px;
             background: #92929B;
           }
           .tips-box{

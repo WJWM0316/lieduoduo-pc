@@ -913,7 +913,7 @@ export default {
         } else {
           this.getlist()
         }
-        if (this.tablist.length > 0) {
+        if (this.tablist.length > 1) {
           deleteScheduleTabRedDotApi(this.tablist[1].time)
         }
       })
@@ -2119,8 +2119,7 @@ export default {
 }
 
       .null-product{
-        // width: 238px;
-        height: 239px;
+        height: 520px;
         margin: 0 auto;
         padding-top: 120px;
         background: #fff;

@@ -365,7 +365,17 @@ export default {
 					this.getLists({api: 'getScheduleList', ...item})
 				}
 			} else {
-				this.getLists({api: 'getScheduleList'})
+				// this.getLists({api: 'getScheduleList'})
+				if (beforeDate.number) {
+					this.clearDayInterviewRedDot(beforeDate.time).then((res) => {
+						console.log(item, beforeDate)
+						beforeDate.number = 0
+						this.getLists({api: 'getScheduleList'})
+					})
+					// this.clearDayInterviewRedDot(beforeDate.time).then(() => this.getLists({api: 'getScheduleList'}))
+				} else {
+					this.getLists({api: 'getScheduleList', ...item})
+				}
 			}
 		},
 		getLists(item) {
