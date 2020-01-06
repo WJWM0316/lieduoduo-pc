@@ -58,7 +58,7 @@
 			</div>
 		</div>
 		<div class="dottedlien"></div>
-		<div class="listredhot" v-if="item.redDot"></div>
+		<!-- <div class="listredhot" v-if="item.redDot"></div> -->
   </div>
 	<no-data v-if="!data.total && data.hasInitPage" />
 	<company-map :visible.sync="showadress" @closedialog="cancel" :companyAddress="companyAddress"></company-map>
