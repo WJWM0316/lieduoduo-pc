@@ -4,7 +4,7 @@
       <div class="logo">
         <img src="../../../assets/images/logo.png" class="avatar">
       </div>
-      <ul class="aside-nav">
+      <ul class="aside-nav warpper-scroll">
         <template v-for="(item, index) in routes">
           <router-link
             tag="li"
@@ -37,7 +37,7 @@ $company-msg-height: 60px;
 .page-aside {
   width: $page-b-side-width;
   background: $bg-color-2;
-  color: #fff;
+  color: rgba(#fff, 0.58);
   z-index: 10;
   width: 200px;
   position: fixed;
