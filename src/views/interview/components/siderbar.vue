@@ -54,17 +54,17 @@ export default {
 	components: {
 		adpostion
 	},
-	data() {
+	data () {
 		return {
 			recommendOpptyInterestLists: []
 		}
 	},
 	methods: {
-		getRecommendOpptyInterestLists() {
+		getRecommendOpptyInterestLists () {
 			getRecommendOpptyInterestListsApi({page: 1, count: 5}).then(({ data }) => this.recommendOpptyInterestLists = data.data)
 		}
 	},
-	created() {
+	created () {
 		this.getRecommendOpptyInterestLists()
 	}
 }

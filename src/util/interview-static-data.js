@@ -129,42 +129,43 @@ export const receiveScreen = [
 export const applyData = {
   list: [],
   page: 1,
-  count: 20,
+  count: 1,
   hasInitPage: false,
   total: 0,
-  pageSize: 20
+  pageSize: 1
 }
 
 export const receiveData = {
   list: [],
   page: 1,
-  count: 20,
+  count: 1,
   hasInitPage: false,
   total: 0,
-  pageSize: 20
+  pageSize: 1
 }
 
 export const scheduleData = {
   list: [],
   page: 1,
-  count: 20,
+  count: 1,
   hasInitPage: false,
   total: 0,
-  pageSize: 20
+  pageSize: 1
 }
 
 export const historyData = {
   list: [],
   page: 1,
-  count: 20,
+  count: 1,
   hasInitPage: false,
   total: 0,
-  pageSize: 20
+  pageSize: 1
 }
 
 export const asideBar = {
   topNav: [
     {
+      id: 'applay',
       text: '申请记录',
       reddot: 0,
       iconClass: 'icon-shenqingjilu',
@@ -178,6 +179,7 @@ export const asideBar = {
       }
     },
     {
+      id: 'receive',
       text: '收到邀请',
       reddot: 0,
       iconClass: 'icon-shoudaoyaoqing',
@@ -191,9 +193,10 @@ export const asideBar = {
       }
     },
     {
+      id: 'schedule',
       text: '面试日程',
       reddot: 0,
-      iconClass: 'icon-ganxingqu-',
+      iconClass: 'icon-mianshiricheng-',
       routeName: 'jobhunterInterview',
       query: {
         page: 1,

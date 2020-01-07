@@ -453,6 +453,7 @@ export default {
 					this.pIndex = pIndex
 					this.cIndex = cIndex
 					this.setActive(pIndex)
+					this[['applyData', 'receiveData', 'scheduleData'][this.pIndex]].page = Number(query.page)
 					if(pIndex === 2) {
 						if(cItem) {
 							this.getInterviewScheduleNumberLists().then(() => {

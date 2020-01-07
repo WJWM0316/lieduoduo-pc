@@ -13,7 +13,7 @@
 		  </el-col>
 		</el-row>
 		<el-row class="li-item-content">
-		  <el-col :span="10" class="li-item-content-admin">
+		  <el-col class="li-item-content-admin" :span="8">
 		  	<div>
 			  	<div class="img-box">
 			  		<el-popover
@@ -36,13 +36,13 @@
 			  	<div class="infos">
 			  		<div class="limit-line-height-one">
 			  			<span class="user-name">{{item.recruiterRealname}}</span>
-			  			<span class="user-degress">&nbsp;&nbsp;·&nbsp;&nbsp;{{item.recruiterPositionName}}</span>
+			  			<span class="user-degress">&nbsp;&nbsp;{{item.recruiterPositionName}}</span>
 			  		</div>
 			  		<div class="company-name">{{item.companyShortname}}</div>
 			  	</div>
 		  	</div>
 		  </el-col>
-		  <el-col :span="7" class="li-item-content-position">
+		  <el-col class="li-item-content-position" :span="8">
 		  	<div>
 		  		<router-link
 		  			v-if="item.positionId"
@@ -50,23 +50,23 @@
 		  			class="router-link" :to="{name: 'positionDetail', query: { positionId: item.positionId }}">
 				  	<div class="limit-line-height-two">
 				  		<span class="position-name">{{item.positionName}}</span>
-				  		<img src="~IMAGES/jipin_v1.png" alt="" class="position-jipin" v-if="item.isUrgency === 1" />
-				  		<img src="~IMAGES/tag_list_24hour.png" alt="" class="position-24hour" v-if="item.interviewType === 2">
+				  		<!-- <img src="~IMAGES/jipin_v1.png" alt="" class="position-jipin" v-if="item.isUrgency === 1" /> -->
+				  		<!-- <img src="~IMAGES/tag_list_24hour.png" alt="" class="position-24hour" v-if="item.interviewType === 2"> -->
 				  		<span class="position-salary" v-if="item.positionInfo">
 				  			<template>{{item.positionInfo.positionEmolumentMin}}~{{item.positionInfo.positionEmolumentMax}}k</template>
 				  			<template v-if="item.positionInfo.annualSalary > 12">· {{item.positionInfo.annualSalary}}薪</template>
 				  		</span>
 				  	</div>
 				  	<div class="position-adress" v-if="item.positionInfo && item.positionInfo.addressInfo">
-				  		<template>{{item.positionInfo.addressInfo.city}}{{item.positionInfo.addressInfo.area}}</template>
-				  		<template> | {{item.positionInfo.workExperience}} </template>
+				  		<template v-if="item.positionInfo.addressInfo.city">{{item.positionInfo.addressInfo.city}}{{item.positionInfo.addressInfo.area}} | </template>
+				  		<template>{{item.positionInfo.workExperience}} </template>
 				  		<template> | {{item.positionInfo.educationDesc}}</template>
 				  	</div>
 			  	</router-link>
 			  	<template v-else><span class="unchoose-position">未选择约面职位</span></template>
 		  	</div>
 		  </el-col>
-		  <el-col :span="7" class="li-item-content-2">
+		  <el-col class="li-item-content-2" :span="8">
 		  	<div>
 		  		<template v-if="[11, 21, 52, 53, 54, 55, 61].includes(item.status)">
 		  			<a
@@ -262,6 +262,7 @@ export default {
 	.li-item-content-admin{
 		text-align: left;
 		height: 100%;
+		width: 310px;
 		> div {
 			display: inline-block;
 			vertical-align: middle;
@@ -270,6 +271,7 @@ export default {
 	}
 	.li-item-content-position{
 		text-align: left;
+		width: 270px;
 		> div {
 			display: inline-block;
 			vertical-align: middle;
@@ -277,6 +279,7 @@ export default {
 	}
 	.li-item-content-2{
 		text-align: right;
+		width: 230px;
 		> div {
 			display: inline-block;
 			vertical-align: middle;
@@ -322,7 +325,7 @@ export default {
 		display: inline-block;
 		@include ellipsis-over(128px);
 		vertical-align: middle;
-		margin-right: 4px;
+		// margin-right: 4px;
 	}
 	.unchoose-position {
 		font-size:14px;
@@ -359,6 +362,20 @@ export default {
 		display: inline-block;
 		@include ellipsis-over(96px);
 		vertical-align: middle;
+		position: relative;
+		padding-right: 7px;
+		&:before{
+			content: '';
+			display: block;
+			width: 3px;
+			height: 3px;
+			border-radius: 50%;
+			position: absolute;
+			right: 0;
+			top: 50%;
+			transform: translateY(-50%);
+			background: $font-color-9;
+		}
 	}
 	.user-degress {
 		font-size:12px;
@@ -375,7 +392,7 @@ export default {
 		width:120px;
 		height:40px;
 		border-radius:4px;
-		margin-left: 30px;
+		margin-left: 20px;
 	}
 	.btn-style {
 		cursor: pointer;

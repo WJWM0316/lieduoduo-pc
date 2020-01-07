@@ -7,7 +7,7 @@
           target="_blank" :to="{name: item.routeName, query: item.query}">
           <div class="icon">
             <i class="iconfont" :class="item.iconClass"></i>
-            <div class="circle" v-if="item.reddot || !isLogin"></div>
+            <div class="circle" v-if="item.reddot || (!isLogin && item.id !== 'applay')"></div>
           </div>
           <div class="describe">{{item.text}}</div>
         </router-link>
@@ -51,8 +51,8 @@ export default {
   },
   watch: {
     '$route': {
-      handler(route) {
-        if(!['interviewApply', 'interviewReceive', 'interviewSchedule'].includes(route.name)) {
+      handler (route) {
+        if (!['jobhunterInterview'].includes(route.name)) {
           this.getInterviewRedDotInfoApi()
         }
       },
