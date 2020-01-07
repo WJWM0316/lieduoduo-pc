@@ -791,7 +791,7 @@ to {top:0px;}
         .recruitmentTeam-buttom{
           margin-top: 10px;
           width: 280px;
-          height: 37px;
+          height: 40px;
           border: 1px solid $border-color-1;
           color: $border-color-5;
           border-radius:2px;
