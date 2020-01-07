@@ -203,6 +203,9 @@ export default {
   border-top: 1px solid rgba($border-color-1, .4);
   .recruit-info {
     min-width: 422px;
+    .recruit-image {
+      vertical-align: top;
+    }
   }
   .recruit-info div, .recruit-name span {
     display: inline-block;
@@ -228,7 +231,7 @@ export default {
     color: $title-color-2;
   }
   .recruit-email {
-    margin-top: 20px;
+    margin-top: 14px;
     color: $title-color-1;
     span {
       color: $title-color-2;
