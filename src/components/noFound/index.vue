@@ -12,7 +12,7 @@ export default {
   props: {
     imageUrl: {
       type: String,
-      default: process.env.VUE_APP_CDN_PATH + '/images/pic_404.png'
+      default: process.env.VUE_APP_CDN_PATH + '/images/new_404_img.png'
     },
     tipText: {
       type: String,

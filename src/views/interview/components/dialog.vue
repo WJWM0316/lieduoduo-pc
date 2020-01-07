@@ -233,6 +233,7 @@ export default {
             this.getInterviewRedDotInfoApi().then(() => {
               let { appointmentList } = res.arrangementInfo
               this.visiable = true
+              this.params.interviewId = res.interviewId
               if (res.arrangementInfo.appointmentList) {
                 this.params.appointmentId = appointmentList[0].id
                 this.$set(appointmentList[0], 'checked', true)
@@ -324,6 +325,7 @@ export default {
         this.$message({ message: '请选择一个面试时间', type: 'warning' })
         return
       }
+      console.log(this.params)
       sureInterviewApi(this.params).then(() => {
         this.visiable = false
         this.$router.push({ query })
