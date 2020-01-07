@@ -35,7 +35,7 @@ export default new Vuex.Store({
       type: 'tocIndex',
       params: ''
     },
-		roleCallBack: null, 
+    roleCallBack: null,
     areaList: []
   },
   // 在getters中声明state中变量的计算函数，缓存计算后的数据， 通过 this.$store.getters 调用
@@ -87,10 +87,10 @@ export default new Vuex.Store({
     },
     setRoleInfos (state, data) {
       state.roleInfos = data
-			if (state.roleCallBack && typeof state.roleCallBack === "function") {
-				state.roleCallBack()
-			}
-			state.roleCallBack = true
+      if (state.roleCallBack && typeof state.roleCallBack === 'function') {
+        state.roleCallBack()
+      }
+      state.roleCallBack = true
     },
     setRecruiterinfo (state, data) {
       state.recruiterinfo = data
@@ -167,7 +167,7 @@ export default new Vuex.Store({
             ...res.data.data,
             ...data
           }
-          console.log(data,'000000000')
+          console.log(data, '000000000')
           store.commit('LOGINCALLBACK', loginData)
           // 获取用户角色信息
           const { state } = store
@@ -187,16 +187,16 @@ export default new Vuex.Store({
 
             if (loginData.refresh) {
               window.location.reload()
-               console.log(state.userIdentity, 1111111111111111)
+              // console.log(state.userIdentity, 1111111111111111)
             } else if (loginData.needBack) {
               router.go(-1)
-               console.log(state.userIdentity, 22222222222)
+              // console.log(state.userIdentity, 22222222222)
             } else {
               console.log(state.userIdentity, 33333333)
               let userIdentity = state.userIdentity
               userIdentity === 1 ? router.replace({ path: '/index' }) : router.replace({ path: '/candidate' })
             }
-            console.log(333333333333333333333333333)
+            // console.log(333333333333333333333333333)
             // 如果是求职者
             if (state.userIdentity === 1 && result.isJobhunter) {
               // 获取简历信息
@@ -249,7 +249,7 @@ export default new Vuex.Store({
           store.dispatch('getMyResume')
         }
 
-        if (result.isRecruiter) {
+        if (state.userIdentity === 2 && result.isRecruiter) {
           // 招聘官信息
           store.dispatch('getMyRecruit')
           // 招聘官认证信息

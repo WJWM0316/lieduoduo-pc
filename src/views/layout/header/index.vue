@@ -152,6 +152,7 @@ export default {
           this.$router.push('/position')
           break
         case 'toggleIdentity':
+          this.$store.dispatch('getMyRecruit')
           this.$store.commit('switchIdentity', { toSwitchRole: 2 })
       }
     },

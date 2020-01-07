@@ -36,6 +36,7 @@ const getters = {
 const actions = {
   // 获取招聘官详情
   getMyRecruit (store) {
+    if (store.state.loaded) return
     // eslint-disable-next-line promise/param-names
     return new Promise((reslove) => {
       recruiterDetail().then(({ data }) => {
