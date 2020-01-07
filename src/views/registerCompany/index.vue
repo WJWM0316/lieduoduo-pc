@@ -753,7 +753,7 @@ export default {
             type: 'warning',
             center: true
           }).then(() => {
-            this.$router.push({ name: 'index' })
+            this.$store.commit('switchIdentity', { toSwitchRole: 1 })
           }).catch(() => {})
           break
         case 'account':

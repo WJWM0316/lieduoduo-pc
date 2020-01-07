@@ -108,6 +108,7 @@ export default {
         logo: this.currentProduct.logoInfo.id
       },
       middleUrl: this.currentProduct.logoInfo.middleUrl,
+      fromCaching: '', // 表单数据缓存
       rules: {
         logo: [{ required: true, type: 'number', message: '请上传产品logo', trigger: 'change' }],
         product_name: [{ required: true, message: '请输入产品名称', trigger: 'blur' }],
@@ -116,6 +117,9 @@ export default {
         lightspot: [{ required: true, message: '请输入产品亮点', trigger: 'blur' }]
       }
     }
+  },
+  mounted () {
+    this.fromCaching = JSON.stringify(this.from)
   },
   methods: {
     pictureInformation (item) { // 拿到头像回调id
@@ -158,6 +162,11 @@ export default {
       })
     },
     cancel () {
+      if (this.fromCaching === JSON.stringify(this.from)) {
+        let type = '公司主页'
+        this.$emit('click', type)
+        return
+      }
       this.$confirm('确定退出，更新的内容将不被保存', '有编辑中内容尚未保存，确定退出编辑吗?', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',

@@ -9,9 +9,9 @@
     <template v-if="[31].includes(infos.status) && infos.arrangementInfo">
       <ul class="ul-box">
         <li class="item-li">
-          <i class="iconfont icon-rencai"></i>
+          <i class="iconfont icon-mianshiguan"></i>
           <div class="ul-li-text-box">
-            <div class="color2 user-name">{{infos.arrangementInfo.realname}}</div>
+            <div class="color4 user-name">{{infos.arrangementInfo.realname}}</div>
             <div class="user-contact color3">{{infos.arrangementInfo.mobile}}</div>
           </div>
         </li>
@@ -19,7 +19,7 @@
           <i class="iconfont icon-zhiwei1"></i>
           <div class="ul-li-text-box">
             <router-link
-              class="color2 position-name"
+              class="color4 position-name"
               target="_blank" :to="{name: 'positionDetail', query: { positionId: infos.positionId }}">
               {{infos.positionName}}
             </router-link>
@@ -28,7 +28,7 @@
         <li class="item-li">
           <i class="iconfont icon-didian"></i>
           <div class="ul-li-text-box">
-            <div class="color2 address">{{infos.address}}{{infos.doorplate}}</div>
+            <div class="color4 address">{{infos.address}}{{infos.doorplate}}</div>
           </div>
         </li>
         <li class="item-li">
@@ -42,7 +42,7 @@
               :class="{'time-item-active': item.checked}">
               <i class="iconfont icon-chenggong choose" v-show="item.checked"></i>
               <i class="iconfont icon-beixuanxiang choose" v-show="!item.checked"></i>
-              <span class="date">{{item.appointment}}</span>
+              <span class="date color5">{{item.appointment}}</span>
             </div>
           </div>
           <!-- <div class="tips">以上时间都不合适，<strong @click="setDateInappropriate">请联系我</strong></div> -->
@@ -56,7 +56,7 @@
     <template v-if="[32].includes(infos.status) && infos.arrangementInfo">
       <ul class="ul-box">
         <li class="item-li">
-          <i class="iconfont icon-rencai"></i>
+          <i class="iconfont icon-mianshiguan"></i>
           <div class="ul-li-text-box">
             <div class="color1 user-name">{{infos.arrangementInfo.realname}}</div>
             <div class="user-contact color2">{{infos.arrangementInfo.mobile}}</div>
@@ -90,7 +90,7 @@
     <template v-if="[41].includes(infos.status) && infos.arrangementInfo">
       <ul class="ul-box">
         <li class="item-li">
-          <i class="iconfont icon-rencai"></i>
+          <i class="iconfont icon-mianshiguan"></i>
           <div class="ul-li-text-box">
             <div class="color1 user-name">{{infos.arrangementInfo.realname}}</div>
             <div class="user-contact color2">{{infos.arrangementInfo.mobile}}</div>
@@ -140,7 +140,7 @@
     <template v-if="[51, 58, 60].includes(infos.status) && infos.arrangementInfo">
       <ul class="ul-box">
         <li class="item-li">
-          <i class="iconfont icon-rencai"></i>
+          <i class="iconfont icon-mianshiguan"></i>
           <div class="ul-li-text-box">
             <div class="color1 user-name">{{infos.arrangementInfo.realname}}</div>
             <div class="user-contact color2">{{infos.arrangementInfo.mobile}}</div>
@@ -167,7 +167,7 @@
     <template v-if="[52].includes(infos.status) && infos.arrangementInfo">
       <ul class="ul-box">
         <li class="item-li">
-          <i class="iconfont icon-rencai"></i>
+          <i class="iconfont icon-mianshiguan"></i>
           <div class="ul-li-text-box">
             <div class="color1 user-name">{{infos.arrangementInfo.realname}}</div>
             <div class="user-contact color2">{{infos.arrangementInfo.mobile}}</div>
@@ -233,7 +233,10 @@ export default {
             this.getInterviewRedDotInfoApi().then(() => {
               let { appointmentList } = res.arrangementInfo
               this.visiable = true
+              this.params.interviewId = res.interviewId
               if (res.arrangementInfo.appointmentList) {
+                this.params.appointmentId = appointmentList[0].id
+                this.$set(appointmentList[0], 'checked', true)
                 appointmentList.push({
                   checked: false,
                   id: 'inappropriate',
@@ -322,6 +325,7 @@ export default {
         this.$message({ message: '请选择一个面试时间', type: 'warning' })
         return
       }
+      console.log(this.params)
       sureInterviewApi(this.params).then(() => {
         this.visiable = false
         this.$router.push({ query })
@@ -387,6 +391,9 @@ export default {
   .color1 {
     color: $font-color-2;
   }
+  .color5 {
+    color: $font-color-2;
+  }
   .time-title{
     padding: 20px 0 14px 0;
     height:16px;
@@ -423,9 +430,9 @@ export default {
     padding: 0;
   }
   .time-item-active{
-    color: $font-color-6;
+    color: $border-color-2;
     .iconfont {
-      color: $font-color-6;
+      color: $border-color-2;
     }
   }
   .tips{
@@ -447,11 +454,13 @@ export default {
     border-radius: 4px;
     margin-left: 16px;
     height: 32px;
+    font-size: 14px;
   }
   .btn-cancle-width{
     width: 86px;
     border-radius: 4px;
-    height: 32px;;
+    height: 32px;
+    font-size: 14px;
   }
   .el-dialog__footer{
     padding: 0;
@@ -462,6 +471,9 @@ export default {
   }
   .color2 {
     color: $font-color-3;
+  }
+  .color4 {
+    color: $font-color-6;
   }
   .center {
     text-align: center;

@@ -78,7 +78,7 @@ export default {
           this.$store.dispatch('logoutApi', { curPage: 2 })
           break
         case 'toggleIdentity':
-          this.$store.commit('switchIdentity', { toSiutchRole: 1 })
+          this.$store.commit('switchIdentity', { toSwitchRole: 1 })
           break
         case 'infos':
           this.$router.push({ name: 'myinfos' })

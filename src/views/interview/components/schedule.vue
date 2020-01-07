@@ -3,7 +3,7 @@
   <div class="li-item_schedule clearfix" v-for="(item, index) in data.list" :key="index">
 		<div class="col-left">
 			<div class="logo-box">
-				<img :src="item.avatar.smallUrl" alt="avatar" v-if="item.avatar" />
+				<img :src="item.companyInfo.logoInfo.smallUrl" alt="avatar" v-if="item.companyInfo" />
 			</div>
 		</div>
 		<div class="col-center">
@@ -12,7 +12,7 @@
 				<div class="company-desc">{{item.companyInfo.financingDesc}}<span>·</span>{{item.companyInfo.employeesDesc}}<span>·</span>{{item.companyInfo.industry}}</div>
 			</div>
 			<div class="colc-bottom">
-				<i class="iconfont icon-didian"></i>
+				<i class="iconfont icon-dizhi"></i>
 				<div class="address" @click="editAddress(item, index)">{{item.addressInfo.address}}{{item.addressInfo.doorplate}}</div>
 				<div class="addressdetail">
 					{{item.addressInfo.address}}{{item.addressInfo.doorplate}}
@@ -133,9 +133,6 @@ export default {
 	position: relative;
 	padding: 33px 40px;
 	transition: .2s background;
-	&:hover{
-		background: #f8fafa;
-	};
 	.col-left{
 		float: left;
 	}
@@ -180,7 +177,6 @@ export default {
 		line-height: 25px;
 		margin: 4px 0 12px 0;
 		.company-name{
-			font-weight: bold;
 			color: #282828;
 			font-size: 18px;
 			float: left;
@@ -232,12 +228,13 @@ export default {
 			position: absolute;
 			width:520px;
 			padding: 10px;
-			color: #fff;
+			color: #66666E;
 			font-size:12px;
 			display: none;
 			box-sizing: border-box;
-			background:rgba(0,0,0,0.62);
-			border-radius:4px;
+			background: #FFFFFF;
+			box-shadow: 0 0 30px 0 rgba(22,39,77,0.07);
+			border-radius: 4px;
 			top: 23px;
 			line-height: 16px;
 			left: -62px;
@@ -315,6 +312,19 @@ export default {
 				}
 			}
 		}
+		.noposition{
+			margin-right: 18px;
+		}
+		.name{
+			span{
+				display: block;
+				float: left;
+				@include ellipsis-over(69px);
+			}
+			.icon-app{
+				float: left;
+			}
+		}
 		.line{
 			width:1px;
 			height:10px;
@@ -323,6 +333,7 @@ export default {
 		}
 		.phone{
 			line-height: 22px;
+			color: #66666E;
 		}
 	}
 }

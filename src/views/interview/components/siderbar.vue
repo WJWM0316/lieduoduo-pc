@@ -108,10 +108,10 @@ export default {
 		padding-bottom: 20px;
 	}
 	.li-item-row-one {
-		font-size:14px;
+		font-size:16px;
 		font-weight:400;
 		color:$font-color-3;
-		line-height:14px;
+		line-height:16px;
 		position: relative;
 	}
 	.position-salary {
@@ -163,18 +163,19 @@ export default {
 	.li-item-row-top{
 		font-size:12px;
 		font-weight:400;
-		color:$--button-default-font-color;
+		color:$border-color-7;
 		line-height:1.1;
 	}
 	.li-item-row-bottom{
 		font-size:12px;
 		font-weight:400;
-		color:$--button-default-font-color;
+		color:$font-color-9;
 		line-height:1.1;
 		padding-top:7px;
+		@include ellipsis-over(203px);
 	}
 	.li-item-row-two{
-		padding-top: 14px;
+		padding-top: 15px;
 	}
 	.company-infos {
 		display: inline-block;
@@ -192,6 +193,9 @@ export default {
 		display: inline-block;
 		@include ellipsis-over(96px);
 		vertical-align: middle
+	}
+	.wrap{
+		width: 290px;
 	}
 }
 </style>

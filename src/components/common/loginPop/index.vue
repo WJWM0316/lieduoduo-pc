@@ -47,7 +47,7 @@ export default class login extends Vue {
       position: absolute;
       transform: translate3d(-50%, -50%, 0);
       top: 50%;
-      left: 50%;
+      left: calc(50% + 90px);
       z-index: 1002;
       .close {
         font-size: 14px;
