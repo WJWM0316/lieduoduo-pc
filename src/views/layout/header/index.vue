@@ -152,7 +152,7 @@ export default {
           this.$router.push('/position')
           break
         case 'toggleIdentity':
-          this.$store.commit('switchIdentity', { toSiutchRole: 2 })
+          this.$store.commit('switchIdentity', { toSwitchRole: 2 })
       }
     },
     handleToLogin (type) {
