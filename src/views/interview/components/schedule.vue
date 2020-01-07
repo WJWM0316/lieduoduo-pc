@@ -315,6 +315,9 @@ export default {
 				}
 			}
 		}
+		.noposition{
+			margin-right: 18px;
+		}
 		.line{
 			width:1px;
 			height:10px;
