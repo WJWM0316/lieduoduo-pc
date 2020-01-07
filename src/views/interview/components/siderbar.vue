@@ -163,18 +163,19 @@ export default {
 	.li-item-row-top{
 		font-size:12px;
 		font-weight:400;
-		color:$--button-default-font-color;
+		color:$border-color-7;
 		line-height:1.1;
 	}
 	.li-item-row-bottom{
 		font-size:12px;
 		font-weight:400;
-		color:$--button-default-font-color;
+		color:$font-color-9;
 		line-height:1.1;
 		padding-top:7px;
+		@include ellipsis-over(203px);
 	}
 	.li-item-row-two{
-		padding-top: 14px;
+		padding-top: 15px;
 	}
 	.company-infos {
 		display: inline-block;
