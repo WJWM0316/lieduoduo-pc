@@ -151,15 +151,17 @@ export default {
   }
   li{
     display: block;
-    color: $--color-text-placeholder;
     transition: .2s all;
     &:hover {
-      color: $nav-color-hover;
+      color: $main-color-1;
       a {
-        color: $nav-color-hover;
+        color: $main-color-1;
       }
       .iconfont {
-        color: $nav-color-hover;
+        color: $main-color-1;
+      }
+      .describe {
+        color: $main-color-1;
       }
     };
   }
