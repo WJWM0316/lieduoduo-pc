@@ -718,7 +718,7 @@ to {top:0px;}
         .recruitmentTeam-box{
 					padding: 19px 0 20px 0;
           height: 60px;
-					cursor: pointer;
+					// cursor: pointer;
 					/*padding-left: 74px;*/
 					position: relative;
           @include flex-v-center;

@@ -241,10 +241,8 @@ export default class myCompany extends Vue {
         @include flex-v-center;
         @include flex-justify-between;
         .avatar{
+          border: 1px solid $border-color-8;
             @include img-radius(90px, 90px, 8px);
-            img{
-              border: 1px solid $border-color-8;
-            }
         }
         .companyInformation-head-button{
             button{
