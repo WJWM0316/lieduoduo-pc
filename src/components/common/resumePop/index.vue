@@ -1,7 +1,7 @@
 <template>
     <div class="pop" v-show="pop.isShow" @click="closeMsg($event)">
       <div class="resumeBox" v-if="showResume" @click="closeload($event)">
-        <div class="Numbering">
+        <!-- <div class="Numbering">
           <span>简历编号：{{nowResumeMsg.vkey}}</span>
           <span v-if="nowResumeMsg.resumeUpdateTime !== '0000-00-00 00:00:00'">{{nowResumeMsg.resumeUpdateTime}}更新</span>
           <div class="closediggle" @click="pop.isShow = false">
@@ -10,7 +10,6 @@
         </div>
         <div class="resumeLyout">
           <div class="ResumeDetails">
-            <!-- 基础信息 -->
             <div class="base">
               <div class="message">
                 <div class="msgUrl">
@@ -52,7 +51,6 @@
                   </div>
                   <div class="description">
                     <span class="msg">{{nowResumeMsg.signature}}</span>
-                    <!-- v-show="nowResumeMsg.personalizedLabels.length>0" -->
                     <div class="iconList">
                       <span
                         class="iconItem"
@@ -65,7 +63,6 @@
                 </div>
               </div>
             </div>
-            <!-- 求职意向 -->
             <div class="intention" v-show="nowResumeMsg.expects!=''">
               <p class="title">求职意向</p>
               <div class="intentList">
@@ -84,10 +81,8 @@
                 </div>
               </div>
             </div>
-            <!-- 工作经历 -->
             <div class="workExperience" v-show="nowResumeMsg.careers!=''">
               <p class="title">工作经历</p>
-              <!-- v-show="nowResumeMsg.careers.length>0" -->
               <div class="workList">
                 <div
                   class="workItem"
@@ -104,7 +99,6 @@
                       <pre>{{item.duty}}</pre>
                     </span>
                   </div>
-                  <!-- v-show="item.technicalLabels.length>0" -->
                   <div class="workIconList" v-show="item.technicalLabels.length>0">
                     <span
                       v-for="item1 in item.technicalLabels"
@@ -114,7 +108,6 @@
                 </div>
               </div>
             </div>
-            <!-- 项目经历 -->
             <div class="workExperience" v-show="nowResumeMsg.projects!=''">
               <p class="title">项目经历</p>
               <div class="workList">
@@ -136,7 +129,6 @@
                 </div>
               </div>
             </div>
-            <!-- 教育经历 -->
             <div class="workExperience" v-show="nowResumeMsg.educations!=''">
               <p class="title">教育经历</p>
               <div class="workList">
@@ -158,7 +150,6 @@
                 </div>
               </div>
             </div>
-            <!-- 更多介绍 -->
             <div class="workExperience" v-if="nowResumeMsg.moreIntroduce && nowResumeMsg.moreIntroduce.introduce">
               <p class="title">更多介绍</p>
               <div class="workList">
@@ -202,9 +193,6 @@
                   </div>
                 </div>
               </div>
-              <!-- <div class="dayin">
-                <i class="iconfont icon-dayin-"></i>
-              </div> -->
               <div class="share" @click="sharediggle()">
                 <i class="iconfont icon-fenxiang"></i>
               </div>
@@ -258,36 +246,15 @@
               <div class="seebtn" v-else><a :href="nowResumeMsg.resumeAttach.url" :download="nowResumeMsg.resumeAttach.fileName" target="_blank">查看附件</a></div>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
 </template>
 
 <script>
-import {
-  getCompanyQrcodeApi,
-  getRecruiterQrcodeApi
-} from '@/api/qrcode'
-import QRCode from 'qrcodejs2'
-import Clipboard from 'clipboard'
-
 export default {
-  watch: {
-    visible (value) {
-      if (value) {
-        this.showSharePopStatus = true
-        this.loadData()
-      } else {
-        // this.imgUrl = ''
-      }
-    }
-  },
   props: {
-    type: {
-      type: String,
-      default: 'company' // company为公司分享, recruiter为招聘官分享， invite为邀请同事
-    },
-    data: { // 公司。招聘官id
+    data: {
       type: Object
     },
     visible: {
@@ -296,221 +263,14 @@ export default {
   },
   data () {
     return {
-      imgUrl: '',
-      helpPopupShow: false,
-      showSharePopStatus: false,
-      text: {},
-      Url: '',
-      dataText: {
-        'company': {
-          title: '分享公司主页',
-          guide: '使用「微信」扫描小程序码分享公司主页',
-          helpTitle: '分享帮助',
-          helpText: '扫描小程序码 > 点击转发按钮',
-          helpImgUrl: `${process.env.VUE_APP_CDN_PATH}/images/companyImg@2x.png`
-        },
-        'recruiter': {
-          title: '分享招聘官',
-          guide: '使用「微信」扫描小程序码分享招聘官',
-          helpTitle: '分享帮助',
-          helpText: '扫描小程序码 > 点击转发按钮',
-          helpImgUrl: `${process.env.VUE_APP_CDN_PATH}/images/recruiterImg@2x.png`
-        },
-        'invite': {
-          title: '邀请同事',
-          guide: '使用「微信」扫码 或 复制链接 进行邀请同事',
-          helpTitle: '邀请帮助',
-          helpText: '微信扫描二维码 > 转发链接给同事',
-          helpImgUrl: `${process.env.VUE_APP_CDN_PATH}/images/inviteImg@2x.png`
-        }
-      }
     }
   },
   components: {
-
   },
   methods: {
-    helpPopupShowFun () {
-      this.helpPopupShow = !this.helpPopupShow
-    },
-    handleClose () {
-      this.$emit('update:visible', false)
-    },
-    loadData () {
-      switch (this.type) {
-        case 'company':
-          this.text = this.dataText['company']
-          let companyId = {
-            companyId: this.data.id
-          }
-          getCompanyQrcodeApi(companyId).then(res => {
-            this.imgUrl = res.data.data.positionQrCodeUrl
-          })
-          break
-        case 'recruiter':
-          this.text = this.dataText['recruiter']
-          getRecruiterQrcodeApi({ recruiterUid: this.data.uid }).then(res => {
-            this.imgUrl = res.data.data.positionQrCodeUrl
-          })
-          break
-        case 'invite':
-          this.text = this.dataText['invite']
-          this.Url = `https://h5.lieduoduo.com/wantYou_b?type=appEnter&uid=${this.data.uid}&q=${Date.now()}`
-          this.$nextTick(() => {
-            if (this.qrcodeImg) {
-              console.log(document.getElementById('qrcode'))
-              this.qrcodeImg.clear()
-              this.qrcodeImg.makeCode(this.Url)
-              return
-            }
-            this.qrcodeImg = new QRCode(document.getElementById('qrcode'), {
-              width: 132,
-              height: 132
-            })
-            this.qrcodeImg.makeCode(this.Url)
-          })
-          break
-      }
-    },
-    copyActiveCode (e, text) {
-      const clipboard = new Clipboard(e.target, { text: () => text })
-      clipboard.on('success', e => {
-        this.$message({ type: 'success', message: '复制成功' })
-        // 释放内存
-        clipboard.off('error')
-        clipboard.off('success')
-        clipboard.destroy()
-      })
-      clipboard.on('error', e => {
-      // 不支持复制
-        this.$message({ type: 'waning', message: '该浏览器不支持自动复制' })
-        // 释放内存
-        clipboard.off('error')
-        clipboard.off('success')
-        clipboard.destroy()
-      })
-      clipboard.onClick(e)
-    }
-  },
-  destoryed () {
-    this.qrcodeImg = null
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.cover{
-    position: relative;
-}
-.share{
-    @include flex-direction-column;
-    @include flex-v-center;
-    height: 396px;
-    position: relative;
-    .share-title{
-        color: $font-color-2;
-        font-size:20px;
-        font-weight:500;
-        line-height:26px;
-        margin-top: 39px;
-    }
-    .share-guide{
-        color: $font-color-6;
-        line-height:22px;
-        font-weight:400;
-        margin-top: 17px;
-    }
-    .share-imgUrl{
-        width: 132px;
-        height: 132px;
-        margin-top: 47px;
-        img{
-            width: 100%;
-            height: 100%;
-            border: 1px solid $bg-color-5;
-            border-radius:70px;
-        }
-    }
-    .invite-imgUrl{
-        margin-top: 24px;
-    }
-    .helpBtn{
-        position: absolute;
-        left: 50%;
-        bottom: 24px;
-        transform: translateX(-50%);
-        color: $main-color-1;
-        i{
-            color: $bg-color-4;
-            margin-left: 6px;
-        }
-    }
-    .invite{
-      margin-top: 24px;
-      width: 302px;
-      height: 32px;
-      display: flex;
-      .el-button {
-        border-radius: 0 2px 2px 0;
-      }
-    }
-    .invite-copy-url {
-      width: 230px;
-      height: 32px;
-      line-height: 32px;
-      border-radius: 2px 0 0 2px;
-      border: 1px solid $border-color-1;
-      border-right: none;
-      padding:0 14px;
-      color: $title-color-2;
-      font-size: 12px;
-      box-sizing: border-box;
-      span {
-        display: inline-block;
-        overflow: hidden;
-        white-space: nowrap;
-        width: 100%;
-      }
-    }
-}
-.helpPop{
-    width: 300px;
-    height: 396px;
-    position: absolute;
-    left: 448px;
-    top:0;
-    background: #ffffff;
-    border-radius: 8px;
-    @include flex-direction-column;
-    @include flex-v-center;
-    &::after {
-      content: "";
-      position: absolute;
-      left: -15px;
-      top: 198px;
-      width: 0px;
-      height: 0px;
-      border-width: 9px;
-      border-style: solid;
-      border-color: transparent #fff transparent transparent ;
-    }
-    .helpTitle{
-        color: $font-color-2;
-        font-weight: 500;
-        font-size: 20px;
-        margin-top: 32px;
-    }
-    .helpText{
-        color: $font-color-6;
-        font-weight: 400;
-        line-height: 22px;
-        font-size: 14px;
-        margin-top: 24px;
-    }
-    .helpImg{
-        width: 250px;
-        height: 224px;
-        margin-top: 32px;
-    }
-}
 </style>

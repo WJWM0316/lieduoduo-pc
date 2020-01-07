@@ -202,12 +202,17 @@ export default {
         if (valid) {
           if (this.from.website === '' || this.from.albumInfo || this.from.address) {
             this.$confirm('完善全部信息，可以提高公司的曝光与排名，是否继续完善?', '温馨提示', {
+              distinguishCancelAndClose: true,
               confirmButtonText: '继续完善',
               cancelButtonText: '直接保存',
               type: 'warning',
               center: true
-            }).catch(() => {
+            }).then(() => {
               return false
+            }).catch((action) => {
+              if (action === 'cancel') {
+                this.saveEditCompany()
+              }
             })
           } else {
             this.saveEditCompany()
