@@ -63,7 +63,7 @@
 				  		<template> | {{item.positionInfo.educationDesc}}</template>
 				  	</div>
 			  	</router-link>
-			  	<template v-else><span class="unchoose-position">未选择约面职位</span></template>
+			  	<template v-else><span class="unchoose-position">直接约面</span></template>
 		  	</div>
 		  </el-col>
 		  <el-col class="li-item-content-2" :span="8">
@@ -212,9 +212,9 @@ export default {
 		height: 1px;
 		content: ''
 	};
-	&:hover{
-		background: #f8fafa;
-	};
+	// &:hover{
+	// 	background: #f8fafa;
+	// };
 	.header-col-left{
 		text-align: left;
 	}
@@ -326,6 +326,9 @@ export default {
 		@include ellipsis-over(128px);
 		vertical-align: middle;
 		// margin-right: 4px;
+		&:hover{
+			color: $main-color-1
+		}
 	}
 	.unchoose-position {
 		font-size:14px;
@@ -363,7 +366,7 @@ export default {
 		@include ellipsis-over(96px);
 		vertical-align: middle;
 		position: relative;
-		padding-right: 7px;
+		padding-right: 8px;
 		&:before{
 			content: '';
 			display: block;
@@ -378,7 +381,7 @@ export default {
 		}
 	}
 	.user-degress {
-		font-size:12px;
+		font-size:14px;
 		color:$font-color-9;
 		display: inline-block;
 		@include ellipsis-over(112px);
@@ -393,6 +396,7 @@ export default {
 		height:40px;
 		border-radius:4px;
 		margin-left: 20px;
+		text-indent: -2px;
 	}
 	.btn-style {
 		cursor: pointer;
