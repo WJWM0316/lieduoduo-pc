@@ -103,7 +103,7 @@ export default {
           name,
           gender: gender || 1,
           avatar: avatarId,
-          avatarUrl: avatarId && avatar.smallUrl,
+          avatarUrl: (avatarId && avatar.smallUrl) || '',
           startWorkYear: !isNaN(startWorkYear) && startWorkYear !== null ? startWorkYear * 1000 : '',
           birth: birth ? birth * 1000 : ''
         })

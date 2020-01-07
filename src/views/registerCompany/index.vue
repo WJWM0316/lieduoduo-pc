@@ -618,12 +618,14 @@ export default {
       this.authForm.business_license_url = data[0].smallUrl
       this.authForm.business_license = data[0].id
       this.checkupdata()
+      this.businessLoading = false
     },
     // 上传工牌
     handleChangeOnjob (data) {
       this.authForm.on_job_url = data[0].smallUrl
       this.authForm.on_job = data[0].id
       this.checkupdata()
+      this.onjobLoading = false
     },
     selectcompany () {
       this.companyshow = false
