@@ -1,16 +1,12 @@
 <template>
   <div id="adsorption">
     <ul class="top">
-      <li v-for="(item, index) in asideBar.topNav" :key="index" class="li-item1">
-        <router-link
-          class="item"
-          target="_blank" :to="{name: item.routeName, query: item.query}">
-          <div class="icon">
-            <i class="iconfont" :class="item.iconClass"></i>
-            <div class="circle" v-if="item.reddot || (!isLogin && item.id !== 'applay')"></div>
-          </div>
-          <div class="describe describe2">{{item.text}}</div>
-        </router-link>
+      <li v-for="(item, index) in asideBar.topNav" :key="index" class="li-item1" @click="routeJump(item)">
+        <div class="icon">
+          <i class="iconfont" :class="item.iconClass"></i>
+          <div class="circle" v-if="item.reddot || (!isLogin && item.id !== 'applay')"></div>
+        </div>
+        <div class="describe describe2">{{item.text}}</div>
       </li>
     </ul>
     <ul class="bottom">
@@ -74,6 +70,22 @@ export default {
     handleScroll () {
       let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
       this.showScrollTopBtn = scrollTop > 200
+    },
+    routeJump(item) {
+      if (this.isLogin) {
+        let routeData = this.$router.resolve({
+          name: item.routeName,
+          query: item.query
+        })
+        window.open(routeData.href, '_blank')
+      } else {
+        this.$router.push({
+          name: 'login',
+          query: {
+            type: 'msgLogin'
+          }
+        })
+      }      
     }
   },
   mounted () {
