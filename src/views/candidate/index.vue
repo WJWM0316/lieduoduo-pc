@@ -2299,6 +2299,14 @@ export default class CourseList extends Vue {
   z-index: 2;
   .el-input__inner{
     cursor: pointer;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    width: 90px !important;
+    height: 40px;
+    padding: 0;
+    z-index: 2;
   }
 }
 </style>
