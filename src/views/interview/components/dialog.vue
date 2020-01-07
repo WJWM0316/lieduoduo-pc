@@ -446,16 +446,19 @@ export default {
     width: 112px;
     border-radius: 4px;
     margin-left: 16px;
+    height: 32px;
   }
   .btn-cancle-width{
     width: 86px;
     border-radius: 4px;
+    height: 32px;;
   }
   .el-dialog__footer{
     padding: 0;
   }
   .footer {
     padding: 30px 40px;
+    text-align: right
   }
   .color2 {
     color: $font-color-3;
