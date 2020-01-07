@@ -129,37 +129,37 @@ export const receiveScreen = [
 export const applyData = {
   list: [],
   page: 1,
-  count: 1,
+  count: 20,
   hasInitPage: false,
   total: 0,
-  pageSize: 1
+  pageSize: 20
 }
 
 export const receiveData = {
   list: [],
   page: 1,
-  count: 1,
+  count: 20,
   hasInitPage: false,
   total: 0,
-  pageSize: 1
+  pageSize: 20
 }
 
 export const scheduleData = {
   list: [],
   page: 1,
-  count: 1,
+  count: 20,
   hasInitPage: false,
   total: 0,
-  pageSize: 1
+  pageSize: 20
 }
 
 export const historyData = {
   list: [],
   page: 1,
-  count: 1,
+  count: 20,
   hasInitPage: false,
   total: 0,
-  pageSize: 1
+  pageSize: 20
 }
 
 export const asideBar = {

@@ -528,7 +528,7 @@ export default {
 				position: absolute;
 				left: 50%;
 				margin-left: -50%;
-				bottom: -24px;
+				bottom: -20px;
 				height: 2px;
 				width: 100%;
 				background: $bg-color-4;

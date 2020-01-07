@@ -35,11 +35,9 @@
         <adpostion position="searchResult"></adpostion>
       </div>
     </div>
-    <scroll-to-top ref="scrollToTop"></scroll-to-top>
   </div>
 </template>
 <script>
-import ScrollToTop from 'COMPONENTS/scrollToTop'
 import Search from './components/search'
 import { getPositionSearch, getPositionSearchType, getRecommendPosition } from 'API/position'
 import { getSearchCompanys } from 'API/company'
@@ -51,7 +49,6 @@ import CompanyItem from 'COMPONENTS/common/company/item'
 export default {
   components: {
     Search,
-    ScrollToTop,
     GuideLogin,
     NoFound,
     adpostion,
@@ -101,6 +98,7 @@ export default {
   methods: {
     // 获取职位列表
     getPositionList () {
+      this.scrollToView()
       this.getLoading = true
       if (!this.isGetSearchType) {
         this.getSearchType()
@@ -119,24 +117,25 @@ export default {
         }
       }
       apiMethod(this.params).then(({ data }) => {
+        this.firstloaded = true
         this.getLoading = false
         const listData = data.data || []
         this.listData = listData.filter(val => val.id)
         this.total = data.meta.total
-        if (this.$refs.scrollToTop) this.$refs.scrollToTop.toTop()
       })
     },
     getCompanysList () {
+      this.scrollToView()
       this.getLoading = true
       if (!this.isGetSearchType) {
         this.getSearchType()
         return
       }
       getSearchCompanys(this.params).then(({ data }) => {
+        this.firstloaded = true
         this.getLoading = false
         this.companyListData = data.data || []
         this.total = data.meta.total
-        if (this.$refs.scrollToTop) this.$refs.scrollToTop.toTop()
       })
     },
     handleSearch (value, type) {
@@ -186,6 +185,10 @@ export default {
       }).catch(() => {
         this.isGetSearchType = false
       })
+    },
+    scrollToView () {
+      if (!this.firstloaded) return
+      this.$util.scrollToView(document.querySelector('.position-wrapper'))
     }
   }
 }

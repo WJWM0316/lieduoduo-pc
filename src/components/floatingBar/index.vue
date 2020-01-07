@@ -96,6 +96,7 @@ export default {
   transition: .2s width;
   box-shadow:0px 0px 20px 0px rgba(22,39,77,0.07);
   border-radius:8px 0px 0px 8px;
+  min-height: 616px;
   &:hover{
   	width:64px;
   	.describe {
@@ -146,18 +147,21 @@ export default {
     opacity: 0;
     transition: .2s opacity;
     padding-top: 4px;
+    color: #99999B
   }
   li{
     display: block;
-    color: $--color-text-placeholder;
     transition: .2s all;
     &:hover {
-      color: $nav-color-hover;
+      color: $main-color-1;
       a {
-        color: $nav-color-hover;
+        color: $main-color-1;
       }
       .iconfont {
-        color: $nav-color-hover;
+        color: $main-color-1;
+      }
+      .describe {
+        color: $main-color-1;
       }
     };
   }
