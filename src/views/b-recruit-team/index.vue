@@ -200,6 +200,9 @@ export default {
   padding: 32px 42px 32px 32px;
   font-size: 14px;
   border-top: 1px solid rgba($border-color-1, .4);
+  .recruit-info {
+    min-width: 422px;
+  }
   .recruit-info div, .recruit-name span {
     display: inline-block;
     vertical-align: middle;
