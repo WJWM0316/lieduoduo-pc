@@ -126,8 +126,11 @@ export default {
     position: relative;
   }
   i {
-    font-size: 18px;
+    font-size: 17px;
     color: $iconFont-gray;
+  }
+  .icon-arrow-top, .icon-xiaochengxu_huaban {
+    font-size: 16px;
   }
   .li-item1{
     display: block;
@@ -165,7 +168,7 @@ export default {
         color: $main-color-1;
       }
       .iconfont {
-        color: $main-color-1;
+        color: $bg-color-4;
       }
       .describe {
         color: $main-color-1;

@@ -79,7 +79,7 @@ export default {
 		background:white;
 		box-shadow:0px 0px 30px 0px rgba(22,39,77,0.07);
 		border-radius:4px;
-		margin-bottom: 25px;
+		margin-bottom: 20px;
 	}
 	.section-header {
 		font-size:16px;
