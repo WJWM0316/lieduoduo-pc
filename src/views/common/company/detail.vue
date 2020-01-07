@@ -839,7 +839,7 @@ to {top:0px;}
     height: 76px;
   }
   strong{
-    color: $nav-color-hover;
+    color: $main-color-1;
   }
   img{
     width: 100%;
