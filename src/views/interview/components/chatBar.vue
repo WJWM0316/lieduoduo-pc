@@ -54,7 +54,7 @@
 				  		<!-- <img src="~IMAGES/tag_list_24hour.png" alt="" class="position-24hour" v-if="item.interviewType === 2"> -->
 				  		<span class="position-salary" v-if="item.positionInfo">
 				  			<template>{{item.positionInfo.positionEmolumentMin}}~{{item.positionInfo.positionEmolumentMax}}k</template>
-				  			<template v-if="item.positionInfo.annualSalary > 12">· {{item.positionInfo.annualSalary}}薪</template>
+				  			<template v-if="item.positionInfo.annualSalary > 12"> · {{item.positionInfo.annualSalary}}薪</template>
 				  		</span>
 				  	</div>
 				  	<div class="position-adress" v-if="item.positionInfo && item.positionInfo.addressInfo">
