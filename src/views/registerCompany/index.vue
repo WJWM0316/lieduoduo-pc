@@ -611,6 +611,7 @@ export default {
     handleChangeAvatar (data) {
       this.authForm.logourl = data[0].smallUrl
       this.authForm.logo = data[0].id
+      this.avatarLoading = false
     },
     // 上传营业执照
     handleChangeBusiness (data) {

@@ -145,6 +145,7 @@ export default {
     handleChangeAvatar (item) {
       this.form.avatar = item[0].id
       this.form.avatarUrl = item[0].smallUrl
+      this.avatarLoading = false
     }
   }
 }
