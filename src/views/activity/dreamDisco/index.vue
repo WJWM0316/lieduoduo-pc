@@ -23,11 +23,19 @@
         <div class="positionCard-main-box">
           <div class="positionCard-wrap" v-for="(item, index) in positionList" :key="index">
             <div class="positionCard-wrap-item" v-for="(item1, index1) in positionList[index]" :key="index1">
-              <p>{{ item1.positionName}}</p>
-              <p>{{ item1.emolumentMin + "-" + item1.emolumentMax + "k·" + item1.annualSalary + "薪" }}</p>
-              <p>
-                <span>{{ item1.province + item1.city + item1.district }}</span>
+              <p class="positionCard-positionName">{{ item1.positionName}}</p>
+              <p class="positionCard-emolument">{{ item1.emolumentMin + "-" + item1.emolumentMax + "k·" + item1.annualSalary + "薪" }}</p>
+              <p class="positionCard-city">
+                <i class="iconfont icon-dizhi"></i>
+                <span>{{ item1.city + item1.district }}</span>
+                <i class="iconfont icon-zhiwei"></i>
+                <span>{{ item1.workExperienceName }}</span>
+                <i class="iconfont icon-zhiwei"></i>
+                <span>{{ item1.educationName }}</span>
               </p>
+              <div class="positionCard-">
+                <img />
+              </div>
             </div>
           </div>
         </div>
@@ -97,7 +105,9 @@ export default {
     background-position: center center;
     width: 100%;
     height: 524px;
-    @include flex-center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     .text-wrap-text{
       font-size:25px;
       font-weight:500;

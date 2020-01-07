@@ -115,7 +115,7 @@
                   <img :src="item.avatar.smallUrl"/>
                   <div class="recruitmentTeam-text">
                     <div class="recruitmentTeam-text-top">
-                      <p class="admin-detail">{{ item.name }} | {{ item.position }}</p>                                              
+                      <p class="admin-detail">{{ item.name }}<span></span>{{ item.position }}</p>
                       <el-popover
                         placement="bottom-end"
                         popper-class="user-infos"
@@ -127,7 +127,7 @@
                           </div>
                           <div class="qr-code"> <img :src="item.qrCode" /> </div>
                         </div>
-                        <div slot="reference"><i class="icon iconfont icon-duihua_huaban"></i></div>           
+                        <div slot="reference"><i class="icon iconfont icon-duihua_huaban"></i></div>
                       </el-popover>
                     </div>
                     <div class="recruitmentTeam-text-buttom">
@@ -758,7 +758,14 @@ to {top:0px;}
               overflow: hidden;
               max-width: 192px;
               display: inline-block;
-              vertical-align: middle
+              vertical-align: middle;
+              span{
+                display: inline-block;
+                height: 10px;
+                width: 1px;
+                margin: 0 8px;
+                background: $font-color-9;
+              }
             }
             .recruitmentTeam-text-buttom{
               width: 100%;
@@ -773,7 +780,7 @@ to {top:0px;}
                 white-space: nowrap;
                 text-overflow: ellipsis;
                 overflow: hidden;
-                vertical-align: middle;
+                vertical-align: top;
               }
             }
           }

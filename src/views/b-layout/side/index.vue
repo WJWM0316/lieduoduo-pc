@@ -120,7 +120,7 @@ $company-msg-height: 60px;
 <style>
   .page-badge sup{
     border: 0;
-    top: -1px;
+    top: 0;
     margin-left: 4px;
     padding: 0 5.67px;
   }
