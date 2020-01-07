@@ -197,7 +197,7 @@ export default {
 }
 .recruit-list {
   @include flex-v-center;
-  padding: 32px 42px 32px 32px;
+  padding: 32px 50px 32px 32px;
   font-size: 14px;
   border-top: 1px solid rgba($border-color-1, .4);
   .recruit-info {
@@ -256,7 +256,8 @@ export default {
   }
   .recruit-share {
     cursor: pointer;
-    flex: 2;
+    min-width: 134px;
+    text-align: center;
     color: $main-color-1;
   }
 }
