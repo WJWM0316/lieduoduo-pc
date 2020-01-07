@@ -735,15 +735,16 @@
         </ul>
         </div>
           <div class="add_time" v-if="model.dateLists.length < 3">
-          <i class="iconfont icon-tianjiashijian bgcolor" style="font-size:12px"></i>
-          <span :style="'margin-left:16px;line-height:14px'">添加时间</span>
-          <el-date-picker
-            v-model="form.date1"
-            type="datetime"
-            @change="getTime"
-            value-format="yyyy-MM-dd HH:mm:ss"
-            placeholder="选择日期时间">
-          </el-date-picker>
+            <i class="iconfont icon-tianjiashijian bgcolor" style="font-size:12px"></i>
+            <span :style="'margin-left:12px;line-height:14px'">添加时间</span>
+            <el-date-picker
+              v-model="form.date1"
+              type="datetime"
+              @change="getTime"
+              value-format="yyyy-MM-dd HH:mm:ss"
+              class="date-seleced-interview-time"
+              placeholder="选择日期时间">
+            </el-date-picker>
           </div>
         </div>
         <div class="selectposition" v-show="pop.type === 'selectposition'">
@@ -2283,5 +2284,28 @@ export default class CourseList extends Vue {
 }
 #candidate .el-loading-mask {
   z-index: 0;
+}
+</style>
+<style lang="scss">
+.date-seleced-interview-time{
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  padding: 0;
+  .el-input__inner{
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 100%;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    padding: 0;
+  }
 }
 </style>

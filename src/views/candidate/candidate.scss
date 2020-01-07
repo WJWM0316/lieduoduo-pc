@@ -1987,14 +1987,32 @@ right: -40px;
           position: relative;
           cursor: pointer;
           overflow: hidden;
-          padding: 12px 0;
+          margin: 12px 0;
           color: #03b3bb;
+          display: inline-block;
+          padding-left: 10px;
+          left: -10px;
           .el-date-editor{
             position: absolute;
             left: 0;
             right: 0;
             height: 100%;
             opacity: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            padding: 0;
+          }
+          .el-input__inner{
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 100%;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            padding: 0;
           }
         }
       }
