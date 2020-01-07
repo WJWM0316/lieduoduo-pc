@@ -6,6 +6,7 @@
                 <div class="share-guide">{{ text.guide }}</div>
                 <div class="share-imgUrl" :class="{ 'invite-imgUrl': type === 'invite'}">
                     <img v-if="imgUrl" v-show="type !== 'invite'" :src="imgUrl"/>
+                    <img src="@/assets/images/Floorplan.png" v-else>
                     <div v-show="type === 'invite'" id="qrcode"></div>
                 </div>
                 <div class="invite" v-if="type === 'invite'">
