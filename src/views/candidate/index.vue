@@ -1489,6 +1489,7 @@ export default class CourseList extends Vue {
   }
 
   getTime (e) {
+    if(!e) return
     let thisTime = e.replace(/-/g, '/')
     this.model.dateLists.push({
       appointment: e,
