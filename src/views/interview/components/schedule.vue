@@ -315,6 +315,16 @@ export default {
 		.noposition{
 			margin-right: 18px;
 		}
+		.name{
+			span{
+				display: block;
+				float: left;
+				@include ellipsis-over(69px);
+			}
+			.icon-app{
+				float: left;
+			}
+		}
 		.line{
 			width:1px;
 			height:10px;
