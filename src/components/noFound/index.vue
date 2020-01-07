@@ -23,7 +23,7 @@ export default {
       default: true
     },
     maxWidth: {
-      default: ''
+      default: '332'
     }
   }
 }

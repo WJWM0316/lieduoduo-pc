@@ -76,7 +76,7 @@
         :total="total">
       </el-pagination>
     </div>
-    <div v-if="!total && isNoFound"><no-found :max-width="300" :tipText="'没有符合筛选条件的公司，放宽筛选条件试试？'"/></div>
+    <div v-if="!total && isNoFound"><no-found :max-width="332" :tipText="'没有符合筛选条件的公司，放宽筛选条件试试？'"/></div>
     <loginPop ref="loginPop"></loginPop>
   </div>
 </template>
