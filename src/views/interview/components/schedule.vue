@@ -333,6 +333,7 @@ export default {
 		}
 		.phone{
 			line-height: 22px;
+			color: #66666E;
 		}
 	}
 }
