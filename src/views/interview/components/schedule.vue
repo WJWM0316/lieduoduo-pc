@@ -3,7 +3,7 @@
   <div class="li-item_schedule clearfix" v-for="(item, index) in data.list" :key="index">
 		<div class="col-left">
 			<div class="logo-box">
-				<img :src="item.avatar.smallUrl" alt="avatar" v-if="item.avatar" />
+				<img :src="item.companyInfo.logoInfo.smallUrl" alt="avatar" v-if="item.companyInfo" />
 			</div>
 		</div>
 		<div class="col-center">
