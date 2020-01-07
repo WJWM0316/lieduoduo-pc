@@ -68,21 +68,21 @@ export default {
           guide: '使用「微信」扫描小程序码分享公司主页',
           helpTitle: '分享帮助',
           helpText: '扫描小程序码 > 点击转发按钮',
-          helpImgUrl: `${process.env.VUE_APP_CDN_PATH}/images/companyImg@2x.png`
+          helpImgUrl: `${process.env.VUE_APP_CDN_PATH}/images/companyImg_new@2x.png`
         },
         'recruiter': {
           title: '分享招聘官',
           guide: '使用「微信」扫描小程序码分享招聘官',
           helpTitle: '分享帮助',
           helpText: '扫描小程序码 > 点击转发按钮',
-          helpImgUrl: `${process.env.VUE_APP_CDN_PATH}/images/recruiterImg@2x.png`
+          helpImgUrl: `${process.env.VUE_APP_CDN_PATH}/images/recruiterImg_new@2x.png`
         },
         'invite': {
           title: '邀请同事',
           guide: '使用「微信」扫码 或 复制链接 进行邀请同事',
           helpTitle: '邀请帮助',
           helpText: '微信扫描二维码 > 转发链接给同事',
-          helpImgUrl: `${process.env.VUE_APP_CDN_PATH}/images/inviteImg@2x.png`
+          helpImgUrl: `${process.env.VUE_APP_CDN_PATH}/images/inviteImg_new@2x.png`
         }
       }
     }
