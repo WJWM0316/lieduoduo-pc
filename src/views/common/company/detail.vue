@@ -791,7 +791,7 @@ to {top:0px;}
         .recruitmentTeam-buttom{
           margin-top: 10px;
           width: 280px;
-          height: 37px;
+          height: 40px;
           border: 1px solid $border-color-1;
           color: $border-color-5;
           border-radius:2px;
@@ -821,18 +821,18 @@ to {top:0px;}
 </style>
 <style lang="scss">
 .user-infos{
-  padding: 13px 17px;
+  padding: 13px 12px 13px 17px;
   .box {
     display: flex;
     align-items: center;
   }
   .describe {
-    width:151px;
+    width:144px;
     font-size:12px;
     font-weight:400;
     color:$font-color-3;
     line-height:16px;
-    margin-right: 5px;
+    margin-right: 10px;
   }
   .qr-code{
     width: 76px;

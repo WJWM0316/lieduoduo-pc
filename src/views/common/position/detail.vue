@@ -372,3 +372,31 @@ export default class PositionDetail extends Vue {
 <style lang="scss" scoped>
 @import './detail.scss';
 </style>
+<style lang="scss">
+.user-infos{
+  padding: 13px 12px 13px 17px;
+  .box {
+    display: flex;
+    align-items: center;
+  }
+  .describe {
+    width:144px;
+    font-size:12px;
+    font-weight:400;
+    color:$font-color-3;
+    line-height:16px;
+    margin-right: 10px;
+  }
+  .qr-code{
+    width: 76px;
+    height: 76px;
+  }
+  strong{
+    color: $main-color-1;
+  }
+  img{
+    width: 100%;
+    height: 100%;
+  }
+}
+</style>

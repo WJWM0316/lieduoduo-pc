@@ -611,18 +611,21 @@ export default {
     handleChangeAvatar (data) {
       this.authForm.logourl = data[0].smallUrl
       this.authForm.logo = data[0].id
+      this.avatarLoading = false
     },
     // 上传营业执照
     handleChangeBusiness (data) {
       this.authForm.business_license_url = data[0].smallUrl
       this.authForm.business_license = data[0].id
       this.checkupdata()
+      this.businessLoading = false
     },
     // 上传工牌
     handleChangeOnjob (data) {
       this.authForm.on_job_url = data[0].smallUrl
       this.authForm.on_job = data[0].id
       this.checkupdata()
+      this.onjobLoading = false
     },
     selectcompany () {
       this.companyshow = false
@@ -752,7 +755,7 @@ export default {
             type: 'warning',
             center: true
           }).then(() => {
-            this.$router.push({ name: 'index' })
+            this.$store.commit('switchIdentity', { toSwitchRole: 1 })
           }).catch(() => {})
           break
         case 'account':

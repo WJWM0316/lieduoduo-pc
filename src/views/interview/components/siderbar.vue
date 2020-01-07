@@ -9,7 +9,7 @@
   				v-for="(item, index) in recommendOpptyInterestLists"
   				:key="index"
   				:class="{'jipin-mark': item.isUrgency === 1}"
-  				class="li-item">
+  				class="li-item-position">
   				<!-- :class="{'jipin': item.isUrgency === 1}" -->
   				<div class="jump">
 		  			<div class="li-item-row-one">
@@ -79,7 +79,7 @@ export default {
 		background:white;
 		box-shadow:0px 0px 30px 0px rgba(22,39,77,0.07);
 		border-radius:4px;
-		margin-bottom: 25px;
+		margin-bottom: 20px;
 	}
 	.section-header {
 		font-size:16px;
@@ -88,7 +88,7 @@ export default {
 		line-height:18px;
 		padding: 20px 20px 8px 20px;
 	}
-	.li-item {
+	.li-item-position {
 		display: block;
 		padding: 20px 20px 0 20px;
 		&:hover{
@@ -115,7 +115,7 @@ export default {
 		position: relative;
 	}
 	.position-salary {
-		font-size:14px;
+		font-size:16px;
 		font-weight:500;
 		color:$sub-color-1;
 		line-height:16px;
