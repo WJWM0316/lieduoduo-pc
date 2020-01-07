@@ -51,7 +51,12 @@
             <i class="iconfont icon-shijian time" v-if="vo.status >= 51"></i>
             <i class="iconfont icon-shijian time2" v-else></i>
             <span v-if="tablist[0].cur">
-              {{(vo.arrangementInfo.appointmentTime)*1000 | date('YYYY-MM-DD HH:mm') }}
+              <span v-if="new Date((vo.arrangementInfo.appointmentTime)*1000).getFullYear() !== (new Date()).getFullYear()">
+            {{(vo.arrangementInfo.appointmentTime)*1000 | date('YYYY-MM-DD HH:mm') }}
+            </span>
+            <span v-else>
+            {{(vo.arrangementInfo.appointmentTime)*1000 | date('MM-DD HH:mm') }}
+            </span>
               </span>
             <span v-else>{{vo.arrangementInfo.appointment.substring(11, 16)}}</span>
           </div>
@@ -930,8 +935,10 @@ export default {
     handleCurrentPageChange (page) {
       if (this.tablist[0].time) {
         this.tabform.page = page
+        this.setPathQuery(this.tabform)
       } else {
         this.form.page = page
+        this.setPathQuery(this.form)
       }
       this.getlist()
     },
@@ -944,10 +951,11 @@ export default {
       }
       if (this.tablist[0].time) {
         this.tabform.page = 1
+        this.setPathQuery(this.tabform)
       } else {
         this.form.page = 1
+        this.setPathQuery(this.form)
       }
-      this.setPathQuery(this.form)
       this.getlist()
     },
     // 点击返回的今天明天获取其他时间
@@ -971,12 +979,13 @@ export default {
       })
       if (data.time) {
         this.tabform.page = 1
+        this.setPathQuery(this.tabform)
         this.gettablist()
       } else {
         this.form.page = 1
+        this.setPathQuery(this.form)
         this.getlist()
       }
-      this.setPathQuery(this.form)
     },
     gettablist () {
       this.getLoading = true
@@ -1533,7 +1542,6 @@ export default {
       }
     },
     toggleaddress (data) {
-      console.log(data)
       this.addresslist.map((v, k) => {
         v.cur = data === v
       })
