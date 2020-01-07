@@ -172,7 +172,8 @@ export default {
       },
       address: this.information.address,
       middleUrl: this.information.logoInfo.middleUrl,
-      albumInfo: this.information.albumInfo
+      albumInfo: this.information.albumInfo,
+      fromCaching: '' // 表单数据缓存
     }
   },
   components: {
@@ -181,6 +182,11 @@ export default {
   },
   methods: {
     cancel () {
+      if (this.fromCaching === JSON.stringify(this.from)) {
+        let type = '公司主页'
+        this.$emit('click', type)
+        return
+      }
       this.$confirm('确定退出，更新的内容将不被保存', '有编辑中内容尚未保存，确定退出编辑吗?', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -195,13 +201,18 @@ export default {
       this.$refs.fromMyMaterial.validate(valid => {
         if (valid) {
           if (this.from.website === '' || this.from.albumInfo || this.from.address) {
-            this.$confirm('温馨提示', '完善全部信息，可以提高公司的曝光与排名，是否继续完善?', {
+            this.$confirm('完善全部信息，可以提高公司的曝光与排名，是否继续完善?', '温馨提示', {
+              distinguishCancelAndClose: true,
               confirmButtonText: '继续完善',
               cancelButtonText: '直接保存',
               type: 'warning',
               center: true
-            }).catch(() => {
-              this.saveEditCompany()
+            }).then(() => {
+              return false
+            }).catch((action) => {
+              if (action === 'cancel') {
+                this.saveEditCompany()
+              }
             })
           } else {
             this.saveEditCompany()
@@ -278,6 +289,7 @@ export default {
   },
   mounted () {
     this.$nextTick(() => {
+      this.fromCaching = JSON.stringify(this.from)
       companyFinancingApi()
         .then(res => {
           this.financing = res.data.data
@@ -298,7 +310,7 @@ export default {
     min-width: 960px;
     margin: 30px auto 0 auto;
     background: #ffffff;
-    padding: 48px 82px 30px 82px !important;
+    padding: 48px 82px !important;
 }
 
 .myMaterial-head-text{

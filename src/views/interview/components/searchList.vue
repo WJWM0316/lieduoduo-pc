@@ -9,7 +9,7 @@
 			:class="{'li-item-last': index === data.list.length - 1}">
 		</chat-bar>
 	  <no-data v-if="!data.total && data.hasInitPage" />
-	  <dialog-model v-model="model.show" :item="model.interview" :list="data.list" />
+	  <dialog-model v-model="model.show" :item="model.interview" />
 	</div>
 </template>
 <script>

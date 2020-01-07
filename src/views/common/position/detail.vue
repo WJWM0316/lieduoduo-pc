@@ -86,7 +86,7 @@
                 <div class="tips_01">
                   {{infos.recruiterInfo.name}}
                   <el-popover
-                    placement="right"
+                    placement="right-start"
                     popper-class="user-infos"
                     trigger="hover">
                     <div class="box">

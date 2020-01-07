@@ -4,13 +4,14 @@
     :visible.sync="visiable"
     width="430px"
     custom-class="interview-model"
+    :center="true"
     @close="handleClose">
     <template v-if="[31].includes(infos.status) && infos.arrangementInfo">
       <ul class="ul-box">
         <li class="item-li">
-          <i class="iconfont icon-rencai"></i>
+          <i class="iconfont icon-mianshiguan"></i>
           <div class="ul-li-text-box">
-            <div class="color2 user-name">{{infos.arrangementInfo.realname}}</div>
+            <div class="color4 user-name">{{infos.arrangementInfo.realname}}</div>
             <div class="user-contact color3">{{infos.arrangementInfo.mobile}}</div>
           </div>
         </li>
@@ -18,7 +19,7 @@
           <i class="iconfont icon-zhiwei1"></i>
           <div class="ul-li-text-box">
             <router-link
-              class="color2 position-name"
+              class="color4 position-name"
               target="_blank" :to="{name: 'positionDetail', query: { positionId: infos.positionId }}">
               {{infos.positionName}}
             </router-link>
@@ -27,7 +28,7 @@
         <li class="item-li">
           <i class="iconfont icon-didian"></i>
           <div class="ul-li-text-box">
-            <div class="color2 address">{{infos.address}}{{infos.doorplate}}</div>
+            <div class="color4 address">{{infos.address}}{{infos.doorplate}}</div>
           </div>
         </li>
         <li class="item-li">
@@ -41,7 +42,7 @@
               :class="{'time-item-active': item.checked}">
               <i class="iconfont icon-chenggong choose" v-show="item.checked"></i>
               <i class="iconfont icon-beixuanxiang choose" v-show="!item.checked"></i>
-              <span class="date">{{item.appointment}}</span>
+              <span class="date color5">{{item.appointment}}</span>
             </div>
           </div>
           <!-- <div class="tips">以上时间都不合适，<strong @click="setDateInappropriate">请联系我</strong></div> -->
@@ -55,7 +56,7 @@
     <template v-if="[32].includes(infos.status) && infos.arrangementInfo">
       <ul class="ul-box">
         <li class="item-li">
-          <i class="iconfont icon-rencai"></i>
+          <i class="iconfont icon-mianshiguan"></i>
           <div class="ul-li-text-box">
             <div class="color1 user-name">{{infos.arrangementInfo.realname}}</div>
             <div class="user-contact color2">{{infos.arrangementInfo.mobile}}</div>
@@ -89,7 +90,7 @@
     <template v-if="[41].includes(infos.status) && infos.arrangementInfo">
       <ul class="ul-box">
         <li class="item-li">
-          <i class="iconfont icon-rencai"></i>
+          <i class="iconfont icon-mianshiguan"></i>
           <div class="ul-li-text-box">
             <div class="color1 user-name">{{infos.arrangementInfo.realname}}</div>
             <div class="user-contact color2">{{infos.arrangementInfo.mobile}}</div>
@@ -115,7 +116,23 @@
         </li>
         <li class="item-li center">
           <div class="waiting5">面试时间已确认</div>
-          <div class="waiting4">已添加到面试日程，请准时赴约哦~<strong> 通知我</strong></div>
+          <div class="waiting4">已添加到面试日程，请准时赴约哦~
+            <strong>
+              通知我
+              <div class="notice-diggle2">
+                <div class="headbar">
+                  <img src="@/assets/images/pic_message.png" alt="">
+                </div>
+                <div class="clock"><img src="@/assets/images/pic_bell.png" alt=""></div>
+                <div class="qrcode">
+                  <img :src="app_url" alt="">
+                </div>
+                <p>下载猎多多APP<br/>获得面试日程通知提醒</p>
+                <div class="forward"></div>
+                <div class="rocket"><img src="@/assets/images/rocket.png" alt=""></div>
+              </div>
+            </strong>
+          </div>
           <div class="waiting3">{{infos.arrangementInfo.appointment}}</div>
         </li>
       </ul>
@@ -123,16 +140,16 @@
     <template v-if="[51, 58, 60].includes(infos.status) && infos.arrangementInfo">
       <ul class="ul-box">
         <li class="item-li">
-          <i class="iconfont icon-rencai"></i>
+          <i class="iconfont icon-mianshiguan"></i>
           <div class="ul-li-text-box">
             <div class="color1 user-name">{{infos.arrangementInfo.realname}}</div>
             <div class="user-contact color2">{{infos.arrangementInfo.mobile}}</div>
           </div>
         </li>
-        <li class="item-li">
+        <li class="item-li" v-if="infos.positionId">
           <i class="iconfont icon-zhiwei1"></i>
           <div class="ul-li-text-box">
-            <div class="color1 position-name" v-if="infos.positionId">{{infos.positionName}}</div>
+            <div class="color1 position-name">{{infos.positionName}}</div>
           </div>
         </li>
         <li class="item-li">
@@ -150,7 +167,7 @@
     <template v-if="[52].includes(infos.status) && infos.arrangementInfo">
       <ul class="ul-box">
         <li class="item-li">
-          <i class="iconfont icon-rencai"></i>
+          <i class="iconfont icon-mianshiguan"></i>
           <div class="ul-li-text-box">
             <div class="color1 user-name">{{infos.arrangementInfo.realname}}</div>
             <div class="user-contact color2">{{infos.arrangementInfo.mobile}}</div>
@@ -187,6 +204,8 @@ import {
   getInterviewDetailApi,
   sureInterviewApi
 } from 'API/interview'
+import { app_qrcode } from 'IMAGES/image'
+
 export default {
   props: {
     show: {
@@ -214,7 +233,10 @@ export default {
             this.getInterviewRedDotInfoApi().then(() => {
               let { appointmentList } = res.arrangementInfo
               this.visiable = true
+              this.params.interviewId = res.interviewId
               if (res.arrangementInfo.appointmentList) {
+                this.params.appointmentId = appointmentList[0].id
+                this.$set(appointmentList[0], 'checked', true)
                 appointmentList.push({
                   checked: false,
                   id: 'inappropriate',
@@ -241,7 +263,8 @@ export default {
     return {
       visiable: false,
       infos: {},
-      params: {}
+      params: {},
+      app_url: app_qrcode
     }
   },
   model: {
@@ -302,6 +325,7 @@ export default {
         this.$message({ message: '请选择一个面试时间', type: 'warning' })
         return
       }
+      console.log(this.params)
       sureInterviewApi(this.params).then(() => {
         this.visiable = false
         this.$router.push({ query })
@@ -313,17 +337,26 @@ export default {
 <style lang="scss">
 .interview-model{
   border-radius: 8px !important;
+  display: flex;
+  flex-direction: column;
+  margin:0 !important;
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
   .item-li {
     font-size:14px;
     font-weight:400;
-    line-height:14px;
-    padding: 10px 40px;
+    line-height:20px;
+    padding: 9px 40px;
   }
   .iconfont {
     font-size: 14px;
     color: $iconFont-gray;
     display: inline-block;
-    vertical-align: middle;
+    vertical-align: top;
+    position: relative;
+    top: 1px;
   }
   .ul-li-text-box{
     display: inline-block;
@@ -335,17 +368,31 @@ export default {
     display: inline-block;
     font-size:14px;
     padding-right: 7px;
-    border-right: 1px solid $border-color-1;
     margin-right: 7px;
+    position: relative;
+    &:after{
+      content: '';
+      display: block;
+      height: 12px;
+      width: 1px;
+      top: 50%;
+      margin-top: -6px;
+      right: 0;
+      background: $border-color-1;
+      position: absolute;
+    }
   }
   .user-contact {
     display: inline-block;
   }
   .color3 {
-    color: $border-color-2;
+    color: $font-color-6;
   }
   .color1 {
-    color: $font-color-3;
+    color: $font-color-2;
+  }
+  .color5 {
+    color: $font-color-2;
   }
   .time-title{
     padding: 20px 0 14px 0;
@@ -397,7 +444,7 @@ export default {
     padding-top: 10px;
     padding-bottom: 12px;
     strong {
-      color: $border-color-2;
+      color: $font-color-6;
       font-weight: 400;
       cursor: pointer;
     }
@@ -406,19 +453,27 @@ export default {
     width: 112px;
     border-radius: 4px;
     margin-left: 16px;
+    height: 32px;
+    font-size: 14px;
   }
   .btn-cancle-width{
     width: 86px;
     border-radius: 4px;
+    height: 32px;
+    font-size: 14px;
   }
   .el-dialog__footer{
     padding: 0;
   }
   .footer {
     padding: 30px 40px;
+    text-align: right
   }
   .color2 {
     color: $font-color-3;
+  }
+  .color4 {
+    color: $font-color-6;
   }
   .center {
     text-align: center;
@@ -459,6 +514,13 @@ export default {
     padding-top: 10px;
     strong {
       color:$main-color-1;
+      position: relative;
+      &:hover{
+        .notice-diggle2 {
+          display: block;
+          opacity: 1;
+        }
+      };
     }
   }
   .waiting5 {
@@ -490,6 +552,76 @@ export default {
   .el-dialog__headerbtn{
     top: 16px;
     right: 16px;
+  }
+  .notice-diggle2{
+    position: absolute;
+    top: 25px;
+    right: -15px;
+    width:260px;
+    background: #fff;
+    border-radius: 8px;
+    height:276px;
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+    z-index: 1;
+    opacity: 0;
+    display: none;
+    transition: all ease .2s;
+    .headbar{
+      width: 260px;
+      height: 81px;
+      background: #00C4CD;
+      img{
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .qrcode{
+      width:104px;
+      height:104px;
+      margin: 23px auto 7px;
+      img{
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .clock{
+      position: absolute;
+      width: 59px;
+      height: 64px;
+      top: 45px;
+      left: 98px;
+      img{
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .rocket{
+      position: absolute;
+      width: 39px;
+      height: 28px;
+      top: 200px;
+      right: 55px;
+      img{
+        width: 100%;
+        height: 100%;
+      }
+    }
+    p{
+      text-align: center;
+      line-height: 18px;
+      font-size: 12px;
+      color: #333333;
+    }
+    .forward{
+      width: 0;
+      height: 0;
+      border-left: 20px solid transparent;
+      border-right: 20px solid transparent;
+      border-bottom: 20px solid #00C4CD;
+      position: absolute;
+      top: -7px;
+      right: 15px;
+    }
   }
 }
 </style>

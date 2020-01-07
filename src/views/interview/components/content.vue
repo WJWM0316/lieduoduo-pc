@@ -294,9 +294,24 @@ export default {
 				this.$router.push({ query })
 			})
 		},
+		clearRedDotBar(oldIndex, newIndex) {
+			let list = this[['applyScreen', 'receiveScreen', 'dateList'][oldIndex]]
+			let beforeActive = list.find(v => v.active)
+			if (oldIndex === 0 || oldIndex === 1) {
+				if (beforeActive.showRedDot && beforeActive.type) {
+					this.clearTabInterviewRedDot(beforeActive.type)
+				}
+			} else {
+				if (beforeActive.number) {
+					beforeDate.number = 0
+					this.clearDayInterviewRedDot(beforeActive.time)
+				}
+			}
+		},
 		pTabClick(item, index) {
 			this.interviewBar[this.pIndex].active = false
 			item.active = true
+			this.clearRedDotBar(this.pIndex, index)
 			this.pIndex = index
 			switch(item.api) {
 				case 'getApplyList':
@@ -350,14 +365,11 @@ export default {
 					this.getLists({api: 'getScheduleList', ...item})
 				}
 			} else {
-				// this.getLists({api: 'getScheduleList'})
 				if (beforeDate.number) {
 					this.clearDayInterviewRedDot(beforeDate.time).then((res) => {
-						console.log(item, beforeDate)
 						beforeDate.number = 0
 						this.getLists({api: 'getScheduleList'})
 					})
-					// this.clearDayInterviewRedDot(beforeDate.time).then(() => this.getLists({api: 'getScheduleList'}))
 				} else {
 					this.getLists({api: 'getScheduleList', ...item})
 				}
@@ -441,6 +453,7 @@ export default {
 					this.pIndex = pIndex
 					this.cIndex = cIndex
 					this.setActive(pIndex)
+					this[['applyData', 'receiveData', 'scheduleData'][this.pIndex]].page = Number(query.page)
 					if(pIndex === 2) {
 						if(cItem) {
 							this.getInterviewScheduleNumberLists().then(() => {
@@ -502,28 +515,31 @@ export default {
 		padding: 0 40px;
 		li {
 			display: inline-block;
-			margin-right: 96px;
+			margin-right: 50px;
 			position: relative;
 			line-height: 1;
 			cursor: pointer;
 			vertical-align: middle;
+			color: $font-color-6;
+			font-size: 16px;
 			&:before{
 				content: '';
 				display: block;
 				position: absolute;
 				left: 50%;
 				margin-left: -50%;
-				bottom: -24px;
+				bottom: -20px;
 				height: 2px;
 				width: 100%;
-				background: $nav-color-hover;
+				background: $bg-color-4;
 				opacity: 0;
 				transition: all ease .4s;
 			};
 		}
 		.active{
-			color: $nav-color-hover;
+			color: $main-color-1;
 			pointer-events: none;
+			font-weight: 500;
 			&:before{
 				opacity: 1;
 			};
@@ -572,27 +588,27 @@ export default {
 				.headbar{
 					width: 260px;
 					height: 81px;
-					background: #00C4CD;
 					img{
+						border-radius: 8px 8px 0 0;
 						width: 100%;
 						height: 100%;
 					}
 				}
 				.qrcode{
-					width:104px;
-					height:104px;
-					margin: 23px auto 7px;
+					width:120px;
+					height:120px;
+					margin: 23px auto 0px;
 					img{
 						width: 100%;
 						height: 100%;
 					}
 				}
 				.clock{
-					position: absolute;
-					width: 59px;
-					height: 64px;
-					top: 45px;
-    			left: 98px;
+					  position: absolute;
+						width: 44px;
+						height: 47px;
+						top: 54px;
+						left: 107px;
 					img{
 						width: 100%;
 						height: 100%;
@@ -602,7 +618,7 @@ export default {
 					position: absolute;
 					width: 39px;
 					height: 28px;
-					top: 200px;
+					top: 216px;
     			right: 55px;
 					img{
 						width: 100%;
@@ -635,7 +651,7 @@ export default {
 	  padding: 0 40px;
 	  .item {
 	    padding: 0 16px;
-	    margin-right: 46px;
+	    margin-right: 14px;
 	    cursor: pointer;
 	    display: inline-block;
 	    height: 24px;
@@ -651,9 +667,8 @@ export default {
 	  }
 	  .active{
 	    color: white;
-	    font-weight: 500;
 	    pointer-events: none;
-			background:$--button-primary-background-color;
+			background:$bg-color-4;
 	  }
 	  .reddot{
 			width:6px;
@@ -690,7 +705,7 @@ export default {
 			color: white;
 	    font-weight: 500;
 	    pointer-events: none;
-			background:$--button-primary-background-color;
+			background:$bg-color-4;
 		}
 	}
 	.pagination-interview{

@@ -10,9 +10,6 @@
   </section>
 </template>
 <script>
-
-import Vue from 'vue'
-import Component from 'vue-class-component'
 import PageFooter from '@/views/layout/footer/index.vue'
 import PageHeader from '@/views/layout/header/'
 import GuideQrcodePop from 'COMPONENTS/common/guideQrcodePop'
@@ -28,11 +25,11 @@ export default {
   },
   computed: {
     shouldBottomShown () {
-      return !['position24h', 'marketOriginality'].includes(this.$route.name)
+      return !['position24h', 'marketOriginality', 'dreamDisco'].includes(this.$route.name)
     }
   },
-  data() {
-    return  {
+  data () {
+    return {
       cdnPath
     }
   }

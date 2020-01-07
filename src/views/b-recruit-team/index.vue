@@ -1,13 +1,13 @@
 <template>
   <!-- 招聘团队 -->
-  <div class="recruit-team" v-infinite-scroll="loadmore" :infinite-scroll-disabled="disabledScroll">
+  <div class="recruit-team">
     <div class="rec-team-header">
       <h1>招聘团队</h1>
       <el-badge :is-dot="reddot" v-if="recruiterIsAdmin">
         <el-button type="primary" @click="applyDialog = true">加入申请（{{count.apply}}）</el-button>
       </el-badge>
     </div>
-    <div class="warpper-scroll recruit-lists"  v-loading="getLoading && total === 0">
+    <div class="warpper-scroll recruit-lists"  v-loading="getLoading">
       <template v-for="item in lists">
         <div class="recruit-list" :key="item.id">
           <div class="recruit-info">
@@ -26,6 +26,16 @@
           <div class="recruit-share" @click="handleShowShare(item)">分享</div>
         </div>
       </template>
+    </div>
+    <div class="pagination" v-if="total > 0 && total > params.count">
+      <el-pagination
+        background
+        @current-change="(val) => handleSearch(val, 'page')"
+        :current-page.sync ="params.page"
+        :page-size="params.count"
+        layout="prev, pager, next"
+        :total="total">
+      </el-pagination>
     </div>
     <!-- 职位列表 -->
     <position-list :visible.sync="positionDialog" :recurit="currentRecruit" />
@@ -60,7 +70,6 @@ export default {
         count: 20
       },
       total: 0,
-      disabledScroll: false,
       showSharePopup: false,
       reddot: false,
       count: {
@@ -81,23 +90,22 @@ export default {
     ])
   },
   methods: {
-    loadmore () {
-      if (this.getLoading || this.total === 0 || this.disabledScroll) return
-      this.params.page++
-      this.getDatas()
-    },
     getDatas () {
       this.getLoading = true
       setTimeout(() => {
         getTeamRecruiters({ ...this.params, companyId: this.recruitDataCompanyId }).then(({ data }) => {
           this.getLoading = false
-          this.lists = this.lists.concat(data.data || [])
+          this.lists = data.data
           this.total = data.meta.total || 0
-          this.disabledScroll = this.params.page * this.params.count >= data.meta.total
         }).catch(() => {
           this.getLoading = false
         })
       }, 50)
+    },
+    handleSearch (value, type) {
+      if (type !== 'page') this.params.page = 1
+      if (value) this.params[type] = value
+      this.getDatas()
     },
     handleShowPosition (item) {
       this.currentRecruit = item

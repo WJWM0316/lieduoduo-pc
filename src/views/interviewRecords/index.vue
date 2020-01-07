@@ -36,6 +36,7 @@
             </div>
           </div>
           </div>
+          <div v-loading="getLoading">
         <div class="candidate_blo" :key="j" v-for="(vo, j) in list" @click="getResume(vo.jobhunterUid, j, vo.interviewId)">
           <div class="bloTop">
             <div class="timer1">面试职位</div>
@@ -50,7 +51,12 @@
             <i class="iconfont icon-shijian time" v-if="vo.status >= 51"></i>
             <i class="iconfont icon-shijian time2" v-else></i>
             <span v-if="tablist[0].cur">
-              {{(vo.arrangementInfo.appointmentTime)*1000 | date('YYYY-MM-DD HH:mm') }}
+              <span v-if="new Date((vo.arrangementInfo.appointmentTime)*1000).getFullYear() !== (new Date()).getFullYear()">
+            {{(vo.arrangementInfo.appointmentTime)*1000 | date('YYYY-MM-DD HH:mm') }}
+            </span>
+            <span v-else>
+            {{(vo.arrangementInfo.appointmentTime)*1000 | date('MM-DD HH:mm') }}
+            </span>
               </span>
             <span v-else>{{vo.arrangementInfo.appointment.substring(11, 16)}}</span>
           </div>
@@ -109,6 +115,7 @@
             </div>
           </div>
         </div>
+        </div>
 
         <el-pagination
         class="pagination"
@@ -123,7 +130,7 @@
         <span class="total">共{{ Math.ceil(form.totalPage) }}页, {{form.total}}条记录</span>
       </el-pagination>
 
-        <div class="null-product" v-show="list.length === 0">
+        <div class="null-product" v-show="!getLoading && list.length === 0">
           <div class="null-img">
             <img src="@/assets/images/fly.png" />
           </div>
@@ -764,6 +771,7 @@ export default {
         type: 'clickPic',
         InterviewTitle: '面试信息'
       },
+      getLoading: false,
       typeCaching: {},
       loadingshow: false,
       toworddiggle: false,
@@ -882,19 +890,11 @@ export default {
         arr.unshift({ name: '全部', id: '' })
         arr.push({ name: '无职位约面', id: 0 })
         this.mgoptions = arr
-        // this.mgoptions.forEach(item => {
-        //   item.children.forEach(item1 => {
-        //     item1.children.forEach(item2 => {
-        //       let result = JSON.stringify(item2.children)
-        //       if (result === '[]') delete item2.children
-        //     })
-        //   })
-        // })
       })
     },
     // 今天和明天列表
     getScheduleList () {
-      // let data = {level: 1}
+      this.getLoading = true
       getScheduletodayListtApi().then((res) => {
         let arr = res.data.data
         arr.unshift({ date: '全部' })
@@ -913,12 +913,13 @@ export default {
         } else {
           this.getlist()
         }
-        if (this.tablist.length > 0) {
+        if (this.tablist.length > 1) {
           deleteScheduleTabRedDotApi(this.tablist[1].time)
         }
       })
     },
     getlist () {
+      this.getLoading = true
       if (this.form.position_label_id === '') {
         this.form.position_label_id = undefined
       }
@@ -926,13 +927,18 @@ export default {
         this.list = res.data.data
         this.form.total = res.data.meta.total
         this.form.totalPage = res.data.meta.lastPage
+        this.getLoading = false
+      }).catch(e => {
+        this.getLoading = false
       })
     },
     handleCurrentPageChange (page) {
       if (this.tablist[0].time) {
         this.tabform.page = page
+        this.setPathQuery(this.tabform)
       } else {
         this.form.page = page
+        this.setPathQuery(this.form)
       }
       this.getlist()
     },
@@ -945,10 +951,11 @@ export default {
       }
       if (this.tablist[0].time) {
         this.tabform.page = 1
+        this.setPathQuery(this.tabform)
       } else {
         this.form.page = 1
+        this.setPathQuery(this.form)
       }
-      this.setPathQuery(this.form)
       this.getlist()
     },
     // 点击返回的今天明天获取其他时间
@@ -972,14 +979,16 @@ export default {
       })
       if (data.time) {
         this.tabform.page = 1
+        this.setPathQuery(this.tabform)
         this.gettablist()
       } else {
         this.form.page = 1
+        this.setPathQuery(this.form)
         this.getlist()
       }
-      this.setPathQuery(this.form)
     },
     gettablist () {
+      this.getLoading = true
       if (this.tabform.position_label_id === '') {
         this.tabform.position_label_id = undefined
       }
@@ -987,6 +996,9 @@ export default {
         this.list = res.data.data
         this.form.total = res.data.meta.total
         this.form.totalPage = res.data.meta.lastPage
+        this.getLoading = false
+      }).catch(e => {
+        this.getLoading = false
       })
     },
     pickchange () {
@@ -1060,7 +1072,11 @@ export default {
           if (vo.redDot > 0) { // 没有红点则不去请求接口，减少并发
             getdeleteInterviewTabRedDotApi(this.interviewId).then(res => {
               this.$store.dispatch('redDotfun')
-              this.getScheduleList() // 刷新列表数据
+              if (this.$route.query.start) {
+                this.gettablist()
+              } else {
+                this.getlist()
+              }
             })
           }
           break
@@ -1526,7 +1542,6 @@ export default {
       }
     },
     toggleaddress (data) {
-      console.log(data)
       this.addresslist.map((v, k) => {
         v.cur = data === v
       })
@@ -3788,5 +3803,8 @@ export default {
   border: 0;
   width: 8px;
   height: 8px;
+}
+.interviewrecords .el-loading-mask {
+  z-index: 0;
 }
 </style>

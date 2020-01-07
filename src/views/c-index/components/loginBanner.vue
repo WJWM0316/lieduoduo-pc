@@ -7,8 +7,8 @@
           <span class="banner-number">{{total.goodChanceNum}} 好机会</span>
         </p>
         <div class="login-wrapper">
-          <el-input class="login-phone-input el-input-radius2px" maxlength="11" placeholder="请输入手机号码" v-model="loginForm.mobile" />
-          <el-input  class="login-code-input el-input-radius2px" placeholder="验证码" v-model="loginForm.code">
+          <el-input class="login-phone-input el-input-radius2px" maxlength="11" placeholder="请输入手机号码" v-model.number="loginForm.mobile" />
+          <el-input class="login-code-input el-input-radius2px" maxlength="4"  placeholder="验证码" v-model.number="loginForm.code">
             <span class="code-span" slot="suffix"  @click="getCode">{{text}}</span>
           </el-input>
           <div class="login-btn" @click="login">登录/注册</div>
@@ -40,7 +40,7 @@ export default {
       text: '获取',
       loginForm: {
         mobile: '',
-        code: ''
+        code: null
       }
     }
   },

@@ -29,7 +29,7 @@
         </div>
       </div>
 
-      <ul class="job_list" v-if="jobList.length>0">
+      <ul class="job_list" v-loading="getLoading">
         <li class="job_blo" v-for="(item,index ) in jobList" :key="index">
           <div class="blo_left">
             <div class="job_top">
@@ -64,7 +64,7 @@
         </li>
       </ul>
 
-      <div class="job_cont_none" v-else>
+      <div class="job_cont_none" v-if="!getLoading && jobList.length === 0">
         <img class="hint_icon" src="../../assets/images/fly.png">
         <div class="none_hint">当前没有{{ navSelectName === '' ? '招聘中' : navSelectName }}的职位~</div>
         <el-button v-if="navSelectName === ''" class="null-produc-bnt" @click="todoAction('addJob')">发布职位</el-button>
@@ -149,6 +149,7 @@ export default class CourseList extends Vue {
     totalPage: 0,
     total: 0
   };
+  getLoading = false
   // close关闭，open 开放，审核通过，audit 审核中，fail 审核失败
   recruiterList = [
     {
@@ -384,6 +385,7 @@ export default class CourseList extends Vue {
   }
 
   getPositionList ({ page } = {}) {
+    this.getLoading = true
     if (page) {
       this.form.page = page || 1
     }
@@ -401,9 +403,11 @@ export default class CourseList extends Vue {
         this.pageInfo.totalPage = meta.lastPage
         this.pageInfo.total = meta.total
         this.pageInfo.page = meta.currentPage
+        this.getLoading = false
       })
       .catch(e => {
         this.$message.error(e.data.msg)
+        this.getLoading = false
       })
   }
 
@@ -922,7 +926,7 @@ export default class CourseList extends Vue {
       right: 50%;
       top: 50%;
       z-index: 6;
-      width: 300px;
+      width: 432px;
       height: 396px;
       margin: -200px -150px 0 0;
       background: rgba(255, 255, 255, 1);
@@ -931,6 +935,7 @@ export default class CourseList extends Vue {
       border-radius: 4px;
       &.share_help {
         margin-right: -470px;
+        width: 300px;
       }
       .pop_tit {
         font-size: 20px;
@@ -970,8 +975,8 @@ export default class CourseList extends Vue {
         }
       }
       .help_icon {
-        width: 191px;
-        height: 172px;
+        width: 250px;
+        height: 224px;
         margin-top: 32px;
         position: relative;
 
