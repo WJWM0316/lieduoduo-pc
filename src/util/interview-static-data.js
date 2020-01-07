@@ -165,6 +165,7 @@ export const historyData = {
 export const asideBar = {
   topNav: [
     {
+      id: 'applay',
       text: '申请记录',
       reddot: 0,
       iconClass: 'icon-shenqingjilu',
@@ -178,6 +179,7 @@ export const asideBar = {
       }
     },
     {
+      id: 'receive',
       text: '收到邀请',
       reddot: 0,
       iconClass: 'icon-shoudaoyaoqing',
@@ -191,6 +193,7 @@ export const asideBar = {
       }
     },
     {
+      id: 'schedule',
       text: '面试日程',
       reddot: 0,
       iconClass: 'icon-ganxingqu-',
