@@ -2,7 +2,7 @@
 node_modules
 script
 /dist
-
+/script
 
 # Log files
 yarn.lock
