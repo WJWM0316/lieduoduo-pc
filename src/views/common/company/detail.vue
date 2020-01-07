@@ -119,10 +119,10 @@
                       <el-popover
                         placement="bottom-end"
                         popper-class="user-infos"
-                        v-model="item.show"
+                        :open-delay="100"
                         trigger="hover">
                         <div class="box">
-                          <div class="describe" v-show="item.show">
+                          <div class="describe">
                             “Hi，对我发布的职位感兴趣？<strong>用微信扫描二维码</strong>，和TA约聊吧。”
                           </div>
                           <div class="qr-code"> <img :src="item.qrCode" /> </div>

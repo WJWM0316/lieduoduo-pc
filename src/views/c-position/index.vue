@@ -98,7 +98,7 @@ export default {
   methods: {
     // 获取职位列表
     getPositionList () {
-      this.$util.scrollToView(document.querySelector('.position-wrapper'))
+      this.scrollToView()
       this.getLoading = true
       if (!this.isGetSearchType) {
         this.getSearchType()
@@ -117,6 +117,7 @@ export default {
         }
       }
       apiMethod(this.params).then(({ data }) => {
+        this.firstloaded = true
         this.getLoading = false
         const listData = data.data || []
         this.listData = listData.filter(val => val.id)
@@ -124,13 +125,14 @@ export default {
       })
     },
     getCompanysList () {
-      this.$util.scrollToView(document.querySelector('.position-wrapper'))
+      this.scrollToView()
       this.getLoading = true
       if (!this.isGetSearchType) {
         this.getSearchType()
         return
       }
       getSearchCompanys(this.params).then(({ data }) => {
+        this.firstloaded = true
         this.getLoading = false
         this.companyListData = data.data || []
         this.total = data.meta.total
@@ -183,6 +185,10 @@ export default {
       }).catch(() => {
         this.isGetSearchType = false
       })
+    },
+    scrollToView () {
+      if (!this.firstloaded) return
+      this.$util.scrollToView(document.querySelector('.position-wrapper'))
     }
   }
 }

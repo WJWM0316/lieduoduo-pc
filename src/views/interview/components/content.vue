@@ -528,7 +528,7 @@ export default {
 				position: absolute;
 				left: 50%;
 				margin-left: -50%;
-				bottom: -24px;
+				bottom: -20px;
 				height: 2px;
 				width: 100%;
 				background: $bg-color-4;
@@ -588,17 +588,16 @@ export default {
 				.headbar{
 					width: 260px;
 					height: 81px;
-					border-radius: 8px 8px 0 0;
-					background: #00C4CD;
 					img{
+						border-radius: 8px 8px 0 0;
 						width: 100%;
 						height: 100%;
 					}
 				}
 				.qrcode{
-					width:104px;
-					height:104px;
-					margin: 23px auto 7px;
+					width:120px;
+					height:120px;
+					margin: 23px auto 0px;
 					img{
 						width: 100%;
 						height: 100%;
@@ -609,7 +608,7 @@ export default {
 						width: 44px;
 						height: 47px;
 						top: 54px;
-						left: 95px;
+						left: 107px;
 					img{
 						width: 100%;
 						height: 100%;
@@ -619,7 +618,7 @@ export default {
 					position: absolute;
 					width: 39px;
 					height: 28px;
-					top: 200px;
+					top: 216px;
     			right: 55px;
 					img{
 						width: 100%;

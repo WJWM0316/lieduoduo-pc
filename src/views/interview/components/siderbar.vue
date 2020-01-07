@@ -108,10 +108,10 @@ export default {
 		padding-bottom: 20px;
 	}
 	.li-item-row-one {
-		font-size:14px;
+		font-size:16px;
 		font-weight:400;
 		color:$font-color-3;
-		line-height:14px;
+		line-height:16px;
 		position: relative;
 	}
 	.position-salary {
@@ -192,6 +192,9 @@ export default {
 		display: inline-block;
 		@include ellipsis-over(96px);
 		vertical-align: middle
+	}
+	.wrap{
+		width: 290px;
 	}
 }
 </style>
