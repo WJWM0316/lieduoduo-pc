@@ -2296,6 +2296,7 @@ export default class CourseList extends Vue {
   width: 90px !important;
   height: 40px;
   padding: 0;
+  z-index: 2;
   .el-input__inner{
     cursor: pointer;
   }
