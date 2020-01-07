@@ -4,7 +4,10 @@
       <router-link target="_blank" :to="{name: 'companyDetail', query: { vkey: 'pfpaotwi' }}" class="li-item">
         <img src="~@/assets/random_images/img1.jpg" alt="loading">
       </router-link>
-      <router-link target="_blank" :to="{name: 'companyDetail', query: { vkey: 'uiwm7efh' }}" class="li-item li-item1">
+      <router-link target="_blank" :to="{name: 'companyDetail', query: { vkey: 'r5fdb5ws' }}" class="li-item">
+        <img src="~@/assets/random_images/img2.jpg" alt="loading">
+      </router-link>
+      <!-- <router-link target="_blank" :to="{name: 'companyDetail', query: { vkey: 'uiwm7efh' }}" class="li-item li-item1">
         <img src="~@/assets/random_images/1.jpg" alt="loading">
       </router-link>
       <router-link target="_blank" :to="{name: 'companyDetail', query: { vkey: 'ozrrijnc' }}" class="li-item li-item3">
@@ -12,7 +15,7 @@
       </router-link>
       <router-link target="_blank" :to="{name: 'companyDetail', query: { vkey: 'r5fdb5ws' }}" style="padding-right: 0;" class="li-item li-item2">
         <img src="~@/assets/random_images/3.jpg" alt="loading">
-      </router-link>
+      </router-link> -->
       <!-- 单图 -->
       <!-- <router-link target="_blank" :to="{name: 'marketOriginality', query: { cc: 'themeMC' }}" class="li-item list-item-left">
         <img src="~@/assets/random_images/active.png" alt="loading">
