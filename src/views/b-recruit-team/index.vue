@@ -197,7 +197,7 @@ export default {
 }
 .recruit-list {
   @include flex-v-center;
-  padding: 32px;
+  padding: 32px 42px 32px 32px;
   font-size: 14px;
   border-top: 1px solid rgba($border-color-1, .4);
   .recruit-info div, .recruit-name span {
@@ -253,7 +253,7 @@ export default {
   }
   .recruit-share {
     cursor: pointer;
-    flex: 3;
+    flex: 2;
     color: $main-color-1;
   }
 }

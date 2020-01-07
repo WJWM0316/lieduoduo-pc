@@ -236,10 +236,15 @@ export default {
     display: flex;
   }
   .apply-name{
-    flex: 2
+    width: 24%;
+  }
+  .apply-time {
+    width: 31%;
+  }
+  .apply-email {
+    width: 45%;
   }
   .apply-email, .apply-time {
-    flex: 3;
     p {
       color: $title-color-3;
       font-size: 12px;
