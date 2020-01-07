@@ -821,18 +821,18 @@ to {top:0px;}
 </style>
 <style lang="scss">
 .user-infos{
-  padding: 13px 17px;
+  padding: 13px 12px 13px 17px;
   .box {
     display: flex;
     align-items: center;
   }
   .describe {
-    width:151px;
+    width:144px;
     font-size:12px;
     font-weight:400;
     color:$font-color-3;
     line-height:16px;
-    margin-right: 5px;
+    margin-right: 10px;
   }
   .qr-code{
     width: 76px;

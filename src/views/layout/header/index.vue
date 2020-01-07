@@ -375,7 +375,7 @@ $header-height-1: $page-header-height;
 .el-popover.share-popover {
   width: 152px;
   box-sizing: border-box;
-  padding: 5px 13px 7px 13px;
+  padding: 5px 13px 12px 13px;
   .tooltips{
     text-align: center;
     font-size:12px;
