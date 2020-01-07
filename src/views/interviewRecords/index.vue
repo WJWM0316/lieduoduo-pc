@@ -1058,16 +1058,16 @@ export default {
           })
           break
         case 'check-invitation':
-          this.pop = {
-            isShow: true,
-            Interview: true,
-            InterviewTitle: '面试信息',
-            btntext: '确定',
-            type: 'preview'
-          }
           let data = { interviewId: this.interviewId }
           watchInvitationAPi(data).then((res) => {
             this.jobhunterInfo = res.data.data
+            this.pop = {
+              isShow: true,
+              Interview: true,
+              InterviewTitle: '面试信息',
+              btntext: '确定',
+              type: 'preview'
+            }
           })
           if (vo.redDot > 0) { // 没有红点则不去请求接口，减少并发
             getdeleteInterviewTabRedDotApi(this.interviewId).then(res => {
@@ -1301,7 +1301,6 @@ export default {
           type: 'setinterinfo'
         }
       } else {
-        console.log(this.showResume)
         if (this.showResume) {
           this.pop.Interview = false
         } else {

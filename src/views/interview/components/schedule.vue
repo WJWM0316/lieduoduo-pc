@@ -13,8 +13,8 @@
 			</div>
 			<div class="colc-bottom">
 				<i class="iconfont icon-dizhi"></i>
-				<div class="address" @click="editAddress(item, index)">{{item.addressInfo.address}}{{item.addressInfo.doorplate}}</div>
-				<div class="addressdetail">
+				<div class="address" ref="address" @mouseenter="eaddressdiggle(item, index)" @mouseleave="laddressdiggle(item, index)" @click="editAddress(item, index)">{{item.addressInfo.address}}{{item.addressInfo.doorplate}}</div>
+				<div class="addressdetail" v-show="item.cur">
 					{{item.addressInfo.address}}{{item.addressInfo.doorplate}}
 				</div>
 			</div>
@@ -106,6 +106,16 @@ export default {
       this.companyAddress.push(item.addressInfo)
       this.showadress = true
     },
+    eaddressdiggle (item, index) {
+      if (this.$refs.address[index].offsetWidth >= 370) {
+        this.$set(item, 'cur', true)
+      }
+    },
+    laddressdiggle (item, index) {
+      if (this.$refs.address[index].offsetWidth >= 370) {
+        this.$set(item, 'cur', false)
+      }
+    },
     cancel () {
       this.showadress = false
     },
@@ -183,7 +193,7 @@ export default {
 			margin-right: 12px;
 			cursor: pointer;
 			&:hover{
-				color: $nav-color-hover;
+				color: #03B3BB;
 			}
 		}
 		.company-desc{
@@ -208,12 +218,12 @@ export default {
 		&:hover .address{
 			color: $nav-color-hover;
 		}
-		&:hover{
-			.addressdetail {
-				display: block;
-				opacity: 1;
-			}
-		}
+		// &:hover{
+		// 	.addressdetail {
+		// 		display: block;
+		// 		opacity: 1;
+		// 	}
+		// }
 		i{
 			color: #BCBEC0;
 			font-size: 13px;
@@ -230,7 +240,6 @@ export default {
 			padding: 10px;
 			color: #66666E;
 			font-size:12px;
-			display: none;
 			box-sizing: border-box;
 			background: #FFFFFF;
 			box-shadow: 0 0 30px 0 rgba(22,39,77,0.07);
