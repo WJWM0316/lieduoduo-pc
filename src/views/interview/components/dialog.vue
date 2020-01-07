@@ -9,7 +9,7 @@
     <template v-if="[31].includes(infos.status) && infos.arrangementInfo">
       <ul class="ul-box">
         <li class="item-li">
-          <i class="iconfont icon-rencai"></i>
+          <i class="iconfont icon-mianshiguan"></i>
           <div class="ul-li-text-box">
             <div class="color4 user-name">{{infos.arrangementInfo.realname}}</div>
             <div class="user-contact color3">{{infos.arrangementInfo.mobile}}</div>
@@ -56,7 +56,7 @@
     <template v-if="[32].includes(infos.status) && infos.arrangementInfo">
       <ul class="ul-box">
         <li class="item-li">
-          <i class="iconfont icon-rencai"></i>
+          <i class="iconfont icon-mianshiguan"></i>
           <div class="ul-li-text-box">
             <div class="color1 user-name">{{infos.arrangementInfo.realname}}</div>
             <div class="user-contact color2">{{infos.arrangementInfo.mobile}}</div>
@@ -90,7 +90,7 @@
     <template v-if="[41].includes(infos.status) && infos.arrangementInfo">
       <ul class="ul-box">
         <li class="item-li">
-          <i class="iconfont icon-rencai"></i>
+          <i class="iconfont icon-mianshiguan"></i>
           <div class="ul-li-text-box">
             <div class="color1 user-name">{{infos.arrangementInfo.realname}}</div>
             <div class="user-contact color2">{{infos.arrangementInfo.mobile}}</div>
@@ -140,7 +140,7 @@
     <template v-if="[51, 58, 60].includes(infos.status) && infos.arrangementInfo">
       <ul class="ul-box">
         <li class="item-li">
-          <i class="iconfont icon-rencai"></i>
+          <i class="iconfont icon-mianshiguan"></i>
           <div class="ul-li-text-box">
             <div class="color1 user-name">{{infos.arrangementInfo.realname}}</div>
             <div class="user-contact color2">{{infos.arrangementInfo.mobile}}</div>
@@ -167,7 +167,7 @@
     <template v-if="[52].includes(infos.status) && infos.arrangementInfo">
       <ul class="ul-box">
         <li class="item-li">
-          <i class="iconfont icon-rencai"></i>
+          <i class="iconfont icon-mianshiguan"></i>
           <div class="ul-li-text-box">
             <div class="color1 user-name">{{infos.arrangementInfo.realname}}</div>
             <div class="user-contact color2">{{infos.arrangementInfo.mobile}}</div>

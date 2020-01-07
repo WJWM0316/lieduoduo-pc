@@ -323,7 +323,7 @@ export default {
 		color:$font-color-3;
 		line-height:16px;
 		display: inline-block;
-		@include ellipsis-over(128px);
+		@include ellipsis-over(144px);
 		vertical-align: middle;
 		// margin-right: 4px;
 		&:hover{
