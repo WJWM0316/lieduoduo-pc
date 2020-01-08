@@ -1,7 +1,7 @@
 <template>
   <div class="interview-data">
     <template v-if="roleInfos.isJobhunter">
-      <no-found :max-width="234" :tipText="'空空如也~'">
+      <no-found :max-width="234" :tipText="tipText">
         <el-button type="primary" @click="todoAction('search')" class="jump">发现更多高薪机会</el-button>
       </no-found>
     </template>
@@ -14,13 +14,36 @@
 <script>
 import NoFound from 'COMPONENTS/noFound'
 export default {
+   props: {
+    tab: {
+      type: String,
+      default: 'apply'
+    }
+  },
   components: {
     NoFound
   },
   computed: {
     ...mapGetters([
       'roleInfos'
-    ])
+    ]),
+    tipText() {
+      let txt = ''
+      switch(this.tab) {
+        case 'apply':
+          txt = '你还没有面试申请记录哟~'
+          break
+        case 'receive':
+          txt = '你还没有面试邀请记录哟~'
+          break
+        case 'schedule':
+          txt = '你还没有面试日程哟~'
+          break
+        default:
+          break
+      }
+      return txt
+    }
   },
   methods: {
     todoAction(mark) {
