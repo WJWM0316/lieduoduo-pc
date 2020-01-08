@@ -3,7 +3,7 @@
     <login-banner :banner="loginBannerList" :total="total"></login-banner>
     <div class="index-tips-banner">
       <ul class="main-center">
-        <li><i class="iconfont icon-rencai"></i> 专注互联网高端才人发展</li>
+        <li><i class="iconfont icon-rencai"></i> 专注互联网高端人才发展</li>
         <li><i class="iconfont icon-qiuzhiyixiang"></i> 优选年薪20W+高薪机会</li>
         <li><i class="iconfont icon-fuwu"></i> 求职顾问1V1免费辅导服务</li>
         <li><i class="iconfont icon-yuebossmiantan"></i> 直接约BOSS面对面沟通</li>

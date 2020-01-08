@@ -107,9 +107,9 @@ export default {
     left: 0;
   }
   .position-24hour {
-    width: 47px;
+    width: 51px;
     height: 18px;
-    margin-right: 14px;
+    margin-right: 10px;
     background: url('../../../assets/images/tag_list_24hour.png') no-repeat;
   }
   .position-active, .position-24hour {
