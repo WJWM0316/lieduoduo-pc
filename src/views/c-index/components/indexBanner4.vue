@@ -1,25 +1,25 @@
 <template>
 	<div class="random-banner">
     <div class="random-left-banner">
-      <!-- <a target="_blank" href="https://h5.lieduoduo.com/delicate" class="li-item" data-com="北京旷视科技有限公司">
-        <img src="~@/assets/random_images/img01.png" alt="loading">
-      </a> -->
-      <!-- <a target="_blank" href="https://h5.lieduoduo.com/wantYou" class="li-item">
-        <img src="~@/assets/random_images/img02.jpg" alt="loading">
-      </a>
-      <router-link target="_blank" :to="{name: 'companyDetail', query: { vkey: 'dcrjn1kv' }}" class="li-item li-item1">
-        <img src="~@/assets/random_images/1.jpeg" alt="loading">
+      <router-link target="_blank" :to="{name: 'companyDetail', query: { vkey: 'pfpaotwi' }}" class="li-item">
+        <img src="~@/assets/random_images/img1.jpg" alt="loading">
       </router-link>
-      <router-link target="_blank" :to="{name: 'companyDetail', query: { vkey: '8sdlelbu' }}" class="li-item li-item3">
-        <img src="~@/assets/random_images/3.jpeg" alt="loading">
+      <router-link target="_blank" :to="{name: 'companyDetail', query: { vkey: 'r5fdb5ws' }}" class="li-item">
+        <img src="~@/assets/random_images/img2.jpg" alt="loading">
       </router-link>
-      <router-link target="_blank" :to="{name: 'companyDetail', query: { vkey: 'enbqgvgx' }}" class="li-item li-item2">
-        <img src="~@/assets/random_images/2.jpeg" alt="loading">
+      <!-- <router-link target="_blank" :to="{name: 'companyDetail', query: { vkey: 'uiwm7efh' }}" class="li-item li-item1">
+        <img src="~@/assets/random_images/1.jpg" alt="loading">
+      </router-link>
+      <router-link target="_blank" :to="{name: 'companyDetail', query: { vkey: 'ozrrijnc' }}" class="li-item li-item3">
+        <img src="~@/assets/random_images/2.jpg" alt="loading">
+      </router-link>
+      <router-link target="_blank" :to="{name: 'companyDetail', query: { vkey: 'r5fdb5ws' }}" style="padding-right: 0;" class="li-item li-item2">
+        <img src="~@/assets/random_images/3.jpg" alt="loading">
       </router-link> -->
-      <router-link target="_blank" :to="{name: 'marketOriginality', query: { cc: 'themeMC' }}" class="li-item list-item-left">
+      <!-- 单图 -->
+      <!-- <router-link target="_blank" :to="{name: 'marketOriginality', query: { cc: 'themeMC' }}" class="li-item list-item-left">
         <img src="~@/assets/random_images/active.png" alt="loading">
-      </router-link>
-
+      </router-link> -->
     </div>
     <div class="random-right-banner">
       <router-link target="_blank" :to="{name: 'companyDetail', query: { vkey: 'r9umtuv3' }}" class="li-item">

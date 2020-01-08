@@ -1989,13 +1989,9 @@ right: -40px;
           overflow: hidden;
           padding: 12px 0;
           color: #03b3bb;
-          .el-date-editor{
-            position: absolute;
-            left: 0;
-            right: 0;
-            height: 100%;
-            opacity: 0;
-          }
+          display: inline-block;
+          padding-left: 10px;
+          left: -10px;
         }
       }
       .selectposition{

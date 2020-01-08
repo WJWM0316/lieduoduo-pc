@@ -1,5 +1,5 @@
 <template>
-  <div class="li-item">
+  <div class="li-item-interview">
   	<el-row class="li-item-header">
 		  <el-col :span="12" class="header-col-left">
 		  	<span class="create-time">{{item.createdAt}}</span>
@@ -54,7 +54,7 @@
 				  		<!-- <img src="~IMAGES/tag_list_24hour.png" alt="" class="position-24hour" v-if="item.interviewType === 2"> -->
 				  		<span class="position-salary" v-if="item.positionInfo">
 				  			<template>{{item.positionInfo.positionEmolumentMin}}~{{item.positionInfo.positionEmolumentMax}}k</template>
-				  			<template v-if="item.positionInfo.annualSalary > 12">· {{item.positionInfo.annualSalary}}薪</template>
+				  			<template v-if="item.positionInfo.annualSalary > 12"> · {{item.positionInfo.annualSalary}}薪</template>
 				  		</span>
 				  	</div>
 				  	<div class="position-adress" v-if="item.positionInfo && item.positionInfo.addressInfo">
@@ -198,8 +198,8 @@ export default {
   }
 }
 </script>
-<style lang="scss" scoped>
-.li-item {
+<style lang="scss">
+.li-item-interview {
 	padding: 26px 40px;
 	transition: .2s background;
 	position: relative;
@@ -323,7 +323,7 @@ export default {
 		color:$font-color-3;
 		line-height:16px;
 		display: inline-block;
-		@include ellipsis-over(128px);
+		@include ellipsis-over(144px);
 		vertical-align: middle;
 		// margin-right: 4px;
 		&:hover{
@@ -421,6 +421,32 @@ export default {
     line-height: 1;
     vertical-align: middle;
     margin-right: 4px;
+  }
+}
+.admin-toast{
+  padding: 13px 12px 13px 17px;
+  .box {
+    display: flex;
+    align-items: center;
+  }
+  .describe {
+    width:144px;
+    font-size:12px;
+    font-weight:400;
+    color:$font-color-3;
+    line-height:16px;
+    margin-right: 10px;
+  }
+  .qr-code{
+    width: 76px;
+    height: 76px;
+  }
+  strong{
+    color: $main-color-1;
+  }
+  img{
+    width: 100%;
+    height: 100%;
   }
 }
 </style>

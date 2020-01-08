@@ -20,8 +20,8 @@
               :value.sync="ruleForm.passport_front_url"
               attach-type="img"
               class="logoimg"
-              @before="avatarLoading = true"
-              @fail="avatarLoading = false"
+              @before="frontLoading = true"
+              @fail="frontLoading = false"
               @change="handleChangefront"
               v-loading="frontLoading">
             <div class="upimages" v-if="!ruleForm.passport_front_url">
@@ -177,6 +177,7 @@ export default {
     handleChangefront (data) {
       this.ruleForm.passport_front_url = data[0].smallUrl
       this.ruleForm.passport_front = data[0].id
+      this.frontLoading = false
     },
     getCompanyIdentityInfos () {
       getCompanyIdentityInfosApi().then(res => {

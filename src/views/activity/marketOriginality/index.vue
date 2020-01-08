@@ -27,7 +27,7 @@
           <div class="img" @click="tocompanydetail(item)">
             <img :src="item.companyLogoInfo.smallUrl" alt="">
           </div>
-          <div class="number" v-if="item.isHotFavored" @click.stop="givethumbsup(item)">
+          <!-- <div class="number" v-if="item.isHotFavored" @click.stop="givethumbsup(item)">
             <img :src="cdnPath + 'fire.png'" alt="">
             <span>{{item.hotFavorCount}}</span>
           </div>
@@ -36,7 +36,7 @@
               <img :src="cdnPath + 'fire.png'" alt="">
             </div>
             <span>{{item.hotFavorCount}}</span>
-          </div>
+          </div> -->
         </div>
         <div class="name">{{item.companyShortname}}</div>
       </div>
@@ -106,7 +106,6 @@ export default {
     }
   },
   created () {
-    console.log(this.cdnPath + 'originality.jpg')
     this.getlist()
     this.baiduTj()
     this.$router.push({ query: { cc: 'themeMC' } })
@@ -173,8 +172,8 @@ export default {
 .first-bg{
   position: relative;
   height: 384px;
-  margin: 0 auto;
-  width: 1726px;
+  // margin: 0 auto;
+  // width: 1726px;
   background: url(#{$image-cdn-url}/images/bg_01.png) no-repeat;
   background-position: top center;
 }
@@ -217,13 +216,14 @@ export default {
   }
   .logo{
     border-radius:8px;
-    height: 156px;
+    height: 126px;
     width: 126px;
     overflow: hidden;
     box-sizing: border-box;
     border:3px solid rgba(0,196,205,1);
     .img{
-      height: 116px;
+      height: 120px;
+      width: 120px;
       img{
         width: 100%;
         height: 100%;
@@ -406,7 +406,7 @@ export default {
   height: 595px;
   background: url(#{$image-cdn-url}/images/bg_06.png) no-repeat;
   background-position: top center;
-  // margin-top: -200px;
+  // margin-top: -111px;
   .join{
     width: 420px;
     margin: 0 auto;

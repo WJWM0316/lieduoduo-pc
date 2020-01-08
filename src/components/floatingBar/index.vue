@@ -9,7 +9,7 @@
             <i class="iconfont" :class="item.iconClass"></i>
             <div class="circle" v-if="item.reddot || (!isLogin && item.id !== 'applay')"></div>
           </div>
-          <div class="describe">{{item.text}}</div>
+          <div class="describe describe2">{{item.text}}</div>
         </router-link>
       </li>
     </ul>
@@ -74,6 +74,22 @@ export default {
     handleScroll () {
       let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
       this.showScrollTopBtn = scrollTop > 200
+    },
+    routeJump(item) {
+      if (this.isLogin) {
+        let routeData = this.$router.resolve({
+          name: item.routeName,
+          query: item.query
+        })
+        window.open(routeData.href, '_blank')
+      } else {
+        this.$router.push({
+          name: 'login',
+          query: {
+            type: 'msgLogin'
+          }
+        })
+      }      
     }
   },
   mounted () {
@@ -96,11 +112,12 @@ export default {
   transition: .2s width;
   box-shadow:0px 0px 20px 0px rgba(22,39,77,0.07);
   border-radius:8px 0px 0px 8px;
-  min-height: 616px;
+  min-height: 435px;
   &:hover{
   	width:64px;
   	.describe {
       opacity: 1;
+      display: block
     }
   }
   .top{
@@ -125,15 +142,18 @@ export default {
     position: relative;
   }
   i {
-    font-size: 18px;
+    font-size: 17px;
     color: $iconFont-gray;
+  }
+  .icon-arrow-top, .icon-xiaochengxu_huaban {
+    font-size: 16px;
   }
   .li-item1{
     display: block;
     position: relative;
     font-size: 12px;
     text-align: center;
-    height: 68px;
+    height: 65px;
   }
   .li-item2{
     display: block;
@@ -141,13 +161,19 @@ export default {
     font-size: 12px;
     color: #9fa3b0;
     text-align: center;
-    margin-top: 30px;
+    margin-bottom: 26px;
   }
   .describe {
     opacity: 0;
     transition: .2s opacity;
     padding-top: 4px;
-    color: #99999B
+    color: #99999B;
+    line-height: 14px;
+  }
+  .describe2 {
+    position: absolute;
+    width: 100%;
+    text-align: center
   }
   li{
     display: block;
@@ -158,7 +184,7 @@ export default {
         color: $main-color-1;
       }
       .iconfont {
-        color: $main-color-1;
+        color: $bg-color-4;
       }
       .describe {
         color: $main-color-1;
@@ -168,7 +194,7 @@ export default {
   .bottom{
     position: absolute;
     width: 100%;
-    bottom: 45px;
+    bottom: 0;
   }
   .qr-box-sidebar{
     position: absolute;
@@ -184,6 +210,7 @@ export default {
     text-align: center;
     cursor: pointer;
     font-size: 12px;
+    margin-bottom: 15px;
   }
 }
 .qr-box-sidebar{

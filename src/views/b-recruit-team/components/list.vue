@@ -2,7 +2,7 @@
   <el-dialog
     :visible.sync="dialogStatus"
     custom-class="app-dialog"
-    width="432px"
+    width="436px"
     @close="handleClose"
     title="职位管理">
     <div class="position-header">
@@ -200,6 +200,8 @@ $font-color-close : #ED5C5C;
     margin-top: 12px;
     span {
       padding: 4px 6px;
+      font-size: 12px;
+      line-height: 1;
       background: $bg-color-1;
       color: $title-color-2;
       border-radius:2px;

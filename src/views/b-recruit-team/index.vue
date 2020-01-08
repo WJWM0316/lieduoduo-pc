@@ -194,12 +194,19 @@ export default {
 }
 .recruit-lists {
   min-height: 150px;
+  min-width: $page-width;
 }
 .recruit-list {
   @include flex-v-center;
-  padding: 32px;
+  padding: 32px 50px 32px 32px;
   font-size: 14px;
   border-top: 1px solid rgba($border-color-1, .4);
+  .recruit-info {
+    min-width: 422px;
+    .recruit-image {
+      vertical-align: top;
+    }
+  }
   .recruit-info div, .recruit-name span {
     display: inline-block;
     vertical-align: middle;
@@ -224,7 +231,7 @@ export default {
     color: $title-color-2;
   }
   .recruit-email {
-    margin-top: 20px;
+    margin-top: 14px;
     color: $title-color-1;
     span {
       color: $title-color-2;
@@ -253,7 +260,8 @@ export default {
   }
   .recruit-share {
     cursor: pointer;
-    flex: 3;
+    min-width: 134px;
+    text-align: center;
     color: $main-color-1;
   }
 }

@@ -448,6 +448,7 @@ export default {
 				this.getLists(navItem)
 			}
 			if(query.pIndex) {
+				this.interviewBar.map((v, i) => v.active = i === pIndex ? true : false)
 				if(navItem) {
 					navItem.active = true
 					this.pIndex = pIndex
@@ -561,6 +562,7 @@ export default {
 				.notice-diggle {
 					display: block;
 					opacity: 1;
+					cursor: default;
 				}
 			};
 			i{
