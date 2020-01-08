@@ -56,6 +56,37 @@ const GuidedDownload = {
   src: app_qrcode
 }
 
+// 简历约聊动态
+const ResumeDynamic = [
+  { buttonText: '开撩约面', is: (val) => val === 11 },
+  { buttonText: '暂时无法约面', status: 11 },
+  { buttonText: '确认约面', status: 11 },
+  { buttonText: '查看邀约', is: (val) => val === 12 },
+  { buttonText: '安排面试', is: (val) => val === 21 },
+  { buttonText: '查看联系', is: (val) => val === 11 },
+  { buttonText: '查看面试', is: (val) => val === 31 },
+  { buttonText: '修改面试', status: 11 },
+  { buttonText: '面试详情', status: 11 },
+  { buttonText: '撤回', status: 11 },
+  { buttonText: '不合适', status: 11 },
+  { buttonText: '查看原因', status: 11 }
+]
+
+// 简历面申请审核状态
+const ResumeAuditDynamic = [
+  { buttonText: '不合适', status: 11 },
+  { buttonText: '去评价', status: 11 },
+  { buttonText: '已评价', status: 11 },
+  { buttonText: '查看原因', status: 11 }
+]
+
 export {
-  JobStatus, Gender, Degree, FileType, CompanyIntro, GuidedDownload
+  JobStatus,
+  Gender,
+  Degree,
+  FileType,
+  CompanyIntro,
+  GuidedDownload,
+  ResumeDynamic,
+  ResumeAuditDynamic
 }
