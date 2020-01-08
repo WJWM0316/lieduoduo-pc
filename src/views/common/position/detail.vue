@@ -126,7 +126,9 @@
           <div class="companyInfos" @click="toCompanyDetail">
             <p class="title">公司基本信息</p>
             <div class="details">
-              <div class="logo"><el-image ref="logo" :class="verticalLogo ? 'vertical' : true" :src="infos.companyInfo.logoInfo.smallUrl" alt="" fit='scale-down'></el-image></div>
+              <div class="logo">
+                <el-image ref="logo" :class="verticalLogo ? 'vertical' : true" :src="infos.companyInfo.logoInfo.smallUrl" alt="" fit='scale-down'></el-image>
+              </div>
               <div class="name">{{infos.companyInfo.companyShortname}}</div>
             </div>
             <div class="infos">
@@ -159,8 +161,10 @@ import { mapState } from 'vuex'
 import AppLinks from 'COMPONENTS/common/appLinks'
 import BlockOverflow from 'COMPONENTS/common/blockOverflow'
 import mapPop from '@/components/mapPop/index'
-let that = null
 import { GuidedDownload } from '@/config/vars'
+// import { app_qrcode } from 'IMAGES/image'
+let that = null
+
 @Component({
   name: 'positionDetail',
   components: {
