@@ -88,6 +88,7 @@
                   <el-popover
                     placement="right-start"
                     popper-class="user-infos"
+                    :offset="-10"
                     trigger="hover">
                     <div class="box">
                       <div class="describe" v-html="GuidedDownload.html"></div>
