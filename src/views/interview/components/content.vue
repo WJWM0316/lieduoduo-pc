@@ -562,6 +562,7 @@ export default {
 				.notice-diggle {
 					display: block;
 					opacity: 1;
+					cursor: default;
 				}
 			};
 			i{

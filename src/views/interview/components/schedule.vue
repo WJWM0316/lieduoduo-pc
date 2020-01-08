@@ -1,14 +1,14 @@
 <template>
 <div class="search-content">
   <div class="li-item_schedule clearfix" v-for="(item, index) in data.list" :key="index">
-		<div class="col-left">
+		<div class="col-left" @click="tocompany(item)">
 			<div class="logo-box">
 				<img :src="item.companyInfo.logoInfo.smallUrl" alt="avatar" v-if="item.companyInfo" />
 			</div>
 		</div>
 		<div class="col-center">
-			<div class="colc-top">
-				<div class="company-name" @click="tocompany(item)">{{item.companyShortname}}</div>
+			<div class="colc-top" @click="tocompany(item)">
+				<div class="company-name">{{item.companyShortname}}</div>
 				<div class="company-desc">{{item.companyInfo.financingDesc}}<span>·</span>{{item.companyInfo.employeesDesc}}<span>·</span>{{item.companyInfo.industry}}</div>
 			</div>
 			<div class="colc-bottom">
