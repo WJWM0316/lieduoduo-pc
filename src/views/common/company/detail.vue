@@ -120,6 +120,7 @@
                         placement="bottom-end"
                         popper-class="user-infos"
                         :open-delay="100"
+                        :offset="10"
                         trigger="hover">
                         <div class="box">
                           <div class="describe" v-html="GuidedDownload.html"></div>
