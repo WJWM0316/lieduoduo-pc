@@ -1,3 +1,5 @@
+import { app_qrcode } from 'IMAGES/image'
+
 const JobStatus = [
   { label: '在职-暂不考虑', value: 1 },
   { label: '离职-随时到岗', value: 2 },
@@ -48,6 +50,12 @@ const CompanyIntro = [
     intro: '创始人兼CEO张一鸣毕业于南开大学软件工程学院；2006年加入旅游信息搜索公司“酷讯”，曾任“酷讯”技术委员会主席；2009年创立房产信息搜索公司“九九房”；2012年创立“字节跳动”公司并担任CEO。张一鸣与今日头条团队的愿景是成为“最懂你的信息平台，连接人与信息，促进创作和交流。”'
   }
 ]
+
+const GuidedDownload = {
+  html: '“Hi，对我发布的职位感兴趣？<strong>用微信扫描二维码</strong>，和我约聊吧~”',
+  src: app_qrcode
+}
+
 export {
-  JobStatus, Gender, Degree, FileType, CompanyIntro
+  JobStatus, Gender, Degree, FileType, CompanyIntro, GuidedDownload
 }
