@@ -67,12 +67,14 @@
 		  <el-col class="li-item-content-2" :span="8">
 		  	<div>
 		  		<template v-if="[11, 21, 52, 53, 54, 55, 61].includes(item.status)">
-		  			<a
+		  			<router-link
+							target="_blank"
 		  				class="router-link"
-		  				@click="clearPositionRedDot(item)"
+		  				@click.native="clearPositionRedDot(item)"
+							:to="{name: 'positionDetail', query: { positionId: item.positionId }}"
 		  				v-if="item.positionId">
 		  				查看职位
-		  			</a>
+		  			</router-link>
 		  			<el-popover
               placement="right"
               v-if="!item.positionId"
@@ -176,11 +178,17 @@ export default {
 	  	clearInterviewItemRedDotApi({id: item.interviewId}).then(() => {
 	  		this.getInterviewRedDotInfoApi().then(() => {
 	  			item.redDot = 0
-			  	let { href } = this.$router.resolve({
-		        name: 'positionDetail',
-		        query: { positionId: item.positionId }
-					})
-					window.open(href, '_blank')
+			  	// let { href } = this.$router.resolve({
+		      //   name: 'positionDetail',
+		      //   query: { positionId: item.positionId }
+					// })
+					// let dom = document.createElement('a')
+					// dom.target = '_blank'
+					// dom.href = href
+					// let event = document.createEvent('MouseEvents')
+					// event.initEvent('click', true, true)
+					// dom.dispatchEvent(event)
+					// console.log(dom, event)
 	  		})
 	  	})
 	  },
