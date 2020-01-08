@@ -1609,15 +1609,15 @@ export default class CourseList extends Vue {
         })
         break
       case 'check-invitation':
-        this.pop = {
-          isShow: true,
-          Interview: true,
-          InterviewTitle: '面试信息',
-          btntext: '确定',
-          type: 'preview'
-        }
         let data = { interviewId: this.interviewId }
         watchInvitationAPi(data).then((res) => {
+          this.pop = {
+            isShow: true,
+            Interview: true,
+            InterviewTitle: '面试信息',
+            btntext: '确定',
+            type: 'preview'
+          }
           this.jobhunterInfo = res.data.data
         })
         break
@@ -1652,14 +1652,14 @@ export default class CourseList extends Vue {
         })
         break
       case 'arranging-interviews':
-        this.pop = {
-          isShow: true,
-          Interview: true,
-          InterviewTitle: '面试安排',
-          btntext: '保存',
-          type: 'setinterinfo'
-        }
         watchInvitationAPi({ interviewId: this.interviewId }).then((res) => {
+          this.pop = {
+            isShow: true,
+            Interview: true,
+            InterviewTitle: '面试安排',
+            btntext: '保存',
+            type: 'setinterinfo'
+          }
           this.arrangeobj = res.data.data
           this.arrangementInfo.interviewId = res.data.data.interviewId
           this.arrangementInfo.realname = res.data.data.arrangementInfo.realname
@@ -1704,15 +1704,15 @@ export default class CourseList extends Vue {
         })
         break
       case 'watch-reson':
-        this.pop = {
-          isShow: true,
-          Interview: true,
-          InterviewTitle: '不合适原因',
-          btntext: '好的',
-          type: 'watchreson'
-        }
         let comment = { interviewId: this.interviewId }
         getInterviewComment(comment).then((res) => {
+          this.pop = {
+            isShow: true,
+            Interview: true,
+            InterviewTitle: '不合适原因',
+            btntext: '好的',
+            type: 'watchreson'
+          }
           this.watchresonlist = res.data.data.reason.split(',')
           this.resonword = res.data.data.extraDesc
         })
