@@ -107,13 +107,13 @@ export default {
     left: 0;
   }
   .position-24hour {
-    width: 47px;
+    width: 52px;
     height: 18px;
-    margin-right: 14px;
+    margin-right: 9px;
     background: url('../../../assets/images/tag_list_24hour.png') no-repeat;
   }
   .position-active, .position-24hour {
-    background-size: cover;
+        background-size: auto 100%;
   }
   .position-require {
     margin-top: 10px;
