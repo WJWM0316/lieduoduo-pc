@@ -127,6 +127,10 @@ export default new Vuex.Store({
           }
         } else {
           if (state.roleInfos.isRecruiter) {
+            this.dispatch('getMyRecruit')
+            perfectauthDetail().then((res) => {
+              this.commit('setRecruiterinfo', res.data.data)
+            })
 					  router.replace({ path: '/candidate' })
           } else {
 					  router.replace({ path: '/register' })
