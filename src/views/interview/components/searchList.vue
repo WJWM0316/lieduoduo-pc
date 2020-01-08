@@ -8,7 +8,7 @@
 			:rowIndex="index"
 			:class="{'li-item-last': index === data.list.length - 1}">
 		</chat-bar>
-	  <no-data v-if="!data.total && data.hasInitPage" />
+	  <no-data v-if="!data.total && data.hasInitPage" :tab="tab" />
 	  <dialog-model v-model="model.show" :item="model.interview" />
 	</div>
 </template>

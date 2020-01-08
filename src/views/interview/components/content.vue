@@ -303,7 +303,7 @@ export default {
 				}
 			} else {
 				if (beforeActive.number) {
-					beforeDate.number = 0
+					beforeActive.number = 0
 					this.clearDayInterviewRedDot(beforeActive.time)
 				}
 			}

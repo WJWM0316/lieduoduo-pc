@@ -64,7 +64,7 @@ const recruiter = [
     meta: {
       useNav: true,
       module: 'recruiterResource',
-      icon: 'iconfont icon-mianshiguanli'
+      icon: 'iconfont icon-Bmianshiricheng-'
     },
     children: [
       {

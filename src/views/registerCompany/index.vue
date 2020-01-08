@@ -1177,7 +1177,6 @@ export default {
   min-height: 100%;
   align-items: center;
   flex-direction: column;
-  padding-bottom: 66px;
   .register {
     cursor: pointer;
   }
@@ -1213,7 +1212,7 @@ export default {
     border-radius: 8px;
     box-shadow:0px 8px 12px 0px rgba(40,40,40,0.2);
     padding: 50px 72px 30px 72px;
-    // max-height: 706px;
+    margin-bottom: 66px;
     box-sizing: border-box;
     position: relative;
     z-index: 101;

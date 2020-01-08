@@ -58,7 +58,7 @@
             <div class="topText" v-if="navType === 'searchCollect'">对我{{item.positionInfo && item.positionInfo.positionName ?'的职位':''}}感兴趣</div>
             <div class="topText" v-if="navType === 'searchMyCollect'">对Ta感兴趣</div>
 
-            <div class="topText topText2">【<span v-if="item.positionInfo.area">{{item.positionInfo.area}}&nbsp;|&nbsp;</span><span v-if="item.positionInfo.positionName">{{item.positionInfo.positionName}}&nbsp;|&nbsp;</span><span v-if="item.positionInfo.emolument"> {{item.positionInfo.emolument}}</span>】</div>
+            <div class="topText topText2"><span v-if="item.positionInfo.area || item.positionInfo.emolument">【{{item.positionInfo.area}}&nbsp;<span v-if="item.positionInfo.area">|</span>&nbsp;</span><span v-if="item.positionInfo.positionName">{{item.positionInfo.positionName}}&nbsp;|&nbsp;</span><span v-if="item.positionInfo.emolument"> {{item.positionInfo.emolument}}】</span></div>
               <div class="status">
                 <div class="like_user" v-if="item.interviewInfo.data.haveInterview && item.interviewInfo.data.interviewStatus >= 41">
                   已安排
