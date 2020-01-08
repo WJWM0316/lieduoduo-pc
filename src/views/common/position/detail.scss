@@ -499,18 +499,21 @@ img {
 				margin-bottom: 34px;
 				.title {
 					font-size:16px;
+					cursor: pointer;
 					font-weight:700;
 					color:$font-color-3;
 					line-height:24px;
 				}
 				.details {
 					margin: 14px 0 21px;
+					cursor: pointer;
 					.logo {
 						width:73px;
 						height:73px;
 						border-radius:4px;
 						float: left;
 						cursor: pointer;
+						border: 1px solid $border-color-8;
 					}
 					.el-image{
 						height: 100%;
@@ -524,9 +527,13 @@ img {
 						color: $font-color-3;
 						overflow: hidden;
 					}
+					.name:hover {
+						color: $main-color-1;
+					}
 				}
 				.infos {
 					.info-item {
+						cursor: pointer;
 						font-size:14px;
 						font-weight:400;
 						color:$font-color-6;

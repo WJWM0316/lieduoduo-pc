@@ -253,7 +253,7 @@ export default {
       height: 0px;
       border-width: 9px;
       border-style: solid;
-      border-color: transparent #fff transparent transparent ;
+      border-color: transparent #fff transparent transparent;
     }
     .helpTitle{
         color: $font-color-2;
