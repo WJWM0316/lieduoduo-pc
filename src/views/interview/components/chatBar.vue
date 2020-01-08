@@ -176,11 +176,11 @@ export default {
 	  	clearInterviewItemRedDotApi({id: item.interviewId}).then(() => {
 	  		this.getInterviewRedDotInfoApi().then(() => {
 	  			item.redDot = 0
-			  	let routeData = this.$router.resolve({
+			  	let { href } = this.$router.resolve({
 		        name: 'positionDetail',
 		        query: { positionId: item.positionId }
-		      })
-		      window.open(routeData.href, '_blank')
+					})
+					window.open(href, '_blank')
 	  		})
 	  	})
 	  },

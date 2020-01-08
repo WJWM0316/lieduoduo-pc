@@ -172,6 +172,7 @@ export default {
 		border-radius:8px;
 		overflow: hidden;
 		box-sizing: border-box;
+		cursor: pointer;
 		border:1px solid rgba(221,225,224,1);
 		img{
 			width: 100%;
@@ -186,6 +187,7 @@ export default {
 		height: 25px;
 		line-height: 25px;
 		margin: 4px 0 12px 0;
+		cursor: pointer;
 		.company-name{
 			color: #282828;
 			font-size: 18px;
