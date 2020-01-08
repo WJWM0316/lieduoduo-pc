@@ -90,12 +90,8 @@
                     popper-class="user-infos"
                     trigger="hover">
                     <div class="box">
-                      <div class="describe">
-                        “Hi，对我发布的职位感兴趣？<strong>用微信扫描二维码</strong>，和TA约聊吧。”
-                      </div>
-                      <div class="qr-code">
-                        <img :src="infos.qrCode"/>
-                      </div>
+                      <div class="describe" v-html="GuidedDownload.html"></div>
+                      <div class="qr-code"><img :src="GuidedDownload.src"/></div>
                     </div>
                     <div class="slotContent" slot="reference"><i class="icon iconfont icon-duihua_huaban"></i></div>
                   </el-popover>
@@ -164,8 +160,7 @@ import AppLinks from 'COMPONENTS/common/appLinks'
 import BlockOverflow from 'COMPONENTS/common/blockOverflow'
 import mapPop from '@/components/mapPop/index'
 let that = null
-import { app_qrcode } from 'IMAGES/image'
-
+import { GuidedDownload } from '@/config/vars'
 @Component({
   name: 'positionDetail',
   components: {
@@ -209,6 +204,7 @@ import { app_qrcode } from 'IMAGES/image'
   }
 })
 export default class PositionDetail extends Vue {
+  GuidedDownload = GuidedDownload
   cdnPath = `${this.$cdnPath}/images/`
 	overflow = false // 是否去掉滚动条
   headerFloat = false
@@ -242,7 +238,6 @@ export default class PositionDetail extends Vue {
     let that = this
     getPositionApi({ id: this.id }).then(res => {
       let infos = res.data.data
-      infos.qrCode = app_qrcode
       this.infos = infos
       if (that.infos.rapidlyInfo && that.infos.rapidlyInfo.endTime) {
         let time = that.infos.rapidlyInfo.endTime.replace(/-/g, '/')

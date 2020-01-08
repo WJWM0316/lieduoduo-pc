@@ -21,10 +21,8 @@
               popper-class="admin-toast"
               trigger="click">
               <div class="box">
-                <div class="describe">
-                  “Hi，对我发布的职位感兴趣？<strong>用微信扫描二维码</strong>，和TA约聊吧。”
-                </div>
-                <div class="qr-code"> <img :src="app_qrcode" alt="avatar" /> </div>
+                <div class="describe" v-html="GuidedDownload.html"></div>
+                <div class="qr-code"><img :src="GuidedDownload.src"/></div>
               </div>
               <div slot="reference">
               	<div class="img-box-inner">
@@ -81,10 +79,8 @@
               popper-class="admin-toast"
               trigger="click">
               <div class="box">
-                <div class="describe">
-                  “Hi，对我发布的职位感兴趣？<strong>用微信扫描二维码</strong>，和TA约聊吧。”
-                </div>
-                <div class="qr-code"> <img :src="app_qrcode" alt="avatar" /> </div>
+                <div class="describe" v-html="GuidedDownload.html"></div>
+                <div class="qr-code"><img :src="GuidedDownload.src"/></div>
               </div>
               <div slot="reference">
               	<el-button type="text" @click="clearRecruiterRedDot(item)">查看招聘官</el-button>
@@ -112,9 +108,9 @@ import {
 import {
 	getMyPositionApi
 } from 'API/position'
-import {
-  app_qrcode
-} from 'IMAGES/image'
+
+import { GuidedDownload } from '@/config/vars'
+
 export default {
 	props: {
     item: {
@@ -133,7 +129,7 @@ export default {
   data() {
   	return {
   		infos: {},
-  		app_qrcode
+			GuidedDownload
   	}
   },
   methods: {

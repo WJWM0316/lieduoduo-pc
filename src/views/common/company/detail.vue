@@ -122,10 +122,8 @@
                         :open-delay="100"
                         trigger="hover">
                         <div class="box">
-                          <div class="describe">
-                            “Hi，对我发布的职位感兴趣？<strong>用微信扫描二维码</strong>，和TA约聊吧。”
-                          </div>
-                          <div class="qr-code"> <img :src="item.qrCode" /> </div>
+                          <div class="describe" v-html="GuidedDownload.html"></div>
+                          <div class="qr-code"><img :src="GuidedDownload.src"/></div>
                         </div>
                         <div slot="reference"><i class="icon iconfont icon-duihua_huaban"></i></div>
                       </el-popover>
@@ -164,15 +162,12 @@ import mapPop from '@/components/mapPop/index'
 import login from '@/components/common/loginPop/index'
 
 import { saveResumeAttach } from 'API/resume.js'
-// import { getRecruiterQrcodeApi } from 'API/qrcode.js'
-
+import { GuidedDownload } from '@/config/vars'
 import {
   getCompanyHotApi,
   getVkeyCompanyApi,
   getCompanysTeamApi
 } from '@/api/company.js'
-
-import { app_qrcode } from 'IMAGES/image'
 
 @Component({
   name: 'company-detail',
@@ -203,6 +198,7 @@ import { app_qrcode } from 'IMAGES/image'
   }
 })
 export default class companyDetail extends Vue {
+  GuidedDownload = GuidedDownload
   activeName = 0 // mapType
   infos = {}
   HotPositionList = {} // 热门职位列表
@@ -253,10 +249,6 @@ export default class companyDetail extends Vue {
     }
     getCompanysTeamApi(data).then(({ data }) => {
       let getCompanysTeamText = data.data
-      getCompanysTeamText.map(v => {
-        v.qrCode = app_qrcode
-        v.show = false
-      })
       this.getCompanysTeamText = getCompanysTeamText
     })
   }
