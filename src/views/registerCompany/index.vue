@@ -1177,6 +1177,7 @@ export default {
   min-height: 100%;
   align-items: center;
   flex-direction: column;
+  padding-bottom: 66px;
   .register {
     cursor: pointer;
   }
