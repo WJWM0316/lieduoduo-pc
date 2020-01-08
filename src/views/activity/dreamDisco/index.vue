@@ -16,7 +16,36 @@
       </div>
     </div>
     <div class="dreamCity">
-
+      <div class="dreamCity-box">
+        <div class="dreamCity-box-btnList">
+          <div class="dreamCity-btn" v-for="(item, index) in dreamCityList" :key="index" @click="dreamCityBntClick(index)" :class="{ 'dreamCity-btn-activity': index === dreamCityActivity }">
+            <span>{{ item.areaName }}</span>
+          </div>
+        </div>
+        <div class="dreamCity-box-companyList">
+          <div class="dreamCity-box-companyList-main">
+            <div class="dreamCity-box-companyList-wrap" v-for="(item, index) in companyNowList" :key="index">
+              <div class="dreamCity-box-companyList-item" v-for="(item1, index1) in item" :key="index1">
+                <div class="dreamCity-company">
+                  <div class="dreamCity-companyImg">
+                    <img :src="item1.logoInfo.smallUrl"/>
+                  </div>
+                  <div class="dreamCity-text">
+                    <p class="dreamCity-companyShortname">{{ item1.companyShortname }}</p>
+                    <p>{{ item1.industry + '&nbsp;|&nbsp;' + item1.financingInfo }}</p>
+                  </div>
+                </div>
+                <div class="dreamCity-position">
+                  <div class="dreamCity-positionList" v-for="(item2, index2) in item1.positionList" :key="index2">
+                    <span class="dreamCity-positionList-name">{{ item2.positionName }}</span>
+                    <span>{{ item2.emolumentMin + '-' + item2.emolumentMax + 'k'}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="positionCard">
       <div class="positionCard-main">
@@ -30,11 +59,14 @@
                 <span>{{ item1.city + item1.district }}</span>
                 <i class="iconfont icon-zhiwei"></i>
                 <span>{{ item1.workExperienceName }}</span>
-                <i class="iconfont icon-zhiwei"></i>
+                <i class="iconfont icon-jiaoyu"></i>
                 <span>{{ item1.educationName }}</span>
               </p>
-              <div class="positionCard-">
-                <img />
+              <div class="positionCard-companyInfo"  v-if="item1.companyInfo">
+                <div class="positionCard-companyInfo-logo">
+                  <img :src="item1.companyInfo.logoInfo.smallUrl"/>
+                </div>
+                <span>{{ item1.companyInfo.companyShortname + '·' + item1.companyInfo.financingInfo}}</span>
               </div>
             </div>
           </div>
@@ -67,12 +99,20 @@ export default {
   data () {
     return {
       cdnPath: `${process.env.VUE_APP_CDN_PATH}/images/`,
-      positionList: []
+      positionList: [],
+      dreamCityList: [], // 城市按钮
+      companyList: [], // 公司卡片总数组
+      companyNowList: [], // 当前所在城市的数组
+      recruiterList: [],
+      dreamCityActivity: 0
     }
   },
-  // methods () {
-
-  // },
+  methods: {
+    dreamCityBntClick (index) {
+      this.dreamCityActivity = index
+      this.companyNowList = this.companyList[index]
+    }
+  },
   mounted () {
     getDiscoListApi({ vkey: 'sdfdafdt' }).then(res => {
       // 职位列表
@@ -84,6 +124,22 @@ export default {
         }
         this.positionList[page].push(item)
       })
+      // 梦想城市列表
+      let dreamCityList = res.data.data.company
+      this.dreamCityList = res.data.data.company
+      dreamCityList.forEach((item, index) => {
+        let cumulative = []
+        item.companyList.forEach((item1, index1) => {
+          const page = Math.floor(index1 / 6)
+          if (!cumulative[page]) {
+            cumulative[page] = []
+          }
+          cumulative[page].push(item1)
+        })
+        this.companyList.push(cumulative)
+      })
+      this.companyNowList = this.companyList[0]
+      // 拿到数据后渲染一次页面
       this.$forceUpdate()
     })
   }
@@ -91,6 +147,38 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+// 颜色配置
+$font-color1: #333333;
+$font-color2: #6D696E;
+$font-color3-icon: #cbcacd;
+$font-color4: #FA0974;
+$font-color5: #232021;
+
+$border-color1: #CBCACD;
+
+$bg-color1: #2C045D;
+
+// img border-radius
+@mixin img-radius($height, $width, $radius:50%, $bgcolor: #fff) {
+  width: $height;
+  height: $width;
+  border-radius: $radius;
+  background: $bgcolor;
+  overflow: hidden;
+  text-align: center;
+  &::after {
+    content: "";
+    height: 100%;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  img {
+   vertical-align: middle;
+    max-width: 100%;
+    max-height: 100%;
+  }
+}
+
 .dream{
   width: 100%;
   background: #170030;
@@ -137,12 +225,6 @@ export default {
 
       }
     }
-  }
-  .dreamCity{
-    background: url(#{$image-cdn-url}/images/discoPC_2_04.jpg) no-repeat;
-    background-position: top center;
-    width: 100%;
-    height: 827px;
   }
   .partner{
     background: url(#{$image-cdn-url}/images/discoPC_2_08.jpg) no-repeat;
@@ -200,14 +282,165 @@ export default {
     }
   }
 }
-// 放到底部减少嵌套
+// 放到外层减少嵌套
+// 梦想城市
+.dreamCity{
+  background: url(#{$image-cdn-url}/images/discoPC_2_04.jpg) no-repeat;
+  background-position: top center;
+  width: 100%;
+  height: 827px;
+  box-sizing: border-box;
+  padding-top: 230px;
+  position: relative;
+}
+.dreamCity-box{
+  margin: 0 auto;
+  width: 1125px;
+  position: relative;
+  z-index: 1;
+  .dreamCity-box-btnList{
+    display: flex;
+    justify-content: center;
+    .dreamCity-btn{
+      display: inline-block;
+      background: $bg-color1;
+      width: 124px;
+      height: 70px;
+      border-radius: 30px;
+      text-align: center;
+      margin-right: 26px;
+      position: relative;
+      cursor: pointer;
+      &::after{
+        content: '';
+        display: inline-block;
+        width: 130px;
+        height: 76px;
+        border-radius: 30px;
+        position: absolute;
+        left: -3px;
+        top: -3px;
+        z-index: -1;
+        background: linear-gradient(269deg, rgba(136,49,250,1), rgba(222,75,253,1), rgba(63,94,255,1));
+      }
+      span{
+        color: #ffffff;
+        font-size: 24px;
+        font-weight: 500;
+        line-height: 70px;
+      }
+    }
+    .dreamCity-btn-activity{
+      background: linear-gradient(0deg,rgba(82,25,138,1),rgba(167,20,255,1));
+      &::before{
+        content: '';
+        display: inline-block;
+        width: 0px;
+        height: 0px;
+        border-width: 9px;
+        border-style: solid;
+        border-color: #D03BFB transparent transparent;
+        position: absolute;
+        bottom: -55px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+  }
+}
+// 公司列表卡片
+.dreamCity-box-companyList{
+  overflow: hidden;
+  width: 1131px;
+  margin: 78px auto 0 auto;
+  height: 620px;
+  position: relative;
+  z-index: 0;
+}
+.dreamCity-box-companyList-main{
+  white-space: nowrap;
+}
+.dreamCity-box-companyList-wrap{
+  display: inline-block;
+  width: 1131px;
+  height: 620px;
+  white-space: normal;
+}
+.dreamCity-box-companyList-item{
+  display: inline-block;
+  width: 344px;
+  height: 274px;
+  margin: 3px 0 30px 31px;
+  background: #ffffff;
+  vertical-align: middle;
+  border-radius:10px;
+  position: relative;
+  &::after{
+    content: '';
+    display: inline-block;
+    border-radius: 10px;
+    height: 280px;
+    width: 350px;
+    position: absolute;
+    left: -3px;
+    top: -3px;
+    bottom: -3px;
+    right: -3px;
+    z-index: -1;
+    background: linear-gradient(-70deg, rgba(233,73,252,1), rgba(136,49,250,1), rgba(63,94,255,1));
+  }
+  .dreamCity-company{
+    box-sizing: border-box;
+    width: 344px;
+    height: 110px;
+    background: linear-gradient(-80deg,#39218a,#601689);
+    border-radius: 10px 10px 0 0 ;
+    padding: 18px 24px 18px 24px;
+    display: flex;
+    align-items: center;
+    .dreamCity-companyImg{
+      @include img-radius(74px, 74px, 10px, (-80deg, #39218a,#601689));
+    }
+    .dreamCity-text{
+      margin-left: 16px;
+      vertical-align: middle;
+      color: #ffffff;
+      font-weight:300;
+      font-size: 18px;
+      .dreamCity-companyShortname{
+        font-size: 26px;
+        font-weight: 500;
+        margin-bottom: 11px;
+      }
+    }
+  }
+  .dreamCity-position{
+    padding: 0 32px 30px 27px;
+    .dreamCity-positionList{
+      margin-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      font-size:21px;
+      color: $font-color4;
+      white-space: nowrap;
+      .dreamCity-positionList-name{
+        width: 200px;
+        font-weight:400;
+        color: $font-color5;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+}
+// 职位列表
 .positionCard{
-    background: url(#{$image-cdn-url}/images/discoPC_2_06.jpg) no-repeat;
-    background-position: top center;
-    width: 100%;
-    height: 1146px;
-    position: relative;
-    z-index: 0;
+  background: url(#{$image-cdn-url}/images/discoPC_2_06.jpg) no-repeat;
+  background-position: top center;
+  width: 100%;
+  height: 1146px;
+  position: relative;
+  z-index: 0;
 }
 .positionCard-main{
   width: 1226px;
@@ -222,6 +455,7 @@ export default {
   .positionCard-wrap{
     display: inline-block;
     width: 1226px;
+    padding-top: 3px;
     white-space: normal;
     vertical-align: top;
     .positionCard-wrap-item{
@@ -229,10 +463,12 @@ export default {
       width: 276px;
       height: 164px;
       border-radius: 10px;
-      margin: 3px 0 23px 26px;
+      margin: 0 0 23px 26px;
       background: #ffffff;
       position: relative;
       vertical-align: middle;
+      padding: 20px 13px 14px 15px;
+      box-sizing: border-box;
       &::after{
         content: '';
         display: inline-block;
@@ -246,6 +482,48 @@ export default {
         right: -3px;
         z-index: -1;
         background: linear-gradient(-70deg, rgba(233,73,252,1), rgba(136,49,250,1), rgba(63,94,255,1));
+      }
+      .positionCard-positionName{
+        font-size: 16px;
+        font-weight: 500;
+        color: $font-color1;
+      }
+      .positionCard-emolument{
+        font-size: 18px;
+        font-weight: 500;
+        color: $font-color4;
+        margin-top: 8px;
+      }
+      .positionCard-city{
+        font-size: 12px;
+        font-weight: 400;
+        color: $font-color2;
+        margin-top: 11px;
+        i{
+          font-size: 14px;
+          color: $font-color3-icon;
+        }
+        span{
+          display: inline-block;
+          margin: 0 14px 0 4px;
+        }
+      }
+      .positionCard-companyInfo{
+        box-sizing: border-box;
+        margin-top: 12px;
+        border-top: 1px dashed $border-color1;
+        padding-top: 13px;
+        .positionCard-companyInfo-logo{
+          display: inline-block;
+          vertical-align: middle;
+          @include img-radius(35px, 35px)
+        }
+        span{
+          display: inline-block;
+          margin-left: 8px;
+          vertical-align: middle;
+          font-size: 14px;
+        }
       }
     }
   }

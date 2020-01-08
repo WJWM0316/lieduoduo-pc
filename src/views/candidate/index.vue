@@ -735,15 +735,16 @@
         </ul>
         </div>
           <div class="add_time" v-if="model.dateLists.length < 3">
-          <i class="iconfont icon-tianjiashijian bgcolor" style="font-size:12px"></i>
-          <span :style="'margin-left:16px;line-height:14px'">添加时间</span>
-          <el-date-picker
-            v-model="form.date1"
-            type="datetime"
-            @change="getTime"
-            value-format="yyyy-MM-dd HH:mm:ss"
-            placeholder="选择日期时间">
-          </el-date-picker>
+            <i class="iconfont icon-tianjiashijian bgcolor" style="font-size:12px"></i>
+            <span :style="'margin-left:12px;line-height:14px'">添加时间</span>
+            <el-date-picker
+              v-model="form.date1"
+              type="datetime"
+              @change="getTime"
+              value-format="yyyy-MM-dd HH:mm:ss"
+              class="date-seleced-interview-time"
+              placeholder="选择日期时间">
+            </el-date-picker>
           </div>
         </div>
         <div class="selectposition" v-show="pop.type === 'selectposition'">
@@ -1488,6 +1489,7 @@ export default class CourseList extends Vue {
   }
 
   getTime (e) {
+    if(!e) return
     let thisTime = e.replace(/-/g, '/')
     this.model.dateLists.push({
       appointment: e,
@@ -2283,5 +2285,28 @@ export default class CourseList extends Vue {
 }
 #candidate .el-loading-mask {
   z-index: 0;
+}
+</style>
+<style lang="scss">
+.date-seleced-interview-time{
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  width: 90px !important;
+  height: 40px;
+  padding: 0;
+  z-index: 2;
+  .el-input__inner{
+    cursor: pointer;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    width: 90px !important;
+    height: 40px;
+    padding: 0;
+    z-index: 2;
+  }
 }
 </style>
