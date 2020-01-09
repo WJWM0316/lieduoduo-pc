@@ -541,212 +541,6 @@
         <div class="content-info">
         <div class="title">{{pop.InterviewTitle}}</div>
         <div class="applytext" v-show="pop.type === 'applyrecord'">{{pop.recordtext}}</div>
-        <!-- 面试安排 -->
-        <div class="arrange" v-if="pop.type === 'setinterinfo'">
-          <div class="item">
-            <div class="name">面试官姓名</div>
-            <div class="info">
-              <el-input v-model="arrangementInfo.realname" placeholder="请填写"></el-input>
-              </div>
-          </div>
-          <div class="item">
-            <div class="name">面试官手机</div>
-            <div class="info">
-              <el-input v-model="arrangementInfo.mobile" placeholder="请填写"></el-input>
-              </div>
-          </div>
-          <div class="item">
-            <div class="name">面试职位</div>
-            <div class="info">
-              <el-select v-model="arrangementInfo.positionId" placeholder="请选择">
-              <el-option
-                v-for="item in positionOption"
-                :key="item.id"
-                :label="item.positionName"
-                :value="item.id">
-              </el-option>
-            </el-select>
-              </div>
-          </div>
-          <div class="item">
-            <div class="name">面试地址</div>
-            <div class="info" @click="selectaddredd()">
-              <div class="info-select">
-                {{arrangementInfo.addressName}}
-              </div>
-              </div>
-          </div>
-        </div>
-        <!-- 选择面试地址 -->
-        <div class="selectaddress" v-if="pop.type === 'address'">
-          <div class="addresslist clearfix" :key="i" v-for="(item, i) in addresslist">
-            <div class="icon" @click="toggleaddress(item)">
-              <i :class="['iconfont icon-chenggong position bg']" v-if="item.cur"></i>
-                <i :class="['iconfont icon-beixuanxiang position']" v-else></i>
-              </div>
-            <div class="center">{{item.address}}</div>
-            <div class="edit" @click="editaddress(item)">编辑</div>
-          </div>
-          <div class="addarea" @click="addaddress()">
-            <div class="add"><i class="iconfont icon-tianjiashijian bgcolor" style="font-size:12px"></i></div>
-            <div class="add-text">添加地址</div>
-          </div>
-        </div>
-        <!-- 添加地址插件 -->
-        <map-search v-if="pop.type==='addaddress'" @popCancel="popCancel" @addAdress="addAdress"></map-search>
-        <!-- 新增地址 -->
-        <div class="arrange" v-if="pop.type === 'editaddress'">
-          <div class="item">
-            <div class="name">地址</div>
-            <div class="info">
-              <el-input :disabled="true" v-model="addressobj.address" placeholder="请填写地址"></el-input>
-              </div>
-          </div>
-          <div class="item">
-            <div class="name">门牌</div>
-            <div class="info">
-              <el-input v-model="addressobj.doorplate" placeholder="请输入门牌号"></el-input>
-              </div>
-          </div>
-        </div>
-
-        <!-- 编辑地址 -->
-        <div class="arrange" v-if="pop.type === 'Aeditaddress'">
-          <div class="item">
-            <div class="name">地址</div>
-            <div class="info">
-              <el-input :disabled="true" v-model="addressobj.address" placeholder="请填写地址"></el-input>
-              </div>
-          </div>
-          <div class="item">
-            <div class="name">门牌</div>
-            <div class="info">
-              <el-input v-model="addressobj.doorplate" placeholder="请输入门牌号"></el-input>
-              </div>
-          </div>
-        </div>
-        <!-- 面试信息 -->
-        <div class="arrangeinfo" v-if="pop.type === 'preview' && jobhunterInfo">
-          <div class="item">
-            <div class="icon">
-              <i class="iconfont icon-mianshiguan"></i>
-            </div>
-            <div class="text">{{jobhunterInfo.arrangementInfo.realname}}</div>
-            <div class="f-line"></div>
-            <div class="phone" v-if="jobhunterInfo.arrangementInfo.mobile">{{jobhunterInfo.arrangementInfo.mobile}}</div>
-          </div>
-          <div class="item" v-if="jobhunterInfo.positionName">
-            <div class="icon">
-              <i class="iconfont icon-zhiwei1"></i>
-            </div>
-            <div class="text">{{jobhunterInfo.positionName}}</div>
-          </div>
-          <div class="item" v-if="jobhunterInfo.address">
-            <div class="icon">
-              <i class="iconfont icon-didian"></i>
-            </div>
-            <div class="text">{{jobhunterInfo.address}}{{jobhunterInfo.doorplate}}</div>
-          </div>
-            <div class="item" v-show="jobhunterInfo.status >= 51">
-              <div class="icon">
-                <i class="iconfont icon-shijian"></i>
-              </div>
-              <div class="text">{{jobhunterInfo.arrangementInfo.appointment}}</div>
-            </div>
-
-          <div v-if="pop.type === 'preview' && jobhunterInfo.status === 12">
-          <div class="arrangeinfo-img">
-            <img src="@/assets/images/timeinfo.png" />
-          </div>
-          <p class="wait">等待候选人接受邀请</p>
-          <p class="wait_time">候选人将收到你的面试邀请，请耐心等待</p>
-          </div>
-          <div v-show="jobhunterInfo.status === 41">
-            <div class="detail">
-              <div class="detailtitle">面试时间已确认</div>
-              <div class="desc">时间已添加到面试日程，准备迎接候选人吧～</div>
-              <div class="time">{{jobhunterInfo.arrangementInfo.appointment}}</div>
-            </div>
-          </div>
-
-            <div class="detail" v-show="jobhunterInfo.status >= 51">
-              <div class="end-time">面试结果</div>
-               <!-- 到场 -->
-               <div class="stepevaluate clearfix" v-show="jobhunterInfo.status === 51">
-                <div class="titlel">
-                  <div class="dian"></div>
-                  <div class="tex">候选人到场了吗？~</div>
-                </div>
-                 <div class="stepall">
-                <div class="step" @click="hascallback('no')">
-                  <div class="icon"><img src="@/assets/images/ku.png" /></div>
-                  <div class="text">候选人没来</div>
-                </div>
-                <div class="step" @click="hascallback('yes')">
-                  <div class="icon"><img src="@/assets/images/xiao.png" /></div>
-                  <div class="text">已到场面试</div>
-                </div>
-                </div>
-              </div>
-              <!-- 评价 -->
-              <div class="stepevaluate clearfix" v-show="[57, 58].includes(jobhunterInfo.status)">
-                <div class="titlel">
-                  <div class="dian"></div>
-                  <div class="tex">到场面试后感觉如何？评价一下吧~</div>
-                </div>
-                <div class="stepall">
-                <div class="step" @click="selereson()">
-                  <div class="icon"><img src="@/assets/images/ku.png" /></div>
-                  <div class="text">不合适</div>
-                </div>
-                <div class="step" @click="haslike()">
-                  <div class="icon"><img src="@/assets/images/xiao.png" /></div>
-                  <div class="text">感觉不错</div>
-                </div>
-                </div>
-              </div>
-              <div class="end-status" v-show="[59, 60, 61].includes(jobhunterInfo.status)">
-                <div class="status-icon">
-                  <img v-show="jobhunterInfo.status === 60" src="@/assets/images/xiao.png" />
-                  <img v-show="jobhunterInfo.status === 61" src="@/assets/images/ku.png" />
-                  <img v-show="jobhunterInfo.status === 59" src="@/assets/images/ku.png" />
-                </div>
-                <div class="status-text" v-show="jobhunterInfo.status === 60">
-                  <p class="p1">已到场面试，感觉不错</p>
-                  <p class="p2">请联系候选人确认后续环节</p>
-                </div>
-                <div class="status-text2" v-show="jobhunterInfo.status === 61">
-                  <p class="p1">已到场面试，但不合适</p>
-                </div>
-                <div class="status-text2" v-show="jobhunterInfo.status === 59">
-                  <p class="p1">候选人没来</p>
-                </div>
-              </div>
-              </div>
-        </div>
-        <div class="intertime" v-show="pop.type === 'setinterinfo'">
-          <div class="intertime_title">约面时间</div>
-          <div>
-          <ul class="time_list" v-if="model.dateLists.length">
-          <li class="time_row" v-for="(item, index) in model.dateLists" :key="index">
-            <i class="el-icon-remove" @click="deleteTime(index)"></i>
-            {{item.appointment}}
-          </li>
-        </ul>
-        </div>
-          <div class="add_time" v-if="model.dateLists.length < 3">
-            <i class="iconfont icon-tianjiashijian bgcolor" style="font-size:12px"></i>
-            <span :style="'margin-left:12px;line-height:14px'">添加时间</span>
-            <el-date-picker
-              v-model="form.date1"
-              type="datetime"
-              @change="getTime"
-              value-format="yyyy-MM-dd HH:mm:ss"
-              class="date-seleced-interview-time"
-              placeholder="选择日期时间">
-            </el-date-picker>
-          </div>
-        </div>
         <div class="selectposition" v-show="pop.type === 'selectposition'">
           <div class="selectitem" v-for="(item, i) in positionLists" :key="i" @click="selectposition(item)">
             <div class="position">
@@ -768,35 +562,6 @@
             </div>
           </div>
         </div>
-        <div v-show="pop.type === 'inappropriate'">
-        <div class="inappropriate clearfix">
-          <div :class="['resonitem', item.cur ? 'resoncur' : '']" v-for="(item, i) in reasonlist" :key="i" @click="togglereson(item)">
-            {{item.title}}
-          </div>
-        </div>
-        <div class="explain">
-            <div class="explaintitle">补充说明</div>
-            <div class="text">
-              <textarea v-model="extra" placeholder="请填写原因"></textarea>
-            </div>
-          </div>
-          </div>
-
-          <div v-show="pop.type === 'watchreson'">
-            <div class="inappropriate clearfix">
-            <div class="wachitem" v-for="(item, i) in watchresonlist" :key="i">
-              {{item}}
-            </div>
-          </div>
-
-            <div class="explain" v-if="resonword">
-              <div class="explaintitle">补充说明</div>
-              <div class="text">
-                <textarea :disabled="resonword" v-model="resonword" placeholder="请填写原因"></textarea>
-              </div>
-            </div>
-
-          </div>
           <div class="selectposition" v-show="pop.type === 'applyrecord'">
             <div class="selectitem" v-for="(item, i) in applyrecordList" :key="i" @click="selectapply(item, i)">
             <div class="position">
@@ -848,9 +613,24 @@
       @clicksend="sendford"
       @clickcancel="cancelmessage"
     ></dynamic-record>
+    <!-- 查看面试，安排面试弹窗 -->
+    <interview-arrange :interviewId="interviewId" :visible.sync="arrangediggle"></interview-arrange>
+    <!-- 面试详情弹窗 -->
+    <interview-detail :interviewId="interviewId" :visible.sync="detaildiggle"></interview-detail>
+    <!-- 选择不合适原因 -->
+    <select-reson :reasonlist="reasonlist" :interviewId="interviewId" :jobuid="jobuid" :visible.sync="resondiggle"></select-reson>
+    <!-- 展示原因列表 -->
+    <reson-list :interviewId="interviewId" :visible.sync="resonlistdiggle"></reson-list>
+    <!-- 开撩选择职位 -->
+    <candidate-position :jobuid="jobuid" :visible.sync="positiondiggle"></candidate-position>
   </div>
 </template>
 <script>
+import InterviewArrange from 'COMPONENTS/common/interviewarrange'
+import interviewDetail from 'COMPONENTS/common/interviewdetail'
+import selectReson from 'COMPONENTS/common/selectreson'
+import resonList from 'COMPONENTS/common/resonlist'
+import candidatePosition from 'COMPONENTS/common/candidateposition'
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import { getMyInfoApi } from 'API/auth'
@@ -907,11 +687,16 @@ import {
       }
     }
   },
-  components: { MapSearch, DynamicRecord }
+  components: { MapSearch, DynamicRecord, InterviewArrange, interviewDetail, selectReson, resonList, candidatePosition }
 })
 export default class CourseList extends Vue {
   userInfo = {}
   selectBlo = {}
+  arrangediggle = false
+  detaildiggle = false
+  resondiggle = false
+  resonlistdiggle = false
+  positiondiggle = false
   showResume = false
   hasonload = false
   loadingshow = false
@@ -1487,85 +1272,6 @@ export default class CourseList extends Vue {
       this.hasonload = false
     }
   }
-
-  getTime (e) {
-    if(!e) return
-    let thisTime = e.replace(/-/g, '/')
-    this.model.dateLists.push({
-      appointment: e,
-      active: false,
-      appointmentTime: Date.parse(new Date(thisTime)) / 1000
-    })
-  }
-
-  deleteTime (index) {
-    this.model.dateLists.splice(index, 1)
-  }
-
-  // 设置是否到场
-  hascallback (type) {
-    if (type === 'no') {
-      let data1 = { interviewId: this.jobhunterInfo.interviewId, isAttend: 0 }
-      setAttendApi(data1).then((res) => {
-        // this.pop.isShow = false
-        this.viewdetail(this.jobhunterInfo)
-      })
-    }
-    if (type === 'yes') {
-      let data2 = { interviewId: this.jobhunterInfo.interviewId, isAttend: 1 }
-      setAttendApi(data2).then((res) => {
-        this.viewdetail(this.jobhunterInfo)
-      })
-    }
-  }
-
-  // 点击感觉不错
-  haslike () {
-    setCommentApi({ interviewId: this.jobhunterInfo.interviewId }).then((res) => {
-      this.viewdetail(this.jobhunterInfo)
-    })
-  }
-
-  // 面试详情
-  viewdetail (item, statusid) {
-    this.pop = {
-      isShow: true,
-      Interview: true,
-      InterviewTitle: '面试信息',
-      type: 'preview'
-    }
-    let ids = ''
-    if (statusid === 1) {
-      ids = item.interviewInfo.data.lastInterviewId
-      this.showResume = true
-    } else {
-      ids = item.interviewId
-      this.showResume = false
-    }
-    let data = { interviewId: ids }
-    getDetailApi(data).then((res) => {
-      this.jobhunterInfo = res.data.data
-      this.init()
-    })
-  }
-
-  // 点击不合适
-  selereson () {
-    this.pop = {
-      isShow: true,
-      Interview: true,
-      InterviewTitle: '选择不合适原因',
-      btntext: '保存',
-      type: 'inappropriate'
-    }
-    getCommentReasonApi().then((res) => {
-      let arr = res.data.data
-      arr.map((v, k) => {
-        v.cur = false
-      })
-      this.reasonlist = arr
-    })
-  }
   setJob (uid, type, vo, statusid) {
     if (statusid === 1) {
       this.showResume = false
@@ -1581,45 +1287,10 @@ export default class CourseList extends Vue {
     }
     switch (type) {
       case 'recruiter-chat':
-        let datalist = { is_online: 1 }
-        recruiterPositonList(datalist).then((res) => {
-          let arr = res.data.data
-          let hasOnline = []
-          arr.map((v, k) => {
-            v.cur = false
-            if (v.isOnline === 2) {
-              hasOnline.push(v)
-            }
-          })
-          if (arr.length === 0 || hasOnline.length === arr.length) {
-            this.pop = {
-              isShow: true,
-              type: 'noJob'
-            }
-          } else {
-            this.pop = {
-              isShow: true,
-              Interview: true,
-              InterviewTitle: '选择职位',
-              btntext: '确定',
-              type: 'selectposition'
-            }
-            this.positionLists = arr
-          }
-        })
+        this.positiondiggle = true
         break
       case 'check-invitation':
-        let data = { interviewId: this.interviewId }
-        watchInvitationAPi(data).then((res) => {
-          this.pop = {
-            isShow: true,
-            Interview: true,
-            InterviewTitle: '面试信息',
-            btntext: '确定',
-            type: 'preview'
-          }
-          this.jobhunterInfo = res.data.data
-        })
+        this.detaildiggle = true
         break
       case 'confirm-interview':
         let status = { vkey: vo.resume ? vo.resume.vkey : vo.vkey, type: 'resume' }
@@ -1652,48 +1323,7 @@ export default class CourseList extends Vue {
         })
         break
       case 'arranging-interviews':
-        watchInvitationAPi({ interviewId: this.interviewId }).then((res) => {
-          this.pop = {
-            isShow: true,
-            Interview: true,
-            InterviewTitle: '面试安排',
-            btntext: '保存',
-            type: 'setinterinfo'
-          }
-          this.arrangeobj = res.data.data
-          this.arrangementInfo.interviewId = res.data.data.interviewId
-          this.arrangementInfo.realname = res.data.data.arrangementInfo.realname
-          this.arrangementInfo.mobile = res.data.data.arrangementInfo.mobile
-          if (res.data.data.positionId === 0) {
-            this.arrangementInfo.positionId = ''
-          } else {
-            this.arrangementInfo.positionId = res.data.data.positionId
-          }
-          this.arrangementInfo.addressId = res.data.data.addressId
-          this.arrangementInfo.addressName = res.data.data.address
-          if (res.data.data.arrangementInfo.appointmentList) {
-            this.model.dateLists = res.data.data.arrangementInfo.appointmentList
-          } else {
-            this.model.dateLists = []
-          }
-
-          let datalist = { is_online: 1 }
-          recruiterPositonList(datalist).then((res) => {
-            let arr = res.data.data
-            let hasOnline = []
-            arr.map((v, k) => {
-              v.cur = false
-              if (v.isOnline === 1) {
-                hasOnline.push(v)
-              }
-            })
-            if (this.arrangeobj.positionStatus === 0 && this.arrangeobj.positionId !== 0) {
-              hasOnline.push({ id: this.arrangeobj.positionId, positionName: this.arrangeobj.positionName })
-            }
-            this.positionOption = hasOnline
-          })
-          // this.arrangementInfo.interviewTime = res.data.data.createdAtTime
-        })
+        this.arrangediggle = true
         break
       case 'interview-retract':
         let retract = { jobhunterUid: this.jobuid, interviewId: this.interviewId }
@@ -1704,18 +1334,7 @@ export default class CourseList extends Vue {
         })
         break
       case 'watch-reson':
-        let comment = { interviewId: this.interviewId }
-        getInterviewComment(comment).then((res) => {
-          this.pop = {
-            isShow: true,
-            Interview: true,
-            InterviewTitle: '不合适原因',
-            btntext: '好的',
-            type: 'watchreson'
-          }
-          this.watchresonlist = res.data.data.reason.split(',')
-          this.resonword = res.data.data.extraDesc
-        })
+        this.resonlistdiggle = true
         break
       case 'inappropriate':
         let status2 = { vkey: vo.resume ? vo.resume.vkey : vo.vkey, type: 'resume' }
@@ -1748,13 +1367,7 @@ export default class CourseList extends Vue {
                   v.cur = false
                 })
                 this.reasonlist = arr
-                this.pop = {
-                  isShow: true,
-                  Interview: true,
-                  InterviewTitle: '选择不合适原因',
-                  btntext: '保存',
-                  type: 'inappropriate'
-                }
+                this.resondiggle = true
               })
             } else {
               getloadingReasonApi().then((res) => {
@@ -1763,13 +1376,7 @@ export default class CourseList extends Vue {
                   v.cur = false
                 })
                 this.reasonlist = arr
-                this.pop = {
-                  isShow: true,
-                  Interview: true,
-                  InterviewTitle: '选择不合适原因',
-                  btntext: '保存',
-                  type: 'inappropriate'
-                }
+                this.resondiggle = true
               })
             }
           }
@@ -1795,51 +1402,10 @@ export default class CourseList extends Vue {
     })
   }
   backhandler () {
-    if (this.pop.type === 'address') {
-      this.pop = {
-        isShow: true,
-        Interview: true,
-        InterviewTitle: '面试安排',
-        btntext: '保存',
-        type: 'setinterinfo'
-      }
+    if (this.showResume) {
+      this.pop.Interview = false
     } else {
-      if (this.showResume) {
-        this.pop.Interview = false
-      } else {
-        this.pop.isShow = false
-      }
-    }
-    if (this.pop.type === 'editaddress' || this.pop.type === 'Aeditaddress') {
-      this.pop = {
-        isShow: true,
-        Interview: true,
-        InterviewTitle: '选择地址',
-        btntext: '发送',
-        type: 'address'
-      }
-    }
-  }
-  // 选择地址发送
-  sendhandler () {
-    let arr = []
-    this.addresslist.map((v, k) => {
-      if (v.cur) {
-        arr.push(v)
-      }
-    })
-    if (arr.length === 0) {
-      this.$message.warning('请选择一个地址')
-    } else {
-      this.arrangementInfo.addressId = arr[0].id
-      this.arrangementInfo.addressName = arr[0].address
-      this.pop = {
-        isShow: true,
-        Interview: true,
-        InterviewTitle: '面试安排',
-        btntext: '保存',
-        type: 'setinterinfo'
-      }
+      this.pop.isShow = false
     }
   }
 
@@ -1861,28 +1427,6 @@ export default class CourseList extends Vue {
         })
       } else {
         this.$message.warning('请选择职位')
-      }
-    }
-    // 点击保存不合适原因
-    if (this.pop.type === 'inappropriate') {
-      let inapp = []
-      this.reasonlist.map((v, k) => {
-        if (v.cur) {
-          inapp.push(v.id)
-        }
-      })
-      let mark = { jobhunterUid: this.jobuid, interviewId: this.interviewId, extra: this.extra, reason: inapp.join(',') }
-      if (inapp.length > 0) {
-        improperMarkingApi(mark).then((res) => {
-          this.extra = ''
-          this.$message.success('操作成功')
-          this.init()
-          this.pop = {
-            isShow: false
-          }
-        })
-      } else {
-        this.$message.warning('请选择不合适原因')
       }
     }
     // 点击处理多条记录
@@ -1953,64 +1497,6 @@ export default class CourseList extends Vue {
         }
       }
     }
-    // 选择地址
-    if (this.pop.type === 'address') {
-      let arr = []
-      this.addresslist.map((v, k) => {
-        if (v.cur) {
-          arr.push(v)
-        }
-      })
-      if (arr.length === 0) {
-        this.$message.warning('请选择一个地址')
-      } else {
-        this.arrangementInfo.addressId = arr[0].id
-        this.arrangementInfo.addressName = arr[0].address
-        this.pop = {
-          isShow: true,
-          Interview: true,
-          InterviewTitle: '面试安排',
-          btntext: '保存',
-          type: 'setinterinfo'
-        }
-      }
-    }
-    // 添加地址
-    if (this.pop.type === 'editaddress') {
-      addCompanyAdressApi(this.addressobj).then(res => {
-        this.pop = {
-          isShow: true,
-          Interview: true,
-          InterviewTitle: '选择地址',
-          btntext: '发送',
-          type: 'address'
-        }
-        this.$message.success('添加成功')
-        this.selectaddredd()
-        this.arrangementInfo.addressId = res.data.data.id
-        this.arrangementInfo.addressName = res.data.data.address
-      }).catch(e => {
-        this.$message.error(e.data.msg)
-      })
-    }
-    // 编辑地址
-    if (this.pop.type === 'Aeditaddress') {
-      editCompanyAdressApi(this.addressobj).then(res => {
-        this.pop = {
-          isShow: true,
-          Interview: true,
-          InterviewTitle: '选择地址',
-          btntext: '发送',
-          type: 'address'
-        }
-        this.$message.success('编辑成功')
-        this.selectaddredd()
-        this.arrangementInfo.addressId = res.data.data.id
-        this.arrangementInfo.addressName = res.data.data.address
-      }).catch(e => {
-        this.$message.error(e.data.msg)
-      })
-    }
     // 点击确定约面
     if (this.pop.type === 'setinterinfo') {
       if (!this.arrangementInfo.addressId) {
@@ -2045,17 +1531,6 @@ export default class CourseList extends Vue {
       } else {
         this.pop.isShow = false
       }
-    }
-  }
-  // 选择职位
-  selectposition (item) {
-    if (item.isOnline === 2) {
-      return false
-    } else {
-      this.jobpositionid = item.id
-      this.positionLists.map((v, k) => {
-        v.cur = item === v
-      })
     }
   }
   // 选择申请记录
@@ -2095,28 +1570,6 @@ export default class CourseList extends Vue {
   togglereson (data) {
     data.cur = !data.cur
   }
-  // 选择地址列表
-  selectaddredd () {
-    let data = { page: 1, count: 20, company_id: this.recruitDataCompanyId }
-    addressListApi(data).then((res) => {
-      this.pop = {
-        isShow: true,
-        Interview: true,
-        InterviewTitle: '选择地址',
-        btntext: '发送',
-        type: 'address'
-      }
-      let arr = res.data.data
-      arr.map((v, k) => {
-        if (this.arrangementInfo.addressId === v.id) {
-          v.cur = true
-        } else {
-          v.cur = false
-        }
-      })
-      this.addresslist = arr
-    })
-  }
   toggleaddress (data) {
     this.addresslist.map((v, k) => {
       v.cur = data === v
@@ -2152,46 +1605,11 @@ export default class CourseList extends Vue {
       })
     }
   }
-  popCancel () {
-    if (this.pop.type === 'addaddress') {
-      this.pop = {
-        isShow: true,
-        Interview: true,
-        InterviewTitle: '选择地址',
-        btntext: '发送',
-        type: 'address'
-      }
-    }
-  }
   created () {
     getinviteapplyNum().then(res => {
       this.applynum = res.data.data.applyTotal
       this.invitenum = res.data.data.inviteTotal
     })
-  }
-  addAdress (param) {
-    this.pop = {
-      isShow: true,
-      Interview: true,
-      InterviewTitle: '新增地址',
-      btntext: '确定',
-      type: 'editaddress'
-    }
-    this.addressobj = param.data
-    this.addressobj.areaName = this.addressobj.area_id
-    this.addressobj.area_id = ''
-  }
-  editaddress (data) {
-    this.pop = {
-      isShow: true,
-      Interview: true,
-      InterviewTitle: '编辑地址',
-      btntext: '确定',
-      type: 'Aeditaddress'
-    }
-    this.addressobj = data
-    this.addressobj.areaName = this.addressobj.area_id
-    this.addressobj.area_id = ''
   }
 
   getMyInfo () {
