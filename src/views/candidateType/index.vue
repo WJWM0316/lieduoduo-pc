@@ -196,11 +196,11 @@
 
       <div class="resumeBox" v-if="showResume" @click="closeload($event)">
         <div class="Numbering">
-          <span>简历编号：{{nowResumeMsg.vkey}}</span>
-          <span v-if="nowResumeMsg.resumeUpdateTime !== '0000-00-00 00:00:00'">{{nowResumeMsg.resumeUpdateTime}}更新</span>
-          <div class="closediggle" @click="pop.isShow = false">
-        <i class="iconfont icon-guanbianniu"></i>
-      </div>
+            <span>简历编号：{{nowResumeMsg.vkey}}</span>
+            <span v-if="nowResumeMsg.resumeUpdateTime !== '0000-00-00 00:00:00'">{{nowResumeMsg.resumeUpdateTime}}更新</span>
+            <div class="closediggle" @click="pop.isShow = false">
+          <i class="iconfont icon-guanbianniu"></i>
+        </div>
         </div>
         <!-- <div class="printing">
           <span>简历打印</span>

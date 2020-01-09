@@ -56,23 +56,30 @@ const GuidedDownload = {
   src: app_qrcode
 }
 
-// 简历约聊动态
-const ResumeDynamic = [
-  { buttonText: '开撩约面', is: (val) => val === 11 },
-  { buttonText: '暂时无法约面', status: 11 },
-  { buttonText: '确认约面', status: 11 },
-  { buttonText: '查看邀约', is: (val) => val === 12 },
-  { buttonText: '安排面试', is: (val) => val === 21 },
-  { buttonText: '查看联系', is: (val) => val === 11 },
-  { buttonText: '查看面试', is: (val) => val === 31 },
-  { buttonText: '修改面试', status: 11 },
-  { buttonText: '面试详情', status: 11 },
-  { buttonText: '撤回', status: 11 },
-  { buttonText: '不合适', status: 11 },
-  { buttonText: '查看原因', status: 11 }
+// 候选人动态操作按钮种类
+const CandidateTypeBtns = [
+  { buttonText: '查看联系', is: (val) => val === 11, statusText: '未处理' },
+  { buttonText: '查看邀约', is: (val) => val === 12, statusText: '待对方处理' },
+  { buttonText: '安排面试', is: (val) => val === 21, statusText: '待我安排' },
+  { buttonText: '查看面试', is: (val) => val === 31, statusText: '待对方确认' },
+  { buttonText: '修改面试', is: (val) => val === 32, statusText: '待我修改' },
+  { buttonText: '面试详情', is: (val) => val === 41, statusText: '已安排' }
 ]
 
-// 简历面申请审核状态
+// 候选人库操作按钮种类
+const CandidateBtns = [
+  { buttonText: '开撩约面', status: 11 },
+  { buttonText: '暂时无法约面', status: 11 },
+  { buttonText: '查看联系', is: (val) => val === 11 },
+  { buttonText: '查看邀约', is: (val) => val === 12 },
+  { buttonText: '安排面试', is: (val) => val === 21 },
+  { buttonText: '查看面试', is: (val) => val === 31 },
+  { buttonText: '修改面试', is: (val) => val === 32 },
+  { buttonText: '面试详情', is: (val) => [41, 51, 57, 58, 59, 60, 61].includes(val) },
+  { buttonText: '查看简历', is: (val) => [52, 53, 54, 55].includes(val) }
+]
+
+// 简历申请状态
 const ResumeAuditDynamic = [
   { buttonText: '不合适', status: 11 },
   { buttonText: '去评价', status: 11 },
@@ -87,6 +94,7 @@ export {
   FileType,
   CompanyIntro,
   GuidedDownload,
-  ResumeDynamic,
+  CandidateTypeBtns,
+  CandidateBtns,
   ResumeAuditDynamic
 }

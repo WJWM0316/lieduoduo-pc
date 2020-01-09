@@ -6,7 +6,6 @@ const recruiter = [
     component: Layout,
     meta: {
       useNav: true,
-      module: 'recruiterResource',
       icon: 'iconfont icon-zhiwei'
     },
     children: [
@@ -29,14 +28,13 @@ const recruiter = [
     component: Layout,
     meta: {
       useNav: true,
-      module: 'recruiterResource',
       icon: 'iconfont icon-houxuanrendongtai'
     },
     children: [
       {
         path: '',
         name: 'candidatetype',
-        component: resolve => require(['../views/candidateType/index.vue'], resolve)
+        component: resolve => require(['../views/candidateType/index1.vue'], resolve)
       }
     ]
   },
@@ -46,7 +44,6 @@ const recruiter = [
     component: Layout,
     meta: {
       useNav: true,
-      module: 'recruiterResource',
       icon: 'iconfont icon-houxuanrenku'
     },
     children: [
@@ -63,7 +60,6 @@ const recruiter = [
     component: Layout,
     meta: {
       useNav: true,
-      module: 'recruiterResource',
       icon: 'iconfont icon-Bmianshiricheng-'
     },
     children: [
@@ -80,7 +76,6 @@ const recruiter = [
     component: Layout,
     meta: {
       useNav: true,
-      module: 'recruiterResource',
       icon: 'iconfont icon-qiye'
     },
     children: [
