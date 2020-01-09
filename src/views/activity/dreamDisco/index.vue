@@ -314,7 +314,7 @@ $bg-color1: #2C045D;
 }
 .carousel-box{
   position: absolute;
-  left: 55%;
+  left: 54%;
   transform: translateX(-50%);
 }
 .carousel-item{
@@ -647,6 +647,7 @@ $bg-color1: #2C045D;
   opacity: 0.1;
 }
 .dream .carousel .el-carousel--horizontal{
+  padding-left: 20px;
   padding-top: 20px;
   width: 1300px;
 }
