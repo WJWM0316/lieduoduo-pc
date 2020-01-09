@@ -135,7 +135,6 @@ export default {
       }
     }
     let logoRegReplace = (rule, value, callback) => {
-      console.log(this.from.id)
       if (this.from.logo > 0) {
         callback()
       } else {
@@ -198,7 +197,7 @@ export default {
       })
     },
     submit () {
-      this.$refs.fromMyMaterial.validate(valid => {
+      this.$refs.fromMyMaterial.validate((valid, validText) => {
         if (valid) {
           if (this.from.website === '' || this.from.albumInfo || this.from.address) {
             this.$confirm('完善全部信息，可以提高公司的曝光与排名，是否继续完善?', '温馨提示', {
@@ -217,6 +216,10 @@ export default {
           } else {
             this.saveEditCompany()
           }
+        } else {
+          Object.keys(validText).forEach(item => {
+            this.$message.error(validText[item][0].message)
+          })
         }
       })
     },
