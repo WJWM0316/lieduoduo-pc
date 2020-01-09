@@ -658,6 +658,7 @@ $bg-color1: #2C045D;
 }
 .dream .carousel .is-in-stage{
   opacity: 0.3;
+  width: 475px;
   overflow: visible;
 }
 
