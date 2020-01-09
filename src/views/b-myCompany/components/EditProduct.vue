@@ -119,6 +119,7 @@ export default {
       })
     } else {
       this.from.company_id = companyid
+      this.fromCaching = JSON.stringify(this.from)
     }
   },
   methods: {
@@ -151,6 +152,7 @@ export default {
         center: true
       }).then(() => {
         deleteCompanyProductInfosApi(this.from.id).then(res => {
+          this.$message.success('删除产品成功！')
           this.$router.push({ name: 'myCompany' })
         })
       })
