@@ -53,18 +53,18 @@ const other = [
         component: resolve => require(['../views/activity/marketOriginality/index.vue'], resolve)
       }
     ]
+  },
+  {
+    path: '/dreamDisco',
+    title: '梦想disco',
+    component: Layout,
+    children: [
+      {
+        path: '',
+        name: 'dreamDisco',
+        component: resolve => require(['../views/activity/dreamDisco/index.vue'], resolve)
+      }
+    ]
   }
-  // {
-  //   path: '/dreamDisco',
-  //   title: '梦想disco',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: '',
-  //       name: 'dreamDisco',
-  //       component: resolve => require(['../views/activity/dreamDisco/index.vue'], resolve)
-  //     }
-  //   ]
-  // }
 ]
 export default other
