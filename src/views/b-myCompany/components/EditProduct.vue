@@ -272,6 +272,10 @@ export default {
 .foot{
   margin-left: 110px;
   margin-top: 50px;
+  button{
+    width: 120px;
+    height: 40px;
+  }
 }
 .EditProduct-Example{
   width: 270px;
@@ -339,5 +343,9 @@ export default {
 }
 .EditProduct .foot .el-button--default{
   margin-left: 24px;
+}
+.EditProduct textarea{
+  width: 520px;
+  height: 140px;
 }
 </style>
