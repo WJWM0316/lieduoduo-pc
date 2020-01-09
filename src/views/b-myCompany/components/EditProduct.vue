@@ -62,7 +62,8 @@ import Picture from '@/components/common/upload/picture'
 import {
   deleteCompanyProductInfosApi, // 删除
   editCompanyProductInfosApi, // 编辑
-  createCompanyProductApi // 创建
+  createCompanyProductApi, // 创建
+  getCompanyProductInfosApi // 获取
 } from '@/api/register'
 
 import {
@@ -72,18 +73,6 @@ import {
 export default {
   components: {
     Picture
-  },
-  props: {
-    currentProduct: {
-      type: Object,
-      default: () => ({})
-    },
-    companyid: {
-      type: Number
-    },
-    typeto: {
-      type: String
-    }
   },
   data () {
     let urlRegReplace = (rule, value, callback) => {
@@ -98,16 +87,8 @@ export default {
     }
     return {
       cdnPath: `${process.env.VUE_APP_CDN_PATH}/images/`,
-      from: {
-        company_id: this.companyid,
-        id: this.currentProduct.id,
-        product_name: this.currentProduct.productName,
-        site_url: this.currentProduct.siteUrl,
-        slogan: this.currentProduct.slogan,
-        lightspot: this.currentProduct.lightspot,
-        logo: this.currentProduct.logoInfo.id
-      },
-      middleUrl: this.currentProduct.logoInfo.middleUrl,
+      from: {},
+      middleUrl: '',
       fromCaching: '', // 表单数据缓存
       rules: {
         logo: [{ required: true, type: 'number', message: '请上传产品logo', trigger: 'change' }],
@@ -119,7 +100,26 @@ export default {
     }
   },
   mounted () {
-    this.fromCaching = JSON.stringify(this.from)
+    let id = this.$route.query.id
+    let companyid = this.$route.query.companyId
+    if (id) {
+      getCompanyProductInfosApi(id).then(res =>{
+        let data = res.data.data
+        this.from = {
+          company_id: data.companyId,
+          id: data.id,
+          product_name: data.productName,
+          site_url: data.siteUrl,
+          slogan: data.slogan,
+          lightspot: data.lightspot,
+          logo: data.logo.id
+        }
+        this.middleUrl = data.logo.middleUrl,
+        this.fromCaching = JSON.stringify(this.from)
+      })
+    } else {
+      this.from.company_id = companyid
+    }
   },
   methods: {
     pictureInformation (item) { // 拿到头像回调id
@@ -132,16 +132,12 @@ export default {
           if (this.from.id) { // 根据是否有id来判断是新建产品还是编辑已有产品
             editCompanyProductInfosApi(this.from).then(res => {
               this.$message.success('编辑产品成功！')
-              this.$emit('save') // 刷新父组件数据
-              let type = '公司主页'
-              this.$emit('click', type)
+              this.$router.push({ name: 'myCompany' })
             })
           } else {
             createCompanyProductApi(this.from).then(res => {
               this.$message.success('创建产品成功！')
-              this.$emit('save') // 刷新父组件数据
-              let type = '公司主页'
-              this.$emit('click', type)
+              this.$router.push({ name: 'myCompany' })
             })
           }
         }
@@ -155,16 +151,13 @@ export default {
         center: true
       }).then(() => {
         deleteCompanyProductInfosApi(this.from.id).then(res => {
-          this.$emit('save') // 刷新父组件数据
-          let type = '公司主页'
-          this.$emit('click', type)
+          this.$router.push({ name: 'myCompany' })
         })
       })
     },
     cancel () {
       if (this.fromCaching === JSON.stringify(this.from)) {
-        let type = '公司主页'
-        this.$emit('click', type)
+        this.$router.push({ name: 'myCompany' })
         return
       }
       this.$confirm('确定退出，更新的内容将不被保存', '有编辑中内容尚未保存，确定退出编辑吗?', {
@@ -173,8 +166,7 @@ export default {
         type: 'warning',
         center: true
       }).then(() => {
-        let type = '公司主页'
-        this.$emit('click', type)
+        this.$router.push({ name: 'myCompany' })
       })
     }
   }

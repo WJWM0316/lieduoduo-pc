@@ -88,6 +88,16 @@ const recruiter = [
         path: '',
         name: 'myCompany',
         component: resolve => require(['../views/b-myCompany/index.vue'], resolve)
+      },
+      {
+        path: 'myMaterial',
+        name: 'myMaterial',
+        component: resolve => require(['../views/b-myCompany/components/myMaterial.vue'], resolve)
+      },
+      {
+        path: 'EditProduct',
+        name: 'EditProduct',
+        component: resolve => require(['../views/b-myCompany/components/EditProduct.vue'], resolve)
       }
     ]
   },

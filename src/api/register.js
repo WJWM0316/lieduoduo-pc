@@ -345,15 +345,13 @@ export const createCompanyProductApi = data => {
 }
 
 // 获取公司产品信息
-export const getCompanyProductInfosApi = (data, hasLoading) => {
+export const getCompanyProductInfosApi = id => {
   return request({
     config: {
       host: 'zhaopin'
     },
     method: 'get',
-    url: `/company/product/${data.id}`,
-    params: data,
-    hasLoading: true
+    url: `/company/product/${id}`
   })
 }
 

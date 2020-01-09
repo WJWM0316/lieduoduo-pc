@@ -1,6 +1,6 @@
 <template>
 <div>
-    <div class="my-company" v-if="materialShow === '公司主页'">
+    <div class="my-company">
         <div class="companyInformation">
             <div class="companyInformation-head">
                 <div class="avatar">
@@ -51,9 +51,9 @@
         <div class="companyProduct">
             <div class="companyProduct-head">
                 <p>公司产品</p>
-                <el-button v-if="isCompanyAdmin && information.product && information.product.length" type="text" @click="toEdit('编辑产品', '添加产品')"><i class="iconfont icon-tianjia-"></i>添加产品</el-button>
+                <el-button v-if="isCompanyAdmin && information.product && information.product.length" type="text" @click="toEdit('编辑产品')"><i class="iconfont icon-tianjia-"></i>添加产品</el-button>
             </div>
-            <company-productList @click="toEdit" @toEditProduct="toEditProduct" :product="information.product"></company-productList>
+            <company-productList @click="toEdit" :product="information.product"></company-productList>
             <div v-loading="getLoading" v-if="!getLoading && !information.product.length" class="noFound">
                 <no-found tipText='尚未添加公司产品' imageUrl='/img/fly.26a25d51.png'>
                     <el-button class="null-produc-bnt" v-if="isCompanyAdmin" @click="toEdit('编辑产品')" type="primary">去添加</el-button>
@@ -61,23 +61,9 @@
             </div>
         </div>
     </div>
-    <my-material
-    v-if="materialShow === '编辑公司'"
-    :information="information"
-    @save="companyDetail"
-    @click="toEdit">
-    </my-material>
-    <Edit-product
-    v-if="materialShow === '编辑产品'"
-    :currentProduct="currentProduct"
-    :companyid="information.id"
-    @save="companyDetail"
-    @click="toEdit">
-    </Edit-product>
     <sharePopup
     :data="information"
     :visible.sync="showSharePopup"></sharePopup>
-
 </div>
 </template>
 
@@ -125,44 +111,30 @@ Vue.use(preview)
   }
 })
 export default class myCompany extends Vue {
-    materialShow = '公司主页'
     bntLeftShow = false
     bntRightShow = true
     transformWidth = 0 // 轮播图平移
     information = {}
     showSharePopup = false
     getLoading = true
-    currentProduct = {
-      id: '',
-      productName: '',
-      siteUrl: '',
-      slogan: '',
-      lightspot: '',
-      logoInfo: {
-        middleUrl: ''
-      }
-    }
     mounted () {
       this.companyDetail()
     }
     toShare () {
       this.showSharePopup = true
     }
-    toEdit (type, typeto) { // typeto识别是否新建产品
-      if (typeto) {
-        let currentProduct = {
-          id: '',
-          productName: '',
-          siteUrl: '',
-          slogan: '',
-          lightspot: '',
-          logoInfo: {
-            middleUrl: ''
+    toEdit (type) {
+      if (type === '编辑产品') {
+        this.$router.push({
+          name: 'EditProduct',
+          query: {
+            id: '',
+            companyId: this.information.id
           }
-        }
-        Object.assign(this.currentProduct, currentProduct)
+        })
+      } else if(type === '编辑公司') {
+        this.$router.push({ name: 'myMaterial' })
       }
-      this.materialShow = type
     }
     companyDetail () {
       companyDetailApi()
@@ -183,9 +155,6 @@ export default class myCompany extends Vue {
         }).catch(res => {
           this.getLoading = true
         })
-    }
-    toEditProduct (item) { // 从产品列表拿到回调参数
-      Object.assign(this.currentProduct, item)
     }
     clickBnt (displacement) {
       let value
