@@ -167,6 +167,17 @@ button, button:hover{
     color: $main-color-1;
   }
 }
+.b-header-button .is-red-dot {
+  position: absolute;
+  display: inline-block;
+  width:6px;
+  height:6px;
+  border-radius: 50%;
+  right: 4px;
+  position: absolute;
+  top: 6px;
+  background: $error-color-1;
+}
 .b-header-group-button {
   display: inline-block;
   border-radius: 4px;

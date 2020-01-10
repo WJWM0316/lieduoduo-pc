@@ -6,14 +6,16 @@
       <div class="b-header-group-button">
         <div
           class="b-header-button"
-          :class="{'active': params.navType==='apply', 'is-red-dot' : recruiterIntentionList > 0}"
+          :class="{'active': params.navType==='apply'}"
           @click="handleSearch('apply', 'navType')">
+          <span :class="{'is-red-dot' : recruiterIntentionList > 0}"></span>
           收到意向({{invitenum || 0}})
         </div>
         <div
           class="b-header-button"
           :class="{'active':  params.navType==='invite','is-red-dot' : recruiterInviteList > 0}"
           @click="handleSearch('invite', 'navType')">
+          <span :class="{'is-red-dot' : recruiterIntentionList > 0}"></span>
           我的邀请({{applynum || 0}})
         </div>
       </div>
