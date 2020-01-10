@@ -210,4 +210,212 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.tishi{
+  position: absolute;
+  width:212px;
+  display: flex;
+  top: 20px;
+  left: 50%;
+  margin-left: -106px;
+  justify-content: center;
+  align-items: center;
+  height:36px;
+  background:rgba(255,244,229,1);
+  box-shadow:0px 2px 12px 0px rgba(75,72,71,0.06);
+  border-radius:4px;
+  font-size: 12px;
+  color: #6D696E;
+  .tishitext{
+    height:36px;
+    line-height: 36px;
+  }
+  .tishiimg{
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+    img{
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+    .content-info{
+      .applytext{
+        color:#92929B;
+        display: block;
+        line-height: 20px;
+        margin-bottom: 20px;
+        margin-top: -19px;
+        padding: 0 40px;
+      }
+      .selectposition{
+        padding: 0 40px;
+        max-height: 335px;
+      overflow-y: scroll;
+      &::-webkit-scrollbar {
+        width: 4px;
+        }
+        &::-webkit-scrollbar-track {
+        background:#fff;
+        -webkit-border-radius: 20px;
+        -moz-border-radius: 20px;
+        border-radius:20px;
+        }
+        &::-webkit-scrollbar-thumb {
+          background:#DDE1E0;
+        -webkit-border-radius: 20px;
+        -moz-border-radius: 20px;
+        border-radius:20px;
+        }
+        .selectitem{
+          height:69px;
+          margin-top: 24px;
+          border-bottom:1px solid #E8E9EB;
+          position: relative;
+          .confirmbox{
+            width:220px;
+            position: absolute;
+            right: 0px;
+            bottom: -78px;
+            z-index: 999;
+            height:96px;
+            background:rgba(255,255,255,1);
+            box-shadow:0px 0px 30px 0px rgba(22,39,77,0.07);
+            .b-head{
+              height: 12px;
+              margin-top: 20px;
+              display: flex;
+              .b-img{
+                width: 12px;
+                height: 12px;
+                margin-right: 4px;
+                margin-left: 20px;
+                img{
+                  width: 100%;
+                  height: 100%;
+                }
+              }
+              .b-text{
+                color: #333333;
+                font-size: 12px;
+              }
+            }
+            .b-btn{
+              padding-right: 20px;
+              margin-top: 20px;
+              .think{
+                width:60px;
+                height:24px;
+                border-radius:2px;
+                color: #92929B;;
+                text-align: center;
+                margin-right: 12px;
+                float: right;
+                line-height: 24px;
+                font-size: 12px;
+                cursor: pointer;
+              }
+              .think-sure{
+                width:60px;
+                text-align: center;
+                height:24px;
+                background:#00C4CD;
+                border-radius:2px;
+                color: #fff;
+                float: right;
+                line-height: 24px;
+                cursor: pointer;
+                font-size: 12px;
+              }
+            }
+          }
+          .position{
+            height:27px;
+            width: 100%;
+            .close{
+              width:56px;
+              height:18px;
+              background:rgba(255,255,255,1);
+              border-radius:2px;
+              color:rgba(237,92,92,1);
+              font-size: 12px;
+              float: left;
+              text-align: center;
+              line-height: 18px;
+              margin-right: 10px;
+              border:1px solid rgba(237,92,92,1);
+            }
+            .name{
+              color:rgba(53,64,72,1);
+              font-weight: bold;
+              font-size: 14px;
+              float: left;
+              line-height: 20px;
+              max-width:227px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              padding-right: 18px;
+            }
+            .money{
+              float: left;
+              color:#FF9E40;
+              font-weight: bold;
+              line-height: 20px;
+              font-size: 14px;
+            }
+            .hui{
+              color:#BCBEC0;
+            }
+          }
+          .info{
+            width: 100%;
+            color: #66666E;
+            font-size:12px;
+            .address{
+              float: left;
+              background: #F4F7F7;
+              padding: 4px 6px;
+              text-align: center;
+              margin-right: 8px;
+              border-radius: 2px;
+            }
+            .year{
+              float: left;
+              background: #F4F7F7;
+              margin-right: 8px;
+              padding: 4px 6px;
+              border-radius: 2px;
+            }
+            .benke{
+              float: left;
+              background: #F4F7F7;
+              padding: 4px 6px;
+              border-radius: 2px;
+            }
+            .hui{
+              color:#BCBEC0;
+            }
+          }
+          .selectcur{
+            position: absolute;
+            width:20px;
+            height:20px;
+            color: #BCBEC0;;
+            top: 20px;
+            right: 0px;
+            .bg{
+              color: #00C4CD;
+            }
+            .circel{
+              width:14px;
+              height:14px;
+              background: #ecebeb;
+              border: 1px solid #BCBEC0;;
+              border-radius: 50%;
+            }
+          }
+        }
+      }
+    }
 </style>

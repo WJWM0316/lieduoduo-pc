@@ -207,7 +207,7 @@ export default {
         setInterviewInfoApi(this.arrangementInfo).then((res) => {
           this.$message.success('安排面试成功')
           this.handleClose()
-          this.$emit('change', false)
+          this.$emit('finish', false)
         }).catch(err => {
           this.$message.error(err.data.msg)
         })
