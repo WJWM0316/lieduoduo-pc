@@ -15,7 +15,7 @@
         <img :src="recruiter.avatar && recruiter.avatar.smallUrl" alt="">
       </div>
       <div class="recruiter-version">
-        <p class="version-type">免费使用版</p>
+        <p class="version-type">{{}}</p>
         <p class="version-time">有效期至 2020-05-01</p>
       </div>
       <el-button type="primary">升级专业版</el-button>
@@ -78,7 +78,7 @@ import { getRecruiterRight } from 'API/recruiter'
 export default {
   data () {
     return {
-
+      info: {}
     }
   },
   computed: {
@@ -127,6 +127,10 @@ $list-bg-color: #FBFDFD;
     border-radius: 4px;
     margin-left: 8px;
     line-height: 18px;
+    .iconfont {
+      font-size: 14px;
+      color: $warning-color-1;
+    }
   }
 }
 .recruiter-config {
