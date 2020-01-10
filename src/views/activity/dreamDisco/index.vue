@@ -123,7 +123,6 @@ export default {
       this.companyNowList = this.companyList[index]
     },
     toNewPage (item, index, identity) { // 'company', 'position', 'recruiter'
-      console.log(item, index, identity)
       let routeTo = {}
       switch (identity) {
         case 'company':
@@ -143,7 +142,13 @@ export default {
           })
           break
         case 'recruiter':
-          console.log(1) // 待定
+          routeTo = this.$router.resolve({
+            path: 'company/details',
+            query: {
+              vkey: item.companyVkey,
+              type: 'position'
+            }
+          })
           break
       }
       window.open(routeTo.href, '_blank')
