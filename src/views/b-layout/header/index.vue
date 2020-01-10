@@ -32,6 +32,7 @@
             </el-dropdown-item>
             <el-dropdown-item command="toggleIdentity">切换为求职者</el-dropdown-item>
             <el-dropdown-item command="infos">我的资料</el-dropdown-item>
+            <el-dropdown-item command="equity">我的权益</el-dropdown-item>
             <el-dropdown-item command="logout">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -82,6 +83,9 @@ export default {
           break
         case 'infos':
           this.$router.push({ name: 'myinfos' })
+          break
+        case 'equity':
+          this.$router.push({ name: 'myequity' })
           break
         case 'perfectauth':
           this.$router.push({ name: 'perfectauth' })

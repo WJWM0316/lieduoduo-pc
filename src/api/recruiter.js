@@ -40,3 +40,11 @@ export const addLifeLabels = data => request({
   params: data,
   config: { host: 'zhaopin' }
 })
+
+// 获取招聘官权益
+export const getRecruiterRight = data => request({
+  url: '/right/cur/recruiter',
+  method: 'get',
+  params: data,
+  config: { host: 'zhaopin' }
+})
