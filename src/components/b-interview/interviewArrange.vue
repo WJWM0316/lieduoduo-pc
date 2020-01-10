@@ -133,7 +133,6 @@ export default {
   watch: {
     visible (value) {
       if (value) {
-        this.dialogStatus = true
         this.getarrangeinfo()
       } else {
         this.dialogStatus = false
@@ -264,6 +263,7 @@ export default {
     },
     getarrangeinfo () {
       watchInvitationAPi({ interviewId: this.interviewId }).then((res) => {
+        this.dialogStatus = true
         this.arrangeobj = res.data.data
         this.arrangementInfo.interviewId = res.data.data.interviewId
         this.arrangementInfo.realname = res.data.data.arrangementInfo.realname
@@ -524,6 +524,29 @@ export default {
       font-size:14px;
       color:#00C4CD;
     }
+  }
+}
+</style>
+<style lang="scss">
+.date-seleced-interview-time{
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  width: 90px !important;
+  height: 40px;
+  padding: 0;
+  z-index: 2;
+  .el-input__inner{
+    cursor: pointer;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    width: 90px !important;
+    height: 40px;
+    padding: 0;
+    z-index: 2;
   }
 }
 </style>

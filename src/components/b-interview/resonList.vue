@@ -35,7 +35,6 @@ export default {
   watch: {
     visible (value) {
       if (value) {
-        this.dialogStatus = true
         this.getresonlist()
       } else {
         this.dialogStatus = false
@@ -68,6 +67,7 @@ export default {
     getresonlist () {
       let comment = { interviewId: this.interviewId }
       getInterviewComment(comment).then((res) => {
+        this.dialogStatus = true
         this.watchresonlist = res.data.data.reason.split(',')
         this.resonword = res.data.data.extraDesc
       })

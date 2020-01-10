@@ -125,28 +125,31 @@
     <!-- 面试详情弹窗 -->
     <interview-detail :interviewId="interviewId" :visible.sync="detaildiggle"></interview-detail>
     <!-- 选择不合适原因 -->
-    <!-- <select-reson :reasonlist="reasonlist" :interviewId="interviewId" :jobuid="currentItem.uid" :visible.sync="resondiggle"></select-reson> -->
+    <select-reson :reasonlist="reasonlist" :interviewId="interviewId" :jobuid="jobuid" :visible.sync="resondiggle"></select-reson>
     <!-- 展示原因列表 -->
     <reson-list :interviewId="interviewId" :visible.sync="resonlistdiggle"></reson-list>
     <!-- 开撩选择职位 -->
     <candidate-position :jobuid="jobuid" :visible.sync="positiondiggle"></candidate-position>
+    <!-- 处理多条面试弹窗 -->
+    <apply-record :applyrecordList="applyrecordList" :interviewId="interviewId" :jobuid="jobuid" :recordtext="recordtext" :interviewNum="interviewNum" :visible.sync="recorddiggle"></apply-record>
   </div>
 </template>
 <script>
+import InterviewArrange from 'COMPONENTS/b-interview/interviewArrange'
+import InterviewDetail from 'COMPONENTS/b-interview/interviewDetail'
+import SelectReson from 'COMPONENTS/b-interview/selectReson'
+import ResonList from 'COMPONENTS/b-interview/resonList'
+import CandidatePosition from 'COMPONENTS/b-interview/candidatePosition'
+import ApplyRecord from 'COMPONENTS/b-interview/applyRecord'
+
 import { getPositionTypeApi } from 'API/position'
 import { getJobHunterPositionTypeApi, getSearchBrowseMyselfApi, getMyNavDataApi } from 'API/browse'
 import { getSearchMyCollectApi, getSearchCollectApi } from 'API/collect'
-import { confirmInterviewApi, interviewRetract, manyrecordstatus } from 'API/candidateType'
+import { confirmInterviewApi, interviewRetract, manyrecordstatus, getCommentReasonApi, getloadingReasonApi } from 'API/candidateType'
 // components
 import HighFilter from 'COMPONENTS/b-interview/highFilter'
 import NoFound from '@/components/noFound'
 import Resume from 'COMPONENTS/b-interview/resume'
-import InterviewArrange from 'COMPONENTS/b-interview/interviewArrange'
-import InterviewDetail from 'COMPONENTS/b-interview/interviewDetail'
-// import SelectReson from 'COMPONENTS/b-interview/selectReson'
-import ResonList from 'COMPONENTS/b-interview/resonList'
-import CandidatePosition from 'COMPONENTS/b-interview/candidatePosition'
-// import applyRecord from 'COMPONENTS/b-interview/applyRecord'
 // 候选人动态操作按钮种类
 const CandidateTypeBtns = [
   { buttonText: '查看联系', type: 'confirm-interview', buttonType: 'primary', is: (val) => val === 11, statusText: '未处理' },
@@ -157,7 +160,7 @@ const CandidateTypeBtns = [
   { buttonText: '面试详情', type: 'check-invitation', buttonType: 'primary', is: (val) => val === 41, statusText: '已安排' }
 ]
 export default {
-  components: { HighFilter, NoFound, Resume, InterviewArrange, InterviewDetail, ResonList, CandidatePosition },
+  components: { HighFilter, NoFound, Resume, InterviewArrange, InterviewDetail, SelectReson, ResonList, CandidatePosition, ApplyRecord },
   data () {
     return {
       getLoading: false,
@@ -182,18 +185,19 @@ export default {
       total: 0,
       currentItem: {}, // 当前选定值
       // 弹窗状态
+      jobuid: '',
+      recordtext: '确认选择后，候选人多条申请将合并为一条面试记录；面试最终确认前，可随时沟通更新面试职位；', // 默认多条面试记录标题
       interviewId: 0, // 面试id
+      interviewNum: '', // 处理多条申请面试记录需要判断的数字
+      reasonlist: [], // 选择不合适原因列表
+      applyrecordList: [], // 处理多条申请面试记录列表
       resumeDialogStatus: false, // 查看简历详情
       arrangediggle: false, // 安排面试
       detaildiggle: false, // 面试详情
       resondiggle: false, // 选择不合适原因
       resonlistdiggle: false, // 展示原因
-      positiondiggle: false // 选择开撩职位
-    }
-  },
-  computed: {
-    jobuid () {
-      return this.currentItem.uid || ''
+      positiondiggle: false, // 选择开撩职位
+      recorddiggle: false // '选择多少申请面试列表'
     }
   },
   created () {
@@ -217,12 +221,13 @@ export default {
   },
   methods: {
     setJob (type, vo) {
-      console.log(type)
       if (vo.interviewId) {
         this.interviewId = vo.interviewId
       } else {
         this.interviewId = vo.interviewInfo.data.lastInterviewId
       }
+      this.jobuid = vo.uid
+      this.currentItem = vo
       switch (type) {
         case 'recruiter-chat':
           this.positiondiggle = true
@@ -234,14 +239,6 @@ export default {
           let status = { vkey: vo.resume ? vo.resume.vkey : vo.vkey, type: 'resume' }
           manyrecordstatus(status).then((res) => {
             if (res.data.data.data.length > 1) {
-              this.pop = {
-                isShow: true,
-                Interview: true,
-                InterviewTitle: '以下是候选人多条申请记录，请选择处理',
-                recordtext: '确认选择后，候选人多条申请将合并为一条面试记录；面试最终确认前，可随时沟通更新面试职位；',
-                btntext: '确定',
-                type: 'applyrecord'
-              }
               let applylists = res.data.data.data
               applylists.map((v, k) => {
                 if (v.positionId === 0) {
@@ -251,11 +248,13 @@ export default {
                 v.boxshow = false
               })
               this.applyrecordList = applylists
+              this.recordtext = '确认选择后，候选人多条申请将合并为一条面试记录；面试最终确认前，可随时沟通更新面试职位；'
+              this.recorddiggle = true
             } else {
               confirmInterviewApi({ interviewId: this.interviewId }).then((res) => {
                 this.$message.success('约面成功')
-                this.getResume(this.jobuid)
-                this.init()
+                this.viewResume(vo)
+                // 更新列表和弹窗显示状态
               })
             }
           })
@@ -277,6 +276,46 @@ export default {
           break
         case 'watch-reson':
           this.resonlistdiggle = true
+          break
+        case 'inappropriate':
+          let status2 = { vkey: vo.resume ? vo.resume.vkey : vo.vkey, type: 'resume' }
+          manyrecordstatus(status2).then((res) => {
+            this.interviewNum = res.data.data
+            if (res.data.data.data.length > 1) {
+              let applylists = res.data.data.data.slice()
+              applylists.push({ positionName: '都不合适' })
+              applylists.map((v, k) => {
+                if (v.positionId === 0) {
+                  v.positionName = '直接与我约面'
+                }
+                v.hascur = false
+              })
+              this.applyrecordList = applylists
+              this.recordtext = '确认选择后，候选人多条申请将合并为一条面试记录；面试最终确认前，可随时沟通更新面试职位；'
+              this.recorddiggle = true
+            } else {
+            // 大于61是结束后不满意
+              if (res.data.data.interviewStatus === 58 || res.data.data.interviewStatus === 59) {
+                getCommentReasonApi().then((res) => {
+                  let arr = res.data.data
+                  arr.map((v, k) => {
+                    v.cur = false
+                  })
+                  this.reasonlist = arr
+                  this.resondiggle = true
+                })
+              } else {
+                getloadingReasonApi().then((res) => {
+                  let arr = res.data.data
+                  arr.map((v, k) => {
+                    v.cur = false
+                  })
+                  this.reasonlist = arr
+                  this.resondiggle = true
+                })
+              }
+            }
+          })
           break
         default:
           break

@@ -122,7 +122,6 @@ export default {
   watch: {
     visible (value) {
       if (value) {
-        this.dialogStatus = true
         this.getdetail()
       } else {
         this.dialogStatus = false
@@ -154,6 +153,7 @@ export default {
     getdetail () {
       let data = { interviewId: this.interviewId }
       watchInvitationAPi(data).then((res) => {
+        this.dialogStatus = true
         this.jobhunterInfo = res.data.data
       })
     },
