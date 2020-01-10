@@ -3,7 +3,7 @@ import { request } from './index'
 
 // 获取列表
 export const getDiscoListApi = data => request({
-  url: '/special/list',
+  url: '/special/pc/list',
   method: 'get',
   params: data,
   config: { host: 'pub' }

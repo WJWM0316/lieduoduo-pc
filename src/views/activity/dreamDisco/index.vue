@@ -153,6 +153,12 @@ export default {
     }
   },
   mounted () {
+    // 百度统计
+    var hm = document.createElement('script')
+    hm.src = 'https://hm.baidu.com/hm.js?b5fe2a115b6c80a09250a6e46005b615'
+    var s = document.getElementsByTagName('script')[0]
+    s.parentNode.insertBefore(hm, s)
+
     getDiscoListApi({ vkey: 'sdfdafdt' }).then(res => {
       // 招聘官列表
       this.recruiterList = res.data.data.recruiter
@@ -226,7 +232,7 @@ $bg-color1: #2C045D;
   .benner{
     height: 718px;
     width: 100%;
-    background: url(#{$image-cdn-url}/images/discoPC_2_01.jpg) no-repeat;
+    background: url(#{$image-cdn-url}/images/discoPC_2_01.jpg?a=1) no-repeat;
     background-position: center center;
   }
   .text-wrap{
@@ -246,13 +252,13 @@ $bg-color1: #2C045D;
     }
   }
   .partner{
-    background: url(#{$image-cdn-url}/images/discoPC_2_08.jpg) no-repeat;
+    background: url(#{$image-cdn-url}/images/discoPC_2_08.jpg?a=1) no-repeat;
     background-position: center center;
     width: 100%;
     height: 388px;
   }
   .footer{
-    background: url(#{$image-cdn-url}/images/discoPC_2_09.jpg) no-repeat;
+    background: url(#{$image-cdn-url}/images/discoPC_2_09.jpg?a=1) no-repeat;
     background-position: center center;
     width: 100%;
     height: 533px;
