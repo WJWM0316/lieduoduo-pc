@@ -13,12 +13,14 @@ const VUE_WEB_QIUZHI_API = process.env.VUE_APP_WEB_QIUZHI_API
 const VUE_WEB_PUB_API = process.env.VUE_APP_WEB_PUB_API
 const VUE_WEB_NODE_API = process.env.VUE_APP_WEB_NODE_API
 
+// 默认统计参数
+axios.defaults.headers.common['Channel-Code'] = 'source_web'
+
 export const request = ({ url, method, params = {}, config = {} }) => {
   if (params && params.globalLoading) counter++
   if (counter === 1) loadingInstance = Loading.service({})
 
-  // 默认统计参数
-  axios.defaults.headers.common['Channel-Code'] = 'source_web'
+  
 
   // 添加统计头部
   // let urlParams = new URLSearchParams(location.search)

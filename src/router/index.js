@@ -10,6 +10,7 @@ import login from './login.js'
 import interview from './interview.js'
 import { Message } from 'element-ui'
 import store from '../store/store'
+import axios from 'axios'
 
 let checkRecruiterRouter = ['recruiterIndex', 'postJob', 'candidateType', 'candidatetype', 'interviewRecords', 'myCompany', 'myinfos', 'recruiteam']
 let routes = [
@@ -33,6 +34,10 @@ router.beforeEach((to, from, next) => {
   if (from.name !== to.name) {
     window.scrollTo(0, 0)
   }
+
+  // 渠道参数跟踪
+  if (to.query.sourceType) axios.defaults.headers.common['Channel-Code'] = to.query.sourceType
+
   let checkRole = () => {
     if (!store.state.roleInfos.isRecruiter) {
       next({path: '/register'})
@@ -44,6 +49,7 @@ router.beforeEach((to, from, next) => {
       next(true)
     }
   }
+  // 判断是否是招聘官才能进去的页面，不是就让它去创建
 	if (checkRecruiterRouter.includes(to.name)) {
 		if (store.state.roleCallBack) {
       checkRole()
