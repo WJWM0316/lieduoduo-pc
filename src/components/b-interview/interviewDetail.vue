@@ -111,7 +111,7 @@
       </div>
     </el-dialog>
     <!-- 选择不合适原因 -->
-    <select-reson :reasonlist="reasonlist" :interviewId="interviewId" :jobuid="jobuid" :visible.sync="resondiggle" @change="handleClose"></select-reson>
+    <select-reson :reasonlist="reasonlist" :interviewId="interviewId" :jobuid="jobuid" :visible.sync="resondiggle" @finish="handleClose"></select-reson>
   </div>
 </template>
 <script>

@@ -202,6 +202,7 @@ export default {
   },
   created () {
     const query = this.$route.query
+    console.log(query)
     // type 类型转换
     query.type = query.type ? query.type.split(',').map(val => !isNaN(val) ? +val : val) : ['all']
     for (let item in query) {
