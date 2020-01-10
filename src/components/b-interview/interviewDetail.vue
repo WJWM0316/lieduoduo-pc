@@ -110,11 +110,14 @@
           <div slot="footer">
       </div>
     </el-dialog>
+    <!-- 选择不合适原因 -->
+    <select-reson :reasonlist="reasonlist" :interviewId="interviewId" :jobuid="jobuid" :visible.sync="resondiggle" @change="handleClose"></select-reson>
   </div>
 </template>
 <script>
+import selectReson from 'COMPONENTS/b-interview/selectReson'
 import {
-  watchInvitationAPi, setAttendApi, setCommentApi } from 'API/candidateType'
+  watchInvitationAPi, setAttendApi, setCommentApi, getCommentReasonApi } from 'API/candidateType'
 export default {
   watch: {
     visible (value) {
@@ -126,6 +129,7 @@ export default {
       }
     }
   },
+  components: { selectReson },
   props: {
     // 面试id
     interviewId: {
@@ -139,6 +143,9 @@ export default {
   data () {
     return {
       dialogStatus: false,
+      resondiggle: false,
+      jobuid: '',
+      reasonlist: [],
       jobhunterInfo: {},
       detailtitle: '面试信息'
     }
@@ -171,7 +178,19 @@ export default {
         this.getdetail()
       })
     },
+    selereson () {
+      this.jobuid = this.jobhunterInfo.jobhunterInfo.uid
+      getCommentReasonApi().then((res) => {
+        let arr = res.data.data
+        arr.map((v, k) => {
+          v.cur = false
+        })
+        this.reasonlist = arr
+        this.resondiggle = true
+      })
+    },
     handleClose () {
+      this.dialogStatus = false
       this.$emit('update:visible', false)
     }
   }

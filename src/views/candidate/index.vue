@@ -541,27 +541,6 @@
         <div class="content-info">
         <div class="title">{{pop.InterviewTitle}}</div>
         <div class="applytext" v-show="pop.type === 'applyrecord'">{{pop.recordtext}}</div>
-        <div class="selectposition" v-show="pop.type === 'selectposition'">
-          <div class="selectitem" v-for="(item, i) in positionLists" :key="i" @click="selectposition(item)">
-            <div class="position">
-              <div class="close" v-show="item.isOnline === 2">关闭</div>
-              <div :class="['name', item.isOnline === 2 ? 'hui' : '']">{{item.positionName}}</div>
-              <div :class="['money', item.isOnline === 2 ? 'hui' : '']">{{item.emolumentMin}}K~{{item.emolumentMax}}K</div>
-            </div>
-            <div class="info">
-              <div :class="['address', item.isOnline === 2 ? 'hui' : '']">{{item.city}}{{item.district}}</div>
-              <div :class="['year', item.isOnline === 2 ? 'hui' : '']">{{item.workExperienceName}}</div>
-              <div :class="['benke', item.isOnline === 2 ? 'hui' : '']">{{item.educationName}}</div>
-            </div>
-            <div class="selectcur" v-if="item.isOnline === 1">
-              <i :class="['iconfont icon-chenggong position bg']" v-if="item.cur"></i>
-                <i :class="['iconfont icon-beixuanxiang position']" v-else></i>
-            </div>
-            <div class="selectcur" v-else>
-              <div class="circel"></div>
-            </div>
-          </div>
-        </div>
           <div class="selectposition" v-show="pop.type === 'applyrecord'">
             <div class="selectitem" v-for="(item, i) in applyrecordList" :key="i" @click="selectapply(item, i)">
             <div class="position">
@@ -623,24 +602,27 @@
     <reson-list :interviewId="interviewId" :visible.sync="resonlistdiggle"></reson-list>
     <!-- 开撩选择职位 -->
     <candidate-position :jobuid="jobuid" :visible.sync="positiondiggle"></candidate-position>
+    <!-- 处理多条面试弹窗 -->
+    <apply-record :applyrecordList="applyrecordList" :recordtext="recordtext" :interviewNum="interviewNum" :visible.sync="recorddiggle"></apply-record>
   </div>
 </template>
 <script>
-import InterviewArrange from 'COMPONENTS/common/interviewarrange'
-import interviewDetail from 'COMPONENTS/common/interviewdetail'
-import selectReson from 'COMPONENTS/common/selectreson'
-import resonList from 'COMPONENTS/common/resonlist'
-import candidatePosition from 'COMPONENTS/common/candidateposition'
+import InterviewArrange from 'COMPONENTS/b-interview/interviewArrange'
+import interviewDetail from 'COMPONENTS/b-interview/interviewDetail'
+import selectReson from 'COMPONENTS/b-interview/selectReson'
+import resonList from 'COMPONENTS/b-interview/resonList'
+import candidatePosition from 'COMPONENTS/b-interview/candidatePosition'
+import applyRecord from 'COMPONENTS/b-interview/applyRecord'
+
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import { getMyInfoApi } from 'API/auth'
-import { getPositionTypeApi, openPositionApi } from 'API/position'
+import { getPositionTypeApi } from 'API/position'
 import { getResumeIdApi } from 'API/userJobhunter'
 import { shareResumeApi } from 'API/forward'
 import {
   getinviteapplyNum,
   getApplyListApi,
-  getDetailApi,
   getInviteListApi,
   getdeleteTabRedDotApi
 } from 'API/candidate'
@@ -649,15 +631,10 @@ import MapSearch from 'COMPONENTS/map'
 import DynamicRecord from '../candidateType/dynamicrecord.vue'
 import { putCollectUserApi, cancelCollectUserApi } from 'API/collect'
 import {
-  recruiterPositonList,
-  sureOpenupAPi,
-  watchInvitationAPi,
   getCommentReasonApi,
   getloadingReasonApi,
-  getInterviewComment,
-  improperMarkingApi,
   confirmInterviewApi,
-  addressListApi, interviewRetract, addCompanyAdressApi, editCompanyAdressApi, setInterviewInfoApi, setCommentApi, setAttendApi, emailtoforword, manyrecordstatus } from 'API/candidateType'
+  interviewRetract, emailtoforword, manyrecordstatus } from 'API/candidateType'
 
 @Component({
   name: 'candidate',
@@ -687,7 +664,7 @@ import {
       }
     }
   },
-  components: { MapSearch, DynamicRecord, InterviewArrange, interviewDetail, selectReson, resonList, candidatePosition }
+  components: { MapSearch, DynamicRecord, InterviewArrange, interviewDetail, selectReson, resonList, candidatePosition, applyRecord }
 })
 export default class CourseList extends Vue {
   userInfo = {}
@@ -697,6 +674,7 @@ export default class CourseList extends Vue {
   resondiggle = false
   resonlistdiggle = false
   positiondiggle = false
+  recorddiggle = false
   showResume = false
   hasonload = false
   loadingshow = false
@@ -710,6 +688,7 @@ export default class CourseList extends Vue {
     recordtext: '确认选择后，候选人多条申请将合并为一条面试记录；面试最终确认前，可随时沟通更新面试职位；',
     type: 'clickPic'
   }
+  recordtext = '确认选择后，候选人多条申请将合并为一条面试记录；面试最终确认前，可随时沟通更新面试职位；'
   jobuid = ''
   jobhunterInfo = ''
   addressobj = {
@@ -960,7 +939,7 @@ export default class CourseList extends Vue {
       this.$store.dispatch('redDotfun')
       this.typeList = this.inviteOptions
       setTimeout(() => {
-      this.getdeleteTabRedDot('invite_list') // 清除 invite红点
+        this.getdeleteTabRedDot('invite_list') // 清除 invite红点
       }, 1000)
     }
     this.getPositionTypeList()
@@ -1296,14 +1275,6 @@ export default class CourseList extends Vue {
         let status = { vkey: vo.resume ? vo.resume.vkey : vo.vkey, type: 'resume' }
         manyrecordstatus(status).then((res) => {
           if (res.data.data.data.length > 1) {
-            this.pop = {
-              isShow: true,
-              Interview: true,
-              InterviewTitle: '以下是候选人多条申请记录，请选择处理',
-              recordtext: '确认选择后，候选人多条申请将合并为一条面试记录；面试最终确认前，可随时沟通更新面试职位；',
-              btntext: '确定',
-              type: 'applyrecord'
-            }
             let applylists = res.data.data.data
             applylists.map((v, k) => {
               if (v.positionId === 0) {
@@ -1313,6 +1284,8 @@ export default class CourseList extends Vue {
               v.boxshow = false
             })
             this.applyrecordList = applylists
+            this.recordtext = '确认选择后，候选人多条申请将合并为一条面试记录；面试最终确认前，可随时沟通更新面试职位；'
+            this.recorddiggle = true
           } else {
             confirmInterviewApi({ interviewId: this.interviewId }).then((res) => {
               this.$message.success('约面成功')
@@ -1341,14 +1314,6 @@ export default class CourseList extends Vue {
         manyrecordstatus(status2).then((res) => {
           this.interviewNum = res.data.data
           if (res.data.data.data.length > 1) {
-            this.pop = {
-              isShow: true,
-              Interview: true,
-              InterviewTitle: '以下是候选人多条申请记录，请选择处理',
-              recordtext: '该候选人有多个未处理申请，您可以从中选择1个进行约面，或选择全部都处理为不合适',
-              btntext: '确定',
-              type: 'applyrecord'
-            }
             let applylists = res.data.data.data.slice()
             applylists.push({ positionName: '都不合适' })
             applylists.map((v, k) => {
@@ -1358,6 +1323,8 @@ export default class CourseList extends Vue {
               v.hascur = false
             })
             this.applyrecordList = applylists
+            this.recordtext = '确认选择后，候选人多条申请将合并为一条面试记录；面试最终确认前，可随时沟通更新面试职位；'
+            this.recorddiggle = true
           } else {
             // 大于61是结束后不满意
             if (res.data.data.interviewStatus === 58 || res.data.data.interviewStatus === 59) {
@@ -1407,176 +1374,6 @@ export default class CourseList extends Vue {
     } else {
       this.pop.isShow = false
     }
-  }
-
-  surehandler () {
-    // 点击选择职位后开撩
-    if (this.pop.type === 'selectposition') {
-      let arr = []
-      this.positionLists.map((v, k) => {
-        if (v.cur) {
-          arr.push(v)
-        }
-      })
-      if (arr.length > 0) {
-        let data = { jobhunterUid: this.jobuid, positionId: this.jobpositionid }
-        sureOpenupAPi(data).then((res) => {
-          this.pop.isShow = false
-          this.init()
-          this.$message.success('开撩成功')
-        })
-      } else {
-        this.$message.warning('请选择职位')
-      }
-    }
-    // 点击处理多条记录
-    if (this.pop.type === 'applyrecord') {
-      let arr = []
-      let canclick = false
-      this.applyrecordList.map((v, k) => {
-        if (v.hascur) {
-          arr.push(v)
-          this.interviewId = v.interviewId
-        }
-        if (v.boxshow) {
-          canclick = true
-        }
-      })
-      if (this.pop.recordtext === '确认选择后，候选人多条申请将合并为一条面试记录；面试最终确认前，可随时沟通更新面试职位；') {
-        if (!canclick) {
-          if (arr.length === 0) {
-            this.$message.warning('请选择一条面试')
-          } else {
-            confirmInterviewApi({ interviewId: this.interviewId }).then((res) => {
-              this.$message.success('约面成功')
-              this.pop = {
-                isShow: false
-              }
-              this.init()
-            })
-          }
-        }
-      } else {
-        if (arr.length === 0) {
-          this.$message.warning('请选择一条标记为不合适')
-        } else {
-          if (this.interviewId) {
-            confirmInterviewApi({ interviewId: this.interviewId }).then((res) => {
-              this.$message.success('约面成功')
-              this.pop = {
-                isShow: false
-              }
-              this.init()
-            })
-          } else {
-            this.pop = {
-              isShow: true,
-              Interview: true,
-              InterviewTitle: '选择不合适原因',
-              btntext: '保存',
-              type: 'inappropriate'
-            }
-            if (this.interviewNum.interviewStatus === 58 || this.interviewNum.interviewStatus === 59) {
-              getCommentReasonApi().then((res) => {
-                let arr = res.data.data
-                arr.map((v, k) => {
-                  v.cur = false
-                })
-                this.reasonlist = arr
-              })
-            } else {
-              getloadingReasonApi().then((res) => {
-                let arr = res.data.data
-                arr.map((v, k) => {
-                  v.cur = false
-                })
-                this.reasonlist = arr
-              })
-            }
-          }
-        }
-      }
-    }
-    // 点击确定约面
-    if (this.pop.type === 'setinterinfo') {
-      if (!this.arrangementInfo.addressId) {
-        this.$message.error('请选择一个职位')
-        return
-      }
-      if (!this.arrangementInfo.addressId) {
-        this.$message.error('请选择一个地址')
-        return
-      }
-      let timearr = []
-      this.model.dateLists.map((v, k) => {
-        timearr.push(v.appointmentTime)
-      })
-      if (!timearr.length) {
-        this.$message.error('请至少添加一个约面时间')
-        return
-      }
-      this.arrangementInfo.interviewTime = timearr.join(',')
-      setInterviewInfoApi(this.arrangementInfo).then((res) => {
-        this.$message.success('安排面试成功')
-        this.init()
-        this.pop.isShow = false
-      }).catch(err => {
-        this.$message.error(err.data.msg)
-      })
-    }
-    // 查看原因
-    if (this.pop.type === 'watchreson') {
-      if (this.showResume) {
-        this.pop.Interview = false
-      } else {
-        this.pop.isShow = false
-      }
-    }
-  }
-  // 选择申请记录
-  selectapply (item, index) {
-    let applyrecordList = this.applyrecordList.slice()
-    applyrecordList.map((v, k) => {
-      v.hascur = k === index
-      v.boxshow = false
-    })
-    if (item.positionStatus === 0) {
-      item.boxshow = true
-    } else {
-      item.boxshow = false
-    }
-    this.applyrecordList = applyrecordList
-  }
-  resetboxcur (item, index) {
-    this.applyrecordList[index].boxshow = false
-    this.applyrecordList[index].hascur = false
-  }
-  sureyuemian (data) {
-    openPositionApi({ id: data.positionId })
-      .then(() => {
-        confirmInterviewApi({ interviewId: data.interviewId }).then((res) => {
-          this.$message.success('约面成功')
-          this.pop = {
-            isShow: false
-          }
-          this.init()
-        })
-      })
-      .catch(e => {
-        this.$message.error(e.data.msg)
-      })
-  }
-  // 选择不合适原因
-  togglereson (data) {
-    data.cur = !data.cur
-  }
-  toggleaddress (data) {
-    this.addresslist.map((v, k) => {
-      v.cur = data === v
-    })
-  }
-  addaddress () {
-    this.pop.type = 'addaddress'
   }
   // 是否感兴趣操作
   ownerOp (status, uid) {
