@@ -8,3 +8,11 @@ export const getDiscoListApi = data => request({
   params: data,
   config: { host: 'pub' }
 })
+
+// 统计接口
+export const getStaDiscoListApi = data => request({
+  url: '/special/pc/sta',
+  method: 'post',
+  params: data,
+  config: { host: 'pub' }
+})

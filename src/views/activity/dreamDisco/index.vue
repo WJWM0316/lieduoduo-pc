@@ -102,7 +102,8 @@
 
 <script>
 import {
-  getDiscoListApi
+  getDiscoListApi,
+  getStaDiscoListApi
 } from '@/api/dreamDisco.js'
 
 export default {
@@ -124,6 +125,10 @@ export default {
     },
     toNewPage (item, index, identity) { // 'company', 'position', 'recruiter'
       let routeTo = {}
+      let data = {
+        vkey: 'sdfdafdt',
+        wherefrom: 1
+      }
       switch (identity) {
         case 'company':
           routeTo = this.$router.resolve({
@@ -132,6 +137,7 @@ export default {
               vkey: item.vkey
             }
           })
+          data.id = item.id
           break
         case 'position':
           routeTo = this.$router.resolve({
@@ -140,6 +146,7 @@ export default {
               positionId: item.positionId
             }
           })
+          data.id = item.positionId
           break
         case 'recruiter':
           routeTo = this.$router.resolve({
@@ -149,8 +156,11 @@ export default {
               type: 'position'
             }
           })
+          data.id = item.uid
           break
       }
+      data.type = identity
+      getStaDiscoListApi(data).then()
       window.open(routeTo.href, '_blank')
     },
     toQuestionnaire () {
