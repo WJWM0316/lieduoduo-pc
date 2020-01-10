@@ -152,8 +152,7 @@ export default {
     },
     handleSet (type, limit, count) {
       // 非不限 && 数量上限
-      // limit !== -1
-      if (limit <= count) {
+      if (limit !== -1 && limit <= count) {
         this.$confirm(TipsText[type].text, '提示', {
           confirmButtonText: '联系客服',
           cancelButtonText: '我考虑一下',
@@ -164,7 +163,7 @@ export default {
         }).catch(() => {})
         return
       }
-      // 调转链接 或者提示弹窗
+      // 跳转链接 或者 提示弹窗
       if (type === 'invite') {
         this.showSharePopup = true
       } else {
