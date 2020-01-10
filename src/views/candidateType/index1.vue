@@ -21,6 +21,7 @@
         :allValue="['all', 'index']"
         @change="handleHighFilter" />
     </div>
+    <!-- lists -->
     <div id="box" class="main_cont" v-loading="getLoading">
       <div class="candidate_blo" @click="viewResume(item)" v-for="(item,index) in candidateList" :key="index">
         <div class="bloTop">
@@ -97,6 +98,7 @@
           </div>
         </div>
       </div>
+      <!-- no found -->
       <no-found class="no-apply-lists"
         v-if="!candidateList.length && !getLoading"
         :image-url="nofoundUrl"
@@ -105,7 +107,7 @@
         <el-button type="primary" style="width: 143px;margin-top: 24px;" @click="$router.push({name: 'recruiterIndex'})">分享职位</el-button>
       </no-found>
     </div>
-
+    <!-- page -->
     <div class="pagination" v-if="total > 0 && total > params.count">
       <el-pagination
         background
@@ -118,17 +120,32 @@
     </div>
     <!-- 预览简历 -->
     <resume :current="currentItem" :visible.sync="resumeDialogStatus" @change-status="setJob" />
+    <!-- 查看面试，安排面试弹窗 -->
+    <interview-arrange :interviewId="interviewId" :visible.sync="arrangediggle"></interview-arrange>
+    <!-- 面试详情弹窗 -->
+    <interview-detail :interviewId="interviewId" :visible.sync="detaildiggle"></interview-detail>
+    <!-- 选择不合适原因 -->
+    <!-- <select-reson :reasonlist="reasonlist" :interviewId="interviewId" :jobuid="currentItem.uid" :visible.sync="resondiggle"></select-reson> -->
+    <!-- 展示原因列表 -->
+    <reson-list :interviewId="interviewId" :visible.sync="resonlistdiggle"></reson-list>
+    <!-- 开撩选择职位 -->
+    <candidate-position :jobuid="currentItem.uid" :visible.sync="positiondiggle"></candidate-position>
   </div>
 </template>
 <script>
 import { getPositionTypeApi } from 'API/position'
 import { getJobHunterPositionTypeApi, getSearchBrowseMyselfApi, getMyNavDataApi } from 'API/browse'
 import { getSearchMyCollectApi, getSearchCollectApi } from 'API/collect'
-
+import { confirmInterviewApi, interviewRetract, manyrecordstatus } from 'API/candidateType'
 // components
-import HighFilter from './components/highFilter'
+import HighFilter from 'COMPONENTS/b-interview/highFilter'
 import NoFound from '@/components/noFound'
-import Resume from './components/resume'
+import Resume from 'COMPONENTS/b-interview/resume'
+import InterviewArrange from 'COMPONENTS/common/interviewarrange'
+import InterviewDetail from 'COMPONENTS/common/interviewdetail'
+// import selectReson from 'COMPONENTS/common/selectreson'
+import ResonList from 'COMPONENTS/common/resonlist'
+import CandidatePosition from 'COMPONENTS/common/candidateposition'
 // 候选人动态操作按钮种类
 const CandidateTypeBtns = [
   { buttonText: '查看联系', type: 'confirm-interview', buttonType: 'primary', is: (val) => val === 11, statusText: '未处理' },
@@ -139,7 +156,7 @@ const CandidateTypeBtns = [
   { buttonText: '面试详情', type: 'check-invitation', buttonType: 'primary', is: (val) => val === 41, statusText: '已安排' }
 ]
 export default {
-  components: { HighFilter, NoFound, Resume },
+  components: { HighFilter, NoFound, Resume, InterviewArrange, InterviewDetail, ResonList, CandidatePosition },
   data () {
     return {
       getLoading: false,
@@ -162,11 +179,15 @@ export default {
       positionTypeList: [], // 职位类型
       candidateList: [], // 候选人数据
       total: 0,
-
       currentItem: {}, // 当前选定值
       // 弹窗状态
-      resumeDialogStatus: false
-
+      interviewId: 0, // 面试id
+      resumeDialogStatus: false, // 查看简历详情
+      arrangediggle: false, // 安排面试
+      detaildiggle: false, // 面试详情
+      resondiggle: false, // 选择不合适原因
+      resonlistdiggle: false, // 展示原因
+      positiondiggle: false // 选择开撩职位
     }
   },
   created () {
@@ -189,8 +210,67 @@ export default {
     this.handleSearch(this.params.navType || 'searchBrowseMyself', 'navType')
   },
   methods: {
-    setJob (type, item) {
+    setJob (type, vo) {
       console.log(type)
+      if (vo.interviewId) {
+        this.interviewId = vo.interviewId
+      } else {
+        this.interviewId = vo.interviewInfo.data.lastInterviewId
+      }
+      switch (type) {
+        case 'recruiter-chat':
+          this.positiondiggle = true
+          break
+        case 'check-invitation':
+          this.detaildiggle = true
+          break
+        case 'confirm-interview':
+          let status = { vkey: vo.resume ? vo.resume.vkey : vo.vkey, type: 'resume' }
+          manyrecordstatus(status).then((res) => {
+            if (res.data.data.data.length > 1) {
+              this.pop = {
+                isShow: true,
+                Interview: true,
+                InterviewTitle: '以下是候选人多条申请记录，请选择处理',
+                recordtext: '确认选择后，候选人多条申请将合并为一条面试记录；面试最终确认前，可随时沟通更新面试职位；',
+                btntext: '确定',
+                type: 'applyrecord'
+              }
+              let applylists = res.data.data.data
+              applylists.map((v, k) => {
+                if (v.positionId === 0) {
+                  v.positionName = '直接与我约面'
+                }
+                v.hascur = false
+                v.boxshow = false
+              })
+              this.applyrecordList = applylists
+            } else {
+              confirmInterviewApi({ interviewId: this.interviewId }).then((res) => {
+                this.$message.success('约面成功')
+                this.getResume(this.jobuid)
+                this.init()
+              })
+            }
+          })
+          break
+        case 'arranging-interviews':
+          this.arrangediggle = true
+          break
+        case 'interview-retract':
+          let retract = { jobhunterUid: vo.uid, interviewId: this.interviewId }
+          interviewRetract(retract).then((res) => {
+            this.$message.success('撤回成功')
+            // this.getResume(this.jobuid)
+            // this.init()
+          })
+          break
+        case 'watch-reson':
+          this.resonlistdiggle = true
+          break
+        default:
+          break
+      }
     },
     // 查看简历
     viewResume (item) {
