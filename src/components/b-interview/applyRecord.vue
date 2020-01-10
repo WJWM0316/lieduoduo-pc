@@ -80,6 +80,10 @@ export default {
       type: [String, Number],
       required: true
     },
+    interviewId: {
+      type: [String, Number],
+      required: true
+    },
     interviewNum: {
       type: [String, Number, Object]
     },

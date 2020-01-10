@@ -603,7 +603,7 @@
     <!-- 开撩选择职位 -->
     <candidate-position :jobuid="jobuid" :visible.sync="positiondiggle"></candidate-position>
     <!-- 处理多条面试弹窗 -->
-    <apply-record :applyrecordList="applyrecordList" :recordtext="recordtext" :interviewNum="interviewNum" :visible.sync="recorddiggle"></apply-record>
+    <apply-record :applyrecordList="applyrecordList" :interviewId="interviewId" :jobuid="jobuid" :recordtext="recordtext" :interviewNum="interviewNum" :visible.sync="recorddiggle"></apply-record>
   </div>
 </template>
 <script>
