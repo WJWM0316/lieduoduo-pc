@@ -202,13 +202,12 @@ export default {
   },
   created () {
     const query = this.$route.query
-    console.log(query)
     // type 类型转换
     query.type = query.type ? query.type.split(',').map(val => !isNaN(val) ? +val : val) : ['all']
     for (let item in query) {
       if (this.params[item] !== undefined) {
         // 数字转换
-        if (!isNaN(query[item]) && query[item] !== null) {
+        if (!isNaN(query[item]) && query[item] !== null && typeof query[item] !== 'object') {
           this.params[item] = +query[item]
         } else {
           this.params[item] = query[item]
@@ -536,6 +535,7 @@ export default {
 .candidate-header {
   height: 40px;
   display: flex;
+  align-items: center;
   .high-filter {
     margin-left: auto;
   }
