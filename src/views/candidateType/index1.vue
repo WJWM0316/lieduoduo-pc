@@ -141,11 +141,12 @@ import { confirmInterviewApi, interviewRetract, manyrecordstatus } from 'API/can
 import HighFilter from 'COMPONENTS/b-interview/highFilter'
 import NoFound from '@/components/noFound'
 import Resume from 'COMPONENTS/b-interview/resume'
-import InterviewArrange from 'COMPONENTS/common/interviewarrange'
-import InterviewDetail from 'COMPONENTS/common/interviewdetail'
-// import selectReson from 'COMPONENTS/common/selectreson'
-import ResonList from 'COMPONENTS/common/resonlist'
-import CandidatePosition from 'COMPONENTS/common/candidateposition'
+import InterviewArrange from 'COMPONENTS/b-interview/interviewArrange'
+import interviewDetail from 'COMPONENTS/b-interview/interviewDetail'
+import selectReson from 'COMPONENTS/b-interview/selectReson'
+import resonList from 'COMPONENTS/b-interview/resonList'
+import candidatePosition from 'COMPONENTS/b-interview/candidatePosition'
+import applyRecord from 'COMPONENTS/b-interview/applyRecord'
 // 候选人动态操作按钮种类
 const CandidateTypeBtns = [
   { buttonText: '查看联系', type: 'confirm-interview', buttonType: 'primary', is: (val) => val === 11, statusText: '未处理' },

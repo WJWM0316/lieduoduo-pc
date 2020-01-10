@@ -82,6 +82,7 @@ export default {
           this.extra = ''
           this.$message.success('操作成功')
           this.$emit('update:visible', false)
+          this.$emit('change')
         })
       } else {
         this.$message.warning('请选择不合适原因')
