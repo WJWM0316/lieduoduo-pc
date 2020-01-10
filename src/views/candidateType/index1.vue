@@ -129,7 +129,7 @@
     <!-- 展示原因列表 -->
     <reson-list :interviewId="interviewId" :visible.sync="resonlistdiggle"></reson-list>
     <!-- 开撩选择职位 -->
-    <candidate-position :jobuid="currentItem.uid" :visible.sync="positiondiggle"></candidate-position>
+    <candidate-position :jobuid="jobuid" :visible.sync="positiondiggle"></candidate-position>
   </div>
 </template>
 <script>
@@ -188,6 +188,11 @@ export default {
       resondiggle: false, // 选择不合适原因
       resonlistdiggle: false, // 展示原因
       positiondiggle: false // 选择开撩职位
+    }
+  },
+  computed: {
+    jobuid () {
+      return this.currentItem.uid || ''
     }
   },
   created () {
@@ -259,8 +264,12 @@ export default {
           break
         case 'interview-retract':
           let retract = { jobhunterUid: vo.uid, interviewId: this.interviewId }
-          interviewRetract(retract).then((res) => {
-            this.$message.success('撤回成功')
+          interviewRetract(retract).then(({ data }) => {
+            if (data.httpStatus === 200) {
+              this.$message.success('撤回成功')
+            }
+            // 更新列表和弹窗显示状态
+
             // this.getResume(this.jobuid)
             // this.init()
           })

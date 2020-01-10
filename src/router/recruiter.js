@@ -87,17 +87,27 @@ const recruiter = [
     ]
   },
   {
-    path: '/myinfos',
-    title: '我的资料',
+    path: '/self',
+    title: '个人中心',
     component: Layout,
     meta: {
       useNav: false
     },
     children: [
+      // 我的账户
+      // {}
+      // 我的资料
       {
-        path: '',
+        path: 'myinfos',
         name: 'myinfos',
-        component: resolve => require(['../views/b-myinfos/index.vue'], resolve)
+        title: '我的资料',
+        component: resolve => require(['../views/b-my-infos/index.vue'], resolve)
+      },
+      {
+        path: 'myequity',
+        name: 'myequity',
+        title: '我的权益',
+        component: resolve => require(['../views/b-my-equity/index.vue'], resolve)
       }
     ]
   },
