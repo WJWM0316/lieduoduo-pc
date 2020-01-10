@@ -127,6 +127,7 @@
 </template>
 <script>
 import MapSearch from 'COMPONENTS/map'
+import { mapGetters } from 'vuex'
 import {
   recruiterPositonList, watchInvitationAPi, setInterviewInfoApi, addressListApi, addCompanyAdressApi, editCompanyAdressApi } from 'API/candidateType'
 export default {
