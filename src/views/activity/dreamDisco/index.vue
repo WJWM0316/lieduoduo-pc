@@ -254,6 +254,7 @@ $bg-color1: #2C045D;
       color: #ffffff;
       line-height:57px;
       text-align: center;
+      margin-top: 20px;
     }
   }
   .partner{
@@ -506,10 +507,15 @@ $bg-color1: #2C045D;
       color: #ffffff;
       font-weight:300;
       font-size: 18px;
+      cursor: pointer;
       .dreamCity-companyShortname{
+        cursor: pointer;
         font-size: 26px;
         font-weight: 500;
         margin-bottom: 11px;
+      }
+      p{
+        cursor: pointer;
       }
     }
   }
