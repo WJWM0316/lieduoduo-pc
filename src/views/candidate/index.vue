@@ -608,11 +608,11 @@
 </template>
 <script>
 import InterviewArrange from 'COMPONENTS/b-interview/interviewArrange'
-import interviewDetail from 'COMPONENTS/b-interview/interviewDetail'
-import selectReson from 'COMPONENTS/b-interview/selectReson'
-import resonList from 'COMPONENTS/b-interview/resonList'
-import candidatePosition from 'COMPONENTS/b-interview/candidatePosition'
-import applyRecord from 'COMPONENTS/b-interview/applyRecord'
+import InterviewDetail from 'COMPONENTS/b-interview/interviewDetail'
+import SelectReson from 'COMPONENTS/b-interview/selectReson'
+import ResonList from 'COMPONENTS/b-interview/resonList'
+import CandidatePosition from 'COMPONENTS/b-interview/candidatePosition'
+import ApplyRecord from 'COMPONENTS/b-interview/applyRecord'
 
 import Vue from 'vue'
 import Component from 'vue-class-component'
@@ -664,7 +664,7 @@ import {
       }
     }
   },
-  components: { MapSearch, DynamicRecord, InterviewArrange, interviewDetail, selectReson, resonList, candidatePosition, applyRecord }
+  components: { MapSearch, DynamicRecord, InterviewArrange, InterviewDetail, SelectReson, ResonList, CandidatePosition, ApplyRecord }
 })
 export default class CourseList extends Vue {
   userInfo = {}
@@ -1500,28 +1500,5 @@ export default class CourseList extends Vue {
 }
 #candidate .el-loading-mask {
   z-index: 0;
-}
-</style>
-<style lang="scss">
-.date-seleced-interview-time{
-  position: absolute;
-  left: 0;
-  top: 0;
-  opacity: 0;
-  width: 90px !important;
-  height: 40px;
-  padding: 0;
-  z-index: 2;
-  .el-input__inner{
-    cursor: pointer;
-    position: absolute;
-    left: 0;
-    top: 0;
-    opacity: 0;
-    width: 90px !important;
-    height: 40px;
-    padding: 0;
-    z-index: 2;
-  }
 }
 </style>

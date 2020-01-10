@@ -8,7 +8,7 @@
       @close="handleClose"
       :visible.sync="dialogStatus">
       <div slot="title" v-if="type !== 'noJob'">{{detailtitle}}</div>
-      <div class="noJobBox" v-if="type === 'noJob'">
+      <div class="noJobBox" v-if="type === 'noJob' && !getListLoading" v-loading="getListLoading">
         <div class="nullimg"><img src="@/assets/images/nullCandidate.png" /></div>
         <div class="noJobText">
           <p>邀请候选人面试</p>
@@ -16,7 +16,7 @@
           </div>
         <div class="noJobBtn" @click.stop="toAddJob">去发布/开放职位</div>
       </div>
-      <div class="selectposition" v-else>
+      <div class="selectposition" v-else v-loading="getListLoading">
           <div class="selectitem" v-for="(item, i) in positionLists" :key="i" @click="selectposition(item)">
             <div class="position">
               <div class="close" v-show="item.isOnline === 2">关闭</div>
@@ -53,7 +53,6 @@ export default {
   watch: {
     visible (value) {
       if (value) {
-        this.dialogStatus = true
         this.getlist()
       } else {
         this.dialogStatus = false
@@ -73,6 +72,7 @@ export default {
   data () {
     return {
       dialogStatus: false,
+      getListLoading: false, // 获取列表loading
       positionLists: [],
       jobpositionid: '',
       type: 'noJob',
@@ -93,6 +93,7 @@ export default {
           let data = { jobhunterUid: this.jobuid, positionId: this.jobpositionid }
           sureOpenupAPi(data).then((res) => {
             this.$emit('update:visible', false)
+            this.$emit('finish')
             this.$message.success('开撩成功')
           })
         } else {
@@ -113,7 +114,10 @@ export default {
     },
     getlist () {
       let datalist = { is_online: 1 }
+      this.getListLoading = true
       recruiterPositonList(datalist).then((res) => {
+        this.getListLoading = false
+        this.dialogStatus = true
         let arr = res.data.data
         let hasOnline = []
         arr.map((v, k) => {
@@ -128,6 +132,8 @@ export default {
           this.type = 'selectposition'
           this.positionLists = arr
         }
+      }).catch(() => {
+        this.getListLoading = false
       })
     },
     toAddJob () {

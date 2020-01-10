@@ -67,7 +67,6 @@ export default {
     visible (value) {
       if (value) {
         this.dialogStatus = true
-        this.getlist()
       } else {
         this.dialogStatus = false
       }
@@ -129,6 +128,7 @@ export default {
             confirmInterviewApi({ interviewId: this.interviewId }).then((res) => {
               this.$message.success('约面成功')
               this.$emit('update:visible', false)
+              this.$emit('finish')
             })
           }
         }
@@ -140,6 +140,7 @@ export default {
             confirmInterviewApi({ interviewId: this.interviewId }).then((res) => {
               this.$message.success('约面成功')
               this.$emit('update:visible', false)
+              this.$emit('finish')
             })
           } else {
             this.resondiggle = true
