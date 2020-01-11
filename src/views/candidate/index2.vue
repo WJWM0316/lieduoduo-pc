@@ -423,7 +423,7 @@ export default {
         case 'invite':
           this.getApplyList()
           break
-        case 'searchCollect':
+        case 'apply':
           this.getInviteList()
           break
       }
