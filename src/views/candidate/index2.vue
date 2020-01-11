@@ -463,10 +463,10 @@ export default {
       this.resumeDialogStatus = true
     },
     setJob (type, vo) {
-      if (vo.interviewId) {
-        this.interviewId = vo.interviewId
-      } else {
+      if (vo.interviewInfo && vo.interviewInfo.data) {
         this.interviewId = vo.interviewInfo.data.lastInterviewId
+      } else {
+        this.interviewId = vo.interviewId
       }
       if (vo.jobhunterUid) {
         this.jobuid = vo.jobhunterUid
