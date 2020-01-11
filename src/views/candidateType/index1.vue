@@ -121,17 +121,17 @@
     <!-- 预览简历 -->
     <resume :current="currentItem" :visible.sync="resumeDialogStatus" @change-status="setJob" />
     <!-- 查看面试，安排面试弹窗 -->
-    <interview-arrange :interviewId="interviewId" :visible.sync="arrangediggle"></interview-arrange>
+    <interview-arrange :interviewId="interviewId" :visible.sync="arrangediggle" @finish="refreshPageData"></interview-arrange>
     <!-- 面试详情弹窗 -->
-    <interview-detail :interviewId="interviewId" :visible.sync="detaildiggle"></interview-detail>
+    <interview-detail :interviewId="interviewId" :visible.sync="detaildiggle" @finish="refreshPageData"></interview-detail>
     <!-- 选择不合适原因 -->
-    <select-reson :reasonlist="reasonlist" :interviewId="interviewId" :jobuid="jobuid" :visible.sync="resondiggle"></select-reson>
+    <select-reson :reasonlist="reasonlist" :interviewId="interviewId" :jobuid="jobuid" :visible.sync="resondiggle" @finish="refreshPageData"></select-reson>
     <!-- 展示原因列表 -->
-    <reson-list :interviewId="interviewId" :visible.sync="resonlistdiggle"></reson-list>
+    <reson-list :interviewId="interviewId" :visible.sync="resonlistdiggle" @finish="refreshPageData"></reson-list>
     <!-- 开撩选择职位 -->
-    <candidate-position :jobuid="jobuid" :visible.sync="positiondiggle"></candidate-position>
+    <candidate-position :jobuid="jobuid" :visible.sync="positiondiggle" @finish="refreshPageData"></candidate-position>
     <!-- 处理多条面试弹窗 -->
-    <apply-record :applyrecordList="applyrecordList" :interviewId="interviewId" :jobuid="jobuid" :recordtext="recordtext" :interviewNum="interviewNum" :visible.sync="recorddiggle"></apply-record>
+    <apply-record :applyrecordList="applyrecordList" :interviewId="interviewId" :jobuid="jobuid" :recordtext="recordtext" :interviewNum="interviewNum" :visible.sync="recorddiggle" @finish="refreshPageData"></apply-record>
   </div>
 </template>
 <script>
@@ -207,7 +207,7 @@ export default {
     for (let item in query) {
       if (this.params[item] !== undefined) {
         // 数字转换
-        if (!isNaN(query[item]) && query[item] !== null) {
+        if (!isNaN(query[item]) && query[item] !== null && typeof query[item] !== 'object') {
           this.params[item] = +query[item]
         } else {
           this.params[item] = query[item]
@@ -325,6 +325,24 @@ export default {
     viewResume (item) {
       this.currentItem = item
       this.resumeDialogStatus = true
+    },
+    /**
+     * 刷新页面按钮显示状态（弹窗简历按钮）
+     * @param cb  刷新成功会掉函数
+     */
+    refreshPageData () {
+      // { cb }
+      switch (this.params.navType) {
+        case 'searchBrowseMyself':
+          this.getSearchBrowseMyself()
+          break
+        case 'searchCollect':
+          this.getSearchCollect()
+          break
+        case 'searchMyCollect':
+          this.getSearchMyCollect()
+          break
+      }
     },
     // 查询参数切换
     handleSearch (value, type) {
@@ -502,6 +520,11 @@ export default {
         if (lastInterviewStatus === 61) {
           item.btn1.statusText = '不合适'
         }
+
+        // 是否有展开简历详情弹窗
+        if (this.resumeDialogStatus && this.currentItem.vkey === item.vkey) {
+          this.currentItem = item
+        }
       })
       return data
     }
@@ -512,6 +535,7 @@ export default {
 .candidate-header {
   height: 40px;
   display: flex;
+  align-items: center;
   .high-filter {
     margin-left: auto;
   }

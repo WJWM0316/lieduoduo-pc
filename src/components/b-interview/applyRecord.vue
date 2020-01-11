@@ -60,8 +60,8 @@
 </template>
 <script>
 import selectReson from 'COMPONENTS/b-interview/selectReson'
-import {
-  openPositionApi, confirmInterviewApi, getCommentReasonApi, getloadingReasonApi } from 'API/candidateType'
+import { openPositionApi } from 'API/position'
+import { confirmInterviewApi, getCommentReasonApi, getloadingReasonApi } from 'API/candidateType'
 export default {
   watch: {
     visible (value) {

@@ -161,7 +161,7 @@ $header-height-1: $page-b-header-height;
   right: 27px;
   position: absolute;
   top: 24px;
-  background:rgba(255,127,76,1);
+  background: $error-color-1;
 }
 </style>
 <style>
