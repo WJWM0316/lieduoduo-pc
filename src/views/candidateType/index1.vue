@@ -157,7 +157,7 @@ const CandidateTypeBtns = [
   { buttonText: '安排面试', type: 'arranging-interviews', buttonType: 'primary', is: (val) => val === 21, statusText: '待我安排' },
   { buttonText: '查看面试', type: 'arranging-interviews', buttonType: 'primary', is: (val) => val === 31, statusText: '待对方确认' },
   { buttonText: '修改面试', type: 'arranging-interviews', buttonType: 'primary', is: (val) => val === 32, statusText: '待我修改' },
-  { buttonText: '面试详情', type: 'check-invitation', buttonType: 'primary', is: (val) => val === 41, statusText: '已安排' }
+  { buttonText: '面试详情', type: 'check-invitation', buttonType: 'primary', is: (val) => val >= 41, statusText: '已安排' }
 ]
 export default {
   components: { HighFilter, NoFound, Resume, InterviewArrange, InterviewDetail, SelectReson, ResonList, CandidatePosition, ApplyRecord },
