@@ -226,7 +226,7 @@ export default {
     // 获取数量
     this.getMyNavData()
     // 默认选择看过我的type
-    this.handleSearch(this.params.navType || 'searchBrowseMyself', 'navType')
+    this.handleSearch(this.params.navType || 'searchBrowseMyself', 'navType', true)
   },
   destroyed () {
     this.cleanListRedDot()
@@ -368,7 +368,7 @@ export default {
       }
     },
     // 查询参数切换
-    handleSearch (value, type) {
+    handleSearch (value, type, init = false) {
       if (type !== 'page') this.params.page = 1
       if (type) this.params[type] = value
       // 查询 | 更新高级筛选数据
@@ -399,7 +399,7 @@ export default {
           this.getSearchMyCollect()
           break
       }
-      this.cleanListRedDot()
+      if (init) this.cleanListRedDot()
       // 滚动到顶部
       // const dom = document.querySelector('.candidate-header')
       // if (dom) {
