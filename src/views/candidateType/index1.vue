@@ -401,7 +401,7 @@ export default {
           break
       }
       // 滚动到顶部
-      // const dom = document.querySelector('.candidate-header')
+      // const dom = document.querySelector('.main_cont')
       // if (dom) {
       //   console.log(dom.getBoundingClientRect())
       //   this.$util.scrollToView(dom)

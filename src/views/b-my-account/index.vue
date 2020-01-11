@@ -2,8 +2,8 @@
   <!-- 我的账户 -->
   <div class="myaccount-wrapper">
     <!-- banners -->
-    <div class="banner">
-      <el-carousel height="70px">
+    <div class="myaccount-banner">
+      <el-carousel height="70px" arrow="never">
         <el-carousel-item v-for="(item, index) in bannerList" :key="index">
           <img class="banner-list" :src="item.bigImgUrl"/>
         </el-carousel-item>
@@ -150,16 +150,19 @@ export default {
     width: 144px;
   }
 }
-.banner{
+.myaccount-banner{
   min-width: 960px;
   height: 70px;
+  margin-bottom: 16px;
+  .el-carousel__item  {
+    text-align: center;
+  }
   .banner-list{
-    min-width: 960px;
-    height: 70px;
+    max-width: 100%;
   }
 }
 
-.account-servers, .right-server, .orders-wrapper /deep/ .order-wrapper-content {
+.account-servers, .right-server, .orders-wrapper /deep/ .order-wrapper-content, .myaccount-banner {
   border-radius: 8px;
   box-shadow: $shadow-1;
 }

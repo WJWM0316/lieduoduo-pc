@@ -47,137 +47,137 @@
     </div>
     <!-- lists -->
     <div id="box" class="main_cont" v-loading="getLoading">
-        <div class="candidate_blo" v-for="(item,index) in candidateList" @click="viewResume(item)" :key="index">
-          <div class="bloTop">
-            <div class="timer">{{item.time}}</div>
-            <div class="topText" v-if="params.navType === 'invite'">邀请面试</div>
-            <div class="topText" v-if="params.navType === 'apply'">申请面试</div>
+      <div class="candidate_blo" v-for="(item,index) in candidateList" @click="viewResume(item)" :key="index">
+        <div class="bloTop">
+          <div class="timer">{{item.time}}</div>
+          <div class="topText" v-if="params.navType === 'invite'">邀请面试</div>
+          <div class="topText" v-if="params.navType === 'apply'">申请面试</div>
 
-            <div class="topText topText2" v-if="item.positionId !== 0">
-              【<span v-if="item.address">{{item.address.city}}{{item.address.area}}<span v-show="item.address.city">&nbsp;|&nbsp;</span></span><span v-if="item.positionName">{{item.positionName}}&nbsp;|&nbsp;</span><span v-if="item.emolument">{{item.positionEmolumentMin}}k-{{item.positionEmolumentMax}}K</span>】
-            </div>
-
-            <div class="topText topText2" v-if="item.origin">
-              <div class="from">候选人来自</div>
-              <div class="origin">{{item.origin}}</div>
-            </div>
-            <div class="bloTop-24hour-wrap">
-              <div class="bloTop-24hour" v-if="item.interviewType === 2"></div>
-            </div>
-
-            <div class="status">
-              <div class="like_user">
-                <span :style="'color: #FF9E40'" v-if="item.statusDesc === '未处理'">{{item.statusDesc}}</span>
-                <span v-else>{{item.statusDesc}}</span>
-              </div>
-              </div>
-              <div class="phone" v-if="[21, 31, 32, 41].includes(item.status)">手机：{{item.resume.mobile}}</div>
-              <div class="redot" v-if="item.redDot"></div>
+          <div class="topText topText2" v-if="item.positionId !== 0">
+            【<span v-if="item.address">{{item.address.city}}{{item.address.area}}<span v-show="item.address.city">&nbsp;|&nbsp;</span></span><span v-if="item.positionName">{{item.positionName}}&nbsp;|&nbsp;</span><span v-if="item.emolument">{{item.positionEmolumentMin}}k-{{item.positionEmolumentMax}}K</span>】
           </div>
-          <div class="bloCont">
-            <div class="cont_left">
-              <div class="leftMsg">
-                <div class="userBaseInfo">
-                  <img class="gender" src="~IMAGES/girl.png" v-if="item.resume.gender===2" />
-                  <img class="gender" src="~IMAGES/boy.png" v-else />
-                  <img class="userIcon" :src="item.avatar.middleUrl" />
-                  <div class="infoRight">
-                    <div class="infoName textEllipsis">
-                      <span>{{item.jobhunterRealname}}</span>
-                    </div>
 
-                    <ul class="userLabel">
-                      <li class v-if="item.resume.workAgeDesc">{{item.resume.workAgeDesc}}</li>
-                      <li class v-if="item.resume.age">{{item.resume.age}}岁</li>
-                      <li class v-else>暂无年龄</li>
-                      <li class v-if="item.resume.degreeDesc">{{item.resume.degreeDesc}}</li>
-                      <li class v-else>暂无学历</li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="intention" v-if="item.resume.expect">
-                  求职意向：
-                  <span
-                    class="intentionText intentionTextWidth textEllipsis"
-                  >{{item.resume.expect.city}}</span>&nbsp;·&nbsp;
-                  <span
-                    class="intentionText intentionTextWidth2 textEllipsis"
-                    style="color:#333"
-                  >{{item.resume.expect.position}}</span>&nbsp;·&nbsp;
-                  <span
-                    class="intentionText2"
-                  >{{item.resume.expect.salaryFloor}}k~{{item.resume.expect.salaryCeil}}k</span>
-                </div>
-                <div class="intention" v-else>求职意向：暂无求职意向</div>
-              </div>
-              <div class="bloExperience workExperience">
-                <div class="experienceTitle">最近工作经历</div>
-                <div
-                  class="experienceText textEllipsis"
-                  v-if="item.lastCompanyName"
-                >{{item.lastCompanyName}}</div>
-                <div
-                  class="experienceText textEllipsis"
-                  v-if="item.lastPosition"
-                >{{item.lastPosition}}</div>
-                <div class="experienceText textEllipsis" v-if="item.lastCompanyName.length<1">暂无工作经历</div>
-              </div>
-              <div class="bloExperience educationExperience">
-                <div class="experienceTitle">最近教育经历</div>
-                <div
-                  class="experienceText textEllipsis"
-                  v-if="item.resume && item.resume.school"
-                >{{item.resume.school}}</div>
-                <div class="experienceText textEllipsis" v-else>暂无教育经历</div>
+          <div class="topText topText2" v-if="item.origin">
+            <div class="from">候选人来自</div>
+            <div class="origin">{{item.origin}}</div>
+          </div>
+          <div class="bloTop-24hour-wrap">
+            <div class="bloTop-24hour" v-if="item.interviewType === 2"></div>
+          </div>
 
-                <div
-                  class="experienceText textEllipsis"
-                  v-if="item.resume && item.resume.major"
-                >{{item.resume.major}}</div>
-              </div>
+          <div class="status">
+            <div class="like_user">
+              <span :style="'color: #FF9E40'" v-if="item.statusDesc === '未处理'">{{item.statusDesc}}</span>
+              <span v-else>{{item.statusDesc}}</span>
             </div>
-            <div class="userOp">
-            <template v-if="item.btn2 && item.btn2.type">
-              <el-button
-                :disabled="item.btn2.disabled"
-                @click.stop="setJob(item.btn2.type, item)"
-                :type="item.btn2.buttonType">
-                {{item.btn2.buttonText}}
-              </el-button>
-            </template>
-            <el-button
-              style="width: 112px;margin-left: 40px"
-              :disabled="item.btn1.disabled"
-              @click.stop="setJob(item.btn1.type, item)"
-              :type="item.btn1.buttonType">
-              {{item.btn1.buttonText}}
-            </el-button>
-          </div>
-            <!-- <div class="userOp">
-              <div class="like_user" @click.stop="setJob(item.jobhunterUid, 'inappropriate', item, 1)" v-show="[11, 12, 21, 31, 32, 41].includes(item.status)">
-                不合适
-              </div>
-                <div class="like_user" @click.stop="setJob(item.jobhunterUid, 'check-invitation', item, 1)" v-show="[57, 58].includes(item.status)">
-                  去评价
-                </div>
-                <div class="like_user" @click.stop="" v-show="[60, 61].includes(item.status)">
-                  <span :style="'color: #92929B;'">已评价</span>
-                </div>
-              <div class="btn" @click.stop="setJob(item.jobhunterUid, 'confirm-interview', item, 1)" v-if="item.status === 11">查看联系</div>
-              <div class="btn" @click.stop="setJob(item.jobhunterUid, 'check-invitation', item, 1)" v-if="item.status === 12">查看邀约</div>
-              <div class="btn" @click.stop="setJob(item.jobhunterUid, 'arranging-interviews', item, 1)" v-if="item.status === 21">安排面试</div>
-              <div class="btn" @click.stop="setJob(item.jobhunterUid, 'arranging-interviews', item, 1)" v-if="item.status === 31">
-                <span>查看面试</span>
-                </div>
-              <div class="btn" @click.stop="setJob(item.jobhunterUid, 'arranging-interviews', item, 1)" v-if="item.status === 32">
-                <span>修改面试</span>
-                </div>
-              <div class="btn" @click.stop="setJob(item.jobhunterUid, 'check-invitation', item, 1)" v-if="[41, 51, 57, 58, 59, 60, 61].includes(item.status)">面试详情</div>
-              <div class="btn" @click="getResume(item.jobhunterUid, index)" v-if="[52, 53, 54, 55].includes(item.status)">查看简历</div>
-            </div> -->
-          </div>
+            </div>
+            <div class="phone" v-if="[21, 31, 32, 41].includes(item.status)">手机：{{item.resume.mobile}}</div>
+            <div class="redot" v-if="item.redDot"></div>
         </div>
-        <!-- no found -->
+        <div class="bloCont">
+          <div class="cont_left">
+            <div class="leftMsg">
+              <div class="userBaseInfo">
+                <img class="gender" src="~IMAGES/girl.png" v-if="item.resume.gender===2" />
+                <img class="gender" src="~IMAGES/boy.png" v-else />
+                <img class="userIcon" :src="item.avatar.middleUrl" />
+                <div class="infoRight">
+                  <div class="infoName textEllipsis">
+                    <span>{{item.jobhunterRealname}}</span>
+                  </div>
+
+                  <ul class="userLabel">
+                    <li class v-if="item.resume.workAgeDesc">{{item.resume.workAgeDesc}}</li>
+                    <li class v-if="item.resume.age">{{item.resume.age}}岁</li>
+                    <li class v-else>暂无年龄</li>
+                    <li class v-if="item.resume.degreeDesc">{{item.resume.degreeDesc}}</li>
+                    <li class v-else>暂无学历</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="intention" v-if="item.resume.expect">
+                求职意向：
+                <span
+                  class="intentionText intentionTextWidth textEllipsis"
+                >{{item.resume.expect.city}}</span>&nbsp;·&nbsp;
+                <span
+                  class="intentionText intentionTextWidth2 textEllipsis"
+                  style="color:#333"
+                >{{item.resume.expect.position}}</span>&nbsp;·&nbsp;
+                <span
+                  class="intentionText2"
+                >{{item.resume.expect.salaryFloor}}k~{{item.resume.expect.salaryCeil}}k</span>
+              </div>
+              <div class="intention" v-else>求职意向：暂无求职意向</div>
+            </div>
+            <div class="bloExperience workExperience">
+              <div class="experienceTitle">最近工作经历</div>
+              <div
+                class="experienceText textEllipsis"
+                v-if="item.lastCompanyName"
+              >{{item.lastCompanyName}}</div>
+              <div
+                class="experienceText textEllipsis"
+                v-if="item.lastPosition"
+              >{{item.lastPosition}}</div>
+              <div class="experienceText textEllipsis" v-if="item.lastCompanyName.length<1">暂无工作经历</div>
+            </div>
+            <div class="bloExperience educationExperience">
+              <div class="experienceTitle">最近教育经历</div>
+              <div
+                class="experienceText textEllipsis"
+                v-if="item.resume && item.resume.school"
+              >{{item.resume.school}}</div>
+              <div class="experienceText textEllipsis" v-else>暂无教育经历</div>
+
+              <div
+                class="experienceText textEllipsis"
+                v-if="item.resume && item.resume.major"
+              >{{item.resume.major}}</div>
+            </div>
+          </div>
+          <div class="userOp">
+          <template v-if="item.btn2 && item.btn2.type">
+            <el-button
+              :disabled="item.btn2.disabled"
+              @click.stop="setJob(item.btn2.type, item)"
+              :type="item.btn2.buttonType">
+              {{item.btn2.buttonText}}
+            </el-button>
+          </template>
+          <el-button
+            style="width: 112px;margin-left: 40px"
+            :disabled="item.btn1.disabled"
+            @click.stop="setJob(item.btn1.type, item)"
+            :type="item.btn1.buttonType">
+            {{item.btn1.buttonText}}
+          </el-button>
+        </div>
+          <!-- <div class="userOp">
+            <div class="like_user" @click.stop="setJob(item.jobhunterUid, 'inappropriate', item, 1)" v-show="[11, 12, 21, 31, 32, 41].includes(item.status)">
+              不合适
+            </div>
+              <div class="like_user" @click.stop="setJob(item.jobhunterUid, 'check-invitation', item, 1)" v-show="[57, 58].includes(item.status)">
+                去评价
+              </div>
+              <div class="like_user" @click.stop="" v-show="[60, 61].includes(item.status)">
+                <span :style="'color: #92929B;'">已评价</span>
+              </div>
+            <div class="btn" @click.stop="setJob(item.jobhunterUid, 'confirm-interview', item, 1)" v-if="item.status === 11">查看联系</div>
+            <div class="btn" @click.stop="setJob(item.jobhunterUid, 'check-invitation', item, 1)" v-if="item.status === 12">查看邀约</div>
+            <div class="btn" @click.stop="setJob(item.jobhunterUid, 'arranging-interviews', item, 1)" v-if="item.status === 21">安排面试</div>
+            <div class="btn" @click.stop="setJob(item.jobhunterUid, 'arranging-interviews', item, 1)" v-if="item.status === 31">
+              <span>查看面试</span>
+              </div>
+            <div class="btn" @click.stop="setJob(item.jobhunterUid, 'arranging-interviews', item, 1)" v-if="item.status === 32">
+              <span>修改面试</span>
+              </div>
+            <div class="btn" @click.stop="setJob(item.jobhunterUid, 'check-invitation', item, 1)" v-if="[41, 51, 57, 58, 59, 60, 61].includes(item.status)">面试详情</div>
+            <div class="btn" @click="getResume(item.jobhunterUid, index)" v-if="[52, 53, 54, 55].includes(item.status)">查看简历</div>
+          </div> -->
+        </div>
+      </div>
+      <!-- no found -->
       <no-found class="no-apply-lists"
         v-if="!candidateList.length && !getLoading"
         :image-url="nofoundUrl"
@@ -185,7 +185,7 @@
         max-width="160">
         <el-button type="primary" style="width: 143px;margin-top: 24px;" @click="$router.push({name: 'recruiterIndex'})">分享职位</el-button>
       </no-found>
-      </div>
+    </div>
     <!-- page -->
     <div class="pagination" v-if="total > 0 && total > params.count">
       <el-pagination

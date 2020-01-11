@@ -711,7 +711,7 @@ export default class CourseList extends Vue {
           overflow: hidden;
         }
         .job_24hour{
-          width: 47px;
+          width: 50px;
           height: 18px;
           margin-left: 14px;
           background: url('../../assets/images/tag_list_24hour.png') no-repeat;
