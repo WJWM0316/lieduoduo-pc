@@ -1,7 +1,7 @@
 <template>
 	<div class="random-banner">
     <router-link target="_blank" :to="{name: 'dreamDisco'}" class="li-item">
-      <img :src="cdnPath + 'dreamBanner.png'" alt="loading">
+      <img :src="cdnPath + 'dreamBanner.jpg'" alt="loading">
     </router-link>
     <!-- <div class="random-left-banner">
       <router-link target="_blank" :to="{name: 'companyDetail', query: { vkey: 'pfpaotwi' }}" class="li-item">
