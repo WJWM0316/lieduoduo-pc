@@ -47,7 +47,7 @@
     </div>
     <!-- lists -->
     <div id="box" class="main_cont" v-loading="getLoading">
-        <div class="candidate_blo" v-for="(item,index) in candidateList" @click="getResume(item.jobhunterUid, index)" :key="index">
+        <div class="candidate_blo" v-for="(item,index) in candidateList" @click="viewResume(item)" :key="index">
           <div class="bloTop">
             <div class="timer">{{item.time}}</div>
             <div class="topText" v-if="params.navType === 'invite'">邀请面试</div>
@@ -198,7 +198,7 @@
       </el-pagination>
     </div>
     <!-- 预览简历 -->
-    <resume :current="currentItem" :visible.sync="resumeDialogStatus" @change-status="setJob" />
+    <resume :current="currentItem" :visible.sync="resumeDialogStatus" ref="resume" @change-status="setJob" />
     <!-- 查看面试，安排面试弹窗 -->
     <interview-arrange :interviewId="interviewId" :visible.sync="arrangediggle" @finish="refreshPageData"></interview-arrange>
     <!-- 面试详情弹窗 -->
@@ -427,6 +427,8 @@ export default {
           this.getInviteList()
           break
       }
+      // 如果查看简历详情在打开状态就刷新简历数据
+      if (this.$refs.resume) this.$refs.resume.getResume()
     },
     // 重置接口数据
     resetListDatas (data) {

@@ -119,7 +119,7 @@
       </el-pagination>
     </div>
     <!-- 预览简历 -->
-    <resume :current="currentItem" :visible.sync="resumeDialogStatus" @change-status="setJob" />
+    <resume :current="currentItem" ref="resume" :visible.sync="resumeDialogStatus" @change-status="setJob" />
     <!-- 查看面试，安排面试弹窗 -->
     <interview-arrange :interviewId="interviewId" :visible.sync="arrangediggle" @finish="refreshPageData"></interview-arrange>
     <!-- 面试详情弹窗 -->
@@ -328,10 +328,9 @@ export default {
     },
     /**
      * 刷新页面按钮显示状态（弹窗简历按钮）
-     * @param cb  刷新成功会掉函数
+     * @param cb  刷新成功回调函数
      */
     refreshPageData () {
-      // { cb }
       switch (this.params.navType) {
         case 'searchBrowseMyself':
           this.getSearchBrowseMyself()
@@ -343,6 +342,8 @@ export default {
           this.getSearchMyCollect()
           break
       }
+      // 如果查看简历详情在打开状态就刷新简历数据
+      if (this.$refs.resume) this.$refs.resume.getResume()
     },
     // 查询参数切换
     handleSearch (value, type) {
@@ -519,11 +520,6 @@ export default {
         }
         if (lastInterviewStatus === 61) {
           item.btn1.statusText = '不合适'
-        }
-
-        // 是否有展开简历详情弹窗
-        if (this.resumeDialogStatus && this.currentItem.vkey === item.vkey) {
-          this.currentItem = item
         }
       })
       return data
