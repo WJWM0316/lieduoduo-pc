@@ -1,4 +1,264 @@
 <template>
   <!-- 我的账户 -->
-  <div>我的账户</div>
+  <div class="myaccount-wrapper">
+    <!-- banners -->
+    <div class="account-banner"></div>
+    <!-- servers -->
+    <div class="account-servers">
+      <div class="counselor">
+        <p class="counselor-title">顾问服务</p>
+        <p>一键约面，极速入职</p>
+        <el-button type="primary" @click="contactDialogStatus = true; isServer = true">了解更多</el-button>
+      </div>
+      <template v-for="(item, index) in servers">
+        <div :key="index" class="server-lists">
+          <div class="server-img">
+            <img :src="item.img" alt="">
+          </div>
+          <div class="server-introduce" v-html="item.content">
+          </div>
+        </div>
+      </template>
+    </div>
+    <div class="account-content">
+      <!-- bill -->
+      <order-details />
+      <div class="account-content-right">
+        <!-- recharge -->
+        <div class="duoduo-coin">
+          <p class="right-title">我的多多币</p>
+          <p class="coin-count">{{coin}}</p>
+          <el-button style="width: 132px" type="primary" size="small" @click="contactDialogStatus = true; isServer = false">去充值</el-button>
+        </div>
+        <!-- contact -->
+        <div class="right-server">
+          <p class="right-title">联系客服</p>
+          <div class="right-server-qrcode">
+            <img :src="qrCode" alt="">
+            <p>扫码添加客服微信号与我们联系</p>
+          </div>
+          <p class="server-number">
+            <span>电话咨询：</span>
+            <span>400-065-5788</span>
+          </p>
+        </div>
+      </div>
+    </div>
+     <el-dialog
+      width="432px"
+      custom-class="app-dialog"
+      :visible.sync="contactDialogStatus">
+      <div class="contact-wrapper">
+        <p class="contact-title"> {{isServer ? '顾问服务' : '充值多多币'}}</p>
+        <p> {{isServer ? '您可微信扫下方二维码，联系我们了解顾问服务' : '您可微信扫下方二维码，联系我们充值多多币'}} </p>
+        <div class="contact-qrcode">
+          <img :src="qrCode" alt="">
+        </div>
+        <p>或拨打全国咨询热线</p>
+        <p class="contact-number">400-065-5788</p>
+      </div>
+    </el-dialog>
+  </div>
 </template>
+<script>
+import OrderDetails from './compnents/details'
+import { getRecruiterAccount } from 'API/recruiter'
+import { wx_account_qrcode } from 'IMAGES/image'
+export default {
+  components: { OrderDetails },
+  data () {
+    return {
+      servers: [
+        {
+          img: require('IMAGES/account/ic_recommend.png'),
+          content: '<p>量身推荐</p><p>按岗位为您</p><p>定制推荐方案</p>'
+        },
+        {
+          img: require('IMAGES/account/ic_communication.png'),
+          content: '<p>帮你沟通</p><p>顾问会帮您与候选</p><p>人沟通并撮合约面</p>'
+        },
+        {
+          img: require('IMAGES/account/ic_follow.png'),
+          content: '<p>顾问跟进</p><p>顾问会跟进您与</p><p>候选人的约面进度</p>'
+        },
+        {
+          img: require('IMAGES/account/ic_deducted.png'),
+          content: '<p>如候选人未能到场</p><p>按岗位为您</p><p>多多币将退回至账号</p>'
+        }
+      ],
+      coin: 0,
+      qrCode: wx_account_qrcode,
+      contactDialogStatus: false,
+      isServer: true
+    }
+  },
+  created () {
+    this.getAccount()
+  },
+  methods: {
+    getAccount () {
+      getRecruiterAccount().then(({ data }) => {
+        const { wallet } = data.data
+        this.coin = wallet.remain
+      })
+    }
+  }
+}
+</script>
+<style lang="scss" scoped>
+.counselor {
+  background-image: url('../../assets/images/account/img_vip.png');
+  background-repeat: no-repeat;
+  background-size: 76% 74%;
+  height: 100%;
+  padding: 34px 0  28px 36px;
+  box-sizing: border-box;
+  p {
+    color: $title-color-2;
+  }
+  .counselor-title {
+    color: $main-color-1;
+    font-weight: bold;
+    font-size: 22px;
+    position: relative;
+    padding-left: 9px;
+    margin-bottom: 8px;
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0px;
+      top: 2px;
+      background-color: $bg-color-4;
+      width:3px;
+      height:18px;
+      border-radius:0px 2px 2px 0px;
+    }
+  }
+  .el-button {
+    margin-top: 20px;
+    width: 144px;
+  }
+}
+.account-servers, .right-server, .orders-wrapper /deep/ .order-wrapper-content {
+  border-radius: 8px;
+  box-shadow: $shadow-1;
+}
+.account-servers {
+  background: #fff;
+  height: 166px;
+  box-sizing: border-box;
+  @include flex-v-center;
+  .counselor {
+    width: 197px;
+    max-width: 197px;
+  }
+  div {
+    flex: 1;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .server-lists {
+    height: 60px;
+    width: 112px;
+    text-align: center;
+    position: relative;
+  }
+  .server-img {
+    margin-top: 5px;
+    width: 36px;
+    img {
+      max-width: 100%;
+    }
+  }
+  .server-lists:not(:last-child) {
+    border-right: 1px dashed $border-color-1;
+  }
+}
+.account-content {
+  display: flex;
+  margin-top: 16px;
+  .orders-wrapper {
+    flex: 1;
+  }
+  .account-content-right {
+    width: 300px;
+    margin-left: 16px;
+  }
+}
+.account-content-right {
+  &> div{
+    padding: 32px 0 24px;
+    background-color: #fff;
+  }
+  .right-title {
+    font-size: 20px;
+    color: $title-color-1;
+    font-weight: bold;
+  }
+  .duoduo-coin {
+    padding-left: 40px;
+    margin-bottom: 16px;
+    background-image: url('../../assets/images/account/count_coin.png');
+    background-repeat: no-repeat;
+    background-position: right bottom;
+    background-size: 100% 100%;
+  }
+  img {
+    width: 86px;
+  }
+  .coin-count {
+    font-size: 42px;
+    font-weight: bold;
+    color: $main-color-1;
+    margin:10px 0 30px;
+  }
+  .right-server {
+    .right-title{
+      padding-left: 40px;
+    }
+    .server-number {
+      text-align: center;
+      span {
+        font-size: 14px;
+        color: $title-color-2;
+      }
+      span:last-child {
+        color: $main-color-1
+      }
+    }
+    .right-server-qrcode {
+      width: 264px;
+      margin:10px 0 18px 27px;
+      background-color: $bg-color-1;
+      box-sizing: border-box;
+      padding: 12px;
+      img, p{
+        display: inline-block;
+        vertical-align: middle;
+      }
+      p {
+        width: 98px;
+        line-height:20px;
+        margin-left: 25px;
+      }
+    }
+  }
+}
+</style>
+<style lang="scss">
+.myaccount-wrapper .server-introduce {
+  margin-left: 20px;
+  text-align: left;
+  p {
+    color: $title-color-2;
+    line-height:16px;
+    font-size: 12px;
+  }
+  p:first-child {
+    font-weight: bold;
+    margin: 5px 0;
+    font-size: 14px;
+    color: $title-color-1;
+  }
+}
+</style>

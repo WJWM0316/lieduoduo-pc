@@ -48,3 +48,19 @@ export const getRecruiterRight = data => request({
   params: data,
   config: { host: 'zhaopin' }
 })
+
+// 获取招聘官账户
+export const getRecruiterAccount = data => request({
+  url: '/user/account',
+  method: 'get',
+  params: data,
+  config: { host: 'zhaopin' }
+})
+
+// 获取招聘官订单列表
+export const getRecruiterOrders = data => request({
+  url: '/user/account/orders',
+  method: 'get',
+  params: data,
+  config: { host: 'zhaopin' }
+})

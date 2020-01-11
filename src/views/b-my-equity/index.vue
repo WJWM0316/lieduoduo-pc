@@ -24,7 +24,10 @@
       </div>
       <div class="recruiter-version">
         <p class="version-type">{{infos.rtVersionName}}</p>
-        <p class="version-time" v-if="infos.expiredDesc">有效期至 {{infos.expiredDesc | date('YYYY年MM月DD日')}}</p>
+        <p class="version-time" v-if="!isFree && infos.remainDay === 0">您的专业版权益已到期</p>
+        <template v-else>
+          <p class="version-time" v-if="infos.expiredDesc">有效期至 {{infos.expiredDesc | date('YYYY年MM月DD日')}}</p>
+        </template>
       </div>
       <el-button type="primary" @click="contactDialogStatus = true">{{isFree ? '升级专业版' : '我要续费'}}</el-button>
     </div>
@@ -90,7 +93,7 @@
           <img :src="wxAccount" alt="">
         </div>
         <p>或拨打全国咨询热线</p>
-        <p class="contant-number">400-065-5788</p>
+        <p class="contact-number">400-065-5788</p>
       </div>
     </el-dialog>
     <share-popup :visible.sync="showSharePopup" type="invite" :data="{uid: recruiter.uid}" />
@@ -138,10 +141,6 @@ export default {
     }
   },
   created () {
-    // this.$message.warning({
-    //   content: 'test',
-    //   duration: 0
-    // })
     this.getInfos()
   },
   methods: {
@@ -279,35 +278,6 @@ h2 {
     line-height:18px;
     color: $title-color-2;
     padding: 0 5px;
-  }
-}
-.contact-wrapper {
-  text-align: center;
-  p {
-    color: $title-color-2;
-    font-size: 14px;
-    line-height: 20px;
-  }
-  .contact-title {
-    font-size: 26px;
-    color: $title-color-1;
-    font-weight: bold;
-    margin-bottom: 30px;
-  }
-  .contact-qrcode {
-    display: inline-block;
-    width: 194px;
-    margin: 8px 0 30px;
-    img {
-      max-width: 100%;
-    }
-  }
-  .contant-number {
-    font-weight: bold;
-    color: $main-color-1;
-    font-size: 30px;
-    padding-bottom: 48px;
-    margin-top: 14px;
   }
 }
 </style>

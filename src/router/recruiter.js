@@ -94,9 +94,6 @@ const recruiter = [
       useNav: false
     },
     children: [
-      // 我的账户
-      // {}
-      // 我的资料
       {
         path: 'myinfos',
         name: 'myinfos',
@@ -124,6 +121,23 @@ const recruiter = [
         path: '',
         name: 'recruiteam',
         component: resolve => require(['../views/b-recruit-team/index.vue'], resolve)
+      }
+    ]
+  },
+  {
+    path: '/myaccount',
+    title: '我的账户',
+    component: Layout,
+    meta: {
+      useNav: true,
+      icon: 'iconfont icon-zhaopintuandui'
+    },
+    children: [
+      {
+        path: '',
+        name: 'myaccount',
+        title: '我的账户',
+        component: resolve => require(['../views/b-my-account/index.vue'], resolve)
       }
     ]
   },
