@@ -13,9 +13,9 @@
         </div>
         <div
           class="b-header-button"
-          :class="{'active':  params.navType==='invite','is-red-dot' : recruiterInviteList > 0}"
+          :class="{ 'active':  params.navType==='invite' }"
           @click="handleSearch('invite', 'navType')">
-          <span :class="{'is-red-dot' : recruiterIntentionList > 0}"></span>
+          <span :class="{'is-red-dot' : recruiterInviteList > 0}"></span>
           我的邀请({{applynum || 0}})
         </div>
       </div>
@@ -214,7 +214,7 @@
   </div>
 </template>
 <script>
-import { getApplyListApi, getInviteListApi, getinviteapplyNum } from 'API/candidate'
+import { getApplyListApi, getInviteListApi, getinviteapplyNum, getdeleteTabRedDotApi } from 'API/candidate'
 import { manyrecordstatus, confirmInterviewApi, interviewRetract, getCommentReasonApi, getloadingReasonApi } from 'API/candidateType'
 import { getPositionTypeApi } from 'API/position'
 
@@ -318,10 +318,13 @@ export default {
     // 获取数量
     this.getListCounts()
     // 初始化选择
-    this.handleSearch(this.params.navType || 'apply', 'navType')
+    this.handleSearch(this.params.navType || 'apply', 'navType', false)
+  },
+  destroyed () {
+    this.cleanListRedDot()
   },
   methods: {
-    handleSearch (value, type) {
+    handleSearch (value, type, init = true) {
       if (type !== 'page') this.params.page = 1
       if (type && this.params[type] !== undefined) this.params[type] = value
       if (type === 'time') {
@@ -332,13 +335,20 @@ export default {
       if (type === 'navType') {
         this.candidateList = []
         this.total = 0
+        if (init) this.cleanListRedDot()
       }
       switch (this.params.navType) {
         case 'invite':
           this.getApplyList()
+          if (this.recruiterInviteList > 0 && type === 'navType') { // 清除收到意向红点
+            getdeleteTabRedDotApi('invite_list')
+          }
           break
         case 'apply':
           this.getInviteList()
+          if (this.recruiterIntentionList > 0 && type === 'navType') { // 清除apply红点
+            getdeleteTabRedDotApi('intention_list')
+          }
           break
       }
       this.$router.push({ name: this.$route.name, query: { ...this.params, q: Date.now(), position_type_id: this.params.position_type_id.join(',') } })
@@ -461,6 +471,16 @@ export default {
     viewResume (item) {
       this.currentItem = item
       this.resumeDialogStatus = true
+      this.cleanListRedDot(item)
+    },
+    cleanListRedDot (vo = null) {
+      if (this.recruiterIntentionList + this.recruiterInviteList > 0) {
+        console.log(1)
+        if (vo !== null) {
+          vo.redDot = 0
+        }
+        this.$store.dispatch('redDotfun')
+      }
     },
     setJob (type, vo) {
       if (vo.interviewId) {
@@ -474,6 +494,7 @@ export default {
         this.jobuid = vo.uid
       }
       this.currentItem = vo
+      this.cleanListRedDot(vo)
       switch (type) {
         case 'recruiter-chat':
           this.positiondiggle = true
@@ -576,6 +597,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .candidate-header {
+  min-width: 1120px;
   height: 40px;
   display: flex;
   .high-filter {

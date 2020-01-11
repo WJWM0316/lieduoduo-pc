@@ -226,7 +226,7 @@ export default {
     // 获取数量
     this.getMyNavData()
     // 默认选择看过我的type
-    this.handleSearch(this.params.navType || 'searchBrowseMyself', 'navType', true)
+    this.handleSearch(this.params.navType || 'searchBrowseMyself', 'navType', false)
   },
   destroyed () {
     this.cleanListRedDot()
@@ -368,7 +368,7 @@ export default {
       }
     },
     // 查询参数切换
-    handleSearch (value, type, init = false) {
+    handleSearch (value, type, init = true) {
       if (type !== 'page') this.params.page = 1
       if (type) this.params[type] = value
       // 查询 | 更新高级筛选数据
@@ -552,6 +552,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .candidate-header {
+  min-width: 960px;
   height: 40px;
   display: flex;
   align-items: center;
