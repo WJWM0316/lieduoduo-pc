@@ -12,13 +12,15 @@ import recruiter from '@/router/recruiter'
       'recruiterIntentionList',
       'recruiterInviteList',
       'recruiterScheduleList',
-      'newJoinApplyNum'
+      'newJoinApplyNum',
+      'dynamicsRedDotNum'
     ]),
     reddot () {
       return {
         '/candidate': this.recruiterIntentionList + this.recruiterInviteList,
         '/interviewRecords': this.recruiterScheduleList,
-        '/recruiteam': this.newJoinApplyNum
+        '/recruiteam': this.newJoinApplyNum,
+        '/candidateType': this.dynamicsRedDotNum
       }
     }
   }
