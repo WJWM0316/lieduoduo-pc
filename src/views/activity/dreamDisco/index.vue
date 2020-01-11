@@ -144,7 +144,7 @@ export default {
       switch (identity) {
         case 'company':
           routeTo = this.$router.resolve({
-            path: 'company/details',
+            path: '/company/details',
             query: {
               vkey: item.vkey
             }
@@ -153,7 +153,7 @@ export default {
           break
         case 'position':
           routeTo = this.$router.resolve({
-            path: 'position/details',
+            path: '/position/details',
             query: {
               positionId: item.positionId
             }
@@ -162,7 +162,7 @@ export default {
           break
         case 'recruiter':
           routeTo = this.$router.resolve({
-            path: 'company/details',
+            path: '/company/details',
             query: {
               vkey: item.companyVkey,
               type: 'position'
