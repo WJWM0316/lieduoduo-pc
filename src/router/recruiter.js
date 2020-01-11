@@ -130,7 +130,7 @@ const recruiter = [
     component: Layout,
     meta: {
       useNav: true,
-      icon: 'iconfont icon-zhaopintuandui'
+      icon: 'iconfont icon-wodezhanghu-'
     },
     children: [
       {

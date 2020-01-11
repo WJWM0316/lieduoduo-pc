@@ -328,6 +328,7 @@ export default {
         this.nowResumeMsg = data.data || {}
         // 获取简历成功获取btn 显示的状态
         this.resetListDatas(this.nowResumeMsg)
+        this.current.interviewInfo = this.nowResumeMsg.interviewInfo
       }).catch(() => {
         this.getResumeLoading = false
       })
