@@ -30,6 +30,7 @@
         layout="prev, pager, next"
         :total="total">
       </el-pagination>
+      <div>共{{Math.ceil(total/params.count)}}页，{{total}}条记录</div>
     </div>
   </div>
 </template>

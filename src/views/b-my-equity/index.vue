@@ -55,7 +55,7 @@
           <span class="list-count-2">{{infos.rOnlinePositionUsed}}</span>
           <span>个</span>
         </div>
-        <div class="c-btn" @click="handleSet('position', infos.cRecruiterNum, infos.rOnlinePositionUsed)">发布职位</div>
+        <div class="c-btn" @click="handleSet('position', infos.rOnlinePosition, infos.rOnlinePositionUsed, 'auth')">发布职位</div>
       </div>
       <div class="equity-list-wrapper">
         <div class="">
@@ -149,7 +149,21 @@ export default {
         this.infos = data.data || {}
       })
     },
-    handleSet (type, limit, count) {
+    handleSet (type, limit, count, validAuth) {
+      if (validAuth === 'auth') {
+        const { recruiterinfo: { identityAuth } } = this.$store.state
+        if (!identityAuth) {
+          this.$confirm('您尚未认证身份，成功认证后即可发布职位。', '身份认证', {
+            confirmButtonText: '前往认证',
+            cancelButtonText: '取消',
+            type: 'warning',
+            center: true
+          }).then(() => {
+            this.$router.push({ name: 'perfectauth' })
+          }).catch(() => {})
+          return
+        }
+      }
       // 非不限 && 数量上限
       if (limit !== -1 && limit <= count) {
         this.$confirm(TipsText[type].text, '提示', {

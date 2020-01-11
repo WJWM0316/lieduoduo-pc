@@ -3,13 +3,23 @@
  */
 import { request } from './index.js'
 
-// 获取banner 图
+// 获取banner图
 export const getBanners = data => request({
   url: '/banner',
   method: 'get',
   params: data,
   config: {
     host: 'qiuzhi'
+  }
+})
+
+// 获取b端 banner图
+export const getBTermBanners = data => request({
+  url: '/banner',
+  method: 'get',
+  params: data,
+  config: {
+    host: 'zhaopin'
   }
 })
 
