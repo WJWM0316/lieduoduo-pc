@@ -45,7 +45,7 @@
           </div>
         </div>
         <div class="dreamCity-box-companyList" v-if="companyNowList[0]">
-          <el-carousel :interval="3000" height="655px" :arrow="companyNowList[0].length > 5 ? 'hover' :'never'">
+          <el-carousel :interval="3000" height="655px" :arrow="companyNowList[1] ? 'hover' :'never'">
             <el-carousel-item v-for="(item, index) in companyNowList" :key="index">
                 <div class="dreamCity-box-companyList-item" v-for="(item1, index1) in item" :key="index1">
                   <div class="dreamCity-company" @click="toNewPage(item1, index1, 'company')">
