@@ -2,7 +2,13 @@
   <!-- 我的账户 -->
   <div class="myaccount-wrapper">
     <!-- banners -->
-    <div class="account-banner"></div>
+    <div class="banner">
+      <el-carousel height="70px">
+        <el-carousel-item v-for="(item, index) in bannerList" :key="index">
+          <img class="banner-list" :src="item.bigImgUrl"/>
+        </el-carousel-item>
+      </el-carousel>
+    </div>
     <!-- servers -->
     <div class="account-servers">
       <div class="counselor">
@@ -63,6 +69,7 @@
 <script>
 import OrderDetails from './compnents/details'
 import { getRecruiterAccount } from 'API/recruiter'
+import { getBTermBanners } from 'API/common'
 import { wx_account_qrcode } from 'IMAGES/image'
 export default {
   components: { OrderDetails },
@@ -86,6 +93,7 @@ export default {
           content: '<p>如候选人未能到场</p><p>按岗位为您</p><p>多多币将退回至账号</p>'
         }
       ],
+      bannerList: {},
       coin: 0,
       qrCode: wx_account_qrcode,
       contactDialogStatus: false,
@@ -100,6 +108,9 @@ export default {
       getRecruiterAccount().then(({ data }) => {
         const { wallet } = data.data
         this.coin = wallet.remain
+      })
+      getBTermBanners('pc_b_my_account_top_banner').then(res => {
+        this.bannerList = res.data.data
       })
     }
   }
@@ -139,6 +150,15 @@ export default {
     width: 144px;
   }
 }
+.banner{
+  min-width: 960px;
+  height: 70px;
+  .banner-list{
+    min-width: 960px;
+    height: 70px;
+  }
+}
+
 .account-servers, .right-server, .orders-wrapper /deep/ .order-wrapper-content {
   border-radius: 8px;
   box-shadow: $shadow-1;
@@ -260,5 +280,22 @@ export default {
     font-size: 14px;
     color: $title-color-1;
   }
+}
+.myaccount-wrapper .el-carousel__indicator--horizontal{
+  padding: 0;
+  margin-left: 6px;
+}
+.myaccount-wrapper .el-carousel__indicator--horizontal button{
+  width:4px;
+  height:4px;
+  background: #ffffff;
+  opacity:0.5;
+  border-radius: 50%;
+}
+.myaccount-wrapper .el-carousel__indicator--horizontal.is-active button{
+  opacity: 1;
+  width: 27px;
+  height: 4px;
+  border-radius: 3px;
 }
 </style>
