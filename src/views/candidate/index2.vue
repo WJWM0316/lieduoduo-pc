@@ -474,11 +474,10 @@ export default {
       this.cleanListRedDot(item)
     },
     cleanListRedDot (vo = null) {
+      if (vo !== null) {
+        vo.redDot = 0
+      }
       if (this.recruiterIntentionList + this.recruiterInviteList > 0) {
-        console.log(1)
-        if (vo !== null) {
-          vo.redDot = 0
-        }
         this.$store.dispatch('redDotfun')
       }
     },

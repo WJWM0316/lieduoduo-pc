@@ -360,10 +360,10 @@ export default {
       if (this.$refs.resume) this.$refs.resume.getResume()
     },
     cleanListRedDot (vo = null) {
+      if (vo !== null) {
+        vo.redDot = 0
+      }
       if (this.visitedMyselfNum + this.interestedMyselfNum > 0) {
-        if (vo !== null) {
-          vo.redDot = 0
-        }
         this.$store.dispatch('redDotfun')
       }
     },
@@ -374,6 +374,7 @@ export default {
       // 查询 | 更新高级筛选数据
       if (type === 'navType') {
         this.candidateList = []
+        if (init) this.cleanListRedDot()
         this.total = 0
       }
       switch (this.params.navType) {
@@ -399,7 +400,6 @@ export default {
           this.getSearchMyCollect()
           break
       }
-      if (init) this.cleanListRedDot()
       // 滚动到顶部
       // const dom = document.querySelector('.candidate-header')
       // if (dom) {

@@ -6,13 +6,13 @@
       <span class="header-tips" v-if="infos.remainDay <= 5">
         <template v-if="isFree">
           <span class="iconfont icon-cuowu"></span>
-          <span>尊贵的用户：您的免费试用版权益</span>
+          <span>尊贵的用户：您的{{infos.rtVersionName}}权益</span>
           <span class="expired-time">即将于{{infos.expiredDesc | date('YYYY年MM月DD日')}}到期，</span>
           <span>限时升级专业版，请尽快联系我们~</span>
         </template>
         <template v-else>
           <span class="iconfont icon-cuowu"></span>
-          <span>尊贵的用户：您的专业版权益</span>
+          <span>尊贵的用户：您的{{infos.rtVersionName}}权益</span>
           <span class="expired-time">即将于{{infos.expiredDesc | date('YYYY年MM月DD日')}}到期，</span>
           <span>为了不影响您的招聘工作，请联系我们进行续费~</span>
         </template>
@@ -37,7 +37,7 @@
         <div class="">
           <p>面试官人数上限</p>
           <span class="list-count">{{infos.cRecruiterNum === -1 ? '不限' : infos.cRecruiterNum}}</span>
-          <span style="padding-left: 4px;">人</span>
+          <span style="padding-left: 4px;" v-if="infos.cRecruiterNum !== -1">人</span>
           <span style="padding: 0 16px;">|</span>
           <span>已加入</span>
           <span class="list-count-2">{{infos.cRecruiterNumUsed}}</span>
@@ -49,11 +49,11 @@
         <div class="">
           <p>在线职位数上限</p>
           <span class="list-count">{{infos.rOnlinePosition === -1 ? '不限' : infos.cRecruiterNum}}</span>
-          <span style="padding-left: 4px;">人</span>
+          <span style="padding-left: 4px;" v-if="infos.rOnlinePosition !== -1">个</span>
           <span style="padding: 0 16px;">|</span>
           <span>已发布</span>
           <span class="list-count-2">{{infos.rOnlinePositionUsed}}</span>
-          <span>人</span>
+          <span>个</span>
         </div>
         <div class="c-btn" @click="handleSet('position', infos.cRecruiterNum, infos.rOnlinePositionUsed)">发布职位</div>
       </div>
@@ -61,7 +61,7 @@
         <div class="">
           <p>每日面试邀约数上限</p>
           <span class="list-count">{{infos.rDayInviteInterview === -1 ? '不限' : infos.cRecruiterNum}}</span>
-          <span style="padding-left: 4px;">人</span>
+          <span style="padding-left: 4px;" v-if="infos.rDayInviteInterview !== -1">人</span>
           <span style="padding: 0 16px;">|</span>
           <span>已邀约</span>
           <span class="list-count-2">{{infos.rDayInviteInterviewUsed}}</span>
@@ -73,7 +73,7 @@
         <div class="">
           <p>每日查看简历上限</p>
           <span class="list-count">{{infos.rDayBrowseResume === -1 ? '不限' : infos.cRecruiterNum}}</span>
-          <span style="padding-left: 4px;">份</span>
+          <span style="padding-left: 4px;" v-if="infos.rDayBrowseResume !== -1">份</span>
           <span style="padding: 0 16px;">|</span>
           <span>已查看</span>
           <span class="list-count-2">{{infos.rDayBrowseResumeUsed}}</span>
@@ -137,7 +137,7 @@ export default {
     },
     // 是否是免费版
     isFree () {
-      return this.infos.rtVersionId
+      return this.infos.rtVersionId === 1
     }
   },
   created () {

@@ -171,7 +171,7 @@ export default new Vuex.Store({
             ...res.data.data,
             ...data
           }
-          console.log(data, '000000000')
+          // console.log(data, '000000000')
           store.commit('LOGINCALLBACK', loginData)
           // 获取用户角色信息
           const { state } = store
@@ -196,7 +196,7 @@ export default new Vuex.Store({
               router.go(-1)
               // console.log(state.userIdentity, 22222222222)
             } else {
-              console.log(state.userIdentity, 33333333)
+              // console.log(state.userIdentity, 33333333)
               let userIdentity = state.userIdentity
               userIdentity === 1 ? router.replace({ path: '/index' }) : router.replace({ path: '/candidate' })
             }
