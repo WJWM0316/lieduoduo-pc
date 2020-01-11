@@ -751,8 +751,7 @@ $bg-color1: #2C045D;
   right: -107px;
 }
 .dream .el-carousel__arrow{
-  opacity: 0.5;
-  background: #320952;
+  background: #524b5859;
   font-size: 25px;
   height: 90px;
   width: 90px;
