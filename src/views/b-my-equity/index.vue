@@ -48,7 +48,7 @@
       <div class="equity-list-wrapper">
         <div class="">
           <p>在线职位数上限</p>
-          <span class="list-count">{{infos.rOnlinePosition === -1 ? '不限' : infos.cRecruiterNum}}</span>
+          <span class="list-count">{{infos.rOnlinePosition === -1 ? '不限' : infos.rOnlinePosition}}</span>
           <span style="padding-left: 4px;" v-if="infos.rOnlinePosition !== -1">个</span>
           <span style="padding: 0 16px;">|</span>
           <span>已发布</span>
@@ -60,7 +60,7 @@
       <div class="equity-list-wrapper">
         <div class="">
           <p>每日面试邀约数上限</p>
-          <span class="list-count">{{infos.rDayInviteInterview === -1 ? '不限' : infos.cRecruiterNum}}</span>
+          <span class="list-count">{{infos.rDayInviteInterview === -1 ? '不限' : infos.rDayInviteInterview}}</span>
           <span style="padding-left: 4px;" v-if="infos.rDayInviteInterview !== -1">人</span>
           <span style="padding: 0 16px;">|</span>
           <span>已邀约</span>
@@ -72,7 +72,7 @@
       <div class="equity-list-wrapper">
         <div class="">
           <p>每日查看简历上限</p>
-          <span class="list-count">{{infos.rDayBrowseResume === -1 ? '不限' : infos.cRecruiterNum}}</span>
+          <span class="list-count">{{infos.rDayBrowseResume === -1 ? '不限' : infos.rDayBrowseResume}}</span>
           <span style="padding-left: 4px;" v-if="infos.rDayBrowseResume !== -1">份</span>
           <span style="padding: 0 16px;">|</span>
           <span>已查看</span>

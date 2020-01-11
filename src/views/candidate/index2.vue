@@ -680,7 +680,7 @@ export default {
         @include flex-v-center;
       }
       .bloTop-24hour{
-        width: 47px;
+        width: 50px;
         height: 18px;
         background: url('../../assets/images/tag_list_24hour.png') no-repeat;
         background-size: cover;
