@@ -1,6 +1,18 @@
 <template>
   <div class="dream">
-    <div class="benner"></div>
+    <div class="banner">
+      <div class="banner-warp">
+        <el-popover
+          placement="top"
+          popper-class="dream-share-wechat"
+          width="100">
+          <img style="max-width:100%; max-height:100%" :src="cdnPath + 'dreamCode.jpg'" alt="">
+          <div class="header-wechat-shart"  slot="reference">
+            <i class="iconfont icon-weixin"></i> 微信分享
+          </div>
+        </el-popover>
+      </div>
+    </div>
     <div class="text-wrap">
       <p class="text-wrap-text">
         2020大幕拉开<br/>每一个努力拼搏的你<br/>都值得拥有实现梦想的舞台<br/>猎多多助你奏响<br/>新年逐梦之音<br/>
@@ -244,11 +256,26 @@ $bg-color1: #2C045D;
 .dream{
   width: 100%;
   background: #170030;
-  .benner{
+  .banner{
     height: 718px;
     width: 100%;
     background: url(#{$image-cdn-url}/images/discoPC_2_01.jpg?a=1) no-repeat;
     background-position: center center;
+    .banner-warp{
+      width: 1200px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .header-wechat-shart {
+      position: absolute;
+      background: rgba( #fff, 0.2);
+      color: #fff;
+      border-radius: 4px;
+      right: 0;
+      top: 52px;
+      padding: 7px 20px;
+      cursor: pointer;
+    }
   }
   .text-wrap{
     background: url(#{$image-cdn-url}/images/discoPC_2_02.jpg) no-repeat;
@@ -530,11 +557,12 @@ $bg-color1: #2C045D;
     }
   }
   .dreamCity-position{
-    padding: 0 32px 30px 27px;
+    padding: 2px 17px;
     .dreamCity-positionList{
-      height:38px;
-      line-height: 38px;
-      margin-top: 12px;
+      padding: 0 10px;
+      height: 43px;
+      line-height: 43px;
+      margin-top: 8px;
       display: flex;
       justify-content: space-between;
       font-size:21px;
@@ -662,6 +690,13 @@ $bg-color1: #2C045D;
       width: 1100px !important;
     }
 }
+
+.dream-share-wechat.el-popper {
+  min-width: 105px;
+  height: 105px;
+  padding: 5px;
+  box-sizing: border-box;
+}
 /* 梦想召集人 */
 .dream .carousel .el-carousel__mask{
   opacity: 0.01;
@@ -716,6 +751,7 @@ $bg-color1: #2C045D;
   right: -107px;
 }
 .dream .el-carousel__arrow{
+  opacity: 0.5;
   background: #320952;
   font-size: 25px;
   height: 90px;
