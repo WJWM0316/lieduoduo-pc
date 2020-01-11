@@ -202,6 +202,9 @@ export default {
       let dreamCityList = res.data.data.company
       this.dreamCityList = res.data.data.company
       dreamCityList.forEach((item, index) => {
+        if (this.$store.state.cityId === item.areaId) {
+          this.dreamCityActivity = index
+        }
         let cumulative = []
         item.companyList.forEach((item1, index1) => {
           const page = Math.floor(index1 / 6)
