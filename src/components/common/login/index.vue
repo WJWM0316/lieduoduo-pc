@@ -129,7 +129,7 @@
             <li>4、招聘官身份所属公司尚未通过审核。</li>
           </ul>
           <div class="code-tips">
-            <img class="pic_3" src="@/assets/images/inf_qrcode@2x.png" />
+            <img class="pic_3" :src="qrCode" />
             <div class="text10">
               使用「微信」扫描小程序码，
               <br />进入猎多多小程序解决以上问题
@@ -148,6 +148,7 @@ import Component from 'vue-class-component'
 import { scanApi, getQrCodeApi, getCodeApi, getCaptchaApi } from '@/api/auth'
 import { mobileReg } from '@/util/fieldRegular.js'
 import { mapState } from 'vuex'
+import { mp_qrcode } from 'IMAGES/image'
 @Component({
   name: 'loginForm',
   methods: {},
@@ -179,6 +180,7 @@ export default class loginForm extends Component {
   loading = false
   // cdn图片地址
   cdnPath = `${process.env.VUE_APP_CDN_PATH}/images/`
+  qrCode = mp_qrcode
   identity = 1 // 1 求职者 2 招聘官
   codeData = {} // 二维码信息
   userInfo = {}

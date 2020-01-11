@@ -219,23 +219,19 @@
               </div>
             </div>
             <div class="btnstatus">
-              <template v-if="current.btn1 && current.btn1.type">
+              <template v-if="buttons.btn1 && buttons.btn1.type">
                 <el-button
                   style="width: 154px;"
-                  :disabled="current.btn1.disabled"
-                  @click.stop="handleSetResume(current.btn1.type)"
-                  :type="current.btn1.buttonType">{{current.btn1.buttonText}}</el-button>
+                  :disabled="buttons.btn1.disabled"
+                  @click.stop="handleSetResume(buttons.btn1.type)"
+                  :type="buttons.btn1.buttonType"
+                >{{buttons.btn1.buttonText}}</el-button>
               </template>
-              <template v-if="current.btn2 && current.btn2.type">
-                <!-- 如果可以查看原因显示撤回按钮 -->
-                <el-button
-                  type="primary"
-                  @click.stop="handleSetResume('interview-retract')"
-                  v-if="current.btn2.type === 'watch-reson'">撤回</el-button>
+              <template v-if="buttons.btn2 && buttons.btn2.type">
                 <el-button
                   style="width: 154px;"
-                  @click.stop="handleSetResume(current.btn2.type)"
-                >{{current.btn2.buttonText}}</el-button>
+                  @click.stop="handleSetResume(buttons.btn2.type)"
+                >{{buttons.btn2.buttonText}}</el-button>
               </template>
             </div>
             <div class="like_user" @click.stop="ownerOp(true, nowResumeMsg.uid)" v-if="nowResumeMsg.interested">
@@ -286,6 +282,15 @@ import { shareResumeApi } from 'API/forward'
 import { getResumeIdApi } from 'API/userJobhunter'
 import { createonlinepdf, createonlineword } from 'API/common'
 import { putCollectUserApi, cancelCollectUserApi } from 'API/collect'
+// 候选人动态操作按钮种类
+const CandidateTypeBtns = [
+  { buttonText: '查看联系', type: 'confirm-interview', buttonType: 'primary', is: (val) => val === 11 },
+  { buttonText: '查看邀约', type: 'check-invitation', buttonType: 'primary', is: (val) => val === 12 },
+  { buttonText: '安排面试', type: 'arranging-interviews', buttonType: 'primary', is: (val) => val === 21 },
+  { buttonText: '查看面试', type: 'arranging-interviews', buttonType: 'primary', is: (val) => val === 31 },
+  { buttonText: '修改面试', type: 'arranging-interviews', buttonType: 'primary', is: (val) => val === 32 },
+  { buttonText: '面试详情', type: 'check-invitation', buttonType: 'primary', is: (val) => val >= 41 }
+]
 export default {
   props: {
     visible: Boolean,
@@ -303,7 +308,11 @@ export default {
       nowResumeMsg: {}, // 简历数据
       loadingshow: false,
       hasonload: false,
-      shareResumeImg: ''
+      shareResumeImg: '',
+      buttons: {
+        btn1: {},
+        btn2: {}
+      }
     }
   },
   methods: {
@@ -314,9 +323,11 @@ export default {
     // 获取简历
     getResume () {
       this.getResumeLoading = true
-      getResumeIdApi({ uid: this.current.uid }).then(({ data }) => {
+      getResumeIdApi({ uid: this.current.uid || this.current.jobhunterUid }).then(({ data }) => {
         this.getResumeLoading = false
-        this.nowResumeMsg = data.data
+        this.nowResumeMsg = data.data || {}
+        // 获取简历成功获取btn 显示的状态
+        this.resetListDatas(this.nowResumeMsg)
       }).catch(() => {
         this.getResumeLoading = false
       })
@@ -390,6 +401,36 @@ export default {
     closeload (e) {
       if ((!this.$refs.queryBox.contains(e.target)) && event.target.className !== 'iconfont icon-xiazai') {
         this.hasonload = false
+      }
+    },
+    resetListDatas (data) {
+      const { data: { haveInterview, isOnProtected, interviewStatus, hasUnsuitRecord } } = data.interviewInfo
+      // 判断是否有邀约
+      if (haveInterview) {
+        if (!hasUnsuitRecord) {
+          this.buttons.btn2 = { buttonType: 'text', type: 'inappropriate', buttonText: '不合适' }
+        }
+        // 求职进去面试流程
+        let btn1 = CandidateTypeBtns.find(val => {
+          return val.is(interviewStatus)
+        })
+        this.buttons.btn1 = btn1 || {}
+        if (interviewStatus === 51) {
+          this.buttons.btn1.statusText = '已结束'
+        }
+      } else {
+        // 查看原因
+        if (hasUnsuitRecord) {
+          this.buttons.btn2 = { buttonType: 'text', type: 'interview-retract', buttonText: '撤回' }
+        }
+        // 拒绝
+        if (isOnProtected) {
+          this.buttons.btn1 = { buttonType: 'primary', type: 'cancel', disabled: true, buttonText: '暂时无法约面' }
+        }
+        // 未开始约聊 | 没不良记录 | 也没拒绝
+        if (!hasUnsuitRecord && !isOnProtected) {
+          this.buttons.btn1 = { buttonText: '开撩约面', type: 'recruiter-chat', buttonType: 'primary' }
+        }
       }
     }
   },
