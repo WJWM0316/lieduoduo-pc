@@ -6,9 +6,11 @@
       <div class="b-header-group-button">
         <div class="b-header-button" :class="{'active': params.navType==='searchBrowseMyself'}" @click="handleSearch('searchBrowseMyself', 'navType')">
           <i class="iconfont icon-zhengyan"></i>看过我的({{navNum.browseMyselfCount || 0}})
+          <span :class="{'is-red-dot' : visitedMyselfNum > 0}"></span>
         </div>
         <div class="b-header-button" :class="{'active':  params.navType==='searchCollect'}" @click="handleSearch('searchCollect', 'navType')">
           <i class="iconfont icon-ganxingqu-" style="padding-right: 6px"></i>对我感兴趣({{navNum.collectMyselfCount || 0}})
+          <span :class="{'is-red-dot' : interestedMyselfNum > 0}"></span>
         </div>
       </div>
       <div class="b-header-button" style="margin-left: 23px;" :class="{'active':  params.navType==='searchMyCollect'}" @click="handleSearch('searchMyCollect', 'navType')">
@@ -36,6 +38,7 @@
           <div class="status">
             <span>{{item.btn1 && item.btn1.statusText}}</span>
           </div>
+          <div class="redDot" v-if="item.redDot > 0"></div>
         </div>
         <div class="bloCont">
           <div class="cont_left">
@@ -200,6 +203,12 @@ export default {
       recorddiggle: false // '选择多少申请面试列表'
     }
   },
+  computed: {
+    ...mapGetters([
+      'visitedMyselfNum',
+      'interestedMyselfNum'
+    ])
+  },
   created () {
     const query = this.$route.query
     // type 类型转换
@@ -219,6 +228,9 @@ export default {
     // 默认选择看过我的type
     this.handleSearch(this.params.navType || 'searchBrowseMyself', 'navType')
   },
+  destroyed () {
+    this.cleanListRedDot()
+  },
   methods: {
     setJob (type, vo) {
       if (vo.interviewId) {
@@ -228,6 +240,7 @@ export default {
       }
       this.jobuid = vo.uid
       this.currentItem = vo
+      this.cleanListRedDot(vo)
       switch (type) {
         case 'recruiter-chat':
           this.positiondiggle = true
@@ -325,6 +338,7 @@ export default {
     viewResume (item) {
       this.currentItem = item
       this.resumeDialogStatus = true
+      this.cleanListRedDot(item)
     },
     /**
      * 刷新页面按钮显示状态（弹窗简历按钮）
@@ -342,6 +356,14 @@ export default {
         case 'searchMyCollect':
           this.getSearchMyCollect()
           break
+      }
+    },
+    cleanListRedDot (vo = null) {
+      if (this.visitedMyselfNum + this.interestedMyselfNum > 0) {
+        if (vo !== null) {
+          vo.redDot = 0
+        }
+        this.$store.dispatch('redDotfun')
       }
     },
     // 查询参数切换
@@ -376,6 +398,7 @@ export default {
           this.getSearchMyCollect()
           break
       }
+      this.cleanListRedDot()
       // 滚动到顶部
       // const dom = document.querySelector('.candidate-header')
       // if (dom) {
@@ -563,6 +586,7 @@ export default {
       color:#92929B;
       box-sizing: border-box;
       overflow: hidden;
+      position: relative;
       .timer {
         float: left;
       }
@@ -727,5 +751,15 @@ export default {
       }
     }
   }
+}
+.redDot{
+  position: absolute;
+  right: 0px;
+  top: 8px;
+  right: 8px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #F45322;
 }
 </style>
