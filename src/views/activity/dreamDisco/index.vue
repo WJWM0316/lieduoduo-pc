@@ -215,7 +215,7 @@ export default {
         })
         this.companyList.push(cumulative)
       })
-      this.companyNowList = this.companyList[0]
+      this.companyNowList = this.companyList[this.dreamCityActivity]
       // 拿到数据后渲染一次页面
       this.$forceUpdate()
     })
