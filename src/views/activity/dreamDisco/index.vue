@@ -259,7 +259,7 @@ $bg-color1: #2C045D;
   .banner{
     height: 718px;
     width: 100%;
-    background: url(#{$image-cdn-url}/images/discoPC_2_01.jpg?a=1) no-repeat;
+    background: url(#{$image-cdn-url}/images/discoPC_2_01.jpg?a=2) no-repeat;
     background-position: center center;
     .banner-warp{
       width: 1200px;
@@ -295,16 +295,16 @@ $bg-color1: #2C045D;
     }
   }
   .partner{
-    background: url(#{$image-cdn-url}/images/discoPC_2_08.jpg?a=1) no-repeat;
+    background: url(#{$image-cdn-url}/images/discoPC_2_08.jpg?a=2) no-repeat;
     background-position: center center;
     width: 100%;
-    height: 388px;
+    height: 330px;
   }
   .footer{
-    background: url(#{$image-cdn-url}/images/discoPC_2_09.jpg?a=1) no-repeat;
+    background: url(#{$image-cdn-url}/images/discoPC_2_09.jpg?a=2) no-repeat;
     background-position: center center;
     width: 100%;
-    height: 533px;
+    height: 449px;
     .join{
       width: 420px;
       margin: 0 auto;
