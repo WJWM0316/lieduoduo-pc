@@ -2,10 +2,10 @@
   <!-- 我的账户 -->
   <div class="myaccount-wrapper">
     <!-- banners -->
-    <div class="myaccount-banner" v-if="bannerList.length">
+    <div class="myaccount-banner" :class="{'unshow-pager' : bannerList.length <= 1}" v-if="bannerList.length">
       <el-carousel height="70px" arrow="never">
         <el-carousel-item v-for="(item, index) in bannerList" :key="index">
-          <img class="banner-list" :src="item.bigImgUrl"/>
+          <img class="banner-list" :src="item.bigImgUrl"  @click="handleToLink(item)"/>
         </el-carousel-item>
       </el-carousel>
     </div>
@@ -40,8 +40,10 @@
         <div class="right-server">
           <p class="right-title">联系客服</p>
           <div class="right-server-qrcode">
-            <img :src="qrCode" alt="">
-            <p>扫码添加客服微信号与我们联系</p>
+            <div>
+              <img :src="qrCode" alt="">
+              <p>扫码添加客服微信号与我们联系</p>
+            </div>
           </div>
           <p class="server-number">
             <span>电话咨询：</span>
@@ -53,6 +55,7 @@
      <el-dialog
       width="432px"
       custom-class="app-dialog"
+      top="calc((100vh - 460px) / 2)"
       :visible.sync="contactDialogStatus">
       <div class="contact-wrapper">
         <p class="contact-title"> {{isServer ? '顾问服务' : '充值多多币'}}</p>
@@ -90,7 +93,7 @@ export default {
         },
         {
           img: require('IMAGES/account/ic_deducted.png'),
-          content: '<p>如候选人未能到场</p><p>按岗位为您</p><p>多多币将退回至账号</p>'
+          content: '<p>到场才扣费</p><p>按岗位为您</p><p>多多币将退回至账号</p>'
         }
       ],
       bannerList: [],
@@ -112,6 +115,12 @@ export default {
       getBTermBanners({ location: 'pc_b_my_account_top_banner' }).then(res => {
         this.bannerList = res.data.data || []
       })
+    },
+    handleToLink (item) {
+      if (item.otherUrl) {
+        let protocol = item.otherUrl.indexOf('http') === -1 ? 'http://' : ''
+        window.open(protocol + item.otherUrl, '_blank')
+      }
     }
   }
 }
@@ -225,6 +234,7 @@ export default {
     background-repeat: no-repeat;
     background-position: right bottom;
     background-size: 100% 100%;
+    border-radius: 8px;
   }
   img {
     width: 86px;
@@ -246,15 +256,20 @@ export default {
         color: $title-color-2;
       }
       span:last-child {
-        color: $main-color-1
+        color: $main-color-1;
+        font-size: 18px;
       }
     }
     .right-server-qrcode {
-      width: 264px;
-      margin:10px 0 18px 27px;
-      background-color: $bg-color-1;
+      width: 100%;
+      padding: 0 30px;
+      div {
+        padding: 12px;
+        background-color: $bg-color-1;
+        box-sizing: border-box;
+      }
+      margin:10px 0 18px 0px;
       box-sizing: border-box;
-      padding: 12px;
       img, p{
         display: inline-block;
         vertical-align: middle;
@@ -284,21 +299,24 @@ export default {
     color: $title-color-1;
   }
 }
-.myaccount-wrapper .el-carousel__indicator--horizontal{
+.myaccount-banner .el-carousel__indicator--horizontal{
   padding: 0;
   margin-left: 6px;
 }
-.myaccount-wrapper .el-carousel__indicator--horizontal button{
+.myaccount-banner .el-carousel__indicator--horizontal button{
   width:4px;
   height:4px;
   background: #ffffff;
   opacity:0.5;
   border-radius: 50%;
 }
-.myaccount-wrapper .el-carousel__indicator--horizontal.is-active button{
+.myaccount-banner .el-carousel__indicator--horizontal.is-active button{
   opacity: 1;
   width: 27px;
   height: 4px;
   border-radius: 3px;
+}
+.myaccount-banner.unshow-pager .el-carousel__indicators {
+  display: none;
 }
 </style>

@@ -36,7 +36,7 @@
       <div class="equity-list-wrapper">
         <div class="">
           <p>面试官人数上限</p>
-          <span class="list-count">{{infos.cRecruiterNum === -1 ? '不限' : infos.cRecruiterNum}}</span>
+          <span class="list-count" :class="{number: infos.cRecruiterNum !== -1}">{{infos.cRecruiterNum === -1 ? '不限' : infos.cRecruiterNum}}</span>
           <span style="padding-left: 4px;" v-if="infos.cRecruiterNum !== -1">人</span>
           <span style="padding: 0 16px;">|</span>
           <span>已加入</span>
@@ -48,7 +48,7 @@
       <div class="equity-list-wrapper">
         <div class="">
           <p>在线职位数上限</p>
-          <span class="list-count">{{infos.rOnlinePosition === -1 ? '不限' : infos.rOnlinePosition}}</span>
+          <span class="list-count" :class="{number: infos.rOnlinePosition !== -1}">{{infos.rOnlinePosition === -1 ? '不限' : infos.rOnlinePosition}}</span>
           <span style="padding-left: 4px;" v-if="infos.rOnlinePosition !== -1">个</span>
           <span style="padding: 0 16px;">|</span>
           <span>已发布</span>
@@ -60,7 +60,7 @@
       <div class="equity-list-wrapper">
         <div class="">
           <p>每日面试邀约数上限</p>
-          <span class="list-count">{{infos.rDayInviteInterview === -1 ? '不限' : infos.rDayInviteInterview}}</span>
+          <span class="list-count" :class="{number: infos.rDayInviteInterview !== -1}">{{infos.rDayInviteInterview === -1 ? '不限' : infos.rDayInviteInterview}}</span>
           <span style="padding-left: 4px;" v-if="infos.rDayInviteInterview !== -1">人</span>
           <span style="padding: 0 16px;">|</span>
           <span>已邀约</span>
@@ -72,7 +72,7 @@
       <div class="equity-list-wrapper">
         <div class="">
           <p>每日查看简历上限</p>
-          <span class="list-count">{{infos.rDayBrowseResume === -1 ? '不限' : infos.rDayBrowseResume}}</span>
+          <span class="list-count" :class="{number: infos.rDayBrowseResume !== -1}">{{infos.rDayBrowseResume === -1 ? '不限' : infos.rDayBrowseResume}}</span>
           <span style="padding-left: 4px;" v-if="infos.rDayBrowseResume !== -1">份</span>
           <span style="padding: 0 16px;">|</span>
           <span>已查看</span>
@@ -85,6 +85,7 @@
     <el-dialog
       width="432px"
       custom-class="app-dialog"
+      top="calc((100vh - 460px) / 2)"
       :visible.sync="contactDialogStatus">
       <div class="contact-wrapper">
         <p class="contact-title">{{dialogText[dialogTextStatus].title}}</p>
@@ -216,6 +217,7 @@ $tip-color: #FF7F4D;
   h1 {
     font-size: 24px;
     line-height:32px;
+    margin: 0 0 30px;
   }
   h1, span {
     display: inline-block;
@@ -299,6 +301,9 @@ h2 {
     color: $title-color-1;
     font-size: 32px;
     line-height:32px;
+  }
+  .list-count.number {
+    font-size: 34px;
   }
   .c-btn {
     margin-left: auto;

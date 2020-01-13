@@ -11,11 +11,12 @@
           </div>
           <div class="">
             <p class="list-money" :class="{'is-add': list.type  === -1, 'is-return' : list.status  === 3}">{{list.type === 1 ? '-' : '+' }}{{list.money}}</p>
-            <p class="list-status-text" :class="{'is-add-text': list.type  === 1}" v-if="list.statusText">{{list.statusText}}</p>
+            <p class="list-status-text" :class="{'is-add-text': list.type  === 1 && list.status  === 2}" v-if="list.statusText">{{list.statusText}}</p>
           </div>
         </div>
         <no-found
           class="no-apply-lists"
+          :max-width="234"
           v-if="!lists.length && !getLoading"
           tip-text="暂无明细记录～" />
       </div>
