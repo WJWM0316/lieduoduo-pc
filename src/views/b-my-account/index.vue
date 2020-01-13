@@ -93,7 +93,7 @@ export default {
         },
         {
           img: require('IMAGES/account/ic_deducted.png'),
-          content: '<p>到场才扣费</p><p>按岗位为您</p><p>多多币将退回至账号</p>'
+          content: '<p>到场才扣费</p><p>如候选人未能到场</p><p>多多币将退回至账号</p>'
         }
       ],
       bannerList: [],
@@ -163,6 +163,7 @@ export default {
   min-width: 960px;
   height: 70px;
   margin-bottom: 16px;
+  overflow: hidden;
   .el-carousel__item  {
     text-align: center;
   }
@@ -259,6 +260,7 @@ export default {
       span:last-child {
         color: $main-color-1;
         font-size: 18px;
+        font-weight: bold;
       }
     }
     .right-server-qrcode {

@@ -10,7 +10,7 @@
             <p class="list-time">{{list.updatedAt}}</p>
           </div>
           <div class="">
-            <p class="list-money" :class="{'is-add': list.type  === -1, 'is-return' : list.status  === 3}">{{list.type === 1 ? '-' : '+' }}{{list.money}}</p>
+            <p class="list-money" :class="{'is-add': list.type  === -1 && list.status  === 2, 'is-return' : list.status  === 3}">{{list.type === 1 ? '-' : '+' }}{{list.money}}</p>
             <p class="list-status-text" :class="{'is-add-text': list.type  === 1 && list.status  === 2}" v-if="list.statusText">{{list.statusText}}</p>
           </div>
         </div>
@@ -106,7 +106,7 @@ export default {
   }
   p {
     font-size: 14px;
-    color: $title-color-2;
+    color: $title-color-1;
   }
   .list-label {
     margin-bottom: 13px;

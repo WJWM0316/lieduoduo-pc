@@ -214,10 +214,11 @@ $tip-color: #FF7F4D;
   min-width: 960px;
 }
 .equity-title {
+  margin: 0 0 30px;
   h1 {
     font-size: 24px;
     line-height:32px;
-    margin: 0 0 30px;
+    margin: 0;
   }
   h1, span {
     display: inline-block;
