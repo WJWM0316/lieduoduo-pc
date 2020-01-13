@@ -7,7 +7,7 @@
         <div class="from">
             <el-form :model="from" ref="fromMyMaterial" :rules="rules" label-width="100px">
                 <el-form-item prop="id" label="公司logo：">
-                  <div class="Picture-wrap">
+                  <div class="Picture-wrap" v-if="middleUrl">
                     <Picture
                     :value.sync="middleUrl"
                     attach-type="avatar"
@@ -52,7 +52,7 @@
                     <el-input type="textarea" show-word-limit maxlength="5000" placeholder="请输入公司介绍" v-model="from.intro"></el-input>
                 </el-form-item>
                 <el-form-item label="公司图片：">
-                  <div class="Picture-wrap-more">
+                  <div class="Picture-wrap-more" v-if="albumInfo">
                   <Picture
                     class="cresume-upload-wrapper"
                     :value.sync="albumInfo"
@@ -65,12 +65,10 @@
                 </el-form-item>
                 <el-form-item label="公司地址：">
                     <p class="address">
-                        <!-- <span @click="increaseAddress">+</span> -->
                         <i @click="increaseAddress" class="iconfont icon-tianjiashijian"></i>
                         <pre @click="increaseAddress">点击添加公司地址</pre>
                     </p>
                     <p class="address" v-for="(item, index) in address" :key="index">
-                        <!-- <span @click="deleteAddress(item)" class="addressBg">-</span> -->
                         <i @click="deleteAddress(item)" class="iconfont icon-shanjian addressIconColor"></i>
                         <pre @click="editAddress(index)">{{item.address + '&nbsp;' + item.doorplate}}</pre>
                     </p>
@@ -111,18 +109,9 @@ import {
   urlReg,
   companyIntroReg
 } from '@/util/fieldRegular'
+import { companyDetailApi } from '@/api/company'
 
 export default {
-  props: {
-    information: {
-      type: Object,
-      default: () => {}
-    },
-    materialShow: {
-      type: String,
-      default: ''
-    }
-  },
   data () {
     let urlRegReplace = (rule, value, callback) => {
       if (!value) {
@@ -135,7 +124,6 @@ export default {
       }
     }
     let logoRegReplace = (rule, value, callback) => {
-      console.log(this.from.id)
       if (this.from.logo > 0) {
         callback()
       } else {
@@ -157,22 +145,10 @@ export default {
         website: [{ required: false, message: '请输入正确的公司官网', trigger: 'blur' }, { validator: urlRegReplace, trigger: 'blur' }],
         intro: [{ required: true, min: 20, max: 5000, message: '请输入20到5000字以内的公司介绍', trigger: 'blur' }]
       },
-      from: {
-        id: this.information.id,
-        company_name: this.information.companyName,
-        company_shortname: this.information.companyShortname,
-        industry: this.information.industry,
-        industry_id: this.information.industryId,
-        financing: this.information.financing,
-        logo: this.information.logoInfo.id,
-        employees: this.information.employees,
-        business_license: this.information.businessLicense,
-        website: this.information.website,
-        intro: this.information.intro
-      },
-      address: this.information.address,
-      middleUrl: this.information.logoInfo.middleUrl,
-      albumInfo: this.information.albumInfo,
+      from: {},
+      address: {},
+      middleUrl: '',
+      albumInfo: [],
       fromCaching: '' // 表单数据缓存
     }
   },
@@ -183,8 +159,7 @@ export default {
   methods: {
     cancel () {
       if (this.fromCaching === JSON.stringify(this.from)) {
-        let type = '公司主页'
-        this.$emit('click', type)
+        this.$router.push({ name: 'myCompany' })
         return
       }
       this.$confirm('确定退出，更新的内容将不被保存', '有编辑中内容尚未保存，确定退出编辑吗?', {
@@ -193,12 +168,11 @@ export default {
         type: 'warning',
         center: true
       }).then(() => {
-        let type = '公司主页'
-        this.$emit('click', type)
+        this.$router.push({ name: 'myCompany' })
       })
     },
     submit () {
-      this.$refs.fromMyMaterial.validate(valid => {
+      this.$refs.fromMyMaterial.validate((valid, validText) => {
         if (valid) {
           if (this.from.website === '' || this.from.albumInfo || this.from.address) {
             this.$confirm('完善全部信息，可以提高公司的曝光与排名，是否继续完善?', '温馨提示', {
@@ -217,6 +191,10 @@ export default {
           } else {
             this.saveEditCompany()
           }
+        } else {
+          Object.keys(validText).forEach(item => {
+            this.$message.error(validText[item][0].message)
+          })
         }
       })
     },
@@ -236,9 +214,7 @@ export default {
       let data = this.from
       editCompanyApi(this.from.id, data).then(res => {
         this.$message.success('保存成功！')
-        this.$emit('save') // 刷新父组件数据
-        let type = '公司主页'
-        this.$emit('click', type)
+        this.$router.push({ name: 'myCompany' })
       })
     },
     receiveAddAdress (data) { // 地图回调
@@ -289,15 +265,32 @@ export default {
   },
   mounted () {
     this.$nextTick(() => {
-      this.fromCaching = JSON.stringify(this.from)
-      companyFinancingApi()
-        .then(res => {
+      companyFinancingApi().then(res => {
           this.financing = res.data.data
         })
-      companyEmployeesApi()
-        .then(res => {
+      companyEmployeesApi().then(res => {
           this.employees = res.data.data
         })
+      companyDetailApi().then(res => {
+        let data = res.data.data
+        this.from = {
+          id: data.id,
+          company_name: data.companyName,
+          company_shortname: data.companyShortname,
+          industry: data.industry,
+          industry_id: data.industryId,
+          financing: data.financing,
+          logo: data.logoInfo.id,
+          employees: data.employees,
+          business_license: data.businessLicense,
+          website: data.website,
+          intro: data.intro
+        }
+        this.fromCaching = JSON.stringify(this.from)
+        this.address = data.address
+        this.middleUrl = data.logoInfo.middleUrl
+        this.albumInfo = data.albumInfo
+      })
     })
   }
 }

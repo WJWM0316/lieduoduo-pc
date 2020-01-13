@@ -36,9 +36,13 @@ export default {
   },
   methods: {
     toEditProduct (item) {
-      this.$emit('toEditProduct', item)
-      let type = '编辑产品'
-      this.$emit('click', type)
+        this.$router.push({
+            name: 'EditProduct',
+            query: {
+                id: item.id,
+                companyId: item.companyId
+            }
+        })
     }
   }
 }
@@ -53,7 +57,6 @@ export default {
     &:nth-last-child(1){
         border: 0;
     }
-
     .productImg{
         float: left;
         width: 60px;

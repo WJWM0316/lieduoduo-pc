@@ -16,8 +16,8 @@
             </div>
           </div>
           <div class="header-left-buttom">
-            <div class="header-left-Introduction" :class="{ activation: activation }" @click="activationType">公司简介</div>
-            <div class="header-left-Introduction" :class="{ activation: !activation }" @click="activationType">招聘职位&nbsp;&nbsp;({{ companyInformation.positionNum }})</div>
+            <div class="header-left-Introduction" :class="{ activation: activation === 'company' }" @click="activationType('company')">公司简介</div>
+            <div class="header-left-Introduction" :class="{ activation: activation === 'position' }" @click="activationType('position')">招聘职位&nbsp;&nbsp;({{ companyInformation.positionNum }})</div>
           </div>
         </div>
         <div class="header-right right_ScrollY">
@@ -47,7 +47,7 @@
     </header>
     <div :class="{ headerScrollY_box: isHeader }"></div>
 
-    <template v-if="activation">
+    <template v-if="activation === 'company'">
       <div class="hotPosition">
         <div class="hotPosition-inner">
           <p class="hotPosition-title">热招职位：</p>
@@ -136,7 +136,7 @@
                     </div>
                   </div>
                 </div>
-                <el-button @click="activationType" class="recruitmentTeam-buttom" plain>
+                <el-button @click="activationType('position')" class="recruitmentTeam-buttom" plain>
                   查看所有Boss的在招职位 <i class="iconfont icon-right"></i>
                 </el-button>
               </div>
@@ -147,7 +147,7 @@
       </div>
     </template>
       <login ref="loginPop"></login>
-      <companyRecruitment v-if="!activation"></companyRecruitment>
+      <companyRecruitment v-if="activation === 'position'"></companyRecruitment>
   </div>
 </template>
 
@@ -204,7 +204,7 @@ export default class companyDetail extends Vue {
   infos = {}
   HotPositionList = {} // 热门职位列表
   companyInformation = {}
-  activation = true
+  activation = 'company'
   annex = '' // 附件简历显示文案
   uploading = false // 附件上传loading
   dialogVisible = false // 地图弹窗
@@ -222,8 +222,8 @@ export default class companyDetail extends Vue {
       this.isHeader = false
     }
   }
-  activationType () {
-    this.activation = !this.activation
+  activationType (type) {
+    this.activation = type
   }
   // 获取公司信息
   getCompany () {
@@ -312,7 +312,10 @@ export default class companyDetail extends Vue {
     this.uploading = false
     this.$message.error('上传附件简历失败')
   }
-  created () {
+  mounted () {
+    if (this.$route.query.type !== undefined) {
+      this.activation = this.$route.query.type
+    }
     window.addEventListener('scroll', this.handleScroll)
     this.getCompanysTeam()
     this.getCompanyHot()
