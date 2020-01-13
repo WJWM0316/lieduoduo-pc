@@ -12,7 +12,7 @@
         </template>
         <template v-else>
           <span class="iconfont icon-cuowu"></span>
-          <span>尊贵的用户：您的{{infos.rtVersionName}}权益</span>
+          <span>尊贵的用户：您的{{infos.rtVersionName}}权益  </span>
           <span class="expired-time">即将于{{infos.expiredDesc | date('YYYY年MM月DD日')}}到期，</span>
           <span>为了不影响您的招聘工作，请联系我们进行续费~</span>
         </template>
@@ -23,7 +23,7 @@
         <img :src="recruiter.avatar && recruiter.avatar.smallUrl" alt="">
       </div>
       <div class="recruiter-version">
-        <p class="version-type">{{infos.rtVersionName}}</p>
+        <p class="version-type">{{infos.rtVersionName}} <span class="iconfont icon-wodequanyi-" v-if="!isFree"></span></p>
         <p class="version-time" v-if="!isFree && infos.remainDay === 0">您的专业版权益已到期</p>
         <template v-else>
           <p class="version-time" v-if="infos.expiredDesc">有效期至 {{infos.expiredDesc | date('YYYY年MM月DD日')}}</p>
@@ -239,6 +239,10 @@ $tip-color: #FF7F4D;
     color: $title-color-1;
     font-size: 20px;
     font-weight: bold;
+    span {
+      color: #D4AE6B;
+      padding-left: 8px;
+    }
   }
   .version-time {
     color: $title-color-2;

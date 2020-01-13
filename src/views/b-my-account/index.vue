@@ -109,7 +109,7 @@ export default {
         const { wallet } = data.data
         this.coin = wallet.remain
       })
-      getBTermBanners('pc_b_my_account_top_banner').then(res => {
+      getBTermBanners({ location: 'pc_b_my_account_top_banner' }).then(res => {
         this.bannerList = res.data.data || []
       })
     }
