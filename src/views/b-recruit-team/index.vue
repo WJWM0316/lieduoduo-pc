@@ -180,11 +180,12 @@ export default {
 </script>
 <style lang="scss" scoped>
 .recruit-team {
-  background: #fff;
   box-sizing: border-box;
   .rec-team-header {
     padding: 40px 50px 30px;
+    min-width: 960px;
     @include flex-v-center;
+    background: #fff;
   }
   h1 {
     font-size: 24px;
@@ -194,7 +195,8 @@ export default {
 }
 .recruit-lists {
   min-height: 150px;
-  min-width: $page-width;
+  min-width: 1120px;
+  background: #fff;
 }
 .recruit-list {
   @include flex-v-center;
