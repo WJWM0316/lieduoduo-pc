@@ -129,8 +129,8 @@ export default {
 .counselor {
   background-image: url('../../assets/images/account/img_vip.png');
   background-repeat: no-repeat;
-  background-size: 60%;
-  background-position-x: 0px;
+  background-size: 55%;
+  background-position-x: -5px;
   height: 100%;
   padding: 34px 0  28px 36px;
   box-sizing: border-box;
@@ -184,9 +184,10 @@ export default {
   height: 166px;
   box-sizing: border-box;
   @include flex-v-center;
+  padding-right: 33px;
   .counselor {
-    width: 197px;
-    max-width: 197px;
+    width: 234px;
+    max-width: 234px;
   }
   div {
     flex: 1;
