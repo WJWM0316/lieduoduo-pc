@@ -168,6 +168,7 @@ export default {
   }
   .banner-list{
     max-width: 100%;
+    cursor: pointer;
   }
 }
 
