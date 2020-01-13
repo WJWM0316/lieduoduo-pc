@@ -109,7 +109,7 @@ export default {
     color: $title-color-1;
   }
   .list-label {
-    margin-bottom: 13px;
+    margin-bottom: 12px;
     color: $title-color-1;
   }
   .list-time {
@@ -117,7 +117,7 @@ export default {
   }
   .list-money {
     font-size: 22px;
-    margin-bottom: 9px;
+    margin-bottom: 6px;
   }
   .is-add, .list-status-text {
     color: $sub-color-1;
