@@ -279,7 +279,7 @@ $tip-color: #FF7F4D;
   }
 }
 h2 {
-  color: $title-color-2;
+  color: $title-color-1;
   font-size: 20px;
   line-height:32px;
   margin: 62px 0 24px;
