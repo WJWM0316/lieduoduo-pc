@@ -129,7 +129,8 @@ export default {
 .counselor {
   background-image: url('../../assets/images/account/img_vip.png');
   background-repeat: no-repeat;
-  background-size: 76% 74%;
+  background-size: 60%;
+  background-position-x: 0px;
   height: 100%;
   padding: 34px 0  28px 36px;
   box-sizing: border-box;
@@ -163,17 +164,18 @@ export default {
   min-width: 960px;
   height: 70px;
   margin-bottom: 16px;
-  overflow: hidden;
   .el-carousel__item  {
     text-align: center;
+    border-radius: 8px;
   }
   .banner-list{
     max-width: 100%;
+    min-height: 100%;
     cursor: pointer;
   }
 }
 
-.account-servers, .right-server, .orders-wrapper /deep/ .order-wrapper-content, .myaccount-banner {
+.account-servers, .right-server, .orders-wrapper /deep/ .order-wrapper-content, .myaccount-banner, .duoduo-coin {
   border-radius: 8px;
   box-shadow: $shadow-1;
 }

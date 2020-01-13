@@ -233,7 +233,7 @@ $tip-color: #FF7F4D;
     margin-left: 8px;
     line-height: 18px;
     .iconfont {
-      padding-right: 2px;
+      padding-right: 4px;
       font-size: 14px;
       color: $tip-color;
     }
