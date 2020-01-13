@@ -293,13 +293,16 @@ h2 {
 }
 .equity-list-wrapper {
   width: 48.9%;
-  padding: 35px 42px 42px;
+  padding: 35px 42px 35px;
   background: $list-bg-color;
   border: 1px solid $border-color-8;
   box-sizing: border-box;
   border-radius:4px;
   margin-bottom: 20px;
   @include flex-v-center;
+  & > div:first-child {
+    padding-bottom: 7px;
+  }
   p {
     color: $title-color-1;
     font-size: 16px;
