@@ -2,7 +2,7 @@
   <!-- 我的账户 -->
   <div class="myaccount-wrapper">
     <!-- banners -->
-    <div class="myaccount-banner">
+    <div class="myaccount-banner" v-if="bannerList.length">
       <el-carousel height="70px" arrow="never">
         <el-carousel-item v-for="(item, index) in bannerList" :key="index">
           <img class="banner-list" :src="item.bigImgUrl"/>
@@ -93,7 +93,7 @@ export default {
           content: '<p>如候选人未能到场</p><p>按岗位为您</p><p>多多币将退回至账号</p>'
         }
       ],
-      bannerList: {},
+      bannerList: [],
       coin: 0,
       qrCode: wx_account_qrcode,
       contactDialogStatus: false,
@@ -110,7 +110,7 @@ export default {
         this.coin = wallet.remain
       })
       getBTermBanners('pc_b_my_account_top_banner').then(res => {
-        this.bannerList = res.data.data
+        this.bannerList = res.data.data || []
       })
     }
   }

@@ -67,7 +67,7 @@
           <span class="list-count-2">{{infos.rDayInviteInterviewUsed}}</span>
           <span>人</span>
         </div>
-        <div class="c-btn" @click="handleSet('colleague', infos.cRecruiterNum, infos.rDayInviteInterviewUsed)">前往邀约</div>
+        <div class="c-btn" @click="handleSet('colleague', infos.rDayInviteInterview, infos.rDayInviteInterviewUsed)">前往邀约</div>
       </div>
       <div class="equity-list-wrapper">
         <div class="">
@@ -79,7 +79,7 @@
           <span class="list-count-2">{{infos.rDayBrowseResumeUsed}}</span>
           <span>份</span>
         </div>
-        <div class="c-btn" @click="handleSet('view', infos.cRecruiterNum, infos.rDayBrowseResumeUsed)">前往查看</div>
+        <div class="c-btn" @click="handleSet('view', infos.rDayBrowseResume, infos.rDayBrowseResumeUsed)">前往查看</div>
       </div>
     </div>
     <el-dialog
@@ -104,19 +104,19 @@ import { getRecruiterRight } from 'API/recruiter'
 import { wx_account_qrcode } from 'IMAGES/image'
 import SharePopup from '@/components/common/sharePopup'
 const TipsText = {
+  invite: {
+    text: '招聘官人数已达上限，请联系客服申请开放人数限制'
+  },
+  position: {
+    text: '招聘中职位数已达上限，请联系客服申请开放数量限制',
+    name: 'postJob'
+  },
   colleague: {
     text: '邀请约面人数已达上限，请联系客服申请开放人数限制',
     name: 'candidatetype'
   },
-  position: {
-    text: '浏览简历次数已达上限，请联系客服申请开放次数限制',
-    name: 'postJob'
-  },
-  invite: {
-    text: '招聘官人数已达上限，请联系客服申请开放人数限制'
-  },
   view: {
-    text: '招聘中职位数已达上限，请联系客服申请开放数量限制',
+    text: '浏览简历次数已达上限，请联系客服申请开放次数限制',
     name: 'candidatetype'
   }
 }
