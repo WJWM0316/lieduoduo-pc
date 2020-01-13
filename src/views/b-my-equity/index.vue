@@ -23,13 +23,13 @@
         <img :src="recruiter.avatar && recruiter.avatar.smallUrl" alt="">
       </div>
       <div class="recruiter-version">
-        <p class="version-type">{{infos.rtVersionName}} <span class="iconfont icon-wodequanyi-" v-if="!isFree"></span></p>
+        <p class="version-type" v-show="infos.rtVersionName">{{infos.rtVersionName}} <span class="iconfont icon-wodequanyi-" v-if="!isFree"></span></p>
         <p class="version-time" v-if="!isFree && infos.remainDay === 0">您的专业版权益已到期</p>
         <template v-else>
           <p class="version-time" v-if="infos.expiredDesc">有效期至 {{infos.expiredDesc | date('YYYY年MM月DD日')}}</p>
         </template>
       </div>
-      <el-button type="primary" @click="contactDialogStatus = true">{{isFree ? '升级专业版' : '我要续费'}}</el-button>
+      <el-button type="primary" @click="contactDialogStatus = true; dialogTextStatus = isFree ? 'free' : 'major'">{{isFree ? '升级专业版' : '我要续费'}}</el-button>
     </div>
     <h2>权益使用详情</h2>
     <div class="equity-list">
@@ -87,8 +87,8 @@
       custom-class="app-dialog"
       :visible.sync="contactDialogStatus">
       <div class="contact-wrapper">
-        <p class="contact-title"> {{isFree ? '升级专业版' : '立即续费'}}</p>
-        <p> {{isFree ? '您可用「微信」扫下方二维码，联系我们升级专业版' : '您可微信扫下方二维码，联系我们进行续费'}} </p>
+        <p class="contact-title">{{dialogText[dialogTextStatus].title}}</p>
+        <p>{{dialogText[dialogTextStatus].content}}</p>
         <div class="contact-qrcode">
           <img :src="wxAccount" alt="">
         </div>
@@ -125,6 +125,21 @@ export default {
   data () {
     return {
       infos: {},
+      dialogText: {
+        major: {
+          title: '立即续费',
+          content: '您可微信扫下方二维码，联系我们进行续费'
+        },
+        free: {
+          title: '升级专业版',
+          content: '您可用「微信」扫下方二维码，联系我们升级专业版'
+        },
+        contact: {
+          title: '联系客服',
+          content: '您可微信扫下方二维码，联系我们'
+        }
+      },
+      dialogTextStatus: 'contact',
       contactDialogStatus: false, // 联系人弹窗
       showSharePopup: false,
       wxAccount: wx_account_qrcode
@@ -173,6 +188,7 @@ export default {
           center: true
         }).then(() => {
           this.contactDialogStatus = true
+          this.dialogTextStatus = 'contact'
         }).catch(() => {})
         return
       }
