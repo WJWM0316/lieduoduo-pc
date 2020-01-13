@@ -23,7 +23,10 @@
         <img :src="recruiter.avatar && recruiter.avatar.smallUrl" alt="">
       </div>
       <div class="recruiter-version">
-        <p class="version-type" v-show="infos.rtVersionName">{{infos.rtVersionName}} <span class="iconfont icon-wodequanyi-" v-if="!isFree"></span></p>
+        <p class="version-type" v-show="infos.rtVersionName">{{infos.rtVersionName}}
+          <!-- <span class="iconfont icon-wodequanyi-" v-if="!isFree"></span> -->
+          <img src="~@/assets/images/vip.png" v-if="!isFree" />
+        </p>
         <p class="version-time" v-if="!isFree && infos.remainDay === 0">您的专业版权益已到期</p>
         <template v-else>
           <p class="version-time" v-if="infos.expiredDesc">有效期至 {{infos.expiredDesc | date('YYYY年MM月DD日')}}</p>
@@ -259,10 +262,14 @@ $tip-color: #FF7F4D;
     color: $title-color-1;
     font-size: 20px;
     font-weight: bold;
-    span {
-      color: #D4AE6B;
-      font-size: 18px;
-      padding-left: 8px;
+    // span {
+    //   color: #D4AE6B;
+    //   font-size: 18px;
+    //   padding-left: 8px;
+    // }
+    img {
+      padding-left: 4px;
+      width: 18px;
     }
   }
   .version-time {
@@ -272,7 +279,7 @@ $tip-color: #FF7F4D;
   }
 }
 h2 {
-  color: $font-color-2;
+  color: $title-color-2;
   font-size: 20px;
   line-height:32px;
   margin: 62px 0 24px;
