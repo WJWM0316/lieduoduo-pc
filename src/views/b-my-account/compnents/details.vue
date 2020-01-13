@@ -112,6 +112,9 @@ export default {
     margin-bottom: 13px;
     color: $title-color-1;
   }
+  .list-time {
+    color: $title-color-3;
+  }
   .list-money {
     font-size: 22px;
     margin-bottom: 9px;

@@ -240,9 +240,10 @@ export default {
   position: relative;
   box-sizing: border-box;
   border: 1px solid $border-color-2;
-  border-radius: 4px 6px 6px 4px;
+  border-radius: 4px 4px 4px 4px;
   height: 50px;
-  border-right: none;
+  display: flex;
+  overflow: hidden;
   .el-autocomplete,& /deep/ .el-input__inner{
     padding-left: 10px;
     height: 40px;
@@ -289,7 +290,8 @@ export default {
     vertical-align: middle;
     width: 128px;
     border-radius: 0 4px 4px 0;
-    padding: 15px 20px;
+    padding: 16px 20px;
+    margin: -1px 0px 0 auto;
   }
   .search-fixed-title {
     display: none

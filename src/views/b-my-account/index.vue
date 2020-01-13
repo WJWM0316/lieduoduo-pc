@@ -164,9 +164,12 @@ export default {
   min-width: 960px;
   height: 70px;
   margin-bottom: 16px;
+  .el-carousel {
+    border-radius: 8px;
+    overflow: hidden;
+  }
   .el-carousel__item  {
     text-align: center;
-    border-radius: 8px;
   }
   .banner-list{
     max-width: 100%;
@@ -218,7 +221,7 @@ export default {
     flex: 1;
   }
   .account-content-right {
-    width: 300px;
+    width: 320px;
     margin-left: 16px;
   }
 }
@@ -246,6 +249,7 @@ export default {
   }
   .coin-count {
     font-size: 42px;
+    line-height: 32px;
     font-weight: bold;
     color: $main-color-1;
     margin:10px 0 30px;
@@ -253,6 +257,7 @@ export default {
   .right-server {
     .right-title{
       padding-left: 40px;
+      line-height: 20px;
     }
     .server-number {
       text-align: center;
@@ -284,6 +289,7 @@ export default {
         width: 98px;
         line-height:20px;
         margin-left: 25px;
+        color: $title-color-2;
       }
     }
   }

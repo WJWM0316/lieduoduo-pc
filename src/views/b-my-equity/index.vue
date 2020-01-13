@@ -219,6 +219,7 @@ $tip-color: #FF7F4D;
     font-size: 24px;
     line-height:32px;
     margin: 0;
+    color: $title-color-1;
   }
   h1, span {
     display: inline-block;
@@ -260,6 +261,7 @@ $tip-color: #FF7F4D;
     font-weight: bold;
     span {
       color: #D4AE6B;
+      font-size: 18px;
       padding-left: 8px;
     }
   }
@@ -304,7 +306,7 @@ h2 {
     line-height:32px;
   }
   .list-count.number {
-    font-size: 34px;
+    font-size: 38px;
   }
   .c-btn {
     margin-left: auto;
