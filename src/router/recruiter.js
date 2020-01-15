@@ -24,7 +24,7 @@ const recruiter = [
   },
   {
     path: '/candidateType',
-    title: '候选人动态',
+    title: '发现候选人',
     component: Layout,
     meta: {
       useNav: true,
@@ -40,7 +40,7 @@ const recruiter = [
   },
   {
     path: '/candidate',
-    title: '候选人库',
+    title: '面试记录',
     component: Layout,
     meta: {
       useNav: true,

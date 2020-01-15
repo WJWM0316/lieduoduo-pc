@@ -32,7 +32,18 @@
       <div class="account-content-right">
         <!-- recharge -->
         <div class="duoduo-coin">
-          <p class="right-title">我的多多币</p>
+          <p class="right-title">我的多多币
+            <el-popover
+              placement="top-end"
+              width="300">
+              <p class="duoduo-popover-title">多多币说明</p>
+              <p class="duoduo-popover-text">多多币是什么？<br/>
+                多多币是猎多多平台专属的虚拟货币，用户需要充值获取，目前兑换比例为1rmb=1多多币。</p>
+                <p class="duoduo-popover-text" style="margin-top: 18px;">多多币如何使用？<br/>
+                  购买后，多多币可用于约聊候选人，或使用顾问服务邀请候选人进行约面，顾问会介入为您提供相关约面服务。</p>
+              <i slot="reference" class="iconfont icon-yanseguanbi_huaban"></i>
+            </el-popover>
+          </p>
           <p class="coin-count">{{coin}}</p>
           <el-button style="width: 132px" type="primary" size="small" @click="contactDialogStatus = true; isServer = false">去充值</el-button>
         </div>
@@ -226,6 +237,11 @@ export default {
     font-size: 20px;
     color: $title-color-1;
     font-weight: bold;
+    .iconfont{
+      display: inline-block;
+      color: $border-color-1;
+      font-size: 14px;
+    }
   }
   .duoduo-coin {
     padding-left: 40px;
@@ -285,6 +301,19 @@ export default {
       }
     }
   }
+}
+.duoduo-popover-title{
+  text-align: center;
+  color: $font-color-3;
+  font-size: 20px;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+.duoduo-popover-text{
+  color: $font-color-3;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
 }
 </style>
 <style lang="scss">

@@ -44,8 +44,10 @@
         </template>
       </ul>
       <div class="header-user-info">
+        <layout-information v-if="headerInfo.id"></layout-information>
         <div class="system">
           <template v-if="headerInfo.id">
+
             <router-link tag="span" to="/interview" class="resume" v-slot="{ href, isActive, isExactActive }">
               <span
                 class="router-link"
@@ -98,9 +100,13 @@
 <script>
 import { getHotArea } from 'API/common'
 import DropDown from 'COMPONENTS/dropDown'
+import layoutInformation from 'COMPONENTS/common/layoutInformation/layoutInformation'
 import { asideBar } from 'UTIL/interview-static-data'
 export default {
-  components: { DropDown },
+  components: {
+    DropDown,
+    layoutInformation
+  },
   data () {
     return {
       addressName: '全国',

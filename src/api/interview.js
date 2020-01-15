@@ -247,3 +247,27 @@ export const sureInterviewApi = (data) => {
     }
   })
 }
+
+// 求职端分页获取约聊列表
+export const CchatInterviewApi = (data) => {
+  return request({
+    method: 'get',
+    url: '/chat/page',
+    params: data,
+    config: {
+      host: 'qiuzhi'
+    }
+  })
+}
+
+// 求职端分页获取约聊列表
+export const BchatInterviewApi = (data) => {
+  return request({
+    method: 'get',
+    url: '/chat/page',
+    params: data,
+    config: {
+      host: 'zhaopin'
+    }
+  })
+}

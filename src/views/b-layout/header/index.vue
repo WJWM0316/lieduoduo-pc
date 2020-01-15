@@ -1,6 +1,7 @@
 <template>
   <div class="page-header">
     <div class="page-header-wrapper">
+      <layout-information port="BPort"></layout-information>
       <div class="sc-wrapper">
         <template v-for="(item, index) in headerDrop">
           <div :key="index" class="sc-wrapper-item">
@@ -42,7 +43,7 @@
 </template>
 <script>
 import { mp_qrcode, wx_qrcode } from 'IMAGES/image'
-import { mapState } from 'vuex'
+import layoutInformation from 'COMPONENTS/common/layoutInformation/layoutInformation'
 export default {
   data () {
     return {
@@ -66,6 +67,9 @@ export default {
       userInfo: state => state.userInfo,
       Identityinfo: state => state.recruiterinfo
     })
+  },
+  components: {
+    layoutInformation
   },
   watch: {
     'Identityinfo': function (n) {
