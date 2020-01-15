@@ -260,3 +260,11 @@ export const getRecommendOpptyInterestListsApi = data => request({
   params: data,
   config: { host: 'qiuzhi' }
 })
+
+// 获取热门推荐职位类型筛选
+export const gethotPositionTypeApi = data => request({
+  url: '/recommend/ranges/all',
+  method: 'get',
+  params: data,
+  config: { host: 'zhaopin' }
+})
