@@ -284,15 +284,19 @@
       :jobuid="jobuid"
       :type="selectedInterviewType"
       :position-id="positionId"/>
+    <!-- 查看约聊不合适原因 -->
+    <chat-reson :list="resonList.reason" :explain="resonList.extraDesc" :visible.sync="chatResonDialog" />
     <!-- 下载app引导弹窗 -->
-    <download-app :visable.sync="downloadAppDialog" />
+    <download-app :visible.sync="downloadAppDialog" />
   </div>
 </template>
 <script>
 import DynamicRecord from './dynamicRecord'
 import SelectPosition from './candidatePosition'
+import ChatReson from './chatResonList'
 import PayCoin from './pay'
 import DownloadApp from '@/components/common/sharePopup/chatDownloadApp'
+import { deleteNotInterest } from 'API/candidate'
 import { shareResumeApi } from 'API/forward'
 import { getResumeIdApi } from 'API/userJobhunter'
 import { createonlinepdf, createonlineword } from 'API/common'
@@ -302,7 +306,7 @@ const ChatTypeBtns = [
   { buttonText: '一键约聊', type: 'recruiter-chat', buttonType: 'primary', is: (val) => [705, 715, 716].includes(val) }, // b->c c拒绝
   { buttonText: '继续聊', type: 'keep-chat', buttonType: 'primary', is: (val) => [101, 301, 501].includes(val) }, // b->c,c->b 未处理， b|c同意
   { buttonText: '继续沟通', type: 'keep-chat', buttonType: 'primary', is: (val) => val === 701 }, // c->b b未同意
-  { buttonText: '取消不合适', type: 'return-cancel', buttonType: 'warning', is: (val) => [305, 315, 316].includes(val), hasReason: true } // b主动拒绝
+  { buttonText: '一键约聊', type: 'recruiter-chat', buttonType: 'primary', is: (val) => [305, 315, 316].includes(val), hasReason: true } // b主动拒绝
 ]
 // 顾问帮约(约面)按钮种类 （）
 const MeetTypeBtns = [
@@ -322,7 +326,7 @@ export default {
       default: () => ({})
     }
   },
-  components: { DynamicRecord, SelectPosition, PayCoin, DownloadApp },
+  components: { DynamicRecord, SelectPosition, PayCoin, DownloadApp, ChatReson },
   data () {
     return {
       getResumeLoading: false, // 获取简历loading
@@ -341,8 +345,10 @@ export default {
       selectPositionDialogStatus: false, // 选择职位弹窗
       payCoinDialogStatus: false, // 支付弹窗
       downloadAppDialog: false, // 下载app弹窗
+      chatResonDialog: false,
       jobuid: 0,
-      positionId: 0
+      positionId: 0,
+      resonList: { reason: [], extraDesc: '' } // 不合适
     }
   },
   methods: {
@@ -350,14 +356,35 @@ export default {
     handleSetChat (btn) {
       switch (btn.type) {
         case 'recruiter-chat':
+          // 选择职位
           this.selectedInterviewType = 'chat'
           this.selectPositionDialogStatus = true
+          break
+        case 'keep-chat':
+          this.downloadAppDialog = true
+          break
+        case 'return-cancel':
+          const { uid } = this.nowResumeMsg
+          deleteNotInterest(uid).then(({ data }) => {
+            if (data.httpStatus === 200) {
+              this.$message.success('取消成功！')
+              this.$emit('finish')
+            }
+          })
+          break
+        case 'watch-chat-reson':
+          const { reason, extraDesc } = this.nowResumeMsg.notSuitInfo
+          this.resonList = {
+            reason, extraDesc
+          }
+          this.chatResonDialog = true
           break
       }
     },
     // 约面流程
     handleSetResume (btn) {
       if (btn.type === 'recruiter-chat') {
+        // 选择职位
         this.selectedInterviewType = 'interview'
         this.selectPositionDialogStatus = true
       } else {
@@ -462,17 +489,18 @@ export default {
       }
     },
     resetListDatas (data) {
-      const { status } = data.chatInfo || {}
+      const { status, notSuitInfo } = data.chatInfo || {}
       const { interviewInfo, isAdvisor } = data.interviewSummary || {}
       if (data.chatInfo) {
         let btn1 = ChatTypeBtns.find(val => val.is(status))
-        if (btn1.hasReason) {
-          // 查看约聊不合适原因
-          this.buttons.btn2 = { buttonText: '查看原因', type: 'watch-chat-reson', buttonType: 'defalut' }
-        }
         this.buttons.btn1 = btn1
       } else {
         this.buttons.btn1 = { buttonText: '一键约聊', type: 'recruiter-chat', buttonType: 'primary' }
+      }
+      // 招聘官（对人）标记不合适
+      if (notSuitInfo) {
+        this.buttons.btn1 = { buttonText: '取消不合适', type: 'return-cancel', buttonType: 'warning' }
+        this.buttons.btn2 = { buttonText: '查看原因', type: 'watch-chat-reson', buttonType: 'defalut' }
       }
       // 是否有约面信息
       if (interviewInfo) {

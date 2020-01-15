@@ -85,7 +85,7 @@ export default {
         // 约聊
         applyChat({
           jobhunter: this.jobuid,
-          positionId: this.positionId
+          position: this.positionId
         }).then(({ data }) => {
           if (data.httpStatus === 200) {
             this.$message.success('约聊成功')

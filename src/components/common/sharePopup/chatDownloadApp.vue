@@ -31,7 +31,7 @@ export default {
   },
   data () {
     return {
-      contactDialogStatus: true,
+      contactDialogStatus: false,
       qrCode: app_qrcode
     }
   },
@@ -59,7 +59,12 @@ export default {
     font-weight: bold;
     position: relative;
     background: url('../../../assets/images/rocket.png') no-repeat;
-    background-position:top right;
+    background-position: 280px 0;
+  }
+  p {
+    color: $title-color-2;
+    font-size: 14px;
+    line-height:22px;
   }
 }
 

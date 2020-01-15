@@ -1,5 +1,5 @@
 <template>
-  <!-- 选择不合适原因 -->
+  <!-- 约面选择不合适原因 -->
   <div class="interview">
     <el-dialog
       width="432px"

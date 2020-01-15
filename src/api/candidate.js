@@ -190,8 +190,17 @@ export const getCandidateInterviewCharge = jobhunter => request({
 // 招聘官发起约聊
 export const applyChat = data => request({
   url: '/chat/apply',
-  method: 'get',
+  method: 'post',
   params: data,
+  config: {
+    host: 'zhaopin'
+  }
+})
+
+// 招聘官取消对人标记的不合适
+export const deleteNotInterest = jobhunterUid => request({
+  url: `/not_suit/jobhunter/${jobhunterUid}`,
+  method: 'delete',
   config: {
     host: 'zhaopin'
   }
