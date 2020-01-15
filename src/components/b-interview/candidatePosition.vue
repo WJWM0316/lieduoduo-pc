@@ -40,15 +40,14 @@
           <div slot="footer">
             <div v-if="type !== 'noJob'">
           <el-button type="default" size="small" @click="handleClose">取消</el-button>
-          <el-button type="primary" size="small" @click="handleSave">保存</el-button>
+          <el-button type="primary" size="small" @click="handleSave">继续</el-button>
           </div>
       </div>
     </el-dialog>
   </div>
 </template>
 <script>
-import {
-  recruiterPositonList, sureOpenupAPi } from 'API/candidateType'
+import { recruiterPositonList } from 'API/candidateType'
 export default {
   watch: {
     visible (value) {
@@ -74,7 +73,7 @@ export default {
       dialogStatus: false,
       getListLoading: false, // 获取列表loading
       positionLists: [],
-      jobpositionid: '',
+      jobpositionid: null,
       type: 'noJob',
       detailtitle: '选择职位'
     }
@@ -90,16 +89,19 @@ export default {
           }
         })
         if (arr.length > 0) {
-          let data = { jobhunterUid: this.jobuid, positionId: this.jobpositionid }
-          sureOpenupAPi(data).then((res) => {
-            this.$emit('update:visible', false)
-            this.$emit('finish')
-            this.$message.success('开撩成功')
-          })
+          this.$emit('update:visible', false)
+          this.$emit('finish', this.jobpositionid)
+          // let data = { jobhunterUid: this.jobuid, positionId: this.jobpositionid }
+          // sureOpenupAPi(data).then((res) => {
+          //   this.$emit('update:visible', false)
+          // })
         } else {
           this.$message.warning('请选择职位')
         }
       }
+    },
+    handleFinish () {
+      this.$emit('finish')
     },
     // 选择职位
     selectposition (item) {

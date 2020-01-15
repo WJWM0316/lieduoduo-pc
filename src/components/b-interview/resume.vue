@@ -219,19 +219,16 @@
               </div>
             </div>
             <div class="btnstatus">
-              <template v-if="buttons.btn1 && buttons.btn1.type">
-                <el-button
-                  style="width: 154px;"
-                  :disabled="buttons.btn1.disabled"
-                  @click.stop="handleSetResume(buttons.btn1.type)"
-                  :type="buttons.btn1.buttonType"
-                >{{buttons.btn1.buttonText}}</el-button>
+              <!-- btn1、btn2 是约聊的按钮逻辑 -->
+              <template v-if="buttons.btn1 && buttons.btn1.buttonText">
+                <el-button @click="handleSetChat(buttons.btn1)" :type="buttons.btn1.buttonType">{{buttons.btn1.buttonText}}</el-button>
               </template>
-              <template v-if="buttons.btn2 && buttons.btn2.type">
-                <el-button
-                  style="width: 154px;"
-                  @click.stop="handleSetResume(buttons.btn2.type)"
-                >{{buttons.btn2.buttonText}}</el-button>
+              <template v-if="buttons.btn2 && buttons.btn2.buttonText">
+                <el-button @click="handleSetChat(buttons.btn2)" :type="buttons.btn2.buttonType">{{buttons.btn2.buttonText}}</el-button>
+              </template>
+              <!-- btn3 是约面的按钮逻辑-->
+              <template v-if="buttons.btn3 && buttons.btn3.buttonText">
+                <el-button  @click="handleSetResume(buttons.btn3)" :type="buttons.btn3.buttonType">{{buttons.btn3.buttonText}}</el-button>
               </template>
             </div>
             <div class="like_user" @click.stop="ownerOp(true, nowResumeMsg.uid)" v-if="nowResumeMsg.interested">
@@ -272,24 +269,50 @@
     <dynamic-record
       :visible.sync="dynamicDialogStatus"
       :info.sync="nowResumeMsg"
-      :imagesurl.sync="shareResumeImg"
-    ></dynamic-record>
+      :imagesurl.sync="shareResumeImg" />
+    <!-- 选择职位 -->
+    <select-position
+      :visible.sync="selectPositionDialogStatus"
+      :jobuid="jobuid"
+      @finish="handleSelectedPosition"
+    />
+    <!-- 支付 -->
+    <!-- 约聊|约面提示支付多多币 -->
+    <pay-coin
+      @finish="handleToRefresh"
+      :visible.sync="payCoinDialogStatus"
+      :jobuid="jobuid"
+      :type="selectedInterviewType"
+      :position-id="positionId"/>
+    <!-- 下载app引导弹窗 -->
+    <download-app :visable.sync="downloadAppDialog" />
   </div>
 </template>
 <script>
 import DynamicRecord from './dynamicRecord'
+import SelectPosition from './candidatePosition'
+import PayCoin from './pay'
+import DownloadApp from '@/components/common/sharePopup/chatDownloadApp'
 import { shareResumeApi } from 'API/forward'
 import { getResumeIdApi } from 'API/userJobhunter'
 import { createonlinepdf, createonlineword } from 'API/common'
 import { putCollectUserApi, cancelCollectUserApi } from 'API/collect'
-// 候选人动态操作按钮种类
-const CandidateTypeBtns = [
-  { buttonText: '查看联系', type: 'confirm-interview', buttonType: 'primary', is: (val) => val === 11 },
-  { buttonText: '查看邀约', type: 'check-invitation', buttonType: 'primary', is: (val) => val === 12 },
-  { buttonText: '安排面试', type: 'arranging-interviews', buttonType: 'primary', is: (val) => val === 21 },
-  { buttonText: '查看面试', type: 'arranging-interviews', buttonType: 'primary', is: (val) => val === 31 },
-  { buttonText: '修改面试', type: 'arranging-interviews', buttonType: 'primary', is: (val) => val === 32 },
-  { buttonText: '面试详情', type: 'check-invitation', buttonType: 'primary', is: (val) => val >= 41 }
+// 约聊操作按钮种类
+const ChatTypeBtns = [
+  { buttonText: '一键约聊', type: 'recruiter-chat', buttonType: 'primary', is: (val) => [705, 715, 716].includes(val) }, // b->c c拒绝
+  { buttonText: '继续聊', type: 'keep-chat', buttonType: 'primary', is: (val) => [101, 301, 501].includes(val) }, // b->c,c->b 未处理， b|c同意
+  { buttonText: '继续沟通', type: 'keep-chat', buttonType: 'primary', is: (val) => val === 701 }, // c->b b未同意
+  { buttonText: '取消不合适', type: 'return-cancel', buttonType: 'warning', is: (val) => [305, 315, 316].includes(val), hasReason: true } // b主动拒绝
+]
+// 顾问帮约(约面)按钮种类 （）
+const MeetTypeBtns = [
+  { buttonText: '_', _text: '同意', type: 'confirm-interview', buttonType: '_', is: (val) => val === 11 }, // c-b b未处理
+  { buttonText: '_', _text: '面试详情', type: 'check-invitation', buttonType: '_', is: (val) => val === 12 }, // b->c c未处理
+  { buttonText: '_', _text: '安排面试', type: 'arranging-interviews', buttonType: '_', is: (val) => val === 21 },
+  { buttonText: '_', _text: '面试详情', type: 'arranging-interviews', buttonType: '_', is: (val) => val === 31 },
+  { buttonText: '_', _text: '修改面试', type: 'arranging-interviews', buttonType: '_', is: (val) => val === 32 },
+  { buttonText: '_', _text: '面试详情', type: 'check-invitation', buttonType: '_', is: (val) => [41, 51, 57, 58, 59, 60, 61].includes(val) },
+  { buttonText: '_', _text: '面试详情', type: 'check-invitation', buttonType: '_', is: (val) => [52, 53, 54, 55].includes(val) }
 ]
 export default {
   props: {
@@ -299,7 +322,7 @@ export default {
       default: () => ({})
     }
   },
-  components: { DynamicRecord },
+  components: { DynamicRecord, SelectPosition, PayCoin, DownloadApp },
   data () {
     return {
       getResumeLoading: false, // 获取简历loading
@@ -310,15 +333,36 @@ export default {
       hasonload: false,
       shareResumeImg: '',
       buttons: {
-        btn1: {},
-        btn2: {}
-      }
+        btn1: {}, // 约聊
+        btn2: {}, // 约聊拒绝原因
+        btn3: {} // 约面
+      },
+      selectedInterviewType: 'chat', // 已经选择的约面或者约聊状态 chat 约聊 | interview 约面
+      selectPositionDialogStatus: false, // 选择职位弹窗
+      payCoinDialogStatus: false, // 支付弹窗
+      downloadAppDialog: false, // 下载app弹窗
+      jobuid: 0,
+      positionId: 0
     }
   },
   methods: {
-    handleSetResume (type) {
-      this.$emit('change-status', type, this.current)
-      // console.log(type)
+    // 约聊流程
+    handleSetChat (btn) {
+      switch (btn.type) {
+        case 'recruiter-chat':
+          this.selectedInterviewType = 'chat'
+          this.selectPositionDialogStatus = true
+          break
+      }
+    },
+    // 约面流程
+    handleSetResume (btn) {
+      if (btn.type === 'recruiter-chat') {
+        this.selectedInterviewType = 'interview'
+        this.selectPositionDialogStatus = true
+      } else {
+        this.$emit('change-status', btn.type, this.current)
+      }
     },
     // 获取简历
     getResume () {
@@ -326,6 +370,7 @@ export default {
       getResumeIdApi({ uid: this.current.uid || this.current.jobhunterUid }).then(({ data }) => {
         this.getResumeLoading = false
         this.nowResumeMsg = data.data || {}
+        this.jobuid = this.nowResumeMsg.uid
         // 获取简历成功获取btn 显示的状态
         this.resetListDatas(this.nowResumeMsg)
         this.current.interviewInfo = this.nowResumeMsg.interviewInfo
@@ -338,6 +383,18 @@ export default {
       shareResumeApi({ resumeUid: this.current.uid, forwardType: 1 }).then(({ data }) => {
         this.shareResumeImg = data.data.positionQrCodeUrl
       })
+    },
+    // 选择好职位id
+    handleSelectedPosition (id) {
+      this.positionId = id
+      this.payCoinDialogStatus = true
+    },
+    // 弹窗组件需要刷新列表数据的回调
+    handleToRefresh (type) {
+      this.$emit('finish')
+      if (type === 'chat') {
+        this.downloadAppDialog = true
+      }
     },
     hanldeClose () {
       this.dialogStatus = false
@@ -405,33 +462,31 @@ export default {
       }
     },
     resetListDatas (data) {
-      const { data: { haveInterview, isOnProtected, interviewStatus, hasUnsuitRecord } } = data.interviewInfo
-      // 判断是否有邀约
-      if (haveInterview) {
-        if (!hasUnsuitRecord) {
-          this.buttons.btn2 = { buttonType: 'text', type: 'inappropriate', buttonText: '不合适' }
+      const { status } = data.chatInfo || {}
+      const { interviewInfo, isAdvisor } = data.interviewSummary || {}
+      if (data.chatInfo) {
+        let btn1 = ChatTypeBtns.find(val => val.is(status))
+        if (btn1.hasReason) {
+          // 查看约聊不合适原因
+          this.buttons.btn2 = { buttonText: '查看原因', type: 'watch-chat-reson', buttonType: 'defalut' }
         }
-        // 求职进去面试流程
-        let btn1 = CandidateTypeBtns.find(val => {
-          return val.is(interviewStatus)
-        })
-        this.buttons.btn1 = btn1 || {}
-        if (interviewStatus === 51) {
-          this.buttons.btn1.statusText = '已结束'
+        this.buttons.btn1 = btn1
+      } else {
+        this.buttons.btn1 = { buttonText: '一键约聊', type: 'recruiter-chat', buttonType: 'primary' }
+      }
+      // 是否有约面信息
+      if (interviewInfo) {
+        // 是否有约面状态
+        if (interviewInfo.status) {
+          let btn3 = MeetTypeBtns.find(val => val.is(interviewInfo.status))
+          btn3.buttonText = isAdvisor === 1 ? '顾问跟进中' : '面试详情'
+          btn3.buttonType = isAdvisor === 1 ? 'black' : 'default'
+          this.buttons.btn3 = btn3
+        } else {
+          this.buttons.btn3 = { buttonText: '顾问帮约', _text: '开撩约面', type: 'recruiter-chat', buttonType: 'black' }
         }
       } else {
-        // 查看原因
-        if (hasUnsuitRecord) {
-          this.buttons.btn2 = { buttonType: 'text', type: 'interview-retract', buttonText: '撤回' }
-        }
-        // 拒绝
-        if (isOnProtected) {
-          this.buttons.btn1 = { buttonType: 'primary', type: 'cancel', disabled: true, buttonText: '暂时无法约面' }
-        }
-        // 未开始约聊 | 没不良记录 | 也没拒绝
-        if (!hasUnsuitRecord && !isOnProtected) {
-          this.buttons.btn1 = { buttonText: '开撩约面', type: 'recruiter-chat', buttonType: 'primary' }
-        }
+        this.buttons.btn3 = { buttonText: '顾问帮约', _text: '开撩约面', type: 'recruiter-chat', buttonType: 'black' }
       }
     }
   },
@@ -444,6 +499,11 @@ export default {
       } else {
         this.nowResumeMsg = {}
         this.shareResumeImg = ''
+        this.buttons = {
+          btn1: {},
+          btn2: {},
+          btn3: {}
+        }
       }
     }
   }
@@ -668,6 +728,7 @@ export default {
           margin-left: 0;
         }
         .el-button {
+          width: 154px;
           margin-bottom: 12px;
         }
       }

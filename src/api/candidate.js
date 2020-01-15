@@ -168,3 +168,31 @@ export const deleteScheduleTabRedDotApi = date => request({
     host: 'zhaopin'
   }
 })
+
+// 获取候选人约聊扣点点数信息
+export const getCandidateChatCharge = jobhunter => request({
+  url: `/charge/chat/${jobhunter}`,
+  method: 'get',
+  config: {
+    host: 'zhaopin'
+  }
+})
+
+// 获取候选人约面扣点点数信息
+export const getCandidateInterviewCharge = jobhunter => request({
+  url: `/charge/advisor_help/${jobhunter}`,
+  method: 'get',
+  config: {
+    host: 'zhaopin'
+  }
+})
+
+// 招聘官发起约聊
+export const applyChat = data => request({
+  url: '/chat/apply',
+  method: 'get',
+  params: data,
+  config: {
+    host: 'zhaopin'
+  }
+})

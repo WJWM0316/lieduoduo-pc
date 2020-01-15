@@ -24,6 +24,15 @@
               </div>
           </div>
           <div class="item">
+            <div class="name">面试形式</div>
+            <div class="info">
+              <el-select v-model="arrangementInfo.source_type" placeholder="请选择">
+                <el-option label="见面聊" :value="1" />
+                <el-option label="电话聊" :value="2" />
+              </el-select>
+            </div>
+          </div>
+          <div class="item">
             <div class="name">面试职位</div>
             <div class="info">
               <el-select v-model="arrangementInfo.positionId" placeholder="请选择">
@@ -165,7 +174,8 @@ export default {
         positionId: '',
         addressId: '',
         addressName: '',
-        interviewTime: ''
+        interviewTime: '',
+        source_type: null
       },
       type: 'arrange',
       interviewtitle: '面试安排',
@@ -188,8 +198,12 @@ export default {
   methods: {
     handleSave () {
       if (this.type === 'arrange') {
-        if (!this.arrangementInfo.addressId) {
+        if (!this.arrangementInfo.positionId) {
           this.$message.error('请选择一个职位')
+          return
+        }
+        if (!this.arrangementInfo.source_type) {
+          this.$message.error('请选择面试形式')
           return
         }
         if (!this.arrangementInfo.addressId) {

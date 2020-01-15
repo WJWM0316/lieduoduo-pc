@@ -121,7 +121,6 @@ export default {
           this.Url = `https://h5.lieduoduo.com/wantYou_b?type=appEnter&uid=${this.data.uid}&q=${Date.now()}`
           this.$nextTick(() => {
             if (this.qrcodeImg) {
-              console.log(document.getElementById('qrcode'))
               this.qrcodeImg.clear()
               this.qrcodeImg.makeCode(this.Url)
               return

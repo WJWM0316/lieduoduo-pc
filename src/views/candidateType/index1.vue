@@ -122,7 +122,7 @@
       </el-pagination>
     </div>
     <!-- 预览简历 -->
-    <resume :current="currentItem" ref="resume" :visible.sync="resumeDialogStatus" @change-status="setJob" />
+    <resume :current="currentItem" ref="resume" :visible.sync="resumeDialogStatus" @finish="refreshPageData" @change-status="setJob" />
     <!-- 查看面试，安排面试弹窗 -->
     <interview-arrange :interviewId="interviewId" :visible.sync="arrangediggle" @finish="refreshPageData"></interview-arrange>
     <!-- 面试详情弹窗 -->

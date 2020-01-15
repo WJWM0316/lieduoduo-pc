@@ -52,30 +52,22 @@
         </div>
       </div>
     </div>
-     <el-dialog
-      width="432px"
-      custom-class="app-dialog"
-      top="calc((100vh - 460px) / 2)"
-      :visible.sync="contactDialogStatus">
-      <div class="contact-wrapper">
-        <p class="contact-title"> {{isServer ? '顾问服务' : '充值多多币'}}</p>
-        <p> {{isServer ? '您可微信扫下方二维码，联系我们了解顾问服务' : '您可微信扫下方二维码，联系我们充值多多币'}} </p>
-        <div class="contact-qrcode">
-          <img :src="qrCode" alt="">
-        </div>
-        <p>或拨打全国咨询热线</p>
-        <p class="contact-number">400-065-5788</p>
-      </div>
-    </el-dialog>
+    <contact-service
+      :visible.sync="contactDialogStatus"
+      :text="{
+        title: isServer ? '顾问服务' : '充值多多币',
+        content: isServer ? '您可微信扫下方二维码，联系我们了解顾问服务' : '您可微信扫下方二维码，联系我们充值多多币'
+      }"/>
   </div>
 </template>
 <script>
+import contactService from '@/components/contactService/public'
 import OrderDetails from './compnents/details'
 import { getRecruiterAccount } from 'API/recruiter'
 import { getBTermBanners } from 'API/common'
 import { wx_account_qrcode } from 'IMAGES/image'
 export default {
-  components: { OrderDetails },
+  components: { OrderDetails, contactService },
   data () {
     return {
       servers: [

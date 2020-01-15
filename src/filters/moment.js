@@ -53,12 +53,44 @@ Vue.filter('duration', timestamp => {
   return result
 })
 
+
+// 面试时间
+Vue.filter('interviewTime', (timestamp) => {
+  let releaseTime = new Date(timestamp || 0)
+  const now = new Date()
+  if (releaseTime) {
+    // 是否跨年 and 超过两天
+    const nowDate = {
+      y: now.getFullYear(),
+      m: now.getMonth(),
+      d: now.getDate()
+    }
+    const releaseTimeDate = {
+      y: releaseTime.getFullYear(),
+      m: releaseTime.getMonth(),
+      d: releaseTime.getDate()
+    }
+    // 今年
+    if (now.getFullYear() === releaseTime.getFullYear()) {
+      // 今天
+      if (nowDate.y === releaseTimeDate.y && nowDate.m === releaseTimeDate.m && nowDate.d === releaseTimeDate.d) {
+        return moment(timestamp).format('HH:mm')
+      } else {
+        return moment(timestamp).format('MM-DD HH:mm')
+      }
+    } else {
+      return moment(timestamp).format('YYYY-MM-DD HH:mm')
+    }
+  } else {
+    return '无效时间'
+  }
+})
 /**
  * 活跃时间
  */
-Vue.filter('activeTime', timestamp => {
+Vue.filter('activeTime', (timestamp, serverTime) => {
   let releaseTime = timestamp || 0
-  const now = this.serverTime ? new Date(this.serverTime * 1000) : new Date()
+  const now = serverTime ? new Date(serverTime * 1000) : new Date()
   let timeStr = '刚刚'
   if (releaseTime) {
     releaseTime = new Date(releaseTime * 1000)
