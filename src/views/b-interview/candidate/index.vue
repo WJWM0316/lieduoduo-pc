@@ -789,7 +789,7 @@ export default {
       .bloTop-24hour{
         width: 50px;
         height: 18px;
-        background: url('../../assets/images/tag_list_24hour.png') no-repeat;
+        background: url('../../../assets/images/tag_list_24hour.png') no-repeat;
         background-size: cover;
       }
       .status{

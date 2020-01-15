@@ -33,7 +33,7 @@
             </div>
             <div class="text">见面聊</div>
           </div>
-          <!-- 我邀请的等待状态、对方不考虑显示个人信息 -->
+          <!-- 我邀请的等待状态、对方不考虑状态除外显示个人信息 -->
           <div class="item" v-if="jobhunterInfo.address && ![12, 52, 53, 55].includes(jobhunterInfo.status)">
             <div class="icon">
               <i class="iconfont icon-didian"></i>

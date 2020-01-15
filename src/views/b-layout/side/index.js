@@ -16,7 +16,7 @@ import recruiter from '@/router/recruiter'
     ]),
     reddot () {
       return {
-        '/candidate': this.recruiterIntentionList + this.recruiterInviteList,
+        '/binterview': this.recruiterIntentionList + this.recruiterInviteList,
         '/recruiteam': this.newJoinApplyNum,
         '/candidateType': this.dynamicsRedDotNum
       }

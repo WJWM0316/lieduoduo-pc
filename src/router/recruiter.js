@@ -34,12 +34,12 @@ const recruiter = [
       {
         path: '',
         name: 'candidatetype',
-        component: resolve => require(['../views/candidateType/index1.vue'], resolve)
+        component: resolve => require(['../views/b-interview/candidate/index.vue'], resolve)
       }
     ]
   },
   {
-    path: '/candidate',
+    path: '/binterview',
     title: '面试记录',
     component: Layout,
     meta: {
@@ -49,27 +49,27 @@ const recruiter = [
     children: [
       {
         path: '',
-        name: 'candidate',
-        component: resolve => require(['../views/candidate/index2.vue'], resolve)
+        name: 'binterview',
+        component: resolve => require(['../views/b-interview/interview-record/index.vue'], resolve)
       }
     ]
   },
-  {
-    path: '/interviewRecords',
-    title: '面试日程',
-    component: Layout,
-    meta: {
-      useNav: true,
-      icon: 'iconfont icon-Bmianshiricheng-'
-    },
-    children: [
-      {
-        path: '',
-        name: 'interviewRecords',
-        component: resolve => require(['../views/interviewRecords/index.vue'], resolve)
-      }
-    ]
-  },
+  // {
+  //   path: '/interviewRecords',
+  //   title: '面试日程',
+  //   component: Layout,
+  //   meta: {
+  //     useNav: true,
+  //     icon: 'iconfont icon-Bmianshiricheng-'
+  //   },
+  //   children: [
+  //     {
+  //       path: '',
+  //       name: 'interviewRecords',
+  //       component: resolve => require(['../views/interviewRecords/index.vue'], resolve)
+  //     }
+  //   ]
+  // },
   {
     path: '/myCompany',
     title: '我的公司',

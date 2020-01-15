@@ -286,6 +286,8 @@
       :position-id="positionId"/>
     <!-- 查看约聊不合适原因 -->
     <chat-reson :list="resonList.reason" :explain="resonList.extraDesc" :visible.sync="chatResonDialog" />
+    <!-- 约面申请 -->
+    <apply-interview :visible.sync="applyInterviewDialog" :position="current"  @finish="handleSetResume"/>
     <!-- 下载app引导弹窗 -->
     <download-app :visible.sync="downloadAppDialog" />
   </div>
@@ -295,6 +297,7 @@ import DynamicRecord from './dynamicRecord'
 import SelectPosition from './candidatePosition'
 import ChatReson from './chatResonList'
 import PayCoin from './pay'
+import applyInterview from './applyInterview'
 import DownloadApp from '@/components/common/sharePopup/chatDownloadApp'
 import { deleteNotInterest } from 'API/candidate'
 import { shareResumeApi } from 'API/forward'
@@ -310,7 +313,7 @@ const ChatTypeBtns = [
 ]
 // 顾问帮约(约面)按钮种类 （）
 const MeetTypeBtns = [
-  { buttonText: '_', _text: '同意', type: 'confirm-interview', buttonType: '_', is: (val) => val === 11 }, // c-b b未处理
+  { buttonText: '_', _text: '同意|拒绝', type: 'apply-interview', buttonType: '_', is: (val) => val === 11 }, // c-b b未处理
   { buttonText: '_', _text: '面试详情', type: 'check-invitation', buttonType: '_', is: (val) => val === 12 }, // b->c c未处理
   { buttonText: '_', _text: '安排面试', type: 'arranging-interviews', buttonType: '_', is: (val) => val === 21 },
   { buttonText: '_', _text: '面试详情', type: 'arranging-interviews', buttonType: '_', is: (val) => val === 31 },
@@ -326,7 +329,7 @@ export default {
       default: () => ({})
     }
   },
-  components: { DynamicRecord, SelectPosition, PayCoin, DownloadApp, ChatReson },
+  components: { DynamicRecord, SelectPosition, PayCoin, DownloadApp, ChatReson, applyInterview },
   data () {
     return {
       getResumeLoading: false, // 获取简历loading
@@ -345,7 +348,8 @@ export default {
       selectPositionDialogStatus: false, // 选择职位弹窗
       payCoinDialogStatus: false, // 支付弹窗
       downloadAppDialog: false, // 下载app弹窗
-      chatResonDialog: false,
+      chatResonDialog: false, // 查看约聊不合适原因 （其实是看对人不合适原因）
+      applyInterviewDialog: false, // 申请约面
       jobuid: 0,
       positionId: 0,
       resonList: { reason: [], extraDesc: '' } // 不合适
@@ -387,6 +391,8 @@ export default {
         // 选择职位
         this.selectedInterviewType = 'interview'
         this.selectPositionDialogStatus = true
+      } else if (btn.type === 'apply-interview') {
+        this.applyInterviewDialog = true
       } else {
         this.$emit('change-status', btn.type, this.current)
       }

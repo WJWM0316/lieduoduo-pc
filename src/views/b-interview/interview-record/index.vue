@@ -56,8 +56,8 @@
           <div class="cont_left">
             <div class="leftMsg">
               <div class="userBaseInfo">
-                <img class="gender" src="../../assets/images/girl.png" v-if="item.gender===2" />
-                <img class="gender" src="../../assets/images/boy.png" v-else />
+                <img class="gender" src="~@/assets/images/girl.png" v-if="item.gender===2" />
+                <img class="gender" src="~@/assets/images/boy.png" v-else />
                 <img class="userIcon" :src="item.avatar.middleUrl" />
                 <div class="infoRight">
                   <div class="infoName textEllipsis">
@@ -94,21 +94,7 @@
           </div>
 
           <div class="userOp">
-            <template v-if="item.btn2 && item.btn2.type">
-              <el-button
-                :disabled="item.btn2.disabled"
-                @click.stop="setJob(item.btn2.type, item)"
-                :type="item.btn2.buttonType">
-                {{item.btn2.buttonText}}
-              </el-button>
-            </template>
-            <el-button
-              style="width: 112px;margin-left: 40px"
-              :disabled="item.btn1.disabled"
-              @click.stop="setJob(item.btn1.type, item)"
-              :type="item.btn1.buttonType">
-              {{item.btn1.buttonText}}
-            </el-button>
+            <el-button type="primary" @click.stop="viewResume(item)">查看简历</el-button>
           </div>
         </div>
       </div>
@@ -160,8 +146,6 @@
     <select-reson :reasonlist="reasonlist" :interviewId="interviewId" :jobuid="jobuid" :visible.sync="resondiggle" @finish="refreshPageData"></select-reson>
     <!-- 展示原因列表 -->
     <reson-list :interviewId="interviewId" :visible.sync="resonlistdiggle" @finish="refreshPageData"></reson-list>
-    <!-- 开撩选择职位 -->
-    <candidate-position :jobuid="jobuid" :visible.sync="positiondiggle" @finish="refreshPageData"></candidate-position>
     <!-- 处理多条面试弹窗 -->
     <apply-record :applyrecordList="applyrecordList" :interviewId="interviewId" :jobuid="jobuid" :recordtext="recordtext" :interviewNum="interviewNum" :visible.sync="recorddiggle" @finish="refreshPageData"></apply-record>
   </div>
@@ -171,29 +155,28 @@ import InterviewArrange from 'COMPONENTS/b-interview/interviewArrange'
 import InterviewDetail from 'COMPONENTS/b-interview/interviewDetail'
 import SelectReson from 'COMPONENTS/b-interview/selectReson'
 import ResonList from 'COMPONENTS/b-interview/resonList'
-import CandidatePosition from 'COMPONENTS/b-interview/candidatePosition'
 import ApplyRecord from 'COMPONENTS/b-interview/applyRecord'
 
 import { getPositionTypeApi } from 'API/position'
 import { getJobHunterPositionTypeApi, getSearchBrowseMyselfApi, getMyNavDataApi } from 'API/browse'
 import { getSearchMyCollectApi, getSearchCollectApi, gethotRecommendationApi } from 'API/collect'
-import { confirmInterviewApi, interviewRetract, manyrecordstatus, getCommentReasonApi, getloadingReasonApi } from 'API/candidateType'
+import { confirmInterviewApi, manyrecordstatus, getCommentReasonApi, getloadingReasonApi } from 'API/candidateType'
 // components
 import HighFilter from 'COMPONENTS/b-interview/highFilter'
 import HotFilter from 'COMPONENTS/b-interview/hotFilter'
 import NoFound from '@/components/noFound'
 import Resume from 'COMPONENTS/b-interview/resume'
 // 候选人动态操作按钮种类
-const CandidateTypeBtns = [
-  { buttonText: '查看联系', type: 'confirm-interview', buttonType: 'primary', is: (val) => val === 11, statusText: '未处理' },
-  { buttonText: '查看邀约', type: 'check-invitation', buttonType: 'primary', is: (val) => val === 12, statusText: '待对方处理' },
-  { buttonText: '安排面试', type: 'arranging-interviews', buttonType: 'primary', is: (val) => val === 21, statusText: '待我安排' },
-  { buttonText: '查看面试', type: 'arranging-interviews', buttonType: 'primary', is: (val) => val === 31, statusText: '待对方确认' },
-  { buttonText: '修改面试', type: 'arranging-interviews', buttonType: 'primary', is: (val) => val === 32, statusText: '待我修改' },
-  { buttonText: '面试详情', type: 'check-invitation', buttonType: 'primary', is: (val) => val >= 41, statusText: '已安排' }
-]
+// const CandidateTypeBtns = [
+//   { buttonText: '查看联系', type: 'confirm-interview', buttonType: 'primary', is: (val) => val === 11, statusText: '未处理' },
+//   { buttonText: '查看邀约', type: 'check-invitation', buttonType: 'primary', is: (val) => val === 12, statusText: '待对方处理' },
+//   { buttonText: '安排面试', type: 'arranging-interviews', buttonType: 'primary', is: (val) => val === 21, statusText: '待我安排' },
+//   { buttonText: '查看面试', type: 'arranging-interviews', buttonType: 'primary', is: (val) => val === 31, statusText: '待对方确认' },
+//   { buttonText: '修改面试', type: 'arranging-interviews', buttonType: 'primary', is: (val) => val === 32, statusText: '待我修改' },
+//   { buttonText: '面试详情', type: 'check-invitation', buttonType: 'primary', is: (val) => val >= 41, statusText: '已安排' }
+// ]
 export default {
-  components: { HighFilter, HotFilter, NoFound, Resume, InterviewArrange, InterviewDetail, SelectReson, ResonList, CandidatePosition, ApplyRecord },
+  components: { HighFilter, HotFilter, NoFound, Resume, InterviewArrange, InterviewDetail, SelectReson, ResonList, ApplyRecord },
   data () {
     return {
       getLoading: false,
@@ -233,7 +216,6 @@ export default {
       detaildiggle: false, // 面试详情
       resondiggle: false, // 选择不合适原因
       resonlistdiggle: false, // 展示原因
-      positiondiggle: false, // 选择开撩职位
       recorddiggle: false // '选择多少申请面试列表'
     }
   },
@@ -272,16 +254,13 @@ export default {
     setJob (type, vo) {
       if (vo.interviewId) {
         this.interviewId = vo.interviewId
-      } else if (vo.interviewInfo && vo.interviewInfo.data) {
-        this.interviewId = vo.interviewInfo.data.lastInterviewId
+      } else if (vo.interviewInfo) {
+        this.interviewId = vo.interviewInfo.id
       }
       this.jobuid = vo.uid
       this.currentItem = vo
       this.cleanListRedDot(vo)
       switch (type) {
-        case 'recruiter-chat':
-          this.positiondiggle = true
-          break
         case 'check-invitation':
           this.detaildiggle = true
           break
@@ -311,21 +290,6 @@ export default {
           break
         case 'arranging-interviews':
           this.arrangediggle = true
-          break
-        case 'interview-retract':
-          let retract = { jobhunterUid: vo.uid, interviewId: this.interviewId }
-          interviewRetract(retract).then(({ data }) => {
-            if (data.httpStatus === 200) {
-              this.$message.success('撤回成功')
-            }
-            // 更新列表和弹窗显示状态
-
-            // this.getResume(this.jobuid)
-            // this.init()
-          })
-          break
-        case 'see-resume':
-          this.viewResume(vo)
           break
         case 'watch-reson':
           this.resonlistdiggle = true
@@ -376,7 +340,6 @@ export default {
     },
     // 查看简历
     viewResume (item) {
-      console.log(item)
       this.currentItem = item
       this.resumeDialogStatus = true
       this.cleanListRedDot(item)
@@ -467,7 +430,7 @@ export default {
         ...this.params,
         type: this.params.type.join(',')
       }).then(({ data }) => {
-        this.candidateList = this.resetListDatas(data.data || [])
+        this.candidateList = data.data || []
         this.total = data.meta.total
         this.navNum.myCollectCount = data.meta.total
         this.getLoading = false
@@ -483,7 +446,7 @@ export default {
         ...this.params,
         type: this.params.type.join(',')
       }).then(({ data }) => {
-        this.candidateList = this.resetListDatas(data.data || [])
+        this.candidateList = data.data || []
         this.total = data.meta.total
         this.navNum.collectMyselfCount = data.meta.total
         this.getLoading = false
@@ -499,7 +462,7 @@ export default {
         ...this.params,
         type: this.params.type.join(',')
       }).then(({ data }) => {
-        this.candidateList = this.resetListDatas(data.data || [])
+        this.candidateList = data.data || []
         this.total = data.meta.total
         this.navNum.browseMyselfCount = data.meta.total
         this.getLoading = false
@@ -514,7 +477,7 @@ export default {
       gethotRecommendationApi({
         ...this.params
       }).then(({ data }) => {
-        this.candidateList = this.resetListDatas(data.data || [])
+        this.candidateList = data.data || []
         this.total = data.meta.total
         this.navNum.RecommendationCount = data.meta.total
         this.getLoading = false
@@ -589,49 +552,6 @@ export default {
       getMyNavDataApi().then(res => {
         this.navNum = res.data.data
       })
-    },
-    // 重置接口数据
-    resetListDatas (data) {
-      data.forEach((item) => {
-        item.btn1 = {}
-        item.btn2 = {}
-        if (this.params.navType === 'hotRecommendation') {
-          item.btn1 = { buttonText: '查看简历', type: 'see-resume', buttonType: 'primary', statusText: '' }
-        } else {
-          const { data: { haveInterview, isOnProtected, interviewStatus, hasUnsuitRecord, lastInterviewStatus } } = item.interviewInfo
-          // 判断是否有邀约
-          if (haveInterview) {
-            if (!hasUnsuitRecord) {
-              item.btn2 = { buttonType: 'text', type: 'inappropriate', buttonText: '不合适', statusText: '' }
-            }
-            // 求职进去面试流程
-            let btn1 = CandidateTypeBtns.find(val => {
-              return val.is(interviewStatus)
-            })
-            item.btn1 = btn1 || {}
-            if (interviewStatus === 51) {
-              item.btn1.statusText = '已结束'
-            }
-          } else {
-          // 查看原因
-            if (hasUnsuitRecord) {
-              item.btn2 = { buttonType: 'text', type: 'watch-reson', buttonText: '查看原因', statusText: '' }
-            }
-            // 拒绝
-            if (isOnProtected) {
-              item.btn1 = { buttonType: 'primary', type: 'cancel', disabled: true, buttonText: '暂时无法约面', statusText: '对方暂不考虑' }
-            }
-            // 未开始约聊 | 没不良记录 | 也没拒绝
-            if (!hasUnsuitRecord && !isOnProtected) {
-              item.btn1 = { buttonText: '开撩约面', type: 'recruiter-chat', buttonType: 'primary', statusText: '' }
-            }
-          }
-          if (lastInterviewStatus === 61) {
-            item.btn1.statusText = '不合适'
-          }
-        }
-      })
-      return data
     }
   }
 }
@@ -841,17 +761,8 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
-        .like_user {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          flex-direction: row;
-          color: $main-color-1;
-          cursor: pointer;
-          font-size: 14px;
-          .img {
-            margin-right: 7px;
-          }
+        .el-button {
+          width: 112px;
         }
       }
     }
