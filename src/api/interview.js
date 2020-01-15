@@ -260,6 +260,18 @@ export const CchatInterviewApi = (data) => {
   })
 }
 
+// 求职者发起约聊
+export const chatApplyApi = (data) => {
+  return request({
+    method: 'post',
+    url: '/chat/apply',
+    params: data,
+    config: {
+      host: 'qiuzhi'
+    }
+  })
+}
+
 // 求职端分页获取约聊列表
 export const BchatInterviewApi = (data) => {
   return request({
