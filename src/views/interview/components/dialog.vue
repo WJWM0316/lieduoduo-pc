@@ -9,6 +9,10 @@
     <template v-if="[31].includes(infos.status) && infos.arrangementInfo">
       <ul class="ul-box">
         <li class="item-li">
+          <i class="iconfont" :class="infos.sourceType === 1 ? 'icon-yuemian' : 'icon-dianhua'"></i>
+          <div class="ul-li-text-box">{{ infos.sourceTypeDesc }}</div>
+        </li>
+        <li class="item-li">
           <i class="iconfont icon-mianshiguan"></i>
           <div class="ul-li-text-box">
             <div class="color4 user-name">{{infos.arrangementInfo.realname}}</div>
@@ -25,7 +29,7 @@
             </router-link>
           </div>
         </li>
-        <li class="item-li">
+        <li class="item-li" v-if="infos.sourceType === 1">
           <i class="iconfont icon-didian"></i>
           <div class="ul-li-text-box">
             <div class="color4 address">{{infos.address}}{{infos.doorplate}}</div>
@@ -56,6 +60,10 @@
     <template v-if="[32].includes(infos.status) && infos.arrangementInfo">
       <ul class="ul-box">
         <li class="item-li">
+          <i class="iconfont" :class="infos.sourceType === 1 ? 'icon-yuemian' : 'icon-dianhua'"></i>
+          <div class="ul-li-text-box">{{ infos.sourceTypeDesc }}</div>
+        </li>
+        <li class="item-li">
           <i class="iconfont icon-mianshiguan"></i>
           <div class="ul-li-text-box">
             <div class="color1 user-name">{{infos.arrangementInfo.realname}}</div>
@@ -74,7 +82,7 @@
             </div>
           </div>
         </li>
-        <li class="item-li">
+        <li class="item-li" v-if="infos.sourceType === 1">
           <i class="iconfont icon-didian"></i>
           <div class="ul-li-text-box">
             <div class="color1 address">{{infos.address}}{{infos.doorplate}}</div>
@@ -90,6 +98,10 @@
     <template v-if="[41].includes(infos.status) && infos.arrangementInfo">
       <ul class="ul-box">
         <li class="item-li">
+          <i class="iconfont" :class="infos.sourceType === 1 ? 'icon-yuemian' : 'icon-dianhua'"></i>
+          <div class="ul-li-text-box">{{ infos.sourceTypeDesc }}</div>
+        </li>
+        <li class="item-li">
           <i class="iconfont icon-mianshiguan"></i>
           <div class="ul-li-text-box">
             <div class="color1 user-name">{{infos.arrangementInfo.realname}}</div>
@@ -108,7 +120,7 @@
             </div>
           </div>
         </li>
-        <li class="item-li">
+        <li class="item-li" v-if="infos.sourceType === 1">
           <i class="iconfont icon-didian"></i>
           <div class="ul-li-text-box">
             <div class="color1 address">{{infos.address}}{{infos.doorplate}}</div>
@@ -140,6 +152,10 @@
     <template v-if="[51, 58, 60].includes(infos.status) && infos.arrangementInfo">
       <ul class="ul-box">
         <li class="item-li">
+          <i class="iconfont" :class="infos.sourceType === 1 ? 'icon-yuemian' : 'icon-dianhua'"></i>
+          <div class="ul-li-text-box">{{ infos.sourceTypeDesc }}</div>
+        </li>
+        <li class="item-li">
           <i class="iconfont icon-mianshiguan"></i>
           <div class="ul-li-text-box">
             <div class="color1 user-name">{{infos.arrangementInfo.realname}}</div>
@@ -152,7 +168,7 @@
             <div class="color1 position-name">{{infos.positionName}}</div>
           </div>
         </li>
-        <li class="item-li">
+        <li class="item-li" v-if="infos.sourceType === 1">
           <i class="iconfont icon-didian"></i>
           <div class="ul-li-text-box">
             <div class="color1 address">{{infos.address}}{{infos.doorplate}}</div>
@@ -166,6 +182,10 @@
     </template>
     <template v-if="[52].includes(infos.status) && infos.arrangementInfo">
       <ul class="ul-box">
+        <li class="item-li">
+          <i class="iconfont" :class="infos.sourceType === 1 ? 'icon-yuemian' : 'icon-dianhua'"></i>
+          <div class="ul-li-text-box">{{ infos.sourceTypeDesc }}</div>
+        </li>
         <li class="item-li">
           <i class="iconfont icon-mianshiguan"></i>
           <div class="ul-li-text-box">
@@ -185,7 +205,7 @@
             </div>
           </div>
         </li>
-        <li class="item-li">
+        <li class="item-li" v-if="infos.sourceType === 1">
           <i class="iconfont icon-didian"></i>
           <div class="ul-li-text-box">
             <div class="color1 address">{{infos.address}}{{infos.doorplate}}</div>
@@ -227,7 +247,7 @@ export default {
   },
   watch: {
     show: {
-      handler(show) {
+      handler (show) {
         if (show) {
           this.getInterviewDetail().then(res => {
             this.getInterviewRedDotInfoApi().then(() => {
@@ -252,7 +272,7 @@ export default {
       }
     },
     visiable: {
-      handler(visiable) {
+      handler (visiable) {
         if (!visiable) {
           this.$emit('close')
         }
@@ -427,7 +447,7 @@ export default {
     padding: 32px 40px 14px 40px;
   }
   .el-dialog__body{
-    padding: 0;
+    padding: 0 !important;
   }
   .time-item-active{
     color: $border-color-2;
