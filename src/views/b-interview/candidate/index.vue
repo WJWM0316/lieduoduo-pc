@@ -432,11 +432,10 @@ export default {
           break
       }
       // 滚动到顶部
-      // const dom = document.querySelector('.main_cont')
-      // if (dom) {
-      //   console.log(dom.getBoundingClientRect())
-      //   this.$util.scrollToView(dom)
-      // }
+      const dom = document.querySelector('.b-app-contain')
+      if (dom) {
+        dom.scrollTop = 0
+      }
 
       // 渲染location
       this.$router.push({ name: this.$route.name, query: { ...this.params, q: Date.now(), type: this.params.type.join(',') } })

@@ -378,6 +378,11 @@ export default {
           }
           break
       }
+      // 滚动到顶部
+      const dom = document.querySelector('.b-app-contain')
+      if (dom) {
+        dom.scrollTop = 0
+      }
       this.$router.push({ name: this.$route.name, query: { ...this.params, q: Date.now(), position_type_id: this.params.position_type_id.join(',') } })
     },
     // 邀请
