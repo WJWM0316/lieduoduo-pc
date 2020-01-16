@@ -187,7 +187,7 @@
           </div>
           <div class="Code">
             <div class="handlerpring">
-              <div class="onload" @click="hasonload = !hasonload">
+              <div class="onload" @click="hasonload = !hasonload"  v-if="!nowResumeMsg.glass">
                 <i class="iconfont icon-xiazai"></i>
               </div>
               <div class="onloadselect"  v-loading="loadingshow" v-show="hasonload" ref="queryBox">
@@ -232,32 +232,19 @@
                 <el-button  @click="handleSetResume(buttons.btn3)" :type="buttons.btn3.buttonType">{{buttons.btn3.buttonText}}</el-button>
               </template>
             </div>
-            <div class="like_user" @click.stop="ownerOp(true, nowResumeMsg.uid)" v-if="nowResumeMsg.interested">
-                <i class="iconfont icon-yishoucang img"></i>
-                取消感兴趣
+            <template v-if="!nowResumeMsg.glass">
+              <div class="like_user" @click.stop="ownerOp(true, nowResumeMsg.uid)" v-if="nowResumeMsg.interested">
+                <i class="iconfont icon-yishoucang img"></i> 取消感兴趣
               </div>
               <div class="like_user" @click.stop="ownerOp(false, nowResumeMsg.uid)" v-else >
-                <i class="iconfont icon-shoucang img"></i>
-                  对Ta感兴趣
+                <i class="iconfont icon-shoucang img"></i> 对Ta感兴趣
               </div>
-            <div class="msgCode"  v-if="shareResumeImg">
+            </template>
+            <div class="msgCode" v-if="shareResumeImg">
               <img :src="shareResumeImg" />
               <span>扫码分享</span>
             </div>
-            <div class="isAdmin">
-              <div class="ContactInformation">
-                <p class="contactTitle" v-if="nowResumeMsg.mobile||nowResumeMsg.wechat">联系方式:</p>
-                <div class="Contact" v-if="nowResumeMsg.mobile">
-                  <span><i class="iconfont icon-dianhua"></i></span>
-                  <span>{{nowResumeMsg.mobile}}</span>
-                </div>
-                <div class="Contact" v-if="nowResumeMsg.wechat">
-                  <span><i class="iconfont icon-weixin"></i></span>
-                  <span >{{nowResumeMsg.wechat}}</span>
-                </div>
-              </div>
-            </div>
-              <div class="seefujian" v-if="nowResumeMsg.resumeAttach">
+            <div class="seefujian" v-if="!nowResumeMsg.glass && nowResumeMsg.resumeAttach">
               <div class="title">附件简历:</div>
               <div class="seebtn" v-if="nowResumeMsg.resumeAttach.extension === 'doc'"><a :href="'https://view.officeapps.live.com/op/view.aspx?src=' + nowResumeMsg.resumeAttach.url" :download="nowResumeMsg.resumeAttach.fileName" target="_blank">查看附件</a></div>
               <div class="seebtn" v-else><a :href="nowResumeMsg.resumeAttach.url" :download="nowResumeMsg.resumeAttach.fileName" target="_blank">查看附件</a></div>
