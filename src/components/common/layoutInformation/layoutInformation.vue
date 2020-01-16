@@ -1,18 +1,23 @@
 <template>
   <div class="layoutInformation">
-    <el-popover popper-class="layoutInformation-popper" placement="bottom" width="350" trigger="click">
+    <el-popover popper-class="layoutInformation-popper" @show="interviewInformation" v-model="popperModel" placement="bottom" width="350" trigger="click">
       <div class="layoutInformation-main">
         <div class="layoutInformation-title">约聊消息</div>
         <div class="layoutInformation-item" v-for="(item, index) in interviewList" :key="index">
           <div class="layoutInformation-img">
-            <img :src="item.recruiterInfo.avatarInfo.smallUrl"/>
+            <img :src="port === 'CPort' ? item.recruiterInfo.avatarInfo.smallUrl : item.jobhunterInfo.avatarInfo.smallUrl"/>
           </div>
           <div class="layoutInformation-text">
-            <p class="layoutInformation-text-top">{{ item.recruiterInfo.name }}<span>{{ item.recruiterInfo.companyInfo.companyShortname }}</span></p>
-            <p class="layoutInformation-text-bottom">正在和你沟通【<span>{{ item.recruiterInfo.position }}</span>】职位</p>
+            <p class="layoutInformation-text-top">
+              {{ port === 'CPort' ? item.recruiterInfo.name : item.jobhunterInfo.name }}
+              <span>{{ port === 'CPort' ? item.recruiterInfo.companyInfo.companyShortname : item.positionInfo.lastCompany === '' ? '暂无工作经历' : item.positionInfo.lastCompany  }}</span>
+            </p>
+            <p v-if="port === 'CPort'" class="layoutInformation-text-bottom">正在和你沟通【<span>{{ item.recruiterInfo.position }}</span>】职位</p>
+            <p v-else-if="item.positionInfo.positionName" class="layoutInformation-text-bottom">还有【<span>{{ item.positionInfo.positionName }}</span>】正在与你沟通中</p>
+            <p v-else class="layoutInformation-text-bottom">正与你直接沟通中</p>
           </div>
         </div>
-        <p v-if="meta.total > 5" class="layoutInformation-communication">{{ '还有' + meta.total - 5 + '人正在与你沟通中' }} <i class="iconfont icon-right"></i></p>
+        <p v-if="meta.total > 5" class="layoutInformation-communication">{{ '还有' + (meta.total - 5) + '人正在与你沟通中' }} <i class="iconfont icon-right"></i></p>
       </div>
       <div class="layoutInformation-botton" @click="showPopup = true">
         下载猎多多APP，查看约聊消息
@@ -39,7 +44,8 @@ export default {
     return {
       interviewList: {},
       meta: {},
-      showPopup: false
+      showPopup: false,
+      popperModel: false
     }
   },
   components: {
@@ -68,6 +74,14 @@ export default {
           this.meta = res.data.meta
         })
         break
+    }
+  },
+  methods: {
+    interviewInformation () {
+      if (this.meta.total === 0) {
+        this.popperModel = false
+        this.showPopup = true
+      }
     }
   }
 }
