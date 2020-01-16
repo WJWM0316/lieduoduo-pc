@@ -31,6 +31,7 @@
         :allValue="['all', 'index']"
         @change="handleHighFilter" />
     </div>
+    <div class="recommendation" v-if="candidateList.length > 0 && len">为你推荐</div>
     <!-- lists -->
     <div id="box" class="main_cont" v-loading="getLoading">
       <div class="candidate_blo" @click="viewResume(item)" v-for="(item,index) in candidateList" :key="index">
@@ -61,7 +62,8 @@
                 <img class="userIcon" :src="item.avatar.middleUrl" />
                 <div class="infoRight">
                   <div class="infoName textEllipsis">
-                    <span>{{item.name}}</span>
+                    <span v-if="item.glass"><img src="@/assets/images/glass.png" alt=""/></span>
+                    <span v-else>{{item.name}}</span>
                   </div>
                   <ul class="userLabel">
                     <li class="" v-if="item.workAgeDesc">{{item.workAgeDesc}}</li>
@@ -159,7 +161,7 @@ import ApplyRecord from 'COMPONENTS/b-interview/applyRecord'
 
 import { getPositionTypeApi } from 'API/position'
 import { getJobHunterPositionTypeApi, getSearchBrowseMyselfApi, getMyNavDataApi } from 'API/browse'
-import { getSearchMyCollectApi, getSearchCollectApi, gethotRecommendationApi } from 'API/collect'
+import { getSearchMyCollectApi, getSearchCollectApi, gethotRecommendationApi, getRecommendationList } from 'API/collect'
 import { confirmInterviewApi, manyrecordstatus, getCommentReasonApi, getloadingReasonApi } from 'API/candidateType'
 // components
 import HighFilter from 'COMPONENTS/b-interview/highFilter'
@@ -481,6 +483,24 @@ export default {
         this.total = data.meta.total
         this.navNum.RecommendationCount = data.meta.total
         this.getLoading = false
+        if (this.candidateList.length === 0) {
+          this.getRecommendationList()
+        }
+      }).catch(e => {
+        this.candidateList = []
+        this.getLoading = false
+      })
+    },
+    getRecommendationList () {
+      this.getLoading = true
+      getRecommendationList({
+        page: this.params.page,
+        count: this.params.count
+      }).then(({ data }) => {
+        this.candidateList = data.data || []
+        this.total = data.meta.total
+        this.navNum.RecommendationCount = data.meta.total
+        this.getLoading = false
       }).catch(e => {
         this.candidateList = []
         this.getLoading = false
@@ -566,6 +586,11 @@ export default {
     margin-left: auto;
   }
 }
+.recommendation{
+  margin-top: 20px;
+  font-weight: bold;
+  font-size: 20px;
+}
 .main_cont {
   margin-top: 20px;
   .candidate_blo {
@@ -648,28 +673,16 @@ export default {
                 font-weight:600;
                 color:#333333;
                 line-height:28px;
+                height: 28px;
                 margin-bottom: 6px;
                 span{
-                  position: relative;
-                  &::before {
-                  position: absolute;
-                  top: 0;
-                  left: 0;
-                  width: 100%;
-                  height: 100%;
-                  content: "";
-                  background: #000;
-                  filter: blur(2px);
-                }
-                &::after {
-                  position: absolute;
-                  top: 0;
-                  left: 0;
-                  width: 100%;
-                  height: 100%;
-                  content: "";
-                  background-color: rgba(255, 255, 255, 0.4);
-                }
+                  height: 28px;
+                  width: 100px;
+                  display: block;
+                  img{
+                    width: 100%;
+                    height: 100%;
+                  }
                 }
               }
               .userLabel {
