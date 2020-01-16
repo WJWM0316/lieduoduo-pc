@@ -100,6 +100,7 @@ export default {
   color: $font-color-6;
   line-height: 20px;
   margin-top: 6px;
+  margin-left: 31px;
   width: 318px;
 }
 .positionDownloadApp-img{

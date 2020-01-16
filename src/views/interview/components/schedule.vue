@@ -18,7 +18,7 @@
 					{{item.addressInfo.address}}{{item.addressInfo.doorplate}}
 				</div>
 			</div>
-			<div class="colc-bottom-else" v-if="item.sourceType === 2">{{ item.companyInfo.intro }}</div>
+			<div class="colc-bottom-else" v-if="item.sourceType === 2 && item.companyInfo.intro"><i class="iconfont icon-qiye"></i>{{ item.companyInfo.intro }}</div>
 			<div class="colc-bottom-else" v-if="item.sourceType === 2 && !item.companyInfo.intro">暂无公司简介</div>
 		</div>
 		<div class="col-right">
@@ -263,6 +263,11 @@ export default {
 		text-overflow: ellipsis;
 		font-size: 14px;
 		font-weight: 400;
+		.iconfont{
+			margin-right: 4px;
+			color: $font-color-10;
+    	font-size: 13px;
+		}
 	}
 	.col-right{
 		float: right;

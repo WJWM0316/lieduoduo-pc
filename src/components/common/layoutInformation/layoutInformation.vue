@@ -9,7 +9,7 @@
           </div>
           <div class="layoutInformation-text">
             <p class="layoutInformation-text-top">{{ item.recruiterInfo.name }}<span>{{ item.recruiterInfo.companyInfo.companyShortname }}</span></p>
-            <p class="layoutInformation-text-bottom">{{ '正在和你沟通【'+ item.recruiterInfo.position + '】职位' }}</p>
+            <p class="layoutInformation-text-bottom">正在和你沟通【<span>{{ item.recruiterInfo.position }}</span>】职位</p>
           </div>
         </div>
         <p v-if="meta.total > 5" class="layoutInformation-communication">{{ '还有' + meta.total - 5 + '人正在与你沟通中' }} <i class="iconfont icon-right"></i></p>
