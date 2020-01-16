@@ -36,7 +36,8 @@
                 </div>
                 <div class="msgUserInfo">
                   <div :class="['basemsg', nowResumeMsg.signature ? '' : 'basecenter']">
-                    <span class="realName">{{nowResumeMsg.name}}</span>
+                    <span class="realName" v-if="nowResumeMsg.glass"><img src="@/assets/images/glass.png" alt=""/></span>
+                    <span class="realName" v-else>{{nowResumeMsg.name}}</span>
                     <div class="lebalList">
                       <div class="lebalItem">
                         <i class="icon iconfont icon-zhiwei" style></i>
@@ -996,6 +997,7 @@ export default {
               .realName {
                 font-size: 22px;
                 font-weight: 700;
+                height: 25px;
                 color: #42334d;
                 max-width: 153px;
                 white-space: nowrap;
@@ -1003,6 +1005,11 @@ export default {
                 overflow: hidden;
                 text-overflow: ellipsis;
                 display: inline-block;
+                img{
+                  width: 100%;
+                  height: 100%;
+                  vertical-align: middle;
+                }
               }
               .lebalList {
                 display: inline-block;
