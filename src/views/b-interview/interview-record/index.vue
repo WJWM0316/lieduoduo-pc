@@ -178,9 +178,8 @@
         </div>
       </div>
       <!-- no found -->
-      <no-found class="no-apply-lists"
+      <no-found
         v-if="!candidateList.length && !getLoading"
-        :image-url="nofoundUrl"
         :tip-text="tipsText[this.params.navType]['text']"
         max-width="160">
         <el-button type="primary" style="width: 143px;margin-top: 24px;" @click="$router.push({name: 'recruiterIndex'})">分享职位</el-button>
@@ -250,7 +249,6 @@ export default {
         time: '',
         navType: 'apply' // apply | invite | calendar
       },
-      nofoundUrl: require('@/assets/images/fly.png'),
       tipsText: {
         apply: { text: '与其等待，不如主动出击~分享职位获取更多候选人吧' },
         invite: { text: '与其等待，不如主动出击~分享职位获取更多候选人吧' },
