@@ -1,6 +1,9 @@
 <template>
   <div class="positionDownloadApp">
-    <el-dialog custom-class="positionDownloadApp-dialog" @close="handleClose" :visible.sync="dialogTableVisible">
+    <el-dialog
+      custom-class="positionDownloadApp-dialog"
+      @close="handleClose"
+      :visible.sync="dialogTableVisible">
       <p class="positionDownloadApp-title">
         <i class="iconfont icon-zhengque"></i>
         <span>{{ title }}</span>

@@ -1,6 +1,10 @@
 <template>
-  <div class="downloadApp">
-    <el-dialog append-to-body custom-class="downloadApp-dialog" @close="handleClose" :visible.sync="dialogTableVisible">
+  <div class="downloadApp-dialog-wrappper">
+    <el-dialog
+      append-to-body
+      custom-class="downloadApp-dialog"
+      @close="handleClose"
+      :visible.sync="dialogTableVisible">
       <div class="downloadApp-text">
         <p>下载猎多多APP</p>
         <ul>
@@ -53,8 +57,12 @@ export default {
   .el-dialog__body{
     padding: 0 !important;
   }
+  .el-dialog__close {
+    color: #fff !important;
+    font-weight: bold;
+  }
 }
-.downloadApp .el-dialog__header{
+.downloadApp-dialog-wrappper .el-dialog__header{
   height: 0 !important;
 }
 .downloadApp-text{
