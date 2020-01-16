@@ -62,11 +62,12 @@ export default {
           this.meta = res.data.meta
         })
         break
-      case 'Bport':
+      case 'BPort':
         BchatInterviewApi(data).then(res => {
           this.interviewList = res.data.data
           this.meta = res.data.meta
         })
+        break
     }
   }
 }

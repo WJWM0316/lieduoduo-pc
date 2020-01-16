@@ -407,7 +407,7 @@ export default {
         this.jobuid = this.nowResumeMsg.uid
         // 获取简历成功获取btn 显示的状态
         this.resetListDatas(this.nowResumeMsg)
-        this.current.interviewInfo = this.nowResumeMsg.interviewInfo
+        this.current.interviewInfo = this.nowResumeMsg.interviewSummary.interviewInfo
       }).catch(() => {
         this.getResumeLoading = false
       })

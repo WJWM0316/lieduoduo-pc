@@ -4,7 +4,7 @@
     <!-- header -->
     <div class="candidate-header">
       <div class="b-header-button" style="margin-right: 24px;" :class="{'active':  params.navType==='hotRecommendation'}" @click="handleSearch('hotRecommendation', 'navType')">
-        <i class="iconfont icon-weibiaoti--" style="padding-right: 6px"></i>热门推荐({{navNum.RecommendationCount || 0}})
+        <i class="iconfont icon-weibiaoti--" style="padding-right: 6px"></i>热门推荐<span v-if="navNum.RecommendationCount !== 0">({{navNum.RecommendationCount || 0}})</span>
       </div>
       <div class="b-header-group-button">
         <div class="b-header-button" :class="{'active': params.navType==='searchBrowseMyself'}" @click="handleSearch('searchBrowseMyself', 'navType')">
@@ -46,7 +46,7 @@
           <div class="topText" v-if="params.navType === 'searchMyCollect'">对Ta感兴趣</div>
           <div class="topText topText2" v-if="params.navType==='hotRecommendation'">
             <span>根据你的</span>
-            <span style="color:#03B3BB;">【{{item.lastPosition}}】</span>
+            <span style="color:#03B3BB;">【{{item.positionInfo.positionName}}】</span>
             <span>为你推荐</span>
           </div>
           <div class="topText topText2" v-else>
@@ -505,7 +505,7 @@ export default {
       }).then(({ data }) => {
         this.candidateList = data.data || []
         this.total = data.meta.total
-        this.navNum.RecommendationCount = data.meta.total
+        // this.navNum.RecommendationCount = data.meta.total
         this.getLoading = false
       }).catch(e => {
         this.candidateList = []
@@ -561,6 +561,8 @@ export default {
       if (arr1.length > 0) this.params.positionId = arr1[0].id
       if (arr2.length > 0) this.params.cityNum = arr2[0].areaId
       if (arr3.length > 0) this.params.salaryIds = arr3.join(',')
+      this.params.page = 1
+      this.$router.push({ name: this.$route.name, query: { ...this.params, q: Date.now(), type: this.params.type.join(',') } })
       this.gethotRecommendation()
     },
     // 热门推荐清除筛选
@@ -572,6 +574,7 @@ export default {
       this.params.positionId = ''
       this.params.cityNum = ''
       this.params.salaryIds = 1
+      this.params.page = 1
     },
     // 获取数量
     getMyNavData () {
