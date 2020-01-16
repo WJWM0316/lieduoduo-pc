@@ -13,8 +13,8 @@
               <span>{{ port === 'CPort' ? item.recruiterInfo.companyInfo.companyShortname : item.positionInfo.lastCompany === '' ? '暂无工作经历' : item.positionInfo.lastCompany  }}</span>
             </p>
             <p v-if="port === 'CPort'" class="layoutInformation-text-bottom">正在和你沟通【<span>{{ item.recruiterInfo.position }}</span>】职位</p>
-            <p v-else-if="item.positionInfo.positionName" class="layoutInformation-text-bottom">还有【<span>{{ item.positionInfo.positionName }}</span>】正在与你沟通中</p>
-            <p v-else class="layoutInformation-text-bottom">正与你直接沟通中</p>
+            <p v-if="port === 'BPort' && item.positionInfo.positionName" class="layoutInformation-text-bottom">正在和你沟通【<span>{{ item.positionInfo.positionName }}</span>】职位</p>
+            <p v-if="port === 'BPort' && !item.positionInfo.positionName" class="layoutInformation-text-bottom">正与你直接沟通中</p>
           </div>
         </div>
         <p v-if="meta.total > 5" class="layoutInformation-communication">{{ '还有' + (meta.total - 5) + '人正在与你沟通中' }} <i class="iconfont icon-right"></i></p>
@@ -93,7 +93,7 @@ export default {
   font-weight: 400;
   color: rgba(255, 255, 255, 0.58);
   margin-right: 28px;
-  line-height: 16px;
+  line-height: 50px;
   &:hover{
     color: $nav-color-hover;
   }
@@ -146,6 +146,15 @@ export default {
       margin-top: 8px;
       font-size: 12px;
       color: $font-color-6;
+      vertical-align: middle;
+      span{
+        display: inline-block;
+        max-width: 100px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        vertical-align: middle;
+      }
     }
   }
 }
