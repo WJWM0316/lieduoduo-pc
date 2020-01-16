@@ -31,11 +31,11 @@
         :allValue="['all', 'index']"
         @change="handleHighFilter" />
     </div>
-    <div class="null-recommendation" v-if="candidateList.length > 0 && len">
+    <div class="null-recommendation" v-if="!getLoading && candidateList.length > 0 && len">
       <img src="@/assets/images/exclamation-circle.png" alt="">
       <span>无筛选结果，可以扩大筛选范围哟~</span>
     </div>
-    <div class="recommendation" v-if="candidateList.length > 0 && len">为你推荐</div>
+    <div class="recommendation" v-if="!getLoading && candidateList.length > 0 && len">为你推荐</div>
     <!-- lists -->
     <div id="box" class="main_cont" v-loading="getLoading">
       <div class="candidate_blo" @click="viewResume(item)" v-for="(item,index) in candidateList" :key="index">
@@ -387,7 +387,19 @@ export default {
       // 查询 | 更新高级筛选数据
       if (type === 'navType') {
         this.candidateList = []
-        if (init) this.cleanListRedDot()
+        if (init) {
+          // 删除红点
+          this.cleanListRedDot()
+          // tab切换 删除高级筛选的参数
+          Object.assign(this.params, {
+            type: ['all'],
+            category: 0, // 0 | 1
+            index: 0, // 0 | 1
+            positionId: '',
+            cityNum: '',
+            salaryIds: 1
+          })
+        }
         this.total = 0
       }
       switch (this.params.navType) {
@@ -397,9 +409,9 @@ export default {
         case 'searchBrowseMyself':
           if (type === 'navType') {
             this.highFilterTitle = '看过我的职位类型'
+            // 高级筛选数据清空
             this.getPositionTypeList()
           }
-          this.clearfilerhot()
           this.getSearchBrowseMyself()
           break
         case 'searchCollect':
@@ -407,7 +419,6 @@ export default {
             this.highFilterTitle = '简历职位类型'
             this.getPositionTypeList()
           }
-          this.clearfilerhot()
           this.getSearchCollect()
           break
         case 'searchMyCollect':
@@ -415,7 +426,6 @@ export default {
             this.highFilterTitle = '感兴趣职位类型'
             this.getJobHunterPositionType()
           }
-          this.clearfilerhot()
           this.getSearchMyCollect()
           break
       }
@@ -488,9 +498,11 @@ export default {
         this.candidateList = data.data || []
         this.total = data.meta.total
         this.navNum.RecommendationCount = data.meta.total
-        this.getLoading = false
+
         if (this.candidateList.length === 0) {
           this.getRecommendationList()
+        } else {
+          this.getLoading = false
         }
       }).catch(e => {
         this.candidateList = []
@@ -567,14 +579,10 @@ export default {
     },
     // 热门推荐清除筛选
     handleclearfilter (arr) {
-      this.clearfilerhot()
-      this.gethotRecommendation()
-    },
-    clearfilerhot () {
       this.params.positionId = ''
       this.params.cityNum = ''
       this.params.salaryIds = 1
-      this.params.page = 1
+      this.gethotRecommendation()
     },
     // 获取数量
     getMyNavData () {
@@ -621,6 +629,7 @@ export default {
 }
 .main_cont {
   margin-top: 20px;
+  min-height: 350px;
   .candidate_blo {
     height: 196px;
     background: rgba(255,255,255,1);
