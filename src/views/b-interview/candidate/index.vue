@@ -31,6 +31,10 @@
         :allValue="['all', 'index']"
         @change="handleHighFilter" />
     </div>
+    <div class="null-recommendation" v-if="candidateList.length > 0 && len">
+      <img src="@/assets/images/exclamation-circle.png" alt="">
+      <span>无筛选结果，可以扩大筛选范围哟~</span>
+    </div>
     <div class="recommendation" v-if="candidateList.length > 0 && len">为你推荐</div>
     <!-- lists -->
     <div id="box" class="main_cont" v-loading="getLoading">
@@ -586,6 +590,25 @@ export default {
   align-items: center;
   .high-filter {
     margin-left: auto;
+  }
+}
+.null-recommendation{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width:462px;
+  height:40px;
+  margin: 20px auto;
+  background:rgba(255,244,229,1);
+  border-radius:8px;
+  img{
+    width: 16px;
+    margin-right: 5px;
+    height: 16px;
+  }
+  span{
+    color: #FF9E40;
+    font-size:14px;
   }
 }
 .recommendation{

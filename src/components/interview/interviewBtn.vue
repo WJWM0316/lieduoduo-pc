@@ -77,49 +77,85 @@ export default {
         this.$refs.loginPop.showLoginPop = true
         return
       }
+
       switch (genre) {
-        case 'chat':
-          chatApplyApi({ recruiter: this.infos.recruiter, position: this.infos.id }).then(res => {
-            this.showPopupType = 'chat' // 约聊成功
-            this.showPopup = true
-            this.loading = false
-            this.$emit('init')
-          }).catch(res => {
-            this.loading = false
-          })
+        case 'chat': // 约聊
+          this.chatApply()
           break
-        case 'goChat':
+        case 'goChat': // 继续聊
           this.showPopupDownload = true
           this.loading = false
           break
-        case 'grabInterviewChat':
-          applyInterviewApi({ recruiterUid: this.infos.recruiter, positionId: this.infos.id, interview_type: 2 }).then(res => {
-            this.showPopupType = 'grabInterviewChat' // 抢占成功弹窗以及传参
-            if (res.data.code === 917) {
-              this.text = res.data.msg
-            }
-            this.showPopup = true
-            this.loading = false
-            this.$emit('init')
-          }).catch(res => {
-            this.loading = false
-          })
+        case 'grabInterviewChat': // 抢占24小时职位
+          if (this.infos.rapidlyInfo.changePositionToast === 1) { // 有没有已经抢占当前招聘官的职位
+            this.$confirm('你已约面该招聘官的其他职位', '是否要更换该约面职位', {
+              distinguishCancelAndClose: true,
+              confirmButtonText: '更换约面职位',
+              cancelButtonText: '我再想想'
+            }).then(() => {
+              this.applyInterview()
+            }).catch(() => {
+              this.loading = false
+            })
+            return
+          }
+          this.applyInterview()
           break
-        case 'interviewChat':
-          chatApplyApi({ recruiter: this.infos.recruiter, position: this.infos.id }).then(res => {
-            this.showPopupType = 'chat' // 约聊成功
-            this.showPopup = true
-            this.loading = false
-            this.$emit('init')
-          }).catch(res => {
-            this.loading = false
-          })
+        case 'interviewChat': // 24约聊
+          this.chatApply()
           break
-        case 'goInterviewChat':
+        case 'goInterviewChat': // 24继续聊
           this.showPopupDownload = true
           this.loading = false
           break
       }
+    },
+    applyInterview () { // 抢占成功方法
+      applyInterviewApi({ recruiterUid: this.infos.recruiter, positionId: this.infos.id, interview_type: 2 }).then(res => {
+        this.loading = false
+        if (res.data.code === 915) {
+          this.$confirm('活动已过期', '已改为提交约聊申请，面试官将尽快处理。', {
+            distinguishCancelAndClose: true,
+            confirmButtonText: '知道了',
+            showCancelButton: false
+          }).then(() => {
+            this.showPopupType = 'grabInterviewChat' // 抢占成功弹窗以及传参
+            this.showPopup = true
+            this.$emit('init')
+          })
+          return
+        }
+        if (res.data.code === 916) {
+          this.$confirm('约面席位已抢光', '已改为提交约聊申请，面试官将尽快处理。', {
+            distinguishCancelAndClose: true,
+            confirmButtonText: '知道了',
+            showCancelButton: false
+          }).then(() => {
+            this.showPopupType = 'grabInterviewChat' // 抢占成功弹窗以及传参
+            this.showPopup = true
+            this.$emit('init')
+          })
+          return
+        }
+        if (res.data.code === 917) { // 节假日延后
+          this.text = res.data.msg
+        }
+        this.showPopupType = 'grabInterviewChat' // 抢占成功弹窗以及传参
+        this.showPopup = true
+        this.$emit('init')
+      }).catch(res => {
+        this.loading = false
+      })
+    },
+    chatApply () { // 约聊成功方法
+      chatApplyApi({ recruiter: this.infos.recruiter, position: this.infos.id }).then(res => {
+        this.showPopupType = 'chat' // 约聊成功
+        this.showPopup = true
+        this.loading = false
+        this.$emit('init')
+      }).catch(res => {
+        this.loading = false
+      })
     }
   }
 }
