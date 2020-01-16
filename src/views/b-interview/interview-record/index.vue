@@ -716,6 +716,7 @@ export default {
 }
 .main_cont {
   margin-top: 20px;
+  min-height: 350px;
   .candidate_blo {
     height: 196px;
     background: rgba(255,255,255,1);

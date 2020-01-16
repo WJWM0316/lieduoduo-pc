@@ -67,6 +67,10 @@ export default {
     },
     handleSearch () {
       this.getOrders()
+      const dom = document.querySelector('.b-app-contain')
+      if (dom) {
+        dom.scrollTop = 282
+      }
     }
   }
 }
