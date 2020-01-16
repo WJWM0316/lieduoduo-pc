@@ -45,7 +45,7 @@
             </el-select>
               </div>
           </div>
-          <div class="item">
+          <div class="item" v-if="arrangementInfo.source_type === 1">
             <div class="name">面试地址</div>
             <div class="info" @click="selectaddredd()">
               <div class="info-select">
@@ -198,17 +198,21 @@ export default {
   methods: {
     handleSave () {
       if (this.type === 'arrange') {
-        if (!this.arrangementInfo.positionId) {
+        const data = JSON.parse(JSON.stringify(this.arrangementInfo))
+        if (!data.positionId) {
           this.$message.error('请选择一个职位')
           return
         }
-        if (!this.arrangementInfo.source_type) {
+        if (!data.source_type) {
           this.$message.error('请选择面试形式')
           return
         }
-        if (!this.arrangementInfo.addressId) {
+        if (!data.addressId && data.source_type === 1) {
           this.$message.error('请选择一个地址')
           return
+        } else {
+          delete data.addressId
+          delete data.addressName
         }
         let timearr = []
         this.model.dateLists.map((v, k) => {
@@ -218,8 +222,8 @@ export default {
           this.$message.error('请至少添加一个约面时间')
           return
         }
-        this.arrangementInfo.interviewTime = timearr.join(',')
-        setInterviewInfoApi(this.arrangementInfo).then((res) => {
+        data.interviewTime = timearr.join(',')
+        setInterviewInfoApi(data).then((res) => {
           this.$message.success('安排面试成功')
           this.handleClose()
           this.$emit('finish', false)
