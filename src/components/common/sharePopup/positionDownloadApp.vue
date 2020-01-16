@@ -54,7 +54,7 @@ export default {
   },
   data () {
     return {
-      dialogTableVisible: true,
+      dialogTableVisible: false,
       imgUrl: app_qrcode,
       cdnPath: `${process.env.VUE_APP_CDN_PATH}/images/`,
       title: ''
@@ -87,6 +87,7 @@ export default {
   font-weight: 500;
   font-size: 16px;
   line-height: 24px;
+  width: 350px;
   .iconfont{
     display: inline-block;
     margin-right: 11px;

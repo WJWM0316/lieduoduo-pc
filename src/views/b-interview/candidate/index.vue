@@ -448,9 +448,10 @@ export default {
     // 对我感兴趣的
     getSearchCollect () {
       this.getLoading = true
+      const type = this.params.type.join(',')
       getSearchCollectApi({
         ...this.params,
-        type: this.params.type.join(',')
+        type: type === 'index' ? '' : type
       }).then(({ data }) => {
         this.candidateList = data.data || []
         this.total = data.meta.total
@@ -464,9 +465,10 @@ export default {
     // 浏览过我的求职者
     getSearchBrowseMyself () {
       this.getLoading = true
+      const type = this.params.type.join(',')
       getSearchBrowseMyselfApi({
         ...this.params,
-        type: this.params.type.join(',')
+        type: type === 'index' ? '' : type
       }).then(({ data }) => {
         this.candidateList = data.data || []
         this.total = data.meta.total
