@@ -1,129 +1,190 @@
 <template>
-  <!-- 候选人动态 -->
-  <div class="candidate-type-wrapper">
+  <!-- 候选人库 -->
+  <div class="candidate-wrapper">
     <!-- header -->
     <div class="candidate-header">
-      <div class="b-header-button" style="margin-right: 24px;" :class="{'active':  params.navType==='hotRecommendation'}" @click="handleSearch('hotRecommendation', 'navType')">
-        <i class="iconfont icon-weibiaoti--" style="padding-right: 6px"></i>热门推荐({{navNum.RecommendationCount || 0}})
-      </div>
-      <div class="b-header-group-button">
-        <div class="b-header-button" :class="{'active': params.navType==='searchBrowseMyself'}" @click="handleSearch('searchBrowseMyself', 'navType')">
-          <i class="iconfont icon-zhengyan"></i>看过我的({{navNum.browseMyselfCount || 0}})
-          <span :class="{'is-red-dot' : visitedMyselfNum > 0}"></span>
+      <div class="header-tap-search">
+        <div class="b-header-button-tap">
+          <div
+            class="b-header-button"
+            :class="{'active': params.navType==='apply'}"
+            @click="handleSearch('apply', 'navType')">
+            <span :class="{'is-red-dot' : recruiterIntentionList > 0}"></span>
+            收到意向({{invitenum || 0}})
+          </div>
+          <div
+            class="b-header-button"
+            :class="{ 'active':  params.navType==='invite' }"
+            @click="handleSearch('invite', 'navType')">
+            <span :class="{'is-red-dot' : recruiterInviteList > 0}"></span>
+            我的邀请({{applynum || 0}})
+          </div>
+          <div
+            class="b-header-button"
+            @click="handleSearch('calendar', 'navType')"
+            :class="{ 'active':  params.navType ==='calendar' }">
+            <span :class="{'is-red-dot' : recruiterScheduleList > 0}"></span>
+            面试日程
+            <!-- ({{applynum || 0}}) -->
+          </div>
         </div>
-        <div class="b-header-button" :class="{'active':  params.navType==='searchCollect'}" @click="handleSearch('searchCollect', 'navType')">
-          <i class="iconfont icon-ganxingqu-" style="padding-right: 6px"></i>对我感兴趣({{navNum.collectMyselfCount || 0}})
-          <span :class="{'is-red-dot' : interestedMyselfNum > 0}"></span>
+        <div class="el-date-picker" v-show="!params.time">
+          <el-date-picker
+            v-model="times"
+            type="daterange"
+            range-separator="至"
+            value-format="yyyy-MM-dd"
+            start-placeholder="开始日期"
+            @change="(val) => handleSearch(val, 'times')"
+            end-placeholder="结束日期"
+          ></el-date-picker>
+          <high-filter
+            title="职位类别筛选"
+            :lists="positionTypeList"
+            v-model="params.position_type_id"
+            :allValue="['all']"
+            @change="handleHighFilter" />
         </div>
+
       </div>
-      <div class="b-header-button" style="margin-left: 24px;" :class="{'active':  params.navType==='searchMyCollect'}" @click="handleSearch('searchMyCollect', 'navType')">
-        <i class="iconfont icon-weibiaoti--" style="padding-right: 6px"></i>我感兴趣的({{navNum.myCollectCount || 0}})
+      <!-- 状态选择 -->
+      <div class="header-status" v-if="params.navType === 'invite' || params.navType === 'apply'">
+        <template v-for="status in statusList">
+          <div
+            :key="status.value"
+            @click="handleSearch(status.value, 'status')"
+            :class="{active: params.status === status.value}"
+            v-show="status.type === params.navType || status.type === 'common'">{{status.label}}</div>
+        </template>
       </div>
-      <hot-filter
-      v-if="params.navType==='hotRecommendation'"
-        @clearfilter="handleclearfilter"
-        @change="handleHotFilter" />
-      <high-filter
-      v-else
-        :title="highFilterTitle"
-        :lists="positionTypeList"
-        v-model="params.type"
-        :allValue="['all', 'index']"
-        @change="handleHighFilter" />
+      <!-- 面试日程tab -->
+      <div class="header-status" v-if="params.navType === 'calendar'">
+        <template v-for="tab in interviewTabs">
+          <div
+            :key="tab.time"
+            @click="handleSearch(tab.time, 'time', true, tab)"
+            :class="{active: params.time === tab.time, 'is-red-dot': tab.number > 0}"
+          >{{tab.date}}</div>
+        </template>
+      </div>
     </div>
     <!-- lists -->
     <div id="box" class="main_cont" v-loading="getLoading">
-      <div class="candidate_blo" @click="viewResume(item)" v-for="(item,index) in candidateList" :key="index">
+      <div class="candidate_blo" v-for="(item,index) in candidateList" @click="viewResume(item)" :key="index">
         <div class="bloTop">
-          <div class="timer">{{item.viewAt}}</div>
-          <div class="topText" v-if="params.navType === 'searchBrowseMyself'">看过我的{{item.positionInfo && item.positionInfo.positionName ?'职位':'主页'}}</div>
-          <div class="topText" v-if="params.navType === 'searchCollect'">对我{{item.positionInfo && item.positionInfo.positionName ?'的职位':''}}感兴趣</div>
-          <div class="topText" v-if="params.navType === 'searchMyCollect'">对Ta感兴趣</div>
-          <div class="topText topText2" v-if="params.navType==='hotRecommendation'">
-            <span>根据你的</span>
-            <span style="color:#03B3BB;">【{{item.lastPosition}}】</span>
-            <span>为你推荐</span>
+          <div class="timer">{{item.time}}</div>
+          <div class="topText" v-if="params.navType === 'invite'">邀请面试</div>
+          <div class="topText" v-if="params.navType === 'apply'">申请面试</div>
+          <div class="topText" v-if="params.navType === 'calendar'">面试职位</div>
+          <div class="topText topText2" v-if="item.positionId !== 0">
+            【<span v-if="item.address">{{item.address.city}}{{item.address.area}}<span v-show="item.address.city">&nbsp;|&nbsp;</span></span><span v-if="item.positionName">{{item.positionName}}&nbsp;|&nbsp;</span><span v-if="item.emolument">{{item.positionEmolumentMin}}k-{{item.positionEmolumentMax}}K</span>】
           </div>
-          <div class="topText topText2" v-else>
-            <span v-if="item.positionInfo.area || item.positionInfo.emolument">【{{item.positionInfo.area}}&nbsp;<span v-if="item.positionInfo.area">|</span>&nbsp;</span><span v-if="item.positionInfo.positionName">{{item.positionInfo.positionName}}&nbsp;|&nbsp;</span><span v-if="item.positionInfo.emolument"> {{item.positionInfo.emolument}}】</span>
-          </div>
-          <div class="status">
-            <span>{{item.btn1 && item.btn1.statusText}}</span>
-          </div>
-          <div class="redDot" v-if="item.redDot > 0"></div>
+           <template v-if="params.navType ==='apply' || params.navType === 'invite'">
+            <div class="topText topText2" v-if="item.origin">
+              <div class="from">候选人来自</div>
+              <div class="origin">{{item.origin}}</div>
+            </div>
+            <div class="bloTop-24hour-wrap">
+              <div class="bloTop-24hour" v-if="item.interviewType === 2"></div>
+            </div>
+            <div class="status">
+              <div class="like_user">
+                <span :class="{'is-active': [11, 12, 21].includes(item.status)}">{{item.statusDesc}}</span>
+              </div>
+            </div>
+            <div class="phone" v-if="[21, 31, 32, 41].includes(item.status)">手机：{{item.resume.mobile}}</div>
+          </template>
+          <template v-if="params.navType === 'calendar'">
+            <div class="time" :class="{'time-bg': item.status < 51}">
+              <i class="iconfont icon-shijian"></i>
+              {{ item.arrangementInfo.appointmentTime * 1000 | interviewTime}}</div>
+          </template>
+          <div class="redot" v-if="item.redDot"></div>
         </div>
         <div class="bloCont">
           <div class="cont_left">
             <div class="leftMsg">
               <div class="userBaseInfo">
-                <img class="gender" src="~@/assets/images/girl.png" v-if="item.gender===2" />
-                <img class="gender" src="~@/assets/images/boy.png" v-else />
+                <img class="gender" src="~IMAGES/girl.png" v-if="item.resume.gender===2" />
+                <img class="gender" src="~IMAGES/boy.png" v-else />
                 <img class="userIcon" :src="item.avatar.middleUrl" />
                 <div class="infoRight">
                   <div class="infoName textEllipsis">
-                    <span>{{item.name}}</span>
+                    <span>{{item.jobhunterRealname}}</span>
                   </div>
+
                   <ul class="userLabel">
-                    <li class="" v-if="item.workAgeDesc">{{item.workAgeDesc}}</li>
-                    <li class="" v-if="item.age">{{item.age}}岁</li>
-                    <li class="" v-else>暂无年龄</li>
-                    <li class="" v-if="item.degreeDesc">{{item.degreeDesc}}</li>
-                    <li class="" v-else>暂无学历</li>
+                    <li class v-if="item.resume.workAgeDesc">{{item.resume.workAgeDesc}}</li>
+                    <li class v-if="item.resume.age">{{item.resume.age}}岁</li>
+                    <li class v-else>暂无年龄</li>
+                    <li class v-if="item.resume.degreeDesc">{{item.resume.degreeDesc}}</li>
+                    <li class v-else>暂无学历</li>
                   </ul>
                 </div>
               </div>
-              <div class="intention" v-if="item.expects.length>0">求职意向：<span class="intentionText intentionTextWidth textEllipsis"> {{item.expects[0].city}} </span>&nbsp;·&nbsp;
-                <span class="intentionText intentionTextWidth2 textEllipsis" style="color:#333">{{item.expects[0].position}}</span>&nbsp;·&nbsp;
-                <span class="intentionText2">{{item.expects[0].salaryFloor}}k~{{item.expects[0].salaryCeil}}k</span>
+              <div class="intention" v-if="item.resume.expect">
+                求职意向：
+                <span
+                  class="intentionText intentionTextWidth textEllipsis"
+                >{{item.resume.expect.city}}</span>&nbsp;·&nbsp;
+                <span
+                  class="intentionText intentionTextWidth2 textEllipsis"
+                  style="color:#333"
+                >{{item.resume.expect.position}}</span>&nbsp;·&nbsp;
+                <span
+                  class="intentionText2"
+                >{{item.resume.expect.salaryFloor}}k~{{item.resume.expect.salaryCeil}}k</span>
               </div>
               <div class="intention" v-else>求职意向：暂无求职意向</div>
             </div>
             <div class="bloExperience workExperience">
-              <div class="experienceTitle ">最近工作经历</div>
-              <div class="experienceText textEllipsis" v-if="item.lastCompanyName">{{item.lastCompanyName}}</div>
-              <div class="experienceText textEllipsis" v-if="item.lastPosition">{{item.lastPosition}}</div>
+              <div class="experienceTitle">最近工作经历</div>
+              <div
+                class="experienceText textEllipsis"
+                v-if="item.lastCompanyName"
+              >{{item.lastCompanyName}}</div>
+              <div
+                class="experienceText textEllipsis"
+                v-if="item.lastPosition"
+              >{{item.lastPosition}}</div>
               <div class="experienceText textEllipsis" v-if="item.lastCompanyName.length<1">暂无工作经历</div>
             </div>
             <div class="bloExperience educationExperience">
               <div class="experienceTitle">最近教育经历</div>
-              <div class="experienceText textEllipsis" v-if="item.education && item.education.school">{{item.education.school}}</div>
+              <div
+                class="experienceText textEllipsis"
+                v-if="item.resume && item.resume.school"
+              >{{item.resume.school}}</div>
               <div class="experienceText textEllipsis" v-else>暂无教育经历</div>
 
-              <div class="experienceText textEllipsis" v-if="item.education && item.education.major">{{item.education.major}}</div>
+              <div
+                class="experienceText textEllipsis"
+                v-if="item.resume && item.resume.major"
+              >{{item.resume.major}}</div>
             </div>
           </div>
-
           <div class="userOp">
-            <el-button type="primary" @click.stop="viewResume(item)">查看简历</el-button>
+            <template v-if="item.btn2 && item.btn2.type">
+              <span class="list-btn" :class="item.btn2.className" @click.stop="setJob(item.btn2.type, item)">{{item.btn2.buttonText}}</span>
+            </template>
+            <el-button
+              style="width: 112px;margin-left: 24px"
+              :disabled="item.btn1.disabled"
+              @click.stop="setJob(item.btn1.type, item)"
+              :type="item.btn1.buttonType">
+              {{item.btn1.buttonText}}
+            </el-button>
           </div>
         </div>
       </div>
       <!-- no found -->
-      <template v-if="params.navType==='hotRecommendation'">
-      <no-found class="no-apply-lists"
-        v-if="!candidateList.length && !getLoading && len"
-        :tip-text="'无筛选结果，可以扩大筛选范围哟~'"
-        max-width="160">
-      </no-found>
-      <no-found class="no-apply-lists"
-        v-if="!candidateList.length && !getLoading && !len"
-        :image-url="nofoundUrl"
-        :tip-text="tipsText[this.params.navType]['text']"
-        max-width="160">
-        <!-- <el-button type="primary" style="width: 143px;margin-top: 24px;" @click="$router.push({name: 'recruiterIndex'})">分享职位</el-button> -->
-        <el-button type="primary" style="width: 143px;margin-top: 24px;" @click="$router.push({name: 'recruiterIndex'})">发布/开放职位</el-button>
-      </no-found>
-      </template>
-      <template v-else>
       <no-found class="no-apply-lists"
         v-if="!candidateList.length && !getLoading"
         :image-url="nofoundUrl"
         :tip-text="tipsText[this.params.navType]['text']"
         max-width="160">
-        <!-- <el-button type="primary" style="width: 143px;margin-top: 24px;" @click="$router.push({name: 'recruiterIndex'})">分享职位</el-button> -->
-        <el-button type="primary" style="width: 143px;margin-top: 24px;" @click="$router.push({name: 'recruiterIndex'})">发布/开放职位</el-button>
+        <el-button type="primary" style="width: 143px;margin-top: 24px;" @click="$router.push({name: 'recruiterIndex'})">分享职位</el-button>
       </no-found>
-      </template>
     </div>
     <!-- page -->
     <div class="pagination" v-if="total > 0 && total > params.count">
@@ -137,7 +198,7 @@
       </el-pagination>
     </div>
     <!-- 预览简历 -->
-    <resume :current="currentItem" ref="resume" :visible.sync="resumeDialogStatus" @finish="refreshPageData" @change-status="setJob" />
+    <resume :current="currentItem" :visible.sync="resumeDialogStatus" ref="resume" @change-status="setJob" @finish="refreshPageData" />
     <!-- 查看面试，安排面试弹窗 -->
     <interview-arrange :interviewId="interviewId" :visible.sync="arrangediggle" @finish="refreshPageData"></interview-arrange>
     <!-- 面试详情弹窗 -->
@@ -151,58 +212,69 @@
   </div>
 </template>
 <script>
+// apis
+import { getApplyListApi, getInviteListApi, getinviteapplyNum, getdeleteTabRedDotApi, getnewHistoryListtApi, getScheduletodayListtApi, getScheduleListApi, deleteScheduleTabRedDotApi } from 'API/candidate'
+import { manyrecordstatus, confirmInterviewApi, interviewRetract, getCommentReasonApi, getloadingReasonApi } from 'API/candidateType'
+import { getPositionTypeApi } from 'API/position'
+// components
+import HighFilter from 'COMPONENTS/b-interview/highFilter'
+import NoFound from '@/components/noFound'
 import InterviewArrange from 'COMPONENTS/b-interview/interviewArrange'
 import InterviewDetail from 'COMPONENTS/b-interview/interviewDetail'
 import SelectReson from 'COMPONENTS/b-interview/selectReson'
 import ResonList from 'COMPONENTS/b-interview/resonList'
 import ApplyRecord from 'COMPONENTS/b-interview/applyRecord'
-
-import { getPositionTypeApi } from 'API/position'
-import { getJobHunterPositionTypeApi, getSearchBrowseMyselfApi, getMyNavDataApi } from 'API/browse'
-import { getSearchMyCollectApi, getSearchCollectApi, gethotRecommendationApi } from 'API/collect'
-import { confirmInterviewApi, manyrecordstatus, getCommentReasonApi, getloadingReasonApi } from 'API/candidateType'
-// components
-import HighFilter from 'COMPONENTS/b-interview/highFilter'
-import HotFilter from 'COMPONENTS/b-interview/hotFilter'
-import NoFound from '@/components/noFound'
 import Resume from 'COMPONENTS/b-interview/resume'
 // 候选人动态操作按钮种类
-// const CandidateTypeBtns = [
-//   { buttonText: '查看联系', type: 'confirm-interview', buttonType: 'primary', is: (val) => val === 11, statusText: '未处理' },
-//   { buttonText: '查看邀约', type: 'check-invitation', buttonType: 'primary', is: (val) => val === 12, statusText: '待对方处理' },
-//   { buttonText: '安排面试', type: 'arranging-interviews', buttonType: 'primary', is: (val) => val === 21, statusText: '待我安排' },
-//   { buttonText: '查看面试', type: 'arranging-interviews', buttonType: 'primary', is: (val) => val === 31, statusText: '待对方确认' },
-//   { buttonText: '修改面试', type: 'arranging-interviews', buttonType: 'primary', is: (val) => val === 32, statusText: '待我修改' },
-//   { buttonText: '面试详情', type: 'check-invitation', buttonType: 'primary', is: (val) => val >= 41, statusText: '已安排' }
-// ]
+const CandidateBtns = [
+  { buttonText: '同意', type: 'confirm-interview', buttonType: 'primary', is: (val) => val === 11 }, // c-b b未处理
+  { buttonText: '面试详情', type: 'check-invitation', buttonType: 'primary', is: (val) => val === 12 }, // b->c c未处理
+  { buttonText: '安排面试', type: 'arranging-interviews', buttonType: 'primary', is: (val) => val === 21 },
+  { buttonText: '面试详情', type: 'arranging-interviews', buttonType: 'primary', is: (val) => val === 31 },
+  { buttonText: '修改面试', type: 'arranging-interviews', buttonType: 'primary', is: (val) => val === 32 },
+  { buttonText: '面试详情', type: 'check-invitation', buttonType: 'primary', is: (val) => [41, 51, 57, 58, 59, 60, 61].includes(val) },
+  { buttonText: '面试详情', type: 'check-invitation', buttonType: 'primary', is: (val) => [52, 53, 54, 55].includes(val) }
+]
 export default {
-  components: { HighFilter, HotFilter, NoFound, Resume, InterviewArrange, InterviewDetail, SelectReson, ResonList, ApplyRecord },
+  components: { HighFilter, NoFound, Resume, InterviewArrange, InterviewDetail, SelectReson, ResonList, ApplyRecord },
   data () {
     return {
       getLoading: false,
       params: {
         page: 1,
         count: 20,
-        type: ['all'],
-        category: 0, // 0 | 1
-        index: 0, // 0 | 1
-        positionId: '',
-        cityNum: '',
-        salaryIds: 1,
-        navType: 'hotRecommendation' //  searchBrowseMyself-看过我的 searchCollect-对我感兴趣 searchMyCollect-我感兴趣的
+        status: 0,
+        created_start_time: '',
+        created_end_time: '',
+        position_type_id: ['all'],
+        time: '',
+        navType: 'apply' // apply | invite | calendar
       },
       nofoundUrl: require('@/assets/images/fly.png'),
       tipsText: {
-        hotRecommendation: { text: '发布/开放职位，我们将为你推荐优质候选人~' },
-        searchBrowseMyself: { text: '还没有人看过你哟~主动分享职位获取更多候选人吧' },
-        searchCollect: { text: '还没有人对你感兴趣哟~主动分享职位获取更多候选人吧' },
-        searchMyCollect: { text: '快去分享职位吧，一大波候选人等着开撩你！' }
+        apply: { text: '与其等待，不如主动出击~分享职位获取更多候选人吧' },
+        invite: { text: '与其等待，不如主动出击~分享职位获取更多候选人吧' },
+        calendar: { text: '与其等待，不如主动出击~分享职位约面更多候选人吧' }
       },
-      highFilterTitle: '',
-      navNum: {}, //
-      positionTypeList: [], // 职位类型
-      candidateList: [], // 候选人数据
+      statusList: [
+        { value: 0, label: '全部', type: 'common' },
+        { value: 11, label: '未处理', type: 'apply' },
+        { value: 12, label: '已邀请', type: 'invite' },
+        { value: 21, label: '待安排', type: 'common' },
+        { value: 31, label: '待对方确认', type: 'common' },
+        { value: 32, label: '待我修改', type: 'common' },
+        { value: 54, label: '对方暂不考虑', type: 'common' },
+        { value: 52, label: '不合适', type: 'common' },
+        { value: 41, label: '已安排', type: 'common' },
+        { value: 51, label: '已结束', type: 'common' }
+      ],
+      times: [],
+      invitenum: 0, // 收到意向数据
+      applynum: 0, // 我的邀请数据
+      positionTypeList: [], // 职位类型数据
       total: 0,
+      candidateList: [], // 列表数据
+      interviewTabs: [], // 面试日程tab
       currentItem: {}, // 当前选定值
       // 弹窗状态
       jobuid: '',
@@ -221,17 +293,17 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'visitedMyselfNum',
-      'interestedMyselfNum'
-    ]),
-    len () {
-      return this.params.positionId || this.params.cityNum || this.params.salaryIds !== 1
-    }
+      'recruiterIntentionList',
+      'recruiterInviteList',
+      'recruiterScheduleList'
+    ])
   },
   created () {
     const query = this.$route.query
-    // type 类型转换
-    query.type = query.type ? query.type.split(',').map(val => !isNaN(val) ? +val : val) : ['all']
+    // position_type_id 类型转换
+    query.position_type_id = query.position_type_id ? query.position_type_id.split(',').map(val => !isNaN(val) ? +val : val) : ['all']
+    // times 转换
+    this.times = query.created_start_time && query.created_end_time ? [query.created_start_time, query.created_end_time] : []
     for (let item in query) {
       if (this.params[item] !== undefined) {
         // 数字转换
@@ -242,24 +314,255 @@ export default {
         }
       }
     }
+    // 获取高级筛选的类型
+    this.getPositionTypeList()
     // 获取数量
-    this.getMyNavData()
-    // 默认选择看过我的type
-    this.handleSearch(this.params.navType || 'hotRecommendation', 'navType', false)
+    this.getListCounts()
+    // 初始化选择
+    this.handleSearch(this.params.navType || 'apply', 'navType', false)
   },
   destroyed () {
-    this.cleanListRedDot()
+    this.clearListRedDot()
+    this.timeCache = null
   },
   methods: {
-    setJob (type, vo) {
-      if (vo.interviewId) {
-        this.interviewId = vo.interviewId
-      } else if (vo.interviewInfo) {
-        this.interviewId = vo.interviewInfo.id
+    /**
+     * 页面触发筛选
+     * @param {any} value query 值
+     * @param {String} type query key值
+     * @param {Boolean} init False是初始化请求
+     * @param {any} item 当前调用可能需要携带的数据
+     */
+    handleSearch (value, type, init = true, item) {
+      if (type !== 'page') this.params.page = 1
+      if (type && this.params[type] !== undefined) this.params[type] = value
+      if (type === 'times') {
+        this.params['created_start_time'] = (value && value[0]) || ''
+        this.params['created_end_time'] = (value && value[1]) || ''
       }
-      this.jobuid = vo.uid
+      // 查询 | 更新高级筛选数据
+      if (type === 'navType') {
+        this.candidateList = []
+        this.total = 0
+        if (init) this.clearListRedDot()
+        this.params.status = 0
+      }
+      switch (this.params.navType) {
+        case 'invite':
+          this.getApplyList()
+          if (this.recruiterInviteList > 0 && type === 'navType') { // 清除收到意向红点
+            getdeleteTabRedDotApi('invite_list')
+          }
+          break
+        case 'apply':
+          this.getInviteList()
+          if (this.recruiterIntentionList > 0 && type === 'navType') { // 清除apply红点
+            getdeleteTabRedDotApi('intention_list')
+          }
+          break
+        case 'calendar':
+          // 获取面试日程列表
+          this.getInterviewList()
+          // 获取面试日程的 日期tab
+          if (type === 'navType') {
+            this.getInterviewTabs()
+          }
+          // 如果有缓存一份tab time 的数据
+          if (this.timeCache && this.timeCache.number > 0) {
+            this.timeCache.number = 0
+          }
+          if (type === 'time') {
+            // 保存一份当前tab time 的数据
+            this.timeCache = item
+            if (item.number > 0) {
+              deleteScheduleTabRedDotApi(item.time)
+            }
+          }
+          break
+      }
+      this.$router.push({ name: this.$route.name, query: { ...this.params, q: Date.now(), position_type_id: this.params.position_type_id.join(',') } })
+    },
+    // 邀请
+    getApplyList () {
+      this.getLoading = true
+      // 时间参数过滤防止接口报错
+      const params = {
+        ...this.params,
+        position_type_id: this.params.position_type_id.join(',')
+      }
+      if (!params.created_start_time) delete params.created_start_time
+      if (!params.created_end_time) delete params.created_end_time
+      if (params.position_type_id === 'all') delete params.position_type_id
+      getApplyListApi(params).then(({ data }) => {
+        // this.candidateList = data.data || []
+        this.candidateList = this.resetListDatas(data.data || [])
+        this.total = data.meta.total
+        this.applynum = data.meta.total
+        this.getLoading = false
+      })
+        .catch(e => {
+          this.candidateList = []
+          this.getLoading = false
+        })
+    },
+    // 意向列表
+    getInviteList () {
+      this.getLoading = true
+      // 时间参数过滤防止接口报错
+      const params = {
+        ...this.params,
+        position_type_id: this.params.position_type_id.join(',')
+      }
+      if (!params.created_start_time) delete params.created_start_time
+      if (!params.created_end_time) delete params.created_end_time
+      if (params.position_type_id === 'all') delete params.position_type_id
+      getInviteListApi(params)
+        .then(({ data }) => {
+          // this.candidateList = data.data || []
+          this.candidateList = this.resetListDatas(data.data || [])
+          this.total = data.meta.total
+          this.invitenum = data.meta.total
+          this.getLoading = false
+        })
+        .catch(e => {
+          this.candidateList = []
+          this.getLoading = false
+        })
+    },
+    // 获取面试职位列表
+    getInterviewList () {
+      this.getLoading = true
+      const params = {
+        ...this.params,
+        position_type_id: this.params.position_type_id.join(',')
+      }
+      if (params.time) {
+        delete params.created_start_time
+        delete params.created_end_time
+        delete params.position_type_id
+      } else {
+        if (params.created_start_time) params.start = parseInt(new Date(params.created_start_time).getTime() / 1000)
+        if (params.created_end_time) params.end = parseInt(new Date(params.created_end_time).getTime() / 1000)
+      }
+      let methodFunc = params.time > 0 ? getScheduleListApi : getnewHistoryListtApi
+      // /interview/schedule
+      methodFunc(params).then(({ data }) => {
+        this.getLoading = false
+        this.candidateList = this.resetListDatas(data.data || [])
+        this.total = data.meta.total
+      }).catch(() => {
+        this.getLoading = false
+      })
+    },
+    // 职业类型列表
+    getPositionTypeList () {
+      const { position_type_id } = this.params
+      getPositionTypeApi().then(({ data }) => {
+        const results = data.data || []
+        this.positionTypeList = [
+          { name: '全部', labelId: 'all', active: position_type_id.includes('all') },
+          ...results.map(item => {
+            item.active = position_type_id.includes(item.labelId)
+            return item
+          })
+        ]
+      })
+    },
+    // 高级筛选
+    handleHighFilter (value) {
+      //
+      this.handleSearch()
+    },
+    // 获取列表数量
+    getListCounts () {
+      getinviteapplyNum().then(({ data }) => {
+        const { applyTotal, inviteTotal } = data.data
+        this.applynum = applyTotal || 0
+        this.invitenum = inviteTotal || 0
+      })
+    },
+    // 获取面试日程的tab
+    getInterviewTabs () {
+      getScheduletodayListtApi().then(({ data }) => {
+        // data.data[0].number = 1
+        this.interviewTabs = [{ number: 0, date: '全部', time: '' }, ...data.data] || [{ number: 0, date: '全部', time: '' }]
+        if (this.params.time) {
+          this.timeCache = this.interviewTabs.find(val => Number(this.params.time) === val.time) || null
+        }
+      })
+    },
+    refreshPageData () {
+      // { cb }
+      switch (this.params.navType) {
+        case 'invite':
+          this.getApplyList()
+          break
+        case 'apply':
+          this.getInviteList()
+          break
+        case 'calendar':
+          this.getInterviewList()
+          break
+      }
+      // 如果查看简历详情在打开状态就刷新简历数据
+      if (this.$refs.resume) this.$refs.resume.getResume()
+    },
+    // 重置接口数据
+    resetListDatas (data) {
+      data.forEach((item) => {
+        item.btn1 = {}
+        item.btn2 = {}
+        const { status } = item
+        let btn1 = CandidateBtns.find(val => {
+          return val.is(status)
+        })
+        item.btn1 = btn1 || {}
+        //  || status === 12 || status === 21 || status === 31 || status === 32 || status === 41
+        if (status === 11) {
+          item.btn2 = { className: 'c-btn-success', type: 'inappropriate', buttonText: '拒绝' }
+        }
+        if (status === 51 || status === 57 || status === 58) {
+          item.btn2 = { className: 'c-btn-success', type: 'check-invitation', buttonText: '去评价' }
+        }
+        if (status === 60 || status === 61) {
+          item.btn2 = { className: 'c-btn-info', disabled: true, type: 'is-invitationed', buttonText: '已评价' }
+        }
+
+        // 是否有展开简历详情弹窗
+        if (this.resumeDialogStatus && this.currentItem.vkey === item.vkey) {
+          this.currentItem = item
+        }
+      })
+      return data
+    },
+    // 查看简历
+    viewResume (item) {
+      this.currentItem = item
+      this.resumeDialogStatus = true
+      this.clearListRedDot(item)
+    },
+    // 删除收到意向、我的邀请
+    clearListRedDot (vo = null) {
+      if (vo !== null) {
+        vo.redDot = 0
+      }
+      if (this.recruiterIntentionList + this.recruiterInviteList > 0 || this.recruiterScheduleList > 0) {
+        this.$store.dispatch('redDotfun')
+      }
+    },
+    setJob (type, vo) {
+      if (vo.interviewInfo && vo.interviewInfo.data) {
+        this.interviewId = vo.interviewInfo.data.lastInterviewId
+      } else {
+        this.interviewId = vo.interviewId
+      }
+      if (vo.jobhunterUid) {
+        this.jobuid = vo.jobhunterUid
+      } else {
+        this.jobuid = vo.uid
+      }
       this.currentItem = vo
-      this.cleanListRedDot(vo)
+      this.clearListRedDot(vo)
       switch (type) {
         case 'check-invitation':
           this.detaildiggle = true
@@ -282,14 +585,30 @@ export default {
             } else {
               confirmInterviewApi({ interviewId: this.interviewId }).then((res) => {
                 this.$message.success('约面成功')
-                this.viewResume(vo)
+                // this.viewResume(vo)
                 // 更新列表和弹窗显示状态
+                this.refreshPageData()
               })
             }
           })
           break
         case 'arranging-interviews':
           this.arrangediggle = true
+          break
+        case 'interview-retract':
+          let retract = { jobhunterUid: vo.uid, interviewId: this.interviewId }
+          interviewRetract(retract).then(({ data }) => {
+            if (data.httpStatus === 200) {
+              this.$message.success('撤回成功')
+            }
+            // 更新列表和弹窗显示状态
+
+            // this.getResume(this.jobuid)
+            // this.init()
+          })
+          break
+        case 'see-resume':
+          this.viewResume(vo)
           break
         case 'watch-reson':
           this.resonlistdiggle = true
@@ -337,233 +656,59 @@ export default {
         default:
           break
       }
-    },
-    // 查看简历
-    viewResume (item) {
-      this.currentItem = item
-      this.resumeDialogStatus = true
-      this.cleanListRedDot(item)
-    },
-    /**
-     * 刷新页面按钮显示状态（弹窗简历按钮）
-     * @param cb  刷新成功回调函数
-     */
-    refreshPageData () {
-      switch (this.params.navType) {
-        case 'hotRecommendation':
-          this.gethotRecommendation()
-          break
-        case 'searchBrowseMyself':
-          this.getSearchBrowseMyself()
-          break
-        case 'searchCollect':
-          this.getSearchCollect()
-          break
-        case 'searchMyCollect':
-          this.getSearchMyCollect()
-          break
-      }
-      // 如果查看简历详情在打开状态就刷新简历数据
-      if (this.$refs.resume) this.$refs.resume.getResume()
-    },
-    cleanListRedDot (vo = null) {
-      if (vo !== null) {
-        vo.redDot = 0
-      }
-      if (this.visitedMyselfNum + this.interestedMyselfNum > 0) {
-        this.$store.dispatch('redDotfun')
-      }
-    },
-    // 查询参数切换
-    handleSearch (value, type, init = true) {
-      if (type !== 'page') this.params.page = 1
-      if (type) this.params[type] = value
-      // 查询 | 更新高级筛选数据
-      if (type === 'navType') {
-        this.candidateList = []
-        if (init) this.cleanListRedDot()
-        this.total = 0
-      }
-      switch (this.params.navType) {
-        case 'hotRecommendation':
-          this.gethotRecommendation()
-          break
-        case 'searchBrowseMyself':
-          if (type === 'navType') {
-            this.highFilterTitle = '看过我的职位类型'
-            this.getPositionTypeList()
-          }
-          this.clearfilerhot()
-          this.getSearchBrowseMyself()
-          break
-        case 'searchCollect':
-          if (type === 'navType') {
-            this.highFilterTitle = '简历职位类型'
-            this.getPositionTypeList()
-          }
-          this.clearfilerhot()
-          this.getSearchCollect()
-          break
-        case 'searchMyCollect':
-          if (type === 'navType') {
-            this.highFilterTitle = '感兴趣职位类型'
-            this.getJobHunterPositionType()
-          }
-          this.clearfilerhot()
-          this.getSearchMyCollect()
-          break
-      }
-      // 滚动到顶部
-      // const dom = document.querySelector('.main_cont')
-      // if (dom) {
-      //   console.log(dom.getBoundingClientRect())
-      //   this.$util.scrollToView(dom)
-      // }
-
-      // 渲染location
-      this.$router.push({ name: this.$route.name, query: { ...this.params, q: Date.now(), type: this.params.type.join(',') } })
-    },
-    // 查询我感兴趣的
-    getSearchMyCollect () {
-      this.getLoading = true
-      getSearchMyCollectApi({
-        ...this.params,
-        type: this.params.type.join(',')
-      }).then(({ data }) => {
-        this.candidateList = data.data || []
-        this.total = data.meta.total
-        this.navNum.myCollectCount = data.meta.total
-        this.getLoading = false
-      }).catch(e => {
-        this.candidateList = []
-        this.getLoading = false
-      })
-    },
-    // 对我感兴趣的
-    getSearchCollect () {
-      this.getLoading = true
-      getSearchCollectApi({
-        ...this.params,
-        type: this.params.type.join(',')
-      }).then(({ data }) => {
-        this.candidateList = data.data || []
-        this.total = data.meta.total
-        this.navNum.collectMyselfCount = data.meta.total
-        this.getLoading = false
-      }).catch(e => {
-        this.candidateList = []
-        this.getLoading = false
-      })
-    },
-    // 浏览过我的求职者
-    getSearchBrowseMyself () {
-      this.getLoading = true
-      getSearchBrowseMyselfApi({
-        ...this.params,
-        type: this.params.type.join(',')
-      }).then(({ data }) => {
-        this.candidateList = data.data || []
-        this.total = data.meta.total
-        this.navNum.browseMyselfCount = data.meta.total
-        this.getLoading = false
-      }).catch(e => {
-        this.candidateList = []
-        this.getLoading = false
-      })
-    },
-    // 热门推荐
-    gethotRecommendation () {
-      this.getLoading = true
-      gethotRecommendationApi({
-        ...this.params
-      }).then(({ data }) => {
-        this.candidateList = data.data || []
-        this.total = data.meta.total
-        this.navNum.RecommendationCount = data.meta.total
-        this.getLoading = false
-      }).catch(e => {
-        this.candidateList = []
-        this.getLoading = false
-      })
-    },
-    // 职业类型列表
-    getPositionTypeList () {
-      const { index, type } = this.params
-      getPositionTypeApi().then(res => {
-        let data = res.data.data || []
-        this.positionTypeList = [
-          { name: '全部', labelId: 'all', active: type.includes('all') },
-          ...data.map(item => {
-            item.active = type.includes(item.labelId)
-            return item
-          }),
-          { name: '我的主页', labelId: 'index', active: !!index }
-        ]
-      })
-    },
-    // 看过我的职业类型列表
-    getJobHunterPositionType () {
-      const { index, type } = this.params
-      getJobHunterPositionTypeApi().then(res => {
-        let data = res.data.data || []
-        this.positionTypeList = [
-          { name: '全部', labelId: 'all', active: type.includes('all') },
-          ...data.map(item => {
-            item.active = type.includes(item.labelId)
-            return item
-          }),
-          { name: '暂无工作经验', labelId: 'index', active: !!index }
-        ]
-      })
-    },
-    // 高级筛选
-    handleHighFilter (value) {
-      if (value[0] === 'all') {
-        this.params.category = 0
-        this.params.index = 0
-      } else if (value[0] === 'index') {
-        this.params.category = 1
-        this.params.index = 1
-      } else {
-        this.params.category = 1
-        this.params.index = 0
-      }
-      this.handleSearch()
-    },
-    // 热门推荐高级筛选
-    handleHotFilter (arr1, arr2, arr3) {
-      if (arr1.length > 0) this.params.positionId = arr1[0].id
-      if (arr2.length > 0) this.params.cityNum = arr2[0].areaId
-      if (arr3.length > 0) this.params.salaryIds = arr3.join(',')
-      this.gethotRecommendation()
-    },
-    // 热门推荐清除筛选
-    handleclearfilter (arr) {
-      this.clearfilerhot()
-      this.gethotRecommendation()
-    },
-    clearfilerhot () {
-      this.params.positionId = ''
-      this.params.cityNum = ''
-      this.params.salaryIds = 1
-    },
-    // 获取数量
-    getMyNavData () {
-      getMyNavDataApi().then(res => {
-        this.navNum = res.data.data
-      })
     }
+
   }
 }
 </script>
 <style lang="scss" scoped>
 .candidate-header {
-  min-width: 960px;
-  height: 40px;
+  min-width: 1120px;
+  padding: 48px 32px 30px;
+  background: #fff;
+}
+.header-status {
+  @include flex-v-center;
+  width: 100%;
+  margin-top: 28px;
+  div + div {
+    margin-left: 10px;
+  }
+  div {
+    cursor: pointer;
+    padding: 5px 16px;
+    border-radius: 2px;
+    position: relative;
+  }
+  div:hover {
+    background: rgba($bg-color-4, 0.1);
+  }
+  div.active {
+    color: $main-color-1;
+    background: rgba($bg-color-4, 0.1);
+  }
+  div.is-red-dot::after {
+    content: "";
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    top: -2px;
+    right: -2px;
+    background: $error-color-1;
+  }
+}
+.header-tap-search {
   display: flex;
-  align-items: center;
-  .high-filter {
+  height: 40px;
+  .el-date-picker {
+    display: flex;
+    justify-content: flex-end;
+    width: 560px;
     margin-left: auto;
+  }
+  .high-filter {
+    margin-left: 16px;
   }
 }
 .main_cont {
@@ -583,27 +728,91 @@ export default {
       height: 48px;
       line-height: 48px;
       border-bottom: 1px solid #DDE1E0;
-      padding: 0 32px 0px 24px;
+      padding: 0 32px 0 24px;
       font-size:12px;
       font-weight:400;
       color:#92929B;
       box-sizing: border-box;
       overflow: hidden;
       position: relative;
+      .phone{
+        float: right;
+        margin-right: 36px;
+        font-weight:400;
+        font-size:14px;
+        color:#66666E;
+      }
+      .redot{
+        position: absolute;
+        right: 0px;
+        top: 8px;
+        right: 8px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background:#F45322;
+      }
       .timer {
         float: left;
       }
       .topText {
         float: left;
         margin-left: 8px;
+        .from{
+          float: left;
+          font-size:12px;
+          margin-left: 30px;
+          color:#92929B;
+        }
+        .origin{
+          float: left;
+          padding: 0px 8px;
+          height:22px;
+          background:#E5F9FA;
+          border-radius:4px;
+          color:#00C4CD;
+          text-align: center;
+          line-height: 22px;
+          margin-left: 4px;
+          margin-top: 12.5px;
+        }
       }
       .topText2 {
         color: #333333;
+      }
+      .bloTop-24hour-wrap {
+        margin-left: 14px;
+        float: left;
+        height: 48px;
+        @include flex-v-center;
+      }
+      .bloTop-24hour{
+        width: 50px;
+        height: 18px;
+        background: url('../../../assets/images/tag_list_24hour.png') no-repeat;
+        background-size: cover;
       }
       .status{
         float: right;
         color:#66666E;
         font-size: 14px;
+      }
+      .is-active {
+        color: $sub-color-1;
+      }
+      .time {
+        float: right;
+        color:#66666E;
+        font-size: 14px;
+      }
+      .time.time-bg {
+        color: $main-color-1;
+        font-weight: bold;
+        padding: 0 12px;
+        height: 28px;
+        margin-top: 10px;
+        line-height: 28px;
+        background: $bg-color-5;
       }
     }
     .bloCont {
@@ -649,28 +858,6 @@ export default {
                 color:#333333;
                 line-height:28px;
                 margin-bottom: 6px;
-                span{
-                  position: relative;
-                  &::before {
-                  position: absolute;
-                  top: 0;
-                  left: 0;
-                  width: 100%;
-                  height: 100%;
-                  content: "";
-                  background: #000;
-                  filter: blur(2px);
-                }
-                &::after {
-                  position: absolute;
-                  top: 0;
-                  left: 0;
-                  width: 100%;
-                  height: 100%;
-                  content: "";
-                  background-color: rgba(255, 255, 255, 0.4);
-                }
-                }
               }
               .userLabel {
                 height: 20px;
@@ -683,9 +870,9 @@ export default {
                   box-sizing: border-box;
                   margin-right: 8px;
                   font-size:12px;
+                  font-weight:400;
                   color:#66666E;
                   background:#F4F7F7;
-                  font-weight:400;
                 }
               }
             }
@@ -748,11 +935,10 @@ export default {
           .experienceText {
             color:#333333;
             margin-bottom: 8px;
-
-
           }
         }
       }
+
       .userOp {
         position: absolute;
         top: 55px;
@@ -761,21 +947,16 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
-        .el-button {
-          width: 112px;
-        }
+      }
+      .list-btn {
+        width: 112px;
+        text-align: center;
+        color: $title-color-2;
+      }
+      .list-btn.c-btn-success {
+        color: $main-color-1;
       }
     }
   }
-}
-.redDot{
-  position: absolute;
-  right: 0px;
-  top: 8px;
-  right: 8px;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #F45322;
 }
 </style>
