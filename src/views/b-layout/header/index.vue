@@ -18,7 +18,6 @@
         <div class="sc-wrapper-item">
           <el-popover
             placement="bottom"
-            width="314"
             popper-class="b-header-share-popper"
             trigger="click">
             <div class="share-images">
@@ -158,12 +157,25 @@ $header-height-1: $page-b-header-height;
   font-size: 12px;
   max-width: 126px;
   color: $title-color-3;
+  position: relative;
   img {
     max-width: 100%;
   }
 }
 .share-images {
   @include flex-v-center;
+  .share-image + .share-image {
+    margin-left: 16px;
+    padding-left: 16px;
+  }
+  .share-image:not(:first-child):after {
+    content: "";
+    position: absolute;
+    height: 62px;
+    width: 1px;
+    left: 16px;
+    background: rgba($border-color-1, .07);
+  }
 }
 .header-dropdown {
   padding-left: 40px;
@@ -197,7 +209,7 @@ $header-height-1: $page-b-header-height;
   }
 }
 .b-header-share-popper.el-popover {
-  padding: 0 13px;
+  padding: 8px 13px 12px;
   min-width: auto;
 }
 </style>
