@@ -3,29 +3,29 @@
     <div class="position">
       <!-- 24小时职位 -->
       <template v-if="infos.isRapidly">
-        <el-button class="rapidlyPosition" v-if="infos.chatInfo !== null &&
+        <el-button class="rapidlyPosition" :loading="loading" v-if="infos.chatInfo !== null &&
         (infos.chatInfo.status === 101 ||
          infos.chatInfo.status === 301 ||
          infos.chatInfo.status === 501 ||
          infos.chatInfo.status === 701)" type="primary" @click="todoAction('goInterviewChat')" >继续聊</el-button>
         <div v-else>
-          <el-button v-if="infos.rapidlyInfo.seatsNum - (infos.rapidlyInfo.applyNum + infos.rapidlyInfo.natureApplyNum) > 0 && infos.rapidlyInfo.applied === 0" class="rapidlyPosition" type="primary" @click="todoAction('grabInterviewChat')" >马上抢</el-button>
-          <el-button v-else class="rapidlyPosition" type="primary" @click="todoAction('interviewChat')" >一键约聊</el-button>
+          <el-button :loading="loading" v-if="infos.rapidlyInfo.seatsNum - (infos.rapidlyInfo.applyNum + infos.rapidlyInfo.natureApplyNum) > 0 && infos.rapidlyInfo.applied === 0" class="rapidlyPosition" type="primary" @click="todoAction('grabInterviewChat')" >马上抢</el-button>
+          <el-button :loading="loading" v-else class="rapidlyPosition" type="primary" @click="todoAction('interviewChat')" >一键约聊</el-button>
         </div>
       </template>
       <!-- 普通职位 -->
       <template v-else>
-        <el-button v-if="infos.chatInfo !== null &&
+        <el-button :loading="loading" v-if="infos.chatInfo !== null &&
           (infos.chatInfo.status === 101 ||
           infos.chatInfo.status === 301 ||
           infos.chatInfo.status === 501 ||
           infos.chatInfo.status === 701)"
          type="primary" @click="todoAction('goChat')">继续聊</el-button>
-        <el-button v-else type="primary" @click="todoAction('chat')">一键约聊</el-button>
+        <el-button :loading="loading" v-else type="primary" @click="todoAction('chat')">一键约聊</el-button>
       </template>
     </div>
     <download-app :visible.sync="showPopupDownload"></download-app>
-    <position-downloadApp :visible.sync="showPopup"></position-downloadApp>
+    <position-downloadApp :visible="showPopup" :type="showPopupType" :text="text"></position-downloadApp>
     <loginPop ref="loginPop" v-if="!hasLogin"></loginPop>
   </div>
 </template>
@@ -62,17 +62,17 @@ export default {
     return {
       showPopup: false,
       showPopupDownload: false,
-      showPopupType: ''
+      showPopupType: '', // chat 约聊成功 grabInterviewChat 抢占成功
+      text: '',
+      loading: false
     }
-  },
-  mounted () {
-    console.log(this.infos.chatInfo)
   },
   computed: mapState({
     hasLogin: state => state.hasLogin
   }),
   methods: {
     todoAction (genre) {
+      this.loading = true
       if (!this.hasLogin) {
         this.$refs.loginPop.showLoginPop = true
         return
@@ -80,22 +80,44 @@ export default {
       switch (genre) {
         case 'chat':
           chatApplyApi({ recruiter: this.infos.recruiter, position: this.infos.id }).then(res => {
-            console.log(res)
+            this.showPopupType = 'chat' // 约聊成功
+            this.showPopup = true
+            this.loading = false
+            this.$emit('init')
+          }).catch(res => {
+            this.loading = false
           })
           break
         case 'goChat':
           this.showPopupDownload = true
+          this.loading = false
           break
         case 'grabInterviewChat':
-          applyInterviewApi({ recruiter: this.infos.recruiter, position: this.infos.id, interview_type: 2 }).then(res => {
-            console.log(res)
+          applyInterviewApi({ recruiterUid: this.infos.recruiter, positionId: this.infos.id, interview_type: 2 }).then(res => {
+            this.showPopupType = 'grabInterviewChat' // 抢占成功弹窗以及传参
+            if (res.data.code === 917) {
+              this.text = res.data.msg
+            }
+            this.showPopup = true
+            this.loading = false
+            this.$emit('init')
+          }).catch(res => {
+            this.loading = false
           })
           break
         case 'interviewChat':
-          this.showPopup = true
+          chatApplyApi({ recruiter: this.infos.recruiter, position: this.infos.id }).then(res => {
+            this.showPopupType = 'chat' // 约聊成功
+            this.showPopup = true
+            this.loading = false
+            this.$emit('init')
+          }).catch(res => {
+            this.loading = false
+          })
           break
         case 'goInterviewChat':
           this.showPopupDownload = true
+          this.loading = false
           break
       }
     }
@@ -114,6 +136,9 @@ export default {
   }
   .rapidlyPosition{
     background: #ff9e40;
+    &:hover{
+      background: mix(#ff9e40, #ffffffCC);
+    }
   }
 }
 </style>
