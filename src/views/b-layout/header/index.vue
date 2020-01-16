@@ -6,7 +6,7 @@
           <el-popover
             placement="bottom"
             popper-class="b-header-share-popper"
-            trigger="click">
+            trigger="hover">
             <div class="share-image">
               <img :src="appQrCode" />
               <p>下载猎多多APP</p>
@@ -19,7 +19,7 @@
           <el-popover
             placement="bottom"
             popper-class="b-header-share-popper"
-            trigger="click">
+            trigger="hover">
             <div class="share-images">
               <div class="share-image">
                 <img :src="mpQrCode" />
@@ -37,7 +37,8 @@
         </div>
         <layout-information class="sc-wrapper-item" port="BPort"></layout-information>
         <div class="sc-wrapper-item">
-          <span>面试</span>
+          <router-link tag="span" class="header-link" :to="{name: 'binterview', query: {navType: 'calendar'}}">面试</router-link>
+          <span class="message-number" v-if="scheduleNumber > 0">{{scheduleNumber}}</span>
         </div>
       </div>
       <div class="header-dropdown">
@@ -49,7 +50,7 @@
             </div>
           </div>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="perfectauth" v-if="haveIdentity.identityAuth !== 1">
+            <el-dropdown-item command="perfectauth" v-if="identityinfo.identityAuth !== 1">
               身份认证<div class="reddot"></div>
             </el-dropdown-item>
             <el-dropdown-item command="toggleIdentity">切换为求职者</el-dropdown-item>
@@ -70,23 +71,18 @@ export default {
     return {
       wxQrCode: wx_qrcode,
       mpQrCode: mp_qrcode,
-      appQrCode: app_qrcode,
-      haveIdentity: ''
+      appQrCode: app_qrcode
     }
   },
   computed: {
-    ...mapState({
-      userInfo: state => state.userInfo,
-      Identityinfo: state => state.recruiterinfo
+    ...mapGetters({
+      userInfo: 'userInfo',
+      identityinfo: 'recruiterinfo',
+      scheduleNumber: 'recruiterScheduleList'
     })
   },
   components: {
     layoutInformation
-  },
-  watch: {
-    'Identityinfo': function (n) {
-      this.haveIdentity = n
-    }
   },
   methods: {
     handleClick (e) {
@@ -107,9 +103,6 @@ export default {
           this.$router.push({ name: 'perfectauth' })
       }
     }
-  },
-  mounted () {
-    this.haveIdentity = this.$store.state.recruiterinfo
   }
 }
 </script>
@@ -143,14 +136,29 @@ $header-height-1: $page-b-header-height;
     vertical-align: top;
     text-align: center;
   }
-  // .sc-wrapper-item + .sc-wrapper-item {
-  //   margin-left: 12px;
-  // }
-   & /deep/ {
-     .BInformation {
-       margin: auto;
-     }
-   }
+  .message-number {
+    margin-left: 4px;
+    background: $error-color-1;
+    color: #fff;
+    line-height: 18px;
+    box-sizing: border-box;
+    display: inline-block;
+    padding: 0px 6px;
+    vertical-align: middle;
+    border-radius: 9px;
+    font-size: 12px;
+  }
+  & /deep/ {
+    .BInformation {
+      margin: auto;
+      height: 60px;
+      line-height: 60px;
+      cursor: pointer;
+    }
+  }
+}
+.header-link {
+  cursor: pointer;
 }
 .share-image {
   text-align: center;
@@ -172,9 +180,10 @@ $header-height-1: $page-b-header-height;
     content: "";
     position: absolute;
     height: 62px;
-    width: 1px;
-    left: 16px;
-    background: rgba($border-color-1, .07);
+    border-left: 1px dashed rgba($border-color-1, .7);
+    left: 0px;
+    z-index: 1;
+    top: 32px;
   }
 }
 .header-dropdown {

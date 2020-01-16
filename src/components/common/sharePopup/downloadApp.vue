@@ -1,6 +1,6 @@
 <template>
   <div class="downloadApp">
-    <el-dialog custom-class="downloadApp-dialog" @close="handleClose" :visible.sync="dialogTableVisible">
+    <el-dialog append-to-body custom-class="downloadApp-dialog" @close="handleClose" :visible.sync="dialogTableVisible">
       <div class="downloadApp-text">
         <p>下载猎多多APP</p>
         <ul>
