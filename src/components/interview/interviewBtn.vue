@@ -75,6 +75,7 @@ export default {
       this.loading = true
       if (!this.hasLogin) {
         this.$refs.loginPop.showLoginPop = true
+        this.loading = false
         return
       }
 
