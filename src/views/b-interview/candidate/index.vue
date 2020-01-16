@@ -31,11 +31,11 @@
         :allValue="['all', 'index']"
         @change="handleHighFilter" />
     </div>
-    <div class="null-recommendation" v-if="!getLoading && candidateList.length > 0 && len">
+    <div class="null-recommendation" v-if="!getLoading && recommendationshow && len">
       <img src="@/assets/images/exclamation-circle.png" alt="">
       <span>无筛选结果，可以扩大筛选范围哟~</span>
     </div>
-    <div class="recommendation" v-if="!getLoading && candidateList.length > 0 && len">为你推荐</div>
+    <div class="recommendation" v-if="!getLoading && recommendationshow && len">为你推荐</div>
     <!-- lists -->
     <div id="box" class="main_cont" v-loading="getLoading">
       <div class="candidate_blo" @click="viewResume(item)" v-for="(item,index) in candidateList" :key="index">
@@ -208,6 +208,7 @@ export default {
       navNum: {}, //
       positionTypeList: [], // 职位类型
       candidateList: [], // 候选人数据
+      recommendationshow: false,
       total: 0,
       currentItem: {}, // 当前选定值
       // 弹窗状态
@@ -387,6 +388,7 @@ export default {
       // 查询 | 更新高级筛选数据
       if (type === 'navType') {
         this.candidateList = []
+        this.recommendationshow = false
         if (init) {
           // 删除红点
           this.cleanListRedDot()
@@ -502,6 +504,7 @@ export default {
         if (this.candidateList.length === 0) {
           this.getRecommendationList()
         } else {
+          this.recommendationshow = false
           this.getLoading = false
         }
       }).catch(e => {
@@ -519,6 +522,7 @@ export default {
         this.total = data.meta.total
         // this.navNum.RecommendationCount = data.meta.total
         this.getLoading = false
+        this.recommendationshow = true
       }).catch(e => {
         this.candidateList = []
         this.getLoading = false
