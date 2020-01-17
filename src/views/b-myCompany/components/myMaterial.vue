@@ -100,7 +100,7 @@ import {
   editCompanyApi,
   delCompanyAddressApi,
   addresseditCompanyAddressApi
-} from '@/api/company'
+  , companyDetailApi } from '@/api/company'
 import {
   getCompanyAddressListApi,
   editCompanyAlbumApi
@@ -109,7 +109,7 @@ import {
   urlReg,
   companyIntroReg
 } from '@/util/fieldRegular'
-import { companyDetailApi } from '@/api/company'
+
 
 export default {
   data () {
@@ -266,11 +266,11 @@ export default {
   mounted () {
     this.$nextTick(() => {
       companyFinancingApi().then(res => {
-          this.financing = res.data.data
-        })
+        this.financing = res.data.data
+      })
       companyEmployeesApi().then(res => {
-          this.employees = res.data.data
-        })
+        this.employees = res.data.data
+      })
       companyDetailApi().then(res => {
         let data = res.data.data
         this.from = {

@@ -42,7 +42,7 @@
                 多多币是猎多多平台专属的虚拟货币，用户需要充值获取，目前兑换比例为1rmb=1多多币。</p>
                 <p class="duoduo-popover-text" style="margin-top: 12px;"><span>2、多多币如何使用？</span><br/>
                   购买后，多多币可用于约聊候选人，或使用顾问服务邀请候选人进行约面，顾问会介入为您提供相关约面服务。</p>
-              <i slot="reference" class="iconfont icon-yanseguanbi_huaban"></i>
+              <img slot="reference" class="duoduo-popover-questionMark" src="../../assets/images/questionMark.png"/>
             </el-popover>
           </p>
           <p class="coin-count">{{coin}}</p>
@@ -181,6 +181,10 @@ export default {
     cursor: pointer;
   }
 }
+.duoduo-popover-questionMark{
+  width: 16px !important;
+  height: 16px;
+}
 
 .account-servers, .right-server, .orders-wrapper /deep/ .order-wrapper-content, .myaccount-banner, .duoduo-coin {
   border-radius: 8px;
@@ -238,11 +242,6 @@ export default {
     font-size: 20px;
     color: $title-color-1;
     font-weight: bold;
-    .iconfont{
-      display: inline-block;
-      color: $border-color-1;
-      font-size: 14px;
-    }
   }
   .duoduo-coin {
     padding-left: 40px;

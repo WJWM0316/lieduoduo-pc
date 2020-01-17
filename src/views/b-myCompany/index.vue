@@ -132,7 +132,7 @@ export default class myCompany extends Vue {
             companyId: this.information.id
           }
         })
-      } else if(type === '编辑公司') {
+      } else if (type === '编辑公司') {
         this.$router.push({ name: 'myMaterial' })
       }
     }
