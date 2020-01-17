@@ -10,11 +10,11 @@
           <div class="layoutInformation-text">
             <p class="layoutInformation-text-top">
               {{ port === 'CPort' ? item.recruiterInfo.name : item.jobhunterInfo.name }}
-              <span>{{ port === 'CPort' ? item.recruiterInfo.companyInfo.companyShortname : item.positionInfo.lastCompany === '' ? '暂无工作经历' : item.positionInfo.lastCompany  }}</span>
+              <span>{{ port === 'CPort' ? item.recruiterInfo.companyInfo.companyShortname : item.jobhunterInfo.lastCompany === '' ? '暂无工作经历' : item.jobhunterInfo.lastCompany  }}</span>
             </p>
             <p v-if="port === 'CPort'" class="layoutInformation-text-bottom">正在和你沟通【<span>{{ item.recruiterInfo.position }}</span>】职位</p>
-            <p v-if="port === 'BPort' && item.positionInfo.positionName" class="layoutInformation-text-bottom">正在和你沟通【<span>{{ item.positionInfo.positionName }}</span>】职位</p>
-            <p v-if="port === 'BPort' && !item.positionInfo.positionName" class="layoutInformation-text-bottom">正与你直接沟通中</p>
+            <p v-if="port === 'BPort' && item.positionInfo && item.positionInfo.positionName" class="layoutInformation-text-bottom">正在和你沟通【<span>{{ item.positionInfo.positionName }}</span>】职位</p>
+            <p v-if="port === 'BPort' && item.positionInfo && !item.positionInfo.positionName" class="layoutInformation-text-bottom">正与你直接沟通中</p>
           </div>
         </div>
         <p v-if="meta.total > 5" class="layoutInformation-communication">{{ '还有' + (meta.total - 5) + '人正在与你沟通中' }} <i class="iconfont icon-right"></i></p>
