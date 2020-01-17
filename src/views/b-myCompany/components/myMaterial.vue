@@ -99,8 +99,8 @@ import {
   addCompanyAddressApi,
   editCompanyApi,
   delCompanyAddressApi,
-  addresseditCompanyAddressApi
-  , companyDetailApi } from '@/api/company'
+  addresseditCompanyAddressApi,
+  companyDetailApi } from '@/api/company'
 import {
   getCompanyAddressListApi,
   editCompanyAlbumApi
@@ -286,6 +286,8 @@ export default {
           website: data.website,
           intro: data.intro
         }
+        this.from.financing = parseFloat(this.from.financing)
+        this.from.employees = parseFloat(this.from.employees)
         this.fromCaching = JSON.stringify(this.from)
         this.address = data.address
         this.middleUrl = data.logoInfo.middleUrl
