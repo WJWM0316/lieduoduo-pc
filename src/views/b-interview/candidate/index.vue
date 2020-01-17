@@ -4,7 +4,7 @@
     <!-- header -->
     <div class="candidate-header">
       <div class="b-header-button" style="margin-right: 24px;" :class="{'active':  params.navType==='hotRecommendation'}" @click="handleSearch('hotRecommendation', 'navType')">
-        <i class="iconfont icon-weibiaoti--" style="padding-right: 6px"></i>热门推荐<span v-if="navNum.RecommendationCount !== 0">({{navNum.RecommendationCount || 0}})</span>
+        <i class="iconfont icon-remen" style="padding-right: 6px"></i>热门推荐<span v-if="navNum.RecommendationCount !== 0">({{navNum.RecommendationCount || 0}})</span>
       </div>
       <div class="b-header-group-button">
         <div class="b-header-button" :class="{'active': params.navType==='searchBrowseMyself'}" @click="handleSearch('searchBrowseMyself', 'navType')">
