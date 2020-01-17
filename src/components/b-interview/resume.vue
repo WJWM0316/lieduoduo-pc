@@ -187,7 +187,7 @@
           </div>
           <div class="Code">
             <div class="handlerpring">
-              <div class="onload" @click="hasonload = !hasonload"  v-if="!nowResumeMsg.glass">
+              <div class="onload" @click="hasonload = !hasonload"  v-if="nowResumeMsg.glass === 0">
                 <i class="iconfont icon-xiazai"></i>
               </div>
               <div class="onloadselect"  v-loading="loadingshow" v-show="hasonload" ref="queryBox">
@@ -232,7 +232,7 @@
                 <el-button  @click="handleSetResume(buttons.btn3)" :type="buttons.btn3.buttonType">{{buttons.btn3.buttonText}}</el-button>
               </template>
             </div>
-            <template v-if="!nowResumeMsg.glass">
+            <template v-if="nowResumeMsg.glass === 0">
               <div class="like_user" @click.stop="ownerOp(true, nowResumeMsg.uid)" v-if="nowResumeMsg.interested">
                 <i class="iconfont icon-yishoucang img"></i> 取消感兴趣
               </div>
@@ -244,7 +244,7 @@
               <img :src="shareResumeImg" />
               <span>扫码分享</span>
             </div>
-            <div class="seefujian" v-if="!nowResumeMsg.glass && nowResumeMsg.resumeAttach">
+            <div class="seefujian" v-if="nowResumeMsg.glass === 0 && nowResumeMsg.resumeAttach">
               <div class="title">附件简历:</div>
               <div class="seebtn" v-if="nowResumeMsg.resumeAttach.extension === 'doc'"><a :href="'https://view.officeapps.live.com/op/view.aspx?src=' + nowResumeMsg.resumeAttach.url" :download="nowResumeMsg.resumeAttach.fileName" target="_blank">查看附件</a></div>
               <div class="seebtn" v-else><a :href="nowResumeMsg.resumeAttach.url" :download="nowResumeMsg.resumeAttach.fileName" target="_blank">查看附件</a></div>

@@ -299,6 +299,7 @@ export default {
         } else {
           this.model.dateLists = []
         }
+        this.arrangementInfo.source_type = res.data.data.sourceType || null
         let datalist = { is_online: 1, page: 1, count: 100 }
         recruiterPositonList(datalist).then((res) => {
           let arr = res.data.data
@@ -510,7 +511,6 @@ export default {
       display: flex;
       align-items: center;
       word-break: break-all;
-      font-family:PingFangSC-Regular,PingFangSC;
       font-weight:400;
       color:#333333;
     }
