@@ -34,12 +34,13 @@
         <div class="duoduo-coin">
           <p class="right-title">我的多多币
             <el-popover
-              placement="top-end"
-              width="300">
+            popper-class="myaccount-popover"
+              placement="bottom-end"
+              width="372">
               <p class="duoduo-popover-title">多多币说明</p>
-              <p class="duoduo-popover-text">多多币是什么？<br/>
+              <p class="duoduo-popover-text"><span>1、多多币是什么？</span><br/>
                 多多币是猎多多平台专属的虚拟货币，用户需要充值获取，目前兑换比例为1rmb=1多多币。</p>
-                <p class="duoduo-popover-text" style="margin-top: 18px;">多多币如何使用？<br/>
+                <p class="duoduo-popover-text" style="margin-top: 12px;"><span>2、多多币如何使用？</span><br/>
                   购买后，多多币可用于约聊候选人，或使用顾问服务邀请候选人进行约面，顾问会介入为您提供相关约面服务。</p>
               <i slot="reference" class="iconfont icon-yanseguanbi_huaban"></i>
             </el-popover>
@@ -303,17 +304,19 @@ export default {
   }
 }
 .duoduo-popover-title{
-  text-align: center;
   color: $font-color-3;
-  font-size: 20px;
-  margin-bottom: 20px;
+  font-size: 14px;
+  margin-bottom: 11px;
   font-weight: 500;
 }
 .duoduo-popover-text{
-  color: $font-color-3;
+  color: $font-color-6;
   font-size: 12px;
   font-weight: 400;
   line-height: 18px;
+  span{
+    color: $font-color-3;
+  }
 }
 </style>
 <style lang="scss">
@@ -351,5 +354,9 @@ export default {
 }
 .myaccount-banner.unshow-pager .el-carousel__indicators {
   display: none;
+}
+.myaccount-popover{
+  padding: 24px 16px 16px 19px !important;
+  box-sizing: border-box;
 }
 </style>

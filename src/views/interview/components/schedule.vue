@@ -18,7 +18,7 @@
 					{{item.addressInfo.address}}{{item.addressInfo.doorplate}}
 				</div>
 			</div>
-			<div class="colc-bottom-else" v-if="item.sourceType === 2 && item.companyInfo.intro"><i class="iconfont icon-qiye"></i>{{ item.companyInfo.intro }}</div>
+			<div class="colc-bottom-else" v-if="item.sourceType === 2 && item.companyInfo.intro"><i class="iconfont icon-qiye"></i>{{ introFilter(item.companyInfo.intro) }}</div>
 			<div class="colc-bottom-else" v-if="item.sourceType === 2 && !item.companyInfo.intro">暂无公司简介</div>
 		</div>
 		<div class="col-right">
@@ -137,6 +137,10 @@ export default {
         }
       })
       window.open(routeData.href, '_blank')
+    },
+    introFilter (item) {
+      item = item.replace(/^\s+|\s+$/g, '')
+      return item
     }
   }
 }
