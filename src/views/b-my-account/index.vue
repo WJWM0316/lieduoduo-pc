@@ -36,6 +36,7 @@
             <el-popover
             popper-class="myaccount-popover"
               placement="bottom-end"
+              :offset="10"
               width="372">
               <p class="duoduo-popover-title">多多币说明</p>
               <p class="duoduo-popover-text"><span>1、多多币是什么？</span><br/>
@@ -184,6 +185,7 @@ export default {
 .duoduo-popover-questionMark{
   width: 16px !important;
   height: 16px;
+  cursor: pointer;
 }
 
 .account-servers, .right-server, .orders-wrapper /deep/ .order-wrapper-content, .myaccount-banner, .duoduo-coin {
