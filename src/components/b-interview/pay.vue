@@ -1,37 +1,42 @@
 <template>
-  <!-- 约聊和约面之前的弹窗 -->
-  <el-dialog
-    :visible.sync="dialogStatus"
-    custom-class="app-dialog pay-coin-dialog"
-    :title="currentText.title"
-    width="432px"
-    @close="hanleClose">
-    <div class="pay-coin-content" v-loading="getLoading">
-      <p class="header-tips">{{currentText.tipTitle}}，需消耗<span> {{coins.charge}} </span>多多币</p>
-      <div class="pay-server">
-        <div v-for="(item, index) in currentText.listTips" :key="index">{{item}}</div>
+  <div>
+    <!-- 约聊和约面之前的弹窗 -->
+    <el-dialog
+      :visible.sync="dialogStatus"
+      custom-class="app-dialog pay-coin-dialog"
+      :title="currentText.title"
+      width="432px"
+      @close="hanleClose">
+      <div class="pay-coin-content" v-loading="getLoading">
+        <p class="header-tips">{{currentText.tipTitle}}，需消耗<span> {{coins.charge}} </span>多多币</p>
+        <div class="pay-server">
+          <div v-for="(item, index) in currentText.listTips" :key="index">{{item}}</div>
+        </div>
+        <div class="pay-tips">
+          <p>* 邀约后，平台顾问将1V1跟进候选人处理&面试情况</p>
+          <p>* 候选人在7天内未接受邀请时，多多币将原路退回到你的账户</p>
+          <p>* 更多细则，欢迎联系客服 <span>400-065-5788</span></p>
+        </div>
       </div>
-      <div class="pay-tips">
-        <p>* 邀约后，平台顾问将1V1跟进候选人处理&面试情况</p>
-        <p>* 候选人在7天内未接受邀请时，多多币将原路退回到你的账户</p>
-        <p>* 更多细则，欢迎联系客服 <span>400-065-5788</span></p>
+      <div slot="footer" class="pay-coin-footer" v-show="!getLoading">
+        <div class="">
+          <p class="need-pay"><span>{{coins.charge}}</span>多多币</p>
+          <p class="my-coin">账户剩余 <span>{{coins.remain}}</span></p>
+        </div>
+        <template v-if="coins.isEnough">
+          <el-button type="primary" style="width: 168px" @click="handleToPay">{{currentText.confirmButton}}</el-button>
+        </template>
+        <template v-else>
+          <el-button type="warning" style="width: 168px" @click="serviceDialogStatus = true">{{currentText.lessCoinButton}}</el-button>
+        </template>
       </div>
-    </div>
-    <div slot="footer" class="pay-coin-footer" v-show="!getLoading">
-      <div class="">
-        <p class="need-pay"><span>{{coins.charge}}</span>多多币</p>
-        <p class="my-coin">账户剩余 <span>{{coins.remain}}</span></p>
-      </div>
-      <template v-if="coins.isEnough">
-        <el-button type="primary" style="width: 168px" @click="handleToPay">{{currentText.confirmButton}}</el-button>
-      </template>
-      <template v-else>
-        <el-button type="warning" style="width: 168px">{{currentText.lessCoinButton}}</el-button>
-      </template>
-    </div>
-  </el-dialog>
+    </el-dialog>
+    <!-- 金币不足 -->
+    <contact-service :visible.sync="serviceDialogStatus" :text="{title: '充值多多币', content: '您可微信扫下方二维码，联系我们充值多多币'}"  />
+  </div>
 </template>
 <script>
+import ContactService from '@/components/contactService/public'
 import { getCandidateChatCharge, getCandidateInterviewCharge, applyChat } from 'API/candidate'
 import { sureOpenupAPi } from 'API/candidateType'
 export default {
@@ -44,9 +49,11 @@ export default {
       default: 'chat' // chat | interview
     }
   },
+  components: { ContactService },
   data () {
     return {
       dialogStatus: false, // 当前弹窗状态
+      serviceDialogStatus: false,
       dialogText: {
         interview: {
           title: '顾问约面服务',
