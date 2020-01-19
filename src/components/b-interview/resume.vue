@@ -36,8 +36,9 @@
                 </div>
                 <div class="msgUserInfo">
                   <div :class="['basemsg', nowResumeMsg.signature ? '' : 'basecenter']">
-                    <span class="realName" v-if="nowResumeMsg.glass"><img src="@/assets/images/glass.png" alt=""/></span>
+                    <span class="realNameglass" v-if="nowResumeMsg.glass"><img src="@/assets/images/glass.png" alt=""/></span>
                     <span class="realName" v-else>{{nowResumeMsg.name}}</span>
+                    <span class="realName">{{nowResumeMsg.name}}</span>
                     <div class="lebalList">
                       <div class="lebalItem">
                         <i class="icon iconfont icon-zhiwei" style></i>
@@ -89,7 +90,7 @@
                 >
                 <div class="whitesize">
                   <span class="position">{{item.position}}&nbsp;|&nbsp;{{item.city}}</span>
-                  <span v-if="item.fields.length>0" style="margin-right:9px;color:#333">|</span>
+                  <span v-if="item.fields.length>0" style="margin-right:9px;color: #66666E;">|</span>
                   <span v-for="(item1,index1) in item.fields" :key="index1">{{item1.field}}&nbsp;&nbsp;</span>
                   </div>
                   <span class="price">{{item.salaryFloor}}k-{{item.salaryCeil}}k</span>
@@ -107,8 +108,10 @@
                   :style="index===nowResumeMsg.careers.length-1?'margin-bottom:0px;':''"
                 >
                   <div class="workTime">
+                    <div class="work-content">
                     <span>{{item.company}} | {{item.position}}</span>
-                    <span>{{item.startTimeDesc}}~{{item.endTimeDesc}}</span>
+                    </div>
+                    <span class="size">{{item.startTimeDesc}}~{{item.endTimeDesc}}</span>
                   </div>
                   <div class="workContent">
                     <span class="duties">
@@ -136,7 +139,7 @@
                 >
                   <div class="workTime">
                     <span>{{item.name}} &nbsp;| &nbsp;{{item.role}}</span>
-                    <span>{{item.startTimeDesc}}~{{item.endTimeDesc}}</span>
+                    <span class="size">{{item.startTimeDesc}}~{{item.endTimeDesc}}</span>
                   </div>
                   <div class="workContent">
                     <span class="duties">
@@ -158,7 +161,7 @@
                 >
                   <div class="workTime">
                     <span>{{item.school}} | {{item.degreeDesc}} | {{item.major}}</span>
-                    <span>{{item.startTimeDesc}}~{{item.endTimeDesc}}</span>
+                    <span class="size">{{item.startTimeDesc}}~{{item.endTimeDesc}}</span>
                   </div>
                   <div class="workContent" v-show="item.experience!=''">
                     <span class="duties">
@@ -169,7 +172,7 @@
               </div>
             </div>
             <!-- 更多介绍 -->
-            <div class="workExperience" v-if="nowResumeMsg.moreIntroduce">
+            <div class="workExperience" v-if="nowResumeMsg.moreIntroduce && (nowResumeMsg.moreIntroduce.introduce || nowResumeMsg.moreIntroduce.imgs.length > 0)">
               <p class="title">更多介绍</p>
               <div class="workList">
                 <pre v-if="nowResumeMsg.moreIntroduce.introduce">{{nowResumeMsg.moreIntroduce.introduce}}</pre>
@@ -738,7 +741,7 @@ export default {
         .share{
           width:18px;
           height:18px;
-          margin: 0 35px 0px 16px;
+          // margin: 0 35px 0px 16px;
           cursor: pointer;
         }
         i{
@@ -998,6 +1001,12 @@ export default {
                 overflow: hidden;
                 text-overflow: ellipsis;
                 display: inline-block;
+              }
+              .realNameglass{
+                height: 40px;
+                max-width: 153px;
+                margin-right: 24px;
+                overflow: hidden;
                 img{
                   width: 100%;
                   height: 100%;
@@ -1152,15 +1161,16 @@ export default {
           white-space: nowrap;
           width: 460px;
           float: left;
+          color: #66666E;
         }
         .position {
           font-size: 14px;
-          color: #333;
+          color: #66666E;
           margin-right: 10px;
         }
         span {
           font-size: 14px;
-          color: #333;;
+          color: #66666E;
         }
         .price {
           font-size: 14px;
@@ -1228,12 +1238,16 @@ export default {
           align-items: center;
           padding: 10px 0px 10px 0px;
           width: 545px;
-          span {
+          .work-content{
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 386px;
+            color: #66666E;
+          }
+          .size {
             font-size: 14px;
             color: #92929B;;
-            &:nth-child(1) {
-              color: #333;
-            }
           }
         }
         .workIconList {

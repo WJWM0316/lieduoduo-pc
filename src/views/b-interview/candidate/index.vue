@@ -617,7 +617,7 @@ export default {
   align-items: center;
   width:462px;
   height:40px;
-  margin: 20px auto;
+  margin: 20px auto 60px;
   background:rgba(255,244,229,1);
   border-radius:8px;
   img{
