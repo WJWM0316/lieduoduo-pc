@@ -336,7 +336,7 @@ export default {
 		.pname{
 			display: block;
     	float: left;
-			@include ellipsis-over(98px);
+			@include ellipsis-over(100px);
 		}
 		.position{
 			margin-right: 18px;

@@ -57,10 +57,10 @@ export default {
   },
   data () {
     return {
-      dialogTableVisible: false,
+      dialogTableVisible: true,
       imgUrl: app_qrcode,
       cdnPath: `${process.env.VUE_APP_CDN_PATH}/images/`,
-      title: ''
+      title: '123'
     }
   },
   mounted () {
@@ -81,20 +81,27 @@ export default {
 }
 .positionDownloadApp .el-dialog__header{
   height: 0 !important;
+  padding-top: 32px;
 }
 .positionDownloadApp .el-dialog__body{
   padding: 0 38px;
 }
 .positionDownloadApp-title{
   color: $main-color-1;
-  font-weight: 500;
+  font-weight: bold;
   font-size: 16px;
   line-height: 24px;
+  min-height: 24px;
   width: 350px;
+  @include flex-v-center;
   .iconfont{
-    display: inline-block;
+    font-weight: normal;
     margin-right: 11px;
     font-size: 20px;
+    color: $bg-color-4;
+  }
+  i, span {
+    display: inline-block;
   }
 }
 .positionDownloadApp-text{

@@ -130,9 +130,21 @@
               <p class="p1">{{dialogText[viewOrPhone]['s60'][0]}}</p>
               <p class="p2">{{dialogText[viewOrPhone]['s60'][1]}}</p>
             </div>
-            <div class="status-text2" v-show="jobhunterInfo.status === 61">
-              <p class="p1">{{dialogText[viewOrPhone]['s61'][0]}}</p>
-            </div>
+            <template v-if="jobhunterInfo.status === 61">
+              <div class="status-text2" >
+                <p class="p1">{{dialogText[viewOrPhone]['s61'][0]}}</p>
+              </div>
+              <!-- 不合适原因 -->
+              <div class="clearfix status-reason" v-if="jobhunterInfo.interviewNotSuitComment">
+                <p>不合适原因：</p>
+                <div class="status-reason-tag">
+                  <template v-for="reason in jobhunterInfo.interviewNotSuitComment.reason">
+                    <span :key="reason">{{reason}}</span>
+                  </template>
+                </div>
+                <p class="status-reason-desc" v-if="!jobhunterInfo.interviewNotSuitComment.extraDesc">{{jobhunterInfo.interviewNotSuitComment.extraDesc}}</p>
+              </div>
+            </template>
             <div class="status-text" v-show="jobhunterInfo.status === 59">
               <p class="p1">{{dialogText[viewOrPhone]['s59'][0]}}</p>
               <p class="p1">{{dialogText[viewOrPhone]['s59'][1]}}</p>
@@ -287,10 +299,11 @@ export default {
     background: $bg-color-1;
     color: $title-color-2;
     font-size: 14px;
+    border-radius: 4px;
     display: inline-block;
     vertical-align: middle;
-    border-radius: 15px;
     margin-bottom: 12px;
+    margin-right: 13px;
   }
   p {
     color: $title-color-2;
@@ -438,48 +451,74 @@ export default {
         }
       }
     }
-    .end-status{
-      width:352px;
-      height:88px;
-      margin-top: 16px;
-      background:#F8FAFA;
-      border-radius:8px;
-      margin-bottom: 10px;
-      .status-icon{
-        width: 64px;
-        height: 64px;
-        float: left;
-        margin: 12px 16px 12px 51px;
-        img{
-          width: 100%;
-          height: 100%;
-        }
-      }
-      .status-text{
-        float: left;
-        margin-top: 26px;
-        .p1{
-          color:#333333;
-          font-weight: bold;
-          font-size:16px;
-        }
-        .p2{
-          font-weight:300;
-          font-size:14px;
-          margin-top: 6px;
-          color:#92929B;
-        }
-      }
-      .status-text2{
-        margin-top: 34px;
-        float: left;
-        .p1{
-          color:#333333;
-          font-weight: bold;
-          font-size:16px;
-        }
-      }
+  }
+}
+.end-status{
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 16px;
+  background: $bg-color-1;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  min-height: 104px;
+  padding: 20px 24px 10px;
+  .status-icon{
+    width: 64px;
+    height: 64px;
+    float: left;
+    margin: 0px 16px 0px 0px;
+    img{
+      width: 100%;
+      height: 100%;
     }
+  }
+  .status-text{
+    float: left;
+    margin-top: 14px;
+    text-align: left;
+    .p1{
+      color:#333333;
+      font-weight: bold;
+      font-size:16px;
+    }
+    .p2{
+      font-weight:300;
+      font-size:14px;
+      margin-top: 6px;
+      color:#92929B;
+    }
+  }
+  .status-text2{
+    margin-top: 24px;
+    float: left;
+    .p1{
+      color:#333333;
+      font-weight: bold;
+      font-size:16px;
+    }
+  }
+}
+.status-reason {
+  text-align: left;
+  margin-top: 84px;
+  .status-reason-tag {
+    margin-top: 12px;
+    span {
+      border-radius: 4px;
+      border: 1px solid $border-color-1;
+      padding: 6px 27px;
+      display: inline-block;
+      vertical-align: middle;
+      background: $border-color-8;
+      margin-right: 14px;
+      margin-bottom: 8px;
+      color: $title-color-1;
+    }
+  }
+  .status-reason-desc {
+    margin-top: 12px;
+    color: $title-color-2;
+    line-height:14px;
   }
 }
 </style>
