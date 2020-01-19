@@ -39,6 +39,7 @@
             end-placeholder="结束日期"
           ></el-date-picker>
           <high-filter
+            ref="highFilter"
             title="职位类别筛选"
             :lists="positionTypeList"
             v-model="params.position_type_id"
@@ -94,7 +95,7 @@
             </div>
             <div class="phone" v-if="[21, 31, 32, 41].includes(item.status)">手机：{{item.resume.mobile}}</div>
           </template>
-          <template v-if="params.navType === 'calendar'">
+          <template v-if="params.navType === 'calendar' && item.arrangementInfo">
             <div class="time" :class="{'time-bg': item.status < 51}">
               <i class="iconfont icon-shijian"></i>
               {{ item.arrangementInfo.appointmentTime * 1000 | interviewTime}}</div>
@@ -342,7 +343,14 @@ export default {
       if (type === 'navType') {
         this.candidateList = []
         this.total = 0
-        if (init) this.clearListRedDot()
+        if (init) {
+          this.clearListRedDot()
+          // 清空高级筛选
+          if (this.$refs.highFilter) this.$refs.highFilter.handleClear()
+          Object.assign(this.params, {
+            position_type_id: ['all']
+          })
+        }
         this.params.status = 0
       }
       switch (this.params.navType) {
@@ -440,13 +448,14 @@ export default {
         position_type_id: this.params.position_type_id.join(',')
       }
       if (params.time) {
-        delete params.created_start_time
-        delete params.created_end_time
-        delete params.position_type_id
+        params.position_label_id = params.position_type_id
       } else {
         if (params.created_start_time) params.start = parseInt(new Date(params.created_start_time).getTime() / 1000)
         if (params.created_end_time) params.end = parseInt(new Date(params.created_end_time).getTime() / 1000)
       }
+      delete params.created_start_time
+      delete params.created_end_time
+      delete params.position_type_id
       let methodFunc = params.time > 0 ? getScheduleListApi : getnewHistoryListtApi
       // /interview/schedule
       methodFunc(params).then(({ data }) => {

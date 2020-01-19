@@ -483,19 +483,21 @@ export default {
       }
     },
     resetListDatas (data) {
-      const { status, notSuitInfo } = data.chatInfo || {}
+      const { status } = data.chatInfo || {}
+      const { notSuitInfo } = data
       const { interviewInfo, isAdvisor } = data.interviewSummary || {}
+      let btn1 = {}
       if (data.chatInfo) {
-        let btn1 = ChatTypeBtns.find(val => val.is(status))
-        this.buttons.btn1 = btn1
+        btn1 = ChatTypeBtns.find(val => val.is(status))
       } else {
-        this.buttons.btn1 = { buttonText: '一键约聊', type: 'recruiter-chat', buttonType: 'primary' }
+        btn1 = { buttonText: '一键约聊', type: 'recruiter-chat', buttonType: 'primary' }
       }
       // 招聘官（对人）标记不合适
       if (notSuitInfo) {
-        this.buttons.btn1 = { buttonText: '取消不合适', type: 'return-cancel', buttonType: 'warning' }
+        btn1 = { buttonText: '取消不合适', type: 'return-cancel', buttonType: 'warning' }
         this.buttons.btn2 = { buttonText: '查看原因', type: 'watch-chat-reson', buttonType: 'defalut' }
       }
+      this.buttons.btn1 = btn1
       // 是否有约面信息
       if (interviewInfo) {
         // 是否有约面状态
@@ -508,7 +510,10 @@ export default {
           this.buttons.btn3 = { buttonText: '顾问帮约', _text: '开撩约面', type: 'recruiter-chat', buttonType: 'black' }
         }
       } else {
-        this.buttons.btn3 = { buttonText: '顾问帮约', _text: '开撩约面', type: 'recruiter-chat', buttonType: 'black' }
+        // 如果c->b约聊，b处理中或者已经通过，并且没有约面的信息，不需要显示顾问帮约
+        if (![101, 301].includes(status)) {
+          this.buttons.btn3 = { buttonText: '顾问帮约', _text: '开撩约面', type: 'recruiter-chat', buttonType: 'black' }
+        }
       }
     }
   },

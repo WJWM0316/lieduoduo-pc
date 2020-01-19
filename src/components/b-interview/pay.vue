@@ -97,7 +97,8 @@ export default {
         // 约面
         sureOpenupAPi({
           jobhunterUid: this.jobuid,
-          positionId: this.positionId
+          positionId: this.positionId,
+          isAdvisor: 1
         }).then(({ data }) => {
           if (data.httpStatus === 200) {
             this.$message.success('约面成功')
