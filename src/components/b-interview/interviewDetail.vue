@@ -289,6 +289,7 @@ export default {
   color: $font-color-10;
   font-size: 12px;
   margin-top: 24px;
+  margin-bottom: 30px;
 }
 .recruiter-reject {
   text-align: left;
@@ -331,7 +332,7 @@ export default {
 }
 
 .arrangeinfo{
-  padding: 0 40px 22px;
+  padding: 0 40px 20px;
   margin-top: 4px;
   .item{
     line-height: 22px;
