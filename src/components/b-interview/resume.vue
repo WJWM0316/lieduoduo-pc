@@ -486,7 +486,7 @@ export default {
       const { status } = data.chatInfo || {}
       const { notSuitInfo } = data
       const { interviewInfo, isAdvisor } = data.interviewSummary || {}
-      let btn1 = {}
+      let btn1 = {}; let btn2 = {}
       if (data.chatInfo) {
         btn1 = ChatTypeBtns.find(val => val.is(status))
       } else {
@@ -495,9 +495,10 @@ export default {
       // 招聘官（对人）标记不合适
       if (notSuitInfo) {
         btn1 = { buttonText: '取消不合适', type: 'return-cancel', buttonType: 'warning' }
-        this.buttons.btn2 = { buttonText: '查看原因', type: 'watch-chat-reson', buttonType: 'defalut' }
+        btn2 = { buttonText: '查看原因', type: 'watch-chat-reson', buttonType: 'default' }
       }
       this.buttons.btn1 = btn1
+      this.buttons.btn2 = btn2
       // 是否有约面信息
       if (interviewInfo) {
         // 是否有约面状态
