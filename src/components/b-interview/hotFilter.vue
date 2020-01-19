@@ -16,7 +16,7 @@
           <div class="selelist">
             <div class="title">选择职位</div>
             <div :class="['positiondom', showdom ? 'domset' : '']" ref="positiondom">
-            <div @click="positionSelect(item)" :class="['list', item.active ? 'active' : '']" v-for="item in positionlist" :key="item.id">{{item.positionName}}</div>
+            <span @click="positionSelect(item)" :class="['list', item.active ? 'active' : '']" v-for="item in positionlist" :key="item.id">{{item.positionName}}</span>
             </div>
             <div class="open" @click="open" v-if="isshow">
               <span v-if="!showdom">展开</span>
@@ -30,7 +30,7 @@
             <div @click="positionCity(item)" :class="['list', item.active ? 'active' : '']" v-for="item in citylist" :key="item.areaId">{{item.name}}</div>
           </div>
           <div class="selelist">
-            <div class="title">薪酬范围<span>(可多选)</span></div>
+            <div class="title">薪酬范围<span style="color:#66666E;margin-left:6px;">(可多选)</span></div>
             <div @click="positionSalary(item)" :class="['list', item.active ? 'active' : '']" v-for="item in salarylist" :key="item.id">{{item.text}}</div>
           </div>
         </div>
@@ -208,7 +208,7 @@ export default {
   }
 }
 .filter-wrapper {
-  padding: 32px 13px 0 13px;
+  padding: 20px 13px 20px 28px;
   .filter-title {
     font-size: 14px;
     font-weight: bold;
@@ -245,6 +245,7 @@ export default {
   .title{
     font-weight: bold;
     margin-bottom: 12px;
+    color: #282828;
   }
   .positiondom{
     max-height: 175px;
@@ -266,16 +267,22 @@ export default {
       margin-left: 5px;
     }
     span{
-      font-size: 14px;
+      font-size: 12px;
     }
   }
 }
 .filter-footer{
   display: flex;
   justify-content: flex-end;
+  margin-top: 36px;
 }
 
 </style>
 <style lang="scss">
-
+.filter-footer .el-button--primary{
+  padding: 9px 45px;
+}
+.filter-footer .el-button--small{
+  padding: 9px 31px;
+}
 </style>
