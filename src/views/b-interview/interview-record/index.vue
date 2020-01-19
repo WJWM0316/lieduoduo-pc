@@ -181,10 +181,10 @@
       <!-- no found -->
       <no-found
         v-if="!candidateList.length && !getLoading"
-        :tip-text="tipsText[this.params.navType]['text']"
+        :tip-text="noFoundText"
         class="no-found-list"
         max-width="240">
-        <el-button type="primary" style="width: 143px;margin-top: 24px;" @click="$router.push({name: 'recruiterIndex'})">分享职位</el-button>
+        <el-button v-if="!params.status || params.navType === 'calendar'" type="primary" style="width: 143px;margin-top: 24px;" @click="$router.push({name: 'recruiterIndex'})">分享职位</el-button>
       </no-found>
     </div>
     <!-- page -->
@@ -296,7 +296,15 @@ export default {
       'recruiterIntentionList',
       'recruiterInviteList',
       'recruiterScheduleList'
-    ])
+    ]),
+    noFoundText () {
+      if (this.params.status > 0) {
+        // eslint-disable-next-line eqeqeq
+        const statusArr = this.statusList.find(val => val.value == this.params.status)
+        return `暂无 ${statusArr.label}  的约面记录`
+      }
+      return this.tipsText[this.params.navType]['text']
+    }
   },
   created () {
     const query = this.$route.query
