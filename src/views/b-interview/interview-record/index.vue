@@ -10,14 +10,14 @@
             :class="{'active': params.navType==='apply'}"
             @click="handleSearch('apply', 'navType')">
             <span :class="{'is-red-dot' : recruiterIntentionList > 0}"></span>
-            收到意向({{invitenum || 0}})
+            收到意向 ({{invitenum || 0}})
           </div>
           <div
             class="b-header-button"
             :class="{ 'active':  params.navType==='invite' }"
             @click="handleSearch('invite', 'navType')">
             <span :class="{'is-red-dot' : recruiterInviteList > 0}"></span>
-            我的邀请({{applynum || 0}})
+            我的邀请 ({{applynum || 0}})
           </div>
           <div
             class="b-header-button"
@@ -169,7 +169,7 @@
               <span class="list-btn" :class="item.btn2.className" @click.stop="setJob(item.btn2.type, item)">{{item.btn2.buttonText}}</span>
             </template>
             <el-button
-              style="width: 112px;margin-left: 24px"
+              style="width: 112px;"
               :disabled="item.btn1.disabled"
               @click.stop="setJob(item.btn1.type, item)"
               :type="item.btn1.buttonType">
@@ -182,7 +182,8 @@
       <no-found
         v-if="!candidateList.length && !getLoading"
         :tip-text="tipsText[this.params.navType]['text']"
-        max-width="160">
+        class="no-found-list"
+        max-width="240">
         <el-button type="primary" style="width: 143px;margin-top: 24px;" @click="$router.push({name: 'recruiterIndex'})">分享职位</el-button>
       </no-found>
     </div>
@@ -507,14 +508,23 @@ export default {
       // { cb }
       switch (this.params.navType) {
         case 'invite':
+          // 操作成功回到全部的tab
+          this.params.status = 0
           this.getApplyList()
           break
         case 'apply':
+          // 操作成功回到全部的tab
+          this.params.status = 0
           this.getInviteList()
           break
         case 'calendar':
           this.getInterviewList()
           break
+      }
+      // 滚动到顶部
+      const dom = document.querySelector('.b-app-contain')
+      if (dom) {
+        dom.scrollTop = 0
       }
       // 如果查看简历详情在打开状态就刷新简历数据
       if (this.$refs.resume) this.$refs.resume.getResume()
@@ -613,10 +623,6 @@ export default {
             if (data.httpStatus === 200) {
               this.$message.success('撤回成功')
             }
-            // 更新列表和弹窗显示状态
-
-            // this.getResume(this.jobuid)
-            // this.init()
           })
           break
         case 'see-resume':
@@ -677,6 +683,8 @@ export default {
 .candidate-header {
   min-width: 1120px;
   padding: 48px 32px 30px;
+  border-radius:8px 8px 0px 0px;
+  box-shadow: $shadow-1;
   background: #fff;
 }
 .header-status {
@@ -691,12 +699,14 @@ export default {
     padding: 5px 16px;
     border-radius: 2px;
     position: relative;
+    color: $title-color-2;
   }
   div:hover {
     background: rgba($bg-color-4, 0.1);
   }
   div.active {
     color: $main-color-1;
+    font-weight: bold;
     background: rgba($bg-color-4, 0.1);
   }
   div.is-red-dot::after {
@@ -728,25 +738,21 @@ export default {
   min-height: 350px;
   .candidate_blo {
     height: 196px;
-    background: rgba(255,255,255,1);
+    background: #fff;
     border-radius: 8px;
-    border: 1px solid #DDE1E0;
+    // border: 1px solid #DDE1E0;
     margin-bottom: 15px;
+    padding: 0 32px;
     box-sizing: border-box;
+    box-shadow: $shadow-1;
     cursor: pointer;
-    &:hover{
-      box-shadow:0px 10px 20px 0px rgba(0,0,0,0.1);
-    }
     .bloTop {
       height: 48px;
       line-height: 48px;
       border-bottom: 1px solid #DDE1E0;
-      padding: 0 32px 0 24px;
       font-size:12px;
-      font-weight:400;
       color:#92929B;
       box-sizing: border-box;
-      overflow: hidden;
       position: relative;
       .phone{
         float: right;
@@ -759,11 +765,12 @@ export default {
         position: absolute;
         right: 0px;
         top: 8px;
-        right: 8px;
+        right: -24px;
         width: 8px;
         height: 8px;
         border-radius: 50%;
-        background:#F45322;
+        z-index:2;
+        background:$error-color-1;
       }
       .timer {
         float: left;
@@ -837,7 +844,7 @@ export default {
         display: flex;
         flex-direction: row;
         width: 80%;
-        padding: 20px 0px 20px 32px;
+        padding: 20px 0px 20px 0px;
         box-sizing: border-box;
         .leftMsg {
           height:72px;
@@ -852,6 +859,7 @@ export default {
               float: left;
               margin-right: 16px;
               border-radius: 50%;
+              border: 1px solid $border-color-8;
             }
             .gender {
               width:19px;
@@ -932,9 +940,9 @@ export default {
           box-sizing: border-box;
           &::after {
             content: '';
-            width: 1px;
+            width: 0px;
             height: 100px;
-            background: #E8E9EB;
+            border-left: 1px dashed $border-color-1;
             position: absolute;
             left: 0;
             top: 10px;
@@ -955,7 +963,7 @@ export default {
       .userOp {
         position: absolute;
         top: 55px;
-        right: 32px;
+        right: 0px;
         flex: 1;
         display: flex;
         justify-content: center;
@@ -971,5 +979,11 @@ export default {
       }
     }
   }
+  .candidate_blo:hover {
+    box-shadow: $shadow-2;
+  }
+}
+.no-found-list.no-found {
+  background: #fff;
 }
 </style>

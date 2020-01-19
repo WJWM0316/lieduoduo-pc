@@ -105,14 +105,15 @@ export default {
       width:110px;
       height:32px;
       line-height: 32px;
-      font-size:14px;
+      font-size: 14px;
       text-align: center;
       background:#F4F7F7;
-      color:#6D696E;
-      border-radius:16px;
+      color:$title-color-2;;
+      border-radius: 4px;
       float: left;
       margin-right: 11px;
       margin-bottom: 10px;
+      cursor: pointer;
     }
     .wachitem{
       width:110px;
@@ -121,7 +122,7 @@ export default {
       font-size:14px;
       text-align: center;
       background:#F4F7F7;
-      color:#6D696E;
+      color:$title-color-2;;
       border-radius:16px;
       float: left;
       margin-right: 11px;

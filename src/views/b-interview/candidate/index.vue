@@ -370,6 +370,11 @@ export default {
           this.getSearchMyCollect()
           break
       }
+      // 滚动到顶部
+      const dom = document.querySelector('.b-app-contain')
+      if (dom) {
+        dom.scrollTop = 0
+      }
       // 如果查看简历详情在打开状态就刷新简历数据
       if (this.$refs.resume) this.$refs.resume.getResume()
     },

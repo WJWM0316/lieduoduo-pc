@@ -3,15 +3,10 @@
     <div class="position">
       <!-- 24小时职位 -->
       <template v-if="infos.isRapidly">
-        <el-button class="rapidlyPosition" :loading="loading" v-if="infos.chatInfo !== null &&
-        infos.rapidlyInfo.applied === 1 &&
-        (infos.chatInfo.status === 101 ||
-          infos.chatInfo.status === 301 ||
-          infos.chatInfo.status === 501 ||
-          infos.chatInfo.status === 701)" type="primary" @click="todoAction('goInterviewChat')" >继续聊</el-button>
+        <el-button v-if="infos.rapidlyInfo.applied === 0 && infos.rapidlyInfo.seatsNum - (infos.rapidlyInfo.applyNum + infos.rapidlyInfo.natureApplyNum) > 0" :loading="loading" class="rapidlyPosition" type="primary" @click="todoAction('grabInterviewChat')" >马上抢</el-button>
         <div v-else>
-          <el-button :loading="loading" v-if="infos.rapidlyInfo.seatsNum - (infos.rapidlyInfo.applyNum + infos.rapidlyInfo.natureApplyNum) > 0 && infos.rapidlyInfo.applied === 0" class="rapidlyPosition" type="primary" @click="todoAction('grabInterviewChat')" >马上抢</el-button>
-          <el-button :loading="loading" v-else class="rapidlyPosition" type="primary" @click="todoAction('interviewChat')" >一键约聊</el-button>
+          <el-button v-if="infos.chatInfo !== null" class="rapidlyPosition" :loading="loading" type="primary" @click="todoAction('goInterviewChat')" >继续聊</el-button>
+          <el-button v-else :loading="loading" class="rapidlyPosition" type="primary" @click="todoAction('interviewChat')" >一键约聊</el-button>
         </div>
       </template>
       <!-- 普通职位 -->

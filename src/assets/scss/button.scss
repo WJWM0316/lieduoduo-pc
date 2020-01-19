@@ -184,6 +184,7 @@ button, button:hover{
   border: 1px solid $border-color-1;
   .b-header-button {
     border: none;
+    box-shadow: none;
   }
   .b-header-button:not(:first-child)::after {
     content: "";
