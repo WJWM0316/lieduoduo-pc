@@ -24,7 +24,7 @@
               <div :class="['money', item.isOnline === 2 ? 'hui' : '']">{{item.emolumentMin}}K~{{item.emolumentMax}}K</div>
             </div>
             <div class="info">
-              <div :class="['address', item.isOnline === 2 ? 'hui' : '']">{{item.city}}{{item.district}}</div>
+              <div :class="['address', item.isOnline === 2 ? 'hui' : '']" v-if="item.city">{{item.city}}{{item.district}}</div>
               <div :class="['year', item.isOnline === 2 ? 'hui' : '']">{{item.workExperienceName}}</div>
               <div :class="['benke', item.isOnline === 2 ? 'hui' : '']">{{item.educationName}}</div>
             </div>

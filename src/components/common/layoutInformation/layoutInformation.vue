@@ -9,8 +9,7 @@
           </div>
           <div class="layoutInformation-text">
             <p class="layoutInformation-text-top">
-              {{ port === 'CPort' ? item.recruiterInfo.name : item.jobhunterInfo.name }}
-              <span>{{ port === 'CPort' ? item.recruiterInfo.companyInfo.companyShortname : item.jobhunterInfo.lastCompany === '' ? '暂无工作经历' : item.jobhunterInfo.lastCompany  }}</span>
+              {{ port === 'CPort' ? item.recruiterInfo.name : item.jobhunterInfo.name }}<span>{{ port === 'CPort' ? item.recruiterInfo.companyInfo.companyShortname : item.jobhunterInfo.lastCompany === '' ? '暂无工作经历' : item.jobhunterInfo.lastCompany  }}</span>
             </p>
             <p v-if="port === 'CPort'" class="layoutInformation-text-bottom">正在和你沟通【<span>{{ item.recruiterInfo.position }}</span>】职位</p>
             <p v-if="port === 'BPort' && item.positionInfo && item.positionInfo.positionName" class="layoutInformation-text-bottom">正在和你沟通【<span>{{ item.positionInfo.positionName }}</span>】职位</p>
@@ -107,11 +106,12 @@ export default {
   line-height: 16px;
 }
 .layoutInformation-main{
-  padding: 0 25px;
+  padding: 0 24px;
   .layoutInformation-title{
     font-size: 14px;
     font-weight: 500;
-    margin: 27px 0 10px 0;
+    margin: 20px 0 10px 0;
+    color: $font-color-3;
   }
   .layoutInformation-communication{
     text-align: center;
@@ -119,6 +119,10 @@ export default {
     line-height: 40px;
     font-size: 12px;
     border-top: 1px $scroll-bar-color dashed;
+    .iconfont{
+      font-size: 12px;
+      color: $font-color-10;
+    }
   }
 }
 .layoutInformation-item{
@@ -131,6 +135,7 @@ export default {
   }
   .layoutInformation-img{
     @include img-radius(38px, 38px, 50%);
+    border: 1px solid $border-color-8;
   }
   .layoutInformation-text{
     font-weight: 400;
@@ -139,16 +144,24 @@ export default {
       font-size: 14px;
       color: $font-color-2;
       line-height: 14px;
+      vertical-align: middle;
       span{
         font-size: 12px;
         display: inline-block;
         margin-left: 6px;
         color: $font-color-9;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        vertical-align: middle;
+        width: 100px;
+        line-height: 14px;
       }
     }
     .layoutInformation-text-bottom{
       margin-top: 8px;
       font-size: 12px;
+      line-height: 12px;
       color: $font-color-6;
       vertical-align: middle;
       span{
@@ -157,7 +170,7 @@ export default {
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
-        vertical-align: middle;
+        vertical-align: top;
       }
     }
   }

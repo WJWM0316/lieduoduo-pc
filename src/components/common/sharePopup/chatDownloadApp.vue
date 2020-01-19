@@ -59,12 +59,16 @@ export default {
     font-weight: bold;
     position: relative;
     background: url('../../../assets/images/rocket.png') no-repeat;
-    background-position: 280px 0;
+    background-position: 290px 0;
+    background-size: auto 100%;
   }
   p {
     color: $title-color-2;
     font-size: 14px;
     line-height:22px;
+  }
+  img {
+    max-width: 146px;
   }
 }
 

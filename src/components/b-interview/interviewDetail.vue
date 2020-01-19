@@ -289,6 +289,7 @@ export default {
   color: $font-color-10;
   font-size: 12px;
   margin-top: 24px;
+  margin-bottom: 30px;
 }
 .recruiter-reject {
   text-align: left;
@@ -331,7 +332,7 @@ export default {
 }
 
 .arrangeinfo{
-  padding: 0 40px 22px;
+  padding: 0 40px 20px;
   margin-top: 4px;
   .item{
     line-height: 22px;
@@ -460,11 +461,11 @@ export default {
   background: $bg-color-1;
   border-radius: 8px;
   margin-bottom: 10px;
-  min-height: 104px;
+  min-height: 82px;
   padding: 20px 24px 10px;
   .status-icon{
-    width: 64px;
-    height: 64px;
+    width: 42px;
+    height: 42px;
     float: left;
     margin: 0px 16px 0px 0px;
     img{
@@ -474,7 +475,7 @@ export default {
   }
   .status-text{
     float: left;
-    margin-top: 14px;
+    margin-top: 3px;
     text-align: left;
     .p1{
       color:#333333;
@@ -489,7 +490,7 @@ export default {
     }
   }
   .status-text2{
-    margin-top: 24px;
+    margin-top: 13px;
     float: left;
     .p1{
       color:#333333;
@@ -500,7 +501,7 @@ export default {
 }
 .status-reason {
   text-align: left;
-  margin-top: 84px;
+  margin-top: 73px;
   .status-reason-tag {
     margin-top: 12px;
     span {

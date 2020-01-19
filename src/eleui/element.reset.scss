@@ -126,6 +126,9 @@ div.el-dialog {
 }
 .el-message-box.el-message-box--center .el-message-box__title {
   justify-content: start;
+  span {
+    font-weight: bold;
+  }
 }
 .el-message-box.el-message-box--center .el-message-box__content {
   padding-left: 76px;

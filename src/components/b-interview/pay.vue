@@ -212,9 +212,10 @@ export default {
   }
   .my-coin {
     color: $title-color-2;
-    font-size: 14px;
+    font-size: 12px;
     span{
       padding-left: 6px;
+      font-size: 14px;
     }
   }
 }

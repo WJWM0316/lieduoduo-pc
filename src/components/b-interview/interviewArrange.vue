@@ -210,7 +210,8 @@ export default {
         if (!data.addressId && data.source_type === 1) {
           this.$message.error('请选择一个地址')
           return
-        } else {
+        }
+        if (data.source_type === 2) {
           delete data.addressId
           delete data.addressName
         }
@@ -292,8 +293,13 @@ export default {
         } else {
           this.arrangementInfo.positionId = res.data.data.positionId
         }
-        this.arrangementInfo.addressId = res.data.data.addressId
-        this.arrangementInfo.addressName = res.data.data.address
+        if (this.arrangementInfo.addressId) {
+          this.arrangementInfo.addressId = res.data.data.addressId
+          this.arrangementInfo.addressName = res.data.data.address
+        } else {
+          this.arrangementInfo.addressId = ''
+          this.arrangementInfo.addressName = ''
+        }
         if (res.data.data.arrangementInfo.appointmentList) {
           this.model.dateLists = res.data.data.arrangementInfo.appointmentList
         } else {
