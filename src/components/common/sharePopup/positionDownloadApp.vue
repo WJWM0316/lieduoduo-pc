@@ -57,10 +57,10 @@ export default {
   },
   data () {
     return {
-      dialogTableVisible: true,
+      dialogTableVisible: false,
       imgUrl: app_qrcode,
       cdnPath: `${process.env.VUE_APP_CDN_PATH}/images/`,
-      title: '123'
+      title: ''
     }
   },
   mounted () {
