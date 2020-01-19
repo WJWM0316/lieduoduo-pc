@@ -192,9 +192,7 @@ export default {
             this.saveEditCompany()
           }
         } else {
-          Object.keys(validText).forEach(item => {
-            this.$message.error(validText[item][0].message)
-          })
+          this.$message.error(validText[Object.keys(validText)[0]][0].message)
         }
       })
     },

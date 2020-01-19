@@ -111,7 +111,7 @@ export default {
       applyInterviewApi({ recruiterUid: this.infos.recruiter, positionId: this.infos.id, interview_type: 2 }).then(res => {
         this.loading = false
         if (res.data.code === 915) {
-          this.$confirm('活动已过期', '已改为提交约聊申请，面试官将尽快处理。', {
+          this.$confirm('已改为提交约聊申请，面试官将尽快处理。', '活动已过期', {
             distinguishCancelAndClose: true,
             confirmButtonText: '知道了',
             showCancelButton: false
@@ -123,7 +123,7 @@ export default {
           return
         }
         if (res.data.code === 916) {
-          this.$confirm('约面席位已抢光', '已改为提交约聊申请，面试官将尽快处理。', {
+          this.$confirm('已改为提交约聊申请，面试官将尽快处理。', '约面席位已抢光', {
             distinguishCancelAndClose: true,
             confirmButtonText: '知道了',
             showCancelButton: false
