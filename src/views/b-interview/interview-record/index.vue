@@ -508,14 +508,23 @@ export default {
       // { cb }
       switch (this.params.navType) {
         case 'invite':
+          // 操作成功回到全部的tab
+          this.params.status = 0
           this.getApplyList()
           break
         case 'apply':
+          // 操作成功回到全部的tab
+          this.params.status = 0
           this.getInviteList()
           break
         case 'calendar':
           this.getInterviewList()
           break
+      }
+      // 滚动到顶部
+      const dom = document.querySelector('.b-app-contain')
+      if (dom) {
+        dom.scrollTop = 0
       }
       // 如果查看简历详情在打开状态就刷新简历数据
       if (this.$refs.resume) this.$refs.resume.getResume()
@@ -614,10 +623,6 @@ export default {
             if (data.httpStatus === 200) {
               this.$message.success('撤回成功')
             }
-            // 更新列表和弹窗显示状态
-
-            // this.getResume(this.jobuid)
-            // this.init()
           })
           break
         case 'see-resume':
@@ -748,7 +753,6 @@ export default {
       font-size:12px;
       color:#92929B;
       box-sizing: border-box;
-      overflow: hidden;
       position: relative;
       .phone{
         float: right;
@@ -761,11 +765,12 @@ export default {
         position: absolute;
         right: 0px;
         top: 8px;
-        right: 8px;
+        right: -24px;
         width: 8px;
         height: 8px;
         border-radius: 50%;
-        background:#F45322;
+        z-index:2;
+        background:$error-color-1;
       }
       .timer {
         float: left;
