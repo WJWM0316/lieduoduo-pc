@@ -8,8 +8,8 @@
       <div class="downloadApp-text">
         <p>下载猎多多APP</p>
         <ul>
-          <li>随时随地与招聘官畅聊职位</li>
-          <li>订阅消息通知，实时掌握约面动态</li>
+          <li><span></span>随时随地与招聘官畅聊职位</li>
+          <li><span></span>订阅消息通知，实时掌握约面动态</li>
         </ul>
         <img :src="imgUrl"/>
       </div>
@@ -76,18 +76,27 @@ export default {
     font-weight: 400;
     font-size: 14px;
     margin-top: 8px;
-    width: 168px;
-    margin-left: 20px;
+    width: 177px;
   }
   li{
     margin-top: 8px;
     line-height: 18px;
-    list-style-type: disc;
+    span{
+      background: #ffffff;
+      width: 4px;
+      height: 4px;
+      display: inline-block;
+      margin-right: 5px;
+      line-height: 18px;
+      border-radius: 50%;
+      vertical-align: middle;
+    }
   }
   img{
     width: 109px;
     height: 109px;
     margin-top: 15px;
+    margin-left: 9px;
   }
 }
 </style>

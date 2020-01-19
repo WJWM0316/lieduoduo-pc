@@ -31,7 +31,7 @@ export default {
             this.title = '约聊成功'
             break
           case 'grabInterviewChat':
-            if (this.text) {
+            if (this.text === '') {
               this.title = '面试官已收到你的申请，将于24h内得到反馈'
             } else {
               this.title = this.text
