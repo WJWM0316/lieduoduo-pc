@@ -118,6 +118,7 @@ export default {
     color: $font-color-9;
     line-height: 40px;
     font-size: 12px;
+    border-top: 1px $scroll-bar-color dashed;
   }
 }
 .layoutInformation-item{
@@ -125,6 +126,9 @@ export default {
   box-sizing: border-box;
   border-bottom: 1px $scroll-bar-color dashed;
   @include flex-v-center;
+  &:last-of-type{
+    border: 0;
+  }
   .layoutInformation-img{
     @include img-radius(38px, 38px, 50%);
   }
@@ -175,5 +179,6 @@ export default {
 .layoutInformation-popper{
   padding: 0 !important;
   border-radius: 10px !important;
+  border: 0 !important;
 }
 </style>
