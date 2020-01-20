@@ -608,6 +608,18 @@ export default {
   .high-filter {
     margin-left: auto;
   }
+  .b-header-button{
+    box-shadow:0px 0px 20px 0px rgba(22,39,77,0.07);
+  }
+  .b-header-group-button{
+    box-shadow:0px 0px 20px 0px rgba(22,39,77,0.07);
+  }
+  .active {
+    font-weight: 500;
+    .iconfont{
+      font-weight: normal;
+    }
+  }
 }
 .null-recommendation{
   display: flex;

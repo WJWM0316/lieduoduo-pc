@@ -25,12 +25,12 @@
               <i v-else class="iconfont icon-arrow-top"></i>
             </div>
           </div>
-          <div class="selelist">
+          <div class="selelist martop">
             <div class="title">选择城市</div>
             <div @click="positionCity(item)" :class="['list', item.active ? 'active' : '']" v-for="item in citylist" :key="item.areaId">{{item.name}}</div>
           </div>
-          <div class="selelist">
-            <div class="title">薪酬范围<span style="color:#66666E;margin-left:6px;">(可多选)</span></div>
+          <div class="selelist martop">
+            <div class="title">薪酬范围<span style="color:#66666E;margin-left:6px;font-weight:normal;">(可多选)</span></div>
             <div @click="positionSalary(item)" :class="['list', item.active ? 'active' : '']" v-for="item in salarylist" :key="item.id">{{item.text}}</div>
           </div>
         </div>
@@ -91,7 +91,7 @@ export default {
     },
     hotfiletr () {
       this.$nextTick(() => {
-        if (this.$refs.positiondom.offsetHeight >= 175) this.isshow = true
+        if (this.$refs.positiondom.offsetHeight >= 160) this.isshow = true
       })
     },
     // 清除筛选
@@ -226,7 +226,7 @@ export default {
     font-size: 14px;
     padding: 6px 12px;
     line-height: 1;
-    margin: 0 8px 16px 0;
+    margin: 0 8px 12px 0;
     box-sizing: border-box;
     cursor: pointer;
     border: 1px solid transparent;
@@ -248,7 +248,7 @@ export default {
     color: #282828;
   }
   .positiondom{
-    max-height: 175px;
+    max-height: 160px;
     overflow: hidden;
   }
   .domset{
@@ -261,7 +261,7 @@ export default {
     cursor: pointer;
     width: 50px;
     justify-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 28px;
     i{
       font-size: 12px;
       margin-left: 5px;
@@ -270,6 +270,9 @@ export default {
       font-size: 12px;
     }
   }
+}
+.martop{
+  margin-top: 16px;
 }
 .filter-footer{
   display: flex;

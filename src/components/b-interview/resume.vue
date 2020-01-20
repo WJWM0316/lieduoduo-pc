@@ -65,7 +65,7 @@
                   </div>
                   <div class="description">
                     <span class="msg">{{nowResumeMsg.signature}}</span>
-                    <div class="iconList">
+                    <div class="iconList" ref="iconList">
                       <span
                         class="iconItem"
                         v-for="(item,index) in nowResumeMsg.personalizedLabels"
@@ -192,6 +192,7 @@
               <div class="onload" @click="hasonload = !hasonload"  v-if="nowResumeMsg.glass === 0">
                 <i class="iconfont icon-xiazai"></i>
               </div>
+              <div class="line" v-if="nowResumeMsg.glass === 0"></div>
               <div class="onloadselect"  v-loading="loadingshow" v-show="hasonload" ref="queryBox">
                 <div class="title">下载简历</div>
                 <div class="select">请选择下载格式:</div>
@@ -397,6 +398,12 @@ export default {
         // 获取简历成功获取btn 显示的状态
         this.resetListDatas(this.nowResumeMsg)
         this.current.interviewInfo = this.nowResumeMsg.interviewSummary.interviewInfo
+        this.$nextTick(() => {
+          let box = this.$refs.iconList
+          if (box.offsetHeight > 22) {
+            box.style.height = (box.offsetHeight - 8) + 'px'
+          }
+        })
       }).catch(() => {
         this.getResumeLoading = false
       })
@@ -520,6 +527,8 @@ export default {
       }
     }
   },
+  created () {
+  },
   watch: {
     visible (value) {
       if (value) {
@@ -578,7 +587,7 @@ export default {
   background: #fff;
   height: calc(100vh - 60px - 60px);
   position: relative;
-  padding-top: 8px;
+  padding-top: 24px;
   box-sizing: border-box;
   .printing{
     display: flex;
@@ -650,17 +659,14 @@ export default {
         .onload{
           width:18px;
           height:18px;
-          margin: 0 16px 0px 35px;
           position: relative;
           cursor: pointer;
-          &::after{
-            content: '';
-            position: absolute;
-            background: #E8E9EB;
-            width: 1px;
-            height: 16px;
-            right: -16px;
-          }
+        }
+        .line{
+          width: 1px;
+          height: 16px;
+          background: #E8E9EB;
+          margin: 0 14px;
         }
         .onloadselect{
           width:221px;
@@ -914,13 +920,12 @@ export default {
         border-radius:20px;
       }
       &::-webkit-scrollbar-thumb {
-        background:#DDE1E0;
+        background:#EBEBEB;
         -webkit-border-radius: 20px;
         -moz-border-radius: 20px;
         border-radius:20px;
       }
       .base {
-        padding-bottom: 20px;
         padding-left: 50px;
         .message {
           display: flex;
@@ -1135,7 +1140,7 @@ export default {
 
   .intention {
     text-align: left;
-    padding-top: 28px;
+    padding-top: 48px;
     padding-bottom: 38px;
     display: flex;
     justify-content: flex-start;
