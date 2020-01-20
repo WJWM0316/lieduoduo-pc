@@ -300,7 +300,7 @@ export default {
 .recruiter-reject {
   text-align: left;
   line-height: normal;
-  margin: 20px 0 24px;
+  margin: 8px 0 24px;
   .b-tag {
     padding: 6px 25px;
     background: $bg-color-1;
@@ -309,12 +309,12 @@ export default {
     border-radius: 4px;
     display: inline-block;
     vertical-align: middle;
-    margin-bottom: 12px;
+    margin-top: 12px;
     margin-right: 13px;
   }
   p {
     color: $title-color-2;
-    margin: 10px 0 ;
+    margin: 24px 0 12px;
   }
   .reject-desc {
     color: $title-color-1;
