@@ -13,7 +13,7 @@
               </div>
               <div class="salary">{{infos.emolumentMin}}~{{infos.emolumentMax}}K<template v-if="infos.annualSalary > 12">·{{infos.annualSalary}}<span class="unit">薪</span></template></div>
               <div class="infos">
-                <span class="info-item"><i class="icon iconfont icon-dizhi"></i>{{infos.city}} {{infos.district}}</span>
+                <span class="info-item" v-if="infos.city || infos.district"><i class="icon iconfont icon-dizhi"></i>{{infos.city}} {{infos.district}}</span>
                 <span class="info-item"><i class="icon iconfont icon-zhiwei"></i>{{infos.workExperienceName}}</span>
                 <span class="info-item"><i class="icon iconfont icon-jiaoyu"></i>{{infos.educationName}}</span>
               </div>
@@ -133,7 +133,7 @@
               <div class="name">{{infos.companyInfo.companyShortname}}</div>
             </div>
             <div class="infos">
-              <p class="info-item"><i class="icon iconfont icon-rongzi"></i>{{infos.companyInfo.financingInfo}}</p>
+              <p class="info-item" v-if="infos.companyInfo.financingInfo"><i class="icon iconfont icon-rongzi"></i>{{infos.companyInfo.financingInfo}}</p>
               <p class="info-item"><i class="icon iconfont icon-renshu1"></i>{{infos.companyInfo.employeesInfo}}</p>
               <p class="info-item"><i class="icon iconfont icon-gongsileixing"></i>{{infos.companyInfo.industry}}</p>
             </div>

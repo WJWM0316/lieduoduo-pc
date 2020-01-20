@@ -3,7 +3,7 @@
 <div class="putIn">
   <header id="putInHeader" >
     <section>
-      <img class="left_logo" :src=" cdnPath + 'logo_lieduodou.png'" @click="toIndex"/>
+      <img class="left_logo" :src=" cdnPath + 'logo_lieduodou.png?a=1'" @click="toIndex"/>
       <div class="headerBtn">
         <span class="btn_blo" @click="openMask('login')">高薪职位</span>
         <el-button type="primary" size="small" class="btn_blo2" @click="setAnimate">求职者登录</el-button>
@@ -423,7 +423,7 @@ export default class CourseList extends Vue {
       getCodeApi({
         mobile: this.form.mobile
       }).then(res => {
-        
+
       }).catch(() => {
       })
     }

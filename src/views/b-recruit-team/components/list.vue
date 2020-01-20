@@ -44,7 +44,7 @@
           </div>
         </div>
       </template>
-      <no-found class="no-apply-lists" v-if="!lists.length && !getLoading" :image-url="nofoundUrl" tip-text="招聘官暂未发布/开放职位" max-width="160" />
+      <no-found class="no-apply-lists" v-if="!lists.length && !getLoading" tip-text="招聘官暂未发布/开放职位" max-width="160" />
     </div>
   </el-dialog>
 </template>

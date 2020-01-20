@@ -9,7 +9,8 @@
           </div>
           <div class="layoutInformation-text">
             <p class="layoutInformation-text-top">
-              {{ port === 'CPort' ? item.recruiterInfo.name : item.jobhunterInfo.name }}<span>{{ port === 'CPort' ? item.recruiterInfo.companyInfo.companyShortname : item.jobhunterInfo.lastCompany === '' ? '暂无工作经历' : item.jobhunterInfo.lastCompany  }}</span>
+              <span class="layoutInformation-text-top-name">{{ port === 'CPort' ? item.recruiterInfo.name : item.jobhunterInfo.name }}</span>
+              <span class="layoutInformation-text-top-companyShortname">{{ port === 'CPort' ? item.recruiterInfo.companyInfo.companyShortname : item.jobhunterInfo.lastCompany === '' ? '暂无工作经历' : item.jobhunterInfo.lastCompany  }}</span>
             </p>
             <p v-if="port === 'CPort'" class="layoutInformation-text-bottom">正在和你沟通【<span>{{ item.recruiterInfo.position }}</span>】职位</p>
             <p v-if="port === 'BPort' && item.positionInfo && item.positionInfo.positionName" class="layoutInformation-text-bottom">正在和你沟通【<span>{{ item.positionInfo.positionName }}</span>】职位</p>
@@ -146,16 +147,21 @@ export default {
       line-height: 14px;
       vertical-align: middle;
       span{
-        font-size: 12px;
-        display: inline-block;
-        margin-left: 6px;
-        color: $font-color-9;
+        text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
-        text-overflow: ellipsis;
+        display: inline-block;
         vertical-align: middle;
-        width: 100px;
         line-height: 14px;
+      }
+      .layoutInformation-text-top-name{
+        max-width: 110px;
+      }
+      .layoutInformation-text-top-companyShortname{
+        margin-left: 6px;
+        width: 130px;
+        color: $font-color-9;
+        font-size: 12px;
       }
     }
     .layoutInformation-text-bottom{
