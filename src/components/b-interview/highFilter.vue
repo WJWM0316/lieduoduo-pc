@@ -139,7 +139,7 @@ export default {
   }
 }
 .filter-wrapper {
-  padding: 13px;
+  padding: 18px 28px;
   .filter-title {
     font-size: 14px;
     font-weight: bold;
@@ -167,6 +167,7 @@ export default {
     color: $main-color-1;
   }
   span.active {
+    font-weight: bold;
     color: $main-color-1;
     background: rgba($bg-color-4, 0.1);
   }
@@ -174,7 +175,7 @@ export default {
 .filter-footer {
   text-align: right;
   margin-top: 36px;
-  margin-bottom: 7px;
+  margin-bottom: 2px;
 }
 </style>
 <style lang="scss">
