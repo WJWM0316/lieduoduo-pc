@@ -3,7 +3,8 @@
     <div class="position">
       <!-- 24小时职位 -->
       <template v-if="infos.isRapidly">
-        <el-button v-if="infos.rapidlyInfo.applied === 0 && infos.rapidlyInfo.seatsNum - (infos.rapidlyInfo.applyNum + infos.rapidlyInfo.natureApplyNum) > 0" :loading="loading" class="rapidlyPosition" type="primary" @click="todoAction('grabInterviewChat')" >马上抢</el-button>
+        <el-button v-if="infos.interviewSummary.isAdvisor === 0 &&
+         infos.rapidlyInfo.applied === 0 && infos.rapidlyInfo.seatsNum - (infos.rapidlyInfo.applyNum + infos.rapidlyInfo.natureApplyNum) > 0" :loading="loading" class="rapidlyPosition" type="primary" @click="todoAction('grabInterviewChat')" >马上抢</el-button>
         <div v-else>
           <el-button v-if="infos.chatInfo !== null" class="rapidlyPosition" :loading="loading" type="primary" @click="todoAction('goInterviewChat')" >继续聊</el-button>
           <el-button v-else :loading="loading" class="rapidlyPosition" type="primary" @click="todoAction('interviewChat')" >一键约聊</el-button>
@@ -116,7 +117,7 @@ export default {
             confirmButtonText: '知道了',
             showCancelButton: false
           }).then(() => {
-            this.showPopupType = 'grabInterviewChat' // 抢占成功弹窗以及传参
+            this.showPopupType = 'chat' // 约聊成功弹窗以及传参
             this.showPopup = true
             this.$emit('init')
           })
@@ -128,7 +129,7 @@ export default {
             confirmButtonText: '知道了',
             showCancelButton: false
           }).then(() => {
-            this.showPopupType = 'grabInterviewChat' // 抢占成功弹窗以及传参
+            this.showPopupType = 'chat' // 约聊成功弹窗以及传参
             this.showPopup = true
             this.$emit('init')
           })
@@ -174,4 +175,7 @@ export default {
     }
   }
 }
+.el-message-box{
+    padding-bottom: 2px !important;
+  }
 </style>
