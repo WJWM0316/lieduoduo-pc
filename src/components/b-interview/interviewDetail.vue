@@ -81,8 +81,10 @@
                   <span class="b-tag" :key="value">{{value}}</span>
                 </template>
               </div>
-              <p>补充说明</p>
-              <div class="reject-desc"> {{jobhunterInfo.interviewNotSuitComment.extraDesc || '未填写'}}</div>
+              <template v-if="jobhunterInfo.interviewNotSuitComment.extraDesc">
+                <p>补充说明</p>
+                <div class="reject-desc"> {{jobhunterInfo.interviewNotSuitComment.extraDesc || '未填写'}}</div>
+              </template>
             </template>
           </div>
           <!-- 到场 -->
@@ -339,7 +341,7 @@ export default {
   padding: 0 40px 20px;
   margin-top: 4px;
   .item{
-    line-height: 22px;
+    line-height: 20px;
     color:#333333;
     font-size:14px;
     display: flex;
@@ -361,7 +363,7 @@ export default {
       float: left;
       width:2px;
       height:12px;
-      margin: 5px 7px;
+      margin: 4px 7px;
       background: #E8E9EB;
     }
     .phone{
@@ -371,7 +373,7 @@ export default {
   }
   .detail{
     width: 100%;
-    margin-top: 36px;
+    margin: 36px 0 32px;
     text-align: center;
     .detailtitle{
       font-size:18px;
@@ -505,9 +507,9 @@ export default {
 }
 .status-reason {
   text-align: left;
-  margin-top: 73px;
+  margin-top: 60px;
   .status-reason-tag {
-    margin-top: 12px;
+    margin-top: 4px;
     span {
       border-radius: 4px;
       border: 1px solid $border-color-1;
@@ -516,7 +518,7 @@ export default {
       vertical-align: middle;
       background: $border-color-8;
       margin-right: 14px;
-      margin-bottom: 8px;
+      margin-top: 8px;
       color: $title-color-1;
     }
   }
