@@ -244,7 +244,6 @@ export default {
   height: 50px;
   display: flex;
   align-items: center;
-  overflow: hidden;
   .el-autocomplete,& /deep/ .el-input__inner{
     padding-left: 10px;
     height: 40px;
