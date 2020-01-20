@@ -243,7 +243,7 @@ export default {
   border-radius: 4px 4px 4px 4px;
   height: 50px;
   display: flex;
-  overflow: hidden;
+  align-items: center;
   .el-autocomplete,& /deep/ .el-input__inner{
     padding-left: 10px;
     height: 40px;
@@ -264,7 +264,7 @@ export default {
       margin-top: 16px;
     }
     & /deep/ .drop-down-header {
-      line-height: inherit;
+      // line-height: inherit;
       vertical-align: top;
     }
   }
@@ -272,7 +272,7 @@ export default {
     content: "";
     position: absolute;
     height: 20px;
-    top: 13px;
+    top: 15px;
     right: 0;
     width: 1px;
     background: $border-color-5;
@@ -280,6 +280,7 @@ export default {
   .el-autocomplete {
     width: 640px;
     display: inline-block;
+    vertical-align: middle;
   }
   & /deep/ .el-input__inner {
     box-sizing: border-box;
