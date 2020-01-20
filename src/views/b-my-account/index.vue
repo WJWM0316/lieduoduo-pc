@@ -357,7 +357,7 @@ export default {
   display: none;
 }
 .myaccount-popover{
-  padding: 24px 16px 16px 19px !important;
+  padding: 20px 16px 20px 19px !important;
   box-sizing: border-box;
   border: 0 !important;
 }
