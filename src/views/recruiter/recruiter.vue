@@ -65,7 +65,7 @@
       </ul>
 
       <div class="job_cont_none" v-if="!getLoading && jobList.length === 0">
-        <img class="hint_icon" src="../../assets/images/fly.png">
+        <img class="hint_icon" :src="imageUrl">
         <div class="none_hint">当前没有{{ navSelectName === '' ? '招聘中' : navSelectName }}的职位~</div>
         <el-button v-if="navSelectName === ''" class="null-produc-bnt" @click="todoAction('addJob')">发布职位</el-button>
       </div>
@@ -149,6 +149,7 @@ export default class CourseList extends Vue {
     totalPage: 0,
     total: 0
   };
+  imageUrl = process.env.VUE_APP_CDN_PATH + '/images/new_404_img.png'
   getLoading = false
   // close关闭，open 开放，审核通过，audit 审核中，fail 审核失败
   recruiterList = [
@@ -783,8 +784,7 @@ export default class CourseList extends Vue {
       margin-bottom: 24px;
     }
     .hint_icon {
-      width: 170px;
-      height: 120px;
+      width: 240px;
     }
     .null-produc-bnt{
       display: block;
