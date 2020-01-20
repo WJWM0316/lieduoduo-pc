@@ -993,5 +993,6 @@ export default {
 }
 .no-found-list.no-found {
   background: #fff;
+  box-shadow:0px 0px 30px 0px rgba(22,39,77,0.07);
 }
 </style>
