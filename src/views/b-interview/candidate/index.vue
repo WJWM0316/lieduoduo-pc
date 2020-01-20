@@ -608,10 +608,8 @@ export default {
   .high-filter {
     margin-left: auto;
   }
-  .b-header-button{
-    box-shadow:0px 0px 20px 0px rgba(22,39,77,0.07);
-  }
-  .b-header-group-button{
+  .b-header-button, .b-header-group-button{
+    border: none;
     box-shadow:0px 0px 20px 0px rgba(22,39,77,0.07);
   }
   .active {
