@@ -300,7 +300,7 @@ export default {
 .recruiter-reject {
   text-align: left;
   line-height: normal;
-  margin: 20px 0;
+  margin: 20px 0 24px;
   .b-tag {
     padding: 6px 25px;
     background: $bg-color-1;
@@ -373,7 +373,7 @@ export default {
   }
   .detail{
     width: 100%;
-    margin: 36px 0 32px;
+    margin: 34px 0 32px;
     text-align: center;
     .detailtitle{
       font-size:18px;
