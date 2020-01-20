@@ -81,22 +81,26 @@ export default {
   li{
     margin-top: 8px;
     line-height: 18px;
+    position: relative;
+    margin-left: 5px;
     span{
       background: #ffffff;
       width: 4px;
       height: 4px;
       display: inline-block;
-      margin-right: 5px;
-      line-height: 18px;
       border-radius: 50%;
       vertical-align: middle;
+      position: absolute;
+      left: -5px;
+      left: -9px;
+      top: 8px;
     }
   }
   img{
     width: 109px;
     height: 109px;
     margin-top: 15px;
-    margin-left: 9px;
+    margin-left: 5px;
   }
 }
 </style>
