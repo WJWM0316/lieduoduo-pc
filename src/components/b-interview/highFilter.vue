@@ -22,8 +22,8 @@
           </template>
         </div>
         <div class="filter-footer">
-          <el-button size="small" type="primary" @click="handleChange">确定</el-button>
-          <el-button size="small" @click="handleRecall">取消</el-button>
+          <el-button size="small" style="width: 88px" @click="handleRecall">取消</el-button>
+          <el-button size="small" style="width: 116px" type="primary" @click="handleChange">确定</el-button>
         </div>
       </div>
     </el-popover>
@@ -168,11 +168,14 @@ export default {
   }
   span.active {
     color: $main-color-1;
-    border-color: $border-color-2;
-    background: #fff;
+    background: rgba($bg-color-4, 0.1);
   }
 }
-
+.filter-footer {
+  text-align: right;
+  margin-top: 36px;
+  margin-bottom: 7px;
+}
 </style>
 <style lang="scss">
 

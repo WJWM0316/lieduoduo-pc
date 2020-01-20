@@ -243,6 +243,7 @@ export default {
   border-radius: 4px 4px 4px 4px;
   height: 50px;
   display: flex;
+  align-items: center;
   overflow: hidden;
   .el-autocomplete,& /deep/ .el-input__inner{
     padding-left: 10px;
@@ -280,6 +281,7 @@ export default {
   .el-autocomplete {
     width: 640px;
     display: inline-block;
+    vertical-align: middle;
   }
   & /deep/ .el-input__inner {
     box-sizing: border-box;
