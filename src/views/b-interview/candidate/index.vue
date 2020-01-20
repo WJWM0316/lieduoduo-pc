@@ -109,13 +109,12 @@
       <no-found class="no-apply-lists"
         v-if="!candidateList.length && !getLoading && len"
         :tip-text="'无筛选结果，可以扩大筛选范围哟~'"
-        max-width="160">
+        max-width="240">
       </no-found>
       <no-found class="no-apply-lists"
         v-if="!candidateList.length && !getLoading && !len"
-        :image-url="nofoundUrl"
         :tip-text="tipsText[this.params.navType]['text']"
-        max-width="160">
+        max-width="240">
         <!-- <el-button type="primary" style="width: 143px;margin-top: 24px;" @click="$router.push({name: 'recruiterIndex'})">分享职位</el-button> -->
         <el-button type="primary" style="width: 143px;margin-top: 24px;" @click="$router.push({name: 'recruiterIndex'})">发布/开放职位</el-button>
       </no-found>
@@ -123,9 +122,8 @@
       <template v-else>
       <no-found class="no-apply-lists"
         v-if="!candidateList.length && !getLoading"
-        :image-url="nofoundUrl"
         :tip-text="tipsText[this.params.navType]['text']"
-        max-width="160">
+        max-width="240">
         <!-- <el-button type="primary" style="width: 143px;margin-top: 24px;" @click="$router.push({name: 'recruiterIndex'})">分享职位</el-button> -->
         <el-button type="primary" style="width: 143px;margin-top: 24px;" @click="$router.push({name: 'recruiterIndex'})">发布/开放职位</el-button>
       </no-found>

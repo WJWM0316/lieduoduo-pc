@@ -1159,7 +1159,7 @@ export default {
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
-          width: 460px;
+          max-width: 460px;
           float: left;
           color: #66666E;
         }
@@ -1176,8 +1176,8 @@ export default {
           font-size: 14px;
           color: #FF9E40;
           font-weight: 700;
-          margin-left: 30px;
-          float: right;
+          margin-left: 15px;
+          float: left;
         }
       }
     }
