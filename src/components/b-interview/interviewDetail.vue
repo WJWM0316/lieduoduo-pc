@@ -160,7 +160,7 @@
       :interviewId="interviewId"
       :jobuid="jobuid"
       :visible.sync="resondiggle"
-      @finish="handleClose"></select-reson>
+      @finish="handleClose('isFinish')"></select-reson>
   </div>
 </template>
 <script>
@@ -277,7 +277,11 @@ export default {
         this.resondiggle = true
       })
     },
-    handleClose () {
+    handleClose (type) {
+      // 选择原因成功也需要刷新页面
+      if (type === 'isFinish') {
+        this.$emit('finish')
+      }
       this.dialogStatus = false
       this.$emit('update:visible', false)
     }
