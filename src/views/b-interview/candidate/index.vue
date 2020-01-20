@@ -4,20 +4,20 @@
     <!-- header -->
     <div class="candidate-header">
       <div class="b-header-button" style="margin-right: 24px;" :class="{'active':  params.navType==='hotRecommendation'}" @click="handleSearch('hotRecommendation', 'navType')">
-        <i class="iconfont icon-remen" style="padding-right: 6px"></i>热门推荐<span v-if="navNum.RecommendationCount !== 0">({{navNum.RecommendationCount || 0}})</span>
+        <i class="iconfont icon-remen" style="padding-right: 6px"></i>热门推荐<span style="margin-left: 4px;" v-if="navNum.RecommendationCount !== 0">({{navNum.RecommendationCount || 0}})</span>
       </div>
       <div class="b-header-group-button">
         <div class="b-header-button" :class="{'active': params.navType==='searchBrowseMyself'}" @click="handleSearch('searchBrowseMyself', 'navType')">
-          <i class="iconfont icon-zhengyan"></i>看过我的({{navNum.browseMyselfCount || 0}})
+          <i class="iconfont icon-zhengyan"></i>看过我的<span style="margin-left: 4px;">({{navNum.browseMyselfCount || 0}})</span>
           <span :class="{'is-red-dot' : visitedMyselfNum > 0}"></span>
         </div>
         <div class="b-header-button" :class="{'active':  params.navType==='searchCollect'}" @click="handleSearch('searchCollect', 'navType')">
-          <i class="iconfont icon-ganxingqu-" style="padding-right: 6px"></i>对我感兴趣({{navNum.collectMyselfCount || 0}})
+          <i class="iconfont icon-ganxingqu-" style="padding-right: 6px"></i>对我感兴趣<span style="margin-left: 4px;">({{navNum.collectMyselfCount || 0}})</span>
           <span :class="{'is-red-dot' : interestedMyselfNum > 0}"></span>
         </div>
       </div>
       <div class="b-header-button" style="margin-left: 24px;" :class="{'active':  params.navType==='searchMyCollect'}" @click="handleSearch('searchMyCollect', 'navType')">
-        <i class="iconfont icon-weibiaoti--" style="padding-right: 6px"></i>我感兴趣的({{navNum.myCollectCount || 0}})
+        <i class="iconfont icon-weibiaoti--" style="padding-right: 6px"></i>我感兴趣的<span style="margin-left: 4px;">({{navNum.myCollectCount || 0}})</span>
       </div>
       <hot-filter
       v-if="params.navType==='hotRecommendation'"
@@ -640,9 +640,10 @@ export default {
     height: 196px;
     background: rgba(255,255,255,1);
     border-radius: 8px;
-    border: 1px solid #DDE1E0;
+    // border: 1px solid #DDE1E0;
     margin-bottom: 15px;
     box-sizing: border-box;
+    box-shadow:0px 0px 30px 0px rgba(22,39,77,0.07);
     cursor: pointer;
     &:hover{
       box-shadow:0px 10px 20px 0px rgba(0,0,0,0.1);
@@ -651,7 +652,7 @@ export default {
       height: 48px;
       line-height: 48px;
       border-bottom: 1px solid #DDE1E0;
-      padding: 0 32px 0px 24px;
+      margin: 0 32px;
       font-size:12px;
       font-weight:400;
       color:#92929B;
