@@ -38,7 +38,6 @@
                   <div :class="['basemsg', nowResumeMsg.signature ? '' : 'basecenter']">
                     <span class="realNameglass" v-if="nowResumeMsg.glass"><img src="@/assets/images/glass.png" alt=""/></span>
                     <span class="realName" v-else>{{nowResumeMsg.name}}</span>
-                    <span class="realName">{{nowResumeMsg.name}}</span>
                     <div class="lebalList">
                       <div class="lebalItem">
                         <i class="icon iconfont icon-zhiwei" style></i>
