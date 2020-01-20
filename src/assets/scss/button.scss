@@ -216,6 +216,7 @@ button, button:hover{
   }
   .b-header-button.active {
     color: $title-color-1;
+    font-weight: bold;
   }
   .b-header-button.active::before {
     width: 100%;

@@ -98,6 +98,8 @@ export default {
     font-weight: normal;
     margin-right: 11px;
     font-size: 20px;
+    align-self: flex-start;
+    line-height: 24px;
     color: $bg-color-4;
   }
   i, span {
