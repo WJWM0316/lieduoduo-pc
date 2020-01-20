@@ -9,10 +9,6 @@
     <template v-if="[31].includes(infos.status) && infos.arrangementInfo">
       <ul class="ul-box">
         <li class="item-li">
-          <i class="iconfont" :class="infos.sourceType === 1 ? 'icon-yuemian' : 'icon-dianhua'"></i>
-          <div class="ul-li-text-box">{{ infos.sourceTypeDesc }}</div>
-        </li>
-        <li class="item-li">
           <i class="iconfont icon-mianshiguan"></i>
           <div class="ul-li-text-box">
             <div class="color4 user-name">{{infos.arrangementInfo.realname}}</div>
@@ -28,6 +24,10 @@
               {{infos.positionName}}
             </router-link>
           </div>
+        </li>
+        <li class="item-li">
+          <i class="iconfont" :class="infos.sourceType === 1 ? 'icon-mianshiguanli' : 'icon-dianhua'"></i>
+          <div class="ul-li-text-box">{{ infos.sourceTypeDesc }}</div>
         </li>
         <li class="item-li" v-if="infos.sourceType === 1">
           <i class="iconfont icon-didian"></i>
@@ -60,10 +60,6 @@
     <template v-if="[32].includes(infos.status) && infos.arrangementInfo">
       <ul class="ul-box">
         <li class="item-li">
-          <i class="iconfont" :class="infos.sourceType === 1 ? 'icon-yuemian' : 'icon-dianhua'"></i>
-          <div class="ul-li-text-box">{{ infos.sourceTypeDesc }}</div>
-        </li>
-        <li class="item-li">
           <i class="iconfont icon-mianshiguan"></i>
           <div class="ul-li-text-box">
             <div class="color1 user-name">{{infos.arrangementInfo.realname}}</div>
@@ -81,6 +77,10 @@
               </router-link>
             </div>
           </div>
+        </li>
+        <li class="item-li">
+          <i class="iconfont" :class="infos.sourceType === 1 ? 'icon-mianshiguanli' : 'icon-dianhua'"></i>
+          <div class="ul-li-text-box">{{ infos.sourceTypeDesc }}</div>
         </li>
         <li class="item-li" v-if="infos.sourceType === 1">
           <i class="iconfont icon-didian"></i>
@@ -98,10 +98,6 @@
     <template v-if="[41].includes(infos.status) && infos.arrangementInfo">
       <ul class="ul-box">
         <li class="item-li">
-          <i class="iconfont" :class="infos.sourceType === 1 ? 'icon-yuemian' : 'icon-dianhua'"></i>
-          <div class="ul-li-text-box">{{ infos.sourceTypeDesc }}</div>
-        </li>
-        <li class="item-li">
           <i class="iconfont icon-mianshiguan"></i>
           <div class="ul-li-text-box">
             <div class="color1 user-name">{{infos.arrangementInfo.realname}}</div>
@@ -119,6 +115,10 @@
               </router-link>
             </div>
           </div>
+        </li>
+        <li class="item-li">
+          <i class="iconfont" :class="infos.sourceType === 1 ? 'icon-mianshiguanli' : 'icon-dianhua'"></i>
+          <div class="ul-li-text-box">{{ infos.sourceTypeDesc }}</div>
         </li>
         <li class="item-li" v-if="infos.sourceType === 1">
           <i class="iconfont icon-didian"></i>
@@ -152,10 +152,6 @@
     <template v-if="[51, 58, 60].includes(infos.status) && infos.arrangementInfo">
       <ul class="ul-box">
         <li class="item-li">
-          <i class="iconfont" :class="infos.sourceType === 1 ? 'icon-yuemian' : 'icon-dianhua'"></i>
-          <div class="ul-li-text-box">{{ infos.sourceTypeDesc }}</div>
-        </li>
-        <li class="item-li">
           <i class="iconfont icon-mianshiguan"></i>
           <div class="ul-li-text-box">
             <div class="color1 user-name">{{infos.arrangementInfo.realname}}</div>
@@ -167,6 +163,10 @@
           <div class="ul-li-text-box">
             <div class="color1 position-name">{{infos.positionName}}</div>
           </div>
+        </li>
+        <li class="item-li">
+          <i class="iconfont" :class="infos.sourceType === 1 ? 'icon-mianshiguanli' : 'icon-dianhua'"></i>
+          <div class="ul-li-text-box">{{ infos.sourceTypeDesc }}</div>
         </li>
         <li class="item-li" v-if="infos.sourceType === 1">
           <i class="iconfont icon-didian"></i>
@@ -182,10 +182,6 @@
     </template>
     <template v-if="[52].includes(infos.status) && infos.arrangementInfo">
       <ul class="ul-box">
-        <li class="item-li">
-          <i class="iconfont" :class="infos.sourceType === 1 ? 'icon-yuemian' : 'icon-dianhua'"></i>
-          <div class="ul-li-text-box">{{ infos.sourceTypeDesc }}</div>
-        </li>
         <li class="item-li">
           <i class="iconfont icon-mianshiguan"></i>
           <div class="ul-li-text-box">
@@ -204,6 +200,10 @@
               </router-link>
             </div>
           </div>
+        </li>
+        <li class="item-li">
+          <i class="iconfont" :class="infos.sourceType === 1 ? 'icon-mianshiguanli' : 'icon-dianhua'"></i>
+          <div class="ul-li-text-box">{{ infos.sourceTypeDesc }}</div>
         </li>
         <li class="item-li" v-if="infos.sourceType === 1">
           <i class="iconfont icon-didian"></i>
@@ -377,12 +377,14 @@ export default {
     vertical-align: top;
     position: relative;
     top: 1px;
+    width: 12px;
   }
   .ul-li-text-box{
     display: inline-block;
     vertical-align: middle;
     padding-left: 18px;
     max-width: calc(100% - 32px);
+    color: $font-color-3;
   }
   .user-name {
     display: inline-block;
@@ -445,6 +447,7 @@ export default {
   }
   .el-dialog__header{
     padding: 32px 40px 14px 40px;
+    text-align: left;
   }
   .el-dialog__body{
     padding: 0 !important;
