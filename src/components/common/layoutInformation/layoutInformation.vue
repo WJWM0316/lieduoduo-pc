@@ -17,7 +17,7 @@
             <p v-if="port === 'BPort' && item.positionInfo && !item.positionInfo.positionName" class="layoutInformation-text-bottom">正与你直接沟通中</p>
           </div>
         </div>
-        <p v-if="meta.total > 5" class="layoutInformation-communication">{{ '还有' + (meta.total - 5) + '人正在与你沟通中' }} <i class="iconfont icon-right"></i></p>
+        <!-- <p v-if="meta.total > 5" class="layoutInformation-communication">{{ '还有' + (meta.total - 5) + '人正在与你沟通中' }} <i class="iconfont icon-right"></i></p> -->
       </div>
       <div class="layoutInformation-botton" @click="showPopup = true">
         下载猎多多APP，查看约聊消息
@@ -192,6 +192,7 @@ export default {
   text-align: center;
   line-height: 46px;
   cursor: pointer;
+  margin-top: 4px;
 }
 </style>
 <style lang="scss">

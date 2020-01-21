@@ -16,6 +16,7 @@
     <ul class="bottom">
       <li class="back" @click="scroll" ref="backTop" v-show="showScrollTopBtn">
         <i class="iconfont icon-arrow-top"></i>
+        <p class="describe describe3">顶部</p>
       </li>
       <li v-for="(item, index) in asideBar.bottomNav" :key="index" class="li-item2">
         <el-popover
@@ -75,7 +76,7 @@ export default {
       let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
       this.showScrollTopBtn = scrollTop > 200
     },
-    routeJump(item) {
+    routeJump (item) {
       if (this.isLogin) {
         let routeData = this.$router.resolve({
           name: item.routeName,
@@ -89,7 +90,7 @@ export default {
             type: 'msgLogin'
           }
         })
-      }      
+      }
     }
   },
   mounted () {
@@ -112,12 +113,12 @@ export default {
   transition: .2s width;
   box-shadow:0px 0px 20px 0px rgba(22,39,77,0.07);
   border-radius:8px 0px 0px 8px;
-  min-height: 435px;
+  min-height: 474px;
   &:hover{
   	width:64px;
   	.describe {
       opacity: 1;
-      display: block
+      display: block;
     }
   }
   .top{
@@ -161,19 +162,22 @@ export default {
     font-size: 12px;
     color: #9fa3b0;
     text-align: center;
-    margin-bottom: 26px;
+    margin-bottom: 24px;
   }
   .describe {
     opacity: 0;
     transition: .2s opacity;
     padding-top: 4px;
-    color: #99999B;
+    color: $font-color-9;
     line-height: 14px;
   }
   .describe2 {
     position: absolute;
     width: 100%;
     text-align: center
+  }
+  .describe3{
+    font-size: 12px !important;
   }
   li{
     display: block;
@@ -210,7 +214,7 @@ export default {
     text-align: center;
     cursor: pointer;
     font-size: 12px;
-    margin-bottom: 15px;
+    margin-bottom: 24px;
   }
 }
 .qr-box-sidebar{
