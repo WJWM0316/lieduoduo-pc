@@ -39,9 +39,9 @@
               :offset="10"
               width="372">
               <p class="duoduo-popover-title">多多币说明</p>
-              <p class="duoduo-popover-text"><span>1、多多币是什么？</span><br/>
+              <p class="duoduo-popover-text"><span>1.多多币是什么？</span><br/>
                 多多币是猎多多平台专属的虚拟货币，用户需要充值获取，目前兑换比例为1rmb=1多多币。</p>
-                <p class="duoduo-popover-text" style="margin-top: 12px;"><span>2、多多币如何使用？</span><br/>
+                <p class="duoduo-popover-text" style="margin-top: 12px;"><span>2.多多币如何使用？</span><br/>
                   购买后，多多币可用于约聊候选人，或使用顾问服务邀请候选人进行约面，顾问会介入为您提供相关约面服务。</p>
               <img slot="reference" class="duoduo-popover-questionMark" src="../../assets/images/questionMark.png"/>
             </el-popover>
@@ -315,8 +315,10 @@ export default {
   font-size: 12px;
   font-weight: 400;
   line-height: 18px;
+  margin-left: 10px;
   span{
     color: $font-color-3;
+    margin-left: -10px;
   }
 }
 </style>
@@ -357,9 +359,10 @@ export default {
   display: none;
 }
 .myaccount-popover{
-  padding: 20px 16px 20px 19px !important;
+  padding: 20px !important;
   box-sizing: border-box;
   border: 0 !important;
+  border-radius: 8px !important;
 }
 .popper__arrow{
   border: 0 !important;

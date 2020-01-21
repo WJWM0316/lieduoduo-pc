@@ -844,6 +844,7 @@ export default {
       }
     }
     .bloCont {
+      width: 100%;
       display: flex;
       flex-direction: row;
       height: 148px;

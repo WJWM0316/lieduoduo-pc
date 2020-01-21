@@ -244,7 +244,6 @@ export default {
   height: 50px;
   display: flex;
   align-items: center;
-  overflow: hidden;
   .el-autocomplete,& /deep/ .el-input__inner{
     padding-left: 10px;
     height: 40px;
@@ -265,7 +264,7 @@ export default {
       margin-top: 16px;
     }
     & /deep/ .drop-down-header {
-      line-height: inherit;
+      // line-height: inherit;
       vertical-align: top;
     }
   }
@@ -273,7 +272,7 @@ export default {
     content: "";
     position: absolute;
     height: 20px;
-    top: 13px;
+    top: 15px;
     right: 0;
     width: 1px;
     background: $border-color-5;
