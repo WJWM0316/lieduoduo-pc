@@ -357,8 +357,11 @@ export default {
           // 清空高级筛选
           if (this.$refs.highFilter) this.$refs.highFilter.handleClear()
           Object.assign(this.params, {
-            position_type_id: ['all']
+            position_type_id: ['all'],
+            created_start_time: '',
+            created_end_time: ''
           })
+          this.times = []
         }
         this.params.status = 0
       }
@@ -456,9 +459,8 @@ export default {
         ...this.params,
         position_type_id: this.params.position_type_id.join(',')
       }
-      if (params.time) {
-        params.position_label_id = params.position_type_id
-      } else {
+      if (!params.time) {
+        params.position_label_id = params.position_type_id === 'all' ? '' : params.position_type_id
         if (params.created_start_time) params.start = parseInt(new Date(params.created_start_time).getTime() / 1000)
         if (params.created_end_time) params.end = parseInt(new Date(params.created_end_time).getTime() / 1000)
       }
