@@ -559,9 +559,9 @@ export default {
         }
 
         // 是否有展开简历详情弹窗
-        if (this.resumeDialogStatus && this.currentItem.vkey === item.vkey) {
-          this.currentItem = item
-        }
+        // if (this.resumeDialogStatus && this.currentItem.vkey === item.vkey) {
+        //   this.currentItem = item
+        // }
       })
       return data
     },
