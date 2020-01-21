@@ -3,26 +3,47 @@
     <div class="position">
       <!-- 24小时职位 -->
       <template v-if="infos.isRapidly">
-        <el-button v-if="
-        (infos.interviewSummary.interviewInfo === null ||
-        infos.interviewSummary.interviewInfo.status === 11) &&
-        infos.interviewSummary.isAdvisor === 0 &&
-         infos.rapidlyInfo.applied === 0 &&
-         infos.rapidlyInfo.seatsNum - (infos.rapidlyInfo.applyNum + infos.rapidlyInfo.natureApplyNum) > 0"
-         :loading="loading" class="rapidlyPosition" type="primary" @click="todoAction('grabInterviewChat')" >马上抢</el-button>
-        <div v-else>
-          <el-button v-if="infos.chatInfo !== null" class="rapidlyPosition" :loading="loading" type="primary" @click="todoAction('goInterviewChat')" >继续聊</el-button>
+
+        <!-- 是否已经登录, 在未登录状态infos.interviewSummary会为null -->
+        <template v-if="!hasLogin">
+          <el-button :loading="loading" class="rapidlyPosition" type="primary" @click="todoAction('grabInterviewChat')">马上抢</el-button>
+        </template>
+
+        <!-- 有无约聊关系 -->
+        <template v-else-if="infos.chatInfo === null">
+          <!-- 有没有抢占过当前职位,     并且没有席位则一键约聊,    没有约面状态且是c约面b -->
+          <el-button v-if="infos.rapidlyInfo.applied === 0 &&
+          infos.rapidlyInfo.seatsNum - (infos.rapidlyInfo.applyNum + infos.rapidlyInfo.natureApplyNum) > 0 &&
+          (infos.interviewSummary.interviewInfo === null ||
+          infos.interviewSummary.interviewInfo.status === 11)"
+           :loading="loading" class="rapidlyPosition" type="primary" @click="todoAction('grabInterviewChat')">马上抢</el-button>
+
           <el-button v-else :loading="loading" class="rapidlyPosition" type="primary" @click="todoAction('interviewChat')" >一键约聊</el-button>
-        </div>
+        </template>
+
+        <template v-else>
+          <!-- 是不是b发起的约聊，如果是则继续聊，否则马上抢   并且没有席位则继续聊,    没有约面状态且是c约面b  -->
+          <el-button v-if="infos.rapidlyInfo.applied === 0 &&
+          infos.chatInfo.status !== 501 && infos.chatInfo.status !== 701 &&
+          infos.rapidlyInfo.seatsNum - (infos.rapidlyInfo.applyNum + infos.rapidlyInfo.natureApplyNum) > 0 &&
+          (infos.interviewSummary.interviewInfo === null ||
+          infos.interviewSummary.interviewInfo.status === 11)"
+           :loading="loading" class="rapidlyPosition" type="primary" @click="todoAction('grabInterviewChat')">马上抢</el-button>
+
+          <el-button v-else :loading="loading" class="rapidlyPosition" type="primary" @click="todoAction('goInterviewChat')" >继续聊</el-button>
+        </template>
       </template>
+
       <!-- 普通职位 -->
       <template v-else>
+
         <el-button :loading="loading" v-if="infos.chatInfo !== null &&
           (infos.chatInfo.status === 101 ||
           infos.chatInfo.status === 301 ||
           infos.chatInfo.status === 501 ||
           infos.chatInfo.status === 701)"
          type="primary" @click="todoAction('goChat')">继续聊</el-button>
+
         <el-button :loading="loading" v-else type="primary" @click="todoAction('chat')">一键约聊</el-button>
       </template>
     </div>
