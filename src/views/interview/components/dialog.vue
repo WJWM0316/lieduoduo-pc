@@ -27,7 +27,7 @@
         </li>
         <li class="item-li">
           <i class="iconfont" :class="infos.sourceType === 1 ? 'icon-mianshiguanli' : 'icon-dianhua'"></i>
-          <div class="ul-li-text-box">{{ infos.sourceTypeDesc }}</div>
+          <div class="color3 ul-li-text-box">{{ infos.sourceTypeDesc }}</div>
         </li>
         <li class="item-li" v-if="infos.sourceType === 1">
           <i class="iconfont icon-didian"></i>
