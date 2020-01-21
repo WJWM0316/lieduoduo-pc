@@ -139,13 +139,14 @@ export default {
   .explain{
     padding: 0 40px;
     margin-top: 14px;
+    margin-bottom: 18px;
     .explaintitle{
       color:#66666E;
       margin-bottom: 12px;
       font-weight: bold;
     }
     .text{
-      width:328px;
+      width:322px;
       height:78px;
       padding: 10px 14px;
       background:rgba(255,255,255,1);
