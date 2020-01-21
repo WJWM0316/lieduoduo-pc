@@ -355,7 +355,7 @@ export default {
         if (init) {
           this.clearListRedDot()
           // 清空高级筛选
-          if (this.$refs.highFilter) this.$refs.highFilter.handleClear()
+          if (this.$refs.highFilter) this.$refs.highFilter.handleClear('parent')
           Object.assign(this.params, {
             position_type_id: ['all'],
             created_start_time: '',

@@ -65,7 +65,7 @@ export default {
     hanldeShow () {
       this.tempValue = JSON.stringify(this.value || [])
     },
-    handleClear () {
+    handleClear (type) {
       if (this.len) {
         this.poperStatus = false
         this.lists.forEach(val => {
@@ -73,11 +73,11 @@ export default {
         })
         if (this.allValue[0] === 'all') {
           this.$emit('input', ['all'])
-          this.$emit('change', ['all'])
+          if (type !== 'parent') this.$emit('change', ['all'])
           this.lists[0].active = true
         } else {
           this.$emit('input', [])
-          this.$emit('change', [])
+          if (type !== 'parent') this.$emit('change', [])
         }
         this.tempValue = JSON.stringify(this.value || [])
       } else {
