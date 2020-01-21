@@ -23,7 +23,8 @@
 
         <template v-else>
           <!-- 是不是b发起的约聊，如果是则继续聊，否则马上抢   并且没有席位则继续聊,    没有约面状态且是c约面b  -->
-          <el-button v-if="infos.chatInfo.status !== 501 && infos.chatInfo.status !== 701 &&
+          <el-button v-if="infos.rapidlyInfo.applied === 0 &&
+          infos.chatInfo.status !== 501 && infos.chatInfo.status !== 701 &&
           infos.rapidlyInfo.seatsNum - (infos.rapidlyInfo.applyNum + infos.rapidlyInfo.natureApplyNum) > 0 &&
           (infos.interviewSummary === null ||
           infos.interviewSummary.interviewInfo.status === 11)"
