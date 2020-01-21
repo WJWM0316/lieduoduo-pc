@@ -278,7 +278,7 @@
     <!-- 查看约聊不合适原因 -->
     <chat-reson :list="resonList.reason" :explain="resonList.extraDesc" :visible.sync="chatResonDialog" />
     <!-- 约面申请 -->
-    <apply-interview :visible.sync="applyInterviewDialog" :position="current"  @finish="handleSetResume"/>
+    <apply-interview :visible.sync="applyInterviewDialog" :interview-id="interviewId"  @finish="handleSetResume"/>
     <!-- 下载app引导弹窗 -->
     <download-app :visible.sync="downloadAppDialog" />
   </div>
@@ -344,6 +344,16 @@ export default {
       jobuid: 0,
       positionId: 0,
       resonList: { reason: [], extraDesc: '' } // 不合适
+    }
+  },
+  computed: {
+    // 面试详情Id
+    interviewId () {
+      if (this.nowResumeMsg.interviewSummary) {
+        return this.nowResumeMsg.interviewSummary.interviewId
+      } else {
+        return 0
+      }
     }
   },
   methods: {
@@ -526,8 +536,6 @@ export default {
         }
       }
     }
-  },
-  created () {
   },
   watch: {
     visible (value) {

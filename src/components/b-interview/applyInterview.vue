@@ -6,11 +6,11 @@
     width="432px"
     title="面试申请"
     @close="handleClose">
-    <div class="apply-interview-warpper">
+    <div class="apply-interview-warpper" v-loading="getLoading">
       <div class="apply-list">
         <i class="iconfont icon-zhiwei1"></i>
-        <span class="position-name">{{position.positionName}}</span>
-        <span>{{position.emolument}}</span>
+        <span class="position-name">{{interviewInfo.positionName}}</span>
+        <span>{{interviewInfo.emolument}}</span>
       </div>
       <div class="apply-list">
         <i class="iconfont icon-mianshiguanli" />
@@ -24,17 +24,17 @@
   </el-dialog>
 </template>
 <script>
+import { getDetailApi } from 'API/candidate'
 export default {
   props: {
     visible: Boolean,
-    position: {
-      type: Object,
-      default: () => ({})
-    }
+    interviewId: Number
   },
   data () {
     return {
-      dialogStatus: false
+      dialogStatus: false,
+      getLoading: false,
+      interviewInfo: {}
     }
   },
   methods: {
@@ -42,6 +42,16 @@ export default {
       this.$emit('finish', { type })
       this.dialogStatus = false
       this.handleClose()
+    },
+    // 获取面试详情信息
+    getDetails () {
+      this.getLoading = true
+      getDetailApi({ interviewId: this.interviewId }).then(({ data }) => {
+        this.interviewInfo = data.data || {}
+        this.getLoading = false
+      }).catch(() => {
+        this.getLoading = false
+      })
     },
     handleClose () {
       this.$emit('update:visible', false)
@@ -51,6 +61,9 @@ export default {
     visible (value) {
       if (value) {
         this.dialogStatus = true
+        if (this.interviewInfo.interviewId !== this.interviewId) {
+          this.getDetails()
+        }
       }
     }
   }
