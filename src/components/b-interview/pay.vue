@@ -13,7 +13,7 @@
           <div v-for="(item, index) in currentText.listTips" :key="index">{{item}}</div>
         </div>
         <div class="pay-tips">
-          <p>* 邀约后，平台顾问将1V1跟进候选人处理&面试情况</p>
+          <p v-if="type === 'interview'">* 邀约后，平台顾问将1V1跟进候选人处理&面试情况</p>
           <p>* 候选人在7天内未接受邀请时，多多币将原路退回到你的账户</p>
           <p>* 更多细则，欢迎联系客服 <span>400-065-5788</span></p>
         </div>

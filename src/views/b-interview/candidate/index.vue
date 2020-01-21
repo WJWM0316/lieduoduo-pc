@@ -799,9 +799,9 @@ export default {
           box-sizing: border-box;
           &::after {
             content: '';
-            width: 1px;
+            width: 0px;
             height: 100px;
-            background: #E8E9EB;
+            border-left: 1px dashed #DDE1E0;
             position: absolute;
             left: 0;
             top: 10px;

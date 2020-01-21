@@ -293,7 +293,8 @@ export default {
         } else {
           this.arrangementInfo.positionId = res.data.data.positionId
         }
-        if (this.arrangementInfo.addressId) {
+        // 如果有地址信息就填写
+        if (res.data.data.addressId) {
           this.arrangementInfo.addressId = res.data.data.addressId
           this.arrangementInfo.addressName = res.data.data.address
         } else {
