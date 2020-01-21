@@ -58,14 +58,14 @@ export default {
         interview: {
           title: '顾问约面服务',
           tipTitle: '向候选人发起约面', // ，需要消耗1000多多币
-          lessCoinButton: '金币不足，获取更多',
+          lessCoinButton: '余币不足，获取更多',
           confirmButton: '确认约面',
           listTips: ['顾问跟进', '帮你沟通', '撮合约面', '到场才扣费']
         },
         chat: {
           title: '邀请候选人约聊',
           tipTitle: '向候选人发起约聊', // 需要消耗100多多币
-          lessCoinButton: '金币不足，获取更多',
+          lessCoinButton: '余币不足，获取更多',
           confirmButton: '确认约聊',
           listTips: ['畅聊职位', '高效约面', '了解面试进展', '受邀才扣费']
         }
