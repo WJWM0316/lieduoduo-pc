@@ -26,7 +26,7 @@
           <el-button v-if="infos.rapidlyInfo.applied === 0 &&
           infos.chatInfo.status !== 501 && infos.chatInfo.status !== 701 &&
           infos.rapidlyInfo.seatsNum - (infos.rapidlyInfo.applyNum + infos.rapidlyInfo.natureApplyNum) > 0 &&
-          (infos.interviewSummary === null ||
+          (infos.interviewSummary.interviewInfo === null ||
           infos.interviewSummary.interviewInfo.status === 11)"
            :loading="loading" class="rapidlyPosition" type="primary" @click="todoAction('grabInterviewChat')">马上抢</el-button>
 
