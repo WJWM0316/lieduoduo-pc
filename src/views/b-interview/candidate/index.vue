@@ -35,7 +35,7 @@
       <img src="@/assets/images/exclamation-circle.png" alt="">
       <span>无筛选结果，可以扩大筛选范围哟~</span>
     </div>
-    <div class="recommendation" v-if="!getLoading && recommendationshow && len">为你推荐</div>
+    <div class="recommendation" v-if="!getLoading && recommendationshow && len && candidateList.length > 0">为你推荐</div>
     <!-- lists -->
     <div id="box" class="main_cont" v-loading="getLoading">
       <div class="candidate_blo" @click="viewResume(item)" v-for="(item,index) in candidateList" :key="index">
@@ -106,11 +106,6 @@
       </div>
       <!-- no found -->
       <template v-if="params.navType==='hotRecommendation'">
-      <no-found class="no-apply-lists"
-        v-if="!candidateList.length && !getLoading && len"
-        :tip-text="'无筛选结果，可以扩大筛选范围哟~'"
-        max-width="240">
-      </no-found>
       <no-found class="no-apply-lists"
         v-if="!candidateList.length && !getLoading && !len"
         :tip-text="tipsText[this.params.navType]['text']"
