@@ -357,8 +357,11 @@ export default {
           // 清空高级筛选
           if (this.$refs.highFilter) this.$refs.highFilter.handleClear()
           Object.assign(this.params, {
-            position_type_id: ['all']
+            position_type_id: ['all'],
+            created_start_time: '',
+            created_end_time: ''
           })
+          this.times = []
         }
         this.params.status = 0
       }
