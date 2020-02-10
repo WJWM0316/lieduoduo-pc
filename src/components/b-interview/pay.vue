@@ -10,7 +10,9 @@
       <div class="pay-coin-content" v-loading="getLoading">
         <p class="header-tips">{{currentText.tipTitle}}，需消耗<span> {{coins.charge}} </span>多多币</p>
         <div class="pay-server">
-          <div v-for="(item, index) in currentText.listTips" :key="index">{{item}}</div>
+          <div v-for="(item, index) in currentText.images" :key="index">
+            <img :src="item" alt="">
+          </div>
         </div>
         <div class="pay-tips">
           <p v-if="type === 'interview'">* 邀约后，平台顾问将1V1跟进候选人处理&面试情况</p>
@@ -60,14 +62,24 @@ export default {
           tipTitle: '向候选人发起约面', // ，需要消耗1000多多币
           lessCoinButton: '余币不足，获取更多',
           confirmButton: '确认约面',
-          listTips: ['顾问跟进', '帮你沟通', '撮合约面', '到场才扣费']
+          images: [
+            require('@/assets/images/pay/img_adviser_introduction_1.png'),
+            require('@/assets/images/pay/img_adviser_introduction_2.png'),
+            require('@/assets/images/pay/img_adviser_introduction_3.png'),
+            require('@/assets/images/pay/img_adviser_introduction_4.png')
+          ]
         },
         chat: {
           title: '邀请候选人约聊',
           tipTitle: '向候选人发起约聊', // 需要消耗100多多币
           lessCoinButton: '余币不足，获取更多',
           confirmButton: '确认约聊',
-          listTips: ['畅聊职位', '高效约面', '了解面试进展', '受邀才扣费']
+          images: [
+            require('@/assets/images/pay/img_chat_introduction_1.png'),
+            require('@/assets/images/pay/img_chat_introduction_2.png'),
+            require('@/assets/images/pay/img_chat_introduction_3.png'),
+            require('@/assets/images/pay/img_chat_introduction_4.png')
+          ]
         }
       },
       coins: {
@@ -164,15 +176,17 @@ export default {
     margin: 20px 0 11px;
     div {
       width: 168px;
-      padding: 20px 0 28px 20px;
       font-size: 14px;
       color: $main-color-1;
       box-sizing: border-box;
-      background: rgba($bg-color-4, .08);
       display: inline-block;
       vertical-align: middle;
       border-radius:4px;
-      margin-bottom: 9px;
+      margin-bottom: 10px;
+    }
+    img {
+      max-width: 100%;
+      min-height: 100%;
     }
     div:nth-child(even) {
       margin-left: 16px;
