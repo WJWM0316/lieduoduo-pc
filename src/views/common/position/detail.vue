@@ -27,7 +27,7 @@
 						  <span class="salary">{{infos.emolumentMin}}~{{infos.emolumentMax}}K<span v-if="infos.annualSalary > 12">·{{infos.annualSalary}}<span class="unit">薪</span></span></span>
 						</div>
           </div>
-          <div class="aside" :style="{'padding-top': infos.isRapidly === 1 ? '6px' : infos.lightspotInfo && infos.lightspotInfo.length ? '40px': '15px'}">
+          <div class="aside" :style="{'padding-top': infos.isRapidly === 1 ? '6px' : infos.lightspotInfo && infos.lightspotInfo.length ? '40px': '22px'}">
             <div v-if="infos.isRapidly === 1" class="icon yuemian24" v-show="!headerFloat">
               <img class="logo" :src="cdnPath + 'tag_24hour.png'" alt="">
               <div class="number"><span class="num">{{remainingSeats}}</span>个<p class="desc">约面席位</p></div>
