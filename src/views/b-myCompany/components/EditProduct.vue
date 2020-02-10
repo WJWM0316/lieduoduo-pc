@@ -87,7 +87,13 @@ export default {
     }
     return {
       cdnPath: `${process.env.VUE_APP_CDN_PATH}/images/`,
-      from: {},
+      from: {
+        logo: null,
+        product_name: '',
+        site_url: '',
+        slogan: '',
+        lightspot: ''
+      },
       middleUrl: '',
       fromCaching: '', // 表单数据缓存
       rules: {
@@ -124,6 +130,7 @@ export default {
   },
   methods: {
     pictureInformation (item) { // 拿到头像回调id
+      console.log(item)
       this.from.logo = item[0].id
       this.middleUrl = item[0].middleUrl
     },
