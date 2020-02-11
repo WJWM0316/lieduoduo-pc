@@ -21,7 +21,6 @@
           border-bottom: 1px solid #E8E9EB;
           padding: 0 32px 0 24px;
           font-size:12px;
-          font-family:PingFangSC-Regular;
           font-weight:400;
           color:#92929B;
           box-sizing: border-box;
@@ -81,7 +80,6 @@
                   padding-top: 10px;
                   .infoName {
                     font-size:20px;
-                    font-family:PingFangSC-Semibold;
                     font-weight:600;
                     color:#333333;
                     line-height:28px;
@@ -108,7 +106,6 @@
               .intention {
                 height:20px;
                 font-size:14px;
-                font-family:PingFangSC-Regular;
                 font-weight:400;
                 color: #66666E;;
                 line-height:20px;
@@ -123,10 +120,7 @@
                 }
                 .intentionText {
                   color: #333333;
-                } 
-                .intentionText {
-                  color: #333333;
-                } 
+                }
                 .intentionText2 {
                   color: #FF9E40;
                 }
@@ -136,7 +130,6 @@
               height: 88px;
               width: 285px;
               font-size:14px;
-              font-family:PingFangSC-Regular;
               font-weight:400;
               color:#92929B;
               line-height:22px;
@@ -165,8 +158,6 @@
               .experienceText {
                 color:#333333;
                 margin-bottom: 8px;
-
-
               }
             }
           }
@@ -200,7 +191,6 @@
               background:rgba(255,220,41,1);
               border-radius:30px;
               font-size:14px;
-              font-family:PingFangSC-Regular;
               font-weight:400;
               color:#333333;
               text-align: center;
@@ -255,7 +245,6 @@
     }
     .loading {
       font-size:14px;
-      font-family:PingFangSC-Regular;
       font-weight:400;
       color:#BCBEC0;;
       line-height:20px;
@@ -350,7 +339,6 @@
         border-radius: 4px;
         .screen_tit {
           font-size:14px;
-          font-family:PingFangSC-Medium;
           font-weight:500;
           color:#333333;
           line-height:24px;
@@ -369,7 +357,6 @@
             text-align: center;
             line-height: 28px;
             font-size:14px;
-            font-family:PingFangSC-Regular;
             font-weight:400;
             padding: 0px 12px;
             margin: 0 8px 16px 0;
@@ -397,7 +384,6 @@
             border-radius:4px;
             border:1px solid #BCBEC0;
             font-size:14px;
-            font-family:PingFangSC-Regular;
             font-weight:400;
             color:#66666E;
             text-align: center;
@@ -526,7 +512,6 @@
       }
       .main_tit {
         font-size:22px;
-        font-family:PingFangSC-Medium;
         font-weight:500;
         color:#333333;
         line-height:26px;
@@ -554,7 +539,6 @@
         }
         p {
           font-size:16px;
-          font-family:PingFangSC-Regular;
           color: #626262;
           line-height:22px;
         }
@@ -583,6 +567,7 @@
       position: absolute;
       left: 50%;
       top: 100px;
+      box-shadow: $shadow-1;
       transform: translate(-50%, 0%);
       .null-img{
         width:220px;
@@ -664,6 +649,7 @@
       .resumeLyout {
         display: flex;
         padding-top: 33px;
+        padding-bottom: 60px;
         justify-content: flex-start;
         align-items: flex-start;
         .Code {
@@ -827,7 +813,7 @@
         }
         .ResumeDetails {
           width: 848px;
-          height: 926px;
+          min-height: 588px;
           border-right: 1px solid #ededed;
           overflow-y: scroll;
           display: inline-block;
@@ -899,25 +885,33 @@
                 text-align: left;
                 vertical-align: top;
                 height: 100%;
-                margin-left: 30px;
+                margin-left: 40px;
                 flex: 1;
                 padding-right: 60px;
                 .basemsg {
 									line-height: 30px;
-									overflow: hidden;
+                  overflow: hidden;
+                  .realName, .realNameglass {
+                    float: left;
+                  }
                   .realName {
+                    max-width: 153px;
+                    white-space: nowrap;
                     font-size: 22px;
                     font-weight: 700;
                     color: #42334d;
-                    max-width: 153px;
-                    white-space: nowrap;
                     overflow: hidden;
                     text-overflow: ellipsis;
-                    float: left;
+                    margin-right: 20px;
+                  }
+                  .realNameglass {
+                    height: 30px;
+                    img {
+                      max-width: 88px;
+                    }
                   }
                   .lebalList {
                     float: left;
-                    margin-left: 20px;
                     .lebalItem {
                       display: inline-block;
                       margin-left: 24px;
@@ -943,10 +937,17 @@
                     color: #03B3BB;
 										font-size: 14px;
 										border-radius: 2px;
-									}
+                  }
+                  .position-name {
+                    font-size: 14px;
+                    color: $title-color-1;
+                  }
                 }
                 .basecenter{
                   margin-top: 33px;
+                }
+                .has-position-name {
+                  margin-top: 14px;
                 }
                 .nowWorking {
                   margin-top: 10px;
@@ -1022,16 +1023,18 @@
         padding-bottom: 38px;
         display: flex;
         justify-content: flex-start;
-        margin-left: 82px;
+        margin-left: 88px;
         .title {
           font-size: 14px;
           font-weight: 700;
           color: #42334d;
           display: inline-block;
+          text-align: right;
+          min-width: 60px;
         }
         .intentList {
           display: inline-block;
-          margin-left: 30px;
+          margin-left: 40px;
           width: 545px;
           .intentionItem {
             width: 100%;
@@ -1041,7 +1044,7 @@
               overflow: hidden;
               text-overflow: ellipsis;
               white-space: nowrap;
-              width: 460px;
+              max-width: 460px;
               float: left;
             }
             .position {
@@ -1058,7 +1061,7 @@
               color: #FF9E40;
               font-weight: 700;
               margin-left: 30px;
-              float: right;
+              float: left;
             }
           }
         }
@@ -1068,19 +1071,18 @@
         margin-left: 88px;
         display: flex;
         justify-content: flex-start;
-        align-items: baseline;
         margin-bottom: 28px;
 				padding-right: 60px;
         .title {
           font-size: 14px;
           font-weight: 700;
           color: #42334d;
-          text-align: left;
+          text-align: right;
           min-width: 60px;
         }
         .workList {
 					width: 100%;
-          margin-left: 30px;
+          margin-left: 40px;
           pre {
             text-align: left;
             white-space: pre-wrap;
@@ -1119,7 +1121,7 @@
               display: flex;
               justify-content: space-between;
               align-items: center;
-              padding: 10px 0 10px 0px;
+              padding: 0px 0 10px 0px;
               span {
                 font-size: 14px;
                 color: #92929B;;
@@ -1157,8 +1159,7 @@
                 color: #92929B;;
                 pre {
                   font-size: 13px;
-                  color: #92929B;;
-                  font-family: PingFangSC-Regular;
+                  color: #92929B;
                   line-height: 21px;
                   white-space: pre-wrap;
                   margin: 0px;
@@ -1279,7 +1280,6 @@
           border:1px solid rgba(220,220,220,1);
           box-sizing: border-box;
           font-size:14px;
-          font-family:PingFangSC-Regular;
           font-weight:400;
           color:rgba(53,64,72,1);
           display: flex;
@@ -1441,7 +1441,6 @@
               display: flex;
               align-items: center;
               word-break: break-all;
-              font-family:PingFangSC-Regular,PingFangSC;
               font-weight:400;
               color:#333333;
             }
