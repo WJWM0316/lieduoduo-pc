@@ -92,7 +92,7 @@ export default {
             font-size: 16px;
             color: $font-color-6;
             line-height: 24px;
-            margin-top: 2px;
+            margin-top: 5px;
         }
         .product-lightspot{
             margin-top: 16px;

@@ -624,6 +624,7 @@ export default class CourseList extends Vue {
             height: 20px;
             border-radius: 2px;
             margin-bottom: 15px;
+            cursor: pointer;
             &.more {
               position: absolute;
               right: 30px;
@@ -632,9 +633,9 @@ export default class CourseList extends Vue {
               color: red;
               cursor: pointer;
             }
-            &.slet {
+            &.slet, &.slet:hover {
               background: #00C4CD;
-              color: rgba(255, 255, 255, 1);
+              color: #fff;
             }
             &:hover{
               color: #03B3BB;
