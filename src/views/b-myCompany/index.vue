@@ -55,7 +55,7 @@
             </div>
             <company-productList @click="toEdit" :product="information.product"></company-productList>
             <div v-loading="getLoading" v-if="!getLoading && !information.product.length" class="noFound">
-                <no-found tipText='尚未添加公司产品' imageUrl='/img/fly.26a25d51.png'>
+                <no-found tipText='尚未添加公司产品' :max-width="234">
                     <el-button class="null-produc-bnt" v-if="isCompanyAdmin" @click="toEdit('编辑产品')" type="primary">去添加</el-button>
                 </no-found>
             </div>
@@ -363,9 +363,8 @@ export default class myCompany extends Vue {
         }
     }
     .noFound{
-        width: 160px;
+        text-align: center;
         min-height: 200px;
-        margin: 0 auto;
         .no-found{ // 覆盖组件内部样式
           padding-left: 0;
           padding-right: 0;
@@ -377,7 +376,6 @@ export default class myCompany extends Vue {
 }
 .null-produc-bnt{
   width: 134px;
-  height: 40px;
 }
 </style>
 
