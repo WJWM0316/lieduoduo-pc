@@ -115,7 +115,7 @@ export default {
   methods: {
     // 列表
     getlist () {
-      let data = { id: '1226营销创业专场' }
+      let data = { id: '职场守护计划招聘专场' }
       getfestivalfavorlist(data).then((res) => {
         this.companylist = res.data.data.batCompanyInfo
         this.positionlist = res.data.data.recommendPositionList
