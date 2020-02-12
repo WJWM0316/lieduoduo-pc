@@ -13,7 +13,9 @@
     </el-popover>
     </div>
   </div>
-  <div class="second-bg"></div>
+  <div class="second-bg">
+    <img class="date_number" :src="cdnPath + 'date_number.png'">
+  </div>
   <div class="third-bg">
     <div class="desc">
       <p>白衣天使守护你的健康，好的企业守护你的事业<br/>疫情之下，万众一心<br/><span>猎多多[职场守护计划]，精选高薪工作机会推荐</span><br/>陪你一起，守护身边的珍贵</p>
@@ -181,6 +183,14 @@ export default {
   height: 236px;
   background: url(#{$image-cdn-url}/images/bg_02.png) no-repeat;
   background-position: top center;
+  .date_number{
+    width: 188px;
+    height: 30px;
+    position: relative;
+    left: 50%;
+    top: 110px;
+    transform: translateX(-50%);
+  }
 }
 .third-bg{
   height: 337px;
