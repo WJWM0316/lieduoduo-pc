@@ -16,7 +16,7 @@
   <div class="second-bg"></div>
   <div class="third-bg">
     <div class="desc">
-      <p>当我们回顾 2019 营销事件的时候，私域流量、Vlog、直播带货、跨界营销……各种新事物、新玩法，也让更多企业在其中获得刷屏级的效果。<br/>结合人气指数、项目评分、评论互动等多项指标，甄选出本年度热议营销事件操盘企业。加入他们，获得更多机会和空间，成为下一个营销事件的制造者，成就你的职业之路。</p>
+      <p>白衣天使守护你的健康，好的企业守护你的事业<br/>疫情之下，万众一心<br/><span>猎多多[职场守护计划]，精选高薪工作机会推荐</span><br/>陪你一起，守护身边的珍贵</p>
     </div>
   </div>
   <div class="fourth-bg">
@@ -171,30 +171,36 @@ export default {
 }
 .first-bg{
   position: relative;
-  height: 384px;
+  height: 367px;
   // margin: 0 auto;
   // width: 1726px;
   background: url(#{$image-cdn-url}/images/bg_01.png) no-repeat;
   background-position: top center;
 }
 .second-bg{
-  height: 384px;
+  height: 236px;
   background: url(#{$image-cdn-url}/images/bg_02.png) no-repeat;
   background-position: top center;
 }
 .third-bg{
-  height: 346px;
+  height: 337px;
   background: url(#{$image-cdn-url}/images/bg_03.png) no-repeat;
   background-position: top center;
   .desc{
     color: #fff;
-    width: 923px;
+    width: 452px;
     margin: 0 auto;
     padding-top: 64px;
     font-size: 20px;
     p{
       line-height: 50px;
       font-size: 20px;
+      text-align: center;
+      font-weight:400;
+      span{
+        color: #0BF5FC;
+        font-weight: 700;
+      }
     }
   }
 }
