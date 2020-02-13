@@ -14,7 +14,7 @@
     </div>
   </div>
   <div class="second-bg">
-    <img class="date_number" :src="cdnPath + 'date_number.png'">
+    <img class="date_number" :src="cdnPath + 'date_number.png?a=23'">
   </div>
   <div class="third-bg">
     <div class="desc">
