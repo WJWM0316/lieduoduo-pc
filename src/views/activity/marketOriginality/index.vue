@@ -340,7 +340,7 @@ export default {
       line-height: 24px;
       color: #333333;
       font-size: 16px;
-      padding: 20px 0 0 20px;
+      padding: 15px 0 0 20px;
       max-width: 175px;
       font-weight: bold;
       overflow:hidden; //超出的文本隐藏
