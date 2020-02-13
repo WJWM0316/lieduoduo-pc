@@ -377,7 +377,7 @@ export default {
       background-size: 8px 1px;
       background-repeat: repeat-x;
       width:258px;
-      margin: 12px 0 14px 16px;
+      margin: 12px 0 14px 0;
     }
     .financing{
       padding-left: 20px;
