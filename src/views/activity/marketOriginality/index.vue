@@ -420,9 +420,9 @@ export default {
   }
 }
 .sixth-bg{
-  height: 595px;
+  height: 415px;
   background: url(#{$image-cdn-url}/images/bg_06.png) no-repeat;
-  background-position: top center;
+  background-position: bottom center;
   // margin-top: -111px;
   .join{
     width: 420px;
