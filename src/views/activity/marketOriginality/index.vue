@@ -200,7 +200,7 @@ export default {
     color: #fff;
     // width: 452px;
     margin: 0 auto;
-    padding-top: 64px;
+    padding-top: 52px;
     font-size: 20px;
     p{
       line-height: 50px;
@@ -376,8 +376,8 @@ export default {
       background-image: linear-gradient(to right, #ccc 0%, #ccc 50%, transparent 50%);
       background-size: 8px 1px;
       background-repeat: repeat-x;
-      width:258px;
-      margin: 12px 0 14px 0;
+      width:238px;
+      margin: 12px 0 14px 16px;
     }
     .financing{
       padding-left: 20px;
@@ -427,7 +427,7 @@ export default {
   .join{
     width: 420px;
     margin: 0 auto;
-    padding-top: 250px;
+    padding-top: 113px;
   }
   .btntips{
     font-size:28px;
