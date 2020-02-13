@@ -193,8 +193,8 @@ export default {
   }
 }
 .third-bg{
-  height: 337px;
-  background: url(#{$image-cdn-url}/images/bg_03.png) no-repeat;
+  height: 336px;
+  background: url(#{$image-cdn-url}/images/bg_03.png?a=1) no-repeat;
   background-position: top center;
   .desc{
     color: #fff;
