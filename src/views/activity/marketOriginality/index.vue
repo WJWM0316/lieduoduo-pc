@@ -18,7 +18,7 @@
   </div>
   <div class="third-bg">
     <div class="desc">
-      <p>白衣天使守护你的健康，好的企业守护你的事业<br/>疫情之下，万众一心<br/><span>猎多多[职场守护计划]，精选高薪工作机会推荐</span><br/>陪你一起，守护身边的珍贵</p>
+      <p>白衣天使守护你的健康，好的企业守护你的事业<br/>疫情之下，万众一心<br/><span>猎多多 [ 职场守护计划 ]，精选高薪工作机会推荐</span><br/>陪你一起，守护身边的珍贵</p>
     </div>
   </div>
   <div class="fourth-bg">
@@ -198,7 +198,7 @@ export default {
   background-position: top center;
   .desc{
     color: #fff;
-    width: 452px;
+    // width: 452px;
     margin: 0 auto;
     padding-top: 64px;
     font-size: 20px;
@@ -207,9 +207,10 @@ export default {
       font-size: 20px;
       text-align: center;
       font-weight:400;
+      letter-spacing: 2px;
       span{
         color: #0BF5FC;
-        font-weight: 700;
+        font-weight: 550;
       }
     }
   }
@@ -426,7 +427,7 @@ export default {
   .join{
     width: 420px;
     margin: 0 auto;
-    padding-top: 270px;
+    padding-top: 250px;
   }
   .btntips{
     font-size:28px;
