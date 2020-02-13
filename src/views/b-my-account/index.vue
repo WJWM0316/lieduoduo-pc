@@ -86,19 +86,19 @@ export default {
       servers: [
         {
           img: require('IMAGES/account/ic_recommend.png'),
-          content: '<p>量身推荐</p><p>按岗位为您</p><p>定制推荐方案</p>'
+          content: '<p>专业顾问</p><p>顾问团队为您提供</p><p>更优质的招聘服务</p>'
         },
         {
           img: require('IMAGES/account/ic_communication.png'),
-          content: '<p>帮你沟通</p><p>顾问会帮您与候选</p><p>人沟通并撮合约面</p>'
+          content: '<p>全程跟进</p><p>顾问在每一环节</p><p>协助您约面候选人</p>'
         },
         {
           img: require('IMAGES/account/ic_follow.png'),
-          content: '<p>顾问跟进</p><p>顾问会跟进您与</p><p>候选人的约面进度</p>'
+          content: '<p>进度可视</p><p>约面日程可转发</p><p>同事，实现协同</p>'
         },
         {
           img: require('IMAGES/account/ic_deducted.png'),
-          content: '<p>到场才扣费</p><p>如候选人未能到场</p><p>多多币将退回至账号</p>'
+          content: '<p>保证到场</p><p>候选人未到场</p><p>多多币将退回给您</p>'
         }
       ],
       bannerList: [],
