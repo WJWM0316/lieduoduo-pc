@@ -128,38 +128,38 @@ export default {
       s.parentNode.insertBefore(hm, s)
     },
     // 点赞
-    givethumbsup (data) {
-      if (!getAccessToken()) {
-        this.$refs.loginPop.showLoginPop = true
-      } else {
-        if (!data.isHotFavored) {
-          festivalfavor({ company_id: data.companyId }).then((res) => {
-            this.getlist()
-          })
-        }
-      }
-    },
+    // givethumbsup (data) {
+    //   if (!getAccessToken()) {
+    //     this.$refs.loginPop.showLoginPop = true
+    //   } else {
+    //     if (!data.isHotFavored) {
+    //       festivalfavor({ company_id: data.companyId }).then((res) => {
+    //         this.getlist()
+    //       })
+    //     }
+    //   }
+    // },
     tocompanydetail (data) {
-      if (!getAccessToken()) {
-        this.$refs.loginPop.showLoginPop = true
-      } else {
-        let routeData = this.$router.resolve({
-          name: 'companyDetail',
-          query: { vkey: data.vkey }
-        })
-        window.open(routeData.href, '_blank')
-      }
+      // if (!getAccessToken()) {
+      //   this.$refs.loginPop.showLoginPop = true
+      // } else {
+      let routeData = this.$router.resolve({
+        name: 'companyDetail',
+        query: { vkey: data.vkey }
+      })
+      window.open(routeData.href, '_blank')
+      // }
     },
     topositiondetail (data) {
-      if (!getAccessToken()) {
-        this.$refs.loginPop.showLoginPop = true
-      } else {
-        let routeData = this.$router.resolve({
-          name: 'positionDetail',
-          query: { positionId: data.id }
-        })
-        window.open(routeData.href, '_blank')
-      }
+      // if (!getAccessToken()) {
+      //   this.$refs.loginPop.showLoginPop = true
+      // } else {
+      let routeData = this.$router.resolve({
+        name: 'positionDetail',
+        query: { positionId: data.id }
+      })
+      window.open(routeData.href, '_blank')
+      // }
     },
     free () {
       window.open('https://www.wjx.top/m/41711237.aspx', '_blank')
