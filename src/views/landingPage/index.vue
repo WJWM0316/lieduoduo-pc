@@ -55,7 +55,7 @@
 										<div class="jobStatusDesc" v-if="nowResumeMsg.jobStatus">{{nowResumeMsg.jobStatusDesc}}</div>
                     <div class="clearfix position-name" v-if="!isHasAuth">职位：{{nowResumeMsg.lastPosition}}</div>
 									</div>
-                  <div class="description">
+                  <div class="description" v-if="isHasAuth">
                     <span class="msg">{{nowResumeMsg.signature}}</span>
                     <div class="iconList">
                       <span

@@ -189,10 +189,10 @@
           </div>
           <div class="Code">
             <div class="handlerpring">
-              <div class="onload" @click="hasonload = !hasonload"  v-if="nowResumeMsg.glass === 0">
+              <div class="onload" @click="handleShowDownload">
                 <i class="iconfont icon-xiazai"></i>
               </div>
-              <div class="line" v-if="nowResumeMsg.glass === 0"></div>
+              <div class="line"></div>
               <div class="onloadselect"  v-loading="loadingshow" v-show="hasonload" ref="queryBox">
                 <div class="title">下载简历</div>
                 <div class="select">请选择下载格式:</div>
@@ -535,6 +535,14 @@ export default {
           this.buttons.btn3 = { buttonText: '顾问帮约', _text: '开撩约面', type: 'recruiter-chat', buttonType: 'black' }
         }
       }
+    },
+    // 显示下载弹窗
+    handleShowDownload () {
+      if (this.nowResumeMsg.glass === 1) {
+        this.$message.warning('暂时无法下载简历，与候选人成功约聊/约面后即可下载')
+        return
+      }
+      this.hasonload = !this.hasonload
     }
   },
   watch: {
