@@ -274,7 +274,7 @@ import NoFound from '@/components/noFound'
   computed: {
     // 是否有查看的权限
     isHasAuth () {
-      return this.dataCode !== 910 && this.dataCod !== 911
+      return !(this.dataCode === 910 || this.dataCode === 911)
     }
   },
   components: {
