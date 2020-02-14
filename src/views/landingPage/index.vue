@@ -182,7 +182,7 @@
             <!-- 显示无权限提示信息 -->
             <template v-else>
               <no-found class="no-auth-tips" tip-text="该简历为热门简历，暂无权限查看更多内容" :max-width="234">
-                <el-button type="primary">联系我们，了解更多产品服务</el-button>
+                <el-button type="primary" @click="contactDialog = true">联系我们，了解更多产品服务</el-button>
               </no-found>
             </template>
           </div>
@@ -256,6 +256,7 @@
       </div>
     </div>
     <login-pop ref="loginPop"></login-pop>
+    <contact-service :visible.sync="contactDialog" :text="{title: '联系我们', content: '你可微信扫下方二维码，联系我们了解更多产品服务'}" />
   </div>
 </template>
 <script>
@@ -266,6 +267,7 @@ import { shareResumeApi } from 'API/forward'
 import { getAccessToken } from 'API/cacheService'
 import { createonlinepdf, createonlineword } from 'API/common'
 import LoginPop from '@/components/common/loginPop'
+import ContactService from '@/components/contactService/public'
 import NoFound from '@/components/noFound'
 @Component({
   name: 'landingpage',
@@ -279,7 +281,8 @@ import NoFound from '@/components/noFound'
   },
   components: {
     LoginPop,
-    NoFound
+    NoFound,
+    ContactService
   }
 })
 export default class CourseList extends Vue {
@@ -288,6 +291,7 @@ export default class CourseList extends Vue {
     uid = ''
     isshow = false
     hasonline = true
+    contactDialog = false
     nowResumeMsg = {}
     getLoading = false // 获取简历信息loading状态
     shareResumeImg = '' // 简历二维码
