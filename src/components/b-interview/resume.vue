@@ -539,7 +539,10 @@ export default {
     // 显示下载弹窗
     handleShowDownload () {
       if (this.nowResumeMsg.glass === 1) {
-        this.$message.warning('暂时无法下载简历，与候选人成功约聊/约面后即可下载')
+        this.$message({
+          type: 'warning',
+          message: '暂时无法下载简历，与候选人成功约聊/约面后即可下载'
+        })
         return
       }
       this.hasonload = !this.hasonload

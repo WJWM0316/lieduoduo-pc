@@ -24,7 +24,7 @@
               <div class="base">
                 <div class="message">
                   <div class="msgUrl">
-                    <img class="magimg" :src="nowResumeMsg.avatar.url" alt v-if="nowResumeMsg.avatar" />
+                    <img class="magimg" :src="resumeAvatar" alt v-if="nowResumeMsg.avatar" />
                     <span class="gender" v-show="nowResumeMsg.gender===2">
                       <img class="genderimg1" v-show="nowResumeMsg.gender===2" src="~IMAGES/girl.png" />
                     </span>
@@ -273,6 +273,12 @@ import NoFound from '@/components/noFound'
     // 是否有查看的权限
     isHasAuth () {
       return !(this.dataCode === 910 || this.dataCode === 911)
+    },
+    resumeAvatar () {
+      if (this.isHasAuth && this.nowResumeMsg.avatar) {
+        return this.nowResumeMsg.avatar.url
+      }
+      return 'https://attach.lieduoduo.ziwork.com/default/man.png!130xauto'
     }
   },
   components: {
@@ -357,6 +363,7 @@ export default class CourseList extends Vue {
 <style lang="scss" scoped="scoped">
 @import "./landingpage.scss";
 .no-auth-tips {
+  padding: 60px 20px 140px;
   & /deep/ p {
     margin: 25px 0;
     color: $title-color-3;
@@ -369,6 +376,7 @@ export default class CourseList extends Vue {
   div {
     color: $title-color-1;
     margin-bottom: 12px;
+    font-weight: bold;
   }
   p {
     color: $title-color-3;

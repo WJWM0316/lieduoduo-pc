@@ -184,6 +184,12 @@ div.el-dialog {
 div.el-message {
   padding: 10px 16px;
   min-width: auto;
+  i {
+    font-size: 16px;
+  }
+  .el-message__content {
+    font-size: 12px;
+  }
 }
 
 /** el date */

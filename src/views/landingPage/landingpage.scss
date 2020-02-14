@@ -880,6 +880,7 @@
                   }
                   .realNameglass {
                     height: 30px;
+                    overflow: hidden;
                     img {
                       max-width: 88px;
                     }
@@ -913,6 +914,7 @@
 										border-radius: 2px;
                   }
                   .position-name {
+                    margin-top: 38px;
                     font-size: 14px;
                     color: $title-color-1;
                   }
