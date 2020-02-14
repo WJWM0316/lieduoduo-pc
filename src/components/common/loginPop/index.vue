@@ -3,7 +3,7 @@
     <div class="bg"></div>
     <div class="loginBox">
       <login-form ref="login-form" loginType="msgLogin" :toggleType="false"></login-form>
-      <i class="close iconfont icon-xiantiaoguanbi" @click="close"></i>
+      <i class="close iconfont icon-xiantiaoguanbi" v-if="showClose" @click="close"></i>
     </div>
   </div>
 </template>
@@ -13,6 +13,12 @@ import Component from 'vue-class-component'
 import loginForm from '@/components/common/login'
 @Component({
   name: 'login',
+  props: {
+    showClose: {
+      type: Boolean,
+      default: true
+    }
+  },
   components: {
     loginForm
   }

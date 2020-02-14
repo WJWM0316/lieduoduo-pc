@@ -111,7 +111,8 @@
                 <img class="userIcon" :src="item.avatar.middleUrl" />
                 <div class="infoRight">
                   <div class="infoName textEllipsis">
-                    <span>{{item.jobhunterRealname}}</span>
+                    <span v-if="item.glass"><img src="@/assets/images/glass.png" alt=""/></span>
+                    <span v-else>{{item.jobhunterRealname}}</span>
                   </div>
 
                   <ul class="userLabel">
@@ -890,6 +891,15 @@ export default {
                 color:#333333;
                 line-height:28px;
                 margin-bottom: 6px;
+                span{
+                  height: 28px;
+                  width: 100px;
+                  display: block;
+                  img{
+                    width: 100%;
+                    height: 100%;
+                  }
+                }
               }
               .userLabel {
                 height: 20px;

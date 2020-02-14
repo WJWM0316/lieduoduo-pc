@@ -736,32 +736,6 @@
               }
             }
           }
-          .haslogin{
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            margin-top: 40px;
-            .login-btn{
-              width:252px;
-              height:40px;
-              text-align: center;
-              line-height: 40px;
-              font-size: 14px;
-              color: #fff;
-              background:#00C4CD;
-              border-radius:4px;
-              cursor: pointer;
-            }
-            .login-desc{
-              width:145px;
-              height:18px;
-              font-size:12px;
-              color:#03B3BB;
-              line-height:18px;
-              margin-top: 10px;
-            }
-          }
           .ContactInformation {
             margin-top: 60px;
             .contactTitle {
