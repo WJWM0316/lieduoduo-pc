@@ -14,7 +14,7 @@
     </div>
   </div>
   <div class="second-bg">
-    <img class="date_number" :src="cdnPath + 'date_number.png?a=23'">
+    <!-- <img class="date_number" :src="cdnPath + 'date_number.png?a=23'"> -->
   </div>
   <div class="third-bg">
     <div class="desc">
@@ -183,14 +183,14 @@ export default {
   height: 236px;
   background: url(#{$image-cdn-url}/images/bg_02.png) no-repeat;
   background-position: top center;
-  .date_number{
-    width: 188px;
-    height: 30px;
-    position: relative;
-    left: 50%;
-    top: 110px;
-    transform: translateX(-50%);
-  }
+  // .date_number{
+  //   width: 188px;
+  //   height: 30px;
+  //   position: relative;
+  //   left: 50%;
+  //   top: 110px;
+  //   transform: translateX(-50%);
+  // }
 }
 .third-bg{
   height: 336px;
