@@ -418,7 +418,7 @@ export default {
     height:56px;
     line-height: 56px;
     text-align: center;
-    color: #0F0464;
+    color: #1C277E;
     font-size: 28px;
     margin: 0 auto 34px;
     font-weight: bold;
