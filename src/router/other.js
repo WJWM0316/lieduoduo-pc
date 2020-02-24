@@ -65,6 +65,18 @@ const other = [
         component: resolve => require(['../views/activity/dreamDisco/index.vue'], resolve)
       }
     ]
+  },
+  {
+    path: '/alliance',
+    title: '复工者联盟',
+    component: Layout,
+    children: [
+      {
+        path: '',
+        name: 'alliance',
+        component: resolve => require(['../views/activity/alliance/index.vue'], resolve)
+      }
+    ]
   }
 ]
 export default other
