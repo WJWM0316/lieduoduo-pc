@@ -166,7 +166,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .originality{
-  background: #060046;
+  background: #1e1d9a;
 }
 .first-bg{
   position: relative;
@@ -410,7 +410,7 @@ export default {
     padding-top: 113px;
   }
   .btntips{
-    font-size:28px;
+    font-size: 26px;
     color:#fff;
   }
   .btn{
