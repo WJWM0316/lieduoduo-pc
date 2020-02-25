@@ -107,7 +107,7 @@ export default {
   created () {
     this.getlist()
     this.baiduTj()
-    this.$router.push({ query: { cc: 'themeMC' } })
+    this.$router.push({ query: { sourceType: 'themeMC' } })
   },
   methods: {
     // 列表
@@ -132,18 +132,6 @@ export default {
       }
       festivalTouch(data)
     },
-    // 点赞
-    // givethumbsup (data) {
-    //   if (!getAccessToken()) {
-    //     this.$refs.loginPop.showLoginPop = true
-    //   } else {
-    //     if (!data.isHotFavored) {
-    //       festivalfavor({ company_id: data.companyId }).then((res) => {
-    //         this.getlist()
-    //       })
-    //     }
-    //   }
-    // },
     tocompanydetail (data) {
       // if (!getAccessToken()) {
       //   this.$refs.loginPop.showLoginPop = true
@@ -181,8 +169,6 @@ export default {
 .first-bg{
   position: relative;
   height: 697px;
-  // margin: 0 auto;
-  // width: 1726px;
   background: url(#{$image-activity-cdn-url}/alliance_pc/bg_01.png) no-repeat;
   background-position: top center;
 }
@@ -192,7 +178,6 @@ export default {
   background-position: top center;
   .desc{
     color: #fff;
-    // width: 452px;
     margin: 0 auto;
     padding-top: 52px;
     font-size: 20px;

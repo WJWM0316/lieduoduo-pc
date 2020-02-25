@@ -26,7 +26,7 @@ export const festivalfavor = data => request({
 // 点击统计接口
 export const festivalTouch = data => request({
   url: '/touch',
-  method: 'post',
+  method: 'get',
   params: data,
   config: {
     host: 'pub'

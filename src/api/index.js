@@ -20,11 +20,11 @@ export const request = ({ url, method, params = {}, config = {} }) => {
   if (params && params.globalLoading) counter++
   if (counter === 1) loadingInstance = Loading.service({})
 
-  
+
 
   // 添加统计头部
   // let urlParams = new URLSearchParams(location.search)
-  let urlParams = Util.getUrlParam('cc')
+  let urlParams = Util.getUrlParam('sourceType')
   if (urlParams) {
     axios.defaults.headers.common['Channel-Code'] = urlParams
   }
