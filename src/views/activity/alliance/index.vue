@@ -15,7 +15,7 @@
   </div>
   <div class="third-bg">
     <div class="desc">
-      <p>疫情终会过去<br/>生活和职场也定将重现繁华<br/><span>【复工者联盟】强势来袭<br/>助你带上高薪工作  加满复工能量</span><br/>一起奋战特别的2020</p>
+      <p>疫情终会过去<br/>生活和职场也定将重现繁华<br/><span>【复工者联盟】强势来袭<br/>助你获得高薪工作 加满复工能量</span><br/>一起奋战特别的2020</p>
     </div>
   </div>
   <div class="fourth-bg">
@@ -119,7 +119,7 @@ export default {
     },
     baiduTj () {
       var hm = document.createElement('script')
-      hm.src = 'https://hm.baidu.com/hm.js?1ee7f58e498191552d7c473d7646bef7'
+      hm.src = 'https://hm.baidu.com/hm.js?b1afdaa4b544b5518b76f7441f884303'
       var s = document.getElementsByTagName('script')[0]
       s.parentNode.insertBefore(hm, s)
     },
