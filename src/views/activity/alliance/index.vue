@@ -90,7 +90,7 @@
 </div>
 </template>
 <script>
-import { getfestivalfavorlist, festivalfavor } from '@/api/activity'
+import { getfestivalfavorlist, festivalTouch, festivalfavor } from '@/api/activity'
 import { getAccessToken } from 'API/cacheService'
 import loginPop from '@/components/common/loginPop'
 export default {
@@ -112,7 +112,7 @@ export default {
   methods: {
     // 列表
     getlist () {
-      let data = { id: '职场守护计划招聘专场' }
+      let data = { id: '复工者联盟招聘专场' }
       getfestivalfavorlist(data).then((res) => {
         this.companylist = res.data.data.batCompanyInfo
         this.positionlist = res.data.data.recommendPositionList
@@ -123,6 +123,14 @@ export default {
       hm.src = 'https://hm.baidu.com/hm.js?1ee7f58e498191552d7c473d7646bef7'
       var s = document.getElementsByTagName('script')[0]
       s.parentNode.insertBefore(hm, s)
+    },
+    // 点击统计
+    festivalTouchfun (vkey) {
+      let data = {
+        vkey: vkey,
+        from: 3
+      }
+      festivalTouch(data)
     },
     // 点赞
     // givethumbsup (data) {
@@ -140,6 +148,7 @@ export default {
       // if (!getAccessToken()) {
       //   this.$refs.loginPop.showLoginPop = true
       // } else {
+      this.festivalTouchfun(data.touchVkey)
       let routeData = this.$router.resolve({
         name: 'companyDetail',
         query: { vkey: data.vkey }
@@ -151,6 +160,7 @@ export default {
       // if (!getAccessToken()) {
       //   this.$refs.loginPop.showLoginPop = true
       // } else {
+      this.festivalTouchfun(data.touchVkey)
       let routeData = this.$router.resolve({
         name: 'positionDetail',
         query: { positionId: data.id }
