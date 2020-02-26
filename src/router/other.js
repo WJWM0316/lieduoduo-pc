@@ -77,6 +77,18 @@ const other = [
         component: resolve => require(['../views/activity/alliance/index.vue'], resolve)
       }
     ]
+  },
+  {
+    path: '/disease',
+    title: '你的招聘我买单',
+    component: Layout,
+    children: [
+      {
+        path: '',
+        name: 'disease',
+        component: resolve => require(['../views/activity/disease/index.vue'], resolve)
+      }
+    ]
   }
 ]
 export default other

@@ -168,7 +168,7 @@ export default {
 .first-bg{
   position: relative;
   height: 697px;
-  background: url(#{$image-activity-cdn-url}/alliance_pc/bg_01.png) no-repeat;
+  background: url(#{$image-activity-cdn-url}/alliance_pc/bg_01.png?a=1) no-repeat;
   background-position: top center;
 }
 .third-bg{
@@ -188,7 +188,7 @@ export default {
       letter-spacing: 2px;
       span{
         color: #0BF3FA;
-        font-weight: 550;
+        font-weight: 500;
       }
     }
   }
