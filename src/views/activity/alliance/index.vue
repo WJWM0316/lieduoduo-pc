@@ -13,12 +13,9 @@
     </el-popover>
     </div>
   </div>
-  <div class="second-bg">
-    <!-- <img class="date_number" :src="cdnPath + 'date_number.png?a=23'"> -->
-  </div>
   <div class="third-bg">
     <div class="desc">
-      <p>白衣天使守护你的健康，好的企业守护你的事业<br/>疫情之下，万众一心<br/><span>猎多多 [ 职场守护计划 ]，精选高薪工作机会推荐</span><br/>陪你一起，守护身边的珍贵</p>
+      <p>疫情终会过去<br/>生活和职场也定将重现繁华<br/><span>【复工者联盟】强势来袭<br/>助你获得高薪工作 加满复工能量</span><br/>一起奋战特别的2020</p>
     </div>
   </div>
   <div class="fourth-bg">
@@ -93,7 +90,7 @@
 </div>
 </template>
 <script>
-import { getfestivalfavorlist, festivalfavor } from '@/api/activity'
+import { getfestivalfavorlist, festivalTouch, festivalfavor } from '@/api/activity'
 import { getAccessToken } from 'API/cacheService'
 import loginPop from '@/components/common/loginPop'
 export default {
@@ -114,7 +111,7 @@ export default {
   methods: {
     // 列表
     getlist () {
-      let data = { id: '职场守护计划招聘专场' }
+      let data = { id: '复工者联盟招聘专场' }
       getfestivalfavorlist(data).then((res) => {
         this.companylist = res.data.data.batCompanyInfo
         this.positionlist = res.data.data.recommendPositionList
@@ -122,26 +119,23 @@ export default {
     },
     baiduTj () {
       var hm = document.createElement('script')
-      hm.src = 'https://hm.baidu.com/hm.js?1ee7f58e498191552d7c473d7646bef7'
+      hm.src = 'https://hm.baidu.com/hm.js?b1afdaa4b544b5518b76f7441f884303'
       var s = document.getElementsByTagName('script')[0]
       s.parentNode.insertBefore(hm, s)
     },
-    // 点赞
-    // givethumbsup (data) {
-    //   if (!getAccessToken()) {
-    //     this.$refs.loginPop.showLoginPop = true
-    //   } else {
-    //     if (!data.isHotFavored) {
-    //       festivalfavor({ company_id: data.companyId }).then((res) => {
-    //         this.getlist()
-    //       })
-    //     }
-    //   }
-    // },
+    // 点击统计
+    festivalTouchfun (vkey) {
+      let data = {
+        vkey: vkey,
+        from: 3
+      }
+      festivalTouch(data)
+    },
     tocompanydetail (data) {
       // if (!getAccessToken()) {
       //   this.$refs.loginPop.showLoginPop = true
       // } else {
+      this.festivalTouchfun(data.touchVkey)
       let routeData = this.$router.resolve({
         name: 'companyDetail',
         query: { vkey: data.vkey }
@@ -153,6 +147,7 @@ export default {
       // if (!getAccessToken()) {
       //   this.$refs.loginPop.showLoginPop = true
       // } else {
+      this.festivalTouchfun(data.touchVkey)
       let routeData = this.$router.resolve({
         name: 'positionDetail',
         query: { positionId: data.id }
@@ -168,47 +163,31 @@ export default {
 </script>
 <style lang="scss" scoped>
 .originality{
-  background: #060046;
+  background: #1e1d9a;
 }
 .first-bg{
   position: relative;
-  height: 367px;
-  // margin: 0 auto;
-  // width: 1726px;
-  background: url(#{$image-cdn-url}/images/bg_01.png) no-repeat;
+  height: 697px;
+  background: url(#{$image-activity-cdn-url}/alliance_pc/bg_01.png) no-repeat;
   background-position: top center;
-}
-.second-bg{
-  height: 236px;
-  background: url(#{$image-cdn-url}/images/bg_02.png) no-repeat;
-  background-position: top center;
-  // .date_number{
-  //   width: 188px;
-  //   height: 30px;
-  //   position: relative;
-  //   left: 50%;
-  //   top: 110px;
-  //   transform: translateX(-50%);
-  // }
 }
 .third-bg{
   height: 336px;
-  background: url(#{$image-cdn-url}/images/bg_03.png?a=1) no-repeat;
+  background: url(#{$image-activity-cdn-url}/alliance_pc/bg_02.png?a=1) no-repeat;
   background-position: top center;
   .desc{
     color: #fff;
-    // width: 452px;
     margin: 0 auto;
     padding-top: 52px;
     font-size: 20px;
     p{
-      line-height: 50px;
+      line-height: 45px;
       font-size: 20px;
       text-align: center;
       font-weight:400;
       letter-spacing: 2px;
       span{
-        color: #0BF5FC;
+        color: #0BF3FA;
         font-weight: 550;
       }
     }
@@ -217,7 +196,7 @@ export default {
 .fourth-bg{
   min-height: 429px;
   padding-bottom: 100px;
-  background: url(#{$image-cdn-url}/images/bg_04.png) no-repeat, url(#{$image-cdn-url}/images/bg_07.png) repeat-y;
+  background: url(#{$image-activity-cdn-url}/alliance_pc/bg_03.png) no-repeat, url(#{$image-activity-cdn-url}/alliance_pc/bg_04.png) repeat-y;
   background-position: top center, bottom center;
   .enterprise{
     width: 1021px;
@@ -310,19 +289,15 @@ export default {
     margin-bottom: 30px;
   }
 }
-.fillbox{
-    background: url(#{$image-cdn-url}/images/bg_07.png) no-repeat;
-    height: 224px;
-  }
 .fifth-bg{
   min-height: 671px;
-  background: url(#{$image-cdn-url}/images/bg_05.png) no-repeat, url(#{$image-cdn-url}/images/bg_07.png) repeat-y;
+  background: url(#{$image-activity-cdn-url}/alliance_pc/bg_05.png) no-repeat, url(#{$image-activity-cdn-url}/alliance_pc/bg_06.png) repeat-y;
   background-position: top center, bottom center;
   .position{
     width: 1200px;
     margin: 0 auto;
     overflow: hidden;
-    padding-top: 95px;
+    padding-top: 165px;
   }
   .companyitem{
     width:282px;
@@ -420,7 +395,7 @@ export default {
 }
 .sixth-bg{
   height: 415px;
-  background: url(#{$image-cdn-url}/images/bg_06.png) no-repeat;
+  background: url(#{$image-activity-cdn-url}/alliance_pc/bg_07.png) no-repeat;
   background-position: bottom center;
   // margin-top: -111px;
   .join{
@@ -429,7 +404,7 @@ export default {
     padding-top: 113px;
   }
   .btntips{
-    font-size:28px;
+    font-size: 26px;
     color:#fff;
   }
   .btn{
@@ -437,13 +412,13 @@ export default {
     height:56px;
     line-height: 56px;
     text-align: center;
-    color: #0F0464;
+    color: #1C277E;
     font-size: 28px;
     margin: 0 auto 34px;
     font-weight: bold;
     cursor: pointer;
     border-radius:28px;
-    background: #35E5ED;
+    background: #0BECF5;
   }
   .forward{
     width:19px;
@@ -462,7 +437,7 @@ export default {
       color: #fff;
     }
     .num{
-      color: #0BF5FC;
+      color: #0BECF5;
       font-weight: bold;
     }
   }

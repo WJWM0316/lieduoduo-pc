@@ -1,7 +1,10 @@
 <template>
 	<div class="random-banner">
-    <router-link target="_blank" :to="{name: 'dreamDisco'}" class="li-item">
+    <!-- <router-link target="_blank" :to="{name: 'dreamDisco'}" class="li-item">
       <img :src="cdnPath + 'dreamBanner.jpg'" alt="loading">
+    </router-link> -->
+    <router-link target="_blank" :to="{name: 'marketOriginality', query: { sourceType: 'themeMC' }}" class="li-item">
+      <img :src="cdnPath + 'marketOriginality_banner.png'" alt="loading">
     </router-link>
     <!-- <div class="random-left-banner">
       <router-link target="_blank" :to="{name: 'companyDetail', query: { vkey: 'pfpaotwi' }}" class="li-item">
