@@ -18,6 +18,7 @@
       <p>疫情终会过去<br/>生活和职场也定将重现繁华<br/><span>【复工者联盟】强势来袭<br/>助你获得高薪工作 加满复工能量</span><br/>一起奋战特别的2020</p>
     </div>
   </div>
+  <div class="fourth-bg-top"></div>
   <div class="fourth-bg">
     <div class="enterprise clearfix">
       <div class="clearfix" id="company_recruit-Market">
@@ -163,7 +164,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .originality{
-  background: #1e1d9a;
+  background: #160764;
 }
 .first-bg{
   position: relative;
@@ -193,15 +194,19 @@ export default {
     }
   }
 }
+.fourth-bg-top{
+  background: url(#{$image-activity-cdn-url}/alliance_pc/bg_03.png) no-repeat;
+  background-position: top center;
+  height: 153px;
+}
 .fourth-bg{
-  min-height: 429px;
+  min-height: 410px;
   padding-bottom: 100px;
-  background: url(#{$image-activity-cdn-url}/alliance_pc/bg_03.png) no-repeat, url(#{$image-activity-cdn-url}/alliance_pc/bg_04.png) repeat-y;
-  background-position: top center, bottom center;
+  background: url(#{$image-activity-cdn-url}/alliance_pc/bg_04.png) no-repeat, ;
+  background-position: top center;
   .enterprise{
     width: 1021px;
     margin: 0 auto;
-    padding-top: 177px;
   }
   .item{
     height: 195px;
