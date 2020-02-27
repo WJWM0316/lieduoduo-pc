@@ -119,7 +119,7 @@ export default {
     },
     baiduTj () {
       var hm = document.createElement('script')
-      hm.src = 'https://hm.baidu.com/hm.js?b1afdaa4b544b5518b76f7441f884303'
+      hm.src = 'https://hm.baidu.com/hm.js?ed417e6ac2b56b41fd931d486a55e623'
       var s = document.getElementsByTagName('script')[0]
       s.parentNode.insertBefore(hm, s)
     },
