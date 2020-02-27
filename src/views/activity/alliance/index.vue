@@ -1,12 +1,12 @@
 <template>
-<div class="originality">
+<div class="alliance">
   <div class="first-bg">
     <div class="wxshare">
     <el-popover
       placement="top"
       popper-class="position-24h-share-wechat"
       :width="100">
-      <img style="max-width:100%; max-height:100%" :src="cdnPath + 'originality.jpg'" alt="">
+      <img style="max-width:100%; max-height:100%" :src="cdnPath + 'allianceCode.jpg'" alt="">
       <div class="header-wechat-shart"  slot="reference">
         <i class="iconfont icon-weixin"></i> 微信分享
       </div>
@@ -163,7 +163,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.originality{
+.alliance{
   background: #160764;
 }
 .first-bg{

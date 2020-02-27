@@ -2,8 +2,8 @@
   <div class="disease-wrap">
     <div class="first">
       <div class="first-btn">
-        <div class="bnt_left" @click="onBtn('left')">马上发布职位</div>
-        <div class="bnt_right" @click="onBtn('right')">已发布职位，领取奖励</div>
+        <div id="Immediateiy-position" class="bnt_left" @click="onBtn('left')">马上发布职位</div>
+        <div id="position_receive-award" class="bnt_right" @click="onBtn('right')">已发布职位，领取奖励</div>
       </div>
     </div>
     <div class="second"></div>
@@ -19,19 +19,30 @@
       5. 活动期间遇到任何问题，可咨询客服人员（微信：xiaoxiannvlff）；<br/>
       6. 本次活动最终解释权归老虎信息科技有限公司所有。
       </p>
-      <div class="sixth-bnt" @click="onBtn('left')">发职位，领奖励</div>
+      <div id="Post-position_receive-award" class="sixth-bnt" @click="onBtn('left')">发职位，领奖励</div>
     </div>
     <login-pop ref="loginPop"></login-pop>
+    <pop v-if="popShow"></pop>
   </div>
 </template>
 
 <script>
+import pop from './components/pop'
 import loginPop from '@/components/common/loginPop'
 import { getAccessToken } from 'API/cacheService'
 import { inviteSubsidyGrant } from 'API/activity.js'
 export default {
   components: {
-    loginPop
+    loginPop,
+    pop
+  },
+  data () {
+    return {
+      popShow: false
+    }
+  },
+  created () {
+    this.baiduTj()
   },
   methods: {
     onBtn (data) {
@@ -47,20 +58,27 @@ export default {
           if (this.$store.getters === 1) {
             this.$router.push({ name: 'register' })
           } else {
-            location.href = '/recruiterIndex'
+            window.open('/recruiterIndex', '_blank')
           }
           break
         case 'right':
           inviteSubsidyGrant().then(res => {
             // grantSubsidy 1 可以领，0不可领
             if (res.data.data.grantSubsidy) {
-              // 弹窗
+              this.popShow = true
             } else {
-              location.href = '/recruiterIndex'
+              let newWindow = window.open()
+              newWindow.location.href = '/recruiterIndex'
             }
           })
           break
       }
+    },
+    baiduTj () {
+      var hm = document.createElement('script')
+      hm.src = 'https://hm.baidu.com/hm.js?1d2eb234dc177895917623cfbc210cf2'
+      var s = document.getElementsByTagName('script')[0]
+      s.parentNode.insertBefore(hm, s)
     }
   }
 }
