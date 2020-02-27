@@ -399,7 +399,7 @@ export default {
   background-position: bottom center;
   // margin-top: -111px;
   .join{
-    width: 420px;
+    width: 390px;
     margin: 0 auto;
     padding-top: 113px;
   }
