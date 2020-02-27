@@ -32,3 +32,13 @@ export const festivalTouch = data => request({
     host: 'pub'
   }
 })
+
+// 获取招聘官是否可领取补贴
+export const inviteSubsidyGrant = data => request({
+  url: '/invite/subsidy/grant',
+  method: 'get',
+  params: data,
+  config: {
+    host: 'pub'
+  }
+})

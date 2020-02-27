@@ -28,6 +28,7 @@
 <script>
 import loginPop from '@/components/common/loginPop'
 import { getAccessToken } from 'API/cacheService'
+import { inviteSubsidyGrant } from 'API/activity.js'
 export default {
   components: {
     loginPop
