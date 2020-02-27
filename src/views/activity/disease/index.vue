@@ -19,7 +19,7 @@
       5. 活动期间遇到任何问题，可咨询客服人员（微信：xiaoxiannvlff）；<br/>
       6. 本次活动最终解释权归老虎信息科技有限公司所有。
       </p>
-      <div class="sixth-bnt" @click="onBtn('bottom')">发职位，领奖励</div>
+      <div class="sixth-bnt" @click="onBtn('left')">发职位，领奖励</div>
     </div>
     <login-pop ref="loginPop"></login-pop>
   </div>
@@ -38,22 +38,29 @@ export default {
       // 是否已经登录
       if (!getAccessToken()) {
         this.$refs.loginPop.showLoginPop = true
-      } else return
+        return
+      }
       // 区分点击按钮来源
       switch (data) {
         case 'left':
-
+          // 是否有b端身份
+          if (this.$store.getters === 1) {
+            this.$router.push({ name: 'register' })
+          } else {
+            location.href = '/recruiterIndex'
+          }
           break
         case 'right':
-
-          break
-        case 'bottom':
-
+          inviteSubsidyGrant().then(res => {
+            // grantSubsidy 1 可以领，0不可领
+            if (res.data.data.grantSubsidy) {
+              // 弹窗
+            } else {
+              location.href = '/recruiterIndex'
+            }
+          })
           break
       }
-      // if (this.$store.getters === 1) {
-
-      // }
     }
   }
 }
