@@ -201,7 +201,7 @@ export default {
 }
 .fourth-bg{
   min-height: 410px;
-  padding-bottom: 100px;
+  padding-bottom: 90px;
   background: url(#{$image-activity-cdn-url}/alliance_pc/bg_04.png) no-repeat, ;
   background-position: top center;
   .enterprise{
