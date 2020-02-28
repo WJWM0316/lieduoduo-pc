@@ -109,6 +109,7 @@ export default {
     this.getlist()
     this.baiduTj()
   },
+  beforeRouteLeave () {},
   methods: {
     // 列表
     getlist () {
@@ -139,7 +140,7 @@ export default {
       this.festivalTouchfun(data.touchVkey)
       let routeData = this.$router.resolve({
         name: 'companyDetail',
-        query: { vkey: data.vkey }
+        query: { vkey: data.vkey, sourceType: 'hd_alliance_web' }
       })
       window.open(routeData.href, '_blank')
       // }
@@ -151,7 +152,7 @@ export default {
       this.festivalTouchfun(data.touchVkey)
       let routeData = this.$router.resolve({
         name: 'positionDetail',
-        query: { positionId: data.id }
+        query: { positionId: data.id, sourceType: 'hd_alliance_web' }
       })
       window.open(routeData.href, '_blank')
       // }

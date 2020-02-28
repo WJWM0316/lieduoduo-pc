@@ -6,8 +6,11 @@
     <!-- <router-link target="_blank" :to="{name: 'marketOriginality'}" class="li-item">
       <img :src="cdnPath + 'marketOriginality_banner.png'" alt="loading">
     </router-link> -->
-    <router-link target="_blank" :to="{name: 'alliance', query: { sourceType: 'hd_alliance_web' }}" class="li-item">
-      <img src="@/assets/images/activity/alliance/big_banner.png" alt="loading">
+    <router-link target="_blank" :to="{name: 'alliance', query: { sourceType: 'hd_alliance_web' }}" class="left-banner">
+      <img src="@/assets/images/activity/alliance/small_banner.png" alt="loading">
+    </router-link>
+    <router-link target="_blank" :to="{name: 'disease', query: { sourceType: 'hd_job_web' }}" class="right-banner">
+      <img src="@/assets/images/activity/disease/diseaseBanner.png" alt="loading">
     </router-link>
     <!-- <div class="random-left-banner">
       <router-link target="_blank" :to="{name: 'companyDetail', query: { vkey: 'pfpaotwi' }}" class="li-item">
@@ -106,5 +109,21 @@ export default {
 			height: 100%;
 		}
 	}
+  .left-banner{
+    width: 507px;
+    display: inline-block;
+    img{
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .right-banner{
+    width: 252px;
+    display: inline-block;
+    img{
+      width: 100%;
+      height: 100%;
+    }
+  }
 }
 </style>
