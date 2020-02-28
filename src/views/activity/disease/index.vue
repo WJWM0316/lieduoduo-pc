@@ -126,7 +126,7 @@ export default {
   margin: 0 auto;
   height: 85px;
   width: 678px;
-  line-height: 80px;
+  line-height: 76px;
   color: #fff;
   font-size: 22px;
   font-weight: 500;

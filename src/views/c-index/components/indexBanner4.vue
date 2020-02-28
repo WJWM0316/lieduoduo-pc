@@ -112,6 +112,7 @@ export default {
   .left-banner{
     width: 507px;
     display: inline-block;
+    margin-right: 3px;
     img{
       width: 100%;
       height: 100%;
