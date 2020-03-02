@@ -190,7 +190,7 @@ export default {
           return
         }
         this.responseCode = res.data.code
-        if (this.responseCode === 0 || this.responseCode > 900) {
+        if (this.responseCode === 0 || this.responseCode === 200 || this.responseCode > 900) {
           if (this.responseCode === 917) this.text = res.data.msg
           // 如果申请成功过，引导完善简历
           if (this.onceApplySuccess) {
@@ -224,7 +224,7 @@ export default {
       if (code && this.reconfirmCode) data.reconfirmCode = this.reconfirmCode
       chatApplyApi(data).then(res => {
         this.responseCode = res.data.code
-        if (this.responseCode === 0) {
+        if (this.responseCode === 0 || this.responseCode === 200) {
           const successCode = this.getTipsSuccessCode()
           if (!this.onceApplySuccess || successCode === 2004) {
             localStorage.setItem('lastApplyTime', Date.now())
