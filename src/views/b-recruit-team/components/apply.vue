@@ -256,6 +256,7 @@ export default {
     color: $main-color-1;
     cursor: pointer;
     font-weight: bold;
+    min-width: 90px;
     span + span {
       margin-left: 18px;
     }
@@ -268,6 +269,7 @@ export default {
   }
   .apply-name {
     position: relative;
+    max-width: 84px;
     .b-reddot::after {
       left: -10px;
       right: inherit;
@@ -277,10 +279,8 @@ export default {
   .apply-name p{
     font-size: 14px;
     color: $title-color-2;
-    max-width: 84px;
   }
   p._text {
-    max-width: 150px;
     line-height: 14px;
     color: $title-color-1;
     font-weight: bold;
