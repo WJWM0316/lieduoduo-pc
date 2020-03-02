@@ -161,7 +161,7 @@ export default {
         positionId: this.infos.id,
         interview_type: 2
       }
-      if (process.env.NODE_ENV === 'development') data.testCheckTag = 1
+      if (process.env.VUE_APP_ENV === 'development') data.testCheckTag = 1
       if (code && this.reconfirmCode) data.reconfirmCode = this.reconfirmCode
       applyInterviewApi(data).then(res => {
         this.loading = false
@@ -220,7 +220,7 @@ export default {
         recruiter: this.infos.recruiter,
         position: this.infos.id
       }
-      if (process.env.NODE_ENV === 'development') data.testCheckTag = 1
+      if (process.env.VUE_APP_ENV === 'development') data.testCheckTag = 1
       if (code && this.reconfirmCode) data.reconfirmCode = this.reconfirmCode
       chatApplyApi(data).then(res => {
         this.responseCode = res.data.code
