@@ -6,6 +6,7 @@
         <span class="iconfont icon-shanchu resume-file-remove" @click="handleRemoveAttach" v-if="attach.id"></span>
       </p>
       <upload-file
+        ref="uploadFile"
         @change="uploadSuccess"
         :size="10"
         @before="uploading = true"
@@ -35,6 +36,15 @@ export default {
   data () {
     return {
       uploading: false
+    }
+  },
+  mounted () {
+    const { query } = this.$route
+    if (query.todo === 'upload') {
+      if (this.$refs.uploadFile) this.$refs.uploadFile.handleClickInput()
+      window.setTimeout(() => {
+        this.$router.replace({ name: 'cresume', query: { todo: 'uploaded' } })
+      }, 1000)
     }
   },
   methods: {

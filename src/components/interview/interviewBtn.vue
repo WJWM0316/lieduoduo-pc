@@ -48,6 +48,12 @@
       </template>
     </div>
     <download-app :visible.sync="showPopupDownload"></download-app>
+    <tips-dialog
+      :visible.sync="tipsPopup"
+      :content="text"
+      @re-apply="code => todoAction(tipsTempActionType, code)"
+      :code="responseCode">
+    </tips-dialog>
     <position-downloadApp :visible="showPopup" :type="showPopupType" :text="text"></position-downloadApp>
     <loginPop ref="loginPop" v-if="!hasLogin"></loginPop>
   </div>
@@ -56,6 +62,7 @@
 import loginPop from '@/components/common/loginPop'
 import downloadApp from '@/components/common/sharePopup/downloadApp'
 import positionDownloadApp from '@/components/common/sharePopup/positionDownloadApp'
+import TipsDialog from './tipsDialog'
 import {
   chatApplyApi,
   applyInterviewApi
@@ -65,7 +72,8 @@ export default {
   components: {
     loginPop,
     downloadApp,
-    positionDownloadApp
+    positionDownloadApp,
+    TipsDialog
   },
   props: {
     infos: {
@@ -86,25 +94,36 @@ export default {
       showPopup: false,
       showPopupDownload: false,
       showPopupType: '', // chat 约聊成功 grabInterviewChat 抢占成功
+      tipsPopup: false,
+      tipsTempActionType: '', // 缓存提示弹窗之前的switch 类型
       text: '',
-      loading: false
+      loading: false,
+      responseCode: 0,
+      onceApplySuccess: false // 当天是否有一次申请职位成功
     }
   },
   computed: mapState({
     hasLogin: state => state.hasLogin
   }),
+  mounted () {
+    const lastApplySuccessTime = localStorage.getItem('lastApplyTime')
+    // 只要两个日期不等 = 今天没有申请成功的职位
+    this.onceApplySuccess = !!(lastApplySuccessTime && new Date(parseInt(lastApplySuccessTime)).getDate() === new Date().getDate())
+  },
   methods: {
-    todoAction (genre) {
+    todoAction (genre, code) {
       this.loading = true
       if (!this.hasLogin) {
         this.$refs.loginPop.showLoginPop = true
         this.loading = false
         return
       }
-
       switch (genre) {
         case 'chat': // 约聊
-          this.chatApply()
+          this.tipsTempActionType = genre
+          // this.responseCode = 2001
+          // this.tipsPopup = true
+          this.chatApply(code)
           break
         case 'goChat': // 继续聊
           this.showPopupDownload = true
@@ -117,16 +136,18 @@ export default {
               confirmButtonText: '更换约面职位',
               cancelButtonText: '我再想想'
             }).then(() => {
-              this.applyInterview()
+              this.applyInterview(code)
             }).catch(() => {
               this.loading = false
             })
             return
           }
-          this.applyInterview()
+          this.tipsTempActionType = genre
+          this.applyInterview(code)
           break
         case 'interviewChat': // 24约聊
-          this.chatApply()
+          this.chatApply(code)
+          this.tipsTempActionType = genre
           break
         case 'goInterviewChat': // 24继续聊
           this.showPopupDownload = true
@@ -134,8 +155,15 @@ export default {
           break
       }
     },
-    applyInterview () { // 抢占成功方法
-      applyInterviewApi({ recruiterUid: this.infos.recruiter, positionId: this.infos.id, interview_type: 2 }).then(res => {
+    applyInterview (code) { // 抢占成功方法
+      let data = {
+        recruiterUid: this.infos.recruiter,
+        positionId: this.infos.id,
+        interview_type: 2
+      }
+      if (process.env.NODE_ENV === 'development') data.testCheckTag = 1
+      if (code && this.reconfirmCode) data.reconfirmCode = this.reconfirmCode
+      applyInterviewApi(data).then(res => {
         this.loading = false
         if (res.data.code === 915) {
           this.$confirm('已改为提交约聊申请，面试官将尽快处理。', '活动已过期', {
@@ -161,30 +189,84 @@ export default {
           })
           return
         }
-        if (res.data.code === 917) { // 节假日延后
-          this.text = res.data.msg
+        this.responseCode = res.data.code
+        if (this.responseCode === 0 || this.responseCode > 900) {
+          if (this.responseCode === 917) this.text = res.data.msg
+          // 如果申请成功过，引导完善简历
+          if (this.onceApplySuccess) {
+            this.responseCode = this.getTipsSuccessCode()
+            this.tipsPopup = true
+            // 如果当天第一次申请成功显示引导下载app
+          } else {
+            this.tipsPopup = false
+            localStorage.setItem('lastApplyTime', Date.now())
+            this.showPopupType = 'grabInterviewChat' // 抢占成功弹窗以及传参
+            this.showPopup = true
+          }
+          // 其他状态 不予申请状态和二次申请
         }
-        this.showPopupType = 'grabInterviewChat' // 抢占成功弹窗以及传参
-        this.showPopup = true
         this.$emit('init')
-      }).catch(res => {
+      }).catch(({ data }) => {
+        if (data.code > 400) {
+          this.responseCode = data.code
+          this.reconfirmCode = data.data.reconfirmCode || null
+          this.tipsPopup = true
+        }
         this.loading = false
       })
     },
-    chatApply () { // 约聊成功方法
-      chatApplyApi({ recruiter: this.infos.recruiter, position: this.infos.id }).then(res => {
-        this.showPopupType = 'chat' // 约聊成功
-        this.showPopup = true
+    chatApply (code) { // 约聊成功方法
+      let data = {
+        recruiter: this.infos.recruiter,
+        position: this.infos.id
+      }
+      if (process.env.NODE_ENV === 'development') data.testCheckTag = 1
+      if (code && this.reconfirmCode) data.reconfirmCode = this.reconfirmCode
+      chatApplyApi(data).then(res => {
+        this.responseCode = res.data.code
+        if (this.responseCode === 0) {
+          const successCode = this.getTipsSuccessCode()
+          if (!this.onceApplySuccess || successCode === 2004) {
+            localStorage.setItem('lastApplyTime', Date.now())
+            this.showPopupType = 'chat' // 约聊成功
+            this.showPopup = true
+            this.tipsPopup = false
+          } else {
+            this.responseCode = successCode
+            this.tipsPopup = true
+          }
+        }
         this.loading = false
         this.$emit('init')
-      }).catch(res => {
+      }).catch(({ data }) => {
+        if (data.code > 400) {
+          this.responseCode = data.code
+          this.reconfirmCode = data.data.reconfirmCode
+          this.tipsPopup = true
+        }
         this.loading = false
       })
+    },
+    // 获取成功弹窗提示的code
+    getTipsSuccessCode () {
+      const { myResume: { resumeCompletePercentage, resumeAttach } } = this.$store.state.resume
+      if (resumeCompletePercentage > 0.75 && resumeAttach) {
+        return 2004
+      }
+      if (resumeCompletePercentage <= 0.75 && resumeAttach) {
+        return 2002
+      }
+      if (resumeCompletePercentage > 0.75 && !resumeAttach) {
+        return 2003
+      }
+      if (resumeCompletePercentage <= 0.75 && !resumeAttach) {
+        return 2001
+      }
     }
   }
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .wrap{
   .el-button{
     width:298px;
@@ -202,6 +284,6 @@ export default {
   }
 }
 .el-message-box{
-    padding-bottom: 2px !important;
-  }
+  padding-bottom: 2px !important;
+}
 </style>

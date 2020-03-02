@@ -348,7 +348,7 @@ export default class PositionDetail extends Vue {
     this.getDetail()
   }
   handleScroll () {
-    if (!this.headerH) this.headerH = this.$refs.header.clientHeight + 50
+    if (!this.headerH && this.$refs.header) this.headerH = this.$refs.header.clientHeight + 50
     if (window.scrollY > this.headerH) {
       if (!this.headerFloat) this.headerFloat = true
     } else {

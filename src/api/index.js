@@ -79,7 +79,7 @@ export const request = ({ url, method, params = {}, config = {} }) => {
       loadingBack()
     }).catch(err => {
       let catchFun = (err) => {
-        if (!config.noCheckLogin && err.response.data.httpStatus !== 200) {
+        if (config.globalTips !== false && !config.noCheckLogin && err.response.data.httpStatus !== 200) {
           // 相同提示不重复提示
           let message = err.response.data.msg || err.response.data.message
           if (!window.messagequeue[message]) {

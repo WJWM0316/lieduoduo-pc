@@ -11,7 +11,8 @@ export const applyInterviewApi = data => request({
   method: 'post',
   params: data,
   config: {
-    host: 'qiuzhi'
+    host: 'qiuzhi',
+    globalTips: false
   }
 })
 
@@ -265,6 +266,19 @@ export const chatApplyApi = (data) => {
   return request({
     method: 'post',
     url: '/chat/apply',
+    params: data,
+    config: {
+      host: 'qiuzhi',
+      globalTips: false
+    }
+  })
+}
+
+// 求职者端二次确认弹窗提示
+export const setReconfirmHide = (data) => {
+  return request({
+    method: 'put',
+    url: '/reconfirm/hide',
     params: data,
     config: {
       host: 'qiuzhi'
