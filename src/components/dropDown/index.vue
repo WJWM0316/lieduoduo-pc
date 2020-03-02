@@ -228,10 +228,10 @@ $drop-height: 50px;
     font-size: 14px;
   }
   .drop-down-item:hover {
-     background: $bg-color-5;
+     background: $bg-color-1;
   }
   .drop-down-item.single-active {
-    background: $bg-color-5;
+    background: $bg-color-1;
     color: $main-color-1;
   }
   .drop-down-item.multiple-active {

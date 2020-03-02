@@ -4,7 +4,7 @@
     <div class="rec-team-header">
       <h1>招聘团队</h1>
       <el-badge :is-dot="reddot" v-if="recruiterIsAdmin">
-        <el-button type="primary" @click="applyDialog = true">加入申请（{{count.apply}}）</el-button>
+        <el-button type="primary" @click="applyDialog = true">加入申请 ({{count.apply}})</el-button>
       </el-badge>
     </div>
     <div class="warpper-scroll recruit-lists"  v-loading="getLoading">
@@ -183,7 +183,7 @@ export default {
   box-sizing: border-box;
   .rec-team-header {
     padding: 40px 50px 30px;
-    min-width: 960px;
+    min-width: 1020px;
     @include flex-v-center;
     background: #fff;
   }

@@ -59,12 +59,10 @@ button.el-button--default:focus {
 }
 
 /** 下拉框 */
-.el-select-dropdown__item.hover, 
-.el-select-dropdown__item:hover, 
 .el-cascader-node:hover,
 .el-cascader-node:focus,
-.el-autocomplete-suggestion li:hover {
-  background: $bg-color-5 !important;
+.el-dropdown-menu__item:hover {
+  background: $bg-color-1 !important;
 }
 
 /**折叠面板**/
