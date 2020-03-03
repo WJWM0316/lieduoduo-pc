@@ -50,7 +50,7 @@
     <tips-dialog
       :visible.sync="tipsPopup"
       :content="text"
-      :is24hours="infos.isRapidly || 0"
+      :is24hours="isGrab24Hours"
       :endtime="infos.rapidlyServiceEndTime || ''"
       @re-apply="code => todoAction(tipsTempActionType, code)"
       :code="responseCode">
@@ -104,7 +104,10 @@ export default {
     }
   },
   computed: mapState({
-    hasLogin: state => state.hasLogin
+    hasLogin: state => state.hasLogin,
+    isGrab24Hours () {
+      return this.tipsTempActionType === 'grabInterviewChat'
+    }
   }),
   mounted () {
     const lastApplySuccessTime = localStorage.getItem('lastApplyTime')
