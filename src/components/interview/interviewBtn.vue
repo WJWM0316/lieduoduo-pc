@@ -229,8 +229,8 @@ export default {
           if (!this.onceApplySuccess || successCode === 2004) {
             localStorage.setItem('lastApplyTime', Date.now())
             this.showPopupType = 'chat' // 约聊成功
-            this.showPopup = true
             this.tipsPopup = false
+            this.showPopup = true
           } else {
             this.responseCode = successCode
             this.tipsPopup = true

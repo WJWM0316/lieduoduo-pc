@@ -98,7 +98,7 @@
         <div class="tips-title tips-title-success"><i class="iconfont icon-chenggong"></i>抢占成功</div>
       </template>
       <div class="tips-content tip-success">
-        <div style="padding-left: 26px; margin-bottom: 33px">{{text || '面试官已收到你的申请，将于24h内给你反馈~'}}</div>
+        <div style="padding-left: 26px; margin-bottom: 33px">{{content || '面试官已收到你的申请，将于24h内给你反馈~'}}</div>
         <div style="text-align: center">
           <img src="~@/assets/images/24h_apply_success.png" alt="">
         </div>
@@ -117,7 +117,7 @@ export default {
   props: {
     visible: Boolean,
     code: Number,
-    text: String,
+    content: String,
     is24hours: Number,
     endtime: String
   },
@@ -158,9 +158,7 @@ export default {
   },
   watch: {
     visible (value) {
-      if (value) {
-        this.dialogStatus = true
-      }
+      this.dialogStatus = value
     }
   }
 }
