@@ -67,7 +67,8 @@
     <!-- 2001 | 2002 | 2003  -->
     <template v-if="code === 2001 || code === 2002 || code === 2003">
       <template slot="title">
-        <div class="tips-title">申请成功</div>
+        <div class="tips-title" v-if="is24hours">抢占成功, {{titleTips}}</div>
+        <div  class="tips-title" v-else>申请成功</div>
       </template>
       <div class="tips-content">
         <template v-if="code === 2003">80%的招聘官更青睐有上传附件简历的候选</template>
@@ -113,12 +114,22 @@ export default {
   props: {
     visible: Boolean,
     code: Number,
-    text: String
+    text: String,
+    is24hours: Number
   },
   data () {
     return {
       dialogStatus: false,
       isCheckTip: false
+    }
+  },
+  computed: {
+    titleTips () {
+      if (this.text) {
+        const textArr = String(this.text).split(',')
+        if (textArr[1]) return [1]
+      }
+      return '将于24h内给你反馈'
     }
   },
   methods: {

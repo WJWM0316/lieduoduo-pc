@@ -51,6 +51,7 @@
     <tips-dialog
       :visible.sync="tipsPopup"
       :content="text"
+      :is24hours="infos.isRapidly || 0"
       @re-apply="code => todoAction(tipsTempActionType, code)"
       :code="responseCode">
     </tips-dialog>
@@ -203,7 +204,6 @@ export default {
             this.showPopupType = 'grabInterviewChat' // 抢占成功弹窗以及传参
             this.showPopup = true
           }
-          // 其他状态 不予申请状态和二次申请
         }
         this.$emit('init')
       }).catch(({ data }) => {
