@@ -59,7 +59,7 @@
       </template>
       <div class="tips-content">系统检测到你的工作经验和工作经历不匹配，请问信息是匹配的吗？</div>
       <template slot="footer">
-        <el-checkbox @change="handleSetHide" v-model="isCheckTip" label="不再提示"></el-checkbox>
+        <el-checkbox v-model="isCheckTip" label="不再提示"></el-checkbox>
         <el-button type="default" @click="handleReApplay">信息无误</el-button>
         <el-button type="primary" @click="$router.push({name: 'cresume'})">修改简历</el-button>
       </template>
@@ -124,18 +124,23 @@ export default {
   methods: {
     // 继续申请
     handleReApplay () {
+      this.handleSetHide()
       this.$emit('re-apply', this.code)
     },
     handleClose () {
       this.dialogStatus = false
       this.$emit('update:visible', false)
     },
-    handleSetHide (value) {
-      let key = Number(!value)
-      setReconfirmHide({
-        code: this.code,
-        isTmp: key
-      })
+    handleSetHide () {
+      if (this.isCheckTip) {
+        let key = Number(!this.isCheckTip)
+        setReconfirmHide({
+          code: this.code,
+          isTmp: key
+        }).then(() => {
+          this.isCheckTip = false
+        })
+      }
     },
     hanldeCopy () {
       const clipObj = new Clipboard('.wechat-code-text')
