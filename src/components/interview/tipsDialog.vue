@@ -37,7 +37,7 @@
         <div style="padding-left: 26px">你的期望职位类型与该职位不匹配，请修改后再申请。</div>
       </div>
       <template slot="footer">
-        <el-button @click="handleClose">取消</el-button>
+        <el-button @click="handleClose">知道了</el-button>
         <el-button type="primary" @click="$router.push({name: 'cresume'})">编辑简历</el-button>
       </template>
     </template>
@@ -60,7 +60,7 @@
       <div class="tips-content">系统检测到你的工作经验和工作经历不匹配，请问信息是匹配的吗？</div>
       <template slot="footer">
         <el-checkbox @change="handleSetHide" v-model="isCheckTip" label="不再提示"></el-checkbox>
-        <el-button type="default" @click="handleClose">信息无误</el-button>
+        <el-button type="default" @click="handleReApplay">信息无误</el-button>
         <el-button type="primary" @click="$router.push({name: 'cresume'})">修改简历</el-button>
       </template>
     </template>
