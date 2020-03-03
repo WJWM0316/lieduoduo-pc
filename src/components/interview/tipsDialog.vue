@@ -67,7 +67,10 @@
     <!-- 2001 | 2002 | 2003  -->
     <template v-if="code === 2001 || code === 2002 || code === 2003">
       <template slot="title">
-        <div class="tips-title" v-if="is24hours">抢占成功, {{titleTips}}</div>
+        <div class="tips-title" v-if="is24hours">
+          <template v-if="endtime">抢占成功, 最迟{{endtime | date('M月DD日')}}得到反馈</template>
+          <template v-else>将于24h内得到反馈</template>
+        </div>
         <div  class="tips-title" v-else>申请成功</div>
       </template>
       <div class="tips-content">
@@ -115,21 +118,13 @@ export default {
     visible: Boolean,
     code: Number,
     text: String,
-    is24hours: Number
+    is24hours: Number,
+    endtime: String
   },
   data () {
     return {
       dialogStatus: false,
       isCheckTip: false
-    }
-  },
-  computed: {
-    titleTips () {
-      if (this.text) {
-        const textArr = String(this.text).split(',')
-        if (textArr[1]) return [1]
-      }
-      return '将于24h内给你反馈'
     }
   },
   methods: {

@@ -42,8 +42,7 @@
           infos.chatInfo.status === 301 ||
           infos.chatInfo.status === 501 ||
           infos.chatInfo.status === 701)"
-         type="primary" @click="todoAction('goChat')">继续聊</el-button>
-
+          type="primary" @click="todoAction('goChat')">继续聊</el-button>
         <el-button :loading="loading" v-else type="primary" @click="todoAction('chat')">一键约聊</el-button>
       </template>
     </div>
@@ -52,6 +51,7 @@
       :visible.sync="tipsPopup"
       :content="text"
       :is24hours="infos.isRapidly || 0"
+      :endtime="infos.rapidlyServiceEndTime || ''"
       @re-apply="code => todoAction(tipsTempActionType, code)"
       :code="responseCode">
     </tips-dialog>
@@ -122,8 +122,6 @@ export default {
       switch (genre) {
         case 'chat': // 约聊
           this.tipsTempActionType = genre
-          // this.responseCode = 2001
-          // this.tipsPopup = true
           this.chatApply(code)
           break
         case 'goChat': // 继续聊
@@ -145,6 +143,8 @@ export default {
           }
           this.tipsTempActionType = genre
           this.applyInterview(code)
+          // this.responseCode = 2001
+          // this.tipsPopup = true
           break
         case 'interviewChat': // 24约聊
           this.chatApply(code)
