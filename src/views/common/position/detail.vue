@@ -35,7 +35,7 @@
                 <div class="time">还剩<template v-if="remainingTime.day > 0"><span class="little-box">{{remainingTime.day}}</span>天</template><span class="little-box">{{remainingTime.hour}}</span>:<span class="little-box">{{remainingTime.minute}}</span>:<span class="little-box">{{remainingTime.second}}</span></div>
                 <p class="desc">{{chatDesc}}<el-tooltip class="item" popper-class="tooltip" effect="light"  placement="bottom-end">
                   <p slot="content">1.抢占约面席位后将享【急速反馈服务】。<br>
-                    2.急速约面服务<br>
+                    2.在线约面服务<br>
                     （1）法定工作日（除节假日前一天）内抢占约面席位，面试官将在抢占成功后的24小时内给与答复。<br>
                     （2）节假日前一天及节假日内抢占约面席位，面试官将在假期结束后的24小时内给与答复。</p>
                   <i class="icon"></i>

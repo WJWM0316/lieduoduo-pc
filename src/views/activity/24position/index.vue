@@ -62,7 +62,7 @@
     <div class="position-bottom">
       <div class="position-bottom-header">
         <img src="../../../assets/images/activity/24h/24h_footer_title.png"  />
-        <p>更多酷公司已加入24小时极速面试</p>
+        <p>更多酷公司已加入24小时在线面试</p>
       </div>
       <div class="position-bottom-logo" style="width: 764px">
         <img :src="$cdnPath + '/images/24h_footer_logo.png'"  />
