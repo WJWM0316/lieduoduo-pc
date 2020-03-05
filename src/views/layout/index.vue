@@ -25,7 +25,7 @@ export default {
   },
   computed: {
     shouldBottomShown () {
-      return !['position24h', 'marketOriginality', 'dreamDisco', 'alliance', 'disease'].includes(this.$route.name)
+      return !['position24h', 'marketOriginality', 'dreamDisco', 'alliance', 'disease', 'queen'].includes(this.$route.name)
     }
   },
   data () {
