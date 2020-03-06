@@ -1,18 +1,38 @@
 <template>
 	<div class="loginWrap">
 		<div class="inner">
-      <i class="correct iconfont icon-zhengque"></i>
 			<div class="inner-content">
-				<p class="title">职位发布成功!</p>
-        <div class="code">
-          <img src="../../../../assets/images/activity/disease/diseaseCode.png"/>
-        </div>
-				<p class="desc">扫码添加客服小姐姐小多多 我们将在3天内发放招聘奖励</p>
+				<p class="desc">亲爱的女王 节日快乐～<br/>
+				复制并添加小仙女微信号：zike_006<br/>
+				即可一键领取福利啦
+				</p>
+				<div class="copy" id="Receive-date" data-clipboard-text="zike_006" @click="copy">马上复制</div>
 			</div>
 			<div class="closeBtn iconfont icon-danchuang-guanbi" @click="closePop"></div>
 		</div>
 	</div>
 </template>
+
+<script>
+import Clipboard from 'clipboard'
+export default {
+  methods: {
+    closePop () {
+      this.$parent.popShow = false
+    },
+    copy () {
+      let clipboard = new Clipboard('#Receive-date')
+			  clipboard.on('success', e => {
+        this.$message({
+          message: '复制成功',
+          type: 'success'
+        })
+			  })
+    }
+  }
+}
+</script>
+
 <style lang="less" scoped>
 	.loginWrap {
 		width: 100%;
@@ -32,30 +52,12 @@
 		box-sizing: border-box;
 		color: #01C7D2;
     position: relative;
-    .correct{
-      position: absolute;
-      left: 50%;
-      transform: translate(-50%,-50%);
-      z-index: 3;
-      font-size: 56px;
-      &::after{
-        content: '';
-        display: inline-block;
-        background: #fff;
-        border-radius: 50%;
-        width: 50px;
-        height: 50px;
-        position: absolute;
-        left: 50%;
-        transform: translate(-50%, 10%);
-        z-index: -1;
-      }
-    }
+
 		.inner-content {
 			overflow: hidden;
-			padding: 60px 0 30px;
+			padding: 40px 0 30px;
 			background: #fff;
-			border: 2px solid #02C7D0;
+			border: 2px solid #FF4AA0;
 			position: relative;
 			border-radius: 16px;
 		}
@@ -73,35 +75,24 @@
 			color: #fff;
 			font-size: 12px;
 		}
-		.title {
-			font-size: 24px;
-			line-height: 20px;
-			font-weight: bold;
-		}
 		.desc {
-			font-size: 16px;
-      margin: 11px auto 10px auto;
-      font-weight: 300;
-      width: 240px;
-      color: #333333;
-      line-height: 23px;
-    }
-    .code{
-      width: 210px;
-      height: 210px;
+			font-size: 20px;
       margin: 0 auto;
-      img{
-        width: 100%;
-      }
-    }
+      font-weight: 300;
+      color: #F7278A;
+      line-height: 30px;
+		}
+		.copy{
+			width: 230px;
+			height: 55px;
+			margin: 40px auto 0 auto;
+			background: url("../../../../assets/images/activity/copy_btn.png") no-repeat;
+			background-size: 100% 100%;
+			line-height: 55px;
+			color: #ffffff;
+			font-size: 24px;
+			font-weight: 500;
+		}
 	}
 </style>
-<script>
-export default {
-  methods: {
-    closePop () {
-      this.$parent.popShow = false
-    }
-  }
-}
-</script>
+

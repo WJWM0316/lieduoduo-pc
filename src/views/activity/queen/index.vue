@@ -100,8 +100,10 @@
     <div class="partner"></div>
     <div class="welfare"></div>
     <div class="footer">
-      <div class="footer-btn">领取福利</div>
+      <div class="footer-btn" id="get-welfare" @click="pop">一键领取</div>
+      <div class="footer-text">前往【猎多多】官方微博，还有更多# 品牌福利抽奖互动 #等你喔~</div>
     </div>
+    <pop v-if="popShow"></pop>
   </div>
 </template>
 
@@ -110,6 +112,8 @@ import {
   getDiscoListApi,
   getStaDiscoListApi
 } from '@/api/dreamDisco.js'
+
+import pop from './components/pop'
 
 export default {
   data () {
@@ -120,8 +124,12 @@ export default {
       positionNowList: [], // 当前所在职位的数组
       recruiterList: [], // 招聘官列表
       positionType: [], // 职位类型按钮
-      positionActivity: 0
+      positionActivity: 0,
+      popShow: false
     }
+  },
+  components: {
+    pop
   },
   methods: {
     positionBntClick (index) {
@@ -167,12 +175,15 @@ export default {
       data.type = identity
       getStaDiscoListApi(data).then()
       window.open(routeTo.href, '_blank')
+    },
+    pop () {
+      this.popShow = true
     }
   },
   mounted () {
     // 百度统计
     var hm = document.createElement('script')
-    hm.src = 'https://hm.baidu.com/hm.js?b5e124d917558ad37fe0e1c928d79dfc'
+    hm.src = '"https://hm.baidu.com/hm.js?1a3ad4f83a2d3c51bb83a193cce8f5eb"'
     var s = document.getElementsByTagName('script')[0]
     s.parentNode.insertBefore(hm, s)
 
@@ -295,16 +306,16 @@ $bg-color1: #F076B7;
     }
   }
   .partner{
-    background: url(#{$image-activity-cdn-url}/queen_pc/queen_07.jpg) no-repeat;
+    background: url(#{$image-activity-cdn-url}/queen_pc/queen_07.jpg?a=1) no-repeat;
     background-position: center center;
     width: 100%;
-    height: 394px;
+    height: 580px;
   }
   .welfare{
-    background: url(#{$image-activity-cdn-url}/queen_pc/queen_08.jpg) no-repeat;
+    background: url(#{$image-activity-cdn-url}/queen_pc/queen_08.jpg?a=1) no-repeat;
     background-position: center center;
     width: 100%;
-    height: 522px;
+    height: 703px;
   }
   .footer{
     background: url(#{$image-activity-cdn-url}/queen_pc/queen_09.jpg) no-repeat;
@@ -323,10 +334,16 @@ $bg-color1: #F076B7;
       line-height: 100px;
       margin: 45px auto 0 auto;
     }
+    .footer-text{
+      font-size: 18px;
+      color: #CD2A6D;
+      margin-top: 164px;
+      text-align: center;
+    }
   }
 }
 // 放到外层减少嵌套
-// 梦想召集人 || 招聘官列表
+// 招聘官列表
 .carousel{
   background: url(#{$image-activity-cdn-url}/queen_pc/queen_03.jpg) no-repeat;
   background-position: center center;
