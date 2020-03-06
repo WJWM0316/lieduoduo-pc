@@ -24,7 +24,7 @@
         <el-carousel height="320px" :interval="3000" type="card" arrow="never">
           <el-carousel-item v-for="(item, index) in recruiterList" :key="index">
             <div class="carousel-item" @click="toNewPage(item, index, 'recruiter')">
-              <img :src="item.pcImg.url"/>
+              <img v-if="item.pcImg" :src="item.pcImg.url"/>
               <div>
                 <p class="carousel-realName">{{ item.realName }}</p>
                 <p class="carousel-companyShortname">{{ item.companyShortname + '&nbsp;|&nbsp;' + item.position }}</p>
@@ -47,7 +47,7 @@
                 <div class="dreamCity-box-companyList-item" v-for="(item1, index1) in item" :key="index1">
                   <div class="dreamCity-company" @click="toNewPage(item1, index1, 'company')">
                     <div class="dreamCity-companyImg">
-                      <img :src="item1.logoInfo.smallUrl"/>
+                      <img v-if="item1.logoInfo" :src="item1.logoInfo.smallUrl"/>
                     </div>
                     <div class="dreamCity-text">
                       <p class="dreamCity-companyShortname">{{ item1.companyShortname }}</p>
