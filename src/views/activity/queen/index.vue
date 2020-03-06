@@ -539,7 +539,7 @@ $bg-color1: #F076B7;
     }
   }
   .dreamCity-position{
-    padding: 3px 17px;
+    padding: 9px 17px 0 17px;
     .dreamCity-positionList{
       padding: 0 10px;
       height: 45px;
