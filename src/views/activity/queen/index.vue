@@ -101,7 +101,7 @@
     <div class="welfare"></div>
     <div class="footer">
       <div class="footer-btn" id="get-welfare" @click="pop">一键领取</div>
-      <div class="footer-text">前往【猎多多】官方微博，还有更多# 品牌福利抽奖互动 #等你喔~</div>
+      <div class="footer-text">前往【猎多多】官方微博，还有更多<span> # 品牌福利抽奖互动 # </span>等你喔~</div>
     </div>
     <pop v-if="popShow"></pop>
   </div>
@@ -336,12 +336,16 @@ $bg-color1: #F076B7;
       font-weight: 500;
       line-height: 100px;
       margin: 45px auto 0 auto;
+      letter-spacing: 6px;
     }
     .footer-text{
       font-size: 18px;
       color: #CD2A6D;
       margin-top: 164px;
       text-align: center;
+      span{
+        font-weight: 600;
+      }
     }
   }
 }
@@ -376,8 +380,8 @@ $bg-color1: #F076B7;
     width: 199px;
     height: 289px;
     position: absolute;
-    left: 3px;
-    bottom: 3px;
+    left: 5px;
+    bottom: 5px;
   }
   .carousel-realName{
     font-size:26px;
@@ -491,12 +495,13 @@ $bg-color1: #F076B7;
 .dreamCity-box-companyList-item{
   display: inline-block;
   width: 344px;
-  height: 274px;
-  margin: 3px 31px 30px 3px;
+  height: 240px;
+  margin: 3px 25px 24px 3px;
   background: #ffffff;
   vertical-align: middle;
   border-radius:10px;
   position: relative;
+  box-shadow:1px 2px 13px 0px rgba(243,215,247,1);
   &:nth-child(3n){
     margin-right: 0;
   }
@@ -532,10 +537,10 @@ $bg-color1: #F076B7;
     }
   }
   .dreamCity-position{
-    padding: 2px 17px;
+    padding: 3px 17px;
     .dreamCity-positionList{
       padding: 0 10px;
-      height: 43px;
+      height: 45px;
       line-height: 43px;
       margin-top: 8px;
       display: flex;
@@ -587,20 +592,7 @@ $bg-color1: #F076B7;
   padding: 20px 13px 14px 15px;
   box-sizing: border-box;
   margin-top: 3px;
-  &::after{
-    content: '';
-    display: inline-block;
-    border-radius: 10px;
-    height: 170px;
-    width: 282px;
-    position: absolute;
-    left: -3px;
-    top: -3px;
-    bottom: -3px;
-    right: -3px;
-    z-index: -1;
-    background: linear-gradient(165deg, rgba(205,42,109,1), rgba(248,140,185,1), rgba(205,42,109,1));
-  }
+  border: 2px solid #da4783;
   &:nth-child(4n){
     margin-right: 0;
   }

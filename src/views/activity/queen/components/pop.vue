@@ -3,10 +3,10 @@
 		<div class="inner">
 			<div class="inner-content">
 				<p class="desc">亲爱的女王 节日快乐～<br/>
-				复制并添加小仙女微信号：zike_006<br/>
-				即可一键领取福利啦
+				扫码添加小仙女微信号<br/>
+				即可领取福利啦
 				</p>
-				<div class="copy" id="Receive-date" data-clipboard-text="zike_006" @click="copy">马上复制</div>
+				<div class="code"></div>
 			</div>
 			<div class="closeBtn iconfont icon-danchuang-guanbi" @click="closePop"></div>
 		</div>
@@ -19,21 +19,12 @@ export default {
   methods: {
     closePop () {
       this.$parent.popShow = false
-    },
-    copy () {
-      let clipboard = new Clipboard('#Receive-date')
-			  clipboard.on('success', e => {
-        this.$message({
-          message: '复制成功',
-          type: 'success'
-        })
-			  })
     }
   }
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 	.loginWrap {
 		width: 100%;
 		height: 100%;
@@ -47,7 +38,7 @@ export default {
 		z-index: 10;
 	}
 	.inner {
-		width: 400px;
+		width: 340px;
 		text-align: center;
 		box-sizing: border-box;
 		color: #01C7D2;
@@ -55,7 +46,7 @@ export default {
 
 		.inner-content {
 			overflow: hidden;
-			padding: 40px 0 30px;
+			padding: 40px 0 22px;
 			background: #fff;
 			border: 2px solid #FF4AA0;
 			position: relative;
@@ -76,22 +67,18 @@ export default {
 			font-size: 12px;
 		}
 		.desc {
-			font-size: 20px;
+			font-size: 18px;
       margin: 0 auto;
-      font-weight: 300;
+      font-weight: 400;
       color: #F7278A;
-      line-height: 30px;
+      line-height: 28px;
 		}
-		.copy{
-			width: 230px;
-			height: 55px;
-			margin: 40px auto 0 auto;
-			background: url("../../../../assets/images/activity/copy_btn.png") no-repeat;
+		.code{
+			width: 180px;
+      height: 180px;
+			margin: 17px auto 0 auto;
+			background: url(#{$image-activity-cdn-url}/queen_pc/queenCode.jpg) no-repeat;
 			background-size: 100% 100%;
-			line-height: 55px;
-			color: #ffffff;
-			font-size: 24px;
-			font-weight: 500;
 		}
 	}
 </style>
