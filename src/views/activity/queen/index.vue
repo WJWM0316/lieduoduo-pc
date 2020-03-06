@@ -42,7 +42,7 @@
       <div class="dreamCity-box">
 
         <div class="dreamCity-box-companyList" v-if="dreamCityList[0]">
-          <el-carousel :interval="3000" height="655px" :arrow="dreamCityList[1] ? 'hover' :'never'">
+          <el-carousel :interval="3000" height="580px" :arrow="dreamCityList[1] ? 'hover' :'never'">
             <el-carousel-item v-for="(item, index) in dreamCityList" :key="index">
                 <div class="dreamCity-box-companyList-item" v-for="(item1, index1) in item" :key="index1">
                   <div class="dreamCity-company" @click="toNewPage(item1, index1, 'company')">
@@ -450,7 +450,7 @@ $bg-color1: #F076B7;
   // overflow: hidden;
   width: 1313px;
   margin: 0 auto;
-  height: 620px;
+  height: 580px;
   position: relative;
   z-index: 0;
 }
