@@ -343,7 +343,7 @@ $bg-color1: #F076B7;
     .footer-text{
       font-size: 18px;
       color: #CD2A6D;
-      margin-top: 164px;
+      margin-top: 170px;
       text-align: center;
       span{
         font-weight: 600;
