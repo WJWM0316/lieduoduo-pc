@@ -147,7 +147,8 @@ export default {
           routeTo = this.$router.resolve({
             path: '/company/details',
             query: {
-              vkey: item.vkey
+              vkey: item.vkey,
+              sourceType: 'hd_queen_web'
             }
           })
           data.id = item.id
@@ -156,7 +157,8 @@ export default {
           routeTo = this.$router.resolve({
             path: '/position/details',
             query: {
-              positionId: item.positionId
+              positionId: item.positionId,
+              sourceType: 'hd_queen_web'
             }
           })
           data.id = item.positionId
@@ -399,7 +401,7 @@ $bg-color1: #F076B7;
       opacity: 0.2;
       width: 211px;
       height: 1px;
-      background: #ffffff;
+      background: #CD2A6D;
       position: absolute;
       top: -23px;
       left: 0;
