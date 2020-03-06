@@ -42,11 +42,21 @@
       </template>
     </template>
     <!-- 725 | 735 -->
-    <template v-if="code === 725 || code === 735 || code === 726 || code === 736">
+    <template v-if="code === 725 || code === 735">
       <template slot="title">
         <div class="tips-title">职位匹配度较低</div>
       </template>
       <div class="tips-content">你的期望职位和该职位匹配度较低，确定要申请吗？</div>
+      <template slot="footer">
+        <el-button @click="handleReApplay">继续申请</el-button>
+        <el-button type="primary" @click="handleClose">再看看</el-button>
+      </template>
+    </template>
+    <template v-if="code === 726 || code === 736">
+      <template slot="title">
+        <div class="tips-title">职位匹配度较低</div>
+      </template>
+      <div class="tips-content">你的工作经验和该职位匹配度较低，确定要申请吗？</div>
       <template slot="footer">
         <el-button @click="handleReApplay">继续申请</el-button>
         <el-button type="primary" @click="handleClose">再看看</el-button>

@@ -13,7 +13,7 @@
         <template v-if="type === 'qrcodeLogin' && toggleType">
           <div class="logind">
             <h3 class="cont_tit" style="margin-bottom:24px">扫码登录</h3>
-            <div class="cont_p">使用「猎多多小程序」扫码登录</div>
+            <div class="cont_p">使用「猎多多APP、小程序」扫码登录</div>
 
             <div class="cont_help">
               <div class="cont_help_left" @click="openHelp = !openHelp">
