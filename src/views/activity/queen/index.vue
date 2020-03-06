@@ -325,6 +325,8 @@ $bg-color1: #F076B7;
     background-position: center center;
     width: 100%;
     height: 386px;
+    padding-top: 45px;
+    box-sizing: border-box;
     .footer-btn{
       text-align: center;
       color: #fff;
@@ -335,7 +337,7 @@ $bg-color1: #F076B7;
       font-size: 30px;
       font-weight: 500;
       line-height: 100px;
-      margin: 45px auto 0 auto;
+      margin: 0 auto;
       letter-spacing: 6px;
     }
     .footer-text{
