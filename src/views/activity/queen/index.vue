@@ -168,7 +168,8 @@ export default {
             path: '/company/details',
             query: {
               vkey: item.companyVkey,
-              type: 'position'
+              type: 'position',
+              sourceType: 'hd_queen_web'
             }
           })
           data.id = item.uid
