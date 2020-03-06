@@ -343,7 +343,7 @@ $bg-color1: #F076B7;
     .footer-text{
       font-size: 18px;
       color: #CD2A6D;
-      margin-top: 170px;
+      margin-top: 115px;
       text-align: center;
       span{
         font-weight: 600;
@@ -434,7 +434,7 @@ $bg-color1: #F076B7;
   background: url(#{$image-activity-cdn-url}/queen_pc/queen_04.jpg) no-repeat;
   background-position: top center;
   width: 100%;
-  height: 827px;
+  height: 873px;
   box-sizing: border-box;
   padding-top: 230px;
   position: relative;
@@ -571,7 +571,7 @@ $bg-color1: #F076B7;
   background-position: top center, bottom center;
   width: 100%;
   height: 1046px;
-  margin-top: 100px;
+  // margin-top: 100px;
   position: relative;
   z-index: 0;
 }
