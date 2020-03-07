@@ -53,7 +53,7 @@ export default {
             this.qrCodeUrl = `${this.cdnPath}uploadAPP.png`
             this.title = '微信扫一扫'
             this.qrClass = 'no-radius'
-            this.qrcodeTxt = '解锁更多急速约面职位'
+            this.qrcodeTxt = '解锁更多在线约面职位'
             break
         }
       }
