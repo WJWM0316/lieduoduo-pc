@@ -715,10 +715,10 @@ $bg-color1: #F076B7;
 
 /* 左右按钮 */
 .dream .el-carousel__arrow--left{
-  left: -107px;
+  left: -105px;
 }
 .dream .el-carousel__arrow--right{
-  right: -107px;
+  right: -105px;
 }
 .dream .el-carousel__arrow{
   background: #524b5859;
