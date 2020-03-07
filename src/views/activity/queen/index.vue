@@ -186,7 +186,7 @@ export default {
   mounted () {
     // 百度统计
     var hm = document.createElement('script')
-    hm.src = 'https://hm.baidu.com/hm.js?1d2eb234dc177895917623cfbc210cf2'
+    hm.src = 'https://hm.baidu.com/hm.js?50405859f2a8a0ac9cad90eaf7b555eb'
     var s = document.getElementsByTagName('script')[0]
     s.parentNode.insertBefore(hm, s)
 
