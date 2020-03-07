@@ -24,7 +24,7 @@
         <el-carousel height="320px" :interval="3000" type="card" arrow="never">
           <el-carousel-item v-for="(item, index) in recruiterList" :key="index">
             <div class="carousel-item" @click="toNewPage(item, index, 'recruiter')">
-              <img :src="item.pcImg.url"/>
+              <img v-if="item.pcImg" :src="item.pcImg.url"/>
               <div>
                 <p class="carousel-realName">{{ item.realName }}</p>
                 <p class="carousel-companyShortname">{{ item.companyShortname + '&nbsp;|&nbsp;' + item.position }}</p>
@@ -42,12 +42,12 @@
       <div class="dreamCity-box">
 
         <div class="dreamCity-box-companyList" v-if="dreamCityList[0]">
-          <el-carousel :interval="3000" height="655px" :arrow="dreamCityList[1] ? 'hover' :'never'">
+          <el-carousel :interval="3000" height="580px" :arrow="dreamCityList[1] ? 'hover' :'never'">
             <el-carousel-item v-for="(item, index) in dreamCityList" :key="index">
                 <div class="dreamCity-box-companyList-item" v-for="(item1, index1) in item" :key="index1">
                   <div class="dreamCity-company" @click="toNewPage(item1, index1, 'company')">
                     <div class="dreamCity-companyImg">
-                      <img :src="item1.logoInfo.smallUrl"/>
+                      <img v-if="item1.logoInfo" :src="item1.logoInfo.smallUrl"/>
                     </div>
                     <div class="dreamCity-text">
                       <p class="dreamCity-companyShortname">{{ item1.companyShortname }}</p>
@@ -100,8 +100,10 @@
     <div class="partner"></div>
     <div class="welfare"></div>
     <div class="footer">
-      <div class="footer-btn">领取福利</div>
+      <div class="footer-btn" id="get-welfare" @click="pop">一键领取</div>
+      <div class="footer-text">前往【猎多多】官方微博，还有更多<span> # 品牌福利抽奖互动 # </span>等你喔~</div>
     </div>
+    <pop v-if="popShow"></pop>
   </div>
 </template>
 
@@ -110,6 +112,8 @@ import {
   getDiscoListApi,
   getStaDiscoListApi
 } from '@/api/dreamDisco.js'
+
+import pop from './components/pop'
 
 export default {
   data () {
@@ -120,8 +124,12 @@ export default {
       positionNowList: [], // 当前所在职位的数组
       recruiterList: [], // 招聘官列表
       positionType: [], // 职位类型按钮
-      positionActivity: 0
+      positionActivity: 0,
+      popShow: false
     }
+  },
+  components: {
+    pop
   },
   methods: {
     positionBntClick (index) {
@@ -139,7 +147,8 @@ export default {
           routeTo = this.$router.resolve({
             path: '/company/details',
             query: {
-              vkey: item.vkey
+              vkey: item.vkey,
+              sourceType: 'hd_queen_web'
             }
           })
           data.id = item.id
@@ -148,7 +157,8 @@ export default {
           routeTo = this.$router.resolve({
             path: '/position/details',
             query: {
-              positionId: item.positionId
+              positionId: item.positionId,
+              sourceType: 'hd_queen_web'
             }
           })
           data.id = item.positionId
@@ -158,7 +168,8 @@ export default {
             path: '/company/details',
             query: {
               vkey: item.companyVkey,
-              type: 'position'
+              type: 'position',
+              sourceType: 'hd_queen_web'
             }
           })
           data.id = item.uid
@@ -167,12 +178,15 @@ export default {
       data.type = identity
       getStaDiscoListApi(data).then()
       window.open(routeTo.href, '_blank')
+    },
+    pop () {
+      this.popShow = true
     }
   },
   mounted () {
     // 百度统计
     var hm = document.createElement('script')
-    hm.src = 'https://hm.baidu.com/hm.js?b5e124d917558ad37fe0e1c928d79dfc'
+    hm.src = '"https://hm.baidu.com/hm.js?1a3ad4f83a2d3c51bb83a193cce8f5eb"'
     var s = document.getElementsByTagName('script')[0]
     s.parentNode.insertBefore(hm, s)
 
@@ -295,22 +309,24 @@ $bg-color1: #F076B7;
     }
   }
   .partner{
-    background: url(#{$image-activity-cdn-url}/queen_pc/queen_07.jpg) no-repeat;
+    background: url(#{$image-activity-cdn-url}/queen_pc/queen_07.jpg?a=1) no-repeat;
     background-position: center center;
     width: 100%;
-    height: 394px;
+    height: 580px;
   }
   .welfare{
-    background: url(#{$image-activity-cdn-url}/queen_pc/queen_08.jpg) no-repeat;
+    background: url(#{$image-activity-cdn-url}/queen_pc/queen_08.jpg?a=1) no-repeat;
     background-position: center center;
     width: 100%;
-    height: 522px;
+    height: 703px;
   }
   .footer{
     background: url(#{$image-activity-cdn-url}/queen_pc/queen_09.jpg) no-repeat;
     background-position: center center;
     width: 100%;
     height: 386px;
+    padding-top: 45px;
+    box-sizing: border-box;
     .footer-btn{
       text-align: center;
       color: #fff;
@@ -321,12 +337,22 @@ $bg-color1: #F076B7;
       font-size: 30px;
       font-weight: 500;
       line-height: 100px;
-      margin: 45px auto 0 auto;
+      margin: 0 auto;
+      letter-spacing: 6px;
+    }
+    .footer-text{
+      font-size: 18px;
+      color: #CD2A6D;
+      margin-top: 115px;
+      text-align: center;
+      span{
+        font-weight: 600;
+      }
     }
   }
 }
 // 放到外层减少嵌套
-// 梦想召集人 || 招聘官列表
+// 招聘官列表
 .carousel{
   background: url(#{$image-activity-cdn-url}/queen_pc/queen_03.jpg) no-repeat;
   background-position: center center;
@@ -356,8 +382,8 @@ $bg-color1: #F076B7;
     width: 199px;
     height: 289px;
     position: absolute;
-    left: 3px;
-    bottom: 3px;
+    left: 5px;
+    bottom: 5px;
   }
   .carousel-realName{
     font-size:26px;
@@ -382,7 +408,7 @@ $bg-color1: #F076B7;
       opacity: 0.2;
       width: 211px;
       height: 1px;
-      background: #ffffff;
+      background: #CD2A6D;
       position: absolute;
       top: -23px;
       left: 0;
@@ -408,7 +434,7 @@ $bg-color1: #F076B7;
   background: url(#{$image-activity-cdn-url}/queen_pc/queen_04.jpg) no-repeat;
   background-position: top center;
   width: 100%;
-  height: 827px;
+  height: 873px;
   box-sizing: border-box;
   padding-top: 230px;
   position: relative;
@@ -424,7 +450,7 @@ $bg-color1: #F076B7;
   // overflow: hidden;
   width: 1313px;
   margin: 0 auto;
-  height: 620px;
+  height: 580px;
   position: relative;
   z-index: 0;
 }
@@ -471,12 +497,13 @@ $bg-color1: #F076B7;
 .dreamCity-box-companyList-item{
   display: inline-block;
   width: 344px;
-  height: 274px;
-  margin: 3px 31px 30px 3px;
+  height: 240px;
+  margin: 3px 25px 24px 3px;
   background: #ffffff;
   vertical-align: middle;
   border-radius:10px;
   position: relative;
+  box-shadow:1px 2px 13px 0px rgba(243,215,247,1);
   &:nth-child(3n){
     margin-right: 0;
   }
@@ -512,10 +539,10 @@ $bg-color1: #F076B7;
     }
   }
   .dreamCity-position{
-    padding: 2px 17px;
+    padding: 9px 17px 0 17px;
     .dreamCity-positionList{
       padding: 0 10px;
-      height: 43px;
+      height: 45px;
       line-height: 43px;
       margin-top: 8px;
       display: flex;
@@ -544,7 +571,7 @@ $bg-color1: #F076B7;
   background-position: top center, bottom center;
   width: 100%;
   height: 1046px;
-  margin-top: 100px;
+  // margin-top: 100px;
   position: relative;
   z-index: 0;
 }
@@ -567,20 +594,7 @@ $bg-color1: #F076B7;
   padding: 20px 13px 14px 15px;
   box-sizing: border-box;
   margin-top: 3px;
-  &::after{
-    content: '';
-    display: inline-block;
-    border-radius: 10px;
-    height: 170px;
-    width: 282px;
-    position: absolute;
-    left: -3px;
-    top: -3px;
-    bottom: -3px;
-    right: -3px;
-    z-index: -1;
-    background: linear-gradient(165deg, rgba(205,42,109,1), rgba(248,140,185,1), rgba(205,42,109,1));
-  }
+  border: 2px solid #da4783;
   &:nth-child(4n){
     margin-right: 0;
   }
