@@ -73,7 +73,7 @@
           </div>
         </div>
       <div class="positionCard-main" v-if="positionNowList[0]">
-          <el-carousel :interval="5000" height="635px" :arrow="positionNowList[0].length > 11 ? 'hover' :'never'">
+          <el-carousel :interval="5000" height="635px" :arrow="positionNowList.length > 1 ? 'hover' :'never'">
             <el-carousel-item v-for="(item, index) in positionNowList" :key="index">
             <div class="positionCard-wrap-item" v-for="(item1, index1) in positionNowList[index]" :key="index1" @click="toNewPage(item1, index1, 'position')">
               <p class="positionCard-positionName">{{ item1.positionName}}</p>
