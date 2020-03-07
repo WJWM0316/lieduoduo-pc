@@ -21,7 +21,7 @@
     </div>
     <div class="carousel">
       <div class="carousel-box">
-        <el-carousel height="320px" :interval="3000" type="card" arrow="never">
+        <el-carousel height="320px" :interval="5000" type="card" arrow="never">
           <el-carousel-item v-for="(item, index) in recruiterList" :key="index">
             <div class="carousel-item" @click="toNewPage(item, index, 'recruiter')">
               <img v-if="item.pcImg" :src="item.pcImg.url"/>
@@ -42,7 +42,7 @@
       <div class="dreamCity-box">
 
         <div class="dreamCity-box-companyList" v-if="dreamCityList[0]">
-          <el-carousel :interval="3000" height="580px" :arrow="dreamCityList[1] ? 'hover' :'never'">
+          <el-carousel :interval="5000" height="580px" :arrow="dreamCityList[1] ? 'hover' :'never'">
             <el-carousel-item v-for="(item, index) in dreamCityList" :key="index">
                 <div class="dreamCity-box-companyList-item" v-for="(item1, index1) in item" :key="index1">
                   <div class="dreamCity-company" @click="toNewPage(item1, index1, 'company')">
@@ -73,7 +73,7 @@
           </div>
         </div>
       <div class="positionCard-main" v-if="positionNowList[0]">
-          <el-carousel :interval="3000" height="635px" :arrow="positionNowList[0].length > 11 ? 'hover' :'never'">
+          <el-carousel :interval="5000" height="635px" :arrow="positionNowList[0].length > 11 ? 'hover' :'never'">
             <el-carousel-item v-for="(item, index) in positionNowList" :key="index">
             <div class="positionCard-wrap-item" v-for="(item1, index1) in positionNowList[index]" :key="index1" @click="toNewPage(item1, index1, 'position')">
               <p class="positionCard-positionName">{{ item1.positionName}}</p>
