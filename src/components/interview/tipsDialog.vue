@@ -128,7 +128,7 @@ export default {
     visible: Boolean,
     code: Number,
     content: String,
-    is24hours: Number,
+    is24hours: Boolean,
     endtime: String
   },
   data () {
@@ -212,6 +212,9 @@ export default {
 </style>
 <style lang="scss">
 .tips-dialog.app-dialog {
+  margin-top: auto !important;
+  top: 50%;
+  transform: translateY(-50%);
   .el-dialog__header {
     padding-bottom: 6px !important;
   }
