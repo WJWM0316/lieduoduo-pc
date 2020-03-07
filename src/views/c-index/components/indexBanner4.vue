@@ -6,12 +6,15 @@
     <!-- <router-link target="_blank" :to="{name: 'marketOriginality'}" class="li-item">
       <img :src="cdnPath + 'marketOriginality_banner.png'" alt="loading">
     </router-link> -->
-    <router-link target="_blank" :to="{name: 'alliance', query: { sourceType: 'hd_alliance_web' }}" class="left-banner">
+    <router-link target="_blank" :to="{name: 'queen', query: { sourceType: 'hd_queen_web' }}" class="li-item">
+      <img src="@/assets/images/activity/queen/queen_banner.png" alt="loading">
+    </router-link>
+    <!-- <router-link target="_blank" :to="{name: 'alliance', query: { sourceType: 'hd_alliance_web' }}" class="left-banner">
       <img src="@/assets/images/activity/alliance/small_banner.png" alt="loading">
     </router-link>
     <router-link target="_blank" :to="{name: 'disease', query: { sourceType: 'hd_job_web' }}" class="right-banner">
       <img src="@/assets/images/activity/disease/diseaseBanner.png" alt="loading">
-    </router-link>
+    </router-link> -->
     <!-- <div class="random-left-banner">
       <router-link target="_blank" :to="{name: 'companyDetail', query: { vkey: 'pfpaotwi' }}" class="li-item">
         <img src="~@/assets/random_images/img1.jpg" alt="loading">
