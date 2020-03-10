@@ -51,7 +51,9 @@ export default {
   width: 432px !important;
   height: 294px;
   border-radius: 8px !important;
-  margin-top: calc(50vh - 147px) !important;
+  margin-top: auto !important;
+  top: 50%;
+  transform: translateY(-50%);
   background: url(#{$image-cdn-url}/images/downloadApp.png) $bg-color-4 !important;
   background-size: 432px 294px !important;
   .el-dialog__body{

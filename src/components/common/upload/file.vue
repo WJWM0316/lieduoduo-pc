@@ -240,15 +240,19 @@ export default {
 .file-alert .el-message-box__header {
   padding-top: 44px;
   text-align: center !important;
+  padding-bottom: 16px;
 }
 .file-alert .el-message-box__title{
   font-size: 14px;
   color: $title-color-1;
   text-align: center;
+  span {
+    font-weight: normal !important;
+  }
 }
 .file-alert .el-message-box__btns {
   text-align: center !important;
-  padding: 42px 0 24px !important;
+  padding: 32px 0 24px !important;
 }
 .file-alert p.alert-content {
   color: $sub-color-1;

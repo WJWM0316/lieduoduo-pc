@@ -77,7 +77,9 @@ export default {
 .positionDownloadApp-dialog{
   width: 432px !important;
   border-radius: 8px !important;
-  margin-top: calc(50vh - 147px) !important;
+  margin-top: auto !important;
+  top: 50%;
+  transform: translateY(-50%);
 }
 .positionDownloadApp .el-dialog__header{
   height: 0 !important;

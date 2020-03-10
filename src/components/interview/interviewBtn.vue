@@ -144,10 +144,10 @@ export default {
             })
             return
           }
-          this.tipsTempActionType = genre
-          this.applyInterview(code)
-          // this.responseCode = 2001
-          // this.tipsPopup = true
+          // this.tipsTempActionType = genre
+          // this.applyInterview(code)
+          this.responseCode = 2004
+          this.tipsPopup = true
           break
         case 'interviewChat': // 24约聊
           this.chatApply(code)

@@ -2,6 +2,7 @@
   <el-dialog
     @close="handleClose"
     width="432px"
+    append-to-body
     custom-class="app-dialog tips-dialog"
     :visible.sync="dialogStatus">
     <!-- 720 | 730 -->
@@ -90,15 +91,15 @@
       <template slot="footer">
         <template v-if="code === 2001">
           <div class="c-btn" style="margin-right: 16px;" @click="$router.push({name: 'cresume', query: {todo: 'upload'}})">上传附件简历</div>
-          <el-button type="primary" @click="$router.push({name: 'cresume'})">完善在线简历</el-button>
+          <el-button type="primary" @click="$router.push({name: 'cresume'})" class="footer-primary-btn">完善在线简历</el-button>
         </template>
         <template v-if="code ===2002">
           <el-button type="default" @click="handleClose">暂不完善</el-button>
-          <el-button type="primary" @click="$router.push({name: 'cresume'})">完善在线简历</el-button>
+          <el-button type="primary" @click="$router.push({name: 'cresume'})" class="footer-primary-btn">完善在线简历</el-button>
         </template>
         <template v-if="code === 2003">
           <el-button type="default" @click="handleClose">暂不完善</el-button>
-          <el-button type="primary" @click="$router.push({name: 'cresume', query: {todo: 'upload'}})">上传附件简历</el-button>
+          <el-button type="primary" @click="$router.push({name: 'cresume', query: {todo: 'upload'}})" class="footer-primary-btn">上传附件简历</el-button>
         </template>
       </template>
     </template>
@@ -109,7 +110,7 @@
       </template>
       <div class="tips-content tip-success">
         <div style="padding-left: 26px; margin-bottom: 33px">{{content || '面试官已收到你的申请，将于24h内给你反馈~'}}</div>
-        <div style="text-align: center">
+        <div style="text-align: center; height: 242px">
           <img src="~@/assets/images/24h_apply_success.png" alt="">
         </div>
       </div>
@@ -196,6 +197,7 @@ export default {
   img {
     max-width: 100%;
     width: 314px;
+    max-height: 242px;
   }
   .wechat-code-text, .weight-text{
     color: $main-color-1;
@@ -209,8 +211,16 @@ export default {
   color: $title-color-3;
   margin-right: 52px;
 }
+.footer-primary-btn.el-button {
+  padding-left: 0;
+  padding-right: 0;
+  text-align: center;
+}
 </style>
 <style lang="scss">
+.tips-dialog.el-dialog .el-dialog__footer {
+  padding-top: 52px !important;
+}
 .tips-dialog.app-dialog {
   margin-top: auto !important;
   top: 50%;

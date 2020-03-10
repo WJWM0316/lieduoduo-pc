@@ -95,6 +95,12 @@ div.el-dialog {
     .el-button {
       width: 88px;
     }
+    .el-button--default {
+      font-weight: normal;
+    }
+    .el-button--default:hover {
+      font-weight: 500;
+    }
     .el-button:last-child{
       width: 116px;
     }
@@ -160,6 +166,12 @@ div.el-dialog {
   }
   .el-button + .el-button {
     margin-left: 16px;
+  }
+  .el-button--default {
+    font-weight: normal;
+  }
+  .el-button--default:hover {
+    font-weight: 500;
   }
   .el-button--default.el-button--primary:focus {
     background: $bg-color-4;
