@@ -252,7 +252,7 @@ export default {
 }
 .file-alert .el-message-box__btns {
   text-align: center !important;
-  padding: 32px 0 24px !important;
+  padding: 42px 0 18px !important;
 }
 .file-alert p.alert-content {
   color: $sub-color-1;

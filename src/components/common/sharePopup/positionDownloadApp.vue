@@ -3,6 +3,7 @@
     <el-dialog
       custom-class="positionDownloadApp-dialog"
       @close="handleClose"
+      append-to-body
       :visible.sync="dialogTableVisible">
       <p class="positionDownloadApp-title">
         <i class="iconfont icon-zhengque"></i>

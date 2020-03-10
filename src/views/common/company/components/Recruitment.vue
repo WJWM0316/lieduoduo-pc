@@ -160,7 +160,7 @@ export default {
     }
     .activation{
       color: $main-color-1 !important;
-      background: $bg-color-1;
+      background: $bg-color-5;
       font-weight: 500;
     }
   }

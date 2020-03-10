@@ -196,7 +196,7 @@ export default {
   color: $title-color-2;
   img {
     max-width: 100%;
-    width: 314px;
+    width: 291px;
     max-height: 242px;
   }
   .wechat-code-text, .weight-text{
