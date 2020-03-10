@@ -203,6 +203,9 @@ export default {
     color: $main-color-1;
     cursor: pointer;
   }
+  .wechat-code-text {
+    text-decoration: underline;
+  }
 }
 .tips-title.tips-title-success {
   color: $main-color-1;
