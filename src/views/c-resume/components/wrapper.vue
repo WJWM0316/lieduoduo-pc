@@ -39,7 +39,7 @@
       <slot name="edit"></slot>
       <div class="wrapper-button">
         <el-button @click="handleClose">取消</el-button>
-        <el-button type="primary" @click="handleSave" :loading="btnLoading">保存</el-button>
+        <el-button type="primary" class="wrapper-primary-button" @click="handleSave" :loading="btnLoading">保存</el-button>
       </div>
     </div>
   </div>
@@ -243,6 +243,9 @@ export default {
   padding-right: 12px;
   .el-button {
     width: 88px;
+  }
+  .wrapper-primary-button {
+    width: 120px;
   }
 }
 </style>

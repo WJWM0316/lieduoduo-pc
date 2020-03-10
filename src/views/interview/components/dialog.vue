@@ -2,7 +2,7 @@
   <el-dialog
     title="面试信息"
     :visible.sync="visiable"
-    width="430px"
+    width="423px"
     custom-class="interview-model"
     :center="true"
     @close="handleClose">

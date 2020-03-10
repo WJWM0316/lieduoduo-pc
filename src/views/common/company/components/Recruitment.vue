@@ -155,12 +155,12 @@ export default {
         border-radius: 2px;
       }
       .positionType-buttom:hover {
-        background-color: $bg-color-5;
+        background-color: $bg-color-1;
       }
     }
     .activation{
       color: $main-color-1 !important;
-      background: $bg-color-5;
+      background: $bg-color-1;
       font-weight: 500;
     }
   }

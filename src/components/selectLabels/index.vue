@@ -14,7 +14,7 @@
       </slot>
     </div>
     <el-dialog
-      width="450px"
+      width="432px"
       custom-class="app-dialog"
       append-to-body
       :visible.sync="dialogStatus">

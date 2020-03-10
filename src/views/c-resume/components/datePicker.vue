@@ -322,7 +322,7 @@ export default {
       font-weight: bold;
     }
     li:hover {
-      background-color: $bg-color-5
+      background-color: $bg-color-1
     }
   }
   .date-months {
@@ -342,7 +342,7 @@ export default {
       font-weight: bold;
     }
     div:hover {
-      background-color: $bg-color-5;
+      background-color: $bg-color-1;
     }
     .active {
       color: $main-color-1;

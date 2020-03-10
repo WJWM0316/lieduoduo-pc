@@ -14,7 +14,7 @@
     </div>
     <el-dialog
       :title="title"
-      width="650px"
+      width="612px"
       custom-class="app-dialog"
       append-to-body
       :visible.sync="showDialog">

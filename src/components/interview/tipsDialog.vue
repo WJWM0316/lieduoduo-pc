@@ -213,6 +213,7 @@ export default {
 .el-checkbox {
   color: $title-color-3;
   margin-right: 52px;
+  font-weight: normal;
 }
 .footer-primary-btn.el-button {
   padding-left: 0;
