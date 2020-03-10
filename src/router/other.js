@@ -91,7 +91,7 @@ const other = [
     ]
   },
   {
-    path: '/queen',
+    path: '/activity/queen',
     title: '女王节专题',
     component: Layout,
     children: [

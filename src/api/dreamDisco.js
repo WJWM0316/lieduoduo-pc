@@ -16,3 +16,11 @@ export const getStaDiscoListApi = data => request({
   params: data,
   config: { host: 'pub' }
 })
+
+// new 获取数据接口(活动后台)
+export const getZtDiscoListApi = data => request({
+  url: '/zt/pc/list',
+  method: 'get',
+  params: data,
+  config: { host: 'pub' }
+})

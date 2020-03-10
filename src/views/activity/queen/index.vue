@@ -23,14 +23,15 @@
       <div class="carousel-box">
         <el-carousel height="320px" :interval="5000" type="card" arrow="never">
           <el-carousel-item v-for="(item, index) in recruiterList" :key="index">
-            <div class="carousel-item" @click="toNewPage(item, index, 'recruiter')">
-              <img v-if="item.pcImg" :src="item.pcImg.url"/>
+            <div v-if="item.info.recruiterInfo
+            " class="carousel-item" @click="toNewPage(item, index, 'recruiter')">
+              <img :src="item.info.arrImage[1]"/>
               <div>
-                <p class="carousel-realName">{{ item.realName }}</p>
-                <p class="carousel-companyShortname">{{ item.companyShortname + '&nbsp;|&nbsp;' + item.position }}</p>
-                <p class="carousel-intro">{{ item.intro }}</p>
+                <p class="carousel-realName">{{ item.info.recruiterInfo.realname }}</p>
+                <p class="carousel-companyShortname">{{ item.info.recruiterInfo.companyShortname + '&nbsp;|&nbsp;' + item.info.recruiterInfo.position }}</p>
+                <p class="carousel-intro">{{ item.info.arrText[0] }}</p>
                 <div class="carousel-bnt">
-                  <span>{{ item.positionNum }}</span>个高薪机会热抢中 >>
+                  <span>{{ item.info.recruiterInfo.positionNum }}</span>个高薪机会热抢中 >>
                 </div>
               </div>
             </div>
@@ -47,15 +48,15 @@
                 <div class="dreamCity-box-companyList-item" v-for="(item1, index1) in item" :key="index1">
                   <div class="dreamCity-company" @click="toNewPage(item1, index1, 'company')">
                     <div class="dreamCity-companyImg">
-                      <img v-if="item1.logoInfo" :src="item1.logoInfo.smallUrl"/>
+                      <img v-if="item1.info.companInfo" :src="item1.info.companInfo.logo"/>
                     </div>
                     <div class="dreamCity-text">
-                      <p class="dreamCity-companyShortname">{{ item1.companyShortname }}</p>
-                      <p>{{ item1.industry + '&nbsp;|&nbsp;' + item1.financingInfo }}</p>
+                      <p class="dreamCity-companyShortname">{{ item1.info.companInfo.companyShortname }}</p>
+                      <p>{{ item1.info.companInfo.industry + '&nbsp;|&nbsp;' + item1.info.companInfo.financingInfo }}</p>
                     </div>
                   </div>
                   <div class="dreamCity-position">
-                    <div class="dreamCity-positionList" v-for="(item2, index2) in item1.positionList" :key="index2" @click="toNewPage(item2, index2, 'position')">
+                    <div class="dreamCity-positionList" v-for="(item2, index2) in item1.info.arrPosition" :key="index2" @click="toNewPage(item2, index2, 'companyPosition')">
                       <span class="dreamCity-positionList-name">{{ item2.positionName }}</span>
                       <span>{{ item2.emolumentMin + '-' + item2.emolumentMax + 'k'}}</span>
                     </div>
@@ -69,28 +70,28 @@
     <div class="positionCard">
       <div class="dreamCity-box-btnList">
           <div class="dreamCity-btn" v-for="(item, index) in positionType" :key="index" @click="positionBntClick(index)" :class="{ 'dreamCity-btn-activity': index === positionActivity }">
-            <span>{{ item.typeName }}</span>
+            <span>{{ item.title }}</span>
           </div>
         </div>
       <div class="positionCard-main" v-if="positionNowList[0]">
           <el-carousel :interval="5000" height="635px" :arrow="positionNowList.length > 1 ? 'hover' :'never'">
             <el-carousel-item v-for="(item, index) in positionNowList" :key="index">
             <div class="positionCard-wrap-item" v-for="(item1, index1) in positionNowList[index]" :key="index1" @click="toNewPage(item1, index1, 'position')">
-              <p class="positionCard-positionName">{{ item1.positionName}}</p>
-              <p class="positionCard-emolument">{{ item1.emolumentMin + "-" + item1.emolumentMax + "k·" + item1.annualSalary + "薪" }}</p>
+              <p class="positionCard-positionName">{{ item1.info.positionInfo.positionName}}</p>
+              <p class="positionCard-emolument">{{ item1.info.positionInfo.emolumentMin + "-" + item1.info.positionInfo.emolumentMax + "k·" + item1.info.positionInfo.annualSalary + "薪" }}</p>
               <p class="positionCard-city">
                 <i class="iconfont icon-dizhi"></i>
-                <span>{{ item1.city + item1.district }}</span>
+                <span>{{ item1.info.positionInfo.city + item1.info.positionInfo.district }}</span>
                 <i class="iconfont icon-zhiwei"></i>
-                <span>{{ item1.workExperienceName }}</span>
+                <span>{{ item1.info.positionInfo.workExperienceName }}</span>
                 <i class="iconfont icon-jiaoyu"></i>
-                <span>{{ item1.educationName }}</span>
+                <span>{{ item1.info.positionInfo.educationName }}</span>
               </p>
-              <div class="positionCard-companyInfo"  v-if="item1.companyInfo">
+              <div class="positionCard-companyInfo"  v-if="item1.info.positionInfo">
                 <div class="positionCard-companyInfo-logo">
-                  <img :src="item1.companyInfo.logoInfo.smallUrl"/>
+                  <img :src="item1.info.positionInfo.logo"/>
                 </div>
-                <span>{{ item1.companyInfo.companyShortname + '·' + item1.companyInfo.financingInfo}}</span>
+                <span>{{ item1.info.positionInfo.companyShortname + '·' + item1.info.positionInfo.financingInfo}}</span>
               </div>
             </div>
             </el-carousel-item>
@@ -109,7 +110,7 @@
 
 <script>
 import {
-  getDiscoListApi,
+  getZtDiscoListApi,
   getStaDiscoListApi
 } from '@/api/dreamDisco.js'
 
@@ -147,21 +148,32 @@ export default {
           routeTo = this.$router.resolve({
             path: '/company/details',
             query: {
-              vkey: item.vkey,
+              vkey: item.info.companInfo.vkey,
               sourceType: 'hd_queen_web'
             }
           })
-          data.id = item.id
+          data.id = item.info.companInfo.id
           break
         case 'position':
           routeTo = this.$router.resolve({
             path: '/position/details',
             query: {
-              positionId: item.positionId,
+              positionId: item.info.positionInfo.id,
               sourceType: 'hd_queen_web'
             }
           })
-          data.id = item.positionId
+          data.id = item.info.positionInfo.id
+          break
+        case 'companyPosition':
+          routeTo = this.$router.resolve({
+            path: '/position/details',
+            query: {
+              positionId: item.id,
+              sourceType: 'hd_queen_web'
+            }
+          })
+          identity = 'position'
+          data.id = item.id
           break
         case 'recruiter':
           routeTo = this.$router.resolve({
@@ -190,27 +202,13 @@ export default {
     var s = document.getElementsByTagName('script')[0]
     s.parentNode.insertBefore(hm, s)
 
-    getDiscoListApi({ vkey: 'r9ub3lyk' }).then(res => {
+    getZtDiscoListApi({ vkey: 'queen_sourceType' }).then(res => {
+      console.log(res.data.data)
       // 招聘官列表
-      this.recruiterList = res.data.data.recruiter
-      // 职位列表
-      let positionType = res.data.data.position
-      this.positionType = res.data.data.position
-      positionType.forEach((item, index) => {
-        let cumulative = []
-        item.positionList.forEach((item1, index1) => {
-          const page = Math.floor(index1 / 12)
-          if (!cumulative[page]) {
-            cumulative[page] = []
-          }
-          cumulative[page].push(item1)
-        })
-        this.positionList.push(cumulative)
-      })
-      this.positionNowList = this.positionList[this.positionActivity]
+      this.recruiterList = res.data.data[0].categoryClassList[0].categoryTypeList
 
       // 公司列表
-      this.dreamCityList = res.data.data.company[0]
+      this.dreamCityList = res.data.data[1].categoryClassList[0].categoryTypeList
       let cumulative = []
       this.dreamCityList.forEach((item, index) => {
         const page = Math.floor(index / 6)
@@ -221,6 +219,21 @@ export default {
       })
       this.dreamCityList = cumulative
 
+      // 职位列表
+      let positionType = res.data.data[2].categoryClassList
+      this.positionType = res.data.data[2].categoryClassList
+      positionType.forEach((item, index) => {
+        let cumulative = []
+        item.categoryTypeList.forEach((item1, index1) => {
+          const page = Math.floor(index1 / 12)
+          if (!cumulative[page]) {
+            cumulative[page] = []
+          }
+          cumulative[page].push(item1)
+        })
+        this.positionList.push(cumulative)
+      })
+      this.positionNowList = this.positionList[this.positionActivity]
 
       // 拿到数据后渲染一次页面
       this.$forceUpdate()
