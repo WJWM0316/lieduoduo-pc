@@ -157,8 +157,11 @@ export default {
       .positionType-buttom:hover {
         background-color: $bg-color-1;
       }
+      .activation:hover {
+        background: $bg-color-5;
+      }
     }
-    .activation{
+    .activation {
       color: $main-color-1 !important;
       background: $bg-color-5;
       font-weight: 500;
