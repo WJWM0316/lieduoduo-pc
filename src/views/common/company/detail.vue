@@ -412,7 +412,7 @@ $sizing: border-box;
             vertical-align: middle;
             margin-right: 14px;
             color: $main-color-2;
-            line-height: 24px;
+            line-height: 22px;
           }
         }
       }

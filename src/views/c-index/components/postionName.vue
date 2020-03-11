@@ -123,14 +123,13 @@ $position-details-width: 528px;
   box-sizing: border-box;
   cursor: pointer;
 }
-.list-item {
-  &:hover {
-    background: $bg-color-1;
-  }
-}
 .list-item:hover {
+  background: $bg-color-1;
   .position-details {
     display: block;
+  }
+  .item-icon  {
+    color: $main-color-1;
   }
 }
 .list-more:hover {
