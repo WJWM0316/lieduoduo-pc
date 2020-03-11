@@ -179,7 +179,7 @@ export default {
           routeTo = this.$router.resolve({
             path: '/company/details',
             query: {
-              vkey: item.companyVkey,
+              vkey: item.info.recruiterInfo.vkey,
               type: 'position',
               sourceType: 'hd_queen_web'
             }
@@ -612,6 +612,10 @@ $bg-color1: #F076B7;
     margin-right: 0;
   }
   .positionCard-positionName{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 240px;
     font-size: 16px;
     font-weight: 500;
     color: $font-color1;
