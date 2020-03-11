@@ -140,7 +140,7 @@ export default {
     toNewPage (item, index, identity) { // 'company', 'position', 'recruiter'
       let routeTo = {}
       let data = {
-        vkey: 'r9ub3lyk',
+        vkey: 'queen_sourceType',
         wherefrom: 1
       }
       switch (identity) {
