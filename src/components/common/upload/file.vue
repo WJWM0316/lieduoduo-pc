@@ -232,7 +232,7 @@ export default {
   }
   .file-processing {
     height:8px;
-    background: $bg-color-10;
+    background: $main-color-1;
   }
 }
 </style>

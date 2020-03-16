@@ -24,6 +24,15 @@
               </div>
           </div>
           <div class="item">
+            <div class="name">面试形式</div>
+            <div class="info">
+              <el-select v-model="arrangementInfo.source_type" placeholder="请选择">
+                <el-option label="见面聊" :value="1" />
+                <el-option label="电话聊" :value="2" />
+              </el-select>
+            </div>
+          </div>
+          <div class="item">
             <div class="name">面试职位</div>
             <div class="info">
               <el-select v-model="arrangementInfo.positionId" placeholder="请选择">
@@ -36,7 +45,7 @@
             </el-select>
               </div>
           </div>
-          <div class="item">
+          <div class="item" v-if="arrangementInfo.source_type === 1">
             <div class="name">面试地址</div>
             <div class="info" @click="selectaddredd()">
               <div class="info-select">
@@ -165,7 +174,8 @@ export default {
         positionId: '',
         addressId: '',
         addressName: '',
-        interviewTime: ''
+        interviewTime: '',
+        source_type: null
       },
       type: 'arrange',
       interviewtitle: '面试安排',
@@ -188,13 +198,22 @@ export default {
   methods: {
     handleSave () {
       if (this.type === 'arrange') {
-        if (!this.arrangementInfo.addressId) {
+        const data = JSON.parse(JSON.stringify(this.arrangementInfo))
+        if (!data.positionId) {
           this.$message.error('请选择一个职位')
           return
         }
-        if (!this.arrangementInfo.addressId) {
+        if (!data.source_type) {
+          this.$message.error('请选择面试形式')
+          return
+        }
+        if (!data.addressId && data.source_type === 1) {
           this.$message.error('请选择一个地址')
           return
+        }
+        if (data.source_type === 2) {
+          delete data.addressId
+          delete data.addressName
         }
         let timearr = []
         this.model.dateLists.map((v, k) => {
@@ -204,8 +223,8 @@ export default {
           this.$message.error('请至少添加一个约面时间')
           return
         }
-        this.arrangementInfo.interviewTime = timearr.join(',')
-        setInterviewInfoApi(this.arrangementInfo).then((res) => {
+        data.interviewTime = timearr.join(',')
+        setInterviewInfoApi(data).then((res) => {
           this.$message.success('安排面试成功')
           this.handleClose()
           this.$emit('finish', false)
@@ -274,13 +293,20 @@ export default {
         } else {
           this.arrangementInfo.positionId = res.data.data.positionId
         }
-        this.arrangementInfo.addressId = res.data.data.addressId
-        this.arrangementInfo.addressName = res.data.data.address
+        // 如果有地址信息就填写
+        if (res.data.data.addressId) {
+          this.arrangementInfo.addressId = res.data.data.addressId
+          this.arrangementInfo.addressName = res.data.data.address
+        } else {
+          this.arrangementInfo.addressId = ''
+          this.arrangementInfo.addressName = ''
+        }
         if (res.data.data.arrangementInfo.appointmentList) {
           this.model.dateLists = res.data.data.arrangementInfo.appointmentList
         } else {
           this.model.dateLists = []
         }
+        this.arrangementInfo.source_type = res.data.data.sourceType || null
         let datalist = { is_online: 1, page: 1, count: 100 }
         recruiterPositonList(datalist).then((res) => {
           let arr = res.data.data
@@ -492,7 +518,6 @@ export default {
       display: flex;
       align-items: center;
       word-break: break-all;
-      font-family:PingFangSC-Regular,PingFangSC;
       font-weight:400;
       color:#333333;
     }

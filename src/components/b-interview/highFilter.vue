@@ -22,8 +22,8 @@
           </template>
         </div>
         <div class="filter-footer">
-          <el-button size="small" type="primary" @click="handleChange">确定</el-button>
-          <el-button size="small" @click="handleRecall">取消</el-button>
+          <el-button size="small" style="width: 88px" @click="handleRecall">取消</el-button>
+          <el-button size="small" style="width: 116px" type="primary" @click="handleChange">确定</el-button>
         </div>
       </div>
     </el-popover>
@@ -65,7 +65,7 @@ export default {
     hanldeShow () {
       this.tempValue = JSON.stringify(this.value || [])
     },
-    handleClear () {
+    handleClear (type) {
       if (this.len) {
         this.poperStatus = false
         this.lists.forEach(val => {
@@ -73,11 +73,11 @@ export default {
         })
         if (this.allValue[0] === 'all') {
           this.$emit('input', ['all'])
-          this.$emit('change', ['all'])
+          if (type !== 'parent') this.$emit('change', ['all'])
           this.lists[0].active = true
         } else {
           this.$emit('input', [])
-          this.$emit('change', [])
+          if (type !== 'parent') this.$emit('change', [])
         }
         this.tempValue = JSON.stringify(this.value || [])
       } else {
@@ -139,7 +139,7 @@ export default {
   }
 }
 .filter-wrapper {
-  padding: 13px;
+  padding: 18px 28px;
   .filter-title {
     font-size: 14px;
     font-weight: bold;
@@ -167,12 +167,16 @@ export default {
     color: $main-color-1;
   }
   span.active {
+    font-weight: bold;
     color: $main-color-1;
-    border-color: $border-color-2;
-    background: #fff;
+    background: rgba($bg-color-4, 0.1);
   }
 }
-
+.filter-footer {
+  text-align: right;
+  margin-top: 36px;
+  margin-bottom: 2px;
+}
 </style>
 <style lang="scss">
 

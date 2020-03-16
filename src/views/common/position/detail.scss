@@ -160,7 +160,7 @@ img {
 				float: right;
 				height: 100%;
 				padding-left: 50px;
-				padding-top: 40px;
+				padding-top: 15px;
 				.operBox {
 					.btn {
 						width: 100%;
@@ -410,7 +410,7 @@ img {
 						line-height: 1;
 					}
 					.aside {
-						padding-top: 0;
+						padding-top: 0 !important;
 					}
 				}
 			}
@@ -453,6 +453,7 @@ img {
 				}
 				.labels {
 					font-size: 0;
+					height: 24px;
 					.label-item {
 						font-size:14px;
 						font-weight:400;

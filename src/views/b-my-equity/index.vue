@@ -85,27 +85,13 @@
         <div class="c-btn" @click="handleSet('view', infos.rDayBrowseResume, infos.rDayBrowseResumeUsed)">前往查看</div>
       </div>
     </div>
-    <el-dialog
-      width="432px"
-      custom-class="app-dialog"
-      top="calc((100vh - 460px) / 2)"
-      :visible.sync="contactDialogStatus">
-      <div class="contact-wrapper">
-        <p class="contact-title">{{dialogText[dialogTextStatus].title}}</p>
-        <p>{{dialogText[dialogTextStatus].content}}</p>
-        <div class="contact-qrcode">
-          <img :src="wxAccount" alt="">
-        </div>
-        <p>或拨打全国咨询热线</p>
-        <p class="contact-number">400-065-5788</p>
-      </div>
-    </el-dialog>
+    <contact-service :visible.sync="contactDialogStatus" :text="dialogText[dialogTextStatus]" />
     <share-popup :visible.sync="showSharePopup" type="invite" :data="{uid: recruiter.uid}" />
   </div>
 </template>
 <script>
 import { getRecruiterRight } from 'API/recruiter'
-import { wx_account_qrcode } from 'IMAGES/image'
+import contactService from '@/components/contactService/public'
 import SharePopup from '@/components/common/sharePopup'
 const TipsText = {
   invite: {
@@ -125,7 +111,7 @@ const TipsText = {
   }
 }
 export default {
-  components: { SharePopup },
+  components: { SharePopup, contactService },
   data () {
     return {
       infos: {},
@@ -145,8 +131,7 @@ export default {
       },
       dialogTextStatus: 'contact',
       contactDialogStatus: false, // 联系人弹窗
-      showSharePopup: false,
-      wxAccount: wx_account_qrcode
+      showSharePopup: false
     }
   },
   computed: {

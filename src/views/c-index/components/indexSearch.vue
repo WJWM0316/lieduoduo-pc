@@ -22,7 +22,7 @@
         <span>热门搜索：</span>
         <template v-for="(item, index) in hotkeyWord">
           <template v-if="item.type === 1">
-            <router-link :to="`/position?keyword=${item.word}&typeName=position`" :key="index">{{item.word}}</router-link>
+            <router-link :to="`/position?keyword=${item.word}&typeName=position&areaType=1`" :key="index">{{item.word}}</router-link>
           </template>
           <template v-else>
             <router-link :to="`/company/details?vkey=${item.extras.vkey}`" :key="index">{{item.word}}</router-link>
@@ -102,7 +102,7 @@ export default {
     handleToSearch () {
       let path = '/position'
       if (this.searchValue) {
-        path = `${path}?keyword=${this.searchValue}`
+        path = `${path}?keyword=${this.searchValue}&areaType=3`
       }
       this.$router.push(path)
     }

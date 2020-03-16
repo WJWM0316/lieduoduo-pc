@@ -87,7 +87,13 @@ export default {
     }
     return {
       cdnPath: `${process.env.VUE_APP_CDN_PATH}/images/`,
-      from: {},
+      from: {
+        logo: null,
+        product_name: '',
+        site_url: '',
+        slogan: '',
+        lightspot: ''
+      },
       middleUrl: '',
       fromCaching: '', // 表单数据缓存
       rules: {
@@ -103,7 +109,7 @@ export default {
     let id = this.$route.query.id
     let companyid = this.$route.query.companyId
     if (id) {
-      getCompanyProductInfosApi(id).then(res =>{
+      getCompanyProductInfosApi(id).then(res => {
         let data = res.data.data
         this.from = {
           company_id: data.companyId,
@@ -114,7 +120,7 @@ export default {
           lightspot: data.lightspot,
           logo: data.logo.id
         }
-        this.middleUrl = data.logo.middleUrl,
+        this.middleUrl = data.logo.middleUrl
         this.fromCaching = JSON.stringify(this.from)
       })
     } else {
@@ -124,11 +130,12 @@ export default {
   },
   methods: {
     pictureInformation (item) { // 拿到头像回调id
+      console.log(item)
       this.from.logo = item[0].id
       this.middleUrl = item[0].middleUrl
     },
     submit () {
-      this.$refs.fromEditProduct.validate(valid => {
+      this.$refs.fromEditProduct.validate((valid, validText) => {
         if (valid) {
           if (this.from.id) { // 根据是否有id来判断是新建产品还是编辑已有产品
             editCompanyProductInfosApi(this.from).then(res => {
@@ -141,6 +148,8 @@ export default {
               this.$router.push({ name: 'myCompany' })
             })
           }
+        } else {
+          this.$message.error(validText[Object.keys(validText)[0]][0].message)
         }
       })
     },

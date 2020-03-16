@@ -32,7 +32,20 @@
       <div class="account-content-right">
         <!-- recharge -->
         <div class="duoduo-coin">
-          <p class="right-title">我的多多币</p>
+          <p class="right-title">我的多多币
+            <el-popover
+            popper-class="myaccount-popover"
+              placement="bottom-end"
+              :offset="10"
+              width="372">
+              <p class="duoduo-popover-title">多多币说明</p>
+              <p class="duoduo-popover-text"><span>1.多多币是什么？</span><br/>
+                多多币是猎多多平台专属的虚拟货币，用户需要充值获取，目前兑换比例为1rmb=1多多币。</p>
+                <p class="duoduo-popover-text" style="margin-top: 12px;"><span>2.多多币如何使用？</span><br/>
+                  购买后，多多币可用于约聊候选人，或使用顾问服务邀请候选人进行约面，顾问会介入为您提供相关约面服务。</p>
+              <img slot="reference" class="duoduo-popover-questionMark" src="../../assets/images/questionMark.png"/>
+            </el-popover>
+          </p>
           <p class="coin-count">{{coin}}</p>
           <el-button style="width: 132px" type="primary" size="small" @click="contactDialogStatus = true; isServer = false">去充值</el-button>
         </div>
@@ -52,48 +65,40 @@
         </div>
       </div>
     </div>
-     <el-dialog
-      width="432px"
-      custom-class="app-dialog"
-      top="calc((100vh - 460px) / 2)"
-      :visible.sync="contactDialogStatus">
-      <div class="contact-wrapper">
-        <p class="contact-title"> {{isServer ? '顾问服务' : '充值多多币'}}</p>
-        <p> {{isServer ? '您可微信扫下方二维码，联系我们了解顾问服务' : '您可微信扫下方二维码，联系我们充值多多币'}} </p>
-        <div class="contact-qrcode">
-          <img :src="qrCode" alt="">
-        </div>
-        <p>或拨打全国咨询热线</p>
-        <p class="contact-number">400-065-5788</p>
-      </div>
-    </el-dialog>
+    <contact-service
+      :visible.sync="contactDialogStatus"
+      :text="{
+        title: isServer ? '顾问服务' : '充值多多币',
+        content: isServer ? '您可微信扫下方二维码，联系我们了解顾问服务' : '您可微信扫下方二维码，联系我们充值多多币'
+      }"/>
   </div>
 </template>
 <script>
+import contactService from '@/components/contactService/public'
 import OrderDetails from './compnents/details'
 import { getRecruiterAccount } from 'API/recruiter'
 import { getBTermBanners } from 'API/common'
 import { wx_account_qrcode } from 'IMAGES/image'
 export default {
-  components: { OrderDetails },
+  components: { OrderDetails, contactService },
   data () {
     return {
       servers: [
         {
           img: require('IMAGES/account/ic_recommend.png'),
-          content: '<p>量身推荐</p><p>按岗位为您</p><p>定制推荐方案</p>'
+          content: '<p>专业顾问</p><p>顾问团队为您提供</p><p>更优质的招聘服务</p>'
         },
         {
           img: require('IMAGES/account/ic_communication.png'),
-          content: '<p>帮你沟通</p><p>顾问会帮您与候选</p><p>人沟通并撮合约面</p>'
+          content: '<p>全程跟进</p><p>顾问在每一环节</p><p>协助您约面候选人</p>'
         },
         {
           img: require('IMAGES/account/ic_follow.png'),
-          content: '<p>顾问跟进</p><p>顾问会跟进您与</p><p>候选人的约面进度</p>'
+          content: '<p>进度可视</p><p>约面日程可转发</p><p>同事，实现协同</p>'
         },
         {
           img: require('IMAGES/account/ic_deducted.png'),
-          content: '<p>到场才扣费</p><p>如候选人未能到场</p><p>多多币将退回至账号</p>'
+          content: '<p>保证到场</p><p>候选人未到场</p><p>多多币将退回给您</p>'
         }
       ],
       bannerList: [],
@@ -176,6 +181,11 @@ export default {
     min-height: 100%;
     cursor: pointer;
   }
+}
+.duoduo-popover-questionMark{
+  width: 16px !important;
+  height: 16px;
+  cursor: pointer;
 }
 
 .account-servers, .right-server, .orders-wrapper /deep/ .order-wrapper-content, .myaccount-banner, .duoduo-coin {
@@ -294,6 +304,23 @@ export default {
     }
   }
 }
+.duoduo-popover-title{
+  color: $font-color-3;
+  font-size: 14px;
+  margin-bottom: 11px;
+  font-weight: 500;
+}
+.duoduo-popover-text{
+  color: $font-color-6;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+  margin-left: 10px;
+  span{
+    color: $font-color-3;
+    margin-left: -10px;
+  }
+}
 </style>
 <style lang="scss">
 .myaccount-wrapper .server-introduce {
@@ -330,5 +357,14 @@ export default {
 }
 .myaccount-banner.unshow-pager .el-carousel__indicators {
   display: none;
+}
+.myaccount-popover{
+  padding: 20px !important;
+  box-sizing: border-box;
+  border: 0 !important;
+  border-radius: 8px !important;
+}
+.popper__arrow{
+  border: 0 !important;
 }
 </style>

@@ -131,7 +131,7 @@ export default new Vuex.Store({
             perfectauthDetail().then((res) => {
               this.commit('setRecruiterinfo', res.data.data)
             })
-					  router.replace({ path: '/candidate' })
+					  router.replace({ path: '/binterview' })
           } else {
 					  router.replace({ path: '/register' })
           }
@@ -198,7 +198,7 @@ export default new Vuex.Store({
             } else {
               // console.log(state.userIdentity, 33333333)
               let userIdentity = state.userIdentity
-              userIdentity === 1 ? router.replace({ path: '/index' }) : router.replace({ path: '/candidate' })
+              userIdentity === 1 ? router.replace({ path: '/index' }) : router.replace({ path: '/binterview' })
             }
             // console.log(333333333333333333333333333)
             // 如果是求职者
@@ -244,7 +244,7 @@ export default new Vuex.Store({
           router.go(-1)
         } else {
           let userIdentity = state.userIdentity
-          userIdentity === 1 ? router.replace({ path: '/index' }) : router.replace({ path: '/candidate' })
+          userIdentity === 1 ? router.replace({ path: '/index' }) : router.replace({ path: '/binterview' })
         }
 
         // 如果是求职者

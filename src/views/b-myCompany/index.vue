@@ -7,8 +7,8 @@
                     <img v-if="information.logoInfo" :src="information.logoInfo.middleUrl"/>
                 </div>
                 <div class="companyInformation-head-button">
-                    <el-button type="text" @click="toShare()"><i class="iconfont icon-fenxiang"></i> 分享</el-button>
-                    <el-button type="text" v-if="isCompanyAdmin" @click="toEdit('编辑公司')"><i class="iconfont icon-bianji"></i> 编辑</el-button>
+                    <el-button type="text" @click="toShare()"><i class="iconfont icon-fenxiang"></i>分享</el-button>
+                    <el-button type="text" v-if="isCompanyAdmin" @click="toEdit('编辑公司')"><i class="iconfont icon-bianji"></i>编辑</el-button>
                 </div>
             </div>
             <p class="companyTitle">{{information.companyName}}</p>
@@ -18,7 +18,7 @@
                     <i class="iconfont icon-qiye"></i>公司简介
                 </p>
                 <p v-if="information.intro" class="companyIntroduction-text">{{information.intro}}</p>
-                <p v-else>尚未添加公司简介<el-button @click="toEdit('编辑公司')" v-if="isCompanyAdmin" type="text">去添加</el-button></p>
+                <p v-else class="onFoundText">尚未添加公司简介<el-button @click="toEdit('编辑公司')" v-if="isCompanyAdmin" type="text">去添加</el-button></p>
             </div>
             <div class="companySurroundings" v-if="information.albumInfo && information.albumInfo.length > 1">
                 <div class="companySurroundings-bnt" v-if="bntLeftShow" @click="clickBnt('left')">
@@ -38,14 +38,14 @@
                 <ul v-if="information.address">
                     <li v-for="(item, index) in information.address" :key="index">{{ item.address + '&nbsp;' + item.doorplate }}</li>
                 </ul>
-                <div class="onFondAddress" v-if="information.address && !information.address.length">尚未添加公司地址<el-button @click="toEdit('编辑公司')" v-if="isCompanyAdmin" type="text">去添加</el-button></div>
+                <div class="onFoundText" v-if="information.address && !information.address.length">尚未添加公司地址<el-button @click="toEdit('编辑公司')" v-if="isCompanyAdmin" type="text">去添加</el-button></div>
             </div>
             <div class="companyWebsite">
                 <p class="companyWebsite-title">
                     <i class="iconfont icon-guanwang-"></i>公司官网
                 </p>
                 <a v-if="information.website" :href="information.website" target="_blank">{{information.website}}</a>
-                <div v-else>尚未添加公司官网<el-button @click="toEdit('编辑公司')" v-if="isCompanyAdmin" type="text">去添加</el-button></div>
+                <div v-else class="onFoundText">尚未添加公司官网<el-button @click="toEdit('编辑公司')" v-if="isCompanyAdmin" type="text">去添加</el-button></div>
             </div>
         </div>
         <div class="companyProduct">
@@ -55,7 +55,7 @@
             </div>
             <company-productList @click="toEdit" :product="information.product"></company-productList>
             <div v-loading="getLoading" v-if="!getLoading && !information.product.length" class="noFound">
-                <no-found tipText='尚未添加公司产品' imageUrl='/img/fly.26a25d51.png'>
+                <no-found tipText='尚未添加公司产品' :max-width="234">
                     <el-button class="null-produc-bnt" v-if="isCompanyAdmin" @click="toEdit('编辑产品')" type="primary">去添加</el-button>
                 </no-found>
             </div>
@@ -132,7 +132,7 @@ export default class myCompany extends Vue {
             companyId: this.information.id
           }
         })
-      } else if(type === '编辑公司') {
+      } else if (type === '编辑公司') {
         this.$router.push({ name: 'myMaterial' })
       }
     }
@@ -193,13 +193,13 @@ export default class myCompany extends Vue {
 }
 .my-company{
     min-width: 940px;
-    max-width: 1140px;
+    max-width: 1200px;
     margin: 32px auto 32px auto;
     @include clearfix;
 }
 .companyInformation{
     background: #ffffff;
-    width: 50%;
+    width: 49.2%;
     float: left;
     padding: 0 56px 64px 56px;
     box-sizing: border-box;
@@ -213,15 +213,12 @@ export default class myCompany extends Vue {
           border: 1px solid $border-color-8;
             @include img-radius(90px, 90px, 8px);
         }
-        .companyInformation-head-button{
-            button{
-                margin-left: 24px;
-                &:nth-child(1){
-                  i{
-                    font-size: 14px;
-                  }
-                }
-            }
+        .iconfont {
+          font-size: 14px;
+          padding-right: 8px;
+        }
+        .el-button{
+          margin-left: 24px;
         }
     }
     .companyTitle{
@@ -315,9 +312,9 @@ export default class myCompany extends Vue {
         button{
             margin-left: 10px;
         }
-        .onFondAddress{
-          color: $font-color-6;
-        }
+    }
+    .onFoundText {
+      color: $font-color-6;
     }
     .companyWebsite{
         margin-top: 50px;
@@ -345,8 +342,8 @@ export default class myCompany extends Vue {
     float: left;
     background: #ffffff;
     box-sizing: border-box;
-    width: 49%;
-    margin-left: 1%;
+    width: 49.2%;
+    margin-left: 1.6%;
     padding: 0 56px;
     // overflow-y: scroll;
     &::-webkit-scrollbar{
@@ -356,7 +353,7 @@ export default class myCompany extends Vue {
         margin-top: 64px;
         @include flex-justify-between;
         i{
-            margin-right: 10px;
+            margin-right: 8px;
             font-size: 14px;
         }
         p{
@@ -366,9 +363,8 @@ export default class myCompany extends Vue {
         }
     }
     .noFound{
-        width: 160px;
+        text-align: center;
         min-height: 200px;
-        margin: 0 auto;
         .no-found{ // 覆盖组件内部样式
           padding-left: 0;
           padding-right: 0;
@@ -380,7 +376,6 @@ export default class myCompany extends Vue {
 }
 .null-produc-bnt{
   width: 134px;
-  height: 40px;
 }
 </style>
 

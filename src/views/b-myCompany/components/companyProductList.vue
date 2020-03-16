@@ -6,12 +6,12 @@
             </div>
             <div class="product-text">
                 <div class="product-title">
-                    <p>{{ item.productName }}</p>
+                    <span>{{ item.productName }}</span>
                     <i v-if="isCompanyAdmin" @click="toEditProduct(item)" class="iconfont icon-bianji"></i>
                 </div>
                 <p class="product-slogan">{{ item.slogan }}</p>
                 <block-overflow class="product-lightspot" :text="item.lightspot"></block-overflow>
-                <a :href="item.siteUrl" target="_blank" class="product-siteUrl">{{ item.siteUrl }}</a>
+                <a v-if="item.siteUrl" :href="item.siteUrl" target="_blank" class="product-siteUrl">{{ item.siteUrl }}</a>
             </div>
         </div>
     </div>
@@ -36,13 +36,13 @@ export default {
   },
   methods: {
     toEditProduct (item) {
-        this.$router.push({
-            name: 'EditProduct',
-            query: {
-                id: item.id,
-                companyId: item.companyId
-            }
-        })
+      this.$router.push({
+        name: 'EditProduct',
+        query: {
+          id: item.id,
+          companyId: item.companyId
+        }
+      })
     }
   }
 }
@@ -74,8 +74,9 @@ export default {
         .product-title{
             @include flex-justify-between;
             @include flex-v-center;
-            p{
+            span{
                 font-size: 20px;
+                line-height: 20px;
                 font-weight: 700;
                 color: $font-color-3;
             }
@@ -91,7 +92,7 @@ export default {
             font-size: 16px;
             color: $font-color-6;
             line-height: 24px;
-            margin-top: 2px;
+            margin-top: 5px;
         }
         .product-lightspot{
             margin-top: 16px;

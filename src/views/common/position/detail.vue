@@ -13,11 +13,11 @@
               </div>
               <div class="salary">{{infos.emolumentMin}}~{{infos.emolumentMax}}K<template v-if="infos.annualSalary > 12">·{{infos.annualSalary}}<span class="unit">薪</span></template></div>
               <div class="infos">
-                <span class="info-item"><i class="icon iconfont icon-dizhi"></i>{{infos.city}} {{infos.district}}</span>
+                <span class="info-item" v-if="infos.city || infos.district"><i class="icon iconfont icon-dizhi"></i>{{infos.city}} {{infos.district}}</span>
                 <span class="info-item"><i class="icon iconfont icon-zhiwei"></i>{{infos.workExperienceName}}</span>
                 <span class="info-item"><i class="icon iconfont icon-jiaoyu"></i>{{infos.educationName}}</span>
               </div>
-              <div class="labels">
+              <div class="labels" v-if="infos.lightspotInfo && infos.lightspotInfo.length">
                 <span class="label-item" v-for="n in infos.lightspotInfo" :key="n">{{n}}</span>
               </div>
             </div>
@@ -27,7 +27,7 @@
 						  <span class="salary">{{infos.emolumentMin}}~{{infos.emolumentMax}}K<span v-if="infos.annualSalary > 12">·{{infos.annualSalary}}<span class="unit">薪</span></span></span>
 						</div>
           </div>
-          <div class="aside">
+          <div class="aside" :style="{'padding-top': infos.isRapidly === 1 ? '6px' : infos.lightspotInfo && infos.lightspotInfo.length ? '40px': '22px'}">
             <div v-if="infos.isRapidly === 1" class="icon yuemian24" v-show="!headerFloat">
               <img class="logo" :src="cdnPath + 'tag_24hour.png'" alt="">
               <div class="number"><span class="num">{{remainingSeats}}</span>个<p class="desc">约面席位</p></div>
@@ -133,7 +133,7 @@
               <div class="name">{{infos.companyInfo.companyShortname}}</div>
             </div>
             <div class="infos">
-              <p class="info-item"><i class="icon iconfont icon-rongzi"></i>{{infos.companyInfo.financingInfo}}</p>
+              <p class="info-item" v-if="infos.companyInfo.financingInfo"><i class="icon iconfont icon-rongzi"></i>{{infos.companyInfo.financingInfo}}</p>
               <p class="info-item"><i class="icon iconfont icon-renshu1"></i>{{infos.companyInfo.employeesInfo}}</p>
               <p class="info-item"><i class="icon iconfont icon-gongsileixing"></i>{{infos.companyInfo.industry}}</p>
             </div>

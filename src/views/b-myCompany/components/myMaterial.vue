@@ -99,8 +99,8 @@ import {
   addCompanyAddressApi,
   editCompanyApi,
   delCompanyAddressApi,
-  addresseditCompanyAddressApi
-} from '@/api/company'
+  addresseditCompanyAddressApi,
+  companyDetailApi } from '@/api/company'
 import {
   getCompanyAddressListApi,
   editCompanyAlbumApi
@@ -109,7 +109,7 @@ import {
   urlReg,
   companyIntroReg
 } from '@/util/fieldRegular'
-import { companyDetailApi } from '@/api/company'
+
 
 export default {
   data () {
@@ -192,9 +192,7 @@ export default {
             this.saveEditCompany()
           }
         } else {
-          Object.keys(validText).forEach(item => {
-            this.$message.error(validText[item][0].message)
-          })
+          this.$message.error(validText[Object.keys(validText)[0]][0].message)
         }
       })
     },
@@ -266,11 +264,11 @@ export default {
   mounted () {
     this.$nextTick(() => {
       companyFinancingApi().then(res => {
-          this.financing = res.data.data
-        })
+        this.financing = res.data.data
+      })
       companyEmployeesApi().then(res => {
-          this.employees = res.data.data
-        })
+        this.employees = res.data.data
+      })
       companyDetailApi().then(res => {
         let data = res.data.data
         this.from = {
@@ -286,6 +284,8 @@ export default {
           website: data.website,
           intro: data.intro
         }
+        this.from.financing = parseFloat(this.from.financing)
+        this.from.employees = parseFloat(this.from.employees)
         this.fromCaching = JSON.stringify(this.from)
         this.address = data.address
         this.middleUrl = data.logoInfo.middleUrl

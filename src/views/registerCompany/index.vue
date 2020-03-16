@@ -403,7 +403,7 @@
         <div class="title">联系我们</div>
         <div class="desc">您可用「微信」扫下方二维码，关注官方公众号</div>
         <div class="qrcode">
-          <img src="@/assets/images/qrcode.png" alt="">
+          <img :src="wxQrCode" alt="">
         </div>
         <div class="s-desc">或请拨打全国咨询热线</div>
         <div class="s-phone">400-065-5788</div>
@@ -423,6 +423,7 @@ import OptionList from '../registerCompany/components/option.vue'
 import Picture from 'COMPONENTS/common/upload/picture'
 import { getLabelFieldListApi } from 'API/putIn'
 import SelectPositionType from 'COMPONENTS/selectPositionType'
+import { wx_qrcode } from 'IMAGES/image'
 import {
   applyCompanyApi,
   createCompanyApi,
@@ -603,7 +604,8 @@ export default {
       isauthcheck: false,
       isupdatacheck: false,
       page: '',
-      applyJoin: false
+      applyJoin: false,
+      wxQrCode: wx_qrcode
     }
   },
   methods: {

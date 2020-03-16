@@ -11,17 +11,20 @@
 				<div class="company-name">{{item.companyShortname}}</div>
 				<div class="company-desc">{{item.companyInfo.financingDesc}}<span>·</span>{{item.companyInfo.employeesDesc}}<span>·</span>{{item.companyInfo.industry}}</div>
 			</div>
-			<div class="colc-bottom">
+			<div class="colc-bottom" v-if="item.sourceType === 1">
 				<i class="iconfont icon-dizhi"></i>
 				<div class="address" ref="address" @mouseenter="eaddressdiggle(item, index)" @mouseleave="laddressdiggle(item, index)" @click="editAddress(item, index)">{{item.addressInfo.address}}{{item.addressInfo.doorplate}}</div>
 				<div class="addressdetail" v-show="item.cur">
 					{{item.addressInfo.address}}{{item.addressInfo.doorplate}}
 				</div>
 			</div>
+			<div class="colc-bottom-else" v-if="item.sourceType === 2 && item.companyInfo.intro"><i class="iconfont icon-qiye"></i>{{ introFilter(item.companyInfo.intro) }}</div>
+			<div class="colc-bottom-else" v-if="item.sourceType === 2 && !item.companyInfo.intro">暂无公司简介</div>
 		</div>
 		<div class="col-right">
 			<div class="clor-top">
 				<!-- <div class="exit">面试已取消</div> -->
+				<span class="clor-top-text">{{ item.sourceTypeDesc }}</span>
 				<div :class="['time', item.status >= 51 ? 'pasttime' : '']"><i class="iconfont icon-shijian"></i>
 				<div class="isall" v-if="$route.query.time === '0' || new Date((item.arrangementInfo.appointmentTime)*1000).getFullYear() !== (new Date()).getFullYear()">
 					<span v-if="item.status >= 51 && new Date((item.arrangementInfo.appointmentTime)*1000).getFullYear() !== (new Date()).getFullYear()">
@@ -134,6 +137,10 @@ export default {
         }
       })
       window.open(routeData.href, '_blank')
+    },
+    introFilter (item) {
+      item = item.replace(/^\s+|\s+$/g, '')
+      return item
     }
   }
 }
@@ -240,7 +247,7 @@ export default {
 			position: absolute;
 			width:520px;
 			padding: 10px;
-			color: #66666E;
+			color: $font-color-6;
 			font-size:12px;
 			box-sizing: border-box;
 			background: #FFFFFF;
@@ -252,6 +259,20 @@ export default {
 			z-index: 1;
 		}
 	}
+	.colc-bottom-else{
+		color: $font-color-6;
+		width: 430px;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		font-size: 14px;
+		font-weight: 400;
+		.iconfont{
+			margin-right: 4px;
+			color: $font-color-10;
+    	font-size: 13px;
+		}
+	}
 	.col-right{
 		float: right;
 	}
@@ -259,6 +280,14 @@ export default {
 		display: flex;
 		justify-content: flex-end;
 		margin-bottom: 9px;
+		.clor-top-text{
+			font-size: 14px;
+			font-weight: 400;
+			line-height: 32px;
+			color: #00C4CD;
+			display: inline-block;
+			margin-right: 19px;
+		}
 		.exit{
 			line-height: 32px;
 			margin-right: 19px;
@@ -307,7 +336,7 @@ export default {
 		.pname{
 			display: block;
     	float: left;
-			@include ellipsis-over(98px);
+			@include ellipsis-over(100px);
 		}
 		.position{
 			margin-right: 18px;

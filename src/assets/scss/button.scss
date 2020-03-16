@@ -70,7 +70,7 @@
   }
 }
 
-// 简历四部
+// 简历四步
 .btn-box{
   height: 50px;
   line-height: 50px;
@@ -132,16 +132,16 @@ button, button:hover{
   outline: none !important;
 }
 
-//
+// b端顶部按钮以及按钮tab
 .b-header-button {
   font-size: 14px;
   font-weight: 400;
   color: $title-color-2;
   background: #fff;
   border-radius: 4px;
-  border: 1px solid $border-color-1;
   cursor: pointer;
   line-height: 1;
+  border: 1px solid $border-color-1;
   display: inline-block;
   vertical-align: middle;
   padding: 0 14px;
@@ -184,6 +184,7 @@ button, button:hover{
   border: 1px solid $border-color-1;
   .b-header-button {
     border: none;
+    box-shadow: none !important;
   }
   .b-header-button:not(:first-child)::after {
     content: "";
@@ -200,4 +201,43 @@ button, button:hover{
     height: 100%;
     top: 0;
   }
+}
+.b-header-button-tap {
+  display: inline-block;
+  .b-header-button::after {
+    height: 100%;
+    top: 0;
+  }
+  .b-header-button {
+    border: none;
+    font-size: 18px;
+    color: $title-color-2;
+    padding: 0;
+  }
+  .b-header-button.active {
+    color: $title-color-1;
+    font-weight: bold;
+  }
+  .b-header-button.active::before {
+    width: 100%;
+    left: 0;
+  }
+  .b-header-button + .b-header-button {
+    margin-left: 40px;
+  }
+  .is-red-dot {
+    right: -8px;
+  }
+}
+
+// 添加黑色状态按钮 el-button--black
+button.el-button--black {
+  color: #fff;
+  background-color: #303E41;
+  border-color: #303E41;
+}
+button.el-button--black:hover, button.el-button--black:focus {
+  background-color: mix(#fff, #303E41, 20%);
+  border-color: mix(#fff, #303E41, 20%);
+  color: #fff;
 }

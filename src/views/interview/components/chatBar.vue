@@ -9,7 +9,7 @@
 		  	</span>
 		  </el-col>
 		  <el-col :span="12" class="header-col-right">
-		  	<div class="todo-status">【{{item.statusDesc}}】<!--<span class="reddot" v-if="item.redDot"></span>--></div>
+		  	<div class="todo-status">【{{ item.status === 11 && item.isRead === 1 ? '对方已查看' : item.statusDesc }}】<!--<span class="reddot" v-if="item.redDot"></span>--></div>
 		  </el-col>
 		</el-row>
 		<el-row class="li-item-content">
@@ -108,13 +108,13 @@ import {
   clearInterviewItemRedDotApi
 } from 'API/interview'
 import {
-	getMyPositionApi
+  getMyPositionApi
 } from 'API/position'
 
 import { GuidedDownload } from '@/config/vars'
 
 export default {
-	props: {
+  props: {
     item: {
       type: Object,
       default: () => ({})
@@ -128,72 +128,72 @@ export default {
     	default: 0
     }
   },
-  data() {
+  data () {
   	return {
   		infos: {},
-			GuidedDownload
+      GuidedDownload
   	}
   },
   methods: {
   	...mapActions([
       'getInterviewRedDotInfoApi'
     ]),
-  	bindClick(item) {
+  	bindClick (item) {
   		this.infos = item
 	    this.$emit('click', item)
 	  },
-	  getInterviewDetail() {
-      return getInterviewDetailApi({interviewId: this.infos.interviewId}).then(({ data }) => data.data)
+	  getInterviewDetail () {
+      return getInterviewDetailApi({ interviewId: this.infos.interviewId }).then(({ data }) => data.data)
     },
-	  refuseInterview(item) {
+	  refuseInterview (item) {
 	  	let query = {
 	  		...this.$route.query,
 	  		reLoad: true,
 	  		q: Date.now()
 	  	}
-	  	refuseInterviewApi({id: item.recruiterUid}).then(() => {
+	  	refuseInterviewApi({ id: item.recruiterUid }).then(() => {
 	  		this.getInterviewRedDotInfoApi().then(() => {
 	  			item.redDot = 0
 	  			this.$router.push({ query })
 	  		})
 	  	})
 	  },
-	  confirmInterview(item) {
+	  confirmInterview (item) {
 	  	let query = {
 	  		...this.$route.query,
 	  		reLoad: true,
 	  		q: Date.now()
 	  	}
-	  	confirmInterviewApi({id: item.interviewId}).then(() => {
+	  	confirmInterviewApi({ id: item.interviewId }).then(() => {
 	  		this.getInterviewRedDotInfoApi().then(() => {
 	  			item.redDot = 0
 	  			this.$router.push({ query })
 	  		})
 	  	})
 	  },
-	  clearInterviewItemRedDot(data) {
+	  clearInterviewItemRedDot (data) {
 	  	return clearInterviewItemRedDotApi(data)
 	  },
-	  clearPositionRedDot(item) {
-	  	clearInterviewItemRedDotApi({id: item.interviewId}).then(() => {
+	  clearPositionRedDot (item) {
+	  	clearInterviewItemRedDotApi({ id: item.interviewId }).then(() => {
 	  		this.getInterviewRedDotInfoApi().then(() => {
 	  			item.redDot = 0
 			  	// let { href } = this.$router.resolve({
 		      //   name: 'positionDetail',
 		      //   query: { positionId: item.positionId }
-					// })
-					// let dom = document.createElement('a')
-					// dom.target = '_blank'
-					// dom.href = href
-					// let event = document.createEvent('MouseEvents')
-					// event.initEvent('click', true, true)
-					// dom.dispatchEvent(event)
-					// console.log(dom, event)
+          // })
+          // let dom = document.createElement('a')
+          // dom.target = '_blank'
+          // dom.href = href
+          // let event = document.createEvent('MouseEvents')
+          // event.initEvent('click', true, true)
+          // dom.dispatchEvent(event)
+          // console.log(dom, event)
 	  		})
 	  	})
 	  },
-	  clearRecruiterRedDot(item, index) {
-	  	clearInterviewItemRedDotApi({id: item.interviewId}).then(() => {
+	  clearRecruiterRedDot (item, index) {
+	  	clearInterviewItemRedDotApi({ id: item.interviewId }).then(() => {
 	  		this.getInterviewRedDotInfoApi().then(() => {
 	  			item.redDot = 0
 	  		})

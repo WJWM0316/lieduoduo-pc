@@ -2348,7 +2348,7 @@ export default {
                 font-size: 12px;
                 height: 18px;
                 line-height: 18px;
-                color: #6D696E;
+                color: $title-color-2;
                 padding-left: 20px;
                 margin-bottom: 12px;
               }
@@ -2368,7 +2368,7 @@ export default {
                 .p_c{
                   font-size: 12px;
                   width: 112px;
-                  color: #6D696E;
+                  color: $title-color-2;
                   line-height: 42px;
                   margin-left: 6px;
                 }
@@ -3663,8 +3663,8 @@ export default {
             font-size:14px;
             text-align: center;
             background:#F4F7F7;
-            color:#6D696E;
-            border-radius:16px;
+            color:$title-color-2;
+            border-radius: 4px;
             float: left;
             margin-right: 11px;
             margin-bottom: 10px;
@@ -3676,7 +3676,7 @@ export default {
             font-size:14px;
             text-align: center;
             background:#F4F7F7;
-            color:#6D696E;
+            color:$title-color-2;
             border-radius:16px;
             float: left;
             margin-right: 11px;
@@ -3694,13 +3694,14 @@ export default {
           // width: 100%;
           padding: 0 40px;
           margin-top: 14px;
+          margin-bottom: 18px;
           .explaintitle{
             color:#66666E;
             margin-bottom: 12px;
             font-weight: bold;
           }
           .text{
-            width:328px;
+            width:322px;
             height:78px;
             padding: 10px 14px;
             background:rgba(255,255,255,1);

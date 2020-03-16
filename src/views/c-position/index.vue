@@ -61,7 +61,8 @@ export default {
         page: 1,
         count: 15,
         keyword: '',
-        cityNums: 0
+        cityNums: 0,
+        areaType: 3
       },
       listData: [], // 职位列表数据
       companyListData: [],
@@ -108,7 +109,7 @@ export default {
       if (this.recommended) {
         apiMethod = getRecommendPosition
         // 判断筛选条件
-        let search = ['cityNums', 'keyword', 'financingIds', 'employeeIds', 'industryIds']
+        let search = ['cityNums', 'keyword', 'financingIds', 'employeeIds', 'industryIds', 'areaType']
         for (let item of search) {
           if (this.params[item]) {
             apiMethod = getPositionSearch
@@ -150,6 +151,7 @@ export default {
           ...this.params,
           ...value
         }
+        this.params.areaType = 3
       } else {
         if (value) this.params[type] = value
       }

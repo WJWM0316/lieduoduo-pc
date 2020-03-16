@@ -1,84 +1,76 @@
 <template>
-  <div class="wrap" v-if="hasStatus">
-    <!-- 求职者还没有发起开撩动作 职位详情 start-->
-    <section class="position" v-if="type === 'position'">
-      <template v-if="type === 'position' && (!interviewInfos.haveInterview || interviewInfos.interviewStatus === 51 || interviewInfos.interviewStatus === 54 || interviewInfos.interviewStatus === 52 || interviewInfos.interviewStatus === 55 || interviewInfos.interviewStatus === 58)">
-        <template v-if="infos.isOnline === 2 && (infos.status === 0 || infos.status === 1 || infos.status === 3 || infos.status === 4)">
-          <el-button class="forbid" disabled> 职位已关闭 </el-button>
+  <div class="wrap">
+    <div class="position">
+      <!-- 24小时职位 -->
+      <template v-if="infos.isRapidly">
+
+        <!-- 是否已经登录, 在未登录状态infos.interviewSummary会为null -->
+        <template v-if="!hasLogin">
+          <el-button :loading="loading" class="rapidlyPosition" type="primary" @click="todoAction('grabInterviewChat')">马上抢</el-button>
+        </template>
+
+        <!-- 有无约聊关系 -->
+        <template v-else-if="infos.chatInfo === null">
+          <!-- 有没有抢占过当前职位,     并且没有席位则一键约聊,    没有约面状态且是c约面b -->
+          <el-button v-if="infos.rapidlyInfo.applied === 0 &&
+          infos.rapidlyInfo.seatsNum - (infos.rapidlyInfo.applyNum + infos.rapidlyInfo.natureApplyNum) > 0 &&
+          (infos.interviewSummary.interviewInfo === null ||
+          infos.interviewSummary.interviewInfo.status === 11)"
+           :loading="loading" class="rapidlyPosition" type="primary" @click="todoAction('grabInterviewChat')">马上抢</el-button>
+
+          <el-button v-else :loading="loading" class="rapidlyPosition" type="primary" @click="todoAction('interviewChat')" >一键约聊</el-button>
         </template>
 
         <template v-else>
-          <el-button @click="todoAction('job-hunting-chat')" class="canView specailBtn" v-if="infos.isRapidly === 1 && !interviewInfos.applied && infos.rapidlyInfo.seatsNum - infos.rapidlyInfo.applyNum - infos.rapidlyInfo.natureApplyNum > 0" :loading="btnLoad">马上抢</el-button>
-          <el-button @click="todoAction('job-hunting-chat')" :loading="btnLoad" class="canView" :class="{'specailBtn' : infos.isRapidly === 1}"  v-else>一键申请</el-button>
+          <!-- 是不是b发起的约聊，如果是则继续聊，否则马上抢   并且没有席位则继续聊,    没有约面状态且是c约面b  -->
+          <el-button v-if="infos.rapidlyInfo.applied === 0 &&
+          infos.chatInfo.status !== 501 && infos.chatInfo.status !== 701 &&
+          infos.rapidlyInfo.seatsNum - (infos.rapidlyInfo.applyNum + infos.rapidlyInfo.natureApplyNum) > 0 &&
+          (infos.interviewSummary.interviewInfo === null ||
+          infos.interviewSummary.interviewInfo.status === 11)"
+           :loading="loading" class="rapidlyPosition" type="primary" @click="todoAction('grabInterviewChat')">马上抢</el-button>
+
+          <el-button v-else :loading="loading" class="rapidlyPosition" type="primary" @click="todoAction('goInterviewChat')" >继续聊</el-button>
         </template>
       </template>
-      <!-- 求职者还没有发起开撩动作 职位详情 start-->
 
-      <!-- 求职者已经发起开撩动作 start-->
-      <template v-else-if="interviewInfos.interviewStatus === 11">
-        <el-button class="forbid" disabled>
-          <template v-if="interviewInfos.interviewType === 2 && !interviewInfos.serviceEndTimeDesc">面试官将于24h内反馈</template>
-          <template v-else-if="interviewInfos.interviewType === 2 && interviewInfos.serviceEndTimeDesc">面试官最迟将于{{interviewInfos.serviceEndTimeDesc}}反馈</template>
-          <template v-else>已申请面试</template>
-        </el-button>
+      <!-- 普通职位 -->
+      <template v-else>
+
+        <el-button :loading="loading" v-if="infos.chatInfo !== null &&
+          (infos.chatInfo.status === 101 ||
+          infos.chatInfo.status === 301 ||
+          infos.chatInfo.status === 501 ||
+          infos.chatInfo.status === 701)"
+         type="primary" @click="todoAction('goChat')">继续聊</el-button>
+
+        <el-button :loading="loading" v-else type="primary" @click="todoAction('chat')">一键约聊</el-button>
       </template>
-      <!-- 求职者已经发起开撩动作 end-->
-
-      <!-- 求职者等待招聘官安排面试 start-->
-      <template v-else-if="interviewInfos.interviewStatus === 21 || interviewInfos.interviewStatus === 32 ">
-        <el-button class="forbid" @click="todoAction('job-hunting-applyed')" disabled>待安排面试</el-button>
-      </template>
-      <!-- 求职者等待招聘官安排面试 end-->
-
-      <!-- 求职者等待招聘管修改信息 start-->
-      <template v-else-if="interviewInfos.interviewStatus === 41 || interviewInfos.interviewStatus === 31">
-        <el-button class="scheduling specailBtn" @click="todoAction('job-hunting-view-detail')">查看面试详情</el-button>
-      </template>
-      <!-- 求职者等待招聘管修改信息 end-->
-
-      <!-- 求职者被设置成不合适 start-->
-      <template v-else-if="interviewInfos.interviewStatus === 52 || interviewInfos.interviewStatus === 53">
-        <div class="button-box button-box-color3">不合适</div>
-      </template>
-      <!-- 求职者被设置成不合适 end-->
-
-      <!-- 求职者已经已收到招聘官的邀请 start-->
-      <template v-else-if="interviewInfos.interviewStatus === 12">
-        <div class="button-box">
-          <el-button class="reject" @click="todoAction('job-hunting-reject')" :loading="btnLoad">暂不考虑</el-button>
-          <el-button class="accept" @click="todoAction('job-hunting-accept')" :loading="btnLoad">接受约面</el-button>
-        </div>
-      </template>
-      <!-- 求职者已经已收到招聘官的邀请 end-->
-    </section>
-
+    </div>
+    <download-app :visible.sync="showPopupDownload"></download-app>
+    <position-downloadApp :visible="showPopup" :type="showPopupType" :text="text"></position-downloadApp>
     <loginPop ref="loginPop" v-if="!hasLogin"></loginPop>
-    <dialog-model v-model="model.show" :item="model.interview" @confirm="confirm" />
   </div>
 </template>
 <script>
-import Vue from 'vue'
-import Component from 'vue-class-component'
 import loginPop from '@/components/common/loginPop'
+import downloadApp from '@/components/common/sharePopup/downloadApp'
+import positionDownloadApp from '@/components/common/sharePopup/positionDownloadApp'
 import {
-  getInterviewStatusApi,
-  applyInterviewApi,
-  confirmInterviewApi,
-  refuseInterviewApi,
-  clearInterviewItemRedDotApi
+  chatApplyApi,
+  applyInterviewApi
 } from '@/api/interview'
-import DialogModel from '@/views/interview/components/dialog'
-
-@Component({
+export default {
   name: 'interviewBtn',
   components: {
     loginPop,
-    DialogModel
+    downloadApp,
+    positionDownloadApp
   },
   props: {
     infos: {
       type: Object,
-      default: {}
+      default: () => {}
     },
     type: {
       type: String,
@@ -89,199 +81,127 @@ import DialogModel from '@/views/interview/components/dialog'
       default: ''
     }
   },
+  data () {
+    return {
+      showPopup: false,
+      showPopupDownload: false,
+      showPopupType: '', // chat 约聊成功 grabInterviewChat 抢占成功
+      text: '',
+      loading: false
+    }
+  },
   computed: mapState({
     hasLogin: state => state.hasLogin
   }),
   methods: {
-    ...mapActions([
-      'getInterviewRedDotInfoApi'
-    ])
-  }
-})
-export default class InterviewBtn extends Component {
-  btnLoad = false
-  interviewInfos = {
-    haveInterview: 0
-  }
-  popParmas = {} // 弹窗需要的参数
-  hasStatus = false
-  showSharePop = false
-  model = {
-    show: false,
-    interview: {}
-  }
-  clearInterviewItemRedDot(data) {
-    return clearInterviewItemRedDotApi(data)
-  }
-  getInterviewStatus () {
-    this.btnLoad = true
-    getInterviewStatusApi({ type: this.type, vkey: this.infos.vkey }).then(res => {
-      this.interviewInfos = res.data.data
-      this.hasStatus = true
-      this.btnLoad = false
-      if (res.data.data.data.length) {
-        this.model.interview = res.data.data.data[0]
+    todoAction (genre) {
+      this.loading = true
+      if (!this.hasLogin) {
+        this.$refs.loginPop.showLoginPop = true
+        this.loading = false
+        return
       }
-    }).catch(e => {
-      this.btnLoad = false
-    })
-  }
 
-  // 求职者确认约面
-  confirmInterview () {
-    this.btnLoad = true
-    confirmInterviewApi({ id: this.interviewInfos.data[0].interviewId }).then(res => {
-      this.getInterviewStatus()
-      this.btnLoad = false
-      this.$message({
-        message: '已接受约面',
-        type: 'success'
-      })
-    }).catch(e => {
-      this.btnLoad = false
-    })
-  }
-  hideSharePop () {
-    this.showSharePop = !this.showSharePop
-  }
-  // 求职者开撩
-  jobHunterChat () {
-    this.btnLoad = true
-    let isSpecail = this.infos.isRapidly === 1 &&
-                    !this.interviewInfos.applied &&
-                    this.infos.rapidlyInfo.applyNum + this.infos.rapidlyInfo.natureApplyNum < this.infos.rapidlyInfo.seatsNum
-    let parmas = { recruiterUid: this.infos.recruiterInfo.uid, positionId: this.infos.id }
-    if (isSpecail) parmas.interview_type = 2
-    let successPop = (res) => {
-      if (res.code === 916) {
-        this.$alert('opps!约面席位刚被抢光啦~但面试官将尽快处理你的约面申请', '申请成功', {
-          confirmButtonText: '知道了'
-        })
-      } else if (res.code === 915) {
-        this.$alert('opps!活动刚刚过期啦~但面试官将尽快处理你的约面申请', '申请成功', {
-          confirmButtonText: '知道了'
-        })
-      } else if (res.code === 917) {
-        this.$message.success(res.msg)
-      } else {
-        if (isSpecail) {
-          this.$message.success('面试官已收到你的申请，将于24h内反馈')
-        } else {
-          this.$message.success('开撩成功')
+      switch (genre) {
+        case 'chat': // 约聊
+          this.chatApply()
+          break
+        case 'goChat': // 继续聊
+          this.showPopupDownload = true
+          this.loading = false
+          break
+        case 'grabInterviewChat': // 抢占24小时职位
+          if (this.infos.rapidlyInfo.changePositionToast === 1) { // 有没有已经抢占当前招聘官的职位
+            this.$confirm('你已约面该招聘官的其他职位', '是否要更换该约面职位', {
+              distinguishCancelAndClose: true,
+              confirmButtonText: '更换约面职位',
+              cancelButtonText: '我再想想'
+            }).then(() => {
+              this.applyInterview()
+            }).catch(() => {
+              this.loading = false
+            })
+            return
+          }
+          this.applyInterview()
+          break
+        case 'interviewChat': // 24约聊
+          this.chatApply()
+          break
+        case 'goInterviewChat': // 24继续聊
+          this.showPopupDownload = true
+          this.loading = false
+          break
+      }
+    },
+    applyInterview () { // 抢占成功方法
+      applyInterviewApi({ recruiterUid: this.infos.recruiter, positionId: this.infos.id, interview_type: 2 }).then(res => {
+        this.loading = false
+        if (res.data.code === 915) {
+          this.$confirm('已改为提交约聊申请，面试官将尽快处理。', '活动已过期', {
+            distinguishCancelAndClose: true,
+            confirmButtonText: '知道了',
+            showCancelButton: false
+          }).then(() => {
+            this.showPopupType = 'chat' // 约聊成功弹窗以及传参
+            this.showPopup = true
+            this.$emit('init')
+          })
+          return
         }
-      }
-    }
-    applyInterviewApi(parmas).then(res => {
-      this.getInterviewStatus()
-      this.btnLoad = false
-      if (isSpecail) {
+        if (res.data.code === 916) {
+          this.$confirm('已改为提交约聊申请，面试官将尽快处理。', '约面席位已抢光', {
+            distinguishCancelAndClose: true,
+            confirmButtonText: '知道了',
+            showCancelButton: false
+          }).then(() => {
+            this.showPopupType = 'chat' // 约聊成功弹窗以及传参
+            this.showPopup = true
+            this.$emit('init')
+          })
+          return
+        }
+        if (res.data.code === 917) { // 节假日延后
+          this.text = res.data.msg
+        }
+        this.showPopupType = 'grabInterviewChat' // 抢占成功弹窗以及传参
+        this.showPopup = true
         this.$emit('init')
-      }
-      successPop(res.data)
-    }).catch(e => {
-      this.btnLoad = false
-    })
-  }
-  // 求职标记不合适
-  jobRejectChat () {
-    this.btnLoad = true
-    refuseInterviewApi({ id: this.infos.recruiterInfo.uid }).then(res => {
-      this.getInterviewStatus()
-      this.btnLoad = false
-      this.$message({
-        message: '已标记暂不考虑',
-        type: 'success'
+      }).catch(res => {
+        this.loading = false
       })
-    }).catch(e => {
-      this.btnLoad = false
-    })
-  }
-  todoAction (type) {
-    let { interview } = this.model
-    if (!this.hasLogin) {
-      this.$refs.loginPop.showLoginPop = true
-      return
+    },
+    chatApply () { // 约聊成功方法
+      chatApplyApi({ recruiter: this.infos.recruiter, position: this.infos.id }).then(res => {
+        this.showPopupType = 'chat' // 约聊成功
+        this.showPopup = true
+        this.loading = false
+        this.$emit('init')
+      }).catch(res => {
+        this.loading = false
+      })
     }
-    if (this.btnLoad) return
-    switch (type) {
-      case 'job-hunting-reject':
-        console.log(interview)
-        this.clearInterviewItemRedDot({id: interview.interviewId}).then(() => {
-          this.getInterviewRedDotInfoApi().then(() => this.jobRejectChat())          
-        })
-        break
-      case 'job-hunting-chat':
-        this.jobHunterChat()
-        break
-      case 'job-hunting-accept':
-        this.clearInterviewItemRedDot({id: interview.interviewId}).then(() => {
-          this.getInterviewRedDotInfoApi().then(() => this.confirmInterview())
-        })        
-        break
-      case 'job-hunting-view-detail':
-        this.clearInterviewItemRedDot({id: this.model.interview.interviewId}).then(() => {
-          this.model.show = true
-        })        
-        // let popParmas = {
-        //   interviewId: this.interviewInfos.data[0].interviewId
-        // }
-        // this.$store.commit('guideQrcodePop', { switch: true, type: 'interviewDetail', params: popParmas })
-        break
-    }
-  }
-  confirm () {
-    this.getInterviewStatus()
-  }
-  created () {
-    this.getInterviewStatus()
   }
 }
 </script>
-<style lang="scss" scoped>
-.wrap {
-  .forbid, .canView, .scheduling, .button-box {
+<style lang="scss">
+.wrap{
+  .el-button{
     width:298px;
     height:36px;
     border-radius:4px;
     font-size:14px;
     font-weight:400;
-    color:#A29CA6;
     border: none;
-    cursor: pointer;
-    &.button-box {
-      border-radius: 16px;
-      overflow: hidden;
-      .reject {
-        width: 50%;
-        height: 100%;
-        background: $bg-color-5;
-        color: $main-color-1;
-        border: none;
-        cursor: pointer;
-        margin: 0;
-      }
-      .accept {
-        width: 50%;
-        height: 100%;
-        background: $bg-color-4;
-        color: #fff;
-        border: none;
-        cursor: pointer;
-        margin: 0;
-      }
-    }
-    &.canView {
-      background: $bg-color-4;
-      color: #fff;
-    }
-    &.scheduling.specailBtn {
-      background: $bg-color-4;
-      color: #fff;
-    }
-    &.canView.specailBtn {
-      background: $sub-color-1;
-      color: #fff;
+  }
+  .rapidlyPosition{
+    background: #ff9e40;
+    &:hover{
+      background: mix(#ff9e40, #ffffffCC);
     }
   }
 }
+.el-message-box{
+    padding-bottom: 2px !important;
+  }
 </style>

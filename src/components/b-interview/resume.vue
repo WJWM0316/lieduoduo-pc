@@ -36,7 +36,8 @@
                 </div>
                 <div class="msgUserInfo">
                   <div :class="['basemsg', nowResumeMsg.signature ? '' : 'basecenter']">
-                    <span class="realName">{{nowResumeMsg.name}}</span>
+                    <span class="realNameglass" v-if="nowResumeMsg.glass"><img src="@/assets/images/glass.png" alt=""/></span>
+                    <span class="realName" v-else>{{nowResumeMsg.name}}</span>
                     <div class="lebalList">
                       <div class="lebalItem">
                         <i class="icon iconfont icon-zhiwei" style></i>
@@ -64,7 +65,7 @@
                   </div>
                   <div class="description">
                     <span class="msg">{{nowResumeMsg.signature}}</span>
-                    <div class="iconList">
+                    <div class="iconList" ref="iconList">
                       <span
                         class="iconItem"
                         v-for="(item,index) in nowResumeMsg.personalizedLabels"
@@ -88,7 +89,7 @@
                 >
                 <div class="whitesize">
                   <span class="position">{{item.position}}&nbsp;|&nbsp;{{item.city}}</span>
-                  <span v-if="item.fields.length>0" style="margin-right:9px;color:#333">|</span>
+                  <span v-if="item.fields.length>0" style="margin-right:9px;color: #66666E;">|</span>
                   <span v-for="(item1,index1) in item.fields" :key="index1">{{item1.field}}&nbsp;&nbsp;</span>
                   </div>
                   <span class="price">{{item.salaryFloor}}k-{{item.salaryCeil}}k</span>
@@ -106,8 +107,10 @@
                   :style="index===nowResumeMsg.careers.length-1?'margin-bottom:0px;':''"
                 >
                   <div class="workTime">
+                    <div class="work-content">
                     <span>{{item.company}} | {{item.position}}</span>
-                    <span>{{item.startTimeDesc}}~{{item.endTimeDesc}}</span>
+                    </div>
+                    <span class="size">{{item.startTimeDesc}}~{{item.endTimeDesc}}</span>
                   </div>
                   <div class="workContent">
                     <span class="duties">
@@ -135,7 +138,7 @@
                 >
                   <div class="workTime">
                     <span>{{item.name}} &nbsp;| &nbsp;{{item.role}}</span>
-                    <span>{{item.startTimeDesc}}~{{item.endTimeDesc}}</span>
+                    <span class="size">{{item.startTimeDesc}}~{{item.endTimeDesc}}</span>
                   </div>
                   <div class="workContent">
                     <span class="duties">
@@ -157,7 +160,7 @@
                 >
                   <div class="workTime">
                     <span>{{item.school}} | {{item.degreeDesc}} | {{item.major}}</span>
-                    <span>{{item.startTimeDesc}}~{{item.endTimeDesc}}</span>
+                    <span class="size">{{item.startTimeDesc}}~{{item.endTimeDesc}}</span>
                   </div>
                   <div class="workContent" v-show="item.experience!=''">
                     <span class="duties">
@@ -168,7 +171,7 @@
               </div>
             </div>
             <!-- 更多介绍 -->
-            <div class="workExperience" v-if="nowResumeMsg.moreIntroduce">
+            <div class="workExperience" v-if="nowResumeMsg.moreIntroduce && (nowResumeMsg.moreIntroduce.introduce || nowResumeMsg.moreIntroduce.imgs.length > 0)">
               <p class="title">更多介绍</p>
               <div class="workList">
                 <pre v-if="nowResumeMsg.moreIntroduce.introduce">{{nowResumeMsg.moreIntroduce.introduce}}</pre>
@@ -186,9 +189,10 @@
           </div>
           <div class="Code">
             <div class="handlerpring">
-              <div class="onload" @click="hasonload = !hasonload">
+              <div class="onload" @click="handleShowDownload">
                 <i class="iconfont icon-xiazai"></i>
               </div>
+              <div class="line"></div>
               <div class="onloadselect"  v-loading="loadingshow" v-show="hasonload" ref="queryBox">
                 <div class="title">下载简历</div>
                 <div class="select">请选择下载格式:</div>
@@ -219,47 +223,31 @@
               </div>
             </div>
             <div class="btnstatus">
-              <template v-if="buttons.btn1 && buttons.btn1.type">
-                <el-button
-                  style="width: 154px;"
-                  :disabled="buttons.btn1.disabled"
-                  @click.stop="handleSetResume(buttons.btn1.type)"
-                  :type="buttons.btn1.buttonType"
-                >{{buttons.btn1.buttonText}}</el-button>
+              <!-- btn1、btn2 是约聊的按钮逻辑 -->
+              <template v-if="buttons.btn1 && buttons.btn1.buttonText">
+                <el-button @click="handleSetChat(buttons.btn1)" :type="buttons.btn1.buttonType">{{buttons.btn1.buttonText}}</el-button>
               </template>
-              <template v-if="buttons.btn2 && buttons.btn2.type">
-                <el-button
-                  style="width: 154px;"
-                  @click.stop="handleSetResume(buttons.btn2.type)"
-                >{{buttons.btn2.buttonText}}</el-button>
+              <template v-if="buttons.btn2 && buttons.btn2.buttonText">
+                <el-button @click="handleSetChat(buttons.btn2)" :type="buttons.btn2.buttonType">{{buttons.btn2.buttonText}}</el-button>
+              </template>
+              <!-- btn3 是约面的按钮逻辑-->
+              <template v-if="buttons.btn3 && buttons.btn3.buttonText">
+                <el-button  @click="handleSetResume(buttons.btn3)" :type="buttons.btn3.buttonType">{{buttons.btn3.buttonText}}</el-button>
               </template>
             </div>
-            <div class="like_user" @click.stop="ownerOp(true, nowResumeMsg.uid)" v-if="nowResumeMsg.interested">
-                <i class="iconfont icon-yishoucang img"></i>
-                取消感兴趣
+            <template v-if="nowResumeMsg.glass === 0">
+              <div class="like_user" @click.stop="ownerOp(true, nowResumeMsg.uid)" v-if="nowResumeMsg.interested">
+                <i class="iconfont icon-yishoucang img"></i> 取消感兴趣
               </div>
               <div class="like_user" @click.stop="ownerOp(false, nowResumeMsg.uid)" v-else >
-                <i class="iconfont icon-shoucang img"></i>
-                  对Ta感兴趣
+                <i class="iconfont icon-shoucang img"></i> 对Ta感兴趣
               </div>
-            <div class="msgCode"  v-if="shareResumeImg">
+            </template>
+            <div class="msgCode" v-if="shareResumeImg">
               <img :src="shareResumeImg" />
               <span>扫码分享</span>
             </div>
-            <div class="isAdmin">
-              <div class="ContactInformation">
-                <p class="contactTitle" v-if="nowResumeMsg.mobile||nowResumeMsg.wechat">联系方式:</p>
-                <div class="Contact" v-if="nowResumeMsg.mobile">
-                  <span><i class="iconfont icon-dianhua"></i></span>
-                  <span>{{nowResumeMsg.mobile}}</span>
-                </div>
-                <div class="Contact" v-if="nowResumeMsg.wechat">
-                  <span><i class="iconfont icon-weixin"></i></span>
-                  <span >{{nowResumeMsg.wechat}}</span>
-                </div>
-              </div>
-            </div>
-              <div class="seefujian" v-if="nowResumeMsg.resumeAttach">
+            <div class="seefujian" v-if="nowResumeMsg.glass === 0 && nowResumeMsg.resumeAttach">
               <div class="title">附件简历:</div>
               <div class="seebtn" v-if="nowResumeMsg.resumeAttach.extension === 'doc'"><a :href="'https://view.officeapps.live.com/op/view.aspx?src=' + nowResumeMsg.resumeAttach.url" :download="nowResumeMsg.resumeAttach.fileName" target="_blank">查看附件</a></div>
               <div class="seebtn" v-else><a :href="nowResumeMsg.resumeAttach.url" :download="nowResumeMsg.resumeAttach.fileName" target="_blank">查看附件</a></div>
@@ -272,24 +260,57 @@
     <dynamic-record
       :visible.sync="dynamicDialogStatus"
       :info.sync="nowResumeMsg"
-      :imagesurl.sync="shareResumeImg"
-    ></dynamic-record>
+      :imagesurl.sync="shareResumeImg" />
+    <!-- 选择职位 -->
+    <select-position
+      :visible.sync="selectPositionDialogStatus"
+      :jobuid="jobuid"
+      @finish="handleSelectedPosition"
+    />
+    <!-- 支付 -->
+    <!-- 约聊|约面提示支付多多币 -->
+    <pay-coin
+      @finish="handleToRefresh"
+      :visible.sync="payCoinDialogStatus"
+      :jobuid="jobuid"
+      :type="selectedInterviewType"
+      :position-id="positionId"/>
+    <!-- 查看约聊不合适原因 -->
+    <chat-reson :list="resonList.reason" :explain="resonList.extraDesc" :visible.sync="chatResonDialog" />
+    <!-- 约面申请 -->
+    <apply-interview :visible.sync="applyInterviewDialog" :interview-id="interviewId"  @finish="handleSetResume"/>
+    <!-- 下载app引导弹窗 -->
+    <download-app :visible.sync="downloadAppDialog" />
   </div>
 </template>
 <script>
 import DynamicRecord from './dynamicRecord'
+import SelectPosition from './candidatePosition'
+import ChatReson from './chatResonList'
+import PayCoin from './pay'
+import applyInterview from './applyInterview'
+import DownloadApp from '@/components/common/sharePopup/chatDownloadApp'
+import { deleteNotInterest } from 'API/candidate'
 import { shareResumeApi } from 'API/forward'
 import { getResumeIdApi } from 'API/userJobhunter'
 import { createonlinepdf, createonlineword } from 'API/common'
 import { putCollectUserApi, cancelCollectUserApi } from 'API/collect'
-// 候选人动态操作按钮种类
-const CandidateTypeBtns = [
-  { buttonText: '查看联系', type: 'confirm-interview', buttonType: 'primary', is: (val) => val === 11 },
-  { buttonText: '查看邀约', type: 'check-invitation', buttonType: 'primary', is: (val) => val === 12 },
-  { buttonText: '安排面试', type: 'arranging-interviews', buttonType: 'primary', is: (val) => val === 21 },
-  { buttonText: '查看面试', type: 'arranging-interviews', buttonType: 'primary', is: (val) => val === 31 },
-  { buttonText: '修改面试', type: 'arranging-interviews', buttonType: 'primary', is: (val) => val === 32 },
-  { buttonText: '面试详情', type: 'check-invitation', buttonType: 'primary', is: (val) => val >= 41 }
+// 约聊操作按钮种类
+const ChatTypeBtns = [
+  { buttonText: '一键约聊', type: 'recruiter-chat', buttonType: 'primary', is: (val) => [705, 715, 716].includes(val) }, // b->c c拒绝
+  { buttonText: '继续聊', type: 'keep-chat', buttonType: 'primary', is: (val) => [101, 301, 501].includes(val) }, // b->c,c->b 未处理， b|c同意
+  { buttonText: '继续沟通', type: 'keep-chat', buttonType: 'primary', is: (val) => val === 701 }, // c->b b未同意
+  { buttonText: '一键约聊', type: 'recruiter-chat', buttonType: 'primary', is: (val) => [305, 315, 316].includes(val), hasReason: true } // b主动拒绝
+]
+// 顾问帮约(约面)按钮种类 （）
+const MeetTypeBtns = [
+  { buttonText: '_', _text: '同意|拒绝', type: 'apply-interview', buttonType: '_', is: (val) => val === 11 }, // c-b b未处理
+  { buttonText: '_', _text: '面试详情', type: 'check-invitation', buttonType: '_', is: (val) => val === 12 }, // b->c c未处理
+  { buttonText: '_', _text: '安排面试', type: 'arranging-interviews', buttonType: '_', is: (val) => val === 21 },
+  { buttonText: '_', _text: '面试详情', type: 'arranging-interviews', buttonType: '_', is: (val) => val === 31 },
+  { buttonText: '_', _text: '修改面试', type: 'arranging-interviews', buttonType: '_', is: (val) => val === 32 },
+  { buttonText: '_', _text: '面试详情', type: 'check-invitation', buttonType: '_', is: (val) => [41, 51, 57, 58, 59, 60, 61].includes(val) },
+  { buttonText: '_', _text: '面试详情', type: 'check-invitation', buttonType: '_', is: (val) => [52, 53, 54, 55].includes(val) }
 ]
 export default {
   props: {
@@ -299,7 +320,7 @@ export default {
       default: () => ({})
     }
   },
-  components: { DynamicRecord },
+  components: { DynamicRecord, SelectPosition, PayCoin, DownloadApp, ChatReson, applyInterview },
   data () {
     return {
       getResumeLoading: false, // 获取简历loading
@@ -310,15 +331,72 @@ export default {
       hasonload: false,
       shareResumeImg: '',
       buttons: {
-        btn1: {},
-        btn2: {}
+        btn1: {}, // 约聊
+        btn2: {}, // 约聊拒绝原因
+        btn3: {} // 约面
+      },
+      selectedInterviewType: 'chat', // 已经选择的约面或者约聊状态 chat 约聊 | interview 约面
+      selectPositionDialogStatus: false, // 选择职位弹窗
+      payCoinDialogStatus: false, // 支付弹窗
+      downloadAppDialog: false, // 下载app弹窗
+      chatResonDialog: false, // 查看约聊不合适原因 （其实是看对人不合适原因）
+      applyInterviewDialog: false, // 申请约面
+      jobuid: 0,
+      positionId: 0,
+      resonList: { reason: [], extraDesc: '' } // 不合适
+    }
+  },
+  computed: {
+    // 面试详情Id
+    interviewId () {
+      if (this.nowResumeMsg.interviewSummary) {
+        return this.nowResumeMsg.interviewSummary.interviewId
+      } else {
+        return 0
       }
     }
   },
   methods: {
-    handleSetResume (type) {
-      this.$emit('change-status', type, this.current)
-      // console.log(type)
+    // 约聊流程
+    handleSetChat (btn) {
+      switch (btn.type) {
+        case 'recruiter-chat':
+          // 选择职位
+          this.selectedInterviewType = 'chat'
+          this.selectPositionDialogStatus = true
+          break
+        case 'keep-chat':
+          this.downloadAppDialog = true
+          break
+        case 'return-cancel':
+          const { uid } = this.nowResumeMsg
+          deleteNotInterest(uid).then(({ data }) => {
+            if (data.httpStatus === 200) {
+              this.$message.success('取消成功！')
+              this.$emit('finish')
+            }
+          })
+          break
+        case 'watch-chat-reson':
+          const { reason, extraDesc } = this.nowResumeMsg.notSuitInfo
+          this.resonList = {
+            reason, extraDesc
+          }
+          this.chatResonDialog = true
+          break
+      }
+    },
+    // 约面流程
+    handleSetResume (btn) {
+      if (btn.type === 'recruiter-chat') {
+        // 选择职位
+        this.selectedInterviewType = 'interview'
+        this.selectPositionDialogStatus = true
+      } else if (btn.type === 'apply-interview') {
+        this.applyInterviewDialog = true
+      } else {
+        this.$emit('change-status', btn.type, this.current)
+      }
     },
     // 获取简历
     getResume () {
@@ -326,9 +404,16 @@ export default {
       getResumeIdApi({ uid: this.current.uid || this.current.jobhunterUid }).then(({ data }) => {
         this.getResumeLoading = false
         this.nowResumeMsg = data.data || {}
+        this.jobuid = this.nowResumeMsg.uid
         // 获取简历成功获取btn 显示的状态
         this.resetListDatas(this.nowResumeMsg)
-        this.current.interviewInfo = this.nowResumeMsg.interviewInfo
+        this.current.interviewInfo = this.nowResumeMsg.interviewSummary.interviewInfo
+        this.$nextTick(() => {
+          let box = this.$refs.iconList
+          if (box.offsetHeight > 22) {
+            box.style.height = (box.offsetHeight - 8) + 'px'
+          }
+        })
       }).catch(() => {
         this.getResumeLoading = false
       })
@@ -338,6 +423,18 @@ export default {
       shareResumeApi({ resumeUid: this.current.uid, forwardType: 1 }).then(({ data }) => {
         this.shareResumeImg = data.data.positionQrCodeUrl
       })
+    },
+    // 选择好职位id
+    handleSelectedPosition (id) {
+      this.positionId = id
+      this.payCoinDialogStatus = true
+    },
+    // 弹窗组件需要刷新列表数据的回调
+    handleToRefresh (type) {
+      this.$emit('finish')
+      if (type === 'chat') {
+        this.downloadAppDialog = true
+      }
     },
     hanldeClose () {
       this.dialogStatus = false
@@ -405,34 +502,50 @@ export default {
       }
     },
     resetListDatas (data) {
-      const { data: { haveInterview, isOnProtected, interviewStatus, hasUnsuitRecord } } = data.interviewInfo
-      // 判断是否有邀约
-      if (haveInterview) {
-        if (!hasUnsuitRecord) {
-          this.buttons.btn2 = { buttonType: 'text', type: 'inappropriate', buttonText: '不合适' }
-        }
-        // 求职进去面试流程
-        let btn1 = CandidateTypeBtns.find(val => {
-          return val.is(interviewStatus)
-        })
-        this.buttons.btn1 = btn1 || {}
-        if (interviewStatus === 51) {
-          this.buttons.btn1.statusText = '已结束'
+      const { status } = data.chatInfo || {}
+      const { notSuitInfo } = data
+      const { interviewInfo, isAdvisor } = data.interviewSummary || {}
+      let btn1 = {}; let btn2 = {}
+      if (data.chatInfo) {
+        btn1 = ChatTypeBtns.find(val => val.is(status))
+      } else {
+        btn1 = { buttonText: '一键约聊', type: 'recruiter-chat', buttonType: 'primary' }
+      }
+      // 招聘官（对人）标记不合适
+      if (notSuitInfo) {
+        btn1 = { buttonText: '取消不合适', type: 'return-cancel', buttonType: 'warning' }
+        btn2 = { buttonText: '查看原因', type: 'watch-chat-reson', buttonType: 'default' }
+      }
+      this.buttons.btn1 = btn1
+      this.buttons.btn2 = btn2
+      // 是否有约面信息
+      if (interviewInfo) {
+        // 是否有约面状态
+        if (interviewInfo.status) {
+          let btn3 = MeetTypeBtns.find(val => val.is(interviewInfo.status))
+          btn3.buttonText = isAdvisor === 1 ? '顾问跟进中' : '面试详情'
+          btn3.buttonType = isAdvisor === 1 ? 'black' : 'default'
+          this.buttons.btn3 = btn3
+        } else {
+          this.buttons.btn3 = { buttonText: '顾问帮约', _text: '开撩约面', type: 'recruiter-chat', buttonType: 'black' }
         }
       } else {
-        // 查看原因
-        if (hasUnsuitRecord) {
-          this.buttons.btn2 = { buttonType: 'text', type: 'interview-retract', buttonText: '撤回' }
-        }
-        // 拒绝
-        if (isOnProtected) {
-          this.buttons.btn1 = { buttonType: 'primary', type: 'cancel', disabled: true, buttonText: '暂时无法约面' }
-        }
-        // 未开始约聊 | 没不良记录 | 也没拒绝
-        if (!hasUnsuitRecord && !isOnProtected) {
-          this.buttons.btn1 = { buttonText: '开撩约面', type: 'recruiter-chat', buttonType: 'primary' }
+        // 如果c->b约聊，b处理中或者已经通过，并且没有约面的信息，不需要显示顾问帮约
+        if (![101, 301].includes(status)) {
+          this.buttons.btn3 = { buttonText: '顾问帮约', _text: '开撩约面', type: 'recruiter-chat', buttonType: 'black' }
         }
       }
+    },
+    // 显示下载弹窗
+    handleShowDownload () {
+      if (this.nowResumeMsg.glass === 1) {
+        this.$message({
+          type: 'warning',
+          message: '暂时无法下载简历，与候选人成功约聊/约面后即可下载'
+        })
+        return
+      }
+      this.hasonload = !this.hasonload
     }
   },
   watch: {
@@ -444,6 +557,11 @@ export default {
       } else {
         this.nowResumeMsg = {}
         this.shareResumeImg = ''
+        this.buttons = {
+          btn1: {},
+          btn2: {},
+          btn3: {}
+        }
       }
     }
   }
@@ -488,7 +606,7 @@ export default {
   background: #fff;
   height: calc(100vh - 60px - 60px);
   position: relative;
-  padding-top: 8px;
+  padding-top: 24px;
   box-sizing: border-box;
   .printing{
     display: flex;
@@ -560,17 +678,14 @@ export default {
         .onload{
           width:18px;
           height:18px;
-          margin: 0 16px 0px 35px;
           position: relative;
           cursor: pointer;
-          &::after{
-            content: '';
-            position: absolute;
-            background: #E8E9EB;
-            width: 1px;
-            height: 16px;
-            right: -16px;
-          }
+        }
+        .line{
+          width: 1px;
+          height: 16px;
+          background: #E8E9EB;
+          margin: 0 14px;
         }
         .onloadselect{
           width:221px;
@@ -650,7 +765,7 @@ export default {
         .share{
           width:18px;
           height:18px;
-          margin: 0 35px 0px 16px;
+          // margin: 0 35px 0px 16px;
           cursor: pointer;
         }
         i{
@@ -668,6 +783,7 @@ export default {
           margin-left: 0;
         }
         .el-button {
+          width: 154px;
           margin-bottom: 12px;
         }
       }
@@ -823,13 +939,12 @@ export default {
         border-radius:20px;
       }
       &::-webkit-scrollbar-thumb {
-        background:#DDE1E0;
+        background:#EBEBEB;
         -webkit-border-radius: 20px;
         -moz-border-radius: 20px;
         border-radius:20px;
       }
       .base {
-        padding-bottom: 20px;
         padding-left: 50px;
         .message {
           display: flex;
@@ -901,6 +1016,7 @@ export default {
               .realName {
                 font-size: 22px;
                 font-weight: 700;
+                height: 25px;
                 color: #42334d;
                 max-width: 153px;
                 white-space: nowrap;
@@ -908,6 +1024,17 @@ export default {
                 overflow: hidden;
                 text-overflow: ellipsis;
                 display: inline-block;
+              }
+              .realNameglass{
+                height: 40px;
+                max-width: 153px;
+                margin-right: 24px;
+                overflow: hidden;
+                img{
+                  width: 100%;
+                  height: 100%;
+                  vertical-align: middle;
+                }
               }
               .lebalList {
                 display: inline-block;
@@ -1032,7 +1159,7 @@ export default {
 
   .intention {
     text-align: left;
-    padding-top: 28px;
+    padding-top: 48px;
     padding-bottom: 38px;
     display: flex;
     justify-content: flex-start;
@@ -1055,24 +1182,25 @@ export default {
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
-          width: 460px;
+          max-width: 460px;
           float: left;
+          color: #66666E;
         }
         .position {
           font-size: 14px;
-          color: #333;
+          color: #66666E;
           margin-right: 10px;
         }
         span {
           font-size: 14px;
-          color: #333;;
+          color: #66666E;
         }
         .price {
           font-size: 14px;
           color: #FF9E40;
           font-weight: 700;
-          margin-left: 30px;
-          float: right;
+          margin-left: 15px;
+          float: left;
         }
       }
     }
@@ -1133,12 +1261,16 @@ export default {
           align-items: center;
           padding: 10px 0px 10px 0px;
           width: 545px;
-          span {
+          .work-content{
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 386px;
+            color: #66666E;
+          }
+          .size {
             font-size: 14px;
             color: #92929B;;
-            &:nth-child(1) {
-              color: #333;
-            }
           }
         }
         .workIconList {

@@ -15,7 +15,7 @@
         <div class="pop_cont">
           <h3 class="pop_text">请拨打全国咨询热线</h3>
           <p class="pop_text2">400-065-5788</p>
-          <img class="pop_code" src="@/assets/images/qrcode.png" alt="">
+          <img class="pop_code" :src="wxQrCode" alt="">
           <p class="pop_text3">猎多多公众号</p>
           <p class="pop_text4">微信扫描二维码，关注官方公众号</p>
         </div>
@@ -29,7 +29,7 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import PageHeader from './header/index'
 import PageAside from './side/index.vue'
-
+import { wx_qrcode } from 'IMAGES/image'
 @Component({
   name: 'App',
   components: {
@@ -43,6 +43,7 @@ import PageAside from './side/index.vue'
 export default class App extends Vue {
   cdnPath = `${process.env.VUE_CDN_PATH}/front-assets/`
   isService = false;
+  wxQrCode = wx_qrcode
   mounted () {
     this.$store.dispatch('redDotfun')
   }

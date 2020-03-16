@@ -93,7 +93,7 @@ div.el-dialog {
     padding: 0px;
   }
   .el-dialog__footer {
-    padding: 34px 34px 24px 0;
+    padding: 34px 40px 32px 0;
     .el-button {
       width: 88px;
     }
@@ -133,6 +133,9 @@ div.el-dialog {
 .el-message-box .el-message-box__title {
   font-size: 16px;
   color: $title-color-1;
+  span {
+    font-weight: bold;
+  }
 }
 .el-message-box .el-message-box__content {
   padding: 0 34px;
@@ -181,6 +184,12 @@ div.el-dialog {
 div.el-message {
   padding: 10px 16px;
   min-width: auto;
+  i {
+    font-size: 16px;
+  }
+  .el-message__content {
+    font-size: 12px;
+  }
 }
 
 /** el date */

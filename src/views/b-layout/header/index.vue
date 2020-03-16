@@ -2,20 +2,44 @@
   <div class="page-header">
     <div class="page-header-wrapper">
       <div class="sc-wrapper">
-        <template v-for="(item, index) in headerDrop">
-          <div :key="index" class="sc-wrapper-item">
-            <el-popover
-              placement="bottom"
-              width="124"
-              trigger="hover">
+        <div class="sc-wrapper-item">
+          <el-popover
+            placement="bottom"
+            popper-class="b-header-share-popper"
+            trigger="hover">
+            <div class="share-image">
+              <img :src="appQrCode" />
+              <p>下载猎多多APP</p>
+              <p>体验完整功能</p>
+            </div>
+            <div slot="reference" class="nav-name">APP</div>
+          </el-popover>
+        </div>
+        <div class="sc-wrapper-item">
+          <el-popover
+            placement="bottom"
+            popper-class="b-header-share-popper"
+            trigger="hover">
+            <div class="share-images">
               <div class="share-image">
-                <img :src="item.img" />
-                <p>{{item.desc}}</p>
+                <img :src="mpQrCode" />
+                <p>猎多多小程序</p>
+                <p>开启社交求职新时代</p>
               </div>
-              <div slot="reference" class="nav-name">{{item.title}}</div>
-            </el-popover>
-          </div>
-        </template>
+              <div class="share-image">
+                <img :src="wxQrCode" />
+                <p>关注猎多多公众号</p>
+                <p>不错过重要消息通知</p>
+              </div>
+            </div>
+            <div slot="reference" class="nav-name">微信端</div>
+          </el-popover>
+        </div>
+        <layout-information class="sc-wrapper-item" port="BPort"></layout-information>
+        <div class="sc-wrapper-item">
+          <router-link tag="span" class="header-link" :to="{name: 'binterview', query: {navType: 'calendar'}}">面试</router-link>
+          <span class="message-number" v-if="scheduleNumber > 0">{{scheduleNumber}}</span>
+        </div>
       </div>
       <div class="header-dropdown">
         <el-dropdown trigger="click" placement="bottom-start" @command="handleClick">
@@ -26,9 +50,8 @@
             </div>
           </div>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="perfectauth" v-if="haveIdentity.identityAuth !== 1">
-              身份认证
-              <div class="reddot"></div>
+            <el-dropdown-item command="perfectauth" v-if="identityinfo.identityAuth !== 1">
+              身份认证<div class="reddot"></div>
             </el-dropdown-item>
             <el-dropdown-item command="toggleIdentity">切换为求职者</el-dropdown-item>
             <el-dropdown-item command="infos">我的资料</el-dropdown-item>
@@ -41,36 +64,25 @@
   </div>
 </template>
 <script>
-import { mp_qrcode, wx_qrcode } from 'IMAGES/image'
-import { mapState } from 'vuex'
+import { mp_qrcode, wx_qrcode, app_qrcode } from 'IMAGES/image'
+import layoutInformation from 'COMPONENTS/common/layoutInformation/layoutInformation'
 export default {
   data () {
     return {
-      headerDrop: [
-        {
-          title: '关注猎多多',
-          desc: '微信扫码关注公众号',
-          img: wx_qrcode
-        },
-        {
-          title: '猎多多移动版',
-          desc: '微信扫码打开小程序',
-          img: mp_qrcode
-        }
-      ],
-      haveIdentity: ''
+      wxQrCode: wx_qrcode,
+      mpQrCode: mp_qrcode,
+      appQrCode: app_qrcode
     }
   },
   computed: {
-    ...mapState({
-      userInfo: state => state.userInfo,
-      Identityinfo: state => state.recruiterinfo
+    ...mapGetters({
+      userInfo: 'userInfo',
+      identityinfo: 'recruiterinfo',
+      scheduleNumber: 'recruiterScheduleList'
     })
   },
-  watch: {
-    'Identityinfo': function (n) {
-      this.haveIdentity = n
-    }
+  components: {
+    layoutInformation
   },
   methods: {
     handleClick (e) {
@@ -91,9 +103,6 @@ export default {
           this.$router.push({ name: 'perfectauth' })
       }
     }
-  },
-  mounted () {
-    this.haveIdentity = this.$store.state.recruiterinfo
   }
 }
 </script>
@@ -122,21 +131,59 @@ $header-height-1: $page-b-header-height;
   .sc-wrapper-item {
     height: $header-height-1;
     line-height: $header-height-1;
-    width: 100px;
+    padding-right: 34px;
     display: inline-block;
     vertical-align: top;
+    text-align: center;
   }
-  .sc-wrapper-item + .sc-wrapper-item {
-    margin-left: 12px;
+  .message-number {
+    margin-left: 4px;
+    background: $error-color-1;
+    color: #fff;
+    line-height: 18px;
+    box-sizing: border-box;
+    display: inline-block;
+    padding: 0px 6px;
+    vertical-align: middle;
+    border-radius: 9px;
+    font-size: 12px;
   }
+  & /deep/ {
+    .BInformation {
+      margin: auto;
+      height: 60px;
+      line-height: 60px;
+      cursor: pointer;
+    }
+  }
+}
+.header-link {
+  cursor: pointer;
 }
 .share-image {
   text-align: center;
   font-size: 12px;
+  max-width: 126px;
   color: $title-color-3;
-  padding: 8px 0 0;
+  position: relative;
   img {
     max-width: 100%;
+  }
+}
+.share-images {
+  @include flex-v-center;
+  .share-image + .share-image {
+    margin-left: 16px;
+    padding-left: 16px;
+  }
+  .share-image:not(:first-child):after {
+    content: "";
+    position: absolute;
+    height: 62px;
+    border-left: 1px dashed rgba($border-color-1, .7);
+    left: 0px;
+    z-index: 1;
+    top: 32px;
   }
 }
 .header-dropdown {
@@ -169,5 +216,9 @@ $header-height-1: $page-b-header-height;
   .page-header .page-header-wrapper {
     padding-right: 30px;
   }
+}
+.b-header-share-popper.el-popover {
+  padding: 8px 13px 12px;
+  min-width: auto;
 }
 </style>

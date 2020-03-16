@@ -31,12 +31,13 @@ export default {
   },
   actions: {
     redDotfun (store) {
-      if (!store.rootState.hasLogin) return
-      getLeftColumnRedDotInfoApi()
-        .then(res => {
-          let data = res.data.data
-          store.commit('redDotfun', data)
-        })
+      if (store.rootState.userInfo && store.rootState.userInfo.id) {
+        getLeftColumnRedDotInfoApi()
+          .then(res => {
+            let data = res.data.data
+            store.commit('redDotfun', data)
+          })
+      }
     }
   }
 }

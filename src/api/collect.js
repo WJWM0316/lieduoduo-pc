@@ -50,3 +50,19 @@ export const cancelCollectPositionApi = data => request({
   params: data,
   config: { host: 'pub' }
 })
+
+// 热门推荐
+export const gethotRecommendationApi = data => request({
+  url: '/recommend/resumes',
+  method: 'get',
+  params: data,
+  config: { host: 'zhaopin' }
+})
+
+// 筛选热门推荐数据为空时，返回为你推荐列表
+export const getRecommendationList = data => request({
+  url: '/recommend/resume/more',
+  method: 'get',
+  params: data,
+  config: { host: 'zhaopin' }
+})
