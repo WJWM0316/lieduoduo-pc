@@ -178,6 +178,12 @@ export default new Vuex.Store({
           getUserRoleInfoApi().then(({ data }) => {
             const result = data.data || {}
             store.commit('setRoleInfos', result)
+            // 猎头公司的人 直接去B端
+            if (result.companyType === 2) {
+              router.replace({ path: '/binterview' })
+              return
+            }
+
             // 引导创建用户
             if (state.userIdentity === 1 && !result.isJobhunter) {
               router.replace({ path: '/createUser' })
@@ -188,11 +194,7 @@ export default new Vuex.Store({
               router.replace({ path: '/register' })
               return
             }
-            // 猎头公司的人 直接去B端
-            if (result.companyType === 2) {
-              router.replace({ path: '/binterview' })
-              return
-            }
+            
             if (loginData.refresh) {
               window.location.reload()
             } else if (loginData.needBack) {
