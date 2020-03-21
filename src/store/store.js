@@ -188,6 +188,7 @@ export default new Vuex.Store({
               router.replace({ path: '/register' })
               return
             }
+            // 猎头公司的人 直接去B端
             if (result.companyType === 2) {
               router.replace({ path: '/binterview' })
               return
