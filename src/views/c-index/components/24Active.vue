@@ -1,7 +1,7 @@
 <template>
   <div class="position-24h-wrapper">
     <div class="active-header-wrapper" @click="handleShowMore">
-      <img src="../../../assets/images/index/title_24hour.png" />
+      <img class="header-img" src="../../../assets/images/index/title_24hour.png" />
       <span class="position-tag">高薪热门职位</span>
       <span class="position-tag">职业顾问服务</span>
       <div class="bubble-wrapper" v-if="bubbleList.length">
@@ -210,8 +210,11 @@ export default {
   cursor: pointer;
   background: transparent;
   img {
-    max-height: 100%;
+    max-height: 10%;
     margin-right: 8px;
+  }
+  .header-img {
+    max-height: 44px;
   }
   .position-tag {
     width: 100px;
