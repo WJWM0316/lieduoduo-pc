@@ -175,7 +175,7 @@ export default {
   }
 }
 .position-types{
-  padding: 30px 0 7px;
+  padding: 22px 0 7px;
   .scroll-pane {
     height: 22px;
   }
@@ -205,16 +205,16 @@ export default {
 }
 .active-header-wrapper {
   @include flex-v-center;
-  height: 64px;
+  height: 40px;
   margin-top: 56px;
   cursor: pointer;
   background: transparent;
   img {
-    max-height: 10%;
+    max-height: 100%;
     margin-right: 8px;
   }
   .header-img {
-    max-height: 44px;
+    max-height: 40px;
   }
   .position-tag {
     width: 100px;
