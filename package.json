@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@vue/eslint-config-standard": "^4.0.0",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "babel-polyfill": "^6.26.0",
     "clipboard": "^2.0.4",
     "cropperjs": "^1.5.5",
